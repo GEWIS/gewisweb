@@ -10,6 +10,9 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel(array());
+        $userService = $this->getServiceLocator()->get('user_service_user');
+        return new ViewModel(array(
+            'form' => $userService->getLoginForm()
+        ));
     }
 }

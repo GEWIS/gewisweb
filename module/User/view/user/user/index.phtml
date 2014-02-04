@@ -1,1 +1,35 @@
-TODO: Login form here.
+<?php if ($this->login): ?>
+You are logged in.
+<?php else:
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user'));
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form);
+?>
+
+<dl>
+<?php $element = $form->get('login') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?php $element = $form->get('password') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+</dl>
+
+<?= $this->formRow($form->get('submit')); ?>
+
+<?= $this->form()->closeTag(); ?>
+<?php endif; ?>
+

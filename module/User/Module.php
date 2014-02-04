@@ -40,10 +40,18 @@ class Module
     {
         return array(
             'aliases' => array(
+                'user_doctrine_em' => 'doctrine.entitymanager.orm_default'
             ),
             'invokables' => array(
+                'user_service_user' => 'User\Service\User',
+                'user_form_login' => 'User\Form\Login'
             ),
             'factories' => array(
+                'user_mapper_user' => function ($sm) {
+                    return new \User\Mapper\User(
+                        $sm->get('user_doctrine_em')
+                    );
+                }
             )
         );
     }
