@@ -1,5 +1,5 @@
 <?php if ($this->login): ?>
-You are logged in.
+<?= $this->translate('You are logged in.') ?>
 <?php else:
 $form = $this->form;
 $form->prepare();
