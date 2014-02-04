@@ -7,4 +7,9 @@ use Zend\Mvc\Controller\AbstractActionController,
 
 class UserController extends AbstractActionController
 {
+
+    public function indexAction()
+    {
+        return new ViewModel(array());
+    }
 }
