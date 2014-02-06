@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-06 16:16+0100\n"
+"POT-Creation-Date: 2014-02-06 22:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,14 +131,22 @@ msgstr ""
 msgid "You are logged in."
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:20
+#: module/User/src/User/Form/Login.php:24
 msgid "Membership number or email address"
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:28
+#: module/User/src/User/Form/Login.php:32
 msgid "Your password"
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:36
+#: module/User/src/User/Form/Login.php:40
 msgid "Login"
+msgstr ""
+
+#: module/User/src/User/Form/Login.php:57
+msgid "This user could not be found."
+msgstr ""
+
+#: module/User/src/User/Form/Login.php:64
+msgid "Wrong password provided."
 msgstr ""

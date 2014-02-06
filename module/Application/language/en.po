@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-06 16:16+0100\n"
-"PO-Revision-Date: 2014-02-06 16:18+0100\n"
+"POT-Creation-Date: 2014-02-06 22:48+0100\n"
+"PO-Revision-Date: 2014-02-06 22:58+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -135,17 +135,25 @@ msgstr "An error occurred"
 msgid "You are logged in."
 msgstr "You are logged in."
 
-#: module/User/src/User/Form/Login.php:20
+#: module/User/src/User/Form/Login.php:24
 msgid "Membership number or email address"
 msgstr "Membership number or email address"
 
-#: module/User/src/User/Form/Login.php:28
+#: module/User/src/User/Form/Login.php:32
 msgid "Your password"
 msgstr "Your password"
 
-#: module/User/src/User/Form/Login.php:36
+#: module/User/src/User/Form/Login.php:40
 msgid "Login"
 msgstr "Login"
+
+#: module/User/src/User/Form/Login.php:57
+msgid "This user could not be found."
+msgstr "This user could not be found."
+
+#: module/User/src/User/Form/Login.php:64
+msgid "Wrong password provided."
+msgstr "Wrong password provided."
 
 #~ msgid "Skeleton Application"
 #~ msgstr "Skeleton Application"
