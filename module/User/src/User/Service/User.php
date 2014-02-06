@@ -30,6 +30,15 @@ class User implements ServiceManagerAwareInterface
      */
     public function login($data)
     {
+        $form = $this->getLoginForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        // try to authenticate
     }
 
     /**
