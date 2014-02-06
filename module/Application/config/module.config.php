@@ -50,6 +50,18 @@ return array(
                     ),
                 ),
             ),
+            'lang' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/lang/:lang/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'lang',
+                        'lang'          => 'nl'
+                    )
+                )
+            )
         ),
     ),
     'service_manager' => array(
