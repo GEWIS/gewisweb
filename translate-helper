@@ -1,0 +1,19 @@
+#!/bin/bash
+find ./module -iname "*.phtml" | xargs xgettext \
+    --language=PHP \
+    --keyword=translate \
+    --output=./module/Application/language/gewisweb.pot \
+    --force-po \
+    --package-name=GEWISweb \
+    --package-version=0.1.0-dev \
+    --copyright-holder=GEWIS \
+
+find ./module -iname "*.php" | xargs xgettext \
+    --language=PHP \
+    --keyword=translate \
+    --output=./module/Application/language/gewisweb.pot \
+    --force-po \
+    --package-name=GEWISweb \
+    --package-version=0.1.0-dev \
+    --copyright-holder=GEWIS \
+    --join-existing \
