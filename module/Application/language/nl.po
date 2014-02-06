@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-06 09:36+0100\n"
-"PO-Revision-Date: 2014-02-06 09:56+0100\n"
+"PO-Revision-Date: 2014-02-06 10:22+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -16,24 +16,25 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #: module/Application/view/layout/layout.phtml:6
 #: module/Application/view/layout/layout.phtml:37
 msgid "Skeleton Application"
-msgstr ""
+msgstr "Applicatie fundering"
 
 #: module/Application/view/layout/layout.phtml:41
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: module/Application/view/layout/layout.phtml:50
 msgid "All rights reserved."
-msgstr ""
+msgstr "Alle rechten voorbehouden."
 
 #: module/Application/view/application/index/index.phtml:2
 #, php-format
 msgid "Welcome to %sZend Framework 2%s"
-msgstr ""
+msgstr "Welkom bij %sZend Framework 2%s"
 
 #: module/Application/view/application/index/index.phtml:3
 #, php-format
@@ -43,14 +44,17 @@ msgid ""
 "skeleton can serve as a simple starting point for you to begin building your "
 "application on ZF2."
 msgstr ""
+"Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol "
+"geinstalleerd. Je gebruikt Zend Framework versie %s. Deze fundering biedt je "
+"een startpunt om je ZF2 applicatie op voort te bouwen."
 
 #: module/Application/view/application/index/index.phtml:4
 msgid "Fork Zend Framework 2 on GitHub"
-msgstr ""
+msgstr "Fork Zend Framework 2 op Github"
 
 #: module/Application/view/application/index/index.phtml:12
 msgid "Follow Development"
-msgstr ""
+msgstr "Volg de Ontwikkeling"
 
 #: module/Application/view/application/index/index.phtml:15
 #, php-format
@@ -61,14 +65,19 @@ msgid ""
 "%sdev blog%s, %sissue tracker%s, and much more. This is a great resource for "
 "staying up to date with the latest developments!"
 msgstr ""
+"Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het "
+"volgen van deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de "
+"offici&euml;le website van Zend Framework. Daar staan links naar de ZF2 "
+"%swiki%s, %sdev blog%s, %sissue tracker%s en nog veel meer. Het is het "
+"perfecte middel om up-to-date te blijven met de ontwikkelingen."
 
 #: module/Application/view/application/index/index.phtml:16
 msgid "ZF2 Development Portal"
-msgstr ""
+msgstr "ZF2 Ontwikkelaars Portaal"
 
 #: module/Application/view/application/index/index.phtml:24
 msgid "Discover Modules"
-msgstr ""
+msgstr "Ontdek Modules"
 
 #: module/Application/view/application/index/index.phtml:27
 #, php-format
@@ -78,14 +87,18 @@ msgid ""
 "%s. The site is currently live and currently contains a list of some of the "
 "modules already available for ZF2."
 msgstr ""
+"De community werkt aan een eigen community website die dient als een "
+"bewaarplaats en galerij voor ZF2 modules. Het project is beschikbaar %sop "
+"GitHub%s. De site staat op dit moment live en bevat een lijst met modules "
+"die op dit moment beschikbaar zijn voor ZF2."
 
 #: module/Application/view/application/index/index.phtml:28
 msgid "Explore ZF2 Modules"
-msgstr ""
+msgstr "Verken ZF2 Modules"
 
 #: module/Application/view/application/index/index.phtml:36
 msgid "Help &amp; Support"
-msgstr ""
+msgstr "Hulp &amp; Support"
 
 #: module/Application/view/application/index/index.phtml:39
 #, php-format
@@ -95,85 +108,91 @@ msgid ""
 "feedback you may have regarding the beta releases. Alternatively, you may "
 "subscribe and post questions to the %smailing lists%s."
 msgstr ""
+"Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons "
+"bereiken via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde je "
+"vragen en zouden graag feedback krijgen betreffende de beta releases. Je "
+"kunt je ook abonneren op de %smailing lists%s."
 
 #: module/Application/view/application/index/index.phtml:40
 msgid "Ping us on IRC"
-msgstr ""
+msgstr "Ping ons via IRC"
 
 #: module/Application/view/error/404.phtml:1
 msgid "A 404 error occurred"
-msgstr ""
+msgstr "404: De pagina kon niet worden gevonden."
 
 #: module/Application/view/error/404.phtml:10
 msgid "The requested controller was unable to dispatch the request."
-msgstr ""
+msgstr "De opgevraagde controller kon deze aanvraag niet verwerken."
 
 #: module/Application/view/error/404.phtml:13
 msgid ""
 "The requested controller could not be mapped to an existing controller class."
-msgstr ""
+msgstr "Er is geen mapping beschikbaar voor de opgevraagde controller."
 
 #: module/Application/view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
-msgstr ""
+msgstr "De opgevraagde controller is niet bruikbaar."
 
 #: module/Application/view/error/404.phtml:19
 msgid "The requested URL could not be matched by routing."
-msgstr ""
+msgstr "Er is geen route gevonden die overeenkomt met de opgevraagde URL."
 
 #: module/Application/view/error/404.phtml:22
 msgid "We cannot determine at this time why a 404 was generated."
 msgstr ""
+"We kunnen op dit moment niet achterhalen waarom de pagina niet kon worden "
+"gevonden."
 
 #: module/Application/view/error/404.phtml:34
 msgid "Controller"
-msgstr ""
+msgstr "Controller"
 
 #: module/Application/view/error/404.phtml:41
 #, php-format
 msgid "resolves to %s"
-msgstr ""
+msgstr "verwijst naar %s"
 
 #: module/Application/view/error/404.phtml:53
 #: module/Application/view/error/index.phtml:8
 msgid "Additional information"
-msgstr ""
+msgstr "Meer informatie"
 
 #: module/Application/view/error/404.phtml:56
 #: module/Application/view/error/404.phtml:80
 #: module/Application/view/error/index.phtml:11
 #: module/Application/view/error/index.phtml:35
 msgid "File"
-msgstr ""
+msgstr "Bestand"
 
 #: module/Application/view/error/404.phtml:60
 #: module/Application/view/error/404.phtml:84
 #: module/Application/view/error/index.phtml:15
 #: module/Application/view/error/index.phtml:39
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: module/Application/view/error/404.phtml:64
 #: module/Application/view/error/404.phtml:88
 #: module/Application/view/error/index.phtml:19
 #: module/Application/view/error/index.phtml:43
 msgid "Stack trace"
-msgstr ""
+msgstr "Stack trace"
 
 #: module/Application/view/error/404.phtml:74
 #: module/Application/view/error/index.phtml:29
 msgid "Previous exceptions"
-msgstr ""
+msgstr "Vorige excepties"
 
 #: module/Application/view/error/404.phtml:103
 #: module/Application/view/error/index.phtml:58
 msgid "No Exception available"
-msgstr ""
+msgstr "Geen exceptie beschikbaar"
 
 #: module/Application/view/error/index.phtml:1
 msgid "An error occurred"
-msgstr ""
+msgstr "Er is een fout opgetreden"
 
 #: module/User/view/user/user/index.phtml:2
 msgid "You are logged in."
-msgstr ""
+msgstr "Je bent ingelogd."
