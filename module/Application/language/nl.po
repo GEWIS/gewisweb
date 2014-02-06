@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-06 13:42+0100\n"
-"PO-Revision-Date: 2014-02-06 13:49+0100\n"
+"POT-Creation-Date: 2014-02-06 16:16+0100\n"
+"PO-Revision-Date: 2014-02-06 16:18+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -135,6 +135,18 @@ msgstr "Er is een fout opgetreden"
 #: module/User/view/user/user/index.phtml:2
 msgid "You are logged in."
 msgstr "Je bent ingelogd."
+
+#: module/User/src/User/Form/Login.php:20
+msgid "Membership number or email address"
+msgstr "Lidnummer of email adres"
+
+#: module/User/src/User/Form/Login.php:28
+msgid "Your password"
+msgstr "Wachtwoord"
+
+#: module/User/src/User/Form/Login.php:36
+msgid "Login"
+msgstr "Login"
 
 #~ msgid "Skeleton Application"
 #~ msgstr "Applicatie fundering"
