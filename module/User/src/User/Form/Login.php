@@ -2,13 +2,14 @@
 
 namespace User\Form;
 
-use Zend\Form\Form,
-    Zend\InputFilter\InputFilter;
+use Zend\Form\Form;
+use Zend\InputFilter\InputFilter;
+use Zend\I18n\Translator\Translator;
 
 class Login extends Form
 {
 
-    public function __construct()
+    public function __construct(Translator $translate)
     {
         parent::__construct();
 
@@ -16,7 +17,7 @@ class Login extends Form
             'name' => 'login',
             'type' => 'text',
             'options' => array(
-                'label' => 'Membership number or email address'
+                'label' => $translate->translate('Membership number or email address')
             )
         ));
 
@@ -24,7 +25,7 @@ class Login extends Form
             'name' => 'password',
             'type' => 'password',
             'options' => array(
-                'label' => 'Your password'
+                'label' => $translate->translate('Your password')
             )
         ));
 
@@ -32,7 +33,7 @@ class Login extends Form
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => array(
-                'value' => 'Login'
+                'value' => $translate->translate('Login')
             )
         ));
 

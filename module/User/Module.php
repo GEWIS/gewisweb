@@ -43,10 +43,14 @@ class Module
                 'user_doctrine_em' => 'doctrine.entitymanager.orm_default'
             ),
             'invokables' => array(
-                'user_service_user' => 'User\Service\User',
-                'user_form_login' => 'User\Form\Login'
+                'user_service_user' => 'User\Service\User'
             ),
             'factories' => array(
+                'user_form_login' => function ($sm) {
+                    return new \User\Form\Login(
+                        $sm->get('translator')
+                    );
+                },
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
