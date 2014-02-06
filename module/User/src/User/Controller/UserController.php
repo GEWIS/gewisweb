@@ -10,12 +10,12 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
-        $userService = $this->getServiceLocator()->get('user_service_user');
+        $userService = $this->getUserService();
 
         if ($this->getRequest()->isPost()) {
+            // try to login
             $login = $userService->login($this->getRequest()->getPost());
 
-            // try to login
             if (null !== $login) {
                 return new ViewModel(array(
                     'login' => true
@@ -27,5 +27,15 @@ class UserController extends AbstractActionController
         return new ViewModel(array(
             'form' => $userService->getLoginForm()
         ));
+    }
+
+    /**
+     * Get a user service.
+     *
+     * @return User\Service\User
+     */
+    protected function getUserService()
+    {
+        return $this->getServiceLocator()->get('user_service_user');
     }
 }
