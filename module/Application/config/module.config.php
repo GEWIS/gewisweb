@@ -62,7 +62,7 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'nl',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -91,12 +91,5 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
-    ),
-    // Placeholder for console routes
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-            ),
-        ),
-    ),
+    )
 );

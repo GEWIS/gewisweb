@@ -11,6 +11,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Session\Container as SessionContainer;
 
 class Module
 {
@@ -19,6 +20,20 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $translator = $e->getApplication()->getServiceManager()->get('translator');
+        $translator->setlocale($this->determineLocale($e));
+    }
+
+    protected function determineLocale(MvcEvent $e)
+    {
+        $session = new SessionContainer('lang');
+        if (!isset($session->lang)) {
+            // default: nl locale
+            $session->lang = 'nl';
+        }
+
+        return $session->lang;
     }
 
     public function getConfig()
