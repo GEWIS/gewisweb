@@ -81,6 +81,13 @@ return array(
                 'base_dir' => __DIR__ . '/../language',
                 'pattern'  => '%s.mo',
             ),
+            // Zend\Validate translation
+            array(
+                'type' => 'phparray',
+                'base_dir' => 'vendor/zendframework/zendframework/resources/languages/',
+                'pattern' => '%s/Zend_Validate.php',
+                'text_domain' => 'validate'
+            )
         ),
     ),
     'controllers' => array(
