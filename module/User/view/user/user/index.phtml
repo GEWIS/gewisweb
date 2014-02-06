@@ -1,4 +1,4 @@
-<?php if ($this->login): ?>
+<?php if (isset($this->login) && $this->login): ?>
 <?= $this->translate('You are logged in.') ?>
 <?php else:
 $form = $this->form;

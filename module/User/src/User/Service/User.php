@@ -39,6 +39,20 @@ class User implements ServiceManagerAwareInterface
         }
 
         // try to authenticate
+        $auth = $this->getServiceManager()->get('user_auth_service');
+        $authAdapter = $auth->getAdapter();
+
+        $authAdapter->setCredentials($form->getData());
+
+        $result = $auth->authenticate();
+
+        // process the result
+        if (!$result->isValid()) {
+            $form->setResult($result);
+            return null;
+        }
+
+        return $auth->getIdentity();
     }
 
     /**

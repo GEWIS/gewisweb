@@ -35,4 +35,35 @@ class User
      * @ORM\Column(type="string")
      */
     protected $password;
+
+
+    /**
+     * Get the membership number.
+     *
+     * @return int
+     */
+    public function getLidnr()
+    {
+        return $this->lidnr;
+    }
+
+    /**
+     * Get the user's email address.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Get the password hash.
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 }

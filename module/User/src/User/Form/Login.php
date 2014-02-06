@@ -5,13 +5,17 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\Translator;
+use Zend\Authentication\Result;
 
 class Login extends Form
 {
 
+    protected $translate;
+
     public function __construct(Translator $translate)
     {
         parent::__construct();
+        $this->translate = $translate;
 
         $this->add(array(
             'name' => 'login',
@@ -38,6 +42,31 @@ class Login extends Form
         ));
 
         $this->initFilters();
+    }
+
+    /**
+     * Set authentication result.
+     */
+    public function setResult(Result $result)
+    {
+        if (!$result->isValid()) {
+            switch ($result->getCode()) {
+            case Result::FAILURE_IDENTITY_NOT_FOUND:
+                $this->setMessages(array(
+                    'login' => array(
+                        $this->translate->translate('This user could not be found.')
+                    )
+                ));
+                break;
+            case Result::FAILURE_CREDENTIAL_INVALID:
+                $this->setMessages(array(
+                    'password' => array(
+                        $this->translate->translate('Wrong password provided.')
+                    )
+                ));
+                break;
+            }
+        }
     }
 
     protected function initFilters()

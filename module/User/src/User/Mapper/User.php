@@ -57,12 +57,12 @@ class User
      *
      * @return void
      */
-    public function findUserByLogin($login)
+    public function findByLogin($login)
     {
         if (is_numeric($login)) {
-            return $this->findUserByNumber($login);
+            return $this->findByNumber($login);
         }
-        return $this->findUserByEmail($login);
+        return $this->findByEmail($login);
     }
 
     /**
@@ -75,4 +75,15 @@ class User
         $this->em->persist($user);
         $this->em->flush();
     }
+
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('User\Model\User');
+    }
+
 }
