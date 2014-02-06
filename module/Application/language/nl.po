@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-06 09:36+0100\n"
-"PO-Revision-Date: 2014-02-06 10:22+0100\n"
+"POT-Creation-Date: 2014-02-06 13:42+0100\n"
+"PO-Revision-Date: 2014-02-06 13:49+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -19,13 +19,20 @@ msgstr ""
 "X-Generator: Poedit 1.6.3\n"
 
 #: module/Application/view/layout/layout.phtml:6
+msgid "GEWIS Website"
+msgstr "GEWIS Website"
+
 #: module/Application/view/layout/layout.phtml:37
-msgid "Skeleton Application"
-msgstr "Applicatie fundering"
+msgid "GEWIS"
+msgstr "GEWIS"
 
 #: module/Application/view/layout/layout.phtml:41
 msgid "Home"
 msgstr "Home"
+
+#: module/Application/view/layout/layout.phtml:50
+msgid "by WebCommissie GEWIS."
+msgstr "door de WebCommissie van GEWIS."
 
 #: module/Application/view/layout/layout.phtml:50
 msgid "All rights reserved."
@@ -33,89 +40,21 @@ msgstr "Alle rechten voorbehouden."
 
 #: module/Application/view/application/index/index.phtml:2
 #, php-format
-msgid "Welcome to %sZend Framework 2%s"
-msgstr "Welkom bij %sZend Framework 2%s"
+msgid "Welcome to %sGEWIS%s"
+msgstr "Welkom op de %sGEWIS%s website"
 
 #: module/Application/view/application/index/index.phtml:3
 #, php-format
 msgid ""
-"Congratulations! You have successfully installed the %sZF2 Skeleton "
-"Application%s. You are currently running Zend Framework version %s. This "
-"skeleton can serve as a simple starting point for you to begin building your "
-"application on ZF2."
+"Welcome to the website of Study association %sGEWIS%s. This is just a "
+"bootstrap thingy for now, until the design is implemented."
 msgstr ""
-"Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol "
-"geinstalleerd. Je gebruikt Zend Framework versie %s. Deze fundering biedt je "
-"een startpunt om je ZF2 applicatie op voort te bouwen."
+"Welkom op de website van Studievereniging %sGEWIS%s. Dit is slechts een "
+"bootstrap dingetje op het moment, totdat het design geimplementeerd is."
 
 #: module/Application/view/application/index/index.phtml:4
-msgid "Fork Zend Framework 2 on GitHub"
-msgstr "Fork Zend Framework 2 op Github"
-
-#: module/Application/view/application/index/index.phtml:12
-msgid "Follow Development"
-msgstr "Volg de Ontwikkeling"
-
-#: module/Application/view/application/index/index.phtml:15
-#, php-format
-msgid ""
-"Zend Framework 2 is under active development. If you are interested in "
-"following the development of ZF2, there is a special ZF2 portal on the "
-"official Zend Framework website which provides links to the ZF2 %swiki%s, "
-"%sdev blog%s, %sissue tracker%s, and much more. This is a great resource for "
-"staying up to date with the latest developments!"
-msgstr ""
-"Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het "
-"volgen van deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de "
-"offici&euml;le website van Zend Framework. Daar staan links naar de ZF2 "
-"%swiki%s, %sdev blog%s, %sissue tracker%s en nog veel meer. Het is het "
-"perfecte middel om up-to-date te blijven met de ontwikkelingen."
-
-#: module/Application/view/application/index/index.phtml:16
-msgid "ZF2 Development Portal"
-msgstr "ZF2 Ontwikkelaars Portaal"
-
-#: module/Application/view/application/index/index.phtml:24
-msgid "Discover Modules"
-msgstr "Ontdek Modules"
-
-#: module/Application/view/application/index/index.phtml:27
-#, php-format
-msgid ""
-"The community is working on developing a community site to serve as a "
-"repository and gallery for ZF2 modules. The project is available %son GitHub"
-"%s. The site is currently live and currently contains a list of some of the "
-"modules already available for ZF2."
-msgstr ""
-"De community werkt aan een eigen community website die dient als een "
-"bewaarplaats en galerij voor ZF2 modules. Het project is beschikbaar %sop "
-"GitHub%s. De site staat op dit moment live en bevat een lijst met modules "
-"die op dit moment beschikbaar zijn voor ZF2."
-
-#: module/Application/view/application/index/index.phtml:28
-msgid "Explore ZF2 Modules"
-msgstr "Verken ZF2 Modules"
-
-#: module/Application/view/application/index/index.phtml:36
-msgid "Help &amp; Support"
-msgstr "Hulp &amp; Support"
-
-#: module/Application/view/application/index/index.phtml:39
-#, php-format
-msgid ""
-"If you need any help or support while developing with ZF2, you may reach us "
-"via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
-"feedback you may have regarding the beta releases. Alternatively, you may "
-"subscribe and post questions to the %smailing lists%s."
-msgstr ""
-"Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons "
-"bereiken via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde je "
-"vragen en zouden graag feedback krijgen betreffende de beta releases. Je "
-"kunt je ook abonneren op de %smailing lists%s."
-
-#: module/Application/view/application/index/index.phtml:40
-msgid "Ping us on IRC"
-msgstr "Ping ons via IRC"
+msgid "Fork the GEWIS website on GitHub"
+msgstr "Fork de GEWIS website op GitHub"
 
 #: module/Application/view/error/404.phtml:1
 msgid "A 404 error occurred"
@@ -196,3 +135,75 @@ msgstr "Er is een fout opgetreden"
 #: module/User/view/user/user/index.phtml:2
 msgid "You are logged in."
 msgstr "Je bent ingelogd."
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Applicatie fundering"
+
+#~ msgid "Welcome to %sZend Framework 2%s"
+#~ msgstr "Welkom bij %sZend Framework 2%s"
+
+#~ msgid ""
+#~ "Congratulations! You have successfully installed the %sZF2 Skeleton "
+#~ "Application%s. You are currently running Zend Framework version %s. This "
+#~ "skeleton can serve as a simple starting point for you to begin building "
+#~ "your application on ZF2."
+#~ msgstr ""
+#~ "Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol "
+#~ "geinstalleerd. Je gebruikt Zend Framework versie %s. Deze fundering biedt "
+#~ "je een startpunt om je ZF2 applicatie op voort te bouwen."
+
+#~ msgid "Fork Zend Framework 2 on GitHub"
+#~ msgstr "Fork Zend Framework 2 op Github"
+
+#~ msgid "Follow Development"
+#~ msgstr "Volg de Ontwikkeling"
+
+#~ msgid ""
+#~ "Zend Framework 2 is under active development. If you are interested in "
+#~ "following the development of ZF2, there is a special ZF2 portal on the "
+#~ "official Zend Framework website which provides links to the ZF2 %swiki%s, "
+#~ "%sdev blog%s, %sissue tracker%s, and much more. This is a great resource "
+#~ "for staying up to date with the latest developments!"
+#~ msgstr ""
+#~ "Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het "
+#~ "volgen van deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de "
+#~ "offici&euml;le website van Zend Framework. Daar staan links naar de ZF2 "
+#~ "%swiki%s, %sdev blog%s, %sissue tracker%s en nog veel meer. Het is het "
+#~ "perfecte middel om up-to-date te blijven met de ontwikkelingen."
+
+#~ msgid "ZF2 Development Portal"
+#~ msgstr "ZF2 Ontwikkelaars Portaal"
+
+#~ msgid "Discover Modules"
+#~ msgstr "Ontdek Modules"
+
+#~ msgid ""
+#~ "The community is working on developing a community site to serve as a "
+#~ "repository and gallery for ZF2 modules. The project is available %son "
+#~ "GitHub%s. The site is currently live and currently contains a list of "
+#~ "some of the modules already available for ZF2."
+#~ msgstr ""
+#~ "De community werkt aan een eigen community website die dient als een "
+#~ "bewaarplaats en galerij voor ZF2 modules. Het project is beschikbaar %sop "
+#~ "GitHub%s. De site staat op dit moment live en bevat een lijst met modules "
+#~ "die op dit moment beschikbaar zijn voor ZF2."
+
+#~ msgid "Explore ZF2 Modules"
+#~ msgstr "Verken ZF2 Modules"
+
+#~ msgid "Help &amp; Support"
+#~ msgstr "Hulp &amp; Support"
+
+#~ msgid ""
+#~ "If you need any help or support while developing with ZF2, you may reach "
+#~ "us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
+#~ "feedback you may have regarding the beta releases. Alternatively, you may "
+#~ "subscribe and post questions to the %smailing lists%s."
+#~ msgstr ""
+#~ "Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons "
+#~ "bereiken via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde "
+#~ "je vragen en zouden graag feedback krijgen betreffende de beta releases. "
+#~ "Je kunt je ook abonneren op de %smailing lists%s."
+
+#~ msgid "Ping us on IRC"
+#~ msgstr "Ping ons via IRC"
