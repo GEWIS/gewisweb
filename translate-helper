@@ -1,4 +1,8 @@
 #!/bin/bash
+dir="$PWD"
+cd `dirname $0`
+
+# parse php files
 find ./module -iname "*.phtml" | xargs xgettext \
     --language=PHP \
     --keyword=translate \
@@ -17,3 +21,11 @@ find ./module -iname "*.php" | xargs xgettext \
     --package-version=0.1.0-dev \
     --copyright-holder=GEWIS \
     --join-existing \
+
+cd ./module/Application/language/
+
+# merge translation files
+msgmerge -U nl.po gewisweb.pot
+msgmerge -U en.po gewisweb.pot
+
+cd $dir
