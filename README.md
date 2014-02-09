@@ -43,6 +43,14 @@ $translator = $sm->get('translator');
 echo $translator->translate('Some text');
 ```
 
+Views
+-----
+
+Most translation actually happens in views. Thus, there is a translate view
+helper to help translation in views along. In views, you don't have to worry
+about translator setup, you can simply use `$this->translate()` to translate
+strings.
+
 Translate helper
 ----------------
 
