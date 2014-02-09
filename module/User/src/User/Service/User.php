@@ -56,6 +56,30 @@ class User implements ServiceManagerAwareInterface
     }
 
     /**
+     * Log the user out.
+     *
+     * @param array $data Logout data
+     *
+     * @return boolean If the user was logged out
+     */
+    public function logout($data)
+    {
+        $form = $this->getLogoutForm();
+        $form->setData($data);
+
+        // if the form isn't valid, the user doesn't want to logout
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        // clear the user identity
+        $auth = $this->getServiceManager()->get('user_auth_service');
+        $auth->clearIdentity();
+
+        return true;
+    }
+
+    /**
      * Get the login form.
      *
      * @return LoginForm Login form
@@ -63,6 +87,16 @@ class User implements ServiceManagerAwareInterface
     public function getLoginForm()
     {
         return $this->sm->get('user_form_login');
+    }
+
+    /**
+     * Get the logout form.
+     *
+     * @return LogoutForm Logout form
+     */
+    public function getLogoutForm()
+    {
+        return $this->sm->get('user_form_logout');
     }
 
     /**

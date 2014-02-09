@@ -57,6 +57,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_logout' => function ($sm) {
+                    return new \User\Form\Logout(
+                        $sm->get('translator')
+                    );
+                },
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')

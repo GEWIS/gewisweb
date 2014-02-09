@@ -44,7 +44,9 @@
                         <?php if (null === $this->identity()): ?>
                             <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
                         <?php else: ?>
-                            <li><a href="#"><?= $this->translate('Logout') ?></a></li>
+                            <li><a href="<?= $this->url('user/default', array(
+                                'action' => 'logout'
+                            )) ?>"><?= $this->translate('Logout') ?></a></li>
                         <?php endif; ?>
                         <li>
                             <a href="<?= $this->url('lang', array(

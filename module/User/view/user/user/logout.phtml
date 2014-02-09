@@ -1,0 +1,25 @@
+<?php if (isset($this->logout) && $this->logout): ?>
+<?= $this->translate('You are logged out.') ?>
+<?php else:
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user/default', array('action' => 'logout')));
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form);
+?>
+
+<p>
+<?= $this->translate('Are you sure you want to logout?') ?>
+</p>
+<p>
+<?= $this->formRow($form->get('submit_yes')); ?>
+&nbsp;&nbsp;
+<?= $this->formRow($form->get('submit_no')); ?>
+</p>
+
+<?= $this->form()->closeTag(); ?>
+<?php endif; ?>
+
