@@ -8,6 +8,9 @@ use Zend\Mvc\Controller\AbstractActionController,
 class UserController extends AbstractActionController
 {
 
+    /**
+     * User login action.
+     */
     public function indexAction()
     {
         $userService = $this->getUserService();
