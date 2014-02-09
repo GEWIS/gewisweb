@@ -40,6 +40,18 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="<?= $this->url('lang', array(
+                                'lang' => 'nl'
+                            )); ?>"><img src="<?= $this->basePath() ?>/img/nl.png" style="height: 18px" /></a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('lang', array(
+                                'lang' => 'en'
+                            )); ?>"><img src="<?= $this->basePath() ?>/img/en.png" style="height: 18px" /></a>
+                        </li>
+                    </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
