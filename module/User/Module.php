@@ -39,6 +39,9 @@ class Module
     public function getServiceConfig()
     {
         return array(
+            'aliases' => array(
+                'Zend\Authentication\AuthenticationService' => 'user_auth_service'
+            ),
             'invokables' => array(
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User'

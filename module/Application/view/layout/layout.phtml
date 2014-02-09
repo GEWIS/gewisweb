@@ -41,6 +41,11 @@
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <?php if (null === $this->identity()): ?>
+                            <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
+                        <?php else: ?>
+                            <li><a href="#"><?= $this->translate('Logout') ?></a></li>
+                        <?php endif; ?>
                         <li>
                             <a href="<?= $this->url('lang', array(
                                 'lang' => 'nl'
@@ -52,6 +57,11 @@
                             )); ?>"><img src="<?= $this->basePath() ?>/img/en.png" style="height: 18px" /></a>
                         </li>
                     </ul>
+                    <?php if (null !== $this->identity()): ?>
+                    <p class="navbar-text navbar-right">
+                        <?= sprintf($this->translate('Signed in as %s'), $this->identity()->getLidnr()) ?>
+                    </p>
+                    <?php endif; ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
