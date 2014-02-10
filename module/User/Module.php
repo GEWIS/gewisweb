@@ -1,6 +1,7 @@
 <?php
 namespace User;
 
+use Zend\Permissions\Acl\Acl;
 
 class Module
 {
@@ -79,6 +80,20 @@ class Module
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );
+                },
+                'acl' => function ($sm) {
+                    // initialize the ACL
+                    $acl = new Acl();
+
+                    // define basic roles
+                    $acl->addRole(new Role('guest')); // simple guest
+                    $acl->addRole(new Role('user'), 'guest'); // simple user
+                    $acl->addRole(new Role('admin')); // administrator
+
+                    // TODO: add current user
+                    // TODO: define resources and add permissions
+
+                    return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
