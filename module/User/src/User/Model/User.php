@@ -2,16 +2,17 @@
 
 namespace User\Model;
 
-use Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection;
-use Zend\Crypt\Password\Bcrypt as Bcrypt;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Zend\Permissions\Acl\Role\RoleInterface;
+use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * User model.
  *
  * @ORM\Entity
  */
-class User
+class User implements RoleInterface, ResourceInterface
 {
 
     /**
@@ -65,5 +66,24 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+    /**
+     * Get the user's role ID.
+     *
+     * @return string
+     */
+    public function getRoleId()
+    {
+        return 'user_' . $this->getLidnr();
+    }
+
+    /**
+     * Get the user's resource ID.
+     *
+     * @return string
+     */
+    public function getResourceId()
+    {
+        return 'user';
     }
 }
