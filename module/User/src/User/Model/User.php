@@ -81,6 +81,33 @@ class User implements RoleInterface, ResourceInterface
     {
         return $this->password;
     }
+
+    /**
+     * Get the user's roles.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Get the user's role names.
+     *
+     * @return array Role names
+     */
+    public function getRoleNames()
+    {
+        $roles = array();
+
+        foreach ($this->getRoles() as $role) {
+            $roles[] = $role->getRole();
+        }
+
+        return $roles;
+    }
+
     /**
      * Get the user's role ID.
      *

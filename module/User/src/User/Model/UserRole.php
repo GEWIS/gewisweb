@@ -79,7 +79,7 @@ class UserRole
      */
     public function getRole()
     {
-        return $role;
+        return $this->role;
     }
 
     /**

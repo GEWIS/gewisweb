@@ -2,6 +2,7 @@
 namespace User;
 
 use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Role\GenericRole as Role;
 
 class Module
 {
@@ -81,6 +82,13 @@ class Module
                         $sm->get('user_auth_adapter')
                     );
                 },
+                'user_role' => function ($sm) {
+                    $authService = $sm->get('user_auth_service');
+                    if ($authService->hasIdentity()) {
+                        return $authService->getIdentity();
+                    }
+                    return 'guest';
+                },
                 'acl' => function ($sm) {
                     // initialize the ACL
                     $acl = new Acl();
@@ -90,8 +98,17 @@ class Module
                     $acl->addRole(new Role('user'), 'guest'); // simple user
                     $acl->addRole(new Role('admin')); // administrator
 
-                    // TODO: add current user as role
-                    // TODO: define resources and add permissions
+                    $user = $sm->get('user_role');
+
+                    // add user to registry
+                    if ('guest' != $user) {
+                        $roles = $user->getRoleNames();
+                        // if the user has no roles, add the 'user' role by default
+                        if (empty($roles)) {
+                            $roles = array('user');
+                        }
+                        $acl->addRole($user, $user->getRoleNames());
+                    }
 
                     return $acl;
                 },
@@ -100,6 +117,9 @@ class Module
                 'user_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
+            ),
+            'shared' => array(
+                'user_role' => false
             )
         );
     }
