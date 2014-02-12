@@ -90,7 +90,7 @@ class Module
                     $acl->addRole(new Role('user'), 'guest'); // simple user
                     $acl->addRole(new Role('admin')); // administrator
 
-                    // TODO: add current user
+                    // TODO: add current user as role
                     // TODO: define resources and add permissions
 
                     return $acl;

@@ -37,6 +37,20 @@ class User implements RoleInterface, ResourceInterface
      */
     protected $password;
 
+    /**
+     * User roles
+     *
+     * @ORM\OneToMany(targetEntity="User\Model\UserRole", mappedBy="lidnr")
+     */
+    protected $roles;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     /**
      * Get the membership number.
