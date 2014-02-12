@@ -59,10 +59,26 @@ class User
      */
     public function findByLogin($login)
     {
+        // create query for user
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u, r')
+            ->from('User\Model\User', 'u')
+            ->leftJoin('u.roles', 'r');
+
+
+        // depending on login, add correct where clause
         if (is_numeric($login)) {
-            return $this->findByNumber($login);
+            $qb->where('u.lidnr = ?1');
+        } else {
+            $qb->where('u.email = ?1');
         }
-        return $this->findByEmail($login);
+
+        // set the parameters
+        $qb->setParameter(1, $login);
+        $qb->setMaxResults(1);
+
+        $res = $qb->getQuery()->getResult();
+        return $res[0];
     }
 
     /**
