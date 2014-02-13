@@ -78,7 +78,7 @@ class User
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
-        return $res[0];
+        return empty($res) ? null : $res[0];
     }
 
     /**
