@@ -2,7 +2,7 @@
 return array(
     'router' => array(
         'routes' => array(
-            'user' => array(
+            'company' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/company',
