@@ -54,6 +54,11 @@ class Module
                     // TODO: set cost
                     return $bcrypt;
                 },
+                'user_form_register' => function ($sm) {
+                    return new \User\Form\Register(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_login' => function ($sm) {
                     return new \User\Form\Login(
                         $sm->get('translator')

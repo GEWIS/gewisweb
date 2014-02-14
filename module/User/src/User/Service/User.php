@@ -80,6 +80,16 @@ class User implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get the register form.
+     *
+     * @return RegisterForm Register form
+     */
+    public function getRegisterForm()
+    {
+        return $this->sm->get('user_form_register');
+    }
+
+    /**
      * Get the login form.
      *
      * @return LoginForm Login form
