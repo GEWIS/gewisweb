@@ -101,6 +101,16 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
+     * Get the member information of this user.
+     *
+     * @return Decision\Model\Member
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
      * Get the user's role names.
      *
      * @return array Role names

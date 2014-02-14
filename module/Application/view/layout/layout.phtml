@@ -60,8 +60,9 @@
                         </li>
                     </ul>
                     <?php if (null !== $this->identity()): ?>
+                    <?php $member = $this->identity()->getMember() ?>
                     <p class="navbar-text navbar-right">
-                        <?= sprintf($this->translate('Signed in as %s'), $this->identity()->getLidnr()) ?>
+                        <?= sprintf($this->translate('Signed in as %s'), $member->getFirstName() . ' ' . $member->getLastName()) ?>
                     </p>
                     <?php endif; ?>
                 </div><!--/.nav-collapse -->
