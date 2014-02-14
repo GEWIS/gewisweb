@@ -2,7 +2,7 @@
 $form = $this->form;
 $form->prepare();
 
-$form->setAttribute('action', $this->url('user'));
+$form->setAttribute('action', $this->url('user/default', array('action' => 'register')));
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('role', 'form');
