@@ -2,6 +2,8 @@
 
 namespace User\Model;
 
+use Decision\Model\Member;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -37,6 +39,21 @@ class NewUser
 
 
     /**
+     * Constructor.
+     *
+     * We can populate most values from a member model.
+     *
+     * @param Member $member
+     */
+    public function __construct(Member $member = null)
+    {
+        if (null !== $member) {
+            $this->lidnr = $member->getLidnr();
+            $this->email = $member->getEmail();
+        }
+    }
+
+    /**
      * Get the membership number.
      *
      * @return int
@@ -64,6 +81,26 @@ class NewUser
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set the user's membership number.
+     *
+     * @param int $lidnr
+     */
+    public function setLidnr($lidnr)
+    {
+        $this->lidnr = $lidnr;
+    }
+
+    /**
+     * Set the user's email address
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**
