@@ -56,6 +56,23 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * User register action.
+     */
+    public function registerAction()
+    {
+        $userService = $this->getUserService();
+
+        if ($this->getRequest()->isPost()) {
+            // TODO: register the user
+        }
+
+        // show form
+        return new ViewModel(array(
+            'form' => $userService->getRegisterForm()
+        ));
+    }
+
+    /**
      * Get a user service.
      *
      * @return User\Service\User
