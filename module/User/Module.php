@@ -55,9 +55,11 @@ class Module
                     return $bcrypt;
                 },
                 'user_form_register' => function ($sm) {
-                    return new \User\Form\Register(
+                    $form = new \User\Form\Register(
                         $sm->get('translator')
                     );
+                    $form->setHydrator($sm->get('decision_hydrator_member'));
+                    return $form;
                 },
                 'user_form_login' => function ($sm) {
                     return new \User\Form\Login(
