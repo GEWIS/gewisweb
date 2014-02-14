@@ -13,10 +13,12 @@ class Member
 {
 
     /**
-     * Membership number
+     * The user
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="lidnr")
+     * @ORM\OneToOne(targetEntity="User\Model\User")
+     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $lidnr;
 

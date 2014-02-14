@@ -45,6 +45,14 @@ class User implements RoleInterface, ResourceInterface
     protected $roles;
 
     /**
+     * The corresponding member for this user.
+     *
+     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
+     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
+     */
+    protected $member;
+
+    /**
      * Constructor
      */
     public function __construct()
