@@ -2,8 +2,11 @@
 
 namespace User\Service;
 
-use User\Model\User as UserModel,
-    User\Mapper\User as UserMapper;
+use User\Model\User as UserModel;
+use User\Model\NewUser as NewUserModel;
+use User\Mapper\User as UserMapper;
+
+use Decision\Model\Member as MemberModel;
 
 use Zend\ServiceManager\ServiceManager,
     Zend\ServiceManager\ServiceManagerAwareInterface;
@@ -20,6 +23,37 @@ class User implements ServiceManagerAwareInterface
      * @var ServiceManager
      */
     protected $sm;
+
+    /**
+     * Register a user.
+     *
+     * @param array $data Registration data
+     *
+     * @return boolean
+     */
+    public function register($data)
+    {
+        $form = $this->getRegisterForm();
+
+        $form->bind(new MemberModel());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $member = $form->getData();
+
+        // TODO: check if the member already has a corresponding user.
+
+        // create a NewUser from the member
+        $newUser = new NewUserModel($member);
+        $newUser->setCode($this->generateCode());
+
+        // persist the user
+        $this->getNewUserMapper()->persist($newUser);
+    }
 
     /**
      * Log the user in.
@@ -77,6 +111,25 @@ class User implements ServiceManagerAwareInterface
         $auth->clearIdentity();
 
         return true;
+    }
+
+    /**
+     * Generate an activation code for the user.
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateCode($length = 20)
+    {
+        $ret = '';
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+        for ($i = 0; $i < $length; $i++) {
+            $ret .= $alphabet[rand(0, strlen($alphabet) - 1)];
+        }
+
+        return $ret;
     }
 
     /**

@@ -64,6 +64,7 @@ class UserController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             // TODO: register the user
+            $userService->register($this->getRequest()->getPost());
         }
 
         // show form
