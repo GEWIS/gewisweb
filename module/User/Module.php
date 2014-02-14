@@ -76,6 +76,11 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_newuser' => function ($sm) {
+                    return new \User\Mapper\NewUser(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt')

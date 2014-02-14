@@ -47,12 +47,13 @@ class User implements ServiceManagerAwareInterface
 
         // TODO: check if the member already has a corresponding user.
 
-        // create a NewUser from the member
+        // save the data
         $newUser = new NewUserModel($member);
         $newUser->setCode($this->generateCode());
 
-        // persist the user
         $this->getNewUserMapper()->persist($newUser);
+
+        // TODO: Send email
     }
 
     /**
@@ -160,6 +161,16 @@ class User implements ServiceManagerAwareInterface
     public function getLogoutForm()
     {
         return $this->sm->get('user_form_logout');
+    }
+
+    /**
+     * Get the new user mapper.
+     *
+     * @return NewUserMapper
+     */
+    public function getNewUserMapper()
+    {
+        return $this->sm->get('user_mapper_newuser');
     }
 
     /**
