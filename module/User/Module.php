@@ -46,7 +46,8 @@ class Module
             ),
             'invokables' => array(
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
-                'user_service_user' => 'User\Service\User'
+                'user_service_user' => 'User\Service\User',
+                'user_service_email' => 'User\Service\Email',
             ),
             'factories' => array(
                 'user_bcrypt' => function ($sm) {
@@ -81,6 +82,15 @@ class Module
                     return new \User\Mapper\NewUser(
                         $sm->get('user_doctrine_em')
                     );
+                },
+                'user_mail_transport' => function ($sm) {
+                    $config = $sm->get('config');
+                    $config = $config['email'];
+                    $class = '\Zend\Mail\Transport\\' . $config['transport'];
+                    $optionsClass = '\Zend\Mail\Transport\\' . $config['transport'] . 'Options';
+                    $transport = new $class();
+                    $transport->setOptions(new $optionsClass($config['options']));
+                    return $transport;
                 },
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(

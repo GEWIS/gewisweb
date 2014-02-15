@@ -53,7 +53,7 @@ class User implements ServiceManagerAwareInterface
 
         $this->getNewUserMapper()->persist($newUser);
 
-        // TODO: Send email
+        $this->getEmailService()->sendRegisterEmail($newUser, $member);
     }
 
     /**
@@ -181,6 +181,16 @@ class User implements ServiceManagerAwareInterface
     public function getUserMapper()
     {
         return $this->sm->get('user_mapper_user');
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return EmailService
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('user_service_email');
     }
 
     /**
