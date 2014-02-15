@@ -3,6 +3,7 @@
 namespace User\Mapper;
 
 use User\Model\User as UserModel;
+use User\Model\NewUser as NewUserModel;
 use Doctrine\ORM\EntityManager;
 
 class User
@@ -80,6 +81,22 @@ class User
 
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Finish user creation.
+     *
+     * This will both destroy the NewUser and create the given user
+     *
+     * @param UserModel $user User to create
+     * @param NewUserModel $newUser NewUser to destroy
+     */
+    public function createUser(UserModel $user, NewUserModel $newUser)
+    {
+        var_dump($user);
+        $this->em->persist($user);
+        $this->em->remove($newUser);
+        $this->em->flush();
     }
 
     /**

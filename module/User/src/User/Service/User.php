@@ -50,6 +50,8 @@ class User implements ServiceManagerAwareInterface
         $user = new UserModel($newUser);
         $user->setPassword($bcrypt->create($data['password']));
 
+        $this->getUserMapper()->createUser($user, $newUser);
+
         return true;
     }
 
