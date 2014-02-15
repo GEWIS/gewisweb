@@ -37,8 +37,10 @@ class Email implements ServiceManagerAwareInterface
 
         $message = new Message();
 
+        $config = $this->getConfig();
+
         // TODO: configuration for this
-        $message->addFrom('web@gewis.nl');
+        $message->addFrom($config['from']);
         $message->addTo($newUser->getEmail());
         $message->setBody($body);
 
@@ -81,6 +83,17 @@ class Email implements ServiceManagerAwareInterface
     public function getTransport()
     {
         return $this->sm->get('user_mail_transport');
+    }
+
+    /**
+     * Get email configuration.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+        return $config['email'];
     }
 
     /**
