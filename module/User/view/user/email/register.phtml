@@ -1,0 +1,4 @@
+<?php
+$name = $this->member->getFirstName() . ' ' . $this->member->getLastName();
+?>
+<?= sprintf($this->translate('Dear %s,'), $name) ?>
