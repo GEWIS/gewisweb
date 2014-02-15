@@ -42,18 +42,7 @@ class Email implements ServiceManagerAwareInterface
         $message->addTo($newUser->getEmail());
         $message->setBody($body);
 
-        $this->send($message);
-    }
-
-    /**
-     * Send a message.
-     *
-     * @param Message $message
-     */
-    public function send(Message $message)
-    {
-        // TODO: send the message
-        var_dump($message);
+        $this->getTransport()->send($message);
     }
 
     /**
@@ -81,7 +70,17 @@ class Email implements ServiceManagerAwareInterface
      */
     public function getRenderer()
     {
-        return $this->sm->geT('view_manager')->getRenderer();
+        return $this->sm->get('view_manager')->getRenderer();
+    }
+
+    /**
+     * Get the email transport.
+     *
+     * @return Zend\Mail\Transport\TransportInterface
+     */
+    public function getTransport()
+    {
+        return $this->sm->get('user_mail_transport');
     }
 
     /**

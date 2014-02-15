@@ -26,5 +26,15 @@ return array(
      * The number represents the base-2 logarithm of the iteration count used for
      * hashing. Default is 14 (about 10 hashes per second on an i5).
      */
-    'bcrypt_cost' => 14
+    'bcrypt_cost' => 14,
+
+    /**
+     * Email configuration.
+     */
+    'email' => array(
+        'transport' => 'File',
+        'options' => array(
+            'path' => 'data/mail/'
+        )
+    )
 );

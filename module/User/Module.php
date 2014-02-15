@@ -83,6 +83,15 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mail_transport' => function ($sm) {
+                    $config = $sm->get('config');
+                    $config = $config['email'];
+                    $class = '\Zend\Mail\Transport\\' . $config['transport'];
+                    $optionsClass = '\Zend\Mail\Transport\\' . $config['transport'] . 'Options';
+                    $transport = new $class();
+                    $transport->setOptions(new $optionsClass($config['options']));
+                    return $transport;
+                },
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt')
