@@ -25,6 +25,27 @@ class User implements ServiceManagerAwareInterface
     protected $sm;
 
     /**
+     * Activate a user.
+     *
+     * @param array $data Activation data.
+     * @param string $code Activation code
+     *
+     * @return boolean
+     */
+    public function activate($data, $code)
+    {
+        $form = $this->getActivateForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Register a user.
      *
      * @param array $data Registration data
@@ -54,6 +75,7 @@ class User implements ServiceManagerAwareInterface
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
+        return true;
     }
 
     /**

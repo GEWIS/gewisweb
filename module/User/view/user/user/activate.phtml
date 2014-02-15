@@ -17,6 +17,7 @@ $element->setAttribute('placeholder', $this->translate('Password'));
 ?>
     <?= $this->formLabel($element) ?>
     <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
 </div>
 <div class="form-group">
 <?php
@@ -26,6 +27,7 @@ $element->setAttribute('placeholder', $this->translate('Verify password'));
 ?>
     <?= $this->formLabel($element) ?>
     <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
 </div>
 
 <?php

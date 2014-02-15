@@ -87,6 +87,11 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
+        if ($this->getRequest()->isPost()) {
+            $userService->activate($this->getRequest()->getPost(), $code);
+            // TODO: logic for when activated
+        }
+
         return new ViewModel(array(
             'form' => $userService->getActivateForm(),
             'code' => $code
