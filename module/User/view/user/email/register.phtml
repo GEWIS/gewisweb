@@ -1,4 +1,19 @@
 <?php
 $name = $this->member->getFirstName() . ' ' . $this->member->getLastName();
 ?>
-<?= sprintf($this->translate('Dear %s,'), $name) ?>
+<?= sprintf($this->translate('Dear %s,'), $name) . "\n" ?>
+
+<?= $this->translate('You have been registered on the website of Study association GEWIS, with the following information:') . "\n" ?>
+
+- <?= $this->translate('Membership number:') ?> <?= $this->user->getLidnr() . "\n" ?>
+- <?= $this->translate('Email address:') ?> <?= $this->user->getEmail() . "\n" ?>
+
+<?= $this->translate('You can activate your account on the following link:') . "\n" ?>
+
+<?= $this->serverUrl($this->url('user/default', array('action' => 'activate'))) . "\n" ?>
+
+<?= $this->translate('Your activation code is:') ?> <?= $this->user->getCode() . "\n" ?>
+
+<?= $this->translate('Best Regards,') . "\n" ?>
+
+<?= $this->translate('WebCommissie GEWIS') ?>
