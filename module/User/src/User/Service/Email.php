@@ -39,7 +39,6 @@ class Email implements ServiceManagerAwareInterface
 
         $config = $this->getConfig();
 
-        // TODO: configuration for this
         $message->addFrom($config['from']);
         $message->addTo($newUser->getEmail());
         $message->setBody($body);

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-09 21:56+0100\n"
-"PO-Revision-Date: 2014-02-09 22:01+0100\n"
+"POT-Creation-Date: 2014-02-15 12:57+0100\n"
+"PO-Revision-Date: 2014-02-15 12:57+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -132,22 +132,74 @@ msgstr "Login"
 msgid "Logout"
 msgstr "Logout"
 
-#: module/Application/view/layout/layout.phtml:64
+#: module/Application/view/layout/layout.phtml:65
 #, php-format
 msgid "Signed in as %s"
 msgstr "Signed in as %s"
 
-#: module/Application/view/layout/layout.phtml:74
+#: module/Application/view/layout/layout.phtml:75
 msgid "by WebCommissie GEWIS."
 msgstr "by WebCommissie GEWIS."
 
-#: module/Application/view/layout/layout.phtml:74
+#: module/Application/view/layout/layout.phtml:75
 msgid "All rights reserved."
 msgstr "All rights reserved."
+
+#: module/User/view/user/email/register.phtml:4
+#, php-format
+msgid "Dear %s,"
+msgstr "Dear %s,"
+
+#: module/User/view/user/email/register.phtml:6
+msgid ""
+"You have been registered on the website of Study association GEWIS, with the "
+"following information:"
+msgstr ""
+"You have been registered on the website of Study association GEWIS, with the "
+"following information:"
+
+#: module/User/view/user/email/register.phtml:8
+msgid "Membership number:"
+msgstr "Membership number:"
+
+#: module/User/view/user/email/register.phtml:9
+msgid "Email address:"
+msgstr "Email address:"
+
+#: module/User/view/user/email/register.phtml:11
+msgid "You can activate your account on the following link:"
+msgstr "You can activate your account on the following link:"
+
+#: module/User/view/user/email/register.phtml:15
+msgid "Your activation code is:"
+msgstr "Your activation code is:"
+
+#: module/User/view/user/email/register.phtml:17
+msgid "Best Regards,"
+msgstr "Best Regards,"
+
+#: module/User/view/user/email/register.phtml:19
+msgid "WebCommissie GEWIS"
+msgstr "WebCommissie GEWIS"
 
 #: module/User/view/user/user/index.phtml:2
 msgid "You are logged in."
 msgstr "You are logged in."
+
+#: module/User/view/user/user/register.phtml:16
+#: module/User/src/User/Form/Register.php:20
+msgid "Membership number"
+msgstr "Membership number"
+
+#: module/User/view/user/user/register.phtml:25
+#: module/User/src/User/Form/Register.php:28
+msgid "E-mail address"
+msgstr "E-mail address"
+
+#: module/User/view/user/user/register.phtml:33
+#: module/User/src/User/Form/Register.php:36
+msgid "Register"
+msgstr "Register"
 
 #: module/User/view/user/user/logout.phtml:2
 msgid "You are logged out."
