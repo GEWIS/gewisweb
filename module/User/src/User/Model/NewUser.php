@@ -31,6 +31,13 @@ class NewUser
     protected $email;
 
     /**
+     * Member's name
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
      * The user's activation code.
      *
      * @ORM\Column(type="string")
@@ -50,6 +57,7 @@ class NewUser
         if (null !== $member) {
             $this->lidnr = $member->getLidnr();
             $this->email = $member->getEmail();
+            $this->name = $member->getFirstName() . ' ' . $member->getLastName();
         }
     }
 
@@ -81,6 +89,16 @@ class NewUser
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Get the member's name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
