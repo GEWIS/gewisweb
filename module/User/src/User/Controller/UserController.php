@@ -95,7 +95,7 @@ class UserController extends AbstractActionController
         }
 
         if ($this->getRequest()->isPost()) {
-            $userService->activate($this->getRequest()->getPost(), $code);
+            $userService->activate($this->getRequest()->getPost(), $newUser);
             // TODO: logic for when activated
         }
 

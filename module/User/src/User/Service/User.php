@@ -28,11 +28,11 @@ class User implements ServiceManagerAwareInterface
      * Activate a user.
      *
      * @param array $data Activation data.
-     * @param string $code Activation code
+     * @param NewUserModel $newUser The user to create
      *
      * @return boolean
      */
-    public function activate($data, $code)
+    public function activate($data, NewUserModel $newUser)
     {
         $form = $this->getActivateForm();
 
@@ -41,6 +41,14 @@ class User implements ServiceManagerAwareInterface
         if (!$form->isValid()) {
             return false;
         }
+
+        $data = $form->getData();
+
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // create a new user from this data, and insert it into the database
+        $user = new UserModel($newUser);
+        $user->setPassword($bcrypt->create($data['password']));
 
         return true;
     }
