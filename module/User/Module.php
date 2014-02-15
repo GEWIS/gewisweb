@@ -46,7 +46,8 @@ class Module
             ),
             'invokables' => array(
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
-                'user_service_user' => 'User\Service\User'
+                'user_service_user' => 'User\Service\User',
+                'user_service_email' => 'User\Service\Email',
             ),
             'factories' => array(
                 'user_bcrypt' => function ($sm) {
