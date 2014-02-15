@@ -27,6 +27,18 @@ class NewUser
     }
 
     /**
+     * Get the new user by code.
+     *
+     * @param string $code
+     *
+     * @return NewUserModel
+     */
+    public function getByCode($code)
+    {
+        return $this->getRepository()->findOneBy(array('code' => $code));
+    }
+
+    /**
      * Persist a user model.
      *
      * @param NewUserModel $user User to persist.

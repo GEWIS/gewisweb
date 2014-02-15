@@ -87,6 +87,13 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
+        // get the new user
+        $newUser = $userService->getNewUser($code);
+
+        if (null === $newUser) {
+            return $this->redirect()->toRoute('home');
+        }
+
         if ($this->getRequest()->isPost()) {
             $userService->activate($this->getRequest()->getPost(), $code);
             // TODO: logic for when activated
@@ -94,7 +101,7 @@ class UserController extends AbstractActionController
 
         return new ViewModel(array(
             'form' => $userService->getActivateForm(),
-            'code' => $code
+            'user' => $newUser
         ));
     }
 

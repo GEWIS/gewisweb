@@ -137,6 +137,18 @@ class User implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get the new user.
+     *
+     * @param string $code
+     *
+     * @return NewUserModel
+     */
+    public function getNewUser($code)
+    {
+        return $this->getNewUserMapper()->getByCode($code);
+    }
+
+    /**
      * Generate an activation code for the user.
      *
      * @param int $length
