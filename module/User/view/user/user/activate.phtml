@@ -1,0 +1,38 @@
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user/activate', array('code' => $this->code)));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+<?php
+$element = $form->get('password');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $this->translate('Password'));
+?>
+    <?= $this->formLabel($element) ?>
+    <?= $this->formInput($element) ?>
+</div>
+<div class="form-group">
+<?php
+$element = $form->get('password_verify');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $this->translate('Verify password'));
+?>
+    <?= $this->formLabel($element) ?>
+    <?= $this->formInput($element) ?>
+</div>
+
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Activate'));
+$submit->setAttribute('class', 'btn btn-default');
+?>
+<?= $this->formButton($submit) ?>
+
+<?= $this->form()->closeTag(); ?>

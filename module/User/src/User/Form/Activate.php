@@ -10,12 +10,9 @@ use Zend\Authentication\Result;
 class Activate extends Form
 {
 
-    protected $translate;
-
     public function __construct(Translator $translate)
     {
         parent::__construct();
-        $this->translate = $translate;
 
         $this->add(array(
             'name' => 'password',

@@ -57,7 +57,7 @@ class Module
                     return $bcrypt;
                 },
                 'user_form_activate' => function ($sm) {
-                    return new \User\Form\Login(
+                    return new \User\Form\Activate(
                         $sm->get('translator')
                     );
                 },
