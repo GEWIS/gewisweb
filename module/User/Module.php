@@ -51,7 +51,8 @@ class Module
             'factories' => array(
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
-                    // TODO: set cost
+                    $config = $sm->get('config');
+                    $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
                 },
                 'user_form_register' => function ($sm) {
