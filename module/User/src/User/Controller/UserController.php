@@ -74,6 +74,26 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * User activation action.
+     */
+    public function activateAction()
+    {
+        $userService = $this->getUserService();
+
+        $code = $this->params()->fromRoute('code');
+
+        if (empty($code)) {
+            // no code given
+            return $this->redirect()->toRoute('home');
+        }
+
+        return new ViewModel(array(
+            'form' => $userService->getActivateForm(),
+            'code' => $code
+        ));
+    }
+
+    /**
      * Get a user service.
      *
      * @return User\Service\User

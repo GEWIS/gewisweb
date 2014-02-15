@@ -134,6 +134,16 @@ class User implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get the activate form.
+     *
+     * @return ActivateForm Activate form
+     */
+    public function getActivateForm()
+    {
+        return $this->sm->get('user_form_activate');
+    }
+
+    /**
      * Get the register form.
      *
      * @return RegisterForm Register form
