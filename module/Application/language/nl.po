@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-15 12:57+0100\n"
-"PO-Revision-Date: 2014-02-15 12:59+0100\n"
+"POT-Creation-Date: 2014-02-16 18:02+0100\n"
+"PO-Revision-Date: 2014-02-16 18:05+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -17,6 +17,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.3\n"
+
+#: module/Application/view/layout/layout.phtml:6
+msgid "GEWIS Website"
+msgstr "GEWIS Website"
+
+#: module/Application/view/layout/layout.phtml:37
+msgid "GEWIS"
+msgstr "GEWIS"
+
+#: module/Application/view/layout/layout.phtml:41
+msgid "Home"
+msgstr "Home"
+
+#: module/Application/view/layout/layout.phtml:45
+#: module/User/src/User/Form/Login.php:40
+msgid "Login"
+msgstr "Login"
+
+#: module/Application/view/layout/layout.phtml:49
+msgid "Logout"
+msgstr "Uitloggen"
+
+#: module/Application/view/layout/layout.phtml:65
+#, php-format
+msgid "Signed in as %s"
+msgstr "Ingelogd als %s"
+
+#: module/Application/view/layout/layout.phtml:75
+msgid "by WebCommissie GEWIS."
+msgstr "door de WebCommissie van GEWIS."
+
+#: module/Application/view/layout/layout.phtml:75
+msgid "All rights reserved."
+msgstr "Alle rechten voorbehouden."
 
 #: module/Application/view/application/index/index.phtml:2
 #, php-format
@@ -35,46 +69,6 @@ msgstr ""
 #: module/Application/view/application/index/index.phtml:4
 msgid "Fork the GEWIS website on GitHub"
 msgstr "Fork de GEWIS website op GitHub"
-
-#: module/Application/view/error/index.phtml:1
-msgid "An error occurred"
-msgstr "Er is een fout opgetreden"
-
-#: module/Application/view/error/index.phtml:8
-#: module/Application/view/error/404.phtml:53
-msgid "Additional information"
-msgstr "Meer informatie"
-
-#: module/Application/view/error/index.phtml:11
-#: module/Application/view/error/index.phtml:35
-#: module/Application/view/error/404.phtml:56
-#: module/Application/view/error/404.phtml:80
-msgid "File"
-msgstr "Bestand"
-
-#: module/Application/view/error/index.phtml:15
-#: module/Application/view/error/index.phtml:39
-#: module/Application/view/error/404.phtml:60
-#: module/Application/view/error/404.phtml:84
-msgid "Message"
-msgstr "Bericht"
-
-#: module/Application/view/error/index.phtml:19
-#: module/Application/view/error/index.phtml:43
-#: module/Application/view/error/404.phtml:64
-#: module/Application/view/error/404.phtml:88
-msgid "Stack trace"
-msgstr "Stack trace"
-
-#: module/Application/view/error/index.phtml:29
-#: module/Application/view/error/404.phtml:74
-msgid "Previous exceptions"
-msgstr "Vorige excepties"
-
-#: module/Application/view/error/index.phtml:58
-#: module/Application/view/error/404.phtml:103
-msgid "No Exception available"
-msgstr "Geen exceptie beschikbaar"
 
 #: module/Application/view/error/404.phtml:1
 msgid "A 404 error occurred"
@@ -112,39 +106,45 @@ msgstr "Controller"
 msgid "resolves to %s"
 msgstr "verwijst naar %s"
 
-#: module/Application/view/layout/layout.phtml:6
-msgid "GEWIS Website"
-msgstr "GEWIS Website"
+#: module/Application/view/error/404.phtml:53
+#: module/Application/view/error/index.phtml:8
+msgid "Additional information"
+msgstr "Meer informatie"
 
-#: module/Application/view/layout/layout.phtml:37
-msgid "GEWIS"
-msgstr "GEWIS"
+#: module/Application/view/error/404.phtml:56
+#: module/Application/view/error/404.phtml:80
+#: module/Application/view/error/index.phtml:11
+#: module/Application/view/error/index.phtml:35
+msgid "File"
+msgstr "Bestand"
 
-#: module/Application/view/layout/layout.phtml:41
-msgid "Home"
-msgstr "Home"
+#: module/Application/view/error/404.phtml:60
+#: module/Application/view/error/404.phtml:84
+#: module/Application/view/error/index.phtml:15
+#: module/Application/view/error/index.phtml:39
+msgid "Message"
+msgstr "Bericht"
 
-#: module/Application/view/layout/layout.phtml:45
-#: module/User/src/User/Form/Login.php:40
-msgid "Login"
-msgstr "Login"
+#: module/Application/view/error/404.phtml:64
+#: module/Application/view/error/404.phtml:88
+#: module/Application/view/error/index.phtml:19
+#: module/Application/view/error/index.phtml:43
+msgid "Stack trace"
+msgstr "Stack trace"
 
-#: module/Application/view/layout/layout.phtml:49
-msgid "Logout"
-msgstr "Uitloggen"
+#: module/Application/view/error/404.phtml:74
+#: module/Application/view/error/index.phtml:29
+msgid "Previous exceptions"
+msgstr "Vorige excepties"
 
-#: module/Application/view/layout/layout.phtml:65
-#, php-format
-msgid "Signed in as %s"
-msgstr "Ingelogd als %s"
+#: module/Application/view/error/404.phtml:103
+#: module/Application/view/error/index.phtml:58
+msgid "No Exception available"
+msgstr "Geen exceptie beschikbaar"
 
-#: module/Application/view/layout/layout.phtml:75
-msgid "by WebCommissie GEWIS."
-msgstr "door de WebCommissie van GEWIS."
-
-#: module/Application/view/layout/layout.phtml:75
-msgid "All rights reserved."
-msgstr "Alle rechten voorbehouden."
+#: module/Application/view/error/index.phtml:1
+msgid "An error occurred"
+msgstr "Er is een fout opgetreden"
 
 #: module/User/view/user/email/register.phtml:4
 #, php-format
@@ -183,25 +183,6 @@ msgstr "Met vriendelijke groet,"
 msgid "WebCommissie GEWIS"
 msgstr "WebCommissie GEWIS"
 
-#: module/User/view/user/user/index.phtml:2
-msgid "You are logged in."
-msgstr "Je bent ingelogd."
-
-#: module/User/view/user/user/register.phtml:16
-#: module/User/src/User/Form/Register.php:20
-msgid "Membership number"
-msgstr "Lidmaatschapsnummer"
-
-#: module/User/view/user/user/register.phtml:25
-#: module/User/src/User/Form/Register.php:28
-msgid "E-mail address"
-msgstr "E-mail adres"
-
-#: module/User/view/user/user/register.phtml:33
-#: module/User/src/User/Form/Register.php:36
-msgid "Register"
-msgstr "Registreer"
-
 #: module/User/view/user/user/logout.phtml:2
 msgid "You are logged out."
 msgstr "Je bent uitgelogd."
@@ -210,19 +191,74 @@ msgstr "Je bent uitgelogd."
 msgid "Are you sure you want to logout?"
 msgstr "Weet je zeker dat je wilt uitloggen?"
 
-#: module/User/src/User/Form/Logout.php:20
-msgid "Yes"
-msgstr "Ja"
+#: module/User/view/user/user/register.phtml:2
+#, php-format
+msgid "You have been registered. An email has been sent to %s for activation."
+msgstr ""
+"Je hebt je account geregistreerd. Een email is naar %s toegestuurd voor "
+"activatie."
 
-#: module/User/src/User/Form/Logout.php:28
-msgid "No"
-msgstr "Nee"
+#: module/User/view/user/user/register.phtml:19
+#: module/User/src/User/Form/Register.php:27
+msgid "Membership number"
+msgstr "Lidmaatschapsnummer"
+
+#: module/User/view/user/user/register.phtml:29
+#: module/User/src/User/Form/Register.php:35
+msgid "E-mail address"
+msgstr "E-mail adres"
+
+#: module/User/view/user/user/register.phtml:38
+#: module/User/src/User/Form/Register.php:43
+msgid "Register"
+msgstr "Registreer"
+
+#: module/User/view/user/user/index.phtml:2
+msgid "You are logged in."
+msgstr "Je bent ingelogd."
+
+#: module/User/view/user/user/activate.phtml:2
+msgid "Your account has been activated. You are now able to login."
+msgstr "Je account is geactiveerd. Je kunt nu inloggen."
+
+#: module/User/view/user/user/activate.phtml:20
+#, php-format
+msgid ""
+"Welcome %s. Create your password for the website and activate your account."
+msgstr ""
+"Welkom %s. Maak hier je wachtwoord voor de website en activeer je account."
+
+#: module/User/view/user/user/activate.phtml:26
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: module/User/view/user/user/activate.phtml:36
+msgid "Verify password"
+msgstr "Verifier wachtwoord"
+
+#: module/User/view/user/user/activate.phtml:45
+#: module/User/src/User/Form/Activate.php:37
+msgid "Activate"
+msgstr "Activeer"
+
+#: module/User/src/User/Form/Register.php:61
+msgid "This email address does not be long to the given member."
+msgstr "Dit email adres is niet van het lid met dit lidmaatschapsnummer."
+
+#: module/User/src/User/Form/Register.php:68
+msgid "There is no member with this membership number."
+msgstr "Er is geen lid met dit lidmaatschapsnummer."
+
+#: module/User/src/User/Form/Register.php:75
+msgid "This member already has an account."
+msgstr "Dit lid heeft al een account."
 
 #: module/User/src/User/Form/Login.php:24
 msgid "Membership number or email address"
 msgstr "Lidnummer of email adres"
 
 #: module/User/src/User/Form/Login.php:32
+#: module/User/src/User/Form/Activate.php:21
 msgid "Your password"
 msgstr "Wachtwoord"
 
@@ -233,6 +269,18 @@ msgstr "Deze gebruiker kon niet gevonden worden."
 #: module/User/src/User/Form/Login.php:64
 msgid "Wrong password provided."
 msgstr "Verkeerd wachtwoord ingevoerd."
+
+#: module/User/src/User/Form/Activate.php:29
+msgid "Verify your password"
+msgstr "Verifieer je wachtwoord"
+
+#: module/User/src/User/Form/Logout.php:20
+msgid "Yes"
+msgstr "Ja"
+
+#: module/User/src/User/Form/Logout.php:28
+msgid "No"
+msgstr "Nee"
 
 #~ msgid "Skeleton Application"
 #~ msgstr "Applicatie fundering"
