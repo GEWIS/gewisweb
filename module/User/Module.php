@@ -56,6 +56,11 @@ class Module
                     $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
                 },
+                'user_form_activate' => function ($sm) {
+                    return new \User\Form\Activate(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_register' => function ($sm) {
                     $form = new \User\Form\Register(
                         $sm->get('translator')

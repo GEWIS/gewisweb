@@ -28,6 +28,19 @@ return array(
                         'options' => array(
                             'route' => '/login',
                         )
+                    ),
+                    'activate' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/activate/:code',
+                            'constraints' => array(
+                                'code' => '[a-zA-Z0-9]*'
+                            ),
+                            'defaults' => array(
+                                'code'   => '',
+                                'action' => 'activate'
+                            )
+                        )
                     )
                 ),
             ),

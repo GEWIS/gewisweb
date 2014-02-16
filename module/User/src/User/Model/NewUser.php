@@ -37,6 +37,14 @@ class NewUser
      */
     protected $code;
 
+    /**
+     * User's member
+     *
+     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
+     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
+     */
+    protected $member;
+
 
     /**
      * Constructor.
@@ -50,6 +58,7 @@ class NewUser
         if (null !== $member) {
             $this->lidnr = $member->getLidnr();
             $this->email = $member->getEmail();
+            $this->member = $member;
         }
     }
 
@@ -81,6 +90,16 @@ class NewUser
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Get the member.
+     *
+     * @return Member
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 
     /**

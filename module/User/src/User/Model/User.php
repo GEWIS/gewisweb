@@ -55,9 +55,15 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(NewUser $newUser = null)
     {
         $this->roles = new ArrayCollection();
+
+        if (null !== $newUser) {
+            $this->lidnr = $newUser->getLidnr();
+            $this->email = $newUser->getEmail();
+            $this->member = $newUser->getMember();
+        }
     }
 
     /**
@@ -88,6 +94,16 @@ class User implements RoleInterface, ResourceInterface
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set the password hash.
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
     /**

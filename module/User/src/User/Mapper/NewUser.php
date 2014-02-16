@@ -27,6 +27,27 @@ class NewUser
     }
 
     /**
+     * Get the new user by code.
+     *
+     * @param string $code
+     *
+     * @return NewUserModel
+     */
+    public function getByCode($code)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u, m')
+            ->from('User\Model\NewUser', 'u')
+            ->join('u.member', 'm')
+            ->where('u.code = ?1');
+        $qb->setParameter(1, $code);
+        $qb->setMaxResults(1);
+
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
      * Persist a user model.
      *
      * @param NewUserModel $user User to persist.

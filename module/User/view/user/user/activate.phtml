@@ -1,0 +1,51 @@
+<?php if (isset($this->activated) && $this->activated): ?>
+<?= $this->translate('Your account has been activated. You are now able to login.') ?>
+<?php else: ?>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user/activate', array('code' => $this->user->getCode())));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+
+echo $this->form()->openTag($form);
+?>
+<p>
+<?php
+$member = $this->user->getMember();
+$name = $member->getFirstName() . ' ' . $member->getLastName();
+?>
+<?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
+</p>
+<div class="form-group">
+<?php
+$element = $form->get('password');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $this->translate('Password'));
+?>
+    <?= $this->formLabel($element) ?>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<div class="form-group">
+<?php
+$element = $form->get('password_verify');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $this->translate('Verify password'));
+?>
+    <?= $this->formLabel($element) ?>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Activate'));
+$submit->setAttribute('class', 'btn btn-default');
+?>
+<?= $this->formButton($submit) ?>
+
+<?= $this->form()->closeTag(); ?>
+<?php endif; ?>

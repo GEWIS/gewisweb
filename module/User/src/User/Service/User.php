@@ -25,6 +25,37 @@ class User implements ServiceManagerAwareInterface
     protected $sm;
 
     /**
+     * Activate a user.
+     *
+     * @param array $data Activation data.
+     * @param NewUserModel $newUser The user to create
+     *
+     * @return boolean
+     */
+    public function activate($data, NewUserModel $newUser)
+    {
+        $form = $this->getActivateForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // create a new user from this data, and insert it into the database
+        $user = new UserModel($newUser);
+        $user->setPassword($bcrypt->create($data['password']));
+
+        $this->getUserMapper()->createUser($user, $newUser);
+
+        return true;
+    }
+
+    /**
      * Register a user.
      *
      * @param array $data Registration data
@@ -54,6 +85,7 @@ class User implements ServiceManagerAwareInterface
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
+        return true;
     }
 
     /**
@@ -115,6 +147,18 @@ class User implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get the new user.
+     *
+     * @param string $code
+     *
+     * @return NewUserModel
+     */
+    public function getNewUser($code)
+    {
+        return $this->getNewUserMapper()->getByCode($code);
+    }
+
+    /**
      * Generate an activation code for the user.
      *
      * @param int $length
@@ -131,6 +175,16 @@ class User implements ServiceManagerAwareInterface
         }
 
         return $ret;
+    }
+
+    /**
+     * Get the activate form.
+     *
+     * @return ActivateForm Activate form
+     */
+    public function getActivateForm()
+    {
+        return $this->sm->get('user_form_activate');
     }
 
     /**
