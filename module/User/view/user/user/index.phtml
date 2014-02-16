@@ -7,9 +7,9 @@ $form->prepare();
 $form->setAttribute('action', $this->url('user'));
 
 $form->setAttribute('method', 'post');
-
-echo $this->form()->openTag($form);
 ?>
+<p>
+<?= $this->form()->openTag($form) ?>
 
 <dl>
 <?php $element = $form->get('login') ?>
@@ -29,7 +29,13 @@ echo $this->form()->openTag($form);
 </dl>
 
 <?= $this->formRow($form->get('submit')); ?>
-
 <?= $this->form()->closeTag(); ?>
+</p>
+<p>
+<?php
+$url = $this->url('user/default', array('action' => 'register'));
+?>
+<?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
+</p>
 <?php endif; ?>
 
