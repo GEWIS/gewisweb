@@ -20,6 +20,7 @@ $element->setAttribute('placeholder', $this->translate('Membership number'));
 ?>
     <?= $this->formLabel($element) ?>
     <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
 </div>
 <div class="form-group">
 <?php
@@ -29,6 +30,7 @@ $element->setAttribute('placeholder', $this->translate('E-mail address'));
 ?>
     <?= $this->formLabel($element) ?>
     <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
 </div>
 
 <?php
