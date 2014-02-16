@@ -6,6 +6,8 @@ use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
 use User\Mapper\User as UserMapper;
 
+use User\Form\Register as RegisterForm;
+
 use Decision\Model\Member as MemberModel;
 
 use Zend\ServiceManager\ServiceManager,
@@ -67,19 +69,31 @@ class User implements ServiceManagerAwareInterface
     public function register($data)
     {
         $form = $this->getRegisterForm();
-        $form->bind(new MemberModel());
         $form->setData($data);
 
         if (!$form->isValid()) {
             return null;
         }
 
-        $member = $form->getData();
+        // get the member
+        $data = $form->getData();
+        $member = $this->getMemberMapper()->findByLidnr($data['lidnr']);
+
+        if (null === $member) {
+            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+            return null;
+        }
+
+        // check if the email is the same
+        if ($member->getEmail() != $data['email']) {
+            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+            return null;
+        }
 
         // check if the member already has a corresponding user.
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
         if (null !== $user) {
-            // TODO: error, user already exists
+            $form->setError(RegisterForm::ERROR_USER_ALREADY_EXISTS);
             return null;
         }
 
@@ -220,6 +234,16 @@ class User implements ServiceManagerAwareInterface
     public function getLogoutForm()
     {
         return $this->sm->get('user_form_logout');
+    }
+
+    /**
+     * Get the member mapper.
+     *
+     * @return MemberMapper
+     */
+    public function getMemberMapper()
+    {
+        return $this->sm->get('decision_mapper_member');
     }
 
     /**

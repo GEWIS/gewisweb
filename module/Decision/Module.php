@@ -40,10 +40,9 @@ class Module
     {
         return array(
             'factories' => array(
-                'decision_hydrator_member' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('decision_doctrine_em'),
-                        'Decision\Model\Member'
+                'decision_mapper_member' => function ($sm) {
+                    return new \Decision\Mapper\Member(
+                        $sm->get('decision_doctrine_em')
                     );
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory

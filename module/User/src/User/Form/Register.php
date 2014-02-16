@@ -9,9 +9,16 @@ use Zend\I18n\Translator\Translator;
 class Register extends Form
 {
 
+    const ERROR_WRONG_EMAIL = 'wrong_email';
+    const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
+    const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
+
+    protected $translate;
+
     public function __construct(Translator $translate)
     {
         parent::__construct();
+        $this->translate = $translate;
 
         $this->add(array(
             'name' => 'lidnr',
@@ -38,6 +45,38 @@ class Register extends Form
         ));
 
         $this->initFilters();
+    }
+
+    /**
+     * Set the error.
+     *
+     * @param string $error
+     */
+    public function setError($error)
+    {
+        switch ($error) {
+        case self::ERROR_WRONG_EMAIL:
+            $this->setMessages(array(
+                'email' => array(
+                    $this->translate->translate("This email address does not be long to the given member.")
+                )
+            ));
+            break;
+        case self::ERROR_MEMBER_NOT_EXISTS:
+            $this->setMessages(array(
+                'lidnr' => array(
+                    $this->translate->translate("There is no member with this membership number.")
+                )
+            ));
+            break;
+        case self::ERROR_USER_ALREADY_EXISTS:
+            $this->setMessages(array(
+                'lidnr' => array(
+                    $this->translate->translate("This member already has an account.")
+                )
+            ));
+            break;
+        }
     }
 
     protected function initFilters()
