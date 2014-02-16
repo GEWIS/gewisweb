@@ -93,7 +93,6 @@ class User
      */
     public function createUser(UserModel $user, NewUserModel $newUser)
     {
-        var_dump($user);
         $this->em->persist($user);
         $this->em->remove($newUser);
         $this->em->flush();

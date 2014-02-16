@@ -10,7 +10,11 @@ $form->setAttribute('role', 'form');
 echo $this->form()->openTag($form);
 ?>
 <p>
-<?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $this->user->getName()) ?>
+<?php
+$member = $this->user->getMember();
+$name = $member->getFirstName() . ' ' . $member->getLastName();
+?>
+<?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
 </p>
 <div class="form-group">
 <?php
