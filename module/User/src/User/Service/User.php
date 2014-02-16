@@ -60,7 +60,7 @@ class User implements ServiceManagerAwareInterface
      *
      * @param array $data Registration data
      *
-     * @return boolean
+     * @return NewUserModel New registered user. Null when the user could not be registered.
      */
     public function register($data)
     {
@@ -71,7 +71,7 @@ class User implements ServiceManagerAwareInterface
         $form->setData($data);
 
         if (!$form->isValid()) {
-            return false;
+            return null;
         }
 
         $member = $form->getData();
@@ -85,7 +85,7 @@ class User implements ServiceManagerAwareInterface
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
-        return true;
+        return $newUser;
     }
 
     /**
