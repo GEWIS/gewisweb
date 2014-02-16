@@ -31,18 +31,19 @@ class NewUser
     protected $email;
 
     /**
-     * Member's name
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $name;
-
-    /**
      * The user's activation code.
      *
      * @ORM\Column(type="string")
      */
     protected $code;
+
+    /**
+     * User's member
+     *
+     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
+     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
+     */
+    protected $member;
 
 
     /**
@@ -57,7 +58,7 @@ class NewUser
         if (null !== $member) {
             $this->lidnr = $member->getLidnr();
             $this->email = $member->getEmail();
-            $this->name = $member->getFirstName() . ' ' . $member->getLastName();
+            $this->member = $member;
         }
     }
 
@@ -92,13 +93,13 @@ class NewUser
     }
 
     /**
-     * Get the member's name.
+     * Get the member.
      *
-     * @return string
+     * @return Member
      */
-    public function getName()
+    public function getMember()
     {
-        return $this->name;
+        return $this->member;
     }
 
     /**

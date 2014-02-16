@@ -62,6 +62,7 @@ class User implements RoleInterface, ResourceInterface
         if (null !== $newUser) {
             $this->lidnr = $newUser->getLidnr();
             $this->email = $newUser->getEmail();
+            $this->member = $newUser->getMember();
         }
     }
 

@@ -35,7 +35,16 @@ class NewUser
      */
     public function getByCode($code)
     {
-        return $this->getRepository()->findOneBy(array('code' => $code));
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u, m')
+            ->from('User\Model\NewUser', 'u')
+            ->join('u.member', 'm')
+            ->where('u.code = ?1');
+        $qb->setParameter(1, $code);
+        $qb->setMaxResults(1);
+
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
     }
 
     /**
