@@ -1,3 +1,6 @@
+<?php if (isset($this->activated) && $this->activated): ?>
+<?= $this->translate('Your account has been activated. You are now able to login.') ?>
+<?php else: ?>
 <?php
 $form = $this->form;
 $form->prepare();
@@ -45,3 +48,4 @@ $submit->setAttribute('class', 'btn btn-default');
 <?= $this->formButton($submit) ?>
 
 <?= $this->form()->closeTag(); ?>
+<?php endif; ?>
