@@ -46,7 +46,7 @@ class User
      *
      * @return UserModel
      */
-    public function findByNumber($email)
+    public function findByLidnr($email)
     {
         return $this->getRepository()->findOneBy(array('lidnr' => $email));
     }

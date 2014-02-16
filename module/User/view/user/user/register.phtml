@@ -1,3 +1,6 @@
+<?php if (isset($this->registered) && $this->registered): ?>
+<?= sprintf($this->translate('You have been registered. An email has been sent to %s for activation.'), $this->user->getEmail()) ?>
+<?php else: ?>
 <?php
 $form = $this->form;
 $form->prepare();
@@ -36,3 +39,4 @@ $submit->setAttribute('class', 'btn btn-default');
 <?= $this->formButton($submit) ?>
 
 <?= $this->form()->closeTag(); ?>
+<?php endif; ?>
