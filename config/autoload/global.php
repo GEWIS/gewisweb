@@ -24,9 +24,9 @@ return array(
      * invalidating existing user accounts.
      *
      * The number represents the base-2 logarithm of the iteration count used for
-     * hashing. Default is 14 (about 10 hashes per second on an i5).
+     * hashing. Default is 13 (about 20 hashes per second on an i5).
      */
-    'bcrypt_cost' => 14,
+    'bcrypt_cost' => 13,
 
     /**
      * Email configuration.
