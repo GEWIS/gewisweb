@@ -40,6 +40,11 @@ class Module
     {
         return array(
             'factories' => array(
+                'decision_mapper_member' => function ($sm) {
+                    return new \Decision\Mapper\Member(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_hydrator_member' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('decision_doctrine_em'),
