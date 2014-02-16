@@ -58,6 +58,8 @@ class User implements ServiceManagerAwareInterface
     /**
      * Register a user.
      *
+     * Will also send an email to the user.
+     *
      * @param array $data Registration data
      *
      * @return NewUserModel New registered user. Null when the user could not be registered.
@@ -65,9 +67,7 @@ class User implements ServiceManagerAwareInterface
     public function register($data)
     {
         $form = $this->getRegisterForm();
-
         $form->bind(new MemberModel());
-
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -76,9 +76,14 @@ class User implements ServiceManagerAwareInterface
 
         $member = $form->getData();
 
-        // TODO: check if the member already has a corresponding user.
+        // check if the member already has a corresponding user.
+        $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
+        if (null !== $user) {
+            // TODO: error, user already exists
+            return null;
+        }
 
-        // save the data
+        // save the data, and send email
         $newUser = new NewUserModel($member);
         $newUser->setCode($this->generateCode());
 
