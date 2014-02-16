@@ -67,14 +67,21 @@ class User implements ServiceManagerAwareInterface
     public function register($data)
     {
         $form = $this->getRegisterForm();
-        $form->bind(new MemberModel());
         $form->setData($data);
 
         if (!$form->isValid()) {
             return null;
         }
 
-        $member = $form->getData();
+        // get the member
+        $data = $form->getData();
+        $member = $this->getMemberMapper()->findByLidnr($data['lidnr']);
+
+        // check if the email is the same
+        if ($member->getEmail() != $data['email']) {
+            // TODO: error, wrong email address
+            return null;
+        }
 
         // check if the member already has a corresponding user.
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
@@ -220,6 +227,16 @@ class User implements ServiceManagerAwareInterface
     public function getLogoutForm()
     {
         return $this->sm->get('user_form_logout');
+    }
+
+    /**
+     * Get the member mapper.
+     *
+     * @return MemberMapper
+     */
+    public function getMemberMapper()
+    {
+        return $this->sm->get('decision_mapper_member');
     }
 
     /**

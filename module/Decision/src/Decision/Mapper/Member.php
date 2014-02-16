@@ -27,6 +27,18 @@ class Member
     }
 
     /**
+     * Find a member by its membership number.
+     *
+     * @param int $number Membership number
+     *
+     * @return MemberModel
+     */
+    public function findByLidnr($email)
+    {
+        return $this->getRepository()->findOneBy(array('lidnr' => $email));
+    }
+
+    /**
      * Persist a member model.
      *
      * @param MemberModel $member Member to persist.

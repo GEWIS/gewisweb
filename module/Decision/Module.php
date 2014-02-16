@@ -45,12 +45,6 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_hydrator_member' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('decision_doctrine_em'),
-                        'Decision\Model\Member'
-                    );
-                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'decision_doctrine_em' => function ($sm) {
