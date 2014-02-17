@@ -39,9 +39,17 @@ class Module
     public function getServiceConfig()
     {
         return array(
+            'invokables' => array(
+                'decision_service_organ' => 'Decision\Service\Organ'
+            ),
             'factories' => array(
                 'decision_mapper_member' => function ($sm) {
                     return new \Decision\Mapper\Member(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
+                'decision_mapper_organ' => function ($sm) {
+                    return new \Decision\Mapper\Organ(
                         $sm->get('decision_doctrine_em')
                     );
                 },

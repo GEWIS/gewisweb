@@ -22,6 +22,26 @@ class Organ implements ServiceManagerAwareInterface
     protected $sm;
 
     /**
+     * Get organs.
+     *
+     * @return array Of organs.
+     */
+    public function getOrgans()
+    {
+        return $this->getOrganMapper()->findAll();
+    }
+
+    /**
+     * Get the organ mapper.
+     *
+     * @return OrganMapper.
+     */
+    public function getOrganMapper()
+    {
+        return $this->sm->get('decision_mapper_organ');
+    }
+
+    /**
      * Set the service manager.
      *
      * @param ServiceManager $sm

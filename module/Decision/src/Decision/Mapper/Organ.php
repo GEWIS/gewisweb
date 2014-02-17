@@ -33,15 +33,13 @@ class Organ
     }
 
     /**
-     * Find a member by its membership number.
+     * Find all organs.
      *
-     * @param int $number Membership number
-     *
-     * @return MemberModel
+     * @return array
      */
-    public function findByLidnr($email)
+    public function findAll()
     {
-        return $this->getRepository()->findOneBy(array('lidnr' => $email));
+        return $this->getRepository()->findAll();
     }
 
     /**
@@ -51,6 +49,6 @@ class Organ
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Decision\Model\Member');
+        return $this->em->getRepository('Decision\Model\Organ');
     }
 }
