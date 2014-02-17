@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-16 18:02+0100\n"
-"PO-Revision-Date: 2014-02-16 18:03+0100\n"
+"POT-Creation-Date: 2014-02-17 20:12+0100\n"
+"PO-Revision-Date: 2014-02-17 20:12+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -17,6 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.3\n"
+
+#: module/Decision/view/decision/decision/index.phtml:7
+msgid "Abbreviation"
+msgstr "Abbreviation"
+
+#: module/Decision/view/decision/decision/index.phtml:8
+msgid "Name"
+msgstr "Name"
+
+#: module/Decision/view/decision/decision/index.phtml:9
+msgid "Type"
+msgstr "Type"
+
+#: module/Decision/view/decision/decision/index.phtml:20
+msgid "Committee"
+msgstr "Committee"
+
+#: module/Decision/view/decision/decision/index.phtml:23
+msgid "Fraternity"
+msgstr "Fraternity"
 
 #: module/Application/view/layout/layout.phtml:6
 msgid "GEWIS Website"
@@ -213,6 +233,11 @@ msgstr "Register"
 #: module/User/view/user/user/index.phtml:2
 msgid "You are logged in."
 msgstr "You are logged in."
+
+#: module/User/view/user/user/index.phtml:38
+#, php-format
+msgid "If you don't have an account yet, go to the %sRegistration page%s"
+msgstr "If you don't have an account yet, go to the %sRegistration page%s"
 
 #: module/User/view/user/user/activate.phtml:2
 msgid "Your account has been activated. You are now able to login."
