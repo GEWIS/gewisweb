@@ -1,1 +1,30 @@
-<?php var_dump($this->organs) ?>
+<?php
+use Decision\Model\Organ;
+?>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><?= $this->translate('Abbreviation') ?></th>
+            <th><?= $this->translate('Name') ?></th>
+            <th><?= $this->translate('Type') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->organs as $organ): ?>
+        <tr>
+            <td><?= $organ->getAbbr() ?></td>
+            <td><?= $organ->getName() ?></td>
+            <td><?php
+                switch ($organ->getType()) {
+                case Organ::TYPE_COMMITTEE:
+                    echo $this->translate('Committee');
+                    break;
+                case Organ::TYPE_FRATERNITY:
+                    echo $this->translate('Fraternity');
+                    break;
+                }
+                ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
