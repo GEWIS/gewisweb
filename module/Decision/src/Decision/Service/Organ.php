@@ -28,6 +28,12 @@ class Organ implements ServiceManagerAwareInterface
      */
     public function getOrgans()
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view the list of organs.')
+            );
+        }
+
         return $this->getOrganMapper()->findAll();
     }
 
@@ -39,6 +45,53 @@ class Organ implements ServiceManagerAwareInterface
     public function getOrganMapper()
     {
         return $this->sm->get('decision_mapper_organ');
+    }
+
+    /**
+     * Check if a operation is allowed for the current user.
+     *
+     * @param string $operation Operation to be checked.
+     * @param string|ResourceInterface $resource Resource to be checked
+     *
+     * @return boolean
+     */
+    public function isAllowed($operation, $resource = 'organ')
+    {
+        return $this->getAcl()->isAllowed(
+            $this->getRole(),
+            $resource,
+            $operation
+        );
+    }
+
+    /**
+     * Get the current user's role.
+     *
+     * @return UserModel|string
+     */
+    public function getRole()
+    {
+        return $this->sm->get('user_role');
+    }
+
+    /**
+     * Get the Acl.
+     *
+     * @return Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->sm->get('decision_acl');
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->sm->get('translator');
     }
 
     /**

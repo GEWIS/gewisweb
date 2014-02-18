@@ -4,6 +4,8 @@ namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Zend\Permissions\Acl\Resource\ResourceInterface;
+
 /**
  * An organ of GEWIS.
  *
@@ -13,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  */
-class Organ
+class Organ implements ResourceInterface
 {
 
     const TYPE_COMMITTEE = 'committee';
@@ -123,5 +125,15 @@ class Organ
             throw new \InvalidArgumentException("Nonexisting type given.");
         }
         $this->type = $type;
+    }
+
+    /**
+     * Get the resource ID.
+     *
+     * @return string
+     */
+    public function getResourceId()
+    {
+        return 'organ';
     }
 }

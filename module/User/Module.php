@@ -133,8 +133,11 @@ class Module
                         if (empty($roles)) {
                             $roles = array('user');
                         }
-                        $acl->addRole($user, $user->getRoleNames());
+                        $acl->addRole($user, $roles);
                     }
+
+                    // admins are allowed to do everything
+                    $acl->allow('admin');
 
                     return $acl;
                 },
