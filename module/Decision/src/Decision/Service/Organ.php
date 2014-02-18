@@ -28,6 +28,12 @@ class Organ implements ServiceManagerAwareInterface
      */
     public function getOrgans()
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view the list of organs.')
+            );
+        }
+
         return $this->getOrganMapper()->findAll();
     }
 
@@ -76,6 +82,16 @@ class Organ implements ServiceManagerAwareInterface
     public function getAcl()
     {
         return $this->sm->get('decision_acl');
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->sm->get('translator');
     }
 
     /**
