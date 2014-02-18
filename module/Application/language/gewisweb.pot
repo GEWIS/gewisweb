@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-17 20:12+0100\n"
+"POT-Creation-Date: 2014-02-18 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,6 +161,10 @@ msgstr ""
 msgid "An error occurred"
 msgstr ""
 
+#: module/Application/view/error/403.phtml:1
+msgid "403 Forbidden"
+msgstr ""
+
 #: module/User/view/user/email/register.phtml:4
 #, php-format
 msgid "Dear %s,"
@@ -254,6 +258,10 @@ msgstr ""
 #: module/User/view/user/user/activate.phtml:45
 #: module/User/src/User/Form/Activate.php:37
 msgid "Activate"
+msgstr ""
+
+#: module/Decision/src/Decision/Service/Organ.php:33
+msgid "Not allowed to view the list of organs."
 msgstr ""
 
 #: module/User/src/User/Form/Register.php:61

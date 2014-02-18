@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-17 20:12+0100\n"
-"PO-Revision-Date: 2014-02-17 20:13+0100\n"
+"POT-Creation-Date: 2014-02-18 23:16+0100\n"
+"PO-Revision-Date: 2014-02-18 23:19+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: module/Decision/view/decision/decision/index.phtml:7
 msgid "Abbreviation"
@@ -166,6 +166,10 @@ msgstr "Geen exceptie beschikbaar"
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
+#: module/Application/view/error/403.phtml:1
+msgid "403 Forbidden"
+msgstr "403 Verboden Toegang"
+
 #: module/User/view/user/email/register.phtml:4
 #, php-format
 msgid "Dear %s,"
@@ -265,6 +269,10 @@ msgstr "Verifier wachtwoord"
 #: module/User/src/User/Form/Activate.php:37
 msgid "Activate"
 msgstr "Activeer"
+
+#: module/Decision/src/Decision/Service/Organ.php:33
+msgid "Not allowed to view the list of organs."
+msgstr "Het is niet toegestaan om de lijst met organen te bekijken."
 
 #: module/User/src/User/Form/Register.php:61
 msgid "This email address does not be long to the given member."
