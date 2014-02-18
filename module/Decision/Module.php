@@ -53,6 +53,13 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+
+                    // TODO: add rules
+
+                    return $acl;
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'decision_doctrine_em' => function ($sm) {

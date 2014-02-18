@@ -42,6 +42,43 @@ class Organ implements ServiceManagerAwareInterface
     }
 
     /**
+     * Check if a operation is allowed for the current user.
+     *
+     * @param string $operation Operation to be checked.
+     * @param string|ResourceInterface $resource Resource to be checked
+     *
+     * @return boolean
+     */
+    public function isAllowed($operation, $resource = 'organ')
+    {
+        return $this->getAcl()->isAllowed(
+            $this->getRole(),
+            $resource,
+            $operation
+        );
+    }
+
+    /**
+     * Get the current user's role.
+     *
+     * @return UserModel|string
+     */
+    public function getRole()
+    {
+        return $this->sm->get('user_role');
+    }
+
+    /**
+     * Get the Acl.
+     *
+     * @return Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->sm->get('decision_acl');
+    }
+
+    /**
      * Set the service manager.
      *
      * @param ServiceManager $sm
