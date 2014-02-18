@@ -136,6 +136,9 @@ class Module
                         $acl->addRole($user, $user->getRoleNames());
                     }
 
+                    // admins are allowed to do everything
+                    $acl->allow('admin');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
