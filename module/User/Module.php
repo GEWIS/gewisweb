@@ -3,9 +3,33 @@ namespace User;
 
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
+use Zend\Mvc\MvcEvent;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
+
+    /**
+     * Bootstrap.
+     *
+     * @var MvcEvent $e
+     */
+    public function onBootstrap(MvcEvent $e)
+    {
+        $em = $e->getApplication()->getEventManager();
+
+        // this event listener will turn the request into '403 Forbidden' when
+        // there is a NotAllowedException
+        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function($e) {
+            if (($e->getError() == 'error-exception') &&
+                    ($e->getParam('exception', null) != null) &&
+                    ($e->getParam('exception') instanceof NotAllowedException)) {
+                $e->getResult()->setTemplate('error/403');
+                $e->getResponse()->setStatusCode(403);
+            }
+        }, -100);
+    }
+
 
     /**
      * Get the autoloader configuration.
