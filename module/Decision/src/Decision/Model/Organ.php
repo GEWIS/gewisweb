@@ -15,7 +15,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  */
-class Organ implements RoleInterface
+class Organ implements ResourceInterface
 {
 
     const TYPE_COMMITTEE = 'committee';
