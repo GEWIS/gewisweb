@@ -56,7 +56,11 @@ class Module
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
-                    // TODO: add rules
+                    // add resources for this module
+                    $acl->addResource('organ');
+
+                    // users are allowed to view the organs
+                    $acl->allow('user', 'organ', 'view');
 
                     return $acl;
                 },
