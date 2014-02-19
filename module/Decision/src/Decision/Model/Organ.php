@@ -51,6 +51,15 @@ class Organ implements ResourceInterface
      */
     protected $type = self::TYPE_COMMITTEE;
 
+    /**
+     * Members in this organ.
+     *
+     * @ORM\ManyToMany(targetEntity="Decision\Model\Member", inversedBy="organs")
+     * @ORM\JoinTable(name="MemberOrgan",
+     *      inverseJoinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")})
+     */
+    protected $members;
+
 
     /**
      * Get the id.
