@@ -57,6 +57,13 @@ class Member
      */
     protected $firstName;
 
+    /**
+     * Organs this member is in.
+     *
+     * @ORM\ManyToMany(targetEntity="Decision\Model\Organ", mappedBy="members")
+     */
+    protected $organs;
+
     // TODO: Much, MUCH more fields
 
     /**
