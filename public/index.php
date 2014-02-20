@@ -15,3 +15,6 @@ require 'init_autoloader.php';
 
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();
+
+//
+echo("<center><h1>WOUT IS ECHT ONTZETTEND GEWELDIG</h1></center>");
