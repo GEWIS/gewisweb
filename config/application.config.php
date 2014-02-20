@@ -8,7 +8,8 @@ return array(
         'User',
         'Application',
         'Company',
-        'Decision'
+        'Decision',
+		'Activity'
     ),
 
     // These are various options for the listeners attached to the ModuleManager
