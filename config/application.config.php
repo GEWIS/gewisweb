@@ -9,8 +9,9 @@ return array(
         'Application',
         'Company',
         'Decision',
-		'Activity',
-		'Photo'
+        'Activity',
+        'Photo',
+        'Education'
     ),
 
     // These are various options for the listeners attached to the ModuleManager
