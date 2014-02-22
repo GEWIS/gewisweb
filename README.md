@@ -3,6 +3,8 @@ GEWIS Website
 
 Website for Study association GEWIS.
 
+[![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)
+
 Installation
 ============
 
