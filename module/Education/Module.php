@@ -54,6 +54,11 @@ class Module
                     return new \Zend\Soap\Client(
                         $config['wsdl'], $config['options']
                     );
+                },
+                'education_oase_client' => function ($sm) {
+                    return new \Education\Oase\Client(
+                        $sm->get('education_oase_soapclient')
+                    );
                 }
             )
         );

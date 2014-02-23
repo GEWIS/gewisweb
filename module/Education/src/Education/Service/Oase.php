@@ -6,10 +6,6 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Soap\Client as SoapClient;
 
-use Education\Oase\Vraag;
-use Education\Oase\Property;
-use Education\Oase\Antwoord;
-
 /**
  * Exam service.
  */
@@ -28,15 +24,9 @@ class Oase implements ServiceManagerAwareInterface
      */
     public function update()
     {
-        $client = $this->sm->get('education_oase_soapclient');
+        $client = $this->sm->get('education_oase_client');
 
-        $vraag = new Vraag("GeefDoelgroepen");
-
-        $vraag->addProperty(new Property('Taal', 'string', 'NL'));
-        $vraag->addProperty(new Property('StudiejaarId', 'string', '2013'));
-        $vraag->addProperty(new Property('JaargangId', 'string', 'Alle'));
-
-        var_dump($client->VraagEnAntwoord($vraag));
+        var_dump($client->GeefDoelgroepen('2013', 'NL'));
     }
 
     /**
