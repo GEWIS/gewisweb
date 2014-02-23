@@ -62,7 +62,7 @@ class Course implements ResourceInterface
     /**
      * Last year the course has been given.
      *
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     protected $year;
 
