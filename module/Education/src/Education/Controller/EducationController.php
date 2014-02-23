@@ -9,7 +9,16 @@ class EducationController extends AbstractActionController {
 
     public function indexAction()
     {
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'form' => $this->getExamService()->getSearchCourseForm()
+        ));
     }
 
+    /**
+     * Get the exam service.
+     */
+    public function getExamService()
+    {
+        return $this->getServiceLocator()->get('education_service_exam');
+    }
 }
