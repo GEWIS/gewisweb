@@ -2,6 +2,8 @@
 
 namespace Education\Oase;
 
+use Education\Model\Study;
+
 class Service
 {
 
@@ -107,7 +109,7 @@ class Service
     /**
      * Filter if a given 'doelgroep' is a W&I study.
      *
-     * @param SimpleXMLElement $doelgroep
+     * @param \SimpleXMLElement $doelgroep
      *
      * @return boolen If it is a W&I study
      */
@@ -135,6 +137,22 @@ class Service
     }
 
     /**
+     * Create a study from a doelgroep.
+     *
+     * @param \SimpleXMLElement $doelgroep
+     *
+     * @return Study
+     */
+    public function createStudy(\SimpleXMLElement $doelgroep)
+    {
+        $study = new Study();
+        $study->setId((int) $doelgroep->Id->__toString());
+        $study->setName($doelgroep->Omschrijving->__toString());
+        $study->setPhase($doelgroep->Opleidingstype->__toString());
+        return $study;
+    }
+
+    /**
      * Get ID's of all W&I's studies.
      *
      * @todo figure out good way to define year in 'GeefDoelgroepen'
@@ -151,6 +169,12 @@ class Service
             $doelgroepen[] = $doelgroep;
         }
 
-        return array_filter($doelgroepen, array($this, 'filterDoelgroep'));
+        $doelgroepen = array_filter($doelgroepen, array($this, 'filterDoelgroep'));
+
+        // since all this filtering, re-index the array
+        $doelgroepen = array_values($doelgroepen);
+
+        // convert doelgroepen to studies
+        return array_map(array($this, 'createStudy'), $doelgroepen);
     }
 }

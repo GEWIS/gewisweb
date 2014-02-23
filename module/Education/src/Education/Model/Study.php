@@ -19,8 +19,9 @@ class Study
     /**
      * Study ID.
      *
+     * This is given by the OASE API.
+     *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
@@ -93,6 +94,16 @@ class Study
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set the ID.
+     *
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
