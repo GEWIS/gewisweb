@@ -3,6 +3,7 @@
 namespace Education\Oase;
 
 use Education\Model\Study;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Service
 {
@@ -41,6 +42,13 @@ class Service
      * @var array
      */
     protected $educationTypes;
+
+    /**
+     * Hydrator for studies.
+     *
+     * @var HydratorInterface
+     */
+    protected $hydrator;
 
 
     /**
@@ -91,6 +99,16 @@ class Service
     public function setEducationTypes(array $educationTypes)
     {
         $this->educationTypes = $educationTypes;
+    }
+
+    /**
+     * Set the hydrator.
+     *
+     * @param HydratorInterface $hydrator
+     */
+    public function setHydrator(HydratorInterface $hydrator)
+    {
+        $this->hydrator = $hydrator;
     }
 
     /**
@@ -145,11 +163,12 @@ class Service
      */
     public function createStudy(\SimpleXMLElement $doelgroep)
     {
-        $study = new Study();
-        $study->setId((int) $doelgroep->Id->__toString());
-        $study->setName($doelgroep->Omschrijving->__toString());
-        $study->setPhase($doelgroep->Opleidingstype->__toString());
-        return $study;
+        $data = array(
+            'id' => (int) $doelgroep->Id->__toString(),
+            'name' => $doelgroep->Omschrijving->__toString(),
+            'phase' => $doelgroep->Opleidingstype->__toString()
+        );
+        return $this->hydrator->hydrate($data, new Study());
     }
 
     /**

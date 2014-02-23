@@ -48,6 +48,17 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'education_mapper_study' => function ($sm) {
+                    return new \Education\Mapper\Study(
+                        $sm->get('education_doctrine_em')
+                    );
+                },
+                'education_hydrator_study' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em'),
+                        'Education\Model\Study'
+                    );
+                },
                 'education_oase_soapclient' => function ($sm) {
                     $config = $sm->get('config');
                     $config = $config['oase']['soap'];
@@ -70,7 +81,13 @@ class Module
                     $service->setNegativeKeywords($config['negative_keywords']);
                     $service->setGroupIds($config['group_ids']);
                     $service->setEducationTypes($config['education_types']);
+                    $service->setHydrator($sm->get('education_hydrator_study'));
                     return $service;
+                },
+                // fake 'alias' for entity manager, because doctrine uses an abstract factory
+                // and aliases don't work with abstract factories
+                'education_doctrine_em' => function ($sm) {
+                    return $sm->get('doctrine.entitymanager.orm_default');
                 }
             )
         );
