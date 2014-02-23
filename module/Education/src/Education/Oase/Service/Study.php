@@ -1,11 +1,13 @@
 <?php
 
-namespace Education\Oase;
+namespace Education\Oase\Service;
 
-use Education\Model\Study;
+use Education\Oase\Client;
+use Education\Model\Study as StudyModel;
+
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class Service
+class Study
 {
 
     /**
@@ -159,7 +161,7 @@ class Service
      *
      * @param \SimpleXMLElement $doelgroep
      *
-     * @return Study
+     * @return StudyModel
      */
     public function createStudy(\SimpleXMLElement $doelgroep)
     {
@@ -168,7 +170,7 @@ class Service
             'name' => $doelgroep->Omschrijving->__toString(),
             'phase' => $doelgroep->Opleidingstype->__toString()
         );
-        return $this->hydrator->hydrate($data, new Study());
+        return $this->hydrator->hydrate($data, new StudyModel());
     }
 
     /**

@@ -26,11 +26,11 @@ class Oase implements ServiceManagerAwareInterface
      */
     public function update()
     {
-        $studies = $this->getOaseService()->getStudies();
+        $studies = $this->getOaseStudyService()->getStudies();
 
         $this->getStudyMapper()->persistMultiple($studies);
 
-        echo "Saved all studies\n";
+        echo "Updated all studies\n";
     }
 
     /**
@@ -48,9 +48,9 @@ class Oase implements ServiceManagerAwareInterface
      *
      * @return \Education\Oase\Service
      */
-    public function getOaseService()
+    public function getOaseStudyService()
     {
-        return $this->sm->get('education_oase_service');
+        return $this->sm->get('education_oase_service_study');
     }
 
     /**
