@@ -13,6 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Study
 {
 
+    const PHASE_BACHELOR = 'bachelor';
+    const PHASE_MASTER = 'master';
+
     /**
      * Study ID.
      *
@@ -28,6 +31,13 @@ class Study
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * Phase of the study.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $phase;
 
     /**
      * Courses belonging to this study.
@@ -66,6 +76,16 @@ class Study
     }
 
     /**
+     * Get the phase.
+     *
+     * @return string
+     */
+    public function getPhase()
+    {
+        return $this->phase;
+    }
+
+    /**
      * Get the courses in this study.
      *
      * @return array
@@ -83,6 +103,22 @@ class Study
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Set the phase.
+     *
+     * @param string $phase
+     */
+    public function setPhase($phase)
+    {
+        if (!in_array($phase, array(
+            self::PHASE_BACHELOR,
+            self::PHASE_MASTER
+        ) {
+            throw new \InvalidArgumentException("Invalid phase given.");
+        }
+        $this->phase = $phase;
     }
 
     /**
