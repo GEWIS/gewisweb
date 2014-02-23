@@ -24,9 +24,9 @@ class Oase implements ServiceManagerAwareInterface
      */
     public function update()
     {
-        $client = $this->sm->get('education_oase_client');
+        $service = $this->sm->get('education_oase_service');
 
-        var_dump($client->GeefDoelgroepen('2013', 'NL'));
+        var_dump($service->getStudies());
     }
 
     /**

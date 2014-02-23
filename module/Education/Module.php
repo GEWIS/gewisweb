@@ -59,6 +59,11 @@ class Module
                     return new \Education\Oase\Client(
                         $sm->get('education_oase_soapclient')
                     );
+                },
+                'education_oase_service' => function ($sm) {
+                    return new \Education\Oase\Service(
+                        $sm->get('education_oase_client')
+                    );
                 }
             )
         );
