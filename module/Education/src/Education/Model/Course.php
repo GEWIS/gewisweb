@@ -52,14 +52,6 @@ class Course implements ResourceInterface
     protected $url;
 
     /**
-     * The studies that apply to the course.
-     *
-     * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
-     * @ORM\JoinTable(name="CoursesStudies")
-     */
-    protected $studies;
-
-    /**
      * Last year the course has been given.
      *
      * @ORM\Column(type="integer")
@@ -81,6 +73,21 @@ class Course implements ResourceInterface
      */
     protected $quartile;
 
+    /**
+     * The studies that apply to the course.
+     *
+     * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
+     * @ORM\JoinTable(name="CoursesStudies")
+     */
+    protected $studies;
+
+    /**
+     * Exams (and summaries) in this course.
+     *
+     * @ORM\OneToMany(targetEntity="Education\Model\Exam", mappedBy="course")
+     */
+    protected $exams;
+
 
     /**
      * Constructor.
@@ -88,6 +95,7 @@ class Course implements ResourceInterface
     public function __construct()
     {
         $this->studies = new ArrayCollection();
+        $this->exams = new ArrayCollection();
     }
 
     /**
@@ -133,7 +141,7 @@ class Course implements ResourceInterface
     /**
      * Get the studies for this course.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getStudies()
     {
@@ -158,6 +166,16 @@ class Course implements ResourceInterface
     public function getQuartile()
     {
         return $this->quartile;
+    }
+
+    /**
+     * Get all exams belonging to this study.
+     *
+     * @return ArrayCollection
+     */
+    public function getExams()
+    {
+        return $this->exams;
     }
 
     /**
@@ -218,6 +236,16 @@ class Course implements ResourceInterface
             throw new \InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
         }
         $this->quartile = $quartile;
+    }
+
+    /**
+     * Add an exam.
+     *
+     * @param Exam $exam
+     */
+    public function addExam(Exam $exam)
+    {
+        $this->exams[] = $exam;
     }
 
     /**
