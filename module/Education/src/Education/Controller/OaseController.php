@@ -13,6 +13,16 @@ class OaseController extends AbstractActionController {
 
     public function indexAction()
     {
-        echo "Hello, World!\n";
+        $oaseService = $this->getOaseService();
+
+        $oaseService->update();
+    }
+
+    /**
+     * Get the OASE service.
+     */
+    public function getOaseService()
+    {
+        return $this->getServiceLocator()->get('education_service_oase');
     }
 }

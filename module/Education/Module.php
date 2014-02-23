@@ -47,6 +47,13 @@ class Module
                     return new \Education\Form\SearchCourse(
                         $sm->get('translator')
                     );
+                },
+                'education_oase_soapclient' => function ($sm) {
+                    $config = $sm->get('config');
+                    $config = $config['oase'];
+                    return new \Zend\Soap\Client(
+                        $config['wsdl'], $config['options']
+                    );
                 }
             )
         );
