@@ -51,8 +51,13 @@ class Course implements ResourceInterface
      */
     protected $url;
 
-    // TODO: create study entity and add relation to that
-    // so we can have multiple studies referred from a course
+    /**
+     * The studies that apply to the course.
+     *
+     * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
+     * @ORM\JoinTable(name="CoursesStudies")
+     */
+    protected $studies;
 
     /**
      * Last year the course has been given.
@@ -75,6 +80,15 @@ class Course implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $quartile;
+
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->studies = new ArrayCollection();
+    }
 
     /**
      * Get the ID.
@@ -117,6 +131,16 @@ class Course implements ResourceInterface
     }
 
     /**
+     * Get the studies for this course.
+     *
+     * @return array
+     */
+    public function getStudies()
+    {
+        return $this->studies;
+    }
+
+    /**
      * Get the last year the course has been given.
      *
      * @return int
@@ -154,6 +178,17 @@ class Course implements ResourceInterface
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * Add a study.
+     *
+     * @param Study $study
+     */
+    public function addStudy(Study $study)
+    {
+        $study->addCourse($this);
+        $this->studies[] = $study;
     }
 
     /**
