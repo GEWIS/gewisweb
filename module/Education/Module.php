@@ -39,7 +39,8 @@ class Module
     {
         return array(
             'invokables' => array(
-                'education_service_exam' => 'Education\Service\Exam'
+                'education_service_exam' => 'Education\Service\Exam',
+                'education_service_oase' => 'Education\Service\Oase'
             ),
             'factories' => array(
                 'education_form_searchcourse' => function ($sm) {
