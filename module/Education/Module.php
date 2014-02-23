@@ -42,6 +42,11 @@ class Module
                 'education_service_exam' => 'Education\Service\Exam'
             ),
             'factories' => array(
+                'education_form_searchcourse' => function ($sm) {
+                    return new \Education\Form\SearchCourse(
+                        $sm->get('translator')
+                    );
+                }
             )
         );
     }

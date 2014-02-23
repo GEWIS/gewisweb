@@ -19,6 +19,16 @@ class Exam implements ServiceManagerAwareInterface
     protected $sm;
 
     /**
+     * Get the SearchExam form.
+     *
+     * @return \Education\Form\SearchCourse
+     */
+    public function getSearchCourseForm()
+    {
+        return $this->sm->get('education_form_searchcourse');
+    }
+
+    /**
      * Set the service manager.
      *
      * @param ServiceManager $sm
