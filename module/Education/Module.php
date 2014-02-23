@@ -50,7 +50,7 @@ class Module
                 },
                 'education_oase_soapclient' => function ($sm) {
                     $config = $sm->get('config');
-                    $config = $config['oase'];
+                    $config = $config['oase']['soap'];
                     return new \Zend\Soap\Client(
                         $config['wsdl'], $config['options']
                     );

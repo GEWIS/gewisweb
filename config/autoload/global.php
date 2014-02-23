@@ -43,14 +43,16 @@ return array(
      * OASE SOAP API configuration.
      */
     'oase' => array(
-        'wsdl' => 'http://dlwtbiz.campus.test.tue.nl/ESB/ESB_ESB_DLWO_ESB_ReceivePort.svc?wsdl',
-        'options' => array(
-            'classmap' => array(
-                'Vraag' => 'Education\Oase\Vraag',
-                'Property' => 'Education\Oase\Property',
-                'Antwoord' => 'Education\Oase\Antwoord'
-            ),
-            'soap_version' => SOAP_1_1
+        'soap' => array(
+            'wsdl' => 'http://dlwtbiz.campus.test.tue.nl/ESB/ESB_ESB_DLWO_ESB_ReceivePort.svc?wsdl',
+            'options' => array(
+                'classmap' => array(
+                    'Vraag' => 'Education\Oase\Vraag',
+                    'Property' => 'Education\Oase\Property',
+                    'Antwoord' => 'Education\Oase\Antwoord'
+                ),
+                'soap_version' => SOAP_1_1
+            )
         )
     )
 );
