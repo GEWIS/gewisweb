@@ -41,6 +41,13 @@ class Study
     protected $phase;
 
     /**
+     * Group ID from OASE.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $groupId;
+
+    /**
      * Courses belonging to this study.
      *
      * @ORM\ManyToMany(targetEntity="Education\Model\Course", mappedBy="studies")
@@ -87,6 +94,16 @@ class Study
     }
 
     /**
+     * Get the group id.
+     *
+     * @return int
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
+    }
+
+    /**
      * Get the courses in this study.
      *
      * @return array
@@ -130,6 +147,16 @@ class Study
             throw new \InvalidArgumentException("Invalid phase given.");
         }
         $this->phase = $phase;
+    }
+
+    /**
+     * Set the group.
+     *
+     * @param int $group
+     */
+    public function setGroupId($group)
+    {
+        $this->groupId = $group;
     }
 
     /**

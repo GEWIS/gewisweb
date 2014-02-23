@@ -168,7 +168,8 @@ class Study
         $data = array(
             'id' => (int) $doelgroep->Id->__toString(),
             'name' => $doelgroep->Omschrijving->__toString(),
-            'phase' => $doelgroep->Opleidingstype->__toString()
+            'phase' => $doelgroep->Opleidingstype->__toString(),
+            'groupId' => (int) $doelgroep->GroepscategorieId->__toString()
         );
         return $this->hydrator->hydrate($data, new StudyModel());
     }
