@@ -41,6 +41,13 @@ return array(
 
     /**
      * OASE SOAP API configuration.
+     *
+     * Please not that it is impossible to use this API without a whitelisted
+     * IP. Hence, it is only possible to use this on the GEWIS server. In 2013
+     * we communicated with STU about using this API, instead of trying to
+     * pull the information from OASE via HTTP. Which would lead to
+     * impracticalities on our side, and a slow OASE at times on the side of
+     * Dienst ICT.
      */
     'oase' => array(
         'soap' => array(
@@ -52,6 +59,55 @@ return array(
                     'Antwoord' => 'Education\Oase\Antwoord'
                 ),
                 'soap_version' => SOAP_1_1
+            )
+        ),
+        /**
+         * Filters for studies
+         */
+        'studies' => array(
+            /**
+             * Studies of W&I will have these keywords.
+             *
+             * Only studies with these keywords will be considered.
+             */
+            'keywords' => array(
+                "software science",
+                "web science",
+                "wiskunde",
+                "informatica",
+                "mathematics",
+                "statistics, probability, and operations research",
+                "computer",
+                "security",
+                "business information systems",
+                "embedded systems"
+            ),
+            /**
+             * Negative keywords.
+             *
+             * Studies with these keywords will not be considered W&I studies.
+             */
+            'negative_keywords' => array(
+                'leraar',
+                'natuurkunde'
+            ),
+            /**
+             * Group ID's.
+             *
+             * Only studies with these group ID's will be considered.
+             */
+            'group_ids' => array(
+                110, // schakelprogramma's
+                155, // HBO-minor
+                200, // bachelor (pre-bachelor-college)
+                210, // regulier onderwijs (incl. master)
+            ),
+            /**
+             * Education types
+             */
+            'education_types' => array(
+                'master',
+                'bachelor'
             )
         )
     )

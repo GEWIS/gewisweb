@@ -61,9 +61,16 @@ class Module
                     );
                 },
                 'education_oase_service' => function ($sm) {
-                    return new \Education\Oase\Service(
+                    $service = new \Education\Oase\Service(
                         $sm->get('education_oase_client')
                     );
+                    $config = $sm->get('config');
+                    $config = $config['oase']['studies'];
+                    $service->setKeywords($config['keywords']);
+                    $service->setNegativeKeywords($config['negative_keywords']);
+                    $service->setGroupIds($config['group_ids']);
+                    $service->setEducationTypes($config['education_types']);
+                    return $service;
                 }
             )
         );
