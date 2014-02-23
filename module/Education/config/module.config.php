@@ -58,7 +58,7 @@ return array(
             'routes' => array(
                 'oase' => array(
                     'options' => array(
-                        'route' => 'oase',
+                        'route' => 'oase update',
                         'defaults' => array(
                             'controller' => 'Education\Controller\Oase',
                             'action' => 'index'
