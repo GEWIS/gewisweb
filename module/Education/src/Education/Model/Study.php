@@ -168,4 +168,14 @@ class Study
     {
         $this->courses[] = $course;
     }
+
+    /**
+     * Remove a course.
+     *
+     * @param Course $course
+     */
+    public function removeCourse(Course $course)
+    {
+        $this->courses->removeElement($course);
+    }
 }

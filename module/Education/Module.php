@@ -48,6 +48,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'education_mapper_course' => function ($sm) {
+                    return new \Education\Mapper\Course(
+                        $sm->get('education_doctrine_em')
+                    );
+                },
                 'education_mapper_study' => function ($sm) {
                     return new \Education\Mapper\Study(
                         $sm->get('education_doctrine_em')

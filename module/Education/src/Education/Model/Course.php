@@ -94,16 +94,6 @@ class Course implements ResourceInterface
     }
 
     /**
-     * Get the ID.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Get the course code.
      *
      * @return string
@@ -174,6 +164,16 @@ class Course implements ResourceInterface
     }
 
     /**
+     * Set the course code.
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
      * Set the course name
      *
      * @param string $name
@@ -200,8 +200,45 @@ class Course implements ResourceInterface
      */
     public function addStudy(Study $study)
     {
-        $study->addCourse($this);
-        $this->studies[] = $study;
+        if (!$this->studies->contains($study)) {
+            $study->addCourse($this);
+            $this->studies[] = $study;
+        }
+    }
+
+    /**
+     * Add multiple studies.
+     *
+     * @param array $studies
+     */
+    public function addStudies($studies)
+    {
+        foreach ($studies as $study) {
+            $this->addStudy($study);
+        }
+    }
+
+    /**
+     * Remove a study.
+     *
+     * @param Study $study
+     */
+    public function removeStudy(Study $study)
+    {
+        $study->removeCourse($this);
+        $this->studies->removeElement($study);
+    }
+
+    /**
+     * Remove multiple studies.
+     *
+     * @param array $studies
+     */
+    public function removeStudies($studies)
+    {
+        foreach ($studies as $study) {
+            $this->removeStudy($study);
+        }
     }
 
     /**

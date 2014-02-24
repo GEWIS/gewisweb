@@ -3,7 +3,7 @@
 namespace Education\Oase\Service;
 
 use Education\Oase\Client;
-use Education\Model\Study as StudyModel;
+use Education\Model\Course as CourseModel;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
@@ -123,9 +123,18 @@ class Course
         if (empty($studies)) {
             return null;
         }
-        return array(
+
+        // create the course
+        $data = array(
+            'code' => $course->VakCode->__toString(),
+            'name' => $course->VakOmschr->__toString(),
+            'url'  => $course->UrlStudiewijzer->__toString(),
+            'quartile' => 'q1', //TODO: determine this value
+            'year' => $year, // TODO: correctly determine this value
+                             // from $course->Studiejaar
             'studies' => $studies
         );
+        return $this->hydrator->hydrate($data, new CourseModel());
     }
 
     /**

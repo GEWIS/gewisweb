@@ -32,19 +32,25 @@ class Oase implements ServiceManagerAwareInterface
 
         echo "Updated all studies\n";
 
-        $data = $this->getOaseCourseService()->getCourses($studies);
+        $courses = $this->getOaseCourseService()->getCourses($studies);
 
-        foreach ($data as $key => $el) {
-            echo $key . "\n";
-            foreach ($el['studies'] as $study) {
-                echo $study->getName() . "\n";
-            }
-            echo "\n";
-        }
+        $this->getCourseMapper()->persistMultiple($courses);
+
+        echo "Updated all courses\n";
 
         // flush all updates
         $this->getStudyMapper()->flush();
         echo "Flushed\n";
+    }
+
+    /**
+     * Get the course mapper.
+     *
+     * @return \Education\Mapper\Course
+     */
+    public function getCourseMapper()
+    {
+        return $this->sm->get('education_mapper_course');
     }
 
     /**
