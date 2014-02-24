@@ -59,6 +59,12 @@ class Module
                         'Education\Model\Study'
                     );
                 },
+                'education_hydrator_course' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em'),
+                        'Education\Model\Course'
+                    );
+                },
                 'education_oase_soapclient' => function ($sm) {
                     $config = $sm->get('config');
                     $config = $config['oase']['soap'];
@@ -72,9 +78,11 @@ class Module
                     );
                 },
                 'education_oase_service_course' => function ($sm) {
-                    return new \Education\Oase\Service\Course(
+                    $service = new \Education\Oase\Service\Course(
                         $sm->get('education_oase_client')
                     );
+                    $service->setHydrator($sm->get('education_hydrator_course'));
+                    return $service;
                 },
                 'education_oase_service_study' => function ($sm) {
                     $service = new \Education\Oase\Service\Study(

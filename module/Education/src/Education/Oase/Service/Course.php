@@ -5,6 +5,8 @@ namespace Education\Oase\Service;
 use Education\Oase\Client;
 use Education\Model\Study as StudyModel;
 
+use Zend\Stdlib\Hydrator\HydratorInterface;
+
 class Course
 {
 
@@ -22,6 +24,13 @@ class Course
      */
     protected $map;
 
+    /**
+     * Hydrator for courses.
+     *
+     * @var HydratorInterface
+     */
+    protected $hydrator;
+
 
     /**
      * Constructor.
@@ -31,6 +40,16 @@ class Course
     public function __construct(Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Set the hydrator.
+     *
+     * @param HydratorInterface $hydrator
+     */
+    public function setHydrator(HydratorInterface $hydrator)
+    {
+        $this->hydrator = $hydrator;
     }
 
     /**
