@@ -22,17 +22,9 @@ class Course implements ResourceInterface
     const QUARTILE_INTERIM = 'interim';
 
     /**
-     * Id column.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-
-    /**
      * Course code.
      *
+     * @ORM\Id
      * @ORM\Column(type="string")
      */
     protected $code;
@@ -77,7 +69,10 @@ class Course implements ResourceInterface
      * The studies that apply to the course.
      *
      * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
-     * @ORM\JoinTable(name="CoursesStudies")
+     * @ORM\JoinTable(name="CoursesStudies",
+     *      joinColumns={@ORM\JoinColumn(name="study_id", referencedColumnName="code")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="course_code", referencedColumnName="id")}
+     * )
      */
     protected $studies;
 
