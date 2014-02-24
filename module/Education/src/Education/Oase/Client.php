@@ -40,8 +40,13 @@ class Client
 
     /**
      * ZoekActiviteitenOpDoelgroep API call.
+     *
+     * @param array $studies
+     * @param string $lang
+     *
+     * @return array
      */
-    public function ZoekActiviteitenOpDoelgroep($studies)
+    public function ZoekActiviteitenOpDoelgroep($studies, $lang)
     {
         $vraag = new Vraag(__FUNCTION__);
 
@@ -52,10 +57,7 @@ class Client
 
         foreach ($groepen as $groep) {
             $vraag->addProperty(new Property("GroepscategorieId", "short", $groep));
-            var_dump($groep);
         }
-
-        $vraag->addProperty(new Property("DoelgroepId", "short", "1114"));
 
         $vraag->addProperty(new Property("Jaargang", "string", "Alle"));
         $vraag->addProperty(new Property("MaxAantalVakken", "int", "5000"));
@@ -66,7 +68,7 @@ class Client
         $vraag->addProperty(new Property("TijdslotId", "", "-1"));
         // K, V, X (Keuze, Verplicht, Beide)
         $vraag->addProperty(new Property("VerplichtKeuze", "string", "X"));
-        $vraag->addProperty(new Property("Voertaal", "string", "EN"));
+        $vraag->addProperty(new Property("Voertaal", "string", $lang));
         $vraag->addProperty(new Property("ZoekInFullText", "boolean", "true"));
         $vraag->addProperty(new Property("Zoekstring", "string", ""));
  

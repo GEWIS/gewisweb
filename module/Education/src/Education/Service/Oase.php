@@ -32,10 +32,7 @@ class Oase implements ServiceManagerAwareInterface
 
         echo "Updated all studies\n";
 
-        // get all studies
-        $client = $this->sm->get('education_oase_client');
-
-        var_dump($client->ZoekActiviteitenOpDoelgroep($studies));
+        var_dump($this->getOaseCourseService()->getCourses($studies));
 
         // flush all updates
         $this->getStudyMapper()->flush();
@@ -53,9 +50,19 @@ class Oase implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the OASE service.
+     * Get the OASE course service.
      *
-     * @return \Education\Oase\Service
+     * @return \Education\Oase\Service\Course
+     */
+    public function getOaseCourseService()
+    {
+        return $this->sm->get('education_oase_service_course');
+    }
+
+    /**
+     * Get the OASE study service.
+     *
+     * @return \Education\Oase\Service\Study
      */
     public function getOaseStudyService()
     {
