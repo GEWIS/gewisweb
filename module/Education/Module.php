@@ -71,6 +71,11 @@ class Module
                         $sm->get('education_oase_soapclient')
                     );
                 },
+                'education_oase_service_course' => function ($sm) {
+                    return new \Education\Oase\Service\Course(
+                        $sm->get('education_oase_client')
+                    );
+                },
                 'education_oase_service_study' => function ($sm) {
                     $service = new \Education\Oase\Service\Study(
                         $sm->get('education_oase_client')

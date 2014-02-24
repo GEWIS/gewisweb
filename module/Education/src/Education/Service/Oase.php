@@ -31,6 +31,15 @@ class Oase implements ServiceManagerAwareInterface
         $this->getStudyMapper()->persistMultiple($studies);
 
         echo "Updated all studies\n";
+
+        // get all studies
+        $client = $this->sm->get('education_oase_client');
+
+        var_dump($client->ZoekActiviteitenOpDoelgroep($studies));
+
+        // flush all updates
+        $this->getStudyMapper()->flush();
+        echo "Flushed\n";
     }
 
     /**

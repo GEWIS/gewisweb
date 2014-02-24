@@ -42,6 +42,13 @@ class Study
         foreach ($studies as $study) {
             $this->em->persist($study);
         }
+    }
+
+    /**
+     * Flush.
+     */
+    public function flush()
+    {
         $this->em->flush();
     }
 
