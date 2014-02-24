@@ -32,7 +32,15 @@ class Oase implements ServiceManagerAwareInterface
 
         echo "Updated all studies\n";
 
-        var_dump($this->getOaseCourseService()->getCourses($studies));
+        $data = $this->getOaseCourseService()->getCourses($studies);
+
+        foreach ($data as $key => $el) {
+            echo $key . "\n";
+            foreach ($el['studies'] as $study) {
+                echo $study->getName() . "\n";
+            }
+            echo "\n";
+        }
 
         // flush all updates
         $this->getStudyMapper()->flush();

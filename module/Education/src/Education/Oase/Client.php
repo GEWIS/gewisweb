@@ -25,6 +25,26 @@ class Client
     }
 
     /**
+     * GeefVakGegevens API call.
+     *
+     * @param string $code
+     * @param string $year
+     * @param string $lang
+     *
+     * @return array
+     */
+    public function GeefVakGegevens($code, $year, $lang)
+    {
+        $vraag = new Vraag(__FUNCTION__);
+
+        $vraag->addProperty(new Property('Studiejaar', 'int', $year));
+        $vraag->addProperty(new Property('Vakcode', 'string', $code));
+        $vraag->addProperty(new Property('Taal', 'string', $lang));
+
+        return $this->call($vraag);
+    }
+
+    /**
      * ZoekActiviteitenOpDoelgroep API call.
      *
      * @param array $studies

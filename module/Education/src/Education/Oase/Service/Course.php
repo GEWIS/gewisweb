@@ -15,6 +15,13 @@ class Course
      */
     protected $client;
 
+    /**
+     * Studies map.
+     *
+     * @var array
+     */
+    protected $map;
+
 
     /**
      * Constructor.
@@ -41,6 +48,19 @@ class Course
     }
 
     /**
+     * Create a studies map.
+     *
+     * @param array $studies
+     */
+    protected function createStudiesMap($studies)
+    {
+        $this->map = array();
+        foreach ($studies as $study) {
+            $this->map[$study->getName()] = $study;
+        }
+    }
+
+    /**
      * Extract group ID's
      *
      * @param array $studies
@@ -55,6 +75,41 @@ class Course
     }
 
     /**
+     * Get more information from a course.
+     *
+     * @param SimpleXMLElement $course
+     *
+     * @return SimpleXMLElement Course info
+     */
+    protected function getCourseInfo($course)
+    {
+        $year = $course->LaatsteStudiejaarGegeven->__toString();
+        $year = empty($year) ? '2013' : $year;
+        $code = $course->ActCode->__toString();
+
+        $course = $this->client->GeefVakGegevens($code, $year, 'NL');
+
+        $studies = array();
+
+        // first check if it actually is a study we want
+        foreach ($course->DoelgroepBlokken->DoelgroepBlok as $blok) {
+            foreach ($blok->Doelgroepen->Doelgroep as $doelgroep) {
+                $name = $doelgroep->DoelgroepOmschr->__toString();
+                if (isset($this->map[$name])) {
+                    $studies[] = $this->map[$name];
+                }
+            }
+        }
+
+        if (empty($studies)) {
+            return null;
+        }
+        return array(
+            'studies' => $studies
+        );
+    }
+
+    /**
      * Get courses
      *
      * @param array $studies
@@ -63,6 +118,8 @@ class Course
      */
     public function getCourses($studies)
     {
+        $this->createStudiesMap($studies);
+
         $groups = $this->extractGroupIds($studies);
         $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'NL');
         $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'EN');
@@ -74,11 +131,11 @@ class Course
          // merge
         $courses = array_merge($courses1, $courses2);
 
-        // turn into course codes
-        $codes = array_map(function ($course) {
-            return $course->ActCode->__toString();
-        }, $courses);
+        // NOTE: looks like a simple map, but the mapped function actually
+        // gets a LOT of info from OASE per course
+        $info = array_map(array($this, 'getCourseInfo'), $courses);
 
-        return $codes;
+        // filter
+        return array_values(array_filter($info, function($data) { return null !== $data; }));
     }
 }
