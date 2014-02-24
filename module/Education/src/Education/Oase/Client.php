@@ -25,20 +25,6 @@ class Client
     }
 
     /**
-     * Extract group ID's
-     *
-     * @param array $studies
-     *
-     * @return array Group ID's
-     */
-    public function extractGroupIds($studies)
-    {
-        return array_unique(array_map(function ($study) {
-            return $study->getGroupId();
-        }, $studies));
-    }
-
-    /**
      * ZoekActiviteitenOpDoelgroep API call.
      *
      * @param array $studies
@@ -46,17 +32,15 @@ class Client
      *
      * @return array
      */
-    public function ZoekActiviteitenOpDoelgroep($studies, $lang)
+    public function ZoekActiviteitenOpDoelgroep($groups, $lang)
     {
         $vraag = new Vraag(__FUNCTION__);
 
         $vraag->addProperty(new Property("AlleZoekwoorden", "boolean", "false"));
         $vraag->addProperty(new Property("ExamensRetourneren", "boolean", "false"));
 
-        $groepen = $this->extractGroupIds($studies);
-
-        foreach ($groepen as $groep) {
-            $vraag->addProperty(new Property("GroepscategorieId", "short", $groep));
+        foreach ($groups as $group) {
+            $vraag->addProperty(new Property("GroepscategorieId", "short", $group));
         }
 
         $vraag->addProperty(new Property("Jaargang", "string", "Alle"));

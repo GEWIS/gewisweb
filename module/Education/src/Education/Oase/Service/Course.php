@@ -31,13 +31,27 @@ class Course
      *
      * @param SimpleXMLElement $element
      */
-    public function toArray(\SimpleXMLElement $element)
+    protected function toArray(\SimpleXMLElement $element)
     {
         $ret = array();
         foreach ($element as $el) {
             $ret[] = $el;
         }
         return $ret;
+    }
+
+    /**
+     * Extract group ID's
+     *
+     * @param array $studies
+     *
+     * @return array Group ID's
+     */
+    protected function extractGroupIds($studies)
+    {
+        return array_unique(array_map(function ($study) {
+            return $study->getGroupId();
+        }, $studies));
     }
 
     /**
@@ -49,8 +63,9 @@ class Course
      */
     public function getCourses($studies)
     {
-        $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep($studies, 'NL');
-        $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep($studies, 'EN');
+        $groups = $this->extractGroupIds($studies);
+        $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'NL');
+        $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'EN');
 
         // turn them into arrays
         $courses1 = $this->toArray($activiteiten1->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
