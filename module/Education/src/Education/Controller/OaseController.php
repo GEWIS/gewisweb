@@ -18,6 +18,14 @@ class OaseController extends AbstractActionController {
         $oaseService->update();
     }
 
+    public function studiesAction()
+    {
+        // show all studies
+        $service = $this->getOaseService();
+
+        var_dump($service->getAllStudies());
+    }
+
     /**
      * Get the OASE service.
      */
