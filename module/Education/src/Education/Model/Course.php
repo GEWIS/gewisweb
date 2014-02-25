@@ -22,17 +22,9 @@ class Course implements ResourceInterface
     const QUARTILE_INTERIM = 'interim';
 
     /**
-     * Id column.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-
-    /**
      * Course code.
      *
+     * @ORM\Id
      * @ORM\Column(type="string")
      */
     protected $code;
@@ -77,7 +69,10 @@ class Course implements ResourceInterface
      * The studies that apply to the course.
      *
      * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
-     * @ORM\JoinTable(name="CoursesStudies")
+     * @ORM\JoinTable(name="CoursesStudies",
+     *      joinColumns={@ORM\JoinColumn(name="course_code", referencedColumnName="code")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="study_id", referencedColumnName="id")}
+     * )
      */
     protected $studies;
 
@@ -96,16 +91,6 @@ class Course implements ResourceInterface
     {
         $this->studies = new ArrayCollection();
         $this->exams = new ArrayCollection();
-    }
-
-    /**
-     * Get the ID.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -179,6 +164,16 @@ class Course implements ResourceInterface
     }
 
     /**
+     * Set the course code.
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
      * Set the course name
      *
      * @param string $name
@@ -205,8 +200,45 @@ class Course implements ResourceInterface
      */
     public function addStudy(Study $study)
     {
-        $study->addCourse($this);
-        $this->studies[] = $study;
+        if (!$this->studies->contains($study)) {
+            $study->addCourse($this);
+            $this->studies[] = $study;
+        }
+    }
+
+    /**
+     * Add multiple studies.
+     *
+     * @param array $studies
+     */
+    public function addStudies($studies)
+    {
+        foreach ($studies as $study) {
+            $this->addStudy($study);
+        }
+    }
+
+    /**
+     * Remove a study.
+     *
+     * @param Study $study
+     */
+    public function removeStudy(Study $study)
+    {
+        $study->removeCourse($this);
+        $this->studies->removeElement($study);
+    }
+
+    /**
+     * Remove multiple studies.
+     *
+     * @param array $studies
+     */
+    public function removeStudies($studies)
+    {
+        foreach ($studies as $study) {
+            $this->removeStudy($study);
+        }
     }
 
     /**

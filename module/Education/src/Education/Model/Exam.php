@@ -38,6 +38,7 @@ class Exam implements ResourceInterface
      * Course belonging to this exam.
      *
      * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="exams")
+     * @ORM\JoinColumn(name="course_code",referencedColumnName="code")
      */
     protected $course;
 

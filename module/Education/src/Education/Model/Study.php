@@ -19,8 +19,9 @@ class Study
     /**
      * Study ID.
      *
+     * This is given by the OASE API.
+     *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
@@ -38,6 +39,13 @@ class Study
      * @ORM\Column(type="string")
      */
     protected $phase;
+
+    /**
+     * Group ID from OASE.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $groupId;
 
     /**
      * Courses belonging to this study.
@@ -86,6 +94,16 @@ class Study
     }
 
     /**
+     * Get the group id.
+     *
+     * @return int
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
+    }
+
+    /**
      * Get the courses in this study.
      *
      * @return array
@@ -93,6 +111,16 @@ class Study
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set the ID.
+     *
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -122,6 +150,16 @@ class Study
     }
 
     /**
+     * Set the group.
+     *
+     * @param int $group
+     */
+    public function setGroupId($group)
+    {
+        $this->groupId = $group;
+    }
+
+    /**
      * Add a course.
      *
      * @param Course $course
@@ -129,5 +167,15 @@ class Study
     public function addCourse(Course $course)
     {
         $this->courses[] = $course;
+    }
+
+    /**
+     * Remove a course.
+     *
+     * @param Course $course
+     */
+    public function removeCourse(Course $course)
+    {
+        $this->courses->removeElement($course);
     }
 }

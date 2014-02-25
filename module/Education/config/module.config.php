@@ -29,7 +29,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Education\Controller\Education' => 'Education\Controller\EducationController'
+            'Education\Controller\Education' => 'Education\Controller\EducationController',
+            'Education\Controller\Oase' => 'Education\Controller\OaseController'
         )
     ),
     'view_manager' => array(
@@ -47,6 +48,22 @@ return array(
             'orm_default' => array(
                 'drivers' => array(
                     'Education\Model' => 'education_entities'
+                )
+            )
+        )
+    ),
+    // console routes
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'oase' => array(
+                    'options' => array(
+                        'route' => 'oase update',
+                        'defaults' => array(
+                            'controller' => 'Education\Controller\Oase',
+                            'action' => 'index'
+                        )
+                    )
                 )
             )
         )
