@@ -70,8 +70,8 @@ class Course implements ResourceInterface
      *
      * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
      * @ORM\JoinTable(name="CoursesStudies",
-     *      joinColumns={@ORM\JoinColumn(name="study_id", referencedColumnName="code")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="course_code", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="course_code", referencedColumnName="code")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="study_id", referencedColumnName="id")}
      * )
      */
     protected $studies;
