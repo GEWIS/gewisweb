@@ -159,8 +159,19 @@ class Course
          // merge
         $courses = array_merge($courses1, $courses2);
 
-        // NOTE: looks like a simple map, but the mapped function actually
-        // gets a LOT of info from OASE per course
+        /*
+         * Filter duplicate courses out.
+         */
+        $tmpCourses = array();
+        // first we make it an associative array
+        foreach ($courses as $course) {
+            $tmpCourses[$course->ActCode->__toString()] = $course;
+        }
+        // now simply take just the values
+        $courses = array_values($tmpCourses);
+
+        // WARNING: looks like a simple map, but the mapped function actually
+        // gets a LOT of info from OASE per course, hence, this call takes quite long
         $info = array_map(array($this, 'getCourseInfo'), $courses);
 
         // filter
