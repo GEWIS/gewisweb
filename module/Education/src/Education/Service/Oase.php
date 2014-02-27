@@ -44,6 +44,16 @@ class Oase implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get all the studies.
+     *
+     * @return array Of all studies
+     */
+    public function getAllStudies()
+    {
+        return $this->getOaseStudyService()->getAllStudies();
+    }
+
+    /**
      * Get the course mapper.
      *
      * @return \Education\Mapper\Course

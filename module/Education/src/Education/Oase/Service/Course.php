@@ -61,7 +61,7 @@ class Course
     {
         $ret = array();
         foreach ($element as $el) {
-            $ret[] = $el;
+            $ret[$el->ActCode->__toString()] = $el;
         }
         return $ret;
     }
@@ -149,18 +149,27 @@ class Course
         $this->createStudiesMap($studies);
 
         $groups = $this->extractGroupIds($studies);
-        $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'NL');
-        $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep($groups, 'EN');
 
-        // turn them into arrays
-        $courses1 = $this->toArray($activiteiten1->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
-        $courses2 = $this->toArray($activiteiten2->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
+        // get all courses
+        $courses = array();
 
-         // merge
-        $courses = array_merge($courses1, $courses2);
+        foreach ($groups as $group) {
+            $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep(array($group), 'NL');
+            $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep(array($group), 'EN');
 
-        // NOTE: looks like a simple map, but the mapped function actually
-        // gets a LOT of info from OASE per course
+            // turn into nice arrays
+            $courses1 = $this->toArray($activiteiten1->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
+            $courses2 = $this->toArray($activiteiten2->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
+
+            // merge
+            $courses = array_merge($courses, $courses1);
+            $courses = array_merge($courses, $courses2);
+        }
+        // now simply take just the values
+        $courses = array_values($courses);
+
+        // WARNING: looks like a simple map, but the mapped function actually
+        // gets a LOT of info from OASE per course, hence, this call takes quite long
         $info = array_map(array($this, 'getCourseInfo'), $courses);
 
         // filter

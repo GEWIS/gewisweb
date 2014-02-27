@@ -64,6 +64,15 @@ return array(
                             'action' => 'index'
                         )
                     )
+                ),
+                'oase-show-studies' => array(
+                    'options' => array(
+                        'route' => 'oase show studies',
+                        'defaults' => array(
+                            'controller' => 'Education\Controller\Oase',
+                            'action' => 'studies'
+                        )
+                    )
                 )
             )
         )

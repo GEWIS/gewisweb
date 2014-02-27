@@ -76,6 +76,10 @@ return array(
                 "wiskunde",
                 "informatica",
                 "mathematics",
+                "finance and risk",
+                "information security technology",
+                "(eit-sde)",
+                "computational science and engineering",
                 "statistics, probability, and operations research",
                 "computer",
                 "security",
@@ -97,10 +101,13 @@ return array(
              * Only studies with these group ID's will be considered.
              */
             'group_ids' => array(
+                100, // diverse masters
                 110, // schakelprogramma's
+                150, // minoren
                 155, // HBO-minor
                 200, // bachelor (pre-bachelor-college)
                 210, // regulier onderwijs (incl. master)
+                212, // coherente keuzepakketten wss
             ),
             /**
              * Education types

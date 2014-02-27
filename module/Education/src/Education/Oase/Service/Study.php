@@ -199,4 +199,14 @@ class Study
         // convert doelgroepen to studies
         return array_map(array($this, 'createStudy'), $doelgroepen);
     }
+
+    /**
+     * Get all studies of the TU/e
+     *
+     * @return array
+     */
+    public function getAllStudies()
+    {
+        return $this->client->GeefDoelgroepen('2013', 'NL');
+    }
 }
