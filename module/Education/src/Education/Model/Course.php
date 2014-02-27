@@ -83,6 +83,20 @@ class Course implements ResourceInterface
      */
     protected $exams;
 
+    /**
+     * Parent course.
+     *
+     * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_code", referencedColumnName="code")
+     */
+    protected $parent;
+
+    /**
+     * Children of this course.
+     *
+     * @ORM\OneToMany(targetEntity="Education\Model\Course", mappedBy="parent")
+     */
+    protected $children;
 
     /**
      * Constructor.
@@ -91,6 +105,7 @@ class Course implements ResourceInterface
     {
         $this->studies = new ArrayCollection();
         $this->exams = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -219,6 +234,27 @@ class Course implements ResourceInterface
     }
 
     /**
+     * Set the parent course.
+     *
+     * @param Course $parent
+     */
+    public function setParent(Course $parent)
+    {
+        $parent->addChild($this);
+        $this->parent = $parent;
+    }
+
+    /**
+     * Add a child.
+     *
+     * @param Course $child
+     */
+    public function addChild(Course $child)
+    {
+        $this->children[] = $child;
+    }
+
+    /**
      * Remove a study.
      *
      * @param Study $study
@@ -268,6 +304,26 @@ class Course implements ResourceInterface
             throw new \InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
         }
         $this->quartile = $quartile;
+    }
+
+    /**
+     * Get the parent course.
+     *
+     * @return Child
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Get all children courses.
+     *
+     * @return ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 
     /**
