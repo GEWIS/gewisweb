@@ -13,6 +13,15 @@ class OaseController extends AbstractActionController {
 
     public function indexAction()
     {
+        $console = $this->getServiceLocator()->get('console');
+
+        echo "WARNING: this command will take very long to execute (20 minutes)\n";
+        echo "Do you want to continue? [y/N] ";
+
+        if (strtolower($console->readLine(1)) != 'y') {
+            return;
+        }
+
         $oaseService = $this->getOaseService();
 
         $oaseService->update();
