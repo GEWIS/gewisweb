@@ -73,7 +73,17 @@ return array(
                             'action' => 'studies'
                         )
                     )
+                ),
+                'oase-show-course' => array(
+                    'options' => array(
+                        'route' => 'oase show course <code>',
+                        'defaults' => array(
+                            'controller' => 'Education\Controller\Oase',
+                            'action' => 'course'
+                        )
+                    )
                 )
+
             )
         )
     )

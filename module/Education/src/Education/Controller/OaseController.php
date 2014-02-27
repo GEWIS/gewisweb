@@ -35,6 +35,14 @@ class OaseController extends AbstractActionController {
         var_dump($service->getAllStudies());
     }
 
+    public function courseAction()
+    {
+        // show a course
+        $service = $this->getOaseService();
+
+        var_dump($service->getCourse($this->getRequest()->getParam('code')));
+    }
+
     /**
      * Get the OASE service.
      */
