@@ -134,7 +134,18 @@ class Course
                              // from $course->Studiejaar
             'studies' => $studies
         );
-        return $this->hydrator->hydrate($data, new CourseModel());
+
+        // get the children course codes
+        $children = array();
+        foreach ($course->VakOnderdelen->VakOnderdeel as $child) {
+            $children[] = $child->OnderdeelVakcode->__toString();
+        }
+
+
+        return array(
+            'course' => $this->hydrator->hydrate($data, new CourseModel()),
+            'children' => $children
+        );
     }
 
     /**
@@ -165,15 +176,28 @@ class Course
             $courses = array_merge($courses, $courses1);
             $courses = array_merge($courses, $courses2);
         }
-        // now simply take just the values
-        $courses = array_values($courses);
 
         // WARNING: looks like a simple map, but the mapped function actually
         // gets a LOT of info from OASE per course, hence, this call takes quite long
         $info = array_map(array($this, 'getCourseInfo'), $courses);
 
-        // filter
-        return array_values(array_filter($info, function($data) { return null !== $data; }));
+        // filter null values
+        $info = array_filter($info, function($data) { return null !== $data; });
+
+        // match children
+        $ret = array();
+
+        foreach ($info as $code => $data) {
+            $course = $data['course'];
+            foreach ($data['children'] as $child) {
+                if (isset($info[$child])) {
+                    $info[$child]['course']->setParent($course);
+                }
+            }
+            $ret[] = $course;
+        }
+
+        return $ret;
     }
 
     /**
