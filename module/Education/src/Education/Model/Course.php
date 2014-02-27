@@ -10,7 +10,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Course.
  *
  * @ORM\Entity
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="code_idx",columns={"code"})})
  */
 class Course implements ResourceInterface
 {
