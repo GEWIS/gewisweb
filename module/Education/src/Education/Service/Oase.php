@@ -44,6 +44,18 @@ class Oase implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get course info.
+     *
+     * @param string $code
+     *
+     * @return SimpleXMLElement
+     */
+    public function getCourse($code)
+    {
+        return $this->getOaseCourseService()->getCourse($code);
+    }
+
+    /**
      * Get all the studies.
      *
      * @return array Of all studies

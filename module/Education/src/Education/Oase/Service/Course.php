@@ -175,4 +175,16 @@ class Course
         // filter
         return array_values(array_filter($info, function($data) { return null !== $data; }));
     }
+
+    /**
+     * Get a single course.
+     *
+     * @param string $code
+     *
+     * @return SimpleXMLElement
+     */
+    public function getCourse($code)
+    {
+        return $this->client->GeefVakGegevens($code, '2013', 'NL');
+    }
 }
