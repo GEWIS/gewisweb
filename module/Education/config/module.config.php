@@ -26,10 +26,36 @@ return array(
                 ),
             ),
         ),
+        'routes' => array(
+            'admin_education' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin/education',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Education\Controller',
+                        'controller'    => 'Admin',
+                        'action'        => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '[/:action]',
+                            'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        )
     ),
     'controllers' => array(
         'invokables' => array(
             'Education\Controller\Education' => 'Education\Controller\EducationController',
+            'Education\Controller\Admin' => 'Education\Controller\AdminController',
             'Education\Controller\Oase' => 'Education\Controller\OaseController'
         )
     ),
