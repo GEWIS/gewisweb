@@ -11,6 +11,13 @@ class AdminController extends AbstractActionController {
     {
     }
 
+    public function uploadAction()
+    {
+        return new ViewModel(array(
+            'form' => $this->getExamService()->getUploadForm()
+        ));
+    }
+
     /**
      * Get the exam service.
      */

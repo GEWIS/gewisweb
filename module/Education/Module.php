@@ -43,6 +43,11 @@ class Module
                 'education_service_oase' => 'Education\Service\Oase'
             ),
             'factories' => array(
+                'education_form_upload' => function ($sm) {
+                    return new \Education\Form\Upload(
+                        $sm->get('translator')
+                    );
+                },
                 'education_form_searchcourse' => function ($sm) {
                     return new \Education\Form\SearchCourse(
                         $sm->get('translator')

@@ -19,6 +19,16 @@ class Exam implements ServiceManagerAwareInterface
     protected $sm;
 
     /**
+     * Get the Upload form.
+     *
+     * @return \Education\Form\Upload
+     */
+    public function getUploadForm()
+    {
+        return $this->sm->get('education_form_upload');
+    }
+
+    /**
      * Get the SearchExam form.
      *
      * @return \Education\Form\SearchCourse

@@ -1,0 +1,26 @@
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('admin_education/default', array('action' => 'upload')));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+?>
+<?php echo $this->form()->openTag($form); ?>
+
+    <div class="form-group">
+        <?php $fileElement = $form->get('upload'); ?>
+        <?php echo $this->formLabel($fileElement); ?>
+        <?php echo $this->formFile($fileElement); ?>
+        <?php echo $this->formElementErrors($fileElement); ?>
+    </div>
+
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Upload'));
+$submit->setAttribute('class', 'btn btn-default');
+?>
+<?= $this->formButton($submit) ?>
+
+<?php echo $this->form()->closeTag(); ?>
