@@ -55,5 +55,7 @@ class Upload extends Form
                 )
             )
         ));
+
+        $this->setInputFilter($filter);
     }
 }

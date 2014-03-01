@@ -18,6 +18,30 @@ class Exam implements ServiceManagerAwareInterface
      */
     protected $sm;
 
+    /**
+     * Upload a new exam.
+     *
+     * @param array $post POST Data
+     * @param array $files FILES Data
+     *
+     * @return boolean
+     */
+    public function upload($post, $files)
+    {
+        $form = $this->getUploadForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        // TODO handle upload
+
+        return true;
+    }
 
     /**
      * Check if a operation is allowed for the current user.
@@ -60,6 +84,8 @@ class Exam implements ServiceManagerAwareInterface
      * Get the Upload form.
      *
      * @return \Education\Form\Upload
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
      */
     public function getUploadForm()
     {
