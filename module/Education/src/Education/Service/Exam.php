@@ -18,6 +18,7 @@ class Exam implements ServiceManagerAwareInterface
      */
     protected $sm;
 
+
     /**
      * Check if a operation is allowed for the current user.
      *
@@ -62,6 +63,12 @@ class Exam implements ServiceManagerAwareInterface
      */
     public function getUploadForm()
     {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->sm->get('translator');
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
         return $this->sm->get('education_form_upload');
     }
 
@@ -73,6 +80,16 @@ class Exam implements ServiceManagerAwareInterface
     public function getSearchCourseForm()
     {
         return $this->sm->get('education_form_searchcourse');
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->sm->get('translator');
     }
 
     /**
