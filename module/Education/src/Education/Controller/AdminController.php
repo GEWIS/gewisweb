@@ -13,6 +13,13 @@ class AdminController extends AbstractActionController {
 
     public function uploadAction()
     {
+        if (!$this->getExamService()->isAllowed('upload')) {
+            $translator = $this->getServiceLocator()->get('translator');
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
+
         return new ViewModel(array(
             'form' => $this->getExamService()->getUploadForm()
         ));

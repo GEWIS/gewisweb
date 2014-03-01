@@ -107,6 +107,19 @@ class Module
                     $service->setHydrator($sm->get('education_hydrator_study'));
                     return $service;
                 },
+                'education_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+
+                    // add resource
+                    $acl->addResource('exam');
+
+                    // users (logged in GEWIS members) are allowed to view exams
+                    // TODO: besides users, also people on the TU/e network
+                    // are allowed to view exams
+                    $acl->allow('user', 'exam', 'view');
+
+                    return $acl;
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'education_doctrine_em' => function ($sm) {
