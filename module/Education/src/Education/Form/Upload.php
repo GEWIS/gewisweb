@@ -35,5 +35,25 @@ class Upload extends Form
 
     protected function initFilters()
     {
+        $filter = new InputFilter();
+
+        $filter->add(array(
+            'name' => 'upload',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'File\Extension',
+                    'options' => array(
+                        'extension' => 'pdf'
+                    )
+                ),
+                array(
+                    'name' => 'File\MimeType',
+                    'options' => array(
+                        'mimeType' => 'application/pdf'
+                    )
+                )
+            )
+        ));
     }
 }
