@@ -114,6 +114,16 @@ class Exam implements ServiceManagerAwareInterface
     }
 
     /**
+     * Get the exam mapper.
+     *
+     * @return \Education\Mapper\Exam
+     */
+    public function getExamMapper()
+    {
+        return $this->sm->get('education_mapper_exam');
+    }
+
+    /**
      * Get the translator.
      *
      * @return Translator
