@@ -14,6 +14,18 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'course' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/course/:code',
+                            'constraints' => array(
+                                'code' => '[a-zA-Z0-9]{5,6}'
+                            ),
+                            'defaults' => array(
+                                'action' => 'course'
+                            )
+                        )
+                    ),
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
@@ -22,11 +34,9 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                         ),
-                    ),
+                    )
                 ),
             ),
-        ),
-        'routes' => array(
             'admin_education' => array(
                 'type' => 'Literal',
                 'options' => array(

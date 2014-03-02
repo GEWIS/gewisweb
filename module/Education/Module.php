@@ -141,4 +141,25 @@ class Module
             )
         );
     }
+
+    /**
+     * Get view helper configuration.
+     *
+     * @return array
+     */
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'examUrl' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $config = $locator->get('config');
+                    $helper = new \Education\View\Helper\ExamUrl();
+                    $helper->setDir($config['education']['public_dir']);
+                    $helper->setExamService($locator->get('education_service_exam'));
+                    return $helper;
+                }
+            )
+        );
+    }
 }
