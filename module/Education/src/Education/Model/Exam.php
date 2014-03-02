@@ -83,6 +83,16 @@ class Exam implements ResourceInterface
     }
 
     /**
+     * Set the course.
+     *
+     * @param Course $course
+     */
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+
+    /**
      * Get the resource ID.
      *
      * @return string

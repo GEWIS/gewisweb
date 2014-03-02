@@ -43,9 +43,21 @@ class Module
                 'education_service_oase' => 'Education\Service\Oase'
             ),
             'factories' => array(
+                'education_form_upload' => function ($sm) {
+                    $form = new \Education\Form\Upload(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('education_hydrator_exam'));
+                    return $form;
+                },
                 'education_form_searchcourse' => function ($sm) {
                     return new \Education\Form\SearchCourse(
                         $sm->get('translator')
+                    );
+                },
+                'education_mapper_exam' => function ($sm) {
+                    return new \Education\Mapper\Exam(
+                        $sm->get('education_doctrine_em')
                     );
                 },
                 'education_mapper_course' => function ($sm) {
@@ -68,6 +80,12 @@ class Module
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Course'
+                    );
+                },
+                'education_hydrator_exam' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em'),
+                        'Education\Model\Exam'
                     );
                 },
                 'education_oase_soapclient' => function ($sm) {
@@ -101,6 +119,19 @@ class Module
                     $service->setEducationTypes($config['education_types']);
                     $service->setHydrator($sm->get('education_hydrator_study'));
                     return $service;
+                },
+                'education_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+
+                    // add resource
+                    $acl->addResource('exam');
+
+                    // users (logged in GEWIS members) are allowed to view exams
+                    // TODO: besides users, also people on the TU/e network
+                    // are allowed to view exams
+                    $acl->allow('user', 'exam', 'view');
+
+                    return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
