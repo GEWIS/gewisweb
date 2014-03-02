@@ -2,8 +2,7 @@
 
 namespace Education\Service;
 
-use Zend\ServiceManager\ServiceManager,
-    Zend\ServiceManager\ServiceManagerAwareInterface;
+use Application\Service\AbstractService;
 
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
@@ -13,15 +12,8 @@ use Zend\Form\FormInterface;
 /**
  * Exam service.
  */
-class Exam implements ServiceManagerAwareInterface
+class Exam extends AbstractService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
 
     /**
      * Upload a new exam.
@@ -184,7 +176,7 @@ class Exam implements ServiceManagerAwareInterface
     public function getUploadForm()
     {
         if (!$this->isAllowed('upload')) {
-            $translator = $this->sm->get('translator');
+            $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to upload exams')
             );
@@ -211,35 +203,4 @@ class Exam implements ServiceManagerAwareInterface
     {
         return $this->sm->get('education_mapper_exam');
     }
-
-    /**
-     * Get the translator.
-     *
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return $this->sm->get('translator');
-    }
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get the service manager.
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->sm;
-    }
 }
-
