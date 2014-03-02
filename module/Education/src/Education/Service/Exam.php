@@ -39,6 +39,7 @@ class Exam implements ServiceManagerAwareInterface
         }
 
         // TODO handle upload
+        var_dump($form->getData());
 
         return true;
     }

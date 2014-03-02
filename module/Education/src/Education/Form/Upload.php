@@ -14,6 +14,22 @@ class Upload extends Form
         parent::__construct();
 
         $this->add(array(
+            'name' => 'course',
+            'type' => 'text',
+            'options' => array(
+                'label' => $translator->translate('Course code')
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'date',
+            'type' => 'date',
+            'options' => array(
+                'label' => $translator->translate('Exam date')
+            )
+        ));
+
+        $this->add(array(
             'name' => 'upload',
             'type' => 'file',
             'option' => array(
@@ -36,6 +52,33 @@ class Upload extends Form
     protected function initFilters()
     {
         $filter = new InputFilter();
+
+
+        $filter->add(array(
+            'name' => 'course',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'string_length',
+                    'options' => array(
+                        'min' => 5,
+                        'max' => 6
+                    )
+                ),
+                array('name' => 'alnum')
+            ),
+            'filters' => array(
+                array('name' => 'string_to_upper')
+            )
+        ));
+
+        $filter->add(array(
+            'name' => 'date',
+            'required' => true,
+            'validators' => array(
+                array('name' => 'date')
+            )
+        ));
 
         $filter->add(array(
             'name' => 'upload',
