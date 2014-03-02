@@ -73,8 +73,15 @@ class Exam implements ServiceManagerAwareInterface
      */
     protected function finishUpload(ExamModel $exam, array $upload)
     {
-        var_dump($this->examToFilename($exam));
-        var_dump($upload);
+        $config = $this->getConfig();
+
+        $filename = $config['upload_dir'] . '/' . $this->examToFilename($exam);
+
+        // make sure the directory exists, and move the file
+        if (!is_dir(dirname($filename))) {
+            mkdir(dirname($filename), $config['dir_mode'], true);
+        }
+        move_uploaded_file($upload['tmp_name'], $filename);
     }
 
     /**
@@ -100,6 +107,17 @@ class Exam implements ServiceManagerAwareInterface
         }
 
         return $dir . '-' . $exam->getId() . '.pdf';
+    }
+
+    /**
+     * Get the education config, as used by this service.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+        return $config['education'];
     }
 
     /**

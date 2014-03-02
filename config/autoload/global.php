@@ -43,7 +43,8 @@ return array(
      * Exam and Summary upload directory configration.
      */
     'education' => array(
-        'upload_dir' => 'public/data/education/'
+        'upload_dir' => 'public/data/education',
+        'dir_mode' => 0777, // rwx by default
     ),
 
     /**
