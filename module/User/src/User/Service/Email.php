@@ -2,25 +2,17 @@
 
 namespace User\Service;
 
+use Application\Service\AbstractService;
+
 use User\Model\NewUser as NewUserModel;
 
 use Decision\Model\Member as MemberModel;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
 
-class Email implements ServiceManagerAwareInterface
+class Email extends AbstractService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
 
     /**
      * Send registration email.
@@ -93,25 +85,5 @@ class Email implements ServiceManagerAwareInterface
     {
         $config = $this->sm->get('config');
         return $config['email'];
-    }
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get the service manager.
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->sm;
     }
 }

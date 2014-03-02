@@ -2,6 +2,8 @@
 
 namespace User\Service;
 
+use Application\Service\AbstractService;
+
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
 use User\Mapper\User as UserMapper;
@@ -10,21 +12,11 @@ use User\Form\Register as RegisterForm;
 
 use Decision\Model\Member as MemberModel;
 
-use Zend\ServiceManager\ServiceManager,
-    Zend\ServiceManager\ServiceManagerAwareInterface;
-
 /**
  * User service.
  */
-class User implements ServiceManagerAwareInterface
+class User extends AbstractService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
 
     /**
      * Activate a user.
@@ -274,25 +266,5 @@ class User implements ServiceManagerAwareInterface
     public function getEmailService()
     {
         return $this->sm->get('user_service_email');
-    }
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get the service manager.
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->sm;
     }
 }
