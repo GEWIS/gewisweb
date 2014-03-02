@@ -53,6 +53,27 @@ class Course
     }
 
     /**
+     * Find a course by code.
+     *
+     * @param string $code
+     *
+     * @return CourseModel
+     */
+    public function findByCode($code)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('c, e')
+            ->from('Education\Model\Course', 'c')
+            ->where('c.code = ?1')
+            ->leftJoin('c.exams', 'e');
+        $qb->setParameter(1, $code);
+
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

@@ -4,6 +4,7 @@ namespace Education\Service;
 
 use Application\Service\AbstractAclService;
 
+use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 
@@ -14,6 +15,18 @@ use Zend\Form\FormInterface;
  */
 class Exam extends AbstractAclService
 {
+
+    /**
+     * Get a course
+     *
+     * @param string $code
+     *
+     * @return CourseModel
+     */
+    public function getCourse($code)
+    {
+        return $this->getCourseMapper()->findByCode($code);
+    }
 
     /**
      * Upload a new exam.
@@ -155,6 +168,16 @@ class Exam extends AbstractAclService
     public function getSearchCourseForm()
     {
         return $this->sm->get('education_form_searchcourse');
+    }
+
+    /**
+     * Get the course mapper.
+     *
+     * @return \Education\Mapper\Course
+     */
+    public function getCourseMapper()
+    {
+        return $this->getServiceManager()->get('education_mapper_course');
     }
 
     /**

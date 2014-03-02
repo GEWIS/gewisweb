@@ -16,7 +16,9 @@ class EducationController extends AbstractActionController {
 
     public function courseAction()
     {
+        $code = $this->params()->fromRoute('code');
         return new ViewModel(array(
+            'course' => $this->getExamService()->getCourse($code)
         ));
     }
 
