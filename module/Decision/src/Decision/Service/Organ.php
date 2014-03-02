@@ -2,24 +2,16 @@
 
 namespace Decision\Service;
 
+use Application\Service\AbstractAclService;
+
 use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
-
-use Zend\ServiceManager\ServiceManager,
-    Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * User service.
  */
-class Organ implements ServiceManagerAwareInterface
+class Organ extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
 
     /**
      * Get organs.
@@ -48,30 +40,13 @@ class Organ implements ServiceManagerAwareInterface
     }
 
     /**
-     * Check if a operation is allowed for the current user.
+     * Get the default resource ID.
      *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @return boolean
+     * @return string
      */
-    public function isAllowed($operation, $resource = 'organ')
+    protected function getDefaultResourceId()
     {
-        return $this->getAcl()->isAllowed(
-            $this->getRole(),
-            $resource,
-            $operation
-        );
-    }
-
-    /**
-     * Get the current user's role.
-     *
-     * @return UserModel|string
-     */
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
+        return 'organ';
     }
 
     /**
@@ -82,35 +57,5 @@ class Organ implements ServiceManagerAwareInterface
     public function getAcl()
     {
         return $this->sm->get('decision_acl');
-    }
-
-    /**
-     * Get the translator.
-     *
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return $this->sm->get('translator');
-    }
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get the service manager.
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->sm;
     }
 }

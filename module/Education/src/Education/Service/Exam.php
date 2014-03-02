@@ -2,8 +2,7 @@
 
 namespace Education\Service;
 
-use Zend\ServiceManager\ServiceManager,
-    Zend\ServiceManager\ServiceManagerAwareInterface;
+use Application\Service\AbstractAclService;
 
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
@@ -13,15 +12,8 @@ use Zend\Form\FormInterface;
 /**
  * Exam service.
  */
-class Exam implements ServiceManagerAwareInterface
+class Exam extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
 
     /**
      * Upload a new exam.
@@ -138,43 +130,6 @@ class Exam implements ServiceManagerAwareInterface
     }
 
     /**
-     * Check if a operation is allowed for the current user.
-     *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @return boolean
-     */
-    public function isAllowed($operation, $resource = 'exam')
-    {
-        return $this->getAcl()->isAllowed(
-            $this->getRole(),
-            $resource,
-            $operation
-        );
-    }
-
-    /**
-     * Get the current user's role.
-     *
-     * @return UserModel|string
-     */
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Zend\Permissions\Acl\Acl
-     */
-    public function getAcl()
-    {
-        return $this->sm->get('education_acl');
-    }
-
-    /**
      * Get the Upload form.
      *
      * @return \Education\Form\Upload
@@ -184,7 +139,7 @@ class Exam implements ServiceManagerAwareInterface
     public function getUploadForm()
     {
         if (!$this->isAllowed('upload')) {
-            $translator = $this->sm->get('translator');
+            $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to upload exams')
             );
@@ -213,33 +168,22 @@ class Exam implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the translator.
+     * Get the Acl.
      *
-     * @return Translator
+     * @return Zend\Permissions\Acl\Acl
      */
-    public function getTranslator()
+    public function getAcl()
     {
-        return $this->sm->get('translator');
+        return $this->getServiceManager()->get('education_acl');
     }
 
     /**
-     * Set the service manager.
+     * Get the default resource ID.
      *
-     * @param ServiceManager $sm
+     * @return string
      */
-    public function setServiceManager(ServiceManager $sm)
+    protected function getDefaultResourceId()
     {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get the service manager.
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->sm;
+        return 'exam';
     }
 }
-
