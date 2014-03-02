@@ -91,6 +91,14 @@ class Exam implements ServiceManagerAwareInterface
      * choked up on the directory size. By dividing it into subdirectories, we
      * get a much better performance from the filesystem.
      *
+     * Exams will have a filename of the following format:
+     *
+     * <code>-<id>-exam-<year>-<month>-<day>.pdf
+     *
+     * Summaries have the following format:
+     *
+     * <code>-<id>-<author>-summary-<year>-<month>-<day>.php
+     *
      * @param ExamModel $exam
      *
      * @return string Filename
@@ -100,13 +108,22 @@ class Exam implements ServiceManagerAwareInterface
         $code = $exam->getCourse()->getCode();
         $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';
 
+        $filename = array();
+
+        $filename[] = $code;
+        $filename[] = $exam->getId();
+
         if ($exam instanceof SummaryModel) {
-            $dir .= 'summary';
+            $filename[] = $exam->getAuthor();
+            $filename[] = 'summary';
         } else {
-            $dir .= 'exam';
+            $filename[] = 'exam';
         }
 
-        return $dir . '-' . $exam->getId() . '.pdf';
+        $filename[] = $exam->getDate()->format('Y-m-d');
+
+
+        return $dir . implode('-', $filename) . '.pdf';
     }
 
     /**
