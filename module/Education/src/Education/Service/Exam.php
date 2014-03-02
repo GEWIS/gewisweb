@@ -108,7 +108,7 @@ class Exam extends AbstractAclService
      *
      * @return string Filename
      */
-    protected function examToFilename(ExamModel $exam)
+    public function examToFilename(ExamModel $exam)
     {
         $code = $exam->getCourse()->getCode();
         $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';

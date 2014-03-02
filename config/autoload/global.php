@@ -44,6 +44,7 @@ return array(
      */
     'education' => array(
         'upload_dir' => 'public/data/education',
+        'public_dir' => 'data/education',
         'dir_mode' => 0777, // rwx by default
     ),
 

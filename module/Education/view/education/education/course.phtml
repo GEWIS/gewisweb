@@ -1,2 +1,15 @@
-<?php
-var_dump($this->course);
+<h1><?= $course->getCode() ?> - <?= $course->getName() ?></h1>
+
+<ul>
+    <li><strong>Course url:</strong> <a href="<?= $course->getUrl() ?>">
+    <?= $course->getUrl() ?>
+    </a></li>
+</ul>
+
+<ul>
+<?php foreach ($course->getExams() as $exam): ?>
+    <li><a href="<?= $this->examUrl($exam) ?>">
+    <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+    </a></li>
+<?php endforeach; ?>
+</ul>
