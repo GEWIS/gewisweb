@@ -36,7 +36,8 @@ class Bootstrap
             ),
             'modules' => array(
                 'Decision',
-                'User'
+                'User',
+                'Application'
             )
         );
 
