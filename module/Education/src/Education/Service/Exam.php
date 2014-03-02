@@ -6,6 +6,9 @@ use Zend\ServiceManager\ServiceManager,
     Zend\ServiceManager\ServiceManagerAwareInterface;
 
 use Education\Model\Exam as ExamModel;
+use Education\Model\Summary as SummaryModel;
+
+use Zend\Form\FormInterface;
 
 /**
  * Exam service.
@@ -42,6 +45,7 @@ class Exam implements ServiceManagerAwareInterface
         }
 
         $exam = $form->getData();
+        $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
         /**
          * Persist the exam and save the uploaded file.
@@ -52,12 +56,50 @@ class Exam implements ServiceManagerAwareInterface
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $this->getExamMapper()->transactional(function ($mapper) use ($exam) {
+        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data) {
             $mapper->persist($exam);
-            var_dump($exam);
+
+            $this->finishUpload($exam, $data['upload']);
         });
 
         return true;
+    }
+
+    /**
+     * Move the uploaded file to the right place.
+     *
+     * @param ExamModel $exam
+     * @param array $upload Upload data
+     */
+    protected function finishUpload(ExamModel $exam, array $upload)
+    {
+        var_dump($this->examToFilename($exam));
+        var_dump($upload);
+    }
+
+    /**
+     * Get a filename from an exam (or summary).
+     *
+     * We do this, since we have so many courses, that most filesystems get
+     * choked up on the directory size. By dividing it into subdirectories, we
+     * get a much better performance from the filesystem.
+     *
+     * @param ExamModel $exam
+     *
+     * @return string Filename
+     */
+    protected function examToFilename(ExamModel $exam)
+    {
+        $code = $exam->getCourse()->getCode();
+        $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';
+
+        if ($exam instanceof SummaryModel) {
+            $dir .= 'summary';
+        } else {
+            $dir .= 'exam';
+        }
+
+        return $dir . '-' . $exam->getId() . '.pdf';
     }
 
     /**
