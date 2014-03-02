@@ -44,9 +44,11 @@ class Module
             ),
             'factories' => array(
                 'education_form_upload' => function ($sm) {
-                    return new \Education\Form\Upload(
+                    $form = new \Education\Form\Upload(
                         $sm->get('translator')
                     );
+                    $form->setHydrator($sm->get('education_hydrator_exam'));
+                    return $form;
                 },
                 'education_form_searchcourse' => function ($sm) {
                     return new \Education\Form\SearchCourse(
@@ -73,6 +75,12 @@ class Module
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Course'
+                    );
+                },
+                'education_hydrator_exam' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em'),
+                        'Education\Model\Exam'
                     );
                 },
                 'education_oase_soapclient' => function ($sm) {

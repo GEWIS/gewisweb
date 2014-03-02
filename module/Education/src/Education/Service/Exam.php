@@ -5,6 +5,8 @@ namespace Education\Service;
 use Zend\ServiceManager\ServiceManager,
     Zend\ServiceManager\ServiceManagerAwareInterface;
 
+use Education\Model\Exam as ExamModel;
+
 /**
  * Exam service.
  */
@@ -29,6 +31,7 @@ class Exam implements ServiceManagerAwareInterface
     public function upload($post, $files)
     {
         $form = $this->getUploadForm();
+        $form->bind(new ExamModel());
 
         $data = array_merge_recursive($post->toArray(), $files->toArray());
 
@@ -39,6 +42,7 @@ class Exam implements ServiceManagerAwareInterface
         }
 
         // TODO handle upload
+        var_dump($data);
         var_dump($form->getData());
 
         return true;
