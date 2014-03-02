@@ -2,7 +2,7 @@
 
 namespace Education\Service;
 
-use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
@@ -12,7 +12,7 @@ use Zend\Form\FormInterface;
 /**
  * Exam service.
  */
-class Exam extends AbstractService
+class Exam extends AbstractAclService
 {
 
     /**
@@ -130,43 +130,6 @@ class Exam extends AbstractService
     }
 
     /**
-     * Check if a operation is allowed for the current user.
-     *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @return boolean
-     */
-    public function isAllowed($operation, $resource = 'exam')
-    {
-        return $this->getAcl()->isAllowed(
-            $this->getRole(),
-            $resource,
-            $operation
-        );
-    }
-
-    /**
-     * Get the current user's role.
-     *
-     * @return UserModel|string
-     */
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Zend\Permissions\Acl\Acl
-     */
-    public function getAcl()
-    {
-        return $this->sm->get('education_acl');
-    }
-
-    /**
      * Get the Upload form.
      *
      * @return \Education\Form\Upload
@@ -202,5 +165,25 @@ class Exam extends AbstractService
     public function getExamMapper()
     {
         return $this->sm->get('education_mapper_exam');
+    }
+
+    /**
+     * Get the Acl.
+     *
+     * @return Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->getServiceManager()->get('education_acl');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'exam';
     }
 }
