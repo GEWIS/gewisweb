@@ -14,6 +14,12 @@ class EducationController extends AbstractActionController {
         ));
     }
 
+    public function courseAction()
+    {
+        return new ViewModel(array(
+        ));
+    }
+
     /**
      * Get the exam service.
      */
