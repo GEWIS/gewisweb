@@ -30,6 +30,21 @@ class Exam
     }
 
     /**
+     * Transactional Doctrine wrapper.
+     *
+     * Instead of the EntityManager, this inserts this Mapper into the
+     * function.
+     *
+     * @param Closure $func
+     */
+    public function transactional(\Closure $func)
+    {
+        return $this->em->transactional(function ($em) use ($func) {
+            return $func($this);
+        });
+    }
+
+    /**
      * Persist an exam
      *
      * @param ExamModel $exam

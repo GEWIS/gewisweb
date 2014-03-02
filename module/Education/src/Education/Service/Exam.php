@@ -41,9 +41,21 @@ class Exam implements ServiceManagerAwareInterface
             return false;
         }
 
-        // TODO handle upload
-        var_dump($data);
-        var_dump($form->getData());
+        $exam = $form->getData();
+
+        /**
+         * Persist the exam and save the uploaded file.
+         *
+         * We do this in a transactional block, so if there is something
+         * wrong, we only have to throw an exception and Doctrine will roll
+         * back the transaction. This comes in handy if we are somehow unable
+         * to process the upload. This does allow us to get the ID of the
+         * exam, which we need in the upload process.
+         */
+        $this->getExamMapper()->transactional(function ($mapper) use ($exam) {
+            $mapper->persist($exam);
+            var_dump($exam);
+        });
 
         return true;
     }
