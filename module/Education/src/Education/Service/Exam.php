@@ -17,6 +17,28 @@ class Exam extends AbstractAclService
 {
 
     /**
+     * Search for a course.
+     *
+     * @param array $data
+     *
+     * @return array Courses, null if form is not valid
+     */
+    public function searchCourse($data)
+    {
+        $form = $this->getSearchCourseForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        $data = $form->getData();
+        $query = $data['query'];
+
+        return $this->getCourseMapper()->search($query);
+    }
+
+    /**
      * Get a course
      *
      * @param string $code
