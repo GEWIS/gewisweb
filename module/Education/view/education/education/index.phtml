@@ -29,5 +29,21 @@ $submit->setAttribute('class', 'btn btn-default');
 
 <?= $this->form()->closeTag(); ?>
 
-<?php
-var_dump($courses);
+<?php if (!empty($courses)): ?>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th><?= $this->translate('Course code') ?></th>
+        <th><?= $this->translate('Course description') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+<?php foreach ($courses as $course): ?>
+    <tr>
+        <td><?= $course->getCode() ?></td>
+        <td><?= $course->getName() ?></td>
+    </tr>
+<?php endforeach; ?>
+    </tbody>
+</table>
+<?php endif; ?>
