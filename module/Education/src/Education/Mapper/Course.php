@@ -63,10 +63,13 @@ class Course
     {
         $qb = $this->em->createQueryBuilder();
 
-        $qb->select('c, e')
+        $qb->select('c, e, p, ch, ce')
             ->from('Education\Model\Course', 'c')
             ->where('c.code = ?1')
-            ->leftJoin('c.exams', 'e');
+            ->leftJoin('c.exams', 'e')
+            ->leftJoin('c.parent', 'p')
+            ->leftJoin('c.children', 'ch')
+            ->leftJoin('ch.exams', 'ce');
         $qb->setParameter(1, $code);
 
         $res = $qb->getQuery()->getResult();

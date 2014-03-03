@@ -6,7 +6,26 @@
     </a></li>
 </ul>
 
+<?php if (!empty($course->getChildren())): ?>
+<h2><?= $this->translate('Course parts') ?></h2>
 <ul>
+<?php foreach ($course->getChildren() as $child): ?>
+    <li><strong><?= $child->getCode() ?></strong> <?= $child->getName() ?></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<h2><?= $this->translate('Exams and summaries') ?></h2>
+
+<ul>
+<?php foreach ($course->getChildren() as $child): ?>
+    <?php foreach ($child->getExams() as $exam): ?>
+        <li><a href="<?= $this->examUrl($exam) ?>">
+        <strong>(<?= $child->getCode() ?>)</strong>
+        <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+        </a></li>
+    <?php endforeach; ?>
+<?php endforeach; ?>
 <?php foreach ($course->getExams() as $exam): ?>
     <li><a href="<?= $this->examUrl($exam) ?>">
     <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>

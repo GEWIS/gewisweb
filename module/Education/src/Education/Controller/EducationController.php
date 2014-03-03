@@ -17,8 +17,17 @@ class EducationController extends AbstractActionController {
     public function courseAction()
     {
         $code = $this->params()->fromRoute('code');
+        $course = $this->getExamService()->getCourse($code);
+
+        // when there is a parent course, redirect to that course
+        if (null !== $course->getParent()) {
+            return $this->redirect()->toRoute('education/course', array(
+                'code' => $course->getParent()->getCode()
+            ));
+        }
+
         return new ViewModel(array(
-            'course' => $this->getExamService()->getCourse($code)
+            'course' => $course
         ));
     }
 
