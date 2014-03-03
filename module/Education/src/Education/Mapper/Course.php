@@ -77,6 +77,27 @@ class Course
     }
 
     /**
+     * Search for courses.
+     *
+     * @param string $query
+     *
+     * @return array
+     */
+    public function search($query)
+    {
+        $query = '%' . $query . '%';
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('c')
+            ->from('Education\Model\Course', 'c')
+            ->where('c.code LIKE ?1')
+            ->orWhere('c.name LIKE ?1');
+        $qb->setParameter(1, $query);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
