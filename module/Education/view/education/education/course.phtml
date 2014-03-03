@@ -7,6 +7,14 @@
 </ul>
 
 <ul>
+<?php foreach ($course->getChildren() as $child): ?>
+    <?php foreach ($child->getExams() as $exam): ?>
+        <li><a href="<?= $this->examUrl($exam) ?>">
+        <strong>(<?= $child->getCode() ?>)</strong>
+        <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+        </a></li>
+    <?php endforeach; ?>
+<?php endforeach; ?>
 <?php foreach ($course->getExams() as $exam): ?>
     <li><a href="<?= $this->examUrl($exam) ?>">
     <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
