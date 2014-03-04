@@ -151,7 +151,7 @@ class SubDecision
      * @todo Determine all values for this
      * @todo Create constants for this
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
     protected $type;
 
