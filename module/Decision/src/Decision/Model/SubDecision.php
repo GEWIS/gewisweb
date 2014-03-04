@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 class SubDecision
 {
 
+    const FUNC_CHAIRMAN = 'chairman';
+    const FUNC_SECRETARY = 'secretary';
+    const FUNC_TREASURER = 'treasurer';
+    const FUNC_VICE_CHAIRMAN = 'vice-chairman';
+    const FUNC_PR_OFFICER = 'pr-officer';
+    const FUNC_EDUCATION_OFFICER = 'education-officer';
+
     /**
      * Decision.
      *
@@ -109,18 +116,29 @@ class SubDecision
      *
      * Can only be one of:
      * - chairman
-     * - treasurer
      * - secretary
+     * - treasurer
      * - vice-chairman
      * - pr-officer
      * - education-officer
      *
      * @todo Determine values of this for historical reasons
-     * @todo Create constants for this
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $function;
+
+    /**
+     * Possible function types.
+     */
+    protected static $functions = array(
+        self::FUNC_CHAIRMAN,
+        self::FUNC_SECRETARY,
+        self::FUNC_TREASURER,
+        self::FUNC_VICE_CHAIRMAN,
+        self::FUNC_PR_OFFICER,
+        self::FUNC_EDUCATION_OFFICER
+    );
 
     /**
      * Member for which this subdecision is applicable
@@ -146,9 +164,10 @@ class SubDecision
      * - installing member
      * - discharging members
      * - releasing member of function (is not a discharge (yet)!)
-     * - misc
+     * - budget
+     * - reckoning
+     * - other
      *
-     * @todo Determine all values for this
      * @todo Create constants for this
      *
      * @ORM\Column(type="string")
@@ -313,12 +332,15 @@ class SubDecision
     /**
      * Set the function.
      *
-     * @todo Make sure that the function is of an allowed value
-     *
      * @param string $function
+     *
+     * @throws \IllegalArgumentException when a nonexisting function is given.
      */
     public function setFunction($function)
     {
+        if (!in_array($function, self::$functions)) {
+            throw \IllegalArgumentException("Nonexisting function given.");
+        }
         $this->function = $function;
     }
 
