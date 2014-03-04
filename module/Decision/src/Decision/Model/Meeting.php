@@ -33,6 +33,13 @@ class Meeting
     protected $number;
 
     /**
+     * Meeting date.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $date;
+
+    /**
      * Allowed meeting types.
      *
      * @var array
@@ -86,5 +93,25 @@ class Meeting
     public function setNumber($number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * Get the meeting date.
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set the meeting date.
+     *
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
     }
 }
