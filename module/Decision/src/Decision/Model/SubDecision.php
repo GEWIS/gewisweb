@@ -90,6 +90,25 @@ class SubDecision
     protected $number;
 
     /**
+     * Referenced decision.
+     *
+     * We use this to reference to other decisions.
+     *
+     * Note that this reference always exsists if there also is a referenced
+     * subdecision. But the opposite does not have to hold. r_number might be
+     * null, thus then there only would be a reference to a decision.
+     *
+     * @ORM\ManyToOne(targetEntity="Decision\Model\Decision")
+     * @ORM\JoinColumns({
+     *  @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
+     *  @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
+     *  @ORM\JoinColumn(name="r_decision_point", referencedColumnName="point"),
+     *  @ORM\JoinColumn(name="r_decision_number", referencedColumnName="number")
+     * })
+     */
+    protected $decision_reference;
+
+    /**
      * Referenced subdecision.
      *
      * We use this to reference to other subdecisions. This can be to revoke
@@ -281,6 +300,26 @@ class SubDecision
     }
 
     /**
+     * Get the decision reference.
+     *
+     * @return Decision
+     */
+    public function getDecisionReference()
+    {
+        return $this->decision_reference;
+    }
+
+    /**
+     * Set the decision reference.
+     *
+     * @param Decision $reference
+     */
+    public function setDecisionReference(Decision $reference)
+    {
+        $this->decision_reference = $reference;
+    }
+
+    /**
      * Get the reference.
      *
      * @return SubDecision
@@ -293,9 +332,9 @@ class SubDecision
     /**
      * Set the reference.
      *
-     * @param Reference $reference
+     * @param SubDecision $reference
      */
-    public function setReference(Reference $reference)
+    public function setReference(SubDecision $reference)
     {
         $this->reference = $reference;
     }
