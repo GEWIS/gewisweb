@@ -6,7 +6,8 @@
     </a></li>
 </ul>
 
-<?php if (!empty($course->getChildren())): ?>
+<?php $children = $course->getChildren() ?>
+<?php if (!empty($children)): ?>
 <h2><?= $this->translate('Course parts') ?></h2>
 <ul>
 <?php foreach ($course->getChildren() as $child): ?>
