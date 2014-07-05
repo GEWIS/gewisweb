@@ -17,6 +17,7 @@ return array(
                     'album' => array(
                         'type'    => 'Segment',
                         'options' => array(
+                            'controller' => 'Album',
                             'route'    => '/album/[/:id]',
                             'constraints' => array(
                                 'id'     => '[0-9]+',
