@@ -14,12 +14,21 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
+                    'album' => array(
                         'type'    => 'Segment',
                         'options' => array(
                             'route'    => '/album/[/:id]',
                             'constraints' => array(
-                                'id'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'photo' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/photo/[/:id]',
+                            'constraints' => array(
+                                'id'     => '[0-9]+',
                             ),
                         ),
                     ),
