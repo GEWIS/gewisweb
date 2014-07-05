@@ -1,9 +1,7 @@
 <?php
-
 namespace Photo\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -14,7 +12,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * TODO: does this need a discriminator map?
  */
-class Exam implements ResourceInterface {
+class Photo implements ResourceInterface {
 
     /**
      * Photo ID.
@@ -82,7 +80,7 @@ class Exam implements ResourceInterface {
      * @param Album $album
      */
     public function setAlbum($album) {
-        $this->course = $album;
+        $this->album = $album;
         //TODO: move the actualy photo file to another album
     }
 
