@@ -1,1 +1,19 @@
-<font size="9"> WOUT FAALT </font>
+<?php if (!empty($albums)): ?>
+<!-- simple table here for now -->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Album name</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+<?php foreach ($albums as $album): ?>
+    <tr>
+        <td><?= $album->getName() ?></td>
+        <td><?= $album->getDate() ?></td>
+    </tr>
+<?php endforeach; ?>
+    </tbody>
+</table>
+<?php endif; ?>
