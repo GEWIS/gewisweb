@@ -78,7 +78,7 @@ class Album implements ResourceInterface {
      * @return string $name
      */
     public function getName() {
-        return $this->album;
+        return $this->name;
     }
 
     /**
@@ -99,6 +99,16 @@ class Album implements ResourceInterface {
         $this->name = $name;
     }
 
+    /**
+     * Set the parent of the album
+     * 
+     * @param album $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent=$parent;
+    }
+    
     /**
      * Get the resource ID.
      *
