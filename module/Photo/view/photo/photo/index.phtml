@@ -11,7 +11,7 @@
 <?php foreach ($albums as $album): ?>
     <tr>
         <td><?= $album->getName() ?></td>
-        <td><?= $album->getDate() ?></td>
+        <td><?= $album->getDate()->format('Y-m-d H:i') ?></td>
     </tr>
 <?php endforeach; ?>
     </tbody>
