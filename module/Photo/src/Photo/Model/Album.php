@@ -8,9 +8,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Album.
  *
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * TODO: does this need a discriminator map?
+ * 
  */
 class Album implements ResourceInterface {
 
@@ -36,6 +34,26 @@ class Album implements ResourceInterface {
      */
     protected $name;
 
+    /**
+     * Parent album, null if there is no parent album.
+     *
+     * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="photos")
+     * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
+     */
+    protected $parent;
+   
+    /**
+     * all the photo's in this album
+     * @ORM\OneToMany(targetEntity="Photo\Model\Photo", mappedBy="album")
+     */
+    protected $photos;
+    
+    /**
+     * all the subalbums
+     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="album")
+     * 
+     */
+    protected $children;
     /**
      * Get the ID.
      *

@@ -8,9 +8,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Photo.
  *
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * TODO: does this need a discriminator map?
  */
 class Photo implements ResourceInterface {
 
