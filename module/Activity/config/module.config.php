@@ -23,6 +23,12 @@ return array(
                             ),
                         ),
                     ),
+                    'create' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => 'activity/create'
+                        )
+                    )
                 ),
             ),
         ),
@@ -30,6 +36,14 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController'
+        ),
+        'factories' => array(
+            'Activity\Controller\Activity' => function ($sm) {
+                $controller = new Activity\Controller\ActivityController;
+                $activity = $sm->getServiceLocator()->get('activity_service');
+                $controller->setActivity($activity);
+                return $controller;
+            }
         )
     ),
     'view_manager' => array(

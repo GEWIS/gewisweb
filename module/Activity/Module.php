@@ -39,7 +39,11 @@ class Module
     public function getServiceConfig()
     {
         return array(
-
+            'factories' => array(
+                'Activity\Model\Activity' => function ($sm) {
+                    return new \Activity\Model\Activity();
+                }
+            )
         );
     }
 }

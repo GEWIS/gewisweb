@@ -2,7 +2,6 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Activity model
  *
@@ -19,6 +18,13 @@ class Activity
 	protected $id;
 
     /**
+     * Name for the activity
+     *
+     * @Orm\Column(type="string")
+     */
+    protected $name;
+
+    /**
      * The date and time the activity starts
      *
      * @ORM\Column(type="datetime")
@@ -28,7 +34,7 @@ class Activity
     /**
      * The date and time the activity ends
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
 	protected $endTime;
 
@@ -64,9 +70,46 @@ class Activity
     protected $onlyGEWIS;
 
     // TODO -> FK's
+    /**
+     * Who did approve this activity
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
+     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     */
     protected $approver;
+
+    /**
+     * Who created this activity
+     *
+     * @ORM\Column(nullable=false)
+     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
+     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     */
     protected $creator;
+
+    // TODO -> where can i find member organ?
     protected $organ;
 
-
+    /**
+     * Create a new activity
+     *
+     * @param array $params Parameters for the new activity
+     * @throws Exception If a activity is loaded
+     * @returns Model_Activity the created activity
+     */
+    public function create(array $params) {
+        if ($this->id != null) {
+            throw new Exception("There is already a loaded activity")
+        }
+        try{
+            $this->name = $params['name'];
+            $this->beginTime = $params['beginTime'];
+            $this->endTime = $params['endTime'];
+            $this->costs = $params['costs'];
+            $this->location = $params['location'];
+        } catch (Exception $e) {
+            throw new Exception("Not all parameters are set");
+        }
+        return $this;
+    }
 }
