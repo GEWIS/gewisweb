@@ -3,7 +3,9 @@
 namespace Activity\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use \Activity\Model\Activity as ActivityModel;
+use \Activity\Form\Activity as ActivityForm;
+
 
 class ActivityController extends AbstractActionController {
     private $modelActivity;
@@ -11,23 +13,25 @@ class ActivityController extends AbstractActionController {
         $sm = $this->getServiceLocator();
         $this->modelActivity = $sm->get('Activity\Model\Activity');
     }
+
 	public function indexAction() {
 	}
 
     public function createAction() {
-        print_r($this->modelActivity);
-        die;
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $activity = $this->modelActivity->create([
-                'name' => '',
-                'startDate' => '',
-                'endDate' => '',
-                'location' => '',
-                'costs' => ''
-            ]);
-            print_r($activity);
+        $form = new ActivityForm();
+        if ($this->getRequest()->isPost()) {
+            $activity = new ActivityModel();
+            $form->setInputFilter($activity->getInputFilter());
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $em = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
+                $activity->create($form->getData());
+                $em->persist($activity);
+                $em->flush();
+
+            }
         }
-        return new ViewModel();
+        return ['form' => $form];
     }
 
 }

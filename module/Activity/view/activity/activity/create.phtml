@@ -1,8 +1,11 @@
-<form action="" method="post">
-    Name: <input type="text" name="name"> <br>
-    Start Date/Time: <input type="text" name="beginTime"> (yyyy-mm-dd hh:mm)<br>
-    End Date/Time: <input type="text" name="endTime"> (yyyy-mm-dd hh:mm)<br>
-    Location: <input type="text" name="location"> <br>
-    Costs: <input type="text" name="costs"><br>
-    <input type="submit">
-</form>
+<?php
+$form->setAttribute('action', '');
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('name'));
+echo $this->formRow($form->get('beginTime'));
+echo $this->formRow($form->get('endTime'));
+echo $this->formRow($form->get('location'));
+echo $this->formRow($form->get('costs'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();

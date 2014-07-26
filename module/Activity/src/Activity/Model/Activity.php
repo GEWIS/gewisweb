@@ -2,18 +2,25 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+
+//input filter
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 /**
  * Activity model
  *
  * @ORM\Entity
  */
-class Activity
+class Activity implements InputFilterAwareInterface
 {
     /**
      * ID for the activity
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
 	protected $id;
 
@@ -87,29 +94,129 @@ class Activity
      */
     protected $creator;
 
+    /**
+     * Is this activity approved
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $approved;
+
+
     // TODO -> where can i find member organ?
     protected $organ;
+
+    /**
+     * Input filter to validate create/edit event form data
+     */
+    protected $inputFilter;
 
     /**
      * Create a new activity
      *
      * @param array $params Parameters for the new activity
-     * @throws Exception If a activity is loaded
-     * @returns Model_Activity the created activity
+     * @throws \Exception If a activity is loaded
+     * @return \Activity\Model\Activity the created activity
      */
     public function create(array $params) {
         if ($this->id != null) {
-            throw new Exception("There is already a loaded activity")
+            throw new \Exception("There is already a loaded activity");
         }
-        try{
-            $this->name = $params['name'];
-            $this->beginTime = $params['beginTime'];
-            $this->endTime = $params['endTime'];
-            $this->costs = $params['costs'];
-            $this->location = $params['location'];
-        } catch (Exception $e) {
-            throw new Exception("Not all parameters are set");
+        foreach(['name', 'beginTime', 'endTime', 'costs', 'location'] as $param) {
+            if (!isset($params[$param])) {
+                throw new \Exception("create: parameter $param not set");
+            }
+            $this->$param =  $params[$param];
         }
+
+        // TODO: These values need to be set correctly
+        $this->beginTime = new \DateTime('0000-00-00 00:00');
+        $this->endTime = new \DateTime('0000-00-00 00:00');
+        $this->canSignUp = true;
+        $this->onlyGEWIS = true;
+        $this->creator = 1;
+        $this->approved = 0;
         return $this;
     }
+
+    /*************** INPUT FILTEr*****************/
+    /** The code below this deals with the input filter
+     * of the create and edit activity form data
+     */
+
+    /**
+     * Get the input filter
+     *
+     * @return InputFilterInterface
+     */
+    public function getInputFilter() {
+        // Check if the input filter is set. If so, serve
+        if ($this->inputFilter) {
+            return $this->inputFilter;
+        }
+
+        $inputFilter = new InputFilter();
+        $factory = new InputFactory();
+        $inputFilter->add($factory->createInput([
+            'name' => 'name',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+                [
+                    'name'    => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min'      => 1,
+                        'max'      => 100,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'location',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+                [
+                    'name'    => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min'      => 1,
+                        'max'      => 100,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'costs',
+            'required' => true,
+            'filters' => [
+                ['name' => 'Int'],
+            ],
+            'validators' => [
+                [
+                    'name'    => 'Between',
+                    'options' => [
+                        'min'      => 0,
+                        'max'      => 10000,
+                    ],
+                ],
+            ],
+        ]));
+
+        $this->inputFilter = $inputFilter;
+        return $this->inputFilter;
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter) {
+        throw new \Exception("Not used");
+    }
+
 }
