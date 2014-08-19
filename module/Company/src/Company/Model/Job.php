@@ -115,9 +115,9 @@ class Job //implements RoleInterface, ResourceInterface
     }
     
     /**
-     * Set the company's address.
+     * Set the job's status.
      *
-     * @param string $address
+     * @param boolean $active
      */
     public function setActive($active)
     {
