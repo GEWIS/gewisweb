@@ -16,6 +16,60 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
 {
 
     /**
+     * The banner's image's URL.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $image;
+        
+    /**
+     * The banner's HTML.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $html;
+    
+    /**
+     * Get the banner's image's URL.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+    /**
+     * Set the banner's image's URL.
+     *
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+    
+    /**
+     * Get the banner's HTML.
+     *
+     * @return string
+     */
+    public function getHTML()
+    {
+        return $this->html;
+    }
+    
+    /**
+     * Set the banner's HTML.
+     *
+     * @param string $html
+     */
+    public function setHTML($html)
+    {
+        $this->html = $html;
+    }
+    
+    /**
      * Constructor
      */
     public function __construct()
