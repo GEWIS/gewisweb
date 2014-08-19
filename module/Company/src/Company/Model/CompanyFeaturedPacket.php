@@ -20,6 +20,7 @@ class CompanyFeaturedPacket extends CompanyPacket //implements RoleInterface, Re
      */
     public function __construct()
     {
+        parent::__construct();
         // todo
     }
 

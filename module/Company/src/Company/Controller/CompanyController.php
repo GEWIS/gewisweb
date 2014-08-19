@@ -13,5 +13,9 @@ class CompanyController extends AbstractActionController {
 	return $vm;
 	
 	}
-
+    
+    /**
+     * 
+     */
+    
 }
