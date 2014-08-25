@@ -20,7 +20,7 @@ class CreateAlbum extends Form {
         ));
 
         $this->add(array(
-            'name' => 'Author',
+            'name' => 'author',
             'type' => 'text',
             'options' => array(
                 'label' => $translate->translate('Author')
@@ -42,7 +42,19 @@ class CreateAlbum extends Form {
         $filter = new InputFilter();
 
         $filter->add(array(
-            'name' => 'query',
+            'name' => 'name',
+            'required' => true,
+            'validators' => array(
+                array('name' => 'not_empty'),
+                array('name' => 'alnum',
+                    'options' => array(
+                        'allowWhiteSpace' => true
+                    )
+                )
+            )
+        ));
+        $filter->add(array(
+            'name' => 'author',
             'required' => true,
             'validators' => array(
                 array('name' => 'not_empty'),
