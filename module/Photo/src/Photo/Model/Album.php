@@ -1,4 +1,5 @@
 <?php
+
 namespace Photo\Model;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ class Album implements ResourceInterface {
      * @ORM\Column(type="date")
      */
     protected $date;
+
     /**
      * Name of the album.
      *
@@ -41,13 +43,13 @@ class Album implements ResourceInterface {
      * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
      */
     protected $parent;
-   
+
     /**
      * all the photo's in this album
-     * @ORM\OneToMany(targetEntity="Photo\Model\Photo", mappedBy="album")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album")
      */
     protected $photos;
-    
+
     /**
      * all the subalbums
      * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="album")
@@ -59,6 +61,15 @@ class Album implements ResourceInterface {
      *
      * @return int
      */
+
+    /**
+     *
+     * The cover photo to display with the album
+     * @ORM\OneToOne(targetEntity="Photo")
+     * @ORM\JoinColumn(name="cover_id", referencedColumnName="id")
+     */
+    protected $cover;
+
     public function getId() {
         return $this->id;
     }
@@ -79,6 +90,15 @@ class Album implements ResourceInterface {
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * Get the album cover
+     * 
+     * @return photo
+     */
+    public function getCover() {
+        return $this->cover;
     }
 
     /**
@@ -104,11 +124,20 @@ class Album implements ResourceInterface {
      * 
      * @param album $parent
      */
-    public function setParent($parent)
-    {
-        $this->parent=$parent;
+    public function setParent($parent) {
+        //TODO: actually move the album
+        $this->parent = $parent;
     }
-    
+
+    /**
+     * Set the cover photo for the album
+     * 
+     * @param photo $photo
+     */
+    public function setCover($photo) {
+        $this->cover = $cover;
+    }
+
     /**
      * Get the resource ID.
      *
