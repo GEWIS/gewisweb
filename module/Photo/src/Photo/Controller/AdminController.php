@@ -20,7 +20,17 @@ class AdminController extends AbstractActionController {
     }
 
     public function createAlbumAction() {
-        
+        $service = $this->getAlbumService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            //TODO: save and create album
+
+        }
+
+        return new ViewModel(array(
+            'form' => $service->getCreateAlbumForm()
+        ));
     }
 
     public function albumAction() {

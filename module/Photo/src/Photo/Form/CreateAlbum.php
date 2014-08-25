@@ -30,8 +30,8 @@ class CreateAlbum extends Form {
         $this->add(array(
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
-                'value' => $translate->translate('Create album')
+            'options' => array(
+                'label' => $translate->translate('Create album')
             )
         ));
 

@@ -40,6 +40,19 @@ class Module {
                 'photo_service_photo' => 'Photo\Service\Photo'
             ),
             'factories' => array(
+                'photo_form_album_create' => function ($sm) {
+                    $form = new \Photo\Form\CreateAlbum(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('photo_hydrator_album'));
+                    return $form;
+                },
+                'photo_hydrator_album' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('photo_doctrine_em'),
+                        'Photo\Model\Album'
+                    );
+                },
                 'photo_mapper_album' => function ($sm) {
             return new Mapper\Album(
                     $sm->get('photo_doctrine_em')

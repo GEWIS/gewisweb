@@ -51,12 +51,17 @@ class Album extends AbstractService {
         return $albums;
     }
 
+    public function getCreateAlbumForm() {
+        //TODO: permissions
+        return $this->sm->get('photo_form_album_create');
+    }
+
     public function createAlbum($name, $parent = null) {
         //TODO: Create actual directory
         $album = new AlbumModel();
         $album->setName($name);
         $album->setParent($parent);
-        $album->setDate(new \DateTime()); //TODO: specify date time?
+        $album->setDate(new \DateTime()); //TODO: specify date time (range)
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
