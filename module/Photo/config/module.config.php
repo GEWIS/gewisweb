@@ -50,9 +50,36 @@ return array(
                     'default' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '[/:action]',
+                            'route' => '/index',
+                        ),
+                    ),
+                    'album' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album/:id',
+                            'defaults' => array(
+                                'action' => 'viewAlbum'
+                            ),
                             'constraints' => array(
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'albumaction' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/album',
+                            'defaults' => array(
+                                'action' => 'album'
+                            ),
+                        ),
+                    ),
+                    'albumaction' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/album/create',
+                            'defaults' => array(
+                                'action' => 'createAlbum'
                             ),
                         ),
                     ),
