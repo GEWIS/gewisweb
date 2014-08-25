@@ -1,45 +1,69 @@
 <?php
+
 return array(
     'router' => array(
         'routes' => array(
             'photo' => array(
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/photo',
+                    'route' => '/photo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Photo\Controller',
-                        'controller'    => 'Photo',
-                        'action'        => 'index',
+                        'controller' => 'Photo',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'album' => array(
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => array(
                             'controller' => 'Album',
-                            'route'    => '/album/[/:id]',
+                            'route' => '/album/[/:id]',
                             'constraints' => array(
-                                'id'     => '[0-9]+',
+                                'id' => '[0-9]+',
                             ),
                         ),
                     ),
                     'photo' => array(
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/photo/[/:id]',
+                            'route' => '/photo/[/:id]',
                             'constraints' => array(
-                                'id'     => '[0-9]+',
+                                'id' => '[0-9]+',
                             ),
                         ),
                     ),
                 ),
-            ),
+            ), 'admin_photo' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin/photo',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Photo\Controller',
+                        'controller' => 'Admin',
+                        'action' => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:action]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                        ),
+                    ),
+                ),
+            )
         ),
     ),
     'controllers' => array(
         'invokables' => array(
-            'Photo\Controller\Photo' => 'Photo\Controller\PhotoController'
+            'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
+            'Photo\Controller\Admin' => 'Photo\Controller\AdminController'
         )
     ),
     'view_manager' => array(
