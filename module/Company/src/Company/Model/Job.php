@@ -61,7 +61,7 @@ class Job //implements RoleInterface, ResourceInterface
     /**
      * The job's description.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $description;
     

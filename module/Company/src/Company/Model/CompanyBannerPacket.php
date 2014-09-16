@@ -18,14 +18,14 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     /**
      * The banner's image's URL.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $image;
         
     /**
      * The banner's HTML.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $html;
     
