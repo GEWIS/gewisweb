@@ -213,5 +213,25 @@ class Job //implements RoleInterface, ResourceInterface
         $this->description = $description;
     }
     
+    /**
+     * Get the job's company.
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    /**
+     * Set the job's company.
+     *
+     * @param Company company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+    
     
 }
