@@ -49,6 +49,11 @@ class Module
                         $sm->get('company_doctrine_em')
                     );
                 },
+                'company_mapper_job' => function ($sm) {
+                    return new \Company\Mapper\Job(
+                        $sm->get('company_doctrine_em')
+                    );
+                },
                 'company_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }

@@ -19,4 +19,13 @@ class Company extends AbstractService
     {
         return $this->sm->get('company_mapper_company');
     }
+    
+    public function getJobList() {
+        return $this->getJobMapper()->findAll();
+    }
+    
+    public function getJobMapper()
+    {
+        return $this->sm->get('company_mapper_job');
+    }
 }
