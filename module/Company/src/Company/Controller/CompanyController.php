@@ -9,13 +9,17 @@ class CompanyController extends AbstractActionController {
 	
 	public function indexAction() {
 	
-	$vm = new ViewModel();
-	return $vm;
+        $companyService = $this->getCompanyService();
+            
+        $vm = new ViewModel(array(
+            'company_list' => $companyService->getCompanyList()
+        ));
+	    return $vm;
 	
 	}
     
-    /**
-     * 
-     */
+    protected function getCompanyService() {
+        return $this->getServiceLocator()->get("company_service_company") ;
+    }
     
 }
