@@ -1,11 +1,24 @@
-<table>
-
+<h1>Companies</h1>
+<div class="company-list">
 <?php
 
 foreach ($company_list as $company) {
-    print '<tr><td>'.var_dump($company).'</td></tr>';
+    ?>
+    <div class="company-list-item list-item">
+        <h2 class="company-name"><a href="<?= $company->getWebsite(); ?>"><?= $company->getName(); ?></a></h2>
+        <div class="company-slogan"><?= $company->getSlogan(); ?></div>
+        <div class="company-logo"><img src="<?= $company->getLogo(); ?>" alt="Logo of <?= $company->getName(); ?>" /></div>
+        <div class="company-address"><?= $company->getAddress(); ?></div>
+        <div class="company-phone"><a href="tel:<?= $company->getPhone(); ?>"><?= $company->getPhone(); ?></a></div>
+        <div class="company-website"><a href="<?= $company->getWebsite(); ?>">Visit website</a></div>
+        <div class="company-email"><a href="mailto:<?= $company->getEmail(); ?>"><?= $company->getEmail(); ?></a></div>
+        <?php // TODO insert jobs ?>
+        <div class="description"><?= $company->getDescription(); ?></div>
+        
+    </div>
+    <?php 
 }
 
 ?>
+</div>
     
-    </table>
