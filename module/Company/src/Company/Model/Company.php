@@ -79,6 +79,12 @@ class Company //implements RoleInterface, ResourceInterface
      */
     protected $description;
     
+    /**
+     * The company's jobs.
+     *
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
+     */
+    protected $jobs;
     
     
     /**

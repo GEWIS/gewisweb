@@ -65,6 +65,14 @@ class Job //implements RoleInterface, ResourceInterface
      */
     protected $description;
     
+    /**
+     * The job's company.
+     *
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="jobs")
+     */
+    protected $company;
+    
+    
         
     /**
      * Constructor
