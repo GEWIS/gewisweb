@@ -4,8 +4,7 @@
 
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-foreach ($job_list as $job) {
-    if ($job->getActive()){
+foreach ($active_job_list as $job) {
     ?>
     <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()); ?>">
         <h2 class="job-name"><a href="<?= $job->getWebsite(); ?>"><?= $job->getName(); ?></a></h2>
@@ -16,7 +15,7 @@ foreach ($job_list as $job) {
         <div class="description"><?= $job->getDescription(); ?></div>
         
     </div>
-    <?php }
+    <?php
 }
 
 ?>

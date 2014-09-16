@@ -22,7 +22,7 @@ class CompanyController extends AbstractActionController {
         $companyService = $this->getCompanyService();
             
         $vm = new ViewModel(array(
-            'job_list' => $companyService->getJobList()
+            'active_job_list' => $companyService->getActiveJobList()
         ));
 	    return $vm;
         

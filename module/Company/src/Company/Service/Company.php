@@ -23,6 +23,17 @@ class Company extends AbstractService
         return $this->getJobMapper()->findAll();
     }
     
+    public function getActiveJobList() {
+        $jl = $this->getJobList();
+        $r = array();
+        foreach($jl as $j) {
+            if ($j->getActive()) {
+                array_push($r, $j);
+            }
+        }
+        return $r;
+    }
+    
     public function getJobMapper()
     {
         return $this->sm->get('company_mapper_job');
