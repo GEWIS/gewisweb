@@ -13,7 +13,6 @@ class Company extends AbstractService
 {
     public function getCompanyList() {
         return $this->getCompanyMapper()->findAll();
-        //return array('Apple', 'Microsoft');
     }
     public function getCompanyMapper()
     {

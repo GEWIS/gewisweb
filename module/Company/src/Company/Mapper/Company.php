@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Decision\Model\Company as CompanyModel;
+use Company\Model\Company as CompanyModel;
 use Doctrine\ORM\EntityManager;
 
 /**
