@@ -34,7 +34,7 @@ class Company //implements RoleInterface, ResourceInterface
     /**
      * The company's address.
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     protected $address;
 
@@ -69,7 +69,7 @@ class Company //implements RoleInterface, ResourceInterface
     /**
      * The company's logo.
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     protected $logo;
     
