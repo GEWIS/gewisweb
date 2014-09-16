@@ -19,6 +19,7 @@ class Job //implements RoleInterface, ResourceInterface
      * The job id.
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;

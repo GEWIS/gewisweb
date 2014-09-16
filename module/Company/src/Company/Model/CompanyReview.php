@@ -19,6 +19,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * The review's id.
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;

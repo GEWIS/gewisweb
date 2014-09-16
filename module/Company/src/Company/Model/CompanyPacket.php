@@ -19,6 +19,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      * The packet's id.
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
