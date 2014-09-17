@@ -4,6 +4,14 @@
 
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
+if(isset($company)){
+	$company_list = array();
+	$company_list[] = $company;
+}
+if(!isset($company_list)){
+	echo "Company not found";
+	return;
+}
 foreach ($company_list as $company) {
     ?>
     <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
@@ -17,7 +25,7 @@ foreach ($company_list as $company) {
         <div class="company-jobs">
             <ul class="company-jobs-list">
                 <?php foreach($company->getJobs() as $job) { ?>
-                    <li class="company-jobs-job"><a href="jobs/<?= $job->getId(); ?>"><?= $job->getName(); ?></a></li>                
+                    <li class="company-jobs-job"><a href="/company/jobs/<?= $job->getId(); ?>"><?= $job->getName(); ?></a></li>                
                 <?php } ?>
             </ul>
         </div>

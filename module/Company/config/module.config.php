@@ -10,6 +10,7 @@ return array(
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller'    => 'Company',
                         'action'        => 'index',
+			'actionArgument'=> '',
                     ),
                 ),
                 'may_terminate' => true,
@@ -17,9 +18,10 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route'    => '[/:action[/:actionArgument]]',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     	     => '[a-zA-Z][a-zA-Z0-9_-]*',
+				'actionArgument'     => '[a-zA-Z0-9_-]*',
                             ),
                         ),
                     ),
