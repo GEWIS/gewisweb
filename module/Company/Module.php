@@ -39,7 +39,20 @@ class Module
     public function getServiceConfig()
     {
         return array(
-
+            'invokables' => array(
+                'company_service_company' => 'Company\Service\Company'
+            ),
+            'factories' => array(
+                
+                'company_mapper_company' => function ($sm) {
+                    return new \Company\Mapper\Company(
+                        $sm->get('company_doctrine_em')
+                    );
+                },
+                'company_doctrine_em' => function ($sm) {
+                    return $sm->get('doctrine.entitymanager.orm_default');
+                }
+            )
         );
     }
 }
