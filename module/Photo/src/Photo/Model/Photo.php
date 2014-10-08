@@ -1,4 +1,5 @@
 <?php
+
 namespace Photo\Model;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,8 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  */
-class Photo implements ResourceInterface {
+class Photo implements ResourceInterface
+{
 
     /**
      * Photo ID.
@@ -40,7 +42,8 @@ class Photo implements ResourceInterface {
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -49,7 +52,8 @@ class Photo implements ResourceInterface {
      *
      * @return \DateTime
      */
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
@@ -58,7 +62,8 @@ class Photo implements ResourceInterface {
      *
      * @return Album
      */
-    public function getAlbum() {
+    public function getAlbum()
+    {
         return $this->album;
     }
 
@@ -67,7 +72,8 @@ class Photo implements ResourceInterface {
      *
      * @param \DateTime $date
      */
-    public function setDate(\DateTime $date) {
+    public function setDate(\DateTime $date)
+    {
         $this->date = $date;
     }
 
@@ -76,7 +82,8 @@ class Photo implements ResourceInterface {
      *
      * @param Album $album
      */
-    public function setAlbum($album) {
+    public function setAlbum($album)
+    {
         $this->album = $album;
         //TODO: move the actualy photo file to another album
     }
@@ -86,7 +93,8 @@ class Photo implements ResourceInterface {
      *
      * @return string
      */
-    public function getResourceId() {
+    public function getResourceId()
+    {
         return 'photo';
     }
 

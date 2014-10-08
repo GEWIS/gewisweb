@@ -11,7 +11,8 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * @ORM\Entity
  * 
  */
-class Album implements ResourceInterface {
+class Album implements ResourceInterface
+{
 
     /**
      * Album ID.
@@ -70,7 +71,8 @@ class Album implements ResourceInterface {
      */
     protected $cover;
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -79,7 +81,8 @@ class Album implements ResourceInterface {
      *
      * @return \DateTime
      */
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
@@ -88,7 +91,8 @@ class Album implements ResourceInterface {
      *
      * @return string $name
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -97,7 +101,8 @@ class Album implements ResourceInterface {
      * 
      * @return photo
      */
-    public function getCover() {
+    public function getCover()
+    {
         return $this->cover;
     }
 
@@ -106,7 +111,8 @@ class Album implements ResourceInterface {
      *
      * @param \DateTime $date
      */
-    public function setDate(\DateTime $date) {
+    public function setDate(\DateTime $date)
+    {
         $this->date = $date;
     }
 
@@ -115,7 +121,8 @@ class Album implements ResourceInterface {
      *
      * @param string $name
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
@@ -124,7 +131,8 @@ class Album implements ResourceInterface {
      * 
      * @param album $parent
      */
-    public function setParent($parent) {
+    public function setParent($parent)
+    {
         //TODO: actually move the album
         $this->parent = $parent;
     }
@@ -134,7 +142,8 @@ class Album implements ResourceInterface {
      * 
      * @param photo $photo
      */
-    public function setCover($photo) {
+    public function setCover($photo)
+    {
         $this->cover = $cover;
     }
 
@@ -143,7 +152,8 @@ class Album implements ResourceInterface {
      *
      * @return string
      */
-    public function getResourceId() {
+    public function getResourceId()
+    {
         return 'album';
     }
 

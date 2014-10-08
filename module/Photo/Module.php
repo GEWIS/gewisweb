@@ -2,14 +2,16 @@
 
 namespace Photo;
 
-class Module {
+class Module
+{
 
     /**
      * Get the autoloader configuration.
      *
      * @return array Autoloader config
      */
-    public function getAutoloaderConfig() {
+    public function getAutoloaderConfig()
+    {
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
@@ -24,7 +26,8 @@ class Module {
      *
      * @return array Module configuration
      */
-    public function getConfig() {
+    public function getConfig()
+    {
         return include __DIR__ . '/config/module.config.php';
     }
 
@@ -33,7 +36,8 @@ class Module {
      *
      * @return array Service configuration
      */
-    public function getServiceConfig() {
+    public function getServiceConfig()
+    {
         return array(
             'invokables' => array(
                 'photo_service_album' => 'Photo\Service\Album',
@@ -42,28 +46,27 @@ class Module {
             'factories' => array(
                 'photo_form_album_create' => function ($sm) {
                     $form = new \Photo\Form\CreateAlbum(
-                        $sm->get('translator')
+                            $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
                     return $form;
                 },
                 'photo_hydrator_album' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('photo_doctrine_em'),
-                        'Photo\Model\Album'
+                            $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
                     );
                 },
                 'photo_mapper_album' => function ($sm) {
-            return new Mapper\Album(
-                    $sm->get('photo_doctrine_em')
-            );
-        },
+                    return new Mapper\Album(
+                            $sm->get('photo_doctrine_em')
+                    );
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 // reused code from the eduction module
                 'photo_doctrine_em' => function ($sm) {
-            return $sm->get('doctrine.entitymanager.orm_default');
-        }
+                    return $sm->get('doctrine.entitymanager.orm_default');
+                }
             )
         );
     }

@@ -11,14 +11,16 @@ use Photo\Model\Photo as PhotoModel;
 /**
  * Album service.
  */
-class Album extends AbstractService {
+class Album extends AbstractService
+{
 
     /**
      * Get the album mapper.
      *
      * @return \Photo\Mapper\Album
      */
-    public function getAlbumMapper() {
+    public function getAlbumMapper()
+    {
         return $this->sm->get('photo_mapper_album');
     }
 
@@ -27,7 +29,8 @@ class Album extends AbstractService {
      * 
      * @return array of albums
      */
-    public function getAlbums() {
+    public function getAlbums()
+    {
         return $this->getAlbumMapper()->getRootAlbums();
     }
 
@@ -36,7 +39,8 @@ class Album extends AbstractService {
      * 
      * @return multi-level array of albums
      */
-    public function getAlbumTree($album = null) {
+    public function getAlbumTree($album = null)
+    {
         $albums = array();
         if ($album !== null) {
             $subAlbums = $this->getAlbumMapper()->getSubAlbums($album);
@@ -51,21 +55,21 @@ class Album extends AbstractService {
         return $albums;
     }
 
-    public function getCreateAlbumForm() {
+    public function getCreateAlbumForm()
+    {
         //TODO: permissions
         return $this->sm->get('photo_form_album_create');
     }
 
     /*
-    public function createAlbum($name, $parent = null) {
-        //TODO: Create actual directory
-        $album = new AlbumModel();
-        $album->setName($name);
-        $album->setParent($parent);
-        $album->setDate(new \DateTime()); //TODO: specify date time (range)
-        $mapper = $this->getAlbumMapper();
-        $mapper->persist($album);
-        $mapper->flush();
-    }*/
-
+      public function createAlbum($name, $parent = null) {
+      //TODO: Create actual directory
+      $album = new AlbumModel();
+      $album->setName($name);
+      $album->setParent($parent);
+      $album->setDate(new \DateTime()); //TODO: specify date time (range)
+      $mapper = $this->getAlbumMapper();
+      $mapper->persist($album);
+      $mapper->flush();
+      } */
 }

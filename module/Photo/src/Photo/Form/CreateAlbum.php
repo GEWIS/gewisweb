@@ -6,9 +6,11 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\Translator;
 
-class CreateAlbum extends Form {
+class CreateAlbum extends Form
+{
 
-    public function __construct(Translator $translate) {
+    public function __construct(Translator $translate)
+    {
         parent::__construct();
 
         $this->add(array(
@@ -38,7 +40,8 @@ class CreateAlbum extends Form {
         $this->initFilters();
     }
 
-    protected function initFilters() {
+    protected function initFilters()
+    {
         $filter = new InputFilter();
 
         $filter->add(array(

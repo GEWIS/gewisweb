@@ -5,27 +5,31 @@ namespace Photo\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class AdminController extends AbstractActionController {
+class AdminController extends AbstractActionController
+{
 
-    public function indexAction() {
+    public function indexAction()
+    {
         
     }
 
-    public function uploadAction() {
+    public function uploadAction()
+    {
         
     }
 
-    public function viewAlbumAction() {
+    public function viewAlbumAction()
+    {
         
     }
 
-    public function createAlbumAction() {
+    public function createAlbumAction()
+    {
         $service = $this->getAlbumService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             //TODO: save and create album
-
         }
 
         return new ViewModel(array(
@@ -33,7 +37,8 @@ class AdminController extends AbstractActionController {
         ));
     }
 
-    public function albumAction() {
+    public function albumAction()
+    {
         $service = $this->getAlbumService();
         $albums = $service->getAlbumTree();
         return new ViewModel(array(
@@ -41,7 +46,8 @@ class AdminController extends AbstractActionController {
         ));
     }
 
-    public function albumCreateAction() {
+    public function albumCreateAction()
+    {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
@@ -64,7 +70,8 @@ class AdminController extends AbstractActionController {
     /**
      * Get the album service.
      */
-    public function getAlbumService() {
+    public function getAlbumService()
+    {
         return $this->getServiceLocator()->get('photo_service_album');
     }
 
