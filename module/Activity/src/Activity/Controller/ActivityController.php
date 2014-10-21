@@ -14,7 +14,9 @@ class ActivityController extends AbstractActionController {
         $this->modelActivity = $sm->get('Activity\Model\Activity');
     }
 
-	public function indexAction() {
+	public function viewAction() {
+        $id = (int) $this->params('id');
+        
 	}
 
     public function createAction() {

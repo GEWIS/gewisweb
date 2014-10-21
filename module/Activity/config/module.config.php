@@ -14,19 +14,22 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
+                    'view' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route'    => '/view/[:id]',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[0-9]*',
                             ),
+                            'defaults' => array(
+                                'action' => 'view'
+                            )
                         ),
                     ),
                     'create' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route' => 'activity/create'
+                            'route' => ''
                         )
                     )
                 ),
