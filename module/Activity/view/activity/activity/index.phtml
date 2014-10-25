@@ -1,1 +1,20 @@
-index.html. Should not see
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Naam</td>
+        <td>Begintijd</td>
+        <td>Eindtijd</td>
+        <td>Locatie</td>
+        <td>Kosten</td>
+    </tr>
+<?php foreach($activities as $activity):?>
+    <tr>
+        <td><?php echo $activity->get('id');?></td>
+        <td><?php echo $activity->get('name');?></td>
+        <td><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s');?></td>
+        <td><?php echo $activity->get('endTime')->format('Y-m-d H:i:s');?></td>
+        <td><?php echo $activity->get('location');?></td>
+        <td><?php echo $activity->get('costs');?></td>
+    </tr>
+<?php endforeach;?>
+</table>

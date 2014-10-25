@@ -110,6 +110,10 @@ class Activity implements InputFilterAwareInterface
      */
     protected $inputFilter;
 
+    public function get($variable) {
+        return $this->$variable;
+    }
+
     /**
      * Create a new activity
      *

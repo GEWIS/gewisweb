@@ -2,7 +2,6 @@
 
 namespace Activity\Mapper;
 
-use User\Model\Activity as ActivityModel;
 use Doctrine\ORM\EntityManager;
 
 class Activity
@@ -15,7 +14,6 @@ class Activity
      */
     protected $em;
 
-
     /**
      * Constructor
      *
@@ -26,7 +24,27 @@ class Activity
         $this->em = $em;
     }
 
-    public function hello() {
-        print_r($this);
+    /**
+     * @param $id
+     *
+     * @return array
+     */
+    public function getActivityById($id)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.id = :id')
+            ->setParameter('id', $id);
+        $result = $qb->getQuery()->getResult();
+        return count($result) > 0 ? $result[0]: null ;
+    }
+
+    public function getAllActivities()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a');
+        return $qb->getQuery()->getResult();
     }
 }

@@ -6,17 +6,20 @@ use Zend\Mvc\Controller\AbstractActionController;
 use \Activity\Model\Activity as ActivityModel;
 use \Activity\Form\Activity as ActivityForm;
 
-
 class ActivityController extends AbstractActionController {
     private $modelActivity;
-    public function getModels() {
-        $sm = $this->getServiceLocator();
-        $this->modelActivity = $sm->get('Activity\Model\Activity');
+
+    public function indexAction() {
+        $activityService = $this->getServiceLocator()->get('ActivityService');
+        $activities = $activityService->getAllActivities();
+        return ['activities' => $activities];
     }
 
 	public function viewAction() {
         $id = (int) $this->params('id');
-        
+        $activityService = $this->getServiceLocator()->get('ActivityService');
+        $activity = $activityService->getActivity($id);
+        return ['activity' => $activity];
 	}
 
     public function createAction() {
@@ -30,7 +33,6 @@ class ActivityController extends AbstractActionController {
                 $activity->create($form->getData());
                 $em->persist($activity);
                 $em->flush();
-
             }
         }
         return ['form' => $form];

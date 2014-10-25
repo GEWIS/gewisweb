@@ -1,0 +1,37 @@
+<table>
+    <tr>
+        <td>Id:</td>
+        <td><?php echo $activity->get('id');?></td>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td><?php echo $activity->get('name');?></td>
+    </tr>
+    <tr>
+        <td>Begintijd:</td>
+        <td><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></td>
+    </tr>
+    <tr>
+        <td>Eindtijd:</td>
+        <td><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></td>
+    </tr>
+    <tr>
+        <td>Locatie:</td>
+        <td><?php echo $activity->get('location')?></td>
+    </tr>
+    <tr>
+        <td>Kosten:</td>
+        <td><?php echo $activity->get('costs');?></td>
+    </tr>
+    <tr>
+        <td>Inschrijven:</td>
+        <td><?php echo $activity->get('canSignUp')?"Ja": "nee"?></td>
+    </tr>
+    <tr>
+        <td>Alleen GEWISsers:</td>
+        <td><?php echo $activity->get('onlyGEWIS')?"Ja": "nee"?></td>
+    </tr>
+</table>
+<?php
+Zend\Debug\Debug::dump($activity);
+?>

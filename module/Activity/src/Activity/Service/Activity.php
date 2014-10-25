@@ -4,11 +4,8 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 
-use Activity\Model\Activity as ActivityModel;
-
 class Activity extends AbstractAclService
 {
-
     /**
      * Get the ACL.
      *
@@ -31,4 +28,27 @@ class Activity extends AbstractAclService
     {
         return 'activity';
     }
+
+    /**
+     * Get the information of one activity from the database
+     * @param $id The activity id to be searched for
+     *
+     * @return Activity\Model\Activity Activity or null if the activity does not exist
+     */
+    public function getActivity($id) {
+        $activityMapper = $this->getServiceManager()->get('ActivityMapper');
+        $activity = $activityMapper->getActivityById($id);
+        return $activity;
+    }
+
+    /**
+     * Returns an array of all activities
+     * @return array Array of activities
+     */
+    public function getAllActivities(){
+        $activityMapper = $this->getServiceManager()->get('ActivityMapper');
+        $activity = $activityMapper->getAllActivities();
+        return $activity;
+    }
+
 }

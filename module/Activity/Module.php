@@ -40,8 +40,20 @@ class Module
     {
         return array(
             'factories' => array(
-                'Activity\Model\Activity' => function ($sm) {
-                    return new \Activity\Model\Activity();
+                // fake 'alias' for entity manager, because doctrine uses an abstract factory
+                // and aliases don't work with abstract factories
+                'activity_doctrine_em' => function ($sm) {
+                    return $sm->get('doctrine.entitymanager.orm_default');
+                },
+                'ActivityService' => function ($sm) {
+                    $ac = new Service\Activity();
+                    $ac->setServiceManager($sm);
+                    return $ac;
+                },
+                'ActivityMapper' => function ($sm) {
+                    return new \Activity\Mapper\Activity(
+                        $sm->get('activity_doctrine_em')
+                    );
                 }
             )
         );
