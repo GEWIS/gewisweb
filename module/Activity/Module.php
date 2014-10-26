@@ -50,8 +50,18 @@ class Module
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
+                'SignupService' => function ($sm) {
+                    $ac = new Service\Signup();
+                    $ac->setServiceManager($sm);
+                    return $ac;
+                },
                 'ActivityMapper' => function ($sm) {
                     return new \Activity\Mapper\Activity(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'SignupMapper' => function ($sm) {
+                    return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')
                     );
                 }

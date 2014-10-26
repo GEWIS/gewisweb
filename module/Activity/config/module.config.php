@@ -26,6 +26,18 @@ return array(
                             )
                         ),
                     ),
+                    'signup' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/signup/[:id]',
+                            'constraints' => array(
+                                'action'     => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'action' => 'signup'
+                            )
+                        ),
+                    ),
                     'create' => array(
                         'type' => 'Literal',
                         'options' => array(

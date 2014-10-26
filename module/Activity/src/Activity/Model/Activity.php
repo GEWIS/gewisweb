@@ -223,4 +223,11 @@ class Activity implements InputFilterAwareInterface
         throw new \Exception("Not used");
     }
 
+    /**
+     * Returns if an user can sign up for this activity
+     */
+    public function canSignUp() {
+        return $this->canSignUp;
+    }
+
 }

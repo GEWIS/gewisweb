@@ -15,6 +15,7 @@
         <td><?php echo $activity->get('endTime')->format('Y-m-d H:i:s');?></td>
         <td><?php echo $activity->get('location');?></td>
         <td><?php echo $activity->get('costs');?></td>
+        <td><a href="<?php echo $this->url('activity/view', array( 'id' => $activity->get('id')))?>">Bekijk</a</td>
     </tr>
 <?php endforeach;?>
 </table>
