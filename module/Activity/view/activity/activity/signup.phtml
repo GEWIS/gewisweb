@@ -5,4 +5,9 @@
     <div class="alert alert-success" role="alert">Succesvol ingeschreven</div>
 <?php endif;?>
 
-<?php echo $this->partial('activity/activity/view.phtml', array('activity' => $activity));?>
+<?php echo $this->partial('activity/activity/view.phtml', array(
+        'activity' => $activity,
+        'isLoggedIn' => $isLoggedIn,
+        'isSignedUp' => $isSignedUp,
+        'canSignUp' => $canSignUp
+));?>

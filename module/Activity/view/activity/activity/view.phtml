@@ -26,10 +26,29 @@
     </tr>
     <tr>
         <td>Inschrijven:</td>
-        <td><?php echo $activity->get('canSignUp')?"Ja": "nee"?></td>
+        <td><?php echo $activity->get('canSignUp') ? "Ja": "nee"?></td>
     </tr>
     <tr>
         <td>Alleen GEWISsers:</td>
-        <td><?php echo $activity->get('onlyGEWIS')?"Ja": "nee"?></td>
+        <td><?php echo $activity->get('onlyGEWIS') ? "Ja": "nee"?></td>
     </tr>
+    <?php if ($isSignedUp) :?>
+    <tr>
+        <td>
+            Je bent ingeschreven voor deze activiteit!
+        </td>
+    </tr>
+    <?php elseif($canSignUp && $isLoggedIn):?>
+    <tr>
+        <td>
+            <a href="<?php echo $this->url('activity/signup', array( 'id' => $activity->get('id')));?>">Schrijf je in</a>
+        </td>
+    </tr>
+    <?php elseif ($canSignUp):?>
+    <tr>
+        <td>
+            Login om je in te schrijven
+        </td>
+    </tr>
+    <?php endif; ?>
 </table>

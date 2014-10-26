@@ -25,7 +25,17 @@ class ActivityController extends AbstractActionController {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('ActivityService');
         $activity = $activityService->getActivity($id);
-        return ['activity' => $activity];
+
+        $identity =$this->identity();
+        $user = is_null($identity) ? null : $identity->getMember();
+        $signupService = $this->getServiceLocator()->get('SignupService');
+
+        return [
+            'activity' => $activity,
+            'canSignUp' => $activity->canSignUp(),
+            'isLoggedIn' => $user != null,
+            'isSignedUp' => !is_null($user) && $signupService->isSignedUp($activity, $user)
+        ];
 	}
 
     /**
@@ -56,6 +66,7 @@ class ActivityController extends AbstractActionController {
         $activity = $activityService->getActivity($id);
         $params = $this->viewAction();
 
+
         // Assure you can sign up for this activity
         if (!$activity->canSignup()){
             $params['error'] = "Op dit moment kun je je niet inschrijven voor deze activiteit";
@@ -63,11 +74,12 @@ class ActivityController extends AbstractActionController {
         }
 
         // Make sure the user is logged in
-        $user = $this->identity()->getMember();
-        if (is_null($user)) {
+        $identity = $this->identity();
+        if (is_null($identity)) {
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
             return $params;
         }
+        $user = $identity->getMember();
 
         $signupService = $this->getServiceLocator()->get('SignupService');
         if ($signupService->isSignedUp($activity, $user)) {
