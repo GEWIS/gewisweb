@@ -15,7 +15,7 @@ if(!isset($company_list)){
 foreach ($company_list as $company) {
     ?>
     <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
-        <h2 class="company-name"><a href="<?= $company->getWebsite(); ?>"><?= $company->getName(); ?></a></h2>
+        <h2 class="company-name"><a href="company/<?= $company->getAsciiName(); ?>"><?= $company->getName(); ?></a></h2>
         <div class="company-slogan"><?= $company->getSlogan(); ?></div>
         <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
         <div class="company-address"><?= $company->getAddress(); ?></div>
