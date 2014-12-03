@@ -6,6 +6,7 @@
     <label>Name <input type="text" id="filter-name"></label>
     <label>Location <input type="text" id="filter-location"></label>
     <label>Description <input type="text" id="filter-description"></label>
+    <label>Job <input type="text" id="filter-job"></label>
 </fieldset>
 
 <div class="company-list">
@@ -34,7 +35,7 @@ foreach ($company_list as $company) {
         <div class="company-jobs">
             <ul class="company-jobs-list">
                 <?php foreach($company->getJobs() as $job) { ?>
-<li class="company-jobs-job"><a href="/company/<?= $company->getAsciiName() ?>/jobs/<?= explode("_",$job->getAsciiName())[1] ?>"><?= $job->getName(); ?></a></li>                
+<li class="company-jobs-job"><a href="company/<?= $company->getAsciiName() ?>/jobs/<?= explode("_",$job->getAsciiName())[1] ?>"><?= $job->getName(); ?></a></li>
                 <?php } ?>
             </ul>
         </div>
@@ -77,6 +78,16 @@ foreach ($company_list as $company) {
             });
         }
 
+        function filter_job(job) {
+            $(".company-list-item").each(function() {
+                if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
         function filter_all(term) {
             $(".company-list-item").each(function() {
                 if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
@@ -97,6 +108,10 @@ foreach ($company_list as $company) {
 
         $("#filter-description").keyup(function() {
             filter_description($(this).val());
+        });
+
+        $("#filter-job").keyup(function() {
+            filter_job($(this).val());
         });
 
         $("#filter-all").keyup(function() {
