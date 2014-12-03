@@ -9,6 +9,12 @@
     <label>Job <input type="text" id="filter-job"></label>
 </fieldset>
 
+<fieldset>
+    <legend>Sort</legend>
+    <label>Column <select id="sort-column"><option value="company-name">[Select column]</option><option value="company-name">Company Name</option><option value="jobs-amount">Amount of jobs available</option></select></label>
+    <label>Order <select id="sort-order"><option value="1">Ascending</option><option value="-1">Descending</option></select></label>
+</fieldset>
+
 <div class="company-list">
 <?php
 
@@ -32,7 +38,7 @@ foreach ($company_list as $company) {
         <div class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></div>
         <div class="company-website"><a href="<?= $company->getWebsite(); ?>">Visit website</a></div>
         <div class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></div>
-        <div class="company-jobs">
+        <div class="company-jobs" data-amount="<?php echo count($company->getJobs()); ?>">
             <ul class="company-jobs-list">
                 <?php foreach($company->getJobs() as $job) { ?>
 <li class="company-jobs-job"><a href="company/<?= $company->getAsciiName() ?>/jobs/<?= explode("_",$job->getAsciiName())[1] ?>"><?= $job->getName(); ?></a></li>
@@ -48,6 +54,8 @@ foreach ($company_list as $company) {
 ?>
 
     <script type="text/javascript">
+        /* FILTERING */
+
         function filter_name(name) {
             $(".company-list-item").each(function() {
                 if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
@@ -116,6 +124,47 @@ foreach ($company_list as $company) {
 
         $("#filter-all").keyup(function() {
             filter_all($(this).val());
+        });
+
+
+        /* SORTING */
+
+        function sort_name(order) {
+            var companies = $(".company-list-item");
+            companies.sort(function(a,b) {
+
+                if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
+                   return order;
+                } else {
+                   return -1 * order;
+                }
+
+            });
+
+            companies.detach().appendTo($(".company-list"));
+        }
+
+        function sort_jobs_amount(order) {
+            var companies = $(".company-list-item");
+            companies.sort(function(a,b) {
+
+                if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
+                    return order;
+                } else {
+                    return -1 * order;
+                }
+
+            });
+
+            companies.detach().appendTo($(".company-list"));
+        }
+
+        $("#sort-column, #sort-order").change(function() {
+            if ($("#sort-column").val()=="company-name") {
+                sort_name($("#sort-order").val());
+            } else  if ($("#sort-order").val()=="jobs-amount") {
+                sort_jobs_amount($("#sort-order").val());
+            }
         });
     </script>
 
