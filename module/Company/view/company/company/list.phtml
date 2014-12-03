@@ -1,21 +1,4 @@
 
-<h1>Companies</h1>
-
-<fieldset>
-    <legend>Filter</legend>
-    <label>All <input type="text" id="filter-all"></label>
-    <label>Name <input type="text" id="filter-name"></label>
-    <label>Location <input type="text" id="filter-location"></label>
-    <label>Description <input type="text" id="filter-description"></label>
-    <label>Job <input type="text" id="filter-job"></label>
-</fieldset>
-
-<fieldset>
-    <legend>Sort</legend>
-    <label>Column <select id="sort-column"><option value="company-name">[Select column]</option><option value="company-name">Company Name</option><option value="jobs-amount">Amount of jobs available</option></select></label>
-    <label>Order <select id="sort-order"><option value="1">Ascending</option><option value="-1">Descending</option></select></label>
-</fieldset>
-
 <div class="company-list">
 <?php
 
@@ -24,6 +7,22 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 if(isset($company)){
 	$company_list = array();
 	$company_list[] = $company;
+        $islist = false;
+}
+else{
+	$islist = true;
+
+
+	echo("<h1>Companies</h1>");
+
+	echo("<fieldset> 
+		<legend>Filter</legend> 
+		<label>All <input type='text' id='filter-all'></label> 
+		<label>Name <input type='text' id='filter-name'></label> 
+		<label>Location <input type='text' id='filter-location'></label> 
+		<label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
+		<label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
+		<label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>");
 }
 if(!isset($company_list)){
 	echo "Company not found";
@@ -32,7 +31,20 @@ if(!isset($company_list)){
 foreach ($company_list as $company) {
     ?>
     <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
-        <h2 class="company-name"><a href="company/<?= $company->getAsciiName(); ?>"><?= $company->getName(); ?></a></h2>
+           <?php 
+	       echo("<h2 class='company-name'><a href='"); 
+       if ($islist==true){
+
+               echo ("company/");  
+               echo($company->getAsciiName()); 
+       }
+       else{
+               echo($company->getWebsite());
+       }
+       echo("'>"); 
+       echo ($company->getName()); 
+       echo ("</a></h2>") ?>
+
         <div class="company-slogan"><?= $company->getSlogan(); ?></div>
         <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
         <div class="company-address"><?= $company->getAddress(); ?></div>
