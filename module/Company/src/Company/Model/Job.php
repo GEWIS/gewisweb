@@ -25,12 +25,18 @@ class Job //implements RoleInterface, ResourceInterface
     protected $id;
 
     /**
-     * The job's name.
+     * The job's display name.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
     
+    /**
+     * The job's ascii name.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $ascii_name;
     /**
      * The job's status.
      *

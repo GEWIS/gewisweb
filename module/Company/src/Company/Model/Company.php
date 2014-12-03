@@ -25,12 +25,19 @@ class Company //implements RoleInterface, ResourceInterface
     protected $id;
 
     /**
-     * The company's name.
+     * The company's display name.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
     
+    /**
+     * The company's ascii version of the name. (username)
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $asciiName;
+
     /**
      * The company's address.
      *
@@ -106,6 +113,13 @@ class Company //implements RoleInterface, ResourceInterface
         return $this->id;
     }
 
+    public function getAsciiName(){
+	    return $this->asciiName;
+    }
+
+    public function setAsciiName($asciiName){
+        $this->asciiName = $asciiName;
+    }
     /**
      * Get the company's name.
      *

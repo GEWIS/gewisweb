@@ -7,14 +7,14 @@ use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController {
 
-    public function indexAction() {
+    public function listAction() {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('actionArgument');    
+        $companyName = $this->params('asciiCompanyName');    
         if ($companyName != null){
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $qb = $objectManager->createQueryBuilder();
-            $qb->select('c')->from('Company\Model\Company','c')->where('c.id=:company_id');
-            $qb->setParameter('company_id', $companyName);
+            $qb->select('c')->from('Company\Model\Company','c')->where('c.asciiName=:ascii_company_name');
+            $qb->setParameter('ascii_company_name', $companyName);
 
             $companies = $qb->getQuery()->getResult();
             if (count($companies)!=0){
@@ -35,12 +35,13 @@ class CompanyController extends AbstractActionController {
 
     public function jobsAction() {
         $companyService = $this->getCompanyService();
-        $jobName = $this->params('actionArgument');    
+        $jobName = $this->params('asciiJobName');    
+        $companyName = $this->params('asciiCompanyName');    
         if ($jobName != null){
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $qb = $objectManager->createQueryBuilder();
-            $qb->select('j')->from('Company\Model\Job','j')->where("j.id=:job_id");
-            $qb->setParameter('job_id', $jobName);
+            $qb->select('j')->from('Company\Model\Job','j')->where("j.ascii_name=:job_id");
+            $qb->setParameter('job_id', $companyName+'_'+$jobName);
 
             $jobs = $qb->getQuery()->getResult();
             if (count($jobs)!=0){
