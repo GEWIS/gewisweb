@@ -109,6 +109,19 @@ class Job //implements RoleInterface, ResourceInterface
         return $this->name;
     }
     
+    public function getAsciiName()
+    {
+        return $this->ascii_name;
+    }
+    /**
+     * Set the job's name.
+     *
+     * @param string $name
+     */
+    public function setAsciiName($name)
+    {
+        $this->ascii_name = $name;
+    }
     /**
      * Set the job's name.
      *
