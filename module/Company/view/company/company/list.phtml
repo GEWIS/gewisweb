@@ -35,8 +35,9 @@ foreach ($company_list as $company) {
 	       echo("<h2 class='company-name'><a href='"); 
        if ($islist==true){
 
-               echo ("company/");  
-               echo($company->getAsciiName()); 
+               //echo ("company/");  
+               //echo($company->getAsciiName()); 
+	       echo ($this->url('company/companyItem',array('asciiCompanyName' => $company->getAsciiName()),array(),true));
        }
        else{
                echo($company->getWebsite());
@@ -54,7 +55,10 @@ foreach ($company_list as $company) {
         <div class="company-jobs" data-amount="<?php echo count($company->getJobs()); ?>">
             <ul class="company-jobs-list">
                 <?php foreach($company->getJobs() as $job) { ?>
-<li class="company-jobs-job"><a href="company/<?= $company->getAsciiName() ?>/jobs/<?= explode("_",$job->getAsciiName())[1] ?>"><?= $job->getName(); ?></a></li>
+		<li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
+						array('asciiCompanyName' => $company->getAsciiName(),
+						            'asciiJobName' => explode("_",$job->getAsciiName())[1]),array(),true) ?>
+							"><?= $job->getName(); ?></a></li>
                 <?php } ?>
             </ul>
         </div>

@@ -28,20 +28,19 @@ return array(
                         ),
                         'may_terminate' => true,
                     ),
-                    'defaults' => array(
+                    'companyItem' => array(
                         'priority' => 2,
                         'type'    => 'segment',
                         'options' => array(
                             // url will be company/<asciiCompanyName>/jobs/<asciiJobName>/<action>
                             // asciijobname and asciicompanyname will be in database, and can be set from the admin panel
-                            // company/apple should be page of apple
+                            // company/apple should give page of apple
                             // company/apple/jobs should be list of jobs of apple
                             // company/apple/jobs/ceo should be the page of ceo job
-                            // company should give frontpage
+                            // company should give frontpage of company part
                             // company/list should give a list of companies
                             // company/index should give the frontpage
-                            // company should give frontpage
-                            'route'    => '[/company]/:asciiCompanyName',
+                            'route'    => '/:asciiCompanyName',
                             'constraints' => array(
                                 'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
                             ),
