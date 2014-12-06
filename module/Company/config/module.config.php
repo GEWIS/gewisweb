@@ -41,7 +41,7 @@ return array(
                             // company/list should give a list of companies
                             // company/index should give the frontpage
                             // company should give frontpage
-                            'route'    => '/:asciiCompanyName',
+                            'route'    => '[/company]/:asciiCompanyName',
                             'constraints' => array(
                                 'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
                             ),
