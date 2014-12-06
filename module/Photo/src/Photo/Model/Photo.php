@@ -38,6 +38,13 @@ class Photo implements ResourceInterface
     protected $album;
 
     /**
+     * The path where the photo is located relative to the storage directory
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $path;
+
+    /**
      * Get the ID.
      *
      * @return int
@@ -85,7 +92,6 @@ class Photo implements ResourceInterface
     public function setAlbum($album)
     {
         $this->album = $album;
-        //TODO: move the actualy photo file to another album
     }
 
     /**
