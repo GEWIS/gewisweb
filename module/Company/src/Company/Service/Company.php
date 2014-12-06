@@ -14,7 +14,13 @@ class Company extends AbstractService
     public function getCompanyList() {
         return $this->getCompanyMapper()->findAll();
     }
+    public function getCompaniesWithAsciiName($asciiName){
+	return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
+    }
     
+    public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName){
+	 return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);
+    }
     public function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');

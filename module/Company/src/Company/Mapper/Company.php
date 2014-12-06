@@ -43,6 +43,22 @@ class Company
     }
 
     /**
+     * Find the company with the given asciiName
+     *
+     * @param asciiName The 'username' of the company to get.
+     * @return An array of companies with the given asciiName.
+     */
+    public function findCompaniesWithAsciiName($asciiName){
+
+            $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+            $qb = $objectRepository->createQueryBuilder('c');
+            $qb->select('c')->where('c.asciiName=:ascii_company_name');
+            $qb->setParameter('ascii_company_name', $asciiName);
+	    return $qb->getQuery()->getResult();
+    }
+
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

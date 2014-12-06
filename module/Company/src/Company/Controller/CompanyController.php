@@ -11,12 +11,7 @@ class CompanyController extends AbstractActionController {
         $companyService = $this->getCompanyService();
         $companyName = $this->params('asciiCompanyName');    
         if ($companyName != null){
-            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-            $qb = $objectManager->createQueryBuilder();
-            $qb->select('c')->from('Company\Model\Company','c')->where('c.asciiName=:ascii_company_name');
-            $qb->setParameter('ascii_company_name', $companyName);
-
-            $companies = $qb->getQuery()->getResult();
+	    $companies = $companyService->getCompaniesWithAsciiName($companyName);
             if (count($companies)!=0){
                 $vm = new ViewModel(array(
                     'company' => $companies[0]
@@ -38,12 +33,7 @@ class CompanyController extends AbstractActionController {
         $jobName = $this->params('asciiJobName');    
         $companyName = $this->params('asciiCompanyName');    
         if ($jobName != null){
-            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-            $qb = $objectManager->createQueryBuilder();
-            $qb->select('j')->from('Company\Model\Job','j')->where("j.ascii_name=:job_id");
-            $qb->setParameter('job_id', $companyName+'_'+$jobName);
-
-            $jobs = $qb->getQuery()->getResult();
+	    $jobs = $companyService->getJobsWithAsciiName($companyName,$jobName);
             if (count($jobs)!=0){
                 $vm = new ViewModel(array(
                     'job' => $jobs[0]
