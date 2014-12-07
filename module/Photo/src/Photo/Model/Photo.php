@@ -75,6 +75,16 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * Get the path where the photo is stored.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
      * Set the date.
      *
      * @param \DateTime $date
@@ -85,13 +95,23 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the album, this moves the photo another folder .
+     * Set the album
      *
      * @param Album $album
      */
     public function setAlbum($album)
     {
         $this->album = $album;
+    }
+
+    /**
+     * Set the path where the photo is stored
+     *
+     * @param Album $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
     }
 
     /**
