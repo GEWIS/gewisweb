@@ -90,7 +90,7 @@ class Photo extends AbstractService
      */
     protected function populateMetadata($photo)
     {
-        //TODO: feth metadata from photo and add it
+        //TODO: fetch metadata from photo and add it
         return $photo;
     }
 
