@@ -21,16 +21,15 @@ class Photo extends AbstractService
      */
     public function getPhotoMapper()
     {
-        return $this->sm->get('photo_mapper_album');
+        return $this->sm->get('photo_mapper_photo');
     }
 
     /**
      * 
      * @param string $path
-     * @param \Photo\Model\Photo $photo
      * @return the path at which the photo should be saved
      */
-    protected function generateStoragePath($path, $photo)
+    protected function generateStoragePath($path)
     {
         $config = $this->getConfig();
         //TODO: check if this is fast enough
@@ -39,9 +38,9 @@ class Photo extends AbstractService
          * the hash is split to obtain a path 
          * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg
          */
-        $directory = $config['upload_dir'] . '/' . substr($hash, 0, 2);
-        if (!file_exists($directory)) {
-            mkdir($directory);
+        $directory = substr($hash, 0, 2);
+        if (!file_exists($config['upload_dir'] . '/' . $directory)) {
+            mkdir($config['upload_dir'] . '/' . $directory);
         }
         $storage_path = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
         return $storage_path;
@@ -57,21 +56,13 @@ class Photo extends AbstractService
      */
     public function storeUploadedPhoto($path, $target_album)
     {
-        $photo = $this->createPhotoEntity($path, target_album);
-        $storage_path = $this->generateStoragePath($path, $photo);
-        rename($path, $storage_path);
-    }
-
-    /**
-     * Creates an instance of a Photo and saves it in the database
-     * @param type $path
-     * @return \Photo\Model\Photo
-     */
-    protected function createPhotoEntity($path, $target_album)
-    {
+        $config = $this->getConfig();
+        $storage_path = $this->generateStoragePath($path);
         $photo = new PhotoModel();
         $photo->setAlbum($target_album);
         $photo = $this->populateMetaData($photo);
+        $photo->setPath($storage_path);
+        
         $mapper = $this->getPhotoMapper();
         /**
          * TODO: optionally we could use a transactional query here to make it
@@ -81,6 +72,8 @@ class Photo extends AbstractService
          */
         $mapper->persist($photo);
         $mapper->flush();
+        rename($path, $config['upload_dir'] . '/' . $storage_path);
+        return $photo;
     }
 
     /**
@@ -91,7 +84,20 @@ class Photo extends AbstractService
     protected function populateMetadata($photo)
     {
         //TODO: fetch metadata from photo and add it
+        //placeholder for now
+        $photo->setDate(new \DateTime("2014-12-12 12:13:12.424242"));
         return $photo;
+    }
+
+    /**
+     * Get the photo config, as used by this service.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+        return $config['photo'];
     }
 
 }
