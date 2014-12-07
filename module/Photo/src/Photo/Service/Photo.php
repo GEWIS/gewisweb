@@ -57,8 +57,8 @@ class Photo extends AbstractService
      */
     public function storeUploadedPhoto($path, $target_album)
     {
-        $photo = createPhotoEntity($path, target_album);
-        $storage_path = generateStoragePath($path, $photo);
+        $photo = $this->createPhotoEntity($path, target_album);
+        $storage_path = $this->generateStoragePath($path, $photo);
         rename($path, $storage_path);
     }
 
@@ -71,7 +71,7 @@ class Photo extends AbstractService
     {
         $photo = new PhotoModel();
         $photo->setAlbum($target_album);
-        $photo = populateMetaData($photo);
+        $photo = $this->populateMetaData($photo);
         $mapper = $this->getPhotoMapper();
         /**
          * TODO: optionally we could use a transactional query here to make it
