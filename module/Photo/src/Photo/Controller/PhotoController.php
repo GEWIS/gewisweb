@@ -10,8 +10,10 @@ class PhotoController extends AbstractActionController
 
     public function indexAction()
     {
-        $service = $this->getAlbumService();
-        $albums = $service->getAlbums();
+        $album_service = $this->getAlbumService();
+        $albums = $album_service->getAlbums();
+        $photo_service = $this->getPhotoService();
+        $photo_service->storeUploadedPhoto("/tmp/2.png",$albums[1]);
         return new ViewModel(array(
             'albums' => $albums
         ));
@@ -25,6 +27,16 @@ class PhotoController extends AbstractActionController
     public function getAlbumService()
     {
         return $this->getServiceLocator()->get("photo_service_album");
+    }
+
+    /**
+     * Gets the photo service.
+     * 
+     * @return Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceLocator()->get("photo_service_photo");
     }
 
 }
