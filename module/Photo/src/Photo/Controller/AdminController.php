@@ -46,27 +46,6 @@ class AdminController extends AbstractActionController
         ));
     }
 
-    public function albumCreateAction()
-    {
-        $service = $this->getExamService();
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $courses = $service->searchCourse($request->getPost());
-
-            if (null !== $courses) {
-                return new ViewModel(array(
-                    'form' => $service->getSearchCourseForm(),
-                    'courses' => $courses
-                ));
-            }
-        }
-
-        return new ViewModel(array(
-            'form' => $service->getSearchCourseForm()
-        ));
-    }
-
     /**
      * Get the album service.
      */
