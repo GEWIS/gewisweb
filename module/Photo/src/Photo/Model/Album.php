@@ -40,37 +40,36 @@ class Album implements ResourceInterface
     /**
      * Parent album, null if there is no parent album.
      *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
      */
     protected $parent;
 
     /**
-     * all the photo's in this album
+     * all the subalbums
+     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent")
+     */
+    protected $children;
+
+    /**
+     * all the photo's in this album.
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album")
      */
     protected $photos;
 
     /**
-     * all the subalbums
-     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="album")
-     * 
-     */
-    protected $children;
-    /**
-     * Get the ID.
-     *
-     * @return int
-     */
-
-    /**
-     *
-     * The cover photo to display with the album
+     * The cover photo to display with the album.
      * @ORM\OneToOne(targetEntity="Photo")
      * @ORM\JoinColumn(name="cover_id", referencedColumnName="id")
      */
     protected $cover;
 
+
+    /**
+     * Get the ID.
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;

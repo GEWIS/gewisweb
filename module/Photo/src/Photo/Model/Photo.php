@@ -28,7 +28,7 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="date")
      */
     protected $date;
-    //add more metadata here later
+    // TODO: add more metadata here later
     /**
      * Album in which the photo is.
      *
