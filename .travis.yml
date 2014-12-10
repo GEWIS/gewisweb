@@ -10,3 +10,4 @@ before_script:
 script:
   - phpunit --configuration module/User/test/phpunit.xml
   - phpunit --configuration module/Decision/test/phpunit.xml
+  - ./web orm:validate-schema
