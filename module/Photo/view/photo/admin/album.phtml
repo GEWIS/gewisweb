@@ -1,3 +1,4 @@
+<h1><?= $this->translate('Albums') ?></h1>
 <?php if (!empty($albums)): ?>
 <!-- simple table here for now -->
 <table class="table table-striped">
@@ -5,15 +6,11 @@
     <tr>
         <th>Album name</th>
         <th>Date</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-<?php foreach ($albums as $album): ?>
-    <tr>
-        <td><?= $album->getName() ?></td>
-        <td><?= $album->getDate()->format('Y-m-d H:i') ?></td>
-    </tr>
-<?php endforeach; ?>
+<?php var_dump($albums); ?>
     </tbody>
 </table>
 <?php endif; ?>
