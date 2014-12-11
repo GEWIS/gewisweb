@@ -25,6 +25,27 @@ class Album extends AbstractService
     }
 
     /**
+     * Get the photo mapper.
+     *
+     * @return \Photo\Mapper\Photo
+     */
+    public function getPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_photo');
+    }
+
+    /**
+     * Gets an album using the album id
+     * 
+     * @param integer $id the id of the album
+     * @return Photo\Model\Album album matching the given id
+     */
+    public function getAlbum($id)
+    {
+        return $this->getAlbumMapper()->getAlbumById($id);
+    }
+
+    /**
      * Get all the albums in the root directory
      * 
      * @return array of albums
@@ -32,6 +53,16 @@ class Album extends AbstractService
     public function getAlbums()
     {
         return $this->getAlbumMapper()->getRootAlbums();
+    }
+
+    /**
+     * Get all photos in an album
+     * @param Photo\Model\Album $album the album to get the photos from
+     * @return array of Photo\Model\Album
+     */
+    public function getPhotos($album)
+    {
+        return $this->getPhotoMapper()->getAlbumPhotos($album);
     }
 
     /**
