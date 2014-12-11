@@ -28,7 +28,23 @@ class Album
     {
         $this->em = $em;
     }
+    
+    /**
+     * retrieves an album by id from the database
+     * 
+     * @param integer $id the id of the album
+     * 
+     * @return Photo\Model\Album
+     */
+    public function getAlbumById($id)
+    {
+        $qb = $this->em->createQueryBuilder();
 
+        $qb->select('magic'); //TODO
+
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
     /**
      * returns all the subalbums.
      * 
