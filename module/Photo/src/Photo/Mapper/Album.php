@@ -40,10 +40,12 @@ class Album
     {
         $qb = $this->em->createQueryBuilder();
 
-        $qb->select('magic'); //TODO
+        $qb->select('a')
+                ->from('Photo\Model\Album', 'a')
+                ->where('a.id = ?1');
+        $qb->setParameter(1, $id);
 
-        $res = $qb->getQuery()->getResult();
-        return empty($res) ? null : $res[0];
+        return $qb->getQuery()->getResult();
     }
     /**
      * returns all the subalbums.
