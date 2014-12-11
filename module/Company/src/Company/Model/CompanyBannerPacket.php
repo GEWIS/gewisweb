@@ -21,14 +21,14 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
      * @ORM\Column(type="string")
      */
     protected $image;
-        
+
     /**
      * The banner's HTML.
      *
      * @ORM\Column(type="text")
      */
     protected $html;
-    
+
     /**
      * Get the banner's image's URL.
      *
@@ -38,7 +38,7 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         return $this->image;
     }
-    
+
     /**
      * Set the banner's image's URL.
      *
@@ -48,7 +48,7 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         $this->image = $image;
     }
-    
+
     /**
      * Get the banner's HTML.
      *
@@ -58,7 +58,7 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         return $this->html;
     }
-    
+
     /**
      * Set the banner's HTML.
      *
@@ -68,7 +68,7 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         $this->html = $html;
     }
-    
+
     /**
      * Constructor
      */
@@ -82,26 +82,26 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         // todo
     }
-    
+
     public function unpublish()
     {
         // todo
     }
-    
+
     public function create()
     {
         // todo
     }
-    
+
     public function save()
     {
         // todo   
     }
-    
+
     public function delete()
     {
         // todo
     }
-    
-    
+
+
 }

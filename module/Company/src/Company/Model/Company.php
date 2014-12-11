@@ -30,7 +30,7 @@ class Company //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
      * The company's ascii version of the name. (username)
      *
@@ -65,7 +65,7 @@ class Company //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $email;
-    
+
     /**
      * The company's phone.
      *
@@ -79,22 +79,22 @@ class Company //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $logo;
-    
+
     /**
      * The company's (HTML) description.
      *
      * @ORM\Column(type="text")
      */
     protected $description;
-    
+
     /**
      * The company's jobs.
      *
      * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
      */
     protected $jobs;
-    
-    
+
+
     /**
      * Constructor
      */
@@ -113,11 +113,13 @@ class Company //implements RoleInterface, ResourceInterface
         return $this->id;
     }
 
-    public function getAsciiName(){
-	    return $this->asciiName;
+    public function getAsciiName()
+    {
+        return $this->asciiName;
     }
 
-    public function setAsciiName($asciiName){
+    public function setAsciiName($asciiName)
+    {
         $this->asciiName = $asciiName;
     }
     /**
@@ -129,7 +131,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->name;
     }
-    
+
     /**
      * Set the company's name.
      *
@@ -149,7 +151,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->address;
     }
-    
+
     /**
      * Set the company's address.
      *
@@ -159,7 +161,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->address = $address;
     }
-    
+
     /**
      * Get the company's website.
      *
@@ -169,7 +171,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->website;
     }
-    
+
     /**
      * Set the company's website.
      *
@@ -179,7 +181,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->website = $website;
     }
-    
+
     /**
      * Get the company's slogan.
      *
@@ -189,7 +191,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->slogan;
     }
-    
+
     /**
      * Set the company's slogan.
      *
@@ -199,7 +201,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->slogan = $slogan;
     }
-    
+
     /**
      * Get the company's email.
      *
@@ -209,7 +211,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->email;
     }
-    
+
     /**
      * Set the company's email.
      *
@@ -219,7 +221,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->email = $email;
     }
-    
+
     /**
      * Get the company's phone.
      *
@@ -229,7 +231,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->phone;
     }
-    
+
     /**
      * Set the company's phone.
      *
@@ -239,7 +241,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->phone = $phone;
     }
-    
+
     /**
      * Get the company's logo.
      *
@@ -249,7 +251,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->logo;
     }
-    
+
     /**
      * Set the company's logo.
      *
@@ -259,7 +261,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->logo = $logo;
     }
-    
+
     /**
      * Get the company's description.
      *
@@ -269,7 +271,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->description;
     }
-    
+
     /**
      * Set the company's description.
      *
@@ -279,7 +281,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->description = $description;
     }
-        
+
     /**
      * Get the company's jobs.
      *
@@ -289,7 +291,7 @@ class Company //implements RoleInterface, ResourceInterface
     {
         return $this->jobs;
     }
-    
+
     /**
      * Set the company's jobs.
      *
@@ -299,5 +301,5 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->jobs = $jobs;
     }
-    
+
 }

@@ -11,26 +11,31 @@ use Company\Mapper\Company as CompanyMapper;
  */
 class Company extends AbstractService
 {
-    public function getCompanyList() {
+    public function getCompanyList()
+    {
         return $this->getCompanyMapper()->findAll();
     }
-    public function getCompaniesWithAsciiName($asciiName){
-	return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
+    public function getCompaniesWithAsciiName($asciiName)
+    {
+        return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
     }
-    
-    public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName){
-	 return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);
+
+    public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName)
+    {
+        return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);
     }
     public function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');
     }
-    
-    public function getJobList() {
+
+    public function getJobList()
+    {
         return $this->getJobMapper()->findAll();
     }
-    
-    public function getActiveJobList() {
+
+    public function getActiveJobList()
+    {
         $jl = $this->getJobList();
         $r = array();
         foreach($jl as $j) {
@@ -40,7 +45,7 @@ class Company extends AbstractService
         }
         return $r;
     }
-    
+
     public function getJobMapper()
     {
         return $this->sm->get('company_mapper_job');

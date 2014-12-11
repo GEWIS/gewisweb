@@ -30,7 +30,7 @@ class Job //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
      * The job's ascii name.
      *
@@ -64,23 +64,23 @@ class Job //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $email;
-    
+
     /**
      * The job's description.
      *
      * @ORM\Column(type="text")
      */
     protected $description;
-    
+
     /**
      * The job's company.
      *
      * @ORM\ManyToOne(targetEntity="Company", inversedBy="jobs")
      */
     protected $company;
-    
-    
-        
+
+
+
     /**
      * Constructor
      */
@@ -108,10 +108,10 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->name;
     }
-    
+
     public function getAsciiName()
     {
-        return $this->ascii_name;
+        return $this->asciiName;
     }
     /**
      * Set the job's name.
@@ -120,7 +120,7 @@ class Job //implements RoleInterface, ResourceInterface
      */
     public function setAsciiName($name)
     {
-        $this->ascii_name = $name;
+        $this->asciiName = $name;
     }
     /**
      * Set the job's name.
@@ -141,7 +141,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->active;
     }
-    
+
     /**
      * Set the job's status.
      *
@@ -151,7 +151,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->active = $active;
     }
-    
+
     /**
      * Get the job's website.
      *
@@ -161,7 +161,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->website;
     }
-    
+
     /**
      * Set the job's website.
      *
@@ -171,7 +171,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->website = $website;
     }
-        
+
     /**
      * Get the job's phone.
      *
@@ -181,7 +181,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->phone;
     }
-    
+
     /**
      * Set the job's phone.
      *
@@ -191,7 +191,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->phone = $phone;
     }
-    
+
     /**
      * Get the job's email.
      *
@@ -201,7 +201,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->email;
     }
-    
+
     /**
      * Set the job's email.
      *
@@ -211,7 +211,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->email = $email;
     }
-    
+
     /**
      * Get the job's description.
      *
@@ -221,7 +221,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->description;
     }
-    
+
     /**
      * Set the job's description.
      *
@@ -231,7 +231,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->description = $description;
     }
-    
+
     /**
      * Get the job's company.
      *
@@ -241,7 +241,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->company;
     }
-    
+
     /**
      * Set the job's company.
      *
@@ -251,6 +251,6 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->company = $company;
     }
-    
-    
+
+
 }

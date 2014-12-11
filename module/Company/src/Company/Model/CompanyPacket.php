@@ -30,22 +30,22 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="date")
      */
     protected $starts;
-        
+
     /**
      * The packet's expiration date.
      *
      * @ORM\Column(type="date")
      */
     protected $expires;
-    
+
     /**
      * The packet's pusblish state.
      *
      * @ORM\Column(type="boolean")
      */
     protected $published;
-    
-        
+
+
     /**
      * Constructor
      */
@@ -73,7 +73,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         return $this->starts;
     }
-    
+
     /**
      * Set the packet's starting date.
      *
@@ -93,7 +93,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         return $this->expires;
     }
-    
+
     /**
      * Set the packet's expiration date.
      *
@@ -103,7 +103,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         $this->expires = $expires;
     }
-    
+
     /**
      * Get the packet's publish state.
      *
@@ -113,7 +113,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         return $this->published;
     }
-    
+
     /**
      * Set the packet's publish state.
      *
@@ -123,39 +123,39 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         $this->published = $published;
     }
-    
+
     public function publish()
     {
         $this->setPublished(true);
         $this->save();
     }
-    
+
     public function unpublish()
     {
         $this->setPublished(false);
         $this->save();
     }
-    
+
     public function create()
     {
         // todo
     }
-    
+
     public function save()
     {
         // todo
     }
-    
+
     public function delete()
     {
         // todo
     }
-    
+
     public function isExpired()
     {
         return time() > $this->getExpirationDate();
     }
-    
+
     public function isActive()
     {
         if ($this->isExpired())
@@ -164,14 +164,14 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
             $this->unpublish();
             return false;
         }
-        
+
         if ($this->getPublished())
         {
             return false;   
         }
-        
+
         return true;
     }
-    
-    
+
+
 }

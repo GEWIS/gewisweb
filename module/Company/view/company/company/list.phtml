@@ -5,148 +5,148 @@
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
 if(isset($company)){
-	$company_list = array();
-	$company_list[] = $company;
-        $islist = false;
+    $company_list = array();
+    $company_list[] = $company;
+    $islist = false;
 }
 else{
-	$islist = true;
+    $islist = true;
 
 
-	echo("<h1>Companies</h1>");
+    echo("<h1>Companies</h1>");
 
-	echo("<fieldset> 
-		<legend>Filter</legend> 
-		<label>All <input type='text' id='filter-all'></label> 
-		<label>Name <input type='text' id='filter-name'></label> 
-		<label>Location <input type='text' id='filter-location'></label> 
-		<label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
-		<label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
-		<label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>");
+    echo("<fieldset> 
+        <legend>Filter</legend> 
+        <label>All <input type='text' id='filter-all'></label> 
+        <label>Name <input type='text' id='filter-name'></label> 
+        <label>Location <input type='text' id='filter-location'></label> 
+        <label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
+        <label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
+        <label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>");
 }
 if(!isset($company_list)){
-	echo "Company not found";
-	return;
+    echo "Company not found";
+    return;
 }
 foreach ($company_list as $company) {
-	echo($this->partial('partial/company/company/list/company.phtml',array('islist'=>$islist,'company'=>$company)));
+    echo($this->partial('partial/company/company/list/company.phtml',array('islist'=>$islist,'company'=>$company)));
 }
 ?>
 
-    <script type="text/javascript">
-        /* FILTERING */
+<script type="text/javascript">
+/* FILTERING */
 
-        function filter_name(name) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
+function filter_name(name) {
+    $(".company-list-item").each(function() {
+        if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
+            $(this).css({display: "none"});
+        } else {
+            $(this).css({display: "block"});
+        }
+    });
+}
+
+function filter_location(location) {
+    $(".company-list-item").each(function() {
+        if ($(this).find(".company-address").text().toLowerCase().indexOf(location.toLowerCase())==-1) {
+            $(this).css({display: "none"});
+        } else {
+            $(this).css({display: "block"});
+        }
+    });
+}
+
+function filter_description(description) {
+    $(".company-list-item").each(function() {
+        if ($(this).find(".company-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
+            $(this).css({display: "none"});
+        } else {
+            $(this).css({display: "block"});
+        }
+    });
+}
+
+function filter_job(job) {
+    $(".company-list-item").each(function() {
+        if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
+            $(this).css({display: "none"});
+        } else {
+            $(this).css({display: "block"});
+        }
+    });
+}
+
+function filter_all(term) {
+    $(".company-list-item").each(function() {
+        if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
+            $(this).css({display: "none"});
+        } else {
+            $(this).css({display: "block"});
+        }
+    });
+}
+
+$("#filter-name").keyup(function() {
+    filter_name($(this).val());
+});
+
+$("#filter-location").keyup(function() {
+    filter_location($(this).val());
+});
+
+$("#filter-description").keyup(function() {
+    filter_description($(this).val());
+});
+
+$("#filter-job").keyup(function() {
+    filter_job($(this).val());
+});
+
+$("#filter-all").keyup(function() {
+    filter_all($(this).val());
+});
+
+
+/* SORTING */
+
+function sort_name(order) {
+    var companies = $(".company-list-item");
+    companies.sort(function(a,b) {
+
+        if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
+            return order;
+        } else {
+            return -1 * order;
         }
 
-        function filter_location(location) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-address").text().toLowerCase().indexOf(location.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
+    });
+
+    companies.detach().appendTo($(".company-list"));
+}
+
+function sort_jobs_amount(order) {
+    var companies = $(".company-list-item");
+    companies.sort(function(a,b) {
+
+        if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
+            return order;
+        } else {
+            return -1 * order;
         }
 
-        function filter_description(description) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
+    });
 
-        function filter_job(job) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
+    companies.detach().appendTo($(".company-list"));
+}
 
-        function filter_all(term) {
-            $(".company-list-item").each(function() {
-                if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        $("#filter-name").keyup(function() {
-            filter_name($(this).val());
-        });
-
-        $("#filter-location").keyup(function() {
-            filter_location($(this).val());
-        });
-
-        $("#filter-description").keyup(function() {
-            filter_description($(this).val());
-        });
-
-        $("#filter-job").keyup(function() {
-            filter_job($(this).val());
-        });
-
-        $("#filter-all").keyup(function() {
-            filter_all($(this).val());
-        });
-
-
-        /* SORTING */
-
-        function sort_name(order) {
-            var companies = $(".company-list-item");
-            companies.sort(function(a,b) {
-
-                if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
-                   return order;
-                } else {
-                   return -1 * order;
-                }
-
-            });
-
-            companies.detach().appendTo($(".company-list"));
-        }
-
-        function sort_jobs_amount(order) {
-            var companies = $(".company-list-item");
-            companies.sort(function(a,b) {
-
-                if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
-                    return order;
-                } else {
-                    return -1 * order;
-                }
-
-            });
-
-            companies.detach().appendTo($(".company-list"));
-        }
-
-        $("#sort-column, #sort-order").change(function() {
-            if ($("#sort-column").val()=="company-name") {
-                sort_name($("#sort-order").val());
-            } else  if ($("#sort-column").val()=="jobs-amount") {
-                sort_jobs_amount($("#sort-order").val());
-            }
-        });
-    </script>
+$("#sort-column, #sort-order").change(function() {
+    if ($("#sort-column").val()=="company-name") {
+        sort_name($("#sort-order").val());
+    } else  if ($("#sort-column").val()=="jobs-amount") {
+        sort_jobs_amount($("#sort-order").val());
+    }
+});
+</script>
 
 </div>
-    
+

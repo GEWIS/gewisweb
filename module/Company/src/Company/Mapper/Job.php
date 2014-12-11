@@ -41,19 +41,20 @@ class Job
     {
         return $this->getRepository()->findAll();
     }
-    /*
+    /**
      * Find all jobs with the given job 'username' from the company with the given ascii name.
      * @param companyAsciiName The asciiname of the containing company.
      * @param jobAsciiName The asciiName of the requested job.
      * @return An array of jobs that match the request.
      */
-    public function findJobWithAsciiName($companyAsciiName,$jobAsciiName){
-		
-            $qb = $this->getRepository()->createQueryBuilder('j');
-            $qb->select('j')->where("j.ascii_name=:job_id");
-            $qb->setParameter('job_id', $companyAsciiName+'_'+$jobAsciiName);
+    public function findJobWithAsciiName($companyAsciiName,$jobAsciiName)
+    {
 
-            return $qb->getQuery()->getResult();
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->where("j.asciiName=:jobId");
+        $qb->setParameter('jobId', $companyAsciiName+'_'+$jobAsciiName);
+
+        return $qb->getQuery()->getResult();
     }
     /**
      * Get the repository for this mapper.
