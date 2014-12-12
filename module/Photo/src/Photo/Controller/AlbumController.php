@@ -10,16 +10,19 @@ class AlbumController extends AbstractActionController
 
     public function indexAction()
     {
-        $album_id=$this->params()->fromRoute('album');
+        $id = $this->params()->fromRoute('album');
         $album_service = $this->getAlbumService();
         $album = $album_service->getAlbum($id);
         $albums = $album_service->getAlbums($album);
-        //$photo_service = $this->getPhotoService();
         $photos = $album_service->getPhotos($album);
+        $config = $album_service->getConfig();
+        //we'll fix this ugly thing later vv
+        $basedir = str_replace("public", "", $config['upload_dir']);
         return new ViewModel(array(
             'album' => $album,
             'albums' => $albums,
-            'photos' => $photos
+            'photos' => $photos,
+            'basedir' => $basedir
         ));
     }
 

@@ -60,7 +60,7 @@ class Photo extends AbstractService
         $storage_path = $this->generateStoragePath($path);
         $photo = new PhotoModel();
         $photo->setAlbum($target_album);
-        $photo = $this->populateMetaData($photo);
+        $photo = $this->populateMetaData($photo, $path);
         $photo->setPath($storage_path);
         
         $mapper = $this->getPhotoMapper();
@@ -81,7 +81,7 @@ class Photo extends AbstractService
      * @param \Photo\Model\Photo $photo the photo to add the metadata to
      * @return \Photo\Model\Photo the photo with the added metadata
      */
-    protected function populateMetadata($photo)
+    protected function populateMetadata($photo, $temp_path)
     {
         //TODO: fetch metadata from photo and add it
         //placeholder for now

@@ -50,10 +50,16 @@ class Album extends AbstractService
      * 
      * @return array of albums
      */
-    public function getAlbums()
+    public function getAlbums($album = null)
     {
-        return $this->getAlbumMapper()->getRootAlbums();
+        if($album == null)
+        {
+            return $this->getAlbumMapper()->getRootAlbums();
+        } else {
+            return $this->getAlbumMapper()->getSubAlbums($album);
+        }
     }
+    
 
     /**
      * Get all photos in an album
@@ -91,5 +97,15 @@ class Album extends AbstractService
         //TODO: permissions
         return $this->sm->get('photo_form_album_create');
     }
-
+    
+    /**
+     * Get the photo config
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+        return $config['photo'];
+    }
 }

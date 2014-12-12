@@ -44,22 +44,22 @@ class Album
                 ->from('Photo\Model\Album', 'a')
                 ->where('a.id = ?1');
         $qb->setParameter(1, $id);
-
-        return $qb->getQuery()->getResult();
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
     }
     /**
      * returns all the subalbums.
      * 
      * @return array of AlbumModels
      */
-    public function getSubAlbums($parent)
+    public function getSubAlbums($parent_id)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
                 ->from('Photo\Model\Album', 'a')
                 ->where('a.parent = ?1');
-        $qb->setParameter(1, $parent);
+        $qb->setParameter(1, $parent_id);
 
         return $qb->getQuery()->getResult();
     }
