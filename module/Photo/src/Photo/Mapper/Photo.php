@@ -48,6 +48,24 @@ class Photo
     }
 
     /**
+     * retrieves an album by id from the database
+     * 
+     * @param integer $id the id of the album
+     * 
+     * @return Photo\Model\Album
+     */
+    public function getPhotoById($id)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.id = ?1');
+        $qb->setParameter(1, $id);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+    /**
      * Persist photo
      *
      * @param PhotoModel $photo

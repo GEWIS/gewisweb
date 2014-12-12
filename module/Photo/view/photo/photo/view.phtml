@@ -1,0 +1,24 @@
+<div class="row">
+    <?php if ($photo != null): ?>
+        <div class="col-lg-10 col-lg-offset-1">
+
+
+
+            <img class="img-responsive" src="<?= $basedir . '/' . $photo->getPath() ?>" alt="">
+        </div>             
+    <?php endif; ?>
+    <div class ="col-lg-2 col-lg-offset-5">
+        <nav>
+            <ul class="pager">
+                <li><a href="/photo/view/<?= $photo->getId()-1; ?>">Previous</a></li>
+                <li><a href="/photo/view/<?= $photo->getId()+1; ?>">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+

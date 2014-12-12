@@ -19,7 +19,7 @@
 <?php if (!empty($photos)): ?>
 <?php foreach ($photos as $photo): ?>
 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="photo/<?= $photo->getId(); ?>">
+                <a class="thumbnail" href="/photo/view/<?= $photo->getId(); ?>">
                     <img class="img-responsive" src="<?= $basedir.'/'.$photo->getPath() ?>" alt="">
                 </a>
             </div>

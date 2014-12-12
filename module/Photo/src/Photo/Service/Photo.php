@@ -26,6 +26,15 @@ class Photo extends AbstractService
 
     /**
      * 
+     * @param integer $id the id of the album
+     * @return Photo\Model\Photo photo matching the given id
+     */
+    public function getPhoto($id)
+    {
+        return $this->getPhotoMapper()->getPhotoById($id);
+    }
+    /**
+     * 
      * @param string $path
      * @return the path at which the photo should be saved
      */

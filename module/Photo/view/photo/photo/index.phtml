@@ -10,8 +10,8 @@
     <tbody>
 <?php foreach ($albums as $album): ?>
     <tr>
-        <td><a href="photo/album/<?= $album->getId(); ?>"><?= $album->getName() ?></a></td>
-        <td><a href="photo/album/<?= $album->getId(); ?>"><?= $album->getDate()->format('Y-m-d H:i') ?></a></td>
+        <td><a href="/photo/album/<?= $album->getId(); ?>"><?= $album->getName() ?></a></td>
+        <td><a href="/photo/album/<?= $album->getId(); ?>"><?= $album->getDate()->format('Y-m-d H:i') ?></a></td>
     </tr>
 <?php endforeach; ?>
     </tbody>
