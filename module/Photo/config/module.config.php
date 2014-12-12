@@ -18,9 +18,9 @@ return array(
                     'album' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/album[/:album]',
+                            'route' => '/album[/:album_id]',
                             'constraints' => array(
-                                'album' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                             'defaults' => array(
                                 'controller' => 'Album',
@@ -31,9 +31,13 @@ return array(
                     'photo' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/photo[/:photo]',
+                            'route' => '/photo[/:photo_id]',
                             'constraints' => array(
-                                'photo' => '[0-9]+',
+                                'photo_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'view',
                             ),
                         ),
                     ),
