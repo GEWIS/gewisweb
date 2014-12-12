@@ -18,9 +18,10 @@ return array(
                     'album' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/album[/:album_id]',
+                            'route' => '/album[/:album_id][/:page]',
                             'constraints' => array(
                                 'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
                             ),
                             'defaults' => array(
                                 'controller' => 'Album',

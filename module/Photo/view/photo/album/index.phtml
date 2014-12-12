@@ -1,35 +1,41 @@
 <div class="row">
     <div class="col-lg-12">
-                <h1 class="page-header"><?= $album->getName(); ?></h1>
-            </div>
-<?php if (!empty($albums)): ?>
-<?php foreach ($albums as $album): ?>
+        <h1 class="page-header"><?= $album->getName(); ?></h1>
+    </div>
+    <?php if (!empty($albums)): ?>
+        <?php foreach ($albums as $album): ?>
 
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="/photo/album/<?= $album->getId(); ?>">
                     <img class="img-responsive" src="http://placehold.it/825x550" alt="">
-                      <div class="caption">
-         Album title
-    </div>
+                    <div class="caption">
+                        <?= $album->getName(); ?>
+                    </div>
                 </a>
-          
+
             </div>
-<?php endforeach; ?>
-<?php endif; ?>
-<?php if (!empty($photos)): ?>
-<?php foreach ($photos as $photo): ?>
-<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <?php if (!empty($photos)): ?>
+        <?php foreach ($photos as $photo): ?>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="/photo/view/<?= $photo->getId(); ?>">
-                    <img class="img-responsive" src="<?= $basedir.'/'.$photo->getPath() ?>" alt="">
+                    <img class="img-responsive" src="<?= $basedir . '/' . $photo->getPath() ?>" alt="">
                 </a>
             </div>
-<?php endforeach; ?>
-<?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    
 </div>
+<nav>
+            <ul class="pager">
+                <li><a href="/photo/album/<?= $album->getId(); ?>/<?= $page-1; ?>">Previous</a></li>
+                <li><a href="/photo/album/<?= $album->getId(); ?>/<?= $page+1; ?>">Next</a></li>
+            </ul>
+        </nav>
 
 
-            
 
 
-            
-        
+
+

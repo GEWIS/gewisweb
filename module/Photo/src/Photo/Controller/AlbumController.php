@@ -11,10 +11,11 @@ class AlbumController extends AbstractActionController
     public function indexAction()
     {
         $album_id = $this->params()->fromRoute('album_id');
+        $page = $this->params()->fromRoute('page');
         $album_service = $this->getAlbumService();
         $album = $album_service->getAlbum($album_id);
         $albums = $album_service->getAlbums($album);
-        $photos = $album_service->getPhotos($album);
+        $photos = $album_service->getPhotos($album, $page);
         $config = $album_service->getConfig();
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $config['upload_dir']);
@@ -22,7 +23,8 @@ class AlbumController extends AbstractActionController
             'album' => $album,
             'albums' => $albums,
             'photos' => $photos,
-            'basedir' => $basedir
+            'basedir' => $basedir,
+            'page' => $page
         ));
     }
 

@@ -52,23 +52,23 @@ class Album extends AbstractService
      */
     public function getAlbums($album = null)
     {
-        if($album == null)
-        {
+        if ($album == null) {
             return $this->getAlbumMapper()->getRootAlbums();
         } else {
             return $this->getAlbumMapper()->getSubAlbums($album);
         }
     }
-    
 
     /**
      * Get all photos in an album
      * @param Photo\Model\Album $album the album to get the photos from
      * @return array of Photo\Model\Album
      */
-    public function getPhotos($album)
+    public function getPhotos($album, $page)
     {
-        return $this->getPhotoMapper()->getAlbumPhotos($album);
+        $config = $this->getConfig();
+        $start = $page * $config['max_photos_page'];
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $config['max_photos_page']);
     }
 
     /**
@@ -97,7 +97,7 @@ class Album extends AbstractService
         //TODO: permissions
         return $this->sm->get('photo_form_album_create');
     }
-    
+
     /**
      * Get the photo config
      *
@@ -108,4 +108,5 @@ class Album extends AbstractService
         $config = $this->sm->get('config');
         return $config['photo'];
     }
+
 }

@@ -35,13 +35,15 @@ class Photo
      * @param \Photo\Model\Album $album The album to retrieve the photos from
      * @return array of photo's
      */
-    public function getAlbumPhotos($album)
+    public function getAlbumPhotos($album, $start, $max_results)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
                 ->from('Photo\Model\Photo', 'a')
-                ->where('a.album = ?1');
+                ->where('a.album = ?1')
+                ->setFirstResult($start)
+                ->setMaxResults($max_results);
         $qb->setParameter(1, $album);
 
         return $qb->getQuery()->getResult();
