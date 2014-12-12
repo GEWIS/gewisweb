@@ -31,7 +31,7 @@ return array(
                     'photo' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/photo[/:photo_id]',
+                            'route' => '/view[/:photo_id]',
                             'constraints' => array(
                                 'photo_id' => '[0-9]+',
                             ),
