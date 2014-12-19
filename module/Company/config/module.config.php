@@ -73,12 +73,36 @@ return [
                     ],
                 ],
                 'priority' => 100
+            ),
+            'admin_company' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/admin/company',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Company\Controller',
+                        'controller'    => 'Admin',
+                        'action'        => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => [
+                    'default' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '[/:action]',
+                            'constraints' => [
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],
     'controllers' => [
         'invokables' => [
-            'Company\Controller\Company' => 'Company\Controller\CompanyController'
+            'Company\Controller\Company' => 'Company\Controller\CompanyController',
+            'Company\Controller\Admin' => 'Company\Controller\AdminController'
         ]
     ],
     'view_manager' => [
