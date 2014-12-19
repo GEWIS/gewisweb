@@ -55,6 +55,18 @@ class CompanyController extends AbstractActionController
         return $vm;
 
     }
+    
+    public function adminAction()
+    {
+        $companyService = $this->getCompanyService();
+        
+            $vm = new ViewModel(array(
+                'company_list' => $companyService->getCompanyList()
+            ));
+        
+        return $vm;
+
+    }
 
     protected function getCompanyService()
     {
