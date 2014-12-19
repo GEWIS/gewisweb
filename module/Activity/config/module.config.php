@@ -41,8 +41,11 @@ return array(
                     'create' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route' => ''
-                        )
+                            'route'    => '/create',
+                            'defaults' => array(
+                                'action' => 'create'
+                            )
+                        ),
                     )
                 ),
             ),
