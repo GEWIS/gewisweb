@@ -2,18 +2,28 @@
 
 namespace Company\Service;
 
-use Application\Service\AbstractService;
+//use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 
 use Company\Model\Company as CompanyModel;
 use Company\Mapper\Company as CompanyMapper;
 /**
  * Company service.
  */
-class Company extends AbstractService
+class Company extends AbstractACLService
 {
     public function getCompanyList()
     {
-        return $this->getCompanyMapper()->findAll();
+        if($this->isAllowed('list')){
+
+            return $this->getCompanyMapper()->findAll();
+        }
+        else{
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to see all the companies')
+            );
+        }
     }
     public function getCompaniesWithAsciiName($asciiName)
     {
@@ -49,5 +59,24 @@ class Company extends AbstractService
     public function getJobMapper()
     {
         return $this->sm->get('company_mapper_job');
+    }
+    /**
+     * Get the Acl.
+     *
+     * @return Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->getServiceManager()->get('company_acl');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'company';
     }
 }
