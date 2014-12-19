@@ -1,0 +1,171 @@
+
+<div class="company-edit-overview">
+    <?php
+
+$escaper = new Zend\Escaper\Escaper('utf-8');.
+    
+
+?>
+    <h1>Companies</h1>
+    
+<fieldset> 
+        <legend>Filter</legend> 
+        <label>All <input type='text' id='filter-all'></label> 
+        <label>Name <input type='text' id='filter-name'></label> 
+        <label>Location <input type='text' id='filter-location'></label> 
+        <label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
+        <label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
+        <label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>
+    
+    <table class="">
+        <thead>
+            <tr>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Jobs') ?></th>
+                <th><?= $this->translate('Packet expiry dates') ?></th>
+                <th><?= $this->translate('Packet statuses') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($company_list as $company) {
+            ?>
+            <tr class="company-list-item">
+                <td><a href="#"><?= $company->getName(); ?></a></td>
+                <td><a href="#"><?= count($company->getJobs()); ?></a></td>
+                <td><a href="#"><?= 0 // TODO: Packets ?></a></td>
+                <td><a href="#"><?= 0 // TODO: Packet statuses ?></a></td>
+            </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Jobs') ?></th>
+                <th><?= $this->translate('Packet expiry date') ?></th>
+                <th><?= $this->translate('Packet status') ?></th>
+            </tr>
+        </tfoot>
+    </table>
+    
+
+
+    <script type="text/javascript">
+        /* FILTERING */
+
+        function filter_name(name) {
+            $(".company-list-item").each(function() {
+                if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_location(location) {
+            $(".company-list-item").each(function() {
+                if ($(this).find(".company-address").text().toLowerCase().indexOf(location.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_description(description) {
+            $(".company-list-item").each(function() {
+                if ($(this).find(".company-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_job(job) {
+            $(".company-list-item").each(function() {
+                if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_all(term) {
+            $(".company-list-item").each(function() {
+                if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        $("#filter-name").keyup(function() {
+            filter_name($(this).val());
+        });
+
+        $("#filter-location").keyup(function() {
+            filter_location($(this).val());
+        });
+
+        $("#filter-description").keyup(function() {
+            filter_description($(this).val());
+        });
+
+        $("#filter-job").keyup(function() {
+            filter_job($(this).val());
+        });
+
+        $("#filter-all").keyup(function() {
+            filter_all($(this).val());
+        });
+
+
+        /* SORTING */
+
+        function sort_name(order) {
+            var companies = $(".company-list-item");
+            companies.sort(function(a,b) {
+
+                if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
+                    return order;
+                } else {
+                    return -1 * order;
+                }
+
+            });
+
+            companies.detach().appendTo($(".company-list"));
+        }
+
+        function sort_jobs_amount(order) {
+            var companies = $(".company-list-item");
+            companies.sort(function(a,b) {
+
+                if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
+                    return order;
+                } else {
+                    return -1 * order;
+                }
+
+            });
+
+            companies.detach().appendTo($(".company-list"));
+        }
+
+        $("#sort-column, #sort-order").change(function() {
+            if ($("#sort-column").val()=="company-name") {
+                sort_name($("#sort-order").val());
+            } else  if ($("#sort-column").val()=="jobs-amount") {
+                sort_jobs_amount($("#sort-order").val());
+            }
+        });
+    </script>
+
+</div>
+
