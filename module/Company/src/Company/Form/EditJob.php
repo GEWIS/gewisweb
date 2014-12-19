@@ -5,7 +5,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
-class EditCompany extends Form
+class EditJob extends Form
 {
     public function __construct(Translator $translate)
     {
@@ -29,12 +29,12 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'address',
+            'name' => 'active',
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'boolean',
             ),
             'options' => array(
-                'label' => $translate->translate('Address'),
+                'label' => $translate->translate('Active'),
             ),
         ));
         $this->add(array(
@@ -44,15 +44,6 @@ class EditCompany extends Form
             ),
             'options' => array(
                 'label' => $translate->translate('Website'),
-            ),
-        ));
-        $this->add(array(
-            'name' => 'slogan',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
-            'options' => array(
-                'label' => $translate->translate('Slogan'),
             ),
         ));
         $this->add(array(
@@ -71,15 +62,6 @@ class EditCompany extends Form
             ),
             'options' => array(
                 'label' => $translate->translate('Phone'),
-            ),
-        ));
-        $this->add(array(
-            'name' => 'logo',
-            'attributes' => array(
-                'type'  => 'file',
-            ),
-            'options' => array(
-                'label' => $translate->translate('Logo'),
             ),
         ));
         $this->add(array(
