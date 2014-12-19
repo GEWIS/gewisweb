@@ -6,7 +6,7 @@ $escaper = new Zend\Escaper\Escaper('utf-8');.
     
 
 ?>
-    <h1>Companies</h1>
+    
     
 <fieldset> 
         <legend>Filter</legend> 
@@ -33,8 +33,8 @@ $escaper = new Zend\Escaper\Escaper('utf-8');.
             <tr class="company-list-item">
                 <td><a href="?id=<?= $company->getId(); ?>"><?= $company->getName(); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= count($company->getJobs()); ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 // TODO: Packets ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 // TODO: Packet statuses ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
             </tr>
             <?php
             }
