@@ -54,10 +54,26 @@ class Module
                             $sm->get('company_doctrine_em')
                         );
                     },
-                        'company_doctrine_em' => function ($sm) {
+                    'company_doctrine_em' => function ($sm) {
                             return $sm->get('doctrine.entitymanager.orm_default');
-                        }
-            ]
-        ];
+                    },
+                'company_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+
+                    // add resource
+                    $acl->addResource('company');
+
+                    // users (logged in GEWIS members) are allowed to view exams
+                    // TODO: besides users, also people on the TU/e network
+                    // are allowed to view exams
+                    $acl->allow('guest', 'company', 'list');
+                    $acl->allow('guest', 'company', 'view');
+                    $acl->allow('admin', 'company', 'edit');
+                    $acl->allow('admin', 'company', 'listall'); // Can use admin interface
+
+                    return $acl;
+                },
+        ]
+    ];
     }
 }
