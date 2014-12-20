@@ -99,11 +99,6 @@ class Activity
     // TODO -> where can i find member organ?
     protected $organ;
 
-    /**
-     * Input filter to validate create/edit event form data
-     */
-    protected $inputFilter;
-
     public function get($variable) {
         return $this->$variable;
     }
@@ -113,6 +108,7 @@ class Activity
      *
      * @param array $params Parameters for the new activity
      * @throws \Exception If a activity is loaded
+     * @throws \Exception If a necessary parameter is not set
      * @return \Activity\Model\Activity the created activity
      */
     public function create(array $params) {
@@ -126,16 +122,16 @@ class Activity
             $this->$param =  $params[$param];
         }
 
+        $this->beginTime = new \DateTime($this->beginTime);
+        $this->endTime = new \DateTime($this->endTime);
+
         // TODO: These values need to be set correctly
-        $this->beginTime = new \DateTime('0000-00-00 00:00');
-        $this->endTime = new \DateTime('0000-00-00 00:00');
         $this->canSignUp = true;
         $this->onlyGEWIS = true;
         $this->creator = 1;
         $this->approved = 0;
         return $this;
     }
-
 
     /**
      * Returns if an user can sign up for this activity

@@ -27,9 +27,11 @@ class Activity extends Form
         ]);
 
         $this->add([
+            'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
-                'type' => 'text'
+                'min' => '2010-01-01T00:00:00Z',
+                'step' => '1', // minutes; default step interval is 1 min
             ],
             'options' => [
                 'label' =>  'Begin date and time of the activity: (yyyy-mm-dd hh:mm)'
@@ -37,9 +39,11 @@ class Activity extends Form
         ]);
 
         $this->add([
+            'type' => 'Zend\Form\Element\DateTime',
             'name' => 'endTime',
             'attributes' => [
-                'type' => 'text'
+                'min' => '2010-01-01T00:00:00Z',
+                'step' => '1', // minutes; default step interval is 1 min
             ],
             'options' => [
                 'label' =>  'End date and time of the activity: (yyyy-mm-dd hh:mm)'
@@ -74,7 +78,8 @@ class Activity extends Form
             ),
         ));
     }
-    /*************** INPUT FILTEr*****************/
+
+    /*************** INPUT FILTER*****************/
     /** The code below this deals with the input filter
      * of the create and edit activity form data
      */
@@ -95,7 +100,7 @@ class Activity extends Form
 
         $inputFilter->add($factory->createInput([
             'name' => 'beginTime',
-            'required' => true
+            'required' => true,
         ]));
 
         $inputFilter->add($factory->createInput([
