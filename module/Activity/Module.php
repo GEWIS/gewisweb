@@ -39,16 +39,14 @@ class Module
     public function getServiceConfig()
     {
         return array(
+            'invokables' => array(
+                'activity_service_activity' => 'Activity\Service\Activity'
+            ),
             'factories' => array(
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                },
-                'activity_service_activity' => function ($sm) {
-                    $ac = new Service\Activity();
-                    $ac->setServiceManager($sm);
-                    return $ac;
                 },
                 'activity_service_signup' => function ($sm) {
                     $ac = new Service\Signup();
