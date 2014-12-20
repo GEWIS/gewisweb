@@ -52,6 +52,10 @@ class ActivityController extends AbstractActionController {
                 $activity->create($form->getData());
                 $em->persist($activity);
                 $em->flush();
+
+                $this->redirect()->toRoute('activity/view', array(
+                    'id' => $activity->get('id')
+                ));
             }
         }
         return ['form' => $form];
