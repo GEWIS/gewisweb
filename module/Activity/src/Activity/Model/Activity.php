@@ -3,17 +3,12 @@ namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-//input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 /**
  * Activity model
  *
  * @ORM\Entity
  */
-class Activity implements InputFilterAwareInterface
+class Activity
 {
     /**
      * ID for the activity
@@ -141,86 +136,6 @@ class Activity implements InputFilterAwareInterface
         return $this;
     }
 
-    /*************** INPUT FILTEr*****************/
-    /** The code below this deals with the input filter
-     * of the create and edit activity form data
-     */
-
-    /**
-     * Get the input filter
-     *
-     * @return InputFilterInterface
-     */
-    public function getInputFilter() {
-        // Check if the input filter is set. If so, serve
-        if ($this->inputFilter) {
-            return $this->inputFilter;
-        }
-
-        $inputFilter = new InputFilter();
-        $factory = new InputFactory();
-        $inputFilter->add($factory->createInput([
-            'name' => 'name',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name'    => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
-                    ],
-                ],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'location',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name'    => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
-                    ],
-                ],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs',
-            'required' => true,
-            'filters' => [
-                ['name' => 'Int'],
-            ],
-            'validators' => [
-                [
-                    'name'    => 'Between',
-                    'options' => [
-                        'min'      => 0,
-                        'max'      => 10000,
-                    ],
-                ],
-            ],
-        ]));
-
-        $this->inputFilter = $inputFilter;
-        return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter) {
-        throw new \Exception("Not used");
-    }
 
     /**
      * Returns if an user can sign up for this activity

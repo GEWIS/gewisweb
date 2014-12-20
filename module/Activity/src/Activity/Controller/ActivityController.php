@@ -45,8 +45,8 @@ class ActivityController extends AbstractActionController {
         $form = new ActivityForm();
         if ($this->getRequest()->isPost()) {
             $activity = new ActivityModel();
-            $form->setInputFilter($activity->getInputFilter());
             $form->setData($this->getRequest()->getPost());
+
             if ($form->isValid()) {
                 $em = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
                 $activity->create($form->getData());
