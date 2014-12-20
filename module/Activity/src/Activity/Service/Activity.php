@@ -36,7 +36,7 @@ class Activity extends AbstractAclService
      * @return Activity\Model\Activity Activity or null if the activity does not exist
      */
     public function getActivity($id) {
-        $activityMapper = $this->getServiceManager()->get('ActivityMapper');
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getActivityById($id);
         return $activity;
     }
@@ -46,7 +46,7 @@ class Activity extends AbstractAclService
      * @return array Array of activities
      */
     public function getAllActivities(){
-        $activityMapper = $this->getServiceManager()->get('ActivityMapper');
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
         return $activity;
     }

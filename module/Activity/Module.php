@@ -45,22 +45,22 @@ class Module
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'ActivityService' => function ($sm) {
+                'activity_service_activity' => function ($sm) {
                     $ac = new Service\Activity();
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-                'SignupService' => function ($sm) {
+                'activity_service_signup' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-                'ActivityMapper' => function ($sm) {
+                'activity_mapper_activity' => function ($sm) {
                     return new \Activity\Mapper\Activity(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'SignupMapper' => function ($sm) {
+                'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')
                     );

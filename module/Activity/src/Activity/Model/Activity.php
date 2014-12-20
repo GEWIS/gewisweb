@@ -76,7 +76,6 @@ class Activity implements InputFilterAwareInterface
      */
     protected $onlyGEWIS;
 
-    // TODO -> FK's
     /**
      * Who did approve this activity
      *
@@ -229,5 +228,4 @@ class Activity implements InputFilterAwareInterface
     public function canSignUp() {
         return $this->canSignUp;
     }
-
 }
