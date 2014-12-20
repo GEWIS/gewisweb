@@ -26,15 +26,14 @@ class ActivityController extends AbstractActionController {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
 
-        $identity =$this->identity();
-        $user = is_null($identity) ? null : $identity->getMember();
+        $identity =$this->getServiceLocator()->get('user_role');
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
-            'isLoggedIn' => $user != null,
-            'isSignedUp' => !is_null($user) && $signupService->isSignedUp($activity, $user)
+            'isLoggedIn' => $identity !== 'guest',
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember())
         ];
 	}
 
@@ -78,8 +77,8 @@ class ActivityController extends AbstractActionController {
         }
 
         // Make sure the user is logged in
-        $identity = $this->identity();
-        if (is_null($identity)) {
+        $identity =$this->getServiceLocator()->get('user_role');
+        if ($identity === 'guest') {
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
             return $params;
         }
