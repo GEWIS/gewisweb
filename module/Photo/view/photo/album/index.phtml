@@ -2,37 +2,62 @@
     <div class="col-lg-12">
         <h1 class="page-header"><?= $album->getName(); ?></h1>
     </div>
-    <?php if (!empty($albums)): ?>
-        <?php foreach ($albums as $album): ?>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/photo/album/<?= $album->getId(); ?>">
-                    <img class="img-responsive" src="http://placehold.it/825x550" alt="">
-                    <div class="caption">
-                        <?= $album->getName(); ?>
-                    </div>
-                </a>
-
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-    <?php if (!empty($photos)): ?>
-        <?php foreach ($photos as $photo): ?>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/photo/view/<?= $photo->getId(); ?>">
-                    <img class="img-responsive" src="<?= $basedir . '/' . $photo->getPath() ?>" alt="">
-                </a>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-    
 </div>
-<nav>
-            <ul class="pager">
-                <li><a href="/photo/album/<?= $album->getId(); ?>/<?= $page-1; ?>">Previous</a></li>
-                <li><a href="/photo/album/<?= $album->getId(); ?>/<?= $page+1; ?>">Next</a></li>
-            </ul>
-        </nav>
+<div class="row">
+    <nav>
+        <ul class="pagination">
+            <?php if ($activepage !== 0): ?>
+                <li>
+                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage - 1; ?>">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php foreach ($pages as $page): ?>
+                <li <?= ($page === $activepage) ? 'class="active"' : '' ?>>
+                    <a href="<?= $page; ?>"><?= $page + 1; ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+            <?php if ($activepage !== $lastpage): ?>
+                <li>
+                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage + 1; ?>">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</div>
+<?php if (!empty($albums)): ?>
+    <?php foreach ($albums as $album): ?>
+
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="/photo/album/<?= $album->getId(); ?>">
+                <img class="img-responsive" src="http://placehold.it/825x550" alt="">
+                <div class="caption">
+                    <?= $album->getName(); ?>
+                </div>
+            </a>
+
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+<div class="row">
+    <?php if (!empty($photos)): ?>
+        <?php for ($i = 0; $i < count($photos); $i++): ?>
+            <?= ($i == 4) ? "</div><div class=\"row\">" : ""; ?>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/photo/view/<?= $photos[$i]->getId(); ?>">
+                    <img class="img-responsive" src="<?= $basedir . '/' . $photos[$i]->getPath() ?>" alt="">
+                </a>
+            </div>
+        <?php endfor; ?>
+    <?php endif; ?>
+</div>
+
 
 
 
