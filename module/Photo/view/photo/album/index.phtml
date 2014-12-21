@@ -16,7 +16,7 @@
             <?php endif; ?>
             <?php foreach ($pages as $page): ?>
                 <li <?= ($page === $activepage) ? 'class="active"' : '' ?>>
-                    <a href="<?= $page; ?>"><?= $page + 1; ?>
+                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $page; ?>"><?= $page + 1; ?>
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -48,7 +48,7 @@
 <div class="row">
     <?php if (!empty($photos)): ?>
         <?php for ($i = 0; $i < count($photos); $i++): ?>
-            <?= ($i == 4) ? "</div><div class=\"row\">" : ""; ?>
+            <?= ($i % 4 === 0) ? "</div><div class=\"row\">" : ""; ?>
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="/photo/view/<?= $photos[$i]->getId(); ?>">
                     <img class="img-responsive" src="<?= $basedir . '/' . $photos[$i]->getPath() ?>" alt="">
