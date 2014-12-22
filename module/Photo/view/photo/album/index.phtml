@@ -3,6 +3,7 @@
         <h1 class="page-header"><?= $album->getName(); ?></h1>
     </div>
 </div>
+<?php if($lastpage>0):  ?>
 <div class="row">
     <nav>
         <ul class="pagination">
@@ -31,6 +32,7 @@
         </ul>
     </nav>
 </div>
+<?php endif; ?>
 <?php if (!empty($albums)): ?>
     <?php foreach ($albums as $album): ?>
 

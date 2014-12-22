@@ -15,21 +15,29 @@ class AlbumController extends AbstractActionController
         $album_service = $this->getAlbumService();
         $album = $album_service->getAlbum($album_id);
         $config = $album_service->getConfig();
-        /**
-         * TODO: Add paging for subalbums, this should be combined with the 
-         * photo paging. This probably should be implemented once the album
-         * model contains data on the album and photo count.
-         */
-        $albums = $album_service->getAlbums($album);
-        $photos = $album_service->getPhotos($album, $activepage * $config['max_photos_page'], $config['max_photos_page']);
+        $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
+        if ($activepage > $lastpage) {
+            //TODO: throw some error, if this every occurs it's the user's fault
+        }
+
+        $albums = array();
+        $album_start = $activepage * $config['max_photos_page'];
+        //check if we need to display albums on this page:
+        if ($album_start < $album->getAlbumCount()) {
+            $albums = $album_service->getAlbums($album, $album_start, $config['max_photos_page']);
+        }
+
+        $photos = array();
+        $photo_count = $config['max_photos_page'] - count($albums);
+        //check if we need to display photos on this page:
+        if ($photo_count > 0) {
+            $photo_start = max($activepage * $config['max_photos_page'] - $album->getAlbumCount(), 0);
+            $photos = $this->getAlbumService()->getPhotos($album, $photo_start, $photo_count);
+        }
+
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $config['upload_dir']);
-        /**
-         * TODO: fetch the real last page based on the photo count in the album
-         * the album model doesn't contain the photo count yet, therefore this
-         * is not possible
-         */
-        $lastpage = 9;
+
         $pages = $this->getAlbumPaging($activepage, $lastpage);
         return new ViewModel(array(
             'album' => $album,
