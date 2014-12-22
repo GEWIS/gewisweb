@@ -14,14 +14,14 @@ class AlbumController extends AbstractActionController
         $activepage = (int) $this->params()->fromRoute('page');
         $album_service = $this->getAlbumService();
         $album = $album_service->getAlbum($album_id);
+        $config = $album_service->getConfig();
         /**
          * TODO: Add paging for subalbums, this should be combined with the 
          * photo paging. This probably should be implemented once the album
          * model contains data on the album and photo count.
          */
         $albums = $album_service->getAlbums($album);
-        $photos = $album_service->getPhotos($album, $activepage);
-        $config = $album_service->getConfig();
+        $photos = $album_service->getPhotos($album, $activepage * $config['max_photos_page'], $config['max_photos_page']);
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $config['upload_dir']);
         /**
