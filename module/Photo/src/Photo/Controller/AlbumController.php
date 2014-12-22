@@ -11,7 +11,7 @@ class AlbumController extends AbstractActionController
     public function indexAction()
     {
         $album_id = $this->params()->fromRoute('album_id');
-        $activepage = (int)$this->params()->fromRoute('page');
+        $activepage = (int) $this->params()->fromRoute('page');
         $album_service = $this->getAlbumService();
         $album = $album_service->getAlbum($album_id);
         /**
@@ -30,32 +30,7 @@ class AlbumController extends AbstractActionController
          * is not possible
          */
         $lastpage = 9;
-        /**
-         * This code determines which set of pages to show the user to
-         * navigate to. The base idea is to show the two pages before and the 
-         * two pages following the currently active page. With special
-         * conditions for when the last and the first page are reached.
-         */
-        $pages=array();
-        $startpage=$activepage-2;
-        $endpage=$activepage+2;
-        if($startpage<0)
-        {
-            $endpage-=$startpage;
-            $startpage=0;
-        }
-        if($endpage>$lastpage)
-        {
-            if($startpage>0)
-            {
-             $startpage -= min($endpage-$lastpage,$startpage);   
-            }
-            $endpage = $lastpage;
-        }
-        for($i=$startpage;$i<=$endpage;$i++)
-        {
-               $pages[]=$i;    
-        }
+        $pages = $this->getAlbumPaging($activepage, $lastpage);
         return new ViewModel(array(
             'album' => $album,
             'albums' => $albums,
@@ -65,6 +40,36 @@ class AlbumController extends AbstractActionController
             'pages' => $pages,
             'lastpage' => $lastpage
         ));
+    }
+
+    /**
+     * This fucntion determines which set of pages to show the user to
+     * navigate to. The base idea is to show the two pages before and the 
+     * two pages following the currently active page. With special
+     * conditions for when the last and the first page are reached.
+     * @param type $lastpage the last page in the album
+     * @param type $activepage the page the user is currently on
+     * @return array the pages to show the user
+     */
+    protected function getAlbumPaging($activepage, $lastpage)
+    {
+        $pages = array();
+        $startpage = $activepage - 2;
+        $endpage = $activepage + 2;
+        if ($startpage < 0) {
+            $endpage-=$startpage;
+            $startpage = 0;
+        }
+        if ($endpage > $lastpage) {
+            if ($startpage > 0) {
+                $startpage -= min($endpage - $lastpage, $startpage);
+            }
+            $endpage = $lastpage;
+        }
+        for ($i = $startpage; $i <= $endpage; $i++) {
+            $pages[] = $i;
+        }
+        return $pages;
     }
 
     /**
