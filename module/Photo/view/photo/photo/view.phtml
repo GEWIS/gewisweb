@@ -17,22 +17,16 @@
                     <tr><td>ISO</td><td>400</td></tr>
                     </tbody>
             </table>
+
+            <nav>
+                <ul class="pager">
+                    <?php if (!is_null($previous)): ?>
+                        <li><a href="/photo/view/<?= $previous->getId(); ?>">Previous</a></li>
+                    <?php endif; if (!is_null($next)): ?>
+                        <li><a href="/photo/view/<?= $next->getId(); ?>">Next</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
         </div>
-    <?php endif; ?>
+<?php endif; ?>
 </div>
-<div class="row">
-    <div class ="col-lg-2 col-lg-offset-5">
-        <nav>
-            <ul class="pager">
-                <li><a href="/photo/view/<?= $photo->getId() - 1; ?>">Previous</a></li>
-                <li><a href="/photo/view/<?= $photo->getId() + 1; ?>">Next</a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-
-
-
-

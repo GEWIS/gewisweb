@@ -33,6 +33,7 @@ class Photo extends AbstractService
     {
         return $this->getPhotoMapper()->getPhotoById($id);
     }
+
     /**
      * 
      * @param string $path
@@ -71,7 +72,7 @@ class Photo extends AbstractService
         $photo->setAlbum($target_album);
         $photo = $this->populateMetaData($photo, $path);
         $photo->setPath($storage_path);
-        
+
         $mapper = $this->getPhotoMapper();
         /**
          * TODO: optionally we could use a transactional query here to make it
@@ -96,6 +97,26 @@ class Photo extends AbstractService
         //placeholder for now
         $photo->setDate(new \DateTime("2014-12-12 12:13:12.424242"));
         return $photo;
+    }
+
+    /**
+     * Returns the next photo in the album to display
+     * 
+     * @param \Photo\Model\Photo $photo 
+     */
+    public function getNextPhoto($photo)
+    {
+        return $this->getPhotoMapper()->getNextPhoto($photo);
+    }
+
+    /**
+     * Returns the previous photo in the album to display
+     * 
+     * @param \Photo\Model\Photo $photo 
+     */
+    public function getPreviousPhoto($photo)
+    {
+        return $this->getPhotoMapper()->getPreviousPhoto($photo);
     }
 
     /**

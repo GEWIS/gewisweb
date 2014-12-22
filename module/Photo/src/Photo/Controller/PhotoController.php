@@ -30,11 +30,15 @@ class PhotoController extends AbstractActionController
         $photo_service = $this->getPhotoService();
         $photo = $photo_service->getPhoto($photo_id);
         $config = $photo_service->getConfig();
+        $next = $photo_service->getNextPhoto($photo);
+        $previous = $photo_service->getPreviousPhoto($photo);
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $config['upload_dir']);
         return new ViewModel(array(
             'photo' => $photo,
-            'basedir' => $basedir
+            'basedir' => $basedir,
+            'next' => $next,
+            'previous' => $previous
         ));
     }
 

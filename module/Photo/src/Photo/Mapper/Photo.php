@@ -30,6 +30,46 @@ class Photo
     }
 
     /**
+     * Returns the next photo in the album to display
+     * 
+     * @param \Photo\Model\Photo $photo 
+     */
+    public function getNextPhoto($photo)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.id > ?1 AND a.album = ?2');
+        $qb->setParameter(1, $photo->getId());
+        $qb->setParameter(2, $photo->getAlbum());
+        $qb->addOrderBy('a.id','ASC');
+        $qb->setMaxResults(1);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Returns the previous photo in the album to display
+     * 
+     * @param \Photo\Model\Photo $photo 
+     */
+    public function getPreviousPhoto($photo)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.id < ?1 AND a.album = ?2');
+        $qb->setParameter(1, $photo->getId());
+        $qb->setParameter(2, $photo->getAlbum());
+        $qb->addOrderBy('a.id','DESC');
+        $qb->setMaxResults(1);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
      * returns all the photos in an album.
      * 
      * @param \Photo\Model\Album $album The album to retrieve the photos from
@@ -67,6 +107,7 @@ class Photo
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
     }
+
     /**
      * Persist photo
      *
