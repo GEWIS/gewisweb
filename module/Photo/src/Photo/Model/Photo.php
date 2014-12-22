@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -9,6 +10,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Photo.
  *
  * @ORM\Entity
+ * @HasLifecycleCallbacks
  */
 class Photo implements ResourceInterface
 {
@@ -113,7 +115,17 @@ class Photo implements ResourceInterface
     {
         $this->path = $path;
     }
-
+  
+    /** 
+     * Updates the photoCount in the album object.
+     * 
+     * @PrePersist 
+     */
+    public function IncrementOnPrePersist()
+    {
+        $this->album->setPhotoCount($this->album->getPhotoCount+1);
+    }
+    
     /**
      * Get the resource ID.
      *
