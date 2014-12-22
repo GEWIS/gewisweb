@@ -9,6 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Album.
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * 
  */
 class Album implements ResourceInterface
@@ -127,7 +128,7 @@ class Album implements ResourceInterface
     {
         return $this->photoCount;
     }
-    
+
     /**
      * Get the amount of subalbums in the album
      * 
@@ -197,6 +198,28 @@ class Album implements ResourceInterface
     public function setAlbumCount($count)
     {
         $this->albumCount = $count;
+    }
+
+    /**
+     * Updates the albumCount in the parent album object.
+     * 
+     * @ORM\PrePersist()
+     * @ORM\PostUpdate() 
+     */
+    public function IncrementOnAdd()
+    {
+        $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+    }
+
+    /**
+     * Updates the albumCount in the parent album object.
+     * 
+     * @ORM\PreRemove() 
+     * @ORM\PreUpdate()
+     */
+    public function DecrementOnRemove()
+    {
+        $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
     }
 
     /**
