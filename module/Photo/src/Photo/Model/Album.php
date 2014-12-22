@@ -64,6 +64,19 @@ class Album implements ResourceInterface
      */
     protected $cover;
 
+    /**
+     * The amount of photos in this album
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $photoCount;
+
+    /**
+     * The amount of subalbums in this album
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $albumCount;
 
     /**
      * Get the ID.
@@ -106,6 +119,26 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Get the amount of photos in the album
+     * 
+     * @return integer
+     */
+    public function getPhotoCount()
+    {
+        return $this->photoCount;
+    }
+    
+    /**
+     * Get the amount of subalbums in the album
+     * 
+     * @return integer
+     */
+    public function getAlbumCount()
+    {
+        return $this->albumCount;
+    }
+
+    /**
      * Set the date.
      *
      * @param \DateTime $date
@@ -143,7 +176,27 @@ class Album implements ResourceInterface
      */
     public function setCover($photo)
     {
-        $this->cover = $cover;
+        $this->cover = $photo;
+    }
+
+    /**
+     * Set the amount of photos in an album
+     * 
+     * @param integer $count
+     */
+    public function setPhotoCount($count)
+    {
+        $this->photoCount = $count;
+    }
+
+    /**
+     * Set the amount of subalbums in an album
+     * 
+     * @param integer $count
+     */
+    public function setAlbumCount($count)
+    {
+        $this->albumCount = $count;
     }
 
     /**
