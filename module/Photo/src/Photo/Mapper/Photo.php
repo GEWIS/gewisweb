@@ -43,7 +43,7 @@ class Photo
                 ->where('a.id > ?1 AND a.album = ?2');
         $qb->setParameter(1, $photo->getId());
         $qb->setParameter(2, $photo->getAlbum());
-        $qb->addOrderBy('a.id','ASC');
+        $qb->addOrderBy('a.id', 'ASC');
         $qb->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
@@ -63,7 +63,7 @@ class Photo
                 ->where('a.id < ?1 AND a.album = ?2');
         $qb->setParameter(1, $photo->getId());
         $qb->setParameter(2, $photo->getAlbum());
-        $qb->addOrderBy('a.id','DESC');
+        $qb->addOrderBy('a.id', 'DESC');
         $qb->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
@@ -73,18 +73,22 @@ class Photo
      * returns all the photos in an album.
      * 
      * @param \Photo\Model\Album $album The album to retrieve the photos from
+     * @param integer $start the result to start at
+     * @param integer $max_results max amount of results to return, null for infinite
      * @return array of photo's
      */
-    public function getAlbumPhotos($album, $start, $max_results)
+    public function getAlbumPhotos($album, $start = 0, $max_results = null)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
                 ->from('Photo\Model\Photo', 'a')
-                ->where('a.album = ?1')
-                ->setFirstResult($start)
-                ->setMaxResults($max_results);
+                ->where('a.album = ?1');
         $qb->setParameter(1, $album);
+        $qb->setFirstResult($start);
+        if (!is_null($max_results)) {
+            $qb->setMaxResults($max_results);
+        }
 
         return $qb->getQuery()->getResult();
     }
