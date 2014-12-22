@@ -1,14 +1,31 @@
 <div class="row">
     <?php if ($photo != null): ?>
-        <div class="col-lg-10 col-lg-offset-1">
+        <div class="col-lg-9">
             <img class="img-responsive" src="<?= $basedir . '/' . $photo->getPath() ?>" alt="">
-        </div>             
+        </div>
+        <div class="col-lg-3">
+            <table class="table table-condensed">
+                <tdoby>
+                    <tr><td>Artist</td><td>NAME</td></tr>
+                    <tr><td>Camera</td><td>NIKON D40</td></tr>
+                    <tr><td>Date/time</td><td>10-12-2014 22:03:01</td></tr>
+                    <tr><td>Flash</td><td>Yes</td></tr>
+                    <tr><td>Focal length</td><td>22.0mm</td></tr>
+                    <tr><td>Exposure time</td><td>0.0167s</td></tr>
+                    <tr><td>Shutter speed</td><td>1/60s</td></tr>
+                    <tr><td>Aperture</td><td>f/2.8</td></tr>
+                    <tr><td>ISO</td><td>400</td></tr>
+                    </tbody>
+            </table>
+        </div>
     <?php endif; ?>
+</div>
+<div class="row">
     <div class ="col-lg-2 col-lg-offset-5">
         <nav>
             <ul class="pager">
-                <li><a href="/photo/view/<?= $photo->getId()-1; ?>">Previous</a></li>
-                <li><a href="/photo/view/<?= $photo->getId()+1; ?>">Next</a></li>
+                <li><a href="/photo/view/<?= $photo->getId() - 1; ?>">Previous</a></li>
+                <li><a href="/photo/view/<?= $photo->getId() + 1; ?>">Next</a></li>
             </ul>
         </nav>
     </div>
