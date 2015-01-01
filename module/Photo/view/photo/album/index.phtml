@@ -11,7 +11,7 @@
                 <li>
                     <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage - 1; ?>">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
+                        <span class="sr-only"><?= $this->translate('Previous') ?></span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -25,7 +25,7 @@
                 <li>
                     <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage + 1; ?>">
                         <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
+                        <span class="sr-only"><?= $this->translate('Next') ?></span>
                     </a>
                 </li>
             <?php endif; ?>
