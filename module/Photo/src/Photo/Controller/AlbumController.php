@@ -13,6 +13,7 @@ class AlbumController extends AbstractActionController
         $album_id = $this->params()->fromRoute('album_id');
         $activepage = (int) $this->params()->fromRoute('page');
         $album_service = $this->getAlbumService();
+        $photo_service = $this->getPhotoService();
         $album = $album_service->getAlbum($album_id);
         $config = $album_service->getConfig();
         $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
@@ -26,7 +27,7 @@ class AlbumController extends AbstractActionController
         if ($album_start < $album->getAlbumCount()) {
             $albums = $album_service->getAlbums($album, $album_start, $config['max_photos_page']);
         }
-
+        $albums = $photo_service->populateCoverPhotos($albums);
         $photos = array();
         $photo_count = $config['max_photos_page'] - count($albums);
         //check if we need to display photos on this page:
