@@ -1,5 +1,12 @@
-<div class="row">
-    <?php if ($photo != null): ?>
+<?php if ($photo != null): ?>
+<div clas="row">
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="/photo/album/<?= $photo->getAlbum()->getId(); ?>"><span aria-hidden="true">&larr;</span> Return to album</a></li>
+  </ul>
+</nav>
+</div>
+    <div class="row">
         <div class="col-lg-9">
             <img class="img-responsive" src="<?= $basedir . '/' . $photo->getPath() ?>" alt="">
         </div>
@@ -22,11 +29,12 @@
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
                         <li><a href="/photo/view/<?= $previous->getId(); ?>">Previous</a></li>
-                    <?php endif; if (!is_null($next)): ?>
+                    <?php endif;
+                    if (!is_null($next)): ?>
                         <li><a href="/photo/view/<?= $next->getId(); ?>">Next</a></li>
-                    <?php endif; ?>
+    <?php endif; ?>
                 </ul>
             </nav>
         </div>
+    </div>
 <?php endif; ?>
-</div>
