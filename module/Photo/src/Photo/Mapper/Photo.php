@@ -70,6 +70,31 @@ class Photo
     }
 
     /**
+     * Returns a random photo from the specified album
+     * 
+     * @param Photo\Model\Album $album
+     * @return Photo\Model\Photo
+     */
+    public function getRandomPhoto($album)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        /**
+         * This is not exactly the right way to do this. There is no way to just
+         * get a random row, unless we use a raw sql query.
+         * The doctrine team refuses to implement any 
+         * random functionality. (http://www.doctrine-project.org/jira/browse/DDC-950)
+         * 
+         */
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.album = ?1');
+        $qb->setParameter(1, $album);
+        $qb->setMaxResults(20);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[array_rand($res)];
+    }
+    /**
      * returns all the photos in an album.
      * 
      * @param \Photo\Model\Album $album The album to retrieve the photos from
