@@ -122,7 +122,7 @@ class Photo implements ResourceInterface
      * @ORM\PrePersist()
      * @ORM\PostUpdate() 
      */
-    public function IncrementOnAdd()
+    public function incrementOnAdd()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
     }
@@ -133,7 +133,7 @@ class Photo implements ResourceInterface
      * @ORM\PreRemove() 
      * @ORM\PreUpdate()
      */
-    public function DecrementOnRemove()
+    public function decrementOnRemove()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
     }
