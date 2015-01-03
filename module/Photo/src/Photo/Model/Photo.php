@@ -65,9 +65,9 @@ class Photo implements ResourceInterface
     protected $exposureTime;
     
     /**
-     * The inverse of the shutter speed.
+     * The shutter speed.
      * 
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string")
      */
     protected $shutterSpeed;
     
@@ -173,7 +173,7 @@ class Photo implements ResourceInterface
     /**
      * Get the shutter speed.
      * 
-     * @return integer
+     * @return string
      */
     public function getShutterSpeed()
     {
@@ -283,7 +283,7 @@ class Photo implements ResourceInterface
     /**
      * Set the shutter speed.
      * 
-     * @param integer $shutterSpeed
+     * @param string $shutterSpeed
      */
     public function setShutterSpeed(integer $shutterSpeed)
     {

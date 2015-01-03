@@ -16,4 +16,7 @@
 <?php endforeach; ?>
     </tbody>
 </table>
+<?php //storeUploadedPhoto('public/data/photo/00001-DSC_9275-2.jpg')
+ var_dump(exif_read_data('public/data/photo/00001-DSC_9275-2.jpg','EXIF'));
+?>
 <?php endif; ?>
