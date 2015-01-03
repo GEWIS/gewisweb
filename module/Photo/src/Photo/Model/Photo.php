@@ -23,11 +23,11 @@ class Photo implements ResourceInterface
     protected $id;
 
     /**
-     * Date added
+     * Date and time when the photo was taken.
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    protected $date;
+    protected $dateTime;
     
     /**
      * Artist/author
@@ -115,9 +115,9 @@ class Photo implements ResourceInterface
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDateTime()
     {
-        return $this->date;
+        return $this->dateTime;
     }
 
     /**
@@ -221,13 +221,13 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the date.
+     * Set the dateTime.
      *
-     * @param \DateTime $date
+     * @param \DateTime $dateTime
      */
-    public function setDate(\DateTime $date)
+    public function setDateTime(\DateTime $dateTime)
     {
-        $this->date = $date;
+        $this->dateTime = $dateTime;
     }
     
     /**

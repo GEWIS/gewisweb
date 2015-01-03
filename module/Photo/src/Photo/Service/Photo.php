@@ -92,7 +92,7 @@ class Photo extends AbstractService
         //I assume the exif data isn't deliberately stripped, so most values 
         //are assumed to exist.
         $photo->setCamera($exif['Model']);
-        $photo->setDate(\date_create($exif['DateTimeOriginal']));
+        $photo->setDateTime(\date_create($exif['DateTimeOriginal']));
         $photo->setFlash($exif['Flash']==0);
         $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
         $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
