@@ -60,9 +60,8 @@ class Photo extends AbstractService
         $storage_path = $this->generateStoragePath($path);
         $photo = new PhotoModel();
         $photo->setAlbum($target_album);
-        $photo = $this->populateMetaData($photo);
+        $photo = $this->populateMetaData($photo,$path);
         $photo->setPath($storage_path);
-        
         $mapper = $this->getPhotoMapper();
         /**
          * TODO: optionally we could use a transactional query here to make it
@@ -81,10 +80,10 @@ class Photo extends AbstractService
      * @param \Photo\Model\Photo $photo the photo to add the metadata to
      * @return \Photo\Model\Photo the photo with the added metadata
      */
-    protected function populateMetadata($photo)
+    protected function populateMetadata($photo,$path)
     {
-        $exif = \read_exif_data($photo->getPath());
-        if (isset($exif['Artist'])){
+        $exif = \read_exif_data($path,'EXIF');
+         if (isset($exif['Artist'])){
             $photo->setArtist($exif['Artist']);
         }
         else{
@@ -93,12 +92,12 @@ class Photo extends AbstractService
         //I assume the exif data isn't deliberately stripped, so most values 
         //are assumed to exist.
         $photo->setCamera($exif['Model']);
-        $photo->setDate(\strtotime($exif['DateTimeOriginal']));
+        $photo->setDate(\date_create($exif['DateTimeOriginal']));
         $photo->setFlash($exif['Flash']==0);
-        $photo->setFocalLength(frac2dec($exif['FocalLength']));
-        $photo->setExposureTime(frac2dec($exif['ExposureTime']));
-        $photo->setShutterSpeed(exifGetShutter($exif));
-        $photo->setAperture(exifGetFstop($exif));
+        $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
+        $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
+        $photo->setShutterSpeed($this->exifGetShutter($exif));
+        $photo->setAperture($this->exifGetFstop($exif));
         $photo->setIso($exif['ISOSpeedRatings']);
         return $photo;
     }
@@ -117,7 +116,7 @@ class Photo extends AbstractService
     private function frac2dec($str) 
     {
         list($n, $d) = \explode('/', $str);
-        //Old site suppresed errors of previous line. No clue why.
+        //Old site suppressed errors of previous line. No clue why.
         if (!empty($d)) {
             return $n / $d;
         }
@@ -134,7 +133,7 @@ class Photo extends AbstractService
         if (!isset($exif['ShutterSpeedValue'])) {
             return "unknown";
         }
-        $apex    = frac2dec($exif['ShutterSpeedValue']);
+        $apex    = $this->frac2dec($exif['ShutterSpeedValue']);
         $shutter = \pow(2, -$apex);
         if ($shutter == 0) {
             return "unknown";
@@ -155,7 +154,7 @@ class Photo extends AbstractService
         if (!isset($exif['ApertureValue'])) {
             return "unknown";
         }
-        $apex  = frac2dec($exif['ApertureValue']);
+        $apex  = $this->frac2dec($exif['ApertureValue']);
         $fstop = \pow(2, $apex/2);
         if ($fstop == 0) {
             return "unknown";

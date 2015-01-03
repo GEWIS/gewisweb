@@ -53,14 +53,14 @@ class Photo implements ResourceInterface
     /**
      * The focal length of the lens, in mm.
      * 
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      */
     protected $focalLength;
     
     /**
      * The exposure time, in seconds.
      * 
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      */
     protected $exposureTime;
     
@@ -74,7 +74,7 @@ class Photo implements ResourceInterface
     /**
      * The lens aperture.
      * 
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="string")
      */
     protected $aperture;
 
@@ -235,7 +235,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $artist 
      */
-    public function setArtist(string $artist)
+    public function setArtist($artist)
     {
         $this->artist = $artist;
     }
@@ -245,7 +245,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $camera
      */
-    public function setCamera(string $camera)
+    public function setCamera($camera)
     {
         $this->camera = $camera;
     }
@@ -255,7 +255,7 @@ class Photo implements ResourceInterface
      * 
      * @param boolean $flash
      */
-    public function setFlash(boolean $flash)
+    public function setFlash($flash)
     {
         $this->flash = $flash;
     }
@@ -265,7 +265,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $focalLength
      */
-    public function setFocalLength(string $focalLength)
+    public function setFocalLength($focalLength)
     {
         $this->focalLength = $focalLength;
     }
@@ -275,7 +275,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $exposureTime
      */
-    public function setExposureTime(string $exposureTime)
+    public function setExposureTime($exposureTime)
     {
         $this->exposureTime = $exposureTime;
     }    
@@ -285,7 +285,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $shutterSpeed
      */
-    public function setShutterSpeed(integer $shutterSpeed)
+    public function setShutterSpeed($shutterSpeed)
     {
         $this->shutterSpeed = $shutterSpeed;
     }
@@ -295,7 +295,7 @@ class Photo implements ResourceInterface
      * 
      * @param string $aperture
      */
-    public function setAperture(string $aperture)
+    public function setAperture($aperture)
     {
         $this->aperture = $aperture;
     }
@@ -305,7 +305,7 @@ class Photo implements ResourceInterface
      * 
      * @param integer $iso
      */
-    public function setIso(integer $iso)
+    public function setIso($iso)
     {
         $this->iso = $iso;
     }    

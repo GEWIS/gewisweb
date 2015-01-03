@@ -13,7 +13,7 @@ class PhotoController extends AbstractActionController
         $album_service = $this->getAlbumService();
         $albums = $album_service->getAlbums();
         $photo_service = $this->getPhotoService();
-
+        //$photo_service->storeUploadedPhoto('public/data/photo/00001-DSC_9275-2.jpg', $albums[0]);
         return new ViewModel(array(
             'albums' => $albums
         ));
