@@ -68,7 +68,7 @@ class Module
                     $acl->allow('guest', 'company', 'list');
                     $acl->allow('guest', 'company', 'view');
                     $acl->allow('admin', 'company', 'edit');
-                    $acl->allow('admin', 'company', 'listall'); // Can use admin interface
+                    $acl->allow('guest', 'company', 'listall'); // Can use admin interface
 
                     return $acl;
                 },
