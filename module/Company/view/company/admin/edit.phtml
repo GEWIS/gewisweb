@@ -1,8 +1,17 @@
 <div class="company-edit-editor">
-<?php if (empty($company_list[0])){
+<?php
+if (empty($company_list[0])){
         echo "Company not found";
     }
-    else{ ?>
+else{ 
+    if (isset($asciiJobName)){
+        // Put code for Job here
+?>
+<!-- Put html for Job here -->
+<?php } else{ 
+        // Put code for Company here
+?>
+<!-- Put html for Company here -->
     <h1><?= $company_list[0]->getName(); ?></h1>
 <?php } ?>
     
