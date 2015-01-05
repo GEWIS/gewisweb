@@ -89,7 +89,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action[/:asciiCompanyName]]',
+                            'route'    => '[/:action[/:asciiCompanyName[/:asciiJobName]]]',
                             'constraints' => array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
