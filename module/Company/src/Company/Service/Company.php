@@ -25,11 +25,29 @@ class Company extends AbstractACLService
             );
         }
     }
+    // Company list for admin interface
+    public function getHiddenCompanyList(){
+        if($this->isAllowed('listall')){
+
+            return $this->getCompanyMapper()->findAll();
+        }
+        else{
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to see all the companies')
+            );
+        }
+    }
+        
     public function getCompaniesWithAsciiName($asciiName)
     {
         return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
     }
 
+    public function getEditableCompaniesWithAsciiName($asciiName)
+    {
+        return $this->getCompanyMapper()->findEditableCompaniesWithAsciiName($asciiName);
+    }
     public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName)
     {
         return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);
