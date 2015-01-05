@@ -89,7 +89,7 @@ return [
                     'default' => [
                         'type'    => 'Segment',
                         'options' => [
-                            'route'    => '[/:action]',
+                            'route'    => '[/:action[/:asciiCompanyName]]',
                             'constraints' => [
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
