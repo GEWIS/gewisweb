@@ -13,7 +13,7 @@ class AdminController extends AbstractActionController
         $companyService = $this->getCompanyService();
         
         $vm = new ViewModel(array(
-            'company_list' => $companyService->getCompanyList()
+            'company_list' => $companyService->getHiddenCompanyList()
         ));
         
         return $vm;
