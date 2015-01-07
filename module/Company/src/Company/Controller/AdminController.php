@@ -27,7 +27,7 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('asciiCompanyName');    
         $jobName = $this->params('asciiJobName');    
         $vm = new ViewModel(array(
-            'company_list' => $companyService->getEditableCompaniesWithAsciiName($companyName)
+            'company_list' => $companyService->getEditableCompaniesWithAsciiName($companyName),
             'asciiJobName' => $jobName
         ));
         
