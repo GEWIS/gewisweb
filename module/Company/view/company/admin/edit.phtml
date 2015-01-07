@@ -5,16 +5,12 @@ if (empty($company_list[0])){
     }
 else{ 
     if (isset($asciiJobName)){
-        // Put code for Job here
+        echo($this->partial('company/admin/editJob.phtml',array('asciiJobName'=>$asciiJobName)));
+    } else{ 
+        echo($this->partial('company/admin/editJob.phtml',array('company'=>$company_list[0])));
+    } 
+} 
+
 ?>
-<!-- Put html for Job here -->
-<?php } else{ 
-        // Put code for Company here
-?>
-<!-- Put html for Company here -->
-    <h1><?= $company_list[0]->getName(); ?></h1>
-<?php } ?>
-    
-    
     
 </div>
