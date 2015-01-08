@@ -1,11 +1,40 @@
-<table>
-
+<h1>Companies</h1>
+<div class="company-list">
 <?php
 
+$escaper = new Zend\Escaper\Escaper('utf-8');
+
+if(isset($company)){
+    $company_list = array();
+    $company_list[] = $company;
+}
+if(!isset($company_list)){
+    echo "Company not found";
+    return;
+}
 foreach ($company_list as $company) {
-    print '<tr><td>'.var_dump($company).'</td></tr>';
+?>
+    <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
+        <h2 class="company-name"><a href="<?= $company->getWebsite(); ?>"><?= $company->getName(); ?></a></h2>
+        <div class="company-slogan"><?= $company->getSlogan(); ?></div>
+        <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
+        <div class="company-address"><?= $company->getAddress(); ?></div>
+        <div class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></div>
+        <div class="company-website"><a href="<?= $company->getWebsite(); ?>">Visit website</a></div>
+        <div class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></div>
+        <div class="company-jobs">
+            <ul class="company-jobs-list">
+                <?php foreach($company->getJobs() as $job) { ?>
+                    <li class="company-jobs-job"><a href="/company/jobs/<?= $job->getId(); ?>"><?= $job->getName(); ?></a></li>                
+                <?php } ?>
+            </ul>
+        </div>
+        <div class="description"><?= $company->getDescription(); ?></div>
+
+    </div>
+<?php 
 }
 
 ?>
-    
-    </table>
+</div>
+

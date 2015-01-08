@@ -2,16 +2,16 @@
 
 namespace Company\Mapper;
 
-use Company\Model\Company as CompanyModel;
+use Company\Model\Job as JobModel;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Mappers for companies.
+ * Mappers for jobs.
  *
- * NOTE: Companies will be modified externally by a script. Modifycations will be
+ * NOTE: Jobs will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Company
+class Job
 {
 
     /**
@@ -41,24 +41,21 @@ class Company
     {
         return $this->getRepository()->findAll();
     }
-
     /**
-     * Find the company with the given asciiName
-     *
-     * @param asciiName The 'username' of the company to get.
-     * @return An array of companies with the given asciiName.
+     * Find all jobs with the given job 'username' from the company with the given ascii name.
+     * @param companyAsciiName The asciiname of the containing company.
+     * @param jobAsciiName The asciiName of the requested job.
+     * @return An array of jobs that match the request.
      */
-    public function findCompaniesWithAsciiName($asciiName)
+    public function findJobWithAsciiName($companyAsciiName,$jobAsciiName)
     {
 
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.asciiName=:asciiCompanyName');
-        $qb->setParameter('asciiCompanyName', $asciiName);
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->where("j.asciiName=:jobId");
+        $qb->setParameter('jobId', $companyAsciiName+'_'+$jobAsciiName);
+
         return $qb->getQuery()->getResult();
     }
-
-
     /**
      * Get the repository for this mapper.
      *
@@ -66,6 +63,6 @@ class Company
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\Company');
+        return $this->em->getRepository('Company\Model\Job');
     }
 }

@@ -28,26 +28,26 @@ class CompanyFeaturedPacket extends CompanyPacket //implements RoleInterface, Re
     {
         // todo
     }
-    
+
     public function unpublish()
     {
         // todo
     }
-    
+
     public function create()
     {
         // todo
     }
-    
+
     public function save()
     {
         // todo   
     }
-    
+
     public function delete()
     {
         // todo
     }
-    
-    
+
+
 }

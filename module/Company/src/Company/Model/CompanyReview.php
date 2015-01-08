@@ -19,6 +19,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * The review's id.
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
@@ -29,7 +30,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $title;
-        
+
     /**
      * The reviewer.
      *
@@ -37,11 +38,11 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $reviewer;
-    
+
     /**
      * The review's content.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $content;
 
@@ -58,7 +59,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="boolean")
      */
     protected $approved;
-    
+
     /**
      * The approver of the review.
      *
@@ -66,8 +67,8 @@ class CompanyReview //implements RoleInterface, ResourceInterface
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $approver;
-    
-        
+
+
     /**
      * Constructor
      */
@@ -95,7 +96,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->title;
     }
-    
+
     /**
      * Set the review's title.
      *
@@ -115,7 +116,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->reviewer;
     }
-    
+
     /**
      * Set the reviewer.
      *
@@ -125,7 +126,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         $this->reviewer = $reviewer;
     }
-    
+
     /**
      * Get the review's content.
      *
@@ -135,7 +136,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->content;
     }
-    
+
     /**
      * Set the review's content.
      *
@@ -145,7 +146,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         $this->content = $content;
     }
-    
+
     /**
      * Get the review's date of publication.
      *
@@ -155,7 +156,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->date;
     }
-    
+
     /**
      * Set the review's date of publication.
      *
@@ -165,7 +166,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         $this->date = $date;
     }
-    
+
     /**
      * Get the review's approval status.
      *
@@ -175,7 +176,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->approved;
     }
-    
+
     /**
      * Set the review's approval status.
      *
@@ -185,7 +186,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         $this->approved = $approved;
     }
-    
+
     /**
      * Get the approver of the review.
      *
@@ -195,7 +196,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         return $this->approver;
     }
-    
+
     /**
      * Set the approver of the review.
      *
@@ -205,6 +206,6 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     {
         $this->approver = $approver;
     }
-    
-    
+
+
 }
