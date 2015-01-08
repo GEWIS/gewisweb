@@ -128,7 +128,7 @@ class Photo extends AbstractService
      * @param array $exif the exif data extracted from the photo.
      * @return string the shutter speed, represented as a rational string.
      */
-    private function exifGetShutter(&$exif) 
+    private function exifGetShutter($exif) 
     {
         if (!isset($exif['ShutterSpeedValue'])) {
             return "unknown";
@@ -149,7 +149,7 @@ class Photo extends AbstractService
      * @param array $exif the exif data extracted from the photo.
      * @return string the aperture, respresented as a rational string.
      */
-    private function exifGetFstop(&$exif) 
+    private function exifGetFstop($exif) 
     {
         if (!isset($exif['ApertureValue'])) {
             return "unknown";
