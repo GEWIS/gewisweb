@@ -93,7 +93,7 @@ class Photo extends AbstractService
         //are assumed to exist.
         $photo->setCamera($exif['Model']);
         $photo->setDateTime(\date_create($exif['DateTimeOriginal']));
-        $photo->setFlash($exif['Flash']==0);
+        $photo->setFlash($exif['Flash']!=0);
         $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
         $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
         $photo->setShutterSpeed($this->exifGetShutter($exif));
