@@ -108,6 +108,16 @@ class Album implements ResourceInterface
     {
         return $this->name;
     }
+    
+    /**
+     * Get the parent album.
+     *
+     * @return string $parent
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
 
     /**
      * Get the album cover
@@ -166,7 +176,6 @@ class Album implements ResourceInterface
      */
     public function setParent($parent)
     {
-        //TODO: actually move the album
         $this->parent = $parent;
     }
 
