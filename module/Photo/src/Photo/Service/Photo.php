@@ -193,6 +193,29 @@ class Photo extends AbstractService
     }
 
     /**
+     * 
+     * @param type $id the id of the photo to retrieve
+     * @return array of data about the photo, which is usefull inside a view
+     */
+    public function getPhotoData($id)
+    {
+        $photo = $this->getPhoto($id);
+        if (!is_null($photo)) {
+            $next = $this->getNextPhoto($photo);
+            $previous = $this->getPreviousPhoto($photo);
+        }
+        //we'll fix this ugly thing later vv
+        $basedir = str_replace("public", "", $this->getConfig()['upload_dir']);
+
+        return array(
+            'photo' => $photo,
+            'basedir' => $basedir,
+            'next' => $next,
+            'previous' => $previous
+        );
+    }
+
+    /**
      * Get the photo config, as used by this service.
      *
      * @return array

@@ -13,7 +13,6 @@ class AlbumController extends AbstractActionController
         $album_id = $this->params()->fromRoute('album_id');
         $activepage = (int) $this->params()->fromRoute('page');
         $album_service = $this->getAlbumService();
-        $photo_service = $this->getPhotoService();
         $album = $album_service->getAlbum($album_id);
         if (is_null($album)) {
             $this->getResponse()->setStatusCode(404);
