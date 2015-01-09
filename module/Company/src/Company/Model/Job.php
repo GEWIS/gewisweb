@@ -19,17 +19,24 @@ class Job //implements RoleInterface, ResourceInterface
      * The job id.
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
 
     /**
-     * The job's name.
+     * The job's display name.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
+    /**
+     * The job's ascii name.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $ascii_name;
     /**
      * The job's status.
      *
@@ -57,15 +64,23 @@ class Job //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $email;
-    
+
     /**
      * The job's description.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $description;
-    
-        
+
+    /**
+     * The job's company.
+     *
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="jobs")
+     */
+    protected $company;
+
+
+
     /**
      * Constructor
      */
@@ -93,7 +108,20 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->name;
     }
-    
+
+    public function getAsciiName()
+    {
+        return $this->asciiName;
+    }
+    /**
+     * Set the job's name.
+     *
+     * @param string $name
+     */
+    public function setAsciiName($name)
+    {
+        $this->asciiName = $name;
+    }
     /**
      * Set the job's name.
      *
@@ -113,7 +141,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->active;
     }
-    
+
     /**
      * Set the job's status.
      *
@@ -123,7 +151,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->active = $active;
     }
-    
+
     /**
      * Get the job's website.
      *
@@ -133,7 +161,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->website;
     }
-    
+
     /**
      * Set the job's website.
      *
@@ -143,7 +171,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->website = $website;
     }
-        
+
     /**
      * Get the job's phone.
      *
@@ -153,7 +181,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->phone;
     }
-    
+
     /**
      * Set the job's phone.
      *
@@ -163,7 +191,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->phone = $phone;
     }
-    
+
     /**
      * Get the job's email.
      *
@@ -173,7 +201,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->email;
     }
-    
+
     /**
      * Set the job's email.
      *
@@ -183,7 +211,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->email = $email;
     }
-    
+
     /**
      * Get the job's description.
      *
@@ -193,7 +221,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->description;
     }
-    
+
     /**
      * Set the job's description.
      *
@@ -203,6 +231,26 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->description = $description;
     }
-    
-    
+
+    /**
+     * Get the job's company.
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set the job's company.
+     *
+     * @param Company company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+
+
 }

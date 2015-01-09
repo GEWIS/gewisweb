@@ -43,16 +43,21 @@ class Module
                 'company_service_company' => 'Company\Service\Company'
             ),
             'factories' => array(
-                
+
                 'company_mapper_company' => function ($sm) {
                     return new \Company\Mapper\Company(
                         $sm->get('company_doctrine_em')
                     );
                 },
-                'company_doctrine_em' => function ($sm) {
-                    return $sm->get('doctrine.entitymanager.orm_default');
-                }
-            )
+                    'company_mapper_job' => function ($sm) {
+                        return new \Company\Mapper\Job(
+                            $sm->get('company_doctrine_em')
+                        );
+                    },
+                        'company_doctrine_em' => function ($sm) {
+                            return $sm->get('doctrine.entitymanager.orm_default');
+                        }
+        )
         );
     }
 }
