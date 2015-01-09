@@ -13,15 +13,15 @@
         <div class="col-lg-3">
             <table class="table table-condensed">
                 <tdoby>
-                    <tr><td><?= $this->translate('Artist') ?></td><td>NAME</td></tr>
-                    <tr><td><?= $this->translate('Camera') ?></td><td>NIKON D40</td></tr>
-                    <tr><td><?= $this->translate('Date/time') ?></td><td>10-12-2014 22:03:01</td></tr>
-                    <tr><td><?= $this->translate('Flash') ?></td><td>Yes</td></tr>
-                    <tr><td><?= $this->translate('Focal length') ?></td><td>22.0mm</td></tr>
-                    <tr><td><?= $this->translate('Exposure time') ?></td><td>0.0167s</td></tr>
-                    <tr><td>S<?= $this->translate('Shutter speed') ?></td><td>1/60s</td></tr>
-                    <tr><td><?= $this->translate('Aperture') ?></td><td>f/2.8</td></tr>
-                    <tr><td><?= $this->translate('ISO') ?></td><td>400</td></tr>
+                    <tr><td><?= $this->translate('Artist') ?></td><td><?= $photo->getArtist() ?></td></tr>
+                    <tr><td><?= $this->translate('Camera') ?></td><td><?= $photo->getCamera() ?></td></tr>
+                    <tr><td><?= $this->translate('Date/time') ?></td><td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td></tr>
+                    <tr><td><?= $this->translate('Flash') ?></td><td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td></tr>
+                    <tr><td><?= $this->translate('Focal length') ?></td><td><?= $photo->getFocalLength() ?></td></tr>
+                    <tr><td><?= $this->translate('Exposure time') ?></td><td><?= $photo->getExposureTime() ?></td></tr>
+                    <tr><td><?= $this->translate('Shutter speed') ?></td><td><?= $photo->getShutterSpeed() ?></td></tr>
+                    <tr><td><?= $this->translate('Aperture') ?></td><td><?= $photo->getAperture() ?></td></tr>
+                    <tr><td><?= $this->translate('ISO') ?></td><td><?= $photo->getIso() ?></td></tr>
                     </tbody>
             </table>
 
@@ -29,11 +29,12 @@
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
                         <li><a href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a></li>
-                    <?php endif;
+                    <?php
+                    endif;
                     if (!is_null($next)):
                         ?>
                         <li><a href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a></li>
-                    <?php endif; ?>
+                   <?php endif; ?>
                 </ul>
             </nav>
         </div>
