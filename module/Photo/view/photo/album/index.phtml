@@ -3,35 +3,37 @@
         <h1 class="page-header"><?= $album->getName(); ?></h1>
     </div>
 </div>
-<?php if($lastpage>0):  ?>
-<div class="row">
-    <nav>
-        <ul class="pagination">
-            <?php if ($activepage !== 0): ?>
-                <li>
-                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage - 1; ?>">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only"><?= $this->translate('Previous') ?></span>
-                    </a>
-                </li>
-            <?php endif; ?>
-            <?php foreach ($pages as $page): ?>
-                <li <?= ($page === $activepage) ? 'class="active"' : '' ?>>
-                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $page; ?>"><?= $page + 1; ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-            <?php if ($activepage !== $lastpage): ?>
-                <li>
-                    <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage + 1; ?>">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only"><?= $this->translate('Next') ?></span>
-                    </a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
-</div>
+<?php if ($lastpage > 0): ?>
+    <div class="row">
+        <nav>        
+            <ul class="pagination">
+                <li class="previous"><a href="/photo<?= is_null($album->getParent()) ? "" : "/album/" . $album->getParent()->getId() ?>">
+                        <span aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
+                <?php if ($activepage !== 0): ?>
+                    <li>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage - 1; ?>">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only"><?= $this->translate('Previous') ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php foreach ($pages as $page): ?>
+                    <li <?= ($page === $activepage) ? 'class="active"' : '' ?>>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $page; ?>"><?= $page + 1; ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                <?php if ($activepage !== $lastpage): ?>
+                    <li>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage + 1; ?>">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only"><?= $this->translate('Next') ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </div>
 <?php endif; ?>
 <?php if (!empty($albums)): ?>
     <?php foreach ($albums as $album): ?>
