@@ -15,10 +15,15 @@ class AlbumController extends AbstractActionController
         $album_service = $this->getAlbumService();
         $photo_service = $this->getPhotoService();
         $album = $album_service->getAlbum($album_id);
+        if (is_null($album)) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
         $config = $album_service->getConfig();
         $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
         if ($activepage > $lastpage) {
-            //TODO: throw some error, if this every occurs it's the user's fault
+            $this->getResponse()->setStatusCode(404);
+            return;
         }
 
         $albums = array();
