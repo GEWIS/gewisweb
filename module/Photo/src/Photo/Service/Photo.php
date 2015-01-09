@@ -120,22 +120,6 @@ class Photo extends AbstractService
     }
 
     /**
-     * Replaces empty cover photos with random ones.
-     * 
-     * @param Photo\Model\Album array $albums
-     * @return Photo\Model\Album array
-     */
-    public function populateCoverPhotos($albums)
-    {
-        foreach ($albums as $album) {
-            if (is_null($album->getCover())) {
-                $album->setCover($this->getPhotoMapper()->getRandomPhoto($album));
-            }
-        }
-        return $albums;
-    }
-
-    /**
      * Get the photo config, as used by this service.
      *
      * @return array

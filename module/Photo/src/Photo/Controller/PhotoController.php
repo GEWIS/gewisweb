@@ -17,7 +17,6 @@ class PhotoController extends AbstractActionController
         //we'll fix this ugly thing later vv
         $config = $this->getPhotoService()->getConfig();
         $basedir = str_replace("public", "", $config['upload_dir']);
-        $albums = $photo_service->populateCoverPhotos($albums);
         return new ViewModel(array(
             'albums' => $albums,
             'basedir' => $basedir

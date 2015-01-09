@@ -32,7 +32,7 @@ class AlbumController extends AbstractActionController
         if ($album_start < $album->getAlbumCount()) {
             $albums = $album_service->getAlbums($album, $album_start, $config['max_photos_page']);
         }
-        $albums = $photo_service->populateCoverPhotos($albums);
+        
         $photos = array();
         $photo_count = $config['max_photos_page'] - count($albums);
         //check if we need to display photos on this page:
