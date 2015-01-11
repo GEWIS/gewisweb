@@ -37,7 +37,7 @@ class AlbumController extends AbstractActionController
         //check if we need to display photos on this page:
         if ($photo_count > 0) {
             $photo_start = max($activepage * $config['max_photos_page'] - $album->getAlbumCount(), 0);
-            $photos = $this->getAlbumService()->getPhotos($album, $photo_start, $photo_count);
+            $photos = $this->getPhotoService()->getPhotos($album, $photo_start, $photo_count);
         }
 
         //we'll fix this ugly thing later vv
