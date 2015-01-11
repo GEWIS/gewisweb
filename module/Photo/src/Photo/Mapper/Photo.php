@@ -94,6 +94,27 @@ class Photo
     }
 
     /**
+     * Checks if the specified photo exists in the database already.
+     * 
+     * @param string $path The storage path of the photo
+     * @param Photo\Model\Album $album the album the photo is in
+     * @return boolean whether the photo exists or not.
+     */
+    public function photoExists($path, $album)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.path = ?1 AND a.album = ?2');
+        $qb->setParameter(1, $path);
+        $qb->setParameter(2, $album);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? false : true;        
+    }
+    
+    
+    /**
      * retrieves an album by id from the database
      * 
      * @param integer $id the id of the album
