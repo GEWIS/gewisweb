@@ -10,7 +10,9 @@ class AdminController extends AbstractActionController
 
     public function indexAction()
     {
-        
+        $target_album = $this->getAlbumService()->getAlbum(3);
+        $path = 'public/data/photo/85/7f989fc27510d827da9e91c604ebd04a58199b.jpg';
+        $this->getServiceLocator()->get('photo_service_photo')->storeUploadedPhoto($path, $target_album);
     }
 
     public function uploadAction()
