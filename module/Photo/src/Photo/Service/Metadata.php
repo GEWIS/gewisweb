@@ -20,7 +20,7 @@ class Metadata extends AbstractService
      * @param \Photo\Model\Photo $photo the photo to add the metadata to
      * @return \Photo\Model\Photo the photo with the added metadata
      */
-    protected function populateMetadata($photo, $path)
+    public function populateMetadata($photo, $path)
     {
         $exif = \read_exif_data($path, 'EXIF');
         if (isset($exif['Artist'])) {

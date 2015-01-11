@@ -160,7 +160,7 @@ class Photo extends AbstractService
      */
     public function getMetadataService()
     {
-        return $this->getServiceLocator()->get("photo_service_metadata");
+        return $this->getServiceManager()->get("photo_service_metadata");
     }
 
 }
