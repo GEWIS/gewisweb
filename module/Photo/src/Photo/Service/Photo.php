@@ -67,21 +67,26 @@ class Photo extends AbstractService
     {
         $config = $this->getConfig();
         $storage_path = $this->generateStoragePath($path);
-        $photo = new PhotoModel();
-        $photo->setAlbum($target_album);
-        $photo = $this->getMetadataService()->populateMetaData($photo, $path);
-        $photo->setPath($storage_path);
+        //check if photo exists already in the database
+        $photo = $this->getPhotoMapper()->getPhotoByData($storage_path, $target_album);
+        //if the returned object is null, then the photo doesn't exist
+        if (is_null($photo)) {
+            $photo = new PhotoModel();
+            $photo->setAlbum($target_album);
+            $photo = $this->getMetadataService()->populateMetaData($photo, $path);
+            $photo->setPath($storage_path);
 
-        $mapper = $this->getPhotoMapper();
-        /**
-         * TODO: optionally we could use a transactional query here to make it
-         * completely failsafe in case something goes wrong when moving the
-         * photo in the storeUploadedPhoto function. However it's very unlikely
-         * anything will go wrong when moving the photo.
-         */
-        $mapper->persist($photo);
-        $mapper->flush();
-        rename($path, $config['upload_dir'] . '/' . $storage_path);
+            $mapper = $this->getPhotoMapper();
+            /**
+             * TODO: optionally we could use a transactional query here to make it
+             * completely failsafe in case something goes wrong when moving the
+             * photo in the storeUploadedPhoto function. However it's very unlikely
+             * anything will go wrong when moving the photo.
+             */
+            $mapper->persist($photo);
+            $mapper->flush();
+            rename($path, $config['upload_dir'] . '/' . $storage_path);
+        }
         return $photo;
     }
 
