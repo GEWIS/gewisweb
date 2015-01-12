@@ -68,7 +68,6 @@ class Photo extends AbstractService
         $config = $this->getConfig();
         $storage_path = $this->generateStoragePath($path);
         //check if photo exists already in the database
-        echo  $storage_path."<br><br>".$target_album->getId();
         $photo = $this->getPhotoMapper()->getPhotoByData($storage_path, $target_album);
         //if the returned object is null, then the photo doesn't exist
         if (is_null($photo)) {
@@ -87,7 +86,7 @@ class Photo extends AbstractService
             $mapper->persist($photo);
             $mapper->flush();
             rename($path, $config['upload_dir'] . '/' . $storage_path);
-        } else { echo  "<h1>exists</h1>"; }
+        }
         return $photo;
     }
 
