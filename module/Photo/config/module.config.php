@@ -18,19 +18,27 @@ return array(
                     'album' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'controller' => 'Album',
-                            'route' => '/album/[/:id]',
+                            'route' => '/album[/:album_id][/:page]',
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Album',
+                                'action' => 'index',
                             ),
                         ),
                     ),
                     'photo' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/photo/[/:id]',
+                            'route' => '/view[/:photo_id]',
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'photo_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'view',
                             ),
                         ),
                     ),
@@ -90,6 +98,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
+            'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
             'Photo\Controller\Admin' => 'Photo\Controller\AdminController'
         )
     ),

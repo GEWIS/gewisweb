@@ -30,11 +30,33 @@ class Album
     }
 
     /**
-     * returns all the subalbums.
+     * retrieves an album by id from the database
      * 
-     * @return array of AlbumModels
+     * @param integer $id the id of the album
+     * 
+     * @return Photo\Model\Album
      */
-    public function getSubAlbums($parent)
+    public function getAlbumById($id)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Album', 'a')
+                ->where('a.id = ?1');
+        $qb->setParameter(1, $id);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * returns all the subalbums of a given album
+     * 
+     * @param type $parent the parent album to retrieve the subalbum from
+     * @param integer $start the result to start at
+     * @param integer $max_results max amount of results to return, null for infinite
+     * @return type
+     */
+    public function getSubAlbums($parent, $start = 0, $max_results = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -42,7 +64,10 @@ class Album
                 ->from('Photo\Model\Album', 'a')
                 ->where('a.parent = ?1');
         $qb->setParameter(1, $parent);
-
+        $qb->setFirstResult($start);
+        if (!is_null($max_results)) {
+            $qb->setMaxResults($max_results);
+        }
         return $qb->getQuery()->getResult();
     }
 

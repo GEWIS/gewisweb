@@ -10,12 +10,25 @@ class PhotoController extends AbstractActionController
 
     public function indexAction()
     {
-        $album_service = $this->getAlbumService();
-        $albums = $album_service->getAlbums();
-        $photo_service = $this->getPhotoService();
+        $albums = $this->getAlbumService()->getAlbums();
+        //add any other special behavior which is required for the main photo page here later
+        //we'll fix this ugly thing later vv
+        $config = $this->getPhotoService()->getConfig();
+        $basedir = str_replace("public", "", $config['upload_dir']);
         return new ViewModel(array(
-            'albums' => $albums
+            'albums' => $albums,
+            'basedir' => $basedir
         ));
+    }
+
+    /**
+     * Called on viewing a photo
+     * 
+     */
+    public function viewAction()
+    {
+        $photo_id = $this->params()->fromRoute('photo_id');
+        return new ViewModel($this->getPhotoService()->getPhotoData($photo_id));
     }
 
     /**

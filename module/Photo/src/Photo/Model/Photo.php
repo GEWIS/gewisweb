@@ -9,6 +9,8 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Photo.
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * 
  */
 class Photo implements ResourceInterface
 {
@@ -329,6 +331,28 @@ class Photo implements ResourceInterface
     public function setPath($path)
     {
         $this->path = $path;
+    }
+
+    /**
+     * Updates the photoCount in the album object.
+     * 
+     * @ORM\PrePersist()
+     * @ORM\PostUpdate() 
+     */
+    public function incrementOnAdd()
+    {
+        $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
+    }
+
+    /**
+     * Updates the photoCount in the album object.
+     * 
+     * @ORM\PreRemove() 
+     * @ORM\PreUpdate()
+     */
+    public function decrementOnRemove()
+    {
+        $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
     }
 
     /**

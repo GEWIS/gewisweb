@@ -9,6 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Album.
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * 
  */
 class Album implements ResourceInterface
@@ -64,6 +65,19 @@ class Album implements ResourceInterface
      */
     protected $cover;
 
+    /**
+     * The amount of photos in this album
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $photoCount;
+
+    /**
+     * The amount of subalbums in this album
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $albumCount;
 
     /**
      * Get the ID.
@@ -94,6 +108,16 @@ class Album implements ResourceInterface
     {
         return $this->name;
     }
+    
+    /**
+     * Get the parent album.
+     *
+     * @return string $parent
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
 
     /**
      * Get the album cover
@@ -103,6 +127,26 @@ class Album implements ResourceInterface
     public function getCover()
     {
         return $this->cover;
+    }
+
+    /**
+     * Get the amount of photos in the album
+     * 
+     * @return integer
+     */
+    public function getPhotoCount()
+    {
+        return $this->photoCount;
+    }
+
+    /**
+     * Get the amount of subalbums in the album
+     * 
+     * @return integer
+     */
+    public function getAlbumCount()
+    {
+        return $this->albumCount;
     }
 
     /**
@@ -132,7 +176,6 @@ class Album implements ResourceInterface
      */
     public function setParent($parent)
     {
-        //TODO: actually move the album
         $this->parent = $parent;
     }
 
@@ -143,7 +186,49 @@ class Album implements ResourceInterface
      */
     public function setCover($photo)
     {
-        $this->cover = $cover;
+        $this->cover = $photo;
+    }
+
+    /**
+     * Set the amount of photos in an album
+     * 
+     * @param integer $count
+     */
+    public function setPhotoCount($count)
+    {
+        $this->photoCount = $count;
+    }
+
+    /**
+     * Set the amount of subalbums in an album
+     * 
+     * @param integer $count
+     */
+    public function setAlbumCount($count)
+    {
+        $this->albumCount = $count;
+    }
+
+    /**
+     * Updates the albumCount in the parent album object.
+     * 
+     * @ORM\PrePersist()
+     * @ORM\PostUpdate() 
+     */
+    public function incrementOnAdd()
+    {
+        $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+    }
+
+    /**
+     * Updates the albumCount in the parent album object.
+     * 
+     * @ORM\PreRemove() 
+     * @ORM\PreUpdate()
+     */
+    public function decrementOnRemove()
+    {
+        $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
     }
 
     /**
