@@ -42,7 +42,6 @@ class Photo extends AbstractService
     protected function generateStoragePath($path)
     {
         $config = $this->getConfig();
-        //TODO: check if this is fast enough
         $hash = sha1_file($path);
         /**
          * the hash is split to obtain a path 
@@ -68,108 +67,27 @@ class Photo extends AbstractService
     {
         $config = $this->getConfig();
         $storage_path = $this->generateStoragePath($path);
-        $photo = new PhotoModel();
-        $photo->setAlbum($target_album);
-        $photo = $this->populateMetaData($photo, $path);
-        $photo->setPath($storage_path);
+        //check if photo exists already in the database
+        $photo = $this->getPhotoMapper()->getPhotoByData($storage_path, $target_album);
+        //if the returned object is null, then the photo doesn't exist
+        if (is_null($photo)) {
+            $photo = new PhotoModel();
+            $photo->setAlbum($target_album);
+            $photo = $this->getMetadataService()->populateMetaData($photo, $path);
+            $photo->setPath($storage_path);
 
-        $mapper = $this->getPhotoMapper();
-        /**
-         * TODO: optionally we could use a transactional query here to make it
-         * completely failsafe in case something goes wrong when moving the
-         * photo in the storeUploadedPhoto function. However it's very unlikely
-         * anything will go wrong when moving the photo.
-         */
-        $mapper->persist($photo);
-        $mapper->flush();
-        rename($path, $config['upload_dir'] . '/' . $storage_path);
+            $mapper = $this->getPhotoMapper();
+            /**
+             * TODO: optionally we could use a transactional query here to make it
+             * completely failsafe in case something goes wrong when moving the
+             * photo in the storeUploadedPhoto function. However it's very unlikely
+             * anything will go wrong when moving the photo.
+             */
+            $mapper->persist($photo);
+            $mapper->flush();
+            rename($path, $config['upload_dir'] . '/' . $storage_path);
+        }
         return $photo;
-    }
-
-    /**
-     * 
-     * @param \Photo\Model\Photo $photo the photo to add the metadata to
-     * @return \Photo\Model\Photo the photo with the added metadata
-     */
-    protected function populateMetadata($photo, $path)
-    {
-        $exif = \read_exif_data($path, 'EXIF');
-        if (isset($exif['Artist'])) {
-            $photo->setArtist($exif['Artist']);
-        } else {
-            $photo->setArtist("Unknown"); //Needs to be t9n'd in the view
-        }
-        //I assume the exif data isn't deliberately stripped, so most values 
-        //are assumed to exist.
-        $photo->setCamera($exif['Model']);
-        $photo->setDateTime(\date_create($exif['DateTimeOriginal']));
-        $photo->setFlash($exif['Flash'] != 0);
-        $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
-        $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-        $photo->setShutterSpeed($this->exifGetShutter($exif));
-        $photo->setAperture($this->exifGetFstop($exif));
-        $photo->setIso($exif['ISOSpeedRatings']);
-        return $photo;
-    }
-
-    /*
-     * NOTE: Most code in the following part is copied from 
-     * the old site, mostly because I lack knowledge in photography.
-     */
-
-    /**
-     * Convert a string representing a rational number to a string representing 
-     * the corresponding decimal approximation. 
-     * @param string $str the rational number, represented as num+'/'+den
-     * @return float the decimal number, represented as float
-     */
-    private function frac2dec($str)
-    {
-        list($n, $d) = \explode('/', $str);
-        //Old site suppressed errors of previous line. No clue why.
-        if (!empty($d)) {
-            return $n / $d;
-        }
-        return $str;
-    }
-
-    /**
-     * Computes the shutter speed from the exif data.
-     * @param array $exif the exif data extracted from the photo.
-     * @return string the shutter speed, represented as a rational string.
-     */
-    private function exifGetShutter($exif)
-    {
-        if (!isset($exif['ShutterSpeedValue'])) {
-            return "unknown";
-        }
-        $apex = $this->frac2dec($exif['ShutterSpeedValue']);
-        $shutter = \pow(2, -$apex);
-        if ($shutter == 0) {
-            return "unknown";
-        }
-        if ($shutter >= 1) {
-            return \round($shutter) . 's';
-        }
-        return '1/' . \round(1 / $shutter) . 's';
-    }
-
-    /**
-     * Computes the aperture form the exif data.
-     * @param array $exif the exif data extracted from the photo.
-     * @return string the aperture, respresented as a rational string.
-     */
-    private function exifGetFstop($exif)
-    {
-        if (!isset($exif['ApertureValue'])) {
-            return "unknown";
-        }
-        $apex = $this->frac2dec($exif['ApertureValue']);
-        $fstop = \pow(2, $apex / 2);
-        if ($fstop == 0) {
-            return "unknown";
-        }
-        return 'f/' . \sprintf("%01.1f", $fstop);
     }
 
     /**
@@ -190,6 +108,20 @@ class Photo extends AbstractService
     public function getPreviousPhoto($photo)
     {
         return $this->getPhotoMapper()->getPreviousPhoto($photo);
+    }
+
+    /**
+     * Get all photos in an album
+     * 
+     * @param Photo\Model\Album $album the album to get the photos from
+     * @param integer $start the result to start at
+     * @param integer $max_results max amount of results to return, null for infinite
+     * @return array of Photo\Model\Album
+     */
+    public function getPhotos($album, $start = 0, $max_results = null)
+    {
+        $config = $this->getConfig();
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $max_results);
     }
 
     /**
@@ -224,6 +156,16 @@ class Photo extends AbstractService
     {
         $config = $this->sm->get('config');
         return $config['photo'];
+    }
+
+    /**
+     * Gets the metadata service.
+     * 
+     * @return Photo\Service\Metadata
+     */
+    public function getMetadataService()
+    {
+        return $this->getServiceManager()->get("photo_service_metadata");
     }
 
 }
