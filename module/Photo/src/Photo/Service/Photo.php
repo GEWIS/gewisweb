@@ -85,7 +85,7 @@ class Photo extends AbstractService
              */
             $mapper->persist($photo);
             $mapper->flush();
-            rename($path, $config['upload_dir'] . '/' . $storage_path);
+            copy($path, $config['upload_dir'] . '/' . $storage_path);
         }
         return $photo;
     }
@@ -107,7 +107,7 @@ class Photo extends AbstractService
                     
                     $subpath = $path . '/' . $entry;
                     var_dump($subpath);
-                    if (\is_dir($entry)){
+                    if (\is_dir($subpath)){
                         $subAlbum = $albumService->createAlbum($entry, $target_album);
                         $this->storeUploadedDirectory($subpath, $subAlbum);
                     }

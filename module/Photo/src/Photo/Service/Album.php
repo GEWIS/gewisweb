@@ -71,9 +71,10 @@ class Album extends AbstractService
         
         $album = new AlbumModel();
         $album->setName($name);
-        if (is_null($parent)){
+        if (!is_null($parent)){
             $album->setParent($parent);
         }
+        
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
