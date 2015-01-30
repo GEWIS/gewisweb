@@ -104,13 +104,15 @@ class Photo extends AbstractService
         if ($handle = \opendir($path)) {
             while (false !== ($entry = \readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
+                    
                     $subpath = $path . '/' . $entry;
+                    var_dump($subpath);
                     if (\is_dir($entry)){
                         $subAlbum = $albumService->createAlbum($entry, $target_album);
                         $this->storeUploadedDirectory($subpath, $subAlbum);
                     }
                     elseif ($image->isValid ($subpath)){
-                        storeUploadedPhoto($subpath,$target_album);
+                        $this->getPhotoService()->storeUploadedPhoto($subpath,$target_album);
                     }
                 }
             }
@@ -202,6 +204,16 @@ class Photo extends AbstractService
     public function getAlbumService()
     {
         return $this->getServiceManager()->get("photo_service_album");
+    }
+    
+    /**
+     * Gets the album service.
+     * 
+     * @return Photo\Service\Album
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceManager()->get("photo_service_photo");
     }
 
 }

@@ -33,7 +33,7 @@ class AdminController extends AbstractActionController
             if ($form->isValid()) {
                 var_dump($request->getPost()['folder_path']);
                 $album = $this->getAlbumService()->getAlbum($request->getPost()['album_id']);
-                $this->getAlbumService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
+                $this->getPhotoService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
             }
         }
 
@@ -71,6 +71,14 @@ class AdminController extends AbstractActionController
     public function getAlbumService()
     {
         return $this->getServiceLocator()->get('photo_service_album');
+    }
+    
+    /**
+     * Get the photo service.
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceLocator()->get('photo_service_photo');
     }
 
 }
