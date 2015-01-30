@@ -59,6 +59,7 @@ class Album extends AbstractService
             return $this->getAlbumMapper()->getSubAlbums($album, $start, $max_results);
         }
     }
+
     /**
      * Creates a new album.
      * 
@@ -78,6 +79,7 @@ class Album extends AbstractService
         $mapper->flush();
         return $album;
     }
+
     /**
      * Get a recusive list of all (sub)albums
      * 
@@ -103,6 +105,16 @@ class Album extends AbstractService
     {
         //TODO: permissions
         return $this->sm->get('photo_form_album_create');
+    }
+
+    /**
+     * Get the PhotoImport form.
+     *
+     * @return \Photo\Form\PhotoImport
+     */
+    public function getPhotoImportForm()
+    {
+        return $this->sm->get('photo_form_import_folder');
     }
 
     /**

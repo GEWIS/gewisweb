@@ -52,6 +52,12 @@ class Module
                     $form->setHydrator($sm->get('photo_hydrator_album'));
                     return $form;
                 },
+                'photo_form_import_folder' => function($sm) {
+                    $form = new Form\PhotoImport(
+                            $sm->get('translator')
+                    );
+                    return $form;
+                },
                 'photo_hydrator_album' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                             $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
