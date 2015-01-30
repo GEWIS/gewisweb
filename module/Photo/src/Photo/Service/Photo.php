@@ -120,7 +120,6 @@ class Photo extends AbstractService
      */
     public function getPhotos($album, $start = 0, $max_results = null)
     {
-        $config = $this->getConfig();
         return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $max_results);
     }
 
