@@ -59,8 +59,23 @@ class Album extends AbstractService
             return $this->getAlbumMapper()->getSubAlbums($album, $start, $max_results);
         }
     }
-
-
+    /**
+     * Creates a new album.
+     * 
+     * @param String $name The name of the new album.
+     * @param Photo\Model\Album $parent The parent of this album, if any.
+     */
+    public function createAlbum($name,$parent = null){
+        
+        $album = new AlbumModel();
+        $album->setName($name);
+        if (is_null($parent)){
+            $album->setParent($parent);
+        }
+        $mapper = $this->getAlbumMapper();
+        $mapper->persist($album);
+        $mapper->flush();
+    }
     /**
      * Get a recusive list of all (sub)albums
      * 
