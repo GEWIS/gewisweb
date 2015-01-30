@@ -342,12 +342,16 @@ class Photo implements ResourceInterface
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
         //update start and end date if the added photo is newere or older
-        if ($this->album->getStartDateTime()->diff($this->getDateTime()) < 0) {
+        if (is_null($this->album->getStartDateTime())) {
+            $this->album->setStartDateTime($this->getDateTime());
+        } else if ($this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()) {
             $this->album->setStartDateTime($this->getDateTime());
         }
 
-        if ($this->album->getEndDateTime()->diff($this->getDateTime()) > 0) {
-            $this->album->setStartDateTime($this->getDateTime());
+        if (is_null($this->album->getEndDateTime())) {
+            $this->album->setEndDateTime($this->getDateTime());
+        } else if ($this->album->getStartDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()) {
+            $this->album->setEndDateTime($this->getDateTime());
         }
     }
 
@@ -360,7 +364,11 @@ class Photo implements ResourceInterface
     public function udpateOnRemove()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
-        //TODO: possibly update the album start and end date after deleting an photo
+        /**
+         * TODO: possibly update the album start and end date after deleting an 
+         * photo, this would however be a hassle to implement. It probably won't
+         * ever occur.
+         */
     }
 
     /**

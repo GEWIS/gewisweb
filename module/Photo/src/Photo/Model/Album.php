@@ -27,16 +27,16 @@ class Album implements ResourceInterface
     /**
      * First date of photos in album
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $startDateTime;
+    protected $startDateTime = null;
 
     /**
      * End date of photos in album
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $endDateTime;
+    protected $endDateTime = null;
 
     /**
      * Name of the album.
@@ -77,14 +77,14 @@ class Album implements ResourceInterface
      *
      * @ORM\Column(type="integer")
      */
-    protected $photoCount;
+    protected $photoCount = 0;
 
     /**
      * The amount of subalbums in this album
      *
      * @ORM\Column(type="integer")
      */
-    protected $albumCount;
+    protected $albumCount = 0;
 
     /**
      * Get the ID.
@@ -244,7 +244,9 @@ class Album implements ResourceInterface
      */
     public function incrementOnAdd()
     {
-        $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+        if (!is_null($this->parent)) {
+            $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+        }
     }
 
     /**
@@ -255,7 +257,9 @@ class Album implements ResourceInterface
      */
     public function decrementOnRemove()
     {
-        $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
+        if (!is_null($this->parent)) {
+            $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
+        }
     }
 
     /**
