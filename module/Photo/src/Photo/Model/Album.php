@@ -25,11 +25,18 @@ class Album implements ResourceInterface
     protected $id;
 
     /**
-     * Date album created
+     * First date of photos in album
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    protected $date;
+    protected $startDateTime;
+
+    /**
+     * End date of photos in album
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $endDateTime;
 
     /**
      * Name of the album.
@@ -90,13 +97,23 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Get the date.
+     * Get the start date.
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getStartDateTime()
     {
-        return $this->date;
+        return $this->startDateTime;
+    }
+
+    /**
+     * Get the end date.
+     *
+     * @return \DateTime
+     */
+    public function getEndDateTime()
+    {
+        return $this->endDateTime;
     }
 
     /**
@@ -108,7 +125,7 @@ class Album implements ResourceInterface
     {
         return $this->name;
     }
-    
+
     /**
      * Get the parent album.
      *
@@ -150,13 +167,23 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Set the date.
+     * Set the start date.
      *
-     * @param \DateTime $date
+     * @param \DateTime $startDateTime
      */
-    public function setDate(\DateTime $date)
+    public function setStartDateTime(\DateTime $startDateTime)
     {
-        $this->date = $date;
+        $this->startDateTime = $startDateTime;
+    }
+
+    /**
+     * Set the end date.
+     *
+     * @param \DateTime $endDateTime
+     */
+    public function setEndDateTime(\DateTime $endDateTime)
+    {
+        $this->endDateTime = $endDateTime;
     }
 
     /**
