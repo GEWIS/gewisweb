@@ -41,6 +41,7 @@ class Module
         return array(
             'invokables' => array(
                 'photo_service_album' => 'Photo\Service\Album',
+                'photo_service_metadata' => 'Photo\Service\Metadata',
                 'photo_service_photo' => 'Photo\Service\Photo'
             ),
             'factories' => array(
