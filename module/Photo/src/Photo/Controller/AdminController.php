@@ -10,6 +10,7 @@ class AdminController extends AbstractActionController
 
     public function indexAction()
     {
+        
     }
 
     public function uploadAction()
@@ -22,6 +23,25 @@ class AdminController extends AbstractActionController
         
     }
 
+    public function importFolderAction()
+    {
+        $form = $this->getAlbumService()->getPhotoImportForm();
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                var_dump($request->getPost()['folder_path']);
+                $album = $this->getAlbumService()->getAlbum($request->getPost()['album_id']);
+                $this->getAlbumService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
+    
     public function createAlbumAction()
     {
         $service = $this->getAlbumService();
