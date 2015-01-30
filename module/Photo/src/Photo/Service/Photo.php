@@ -62,7 +62,7 @@ class Photo extends AbstractService
      * @param string $path the tempoary path of the uploaded photo
      * @param \Photo\Model\Album $target_album the album to save the photo in
      * @return \Photo\Model\Photo
-     */
+     */            
     public function storeUploadedPhoto($path, $target_album)
     {
         $config = $this->getConfig();
@@ -89,7 +89,34 @@ class Photo extends AbstractService
         }
         return $photo;
     }
-
+    /**
+     * Stores an directory in $target_album.
+     * If any subdirectory is present, it will be stored in a new album, 
+     * with the (temporary) name of the directory.
+     * (i.e. the function is applied recursively)
+     * @param type $path The path of the directory.
+     * @param type $target_album The album to store the photos.
+     */
+    public function storeUploadedDirectory($path, $target_album)
+    {
+        $albumService = $this->getAlbumService();
+        $image = new \Zend\Validator\File\IsImage();
+        if ($handle = \opendir($path)) {
+            while (false !== ($entry = \readdir($handle))) {
+                if ($entry != "." && $entry != "..") {
+                    $subpath = $path . '/' . $entry;
+                    if (\is_dir($entry)){
+                        $subAlbum = $albumService->createAlbum($entry, $target_album);
+                        $this->storeUploadedDirectory($subpath, $subAlbum);
+                    }
+                    elseif ($image->isValid ($subpath)){
+                        storeUploadedPhoto($subpath,$target_album);
+                    }
+                }
+            }
+            closedir($handle);
+        }
+    }
     /**
      * Returns the next photo in the album to display
      * 
@@ -165,6 +192,16 @@ class Photo extends AbstractService
     public function getMetadataService()
     {
         return $this->getServiceManager()->get("photo_service_metadata");
+    }
+    
+    /**
+     * Gets the album service.
+     * 
+     * @return Photo\Service\Album
+     */
+    public function getAlbumService()
+    {
+        return $this->getServiceManager()->get("photo_service_album");
     }
 
 }
