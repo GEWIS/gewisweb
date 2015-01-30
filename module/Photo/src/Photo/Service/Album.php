@@ -64,6 +64,7 @@ class Album extends AbstractService
      * 
      * @param String $name The name of the new album.
      * @param Photo\Model\Album $parent The parent of this album, if any.
+     * @return The new album.
      */
     public function createAlbum($name,$parent = null){
         
@@ -75,6 +76,7 @@ class Album extends AbstractService
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
+        return $album;
     }
     /**
      * Get a recusive list of all (sub)albums
