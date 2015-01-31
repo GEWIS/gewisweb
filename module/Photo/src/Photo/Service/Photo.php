@@ -100,7 +100,7 @@ class Photo extends AbstractService
     public function storeUploadedDirectory($path, $target_album)
     {
         $albumService = $this->getAlbumService();
-        $image = new Zend\Validator\File\IsImage();
+        $image = new \Zend\Validator\File\IsImage();
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {

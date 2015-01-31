@@ -54,12 +54,11 @@ class Metadata extends AbstractService
      */
     private function frac2dec($str)
     {
-        list($n, $d) = explode('/', $str);
-        //Old site suppressed errors of previous line. No clue why.
-        if (!empty($d)) {
-            return $n / $d;
+        if (strpos($str, '/') === false){
+            return $str;
         }
-        return $str;
+        list($n, $d) = explode('/', $str);
+        return $n / $d;//I assume stuff like '234/0' is not supported by EXIF.
     }
 
     /**
