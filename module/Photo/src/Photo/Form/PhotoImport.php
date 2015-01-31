@@ -4,7 +4,7 @@ namespace Photo\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Mvc\I18n\Translator as Translator;
 
 class PhotoImport extends Form
 {

@@ -361,7 +361,7 @@ class Photo implements ResourceInterface
      * @ORM\PreRemove() 
      * @ORM\PreUpdate()
      */
-    public function udpateOnRemove()
+    public function updateOnRemove()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
         /**
