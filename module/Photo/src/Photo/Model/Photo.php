@@ -115,7 +115,7 @@ class Photo implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTimeInterface
      */
     public function getDateTime()
     {
@@ -227,7 +227,7 @@ class Photo implements ResourceInterface
      *
      * @param \DateTime $dateTime
      */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(DateTimeInterface $dateTime)
     {
         $this->dateTime = $dateTime;
     }

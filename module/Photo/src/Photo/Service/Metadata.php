@@ -17,12 +17,12 @@ class Metadata extends AbstractService
 
     /**
      * 
-     * @param \Photo\Model\Photo $photo the photo to add the metadata to
-     * @return \Photo\Model\Photo the photo with the added metadata
+     * @param Photo\Model\Photo $photo the photo to add the metadata to
+     * @return Photo\Model\Photo the photo with the added metadata
      */
     public function populateMetadata($photo, $path)
     {
-        $exif = \read_exif_data($path, 'EXIF');
+        $exif = read_exif_data($path, 'EXIF');
         if (isset($exif['Artist'])) {
             $photo->setArtist($exif['Artist']);
         } else {
@@ -31,7 +31,7 @@ class Metadata extends AbstractService
         //I assume the exif data isn't deliberately stripped, so most values 
         //are assumed to exist.
         $photo->setCamera($exif['Model']);
-        $photo->setDateTime(\date_create($exif['DateTimeOriginal']));
+        $photo->setDateTime(date_create($exif['DateTimeOriginal']));
         $photo->setFlash($exif['Flash'] != 0);
         $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
         $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
@@ -54,7 +54,7 @@ class Metadata extends AbstractService
      */
     private function frac2dec($str)
     {
-        list($n, $d) = \explode('/', $str);
+        list($n, $d) = explode('/', $str);
         //Old site suppressed errors of previous line. No clue why.
         if (!empty($d)) {
             return $n / $d;
@@ -73,14 +73,14 @@ class Metadata extends AbstractService
             return "unknown";
         }
         $apex = $this->frac2dec($exif['ShutterSpeedValue']);
-        $shutter = \pow(2, -$apex);
+        $shutter = pow(2, -$apex);
         if ($shutter == 0) {
             return "unknown";
         }
         if ($shutter >= 1) {
-            return \round($shutter) . 's';
+            return round($shutter) . 's';
         }
-        return '1/' . \round(1 / $shutter) . 's';
+        return '1/' . round(1 / $shutter) . 's';
     }
 
     /**
@@ -94,11 +94,11 @@ class Metadata extends AbstractService
             return "unknown";
         }
         $apex = $this->frac2dec($exif['ApertureValue']);
-        $fstop = \pow(2, $apex / 2);
+        $fstop = pow(2, $apex / 2);
         if ($fstop == 0) {
             return "unknown";
         }
-        return 'f/' . \sprintf("%01.1f", $fstop);
+        return 'f/' . sprintf("%01.1f", $fstop);
     }
 
 }

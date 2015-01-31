@@ -32,7 +32,7 @@ class Photo
     /**
      * Returns the next photo in the album to display
      * 
-     * @param \Photo\Model\Photo $photo 
+     * @param Photo\Model\Photo $photo 
      */
     public function getNextPhoto($photo)
     {
@@ -52,7 +52,7 @@ class Photo
     /**
      * Returns the previous photo in the album to display
      * 
-     * @param \Photo\Model\Photo $photo 
+     * @param Photo\Model\Photo $photo 
      */
     public function getPreviousPhoto($photo)
     {
@@ -72,7 +72,7 @@ class Photo
     /**
      * returns all the photos in an album.
      * 
-     * @param \Photo\Model\Album $album The album to retrieve the photos from
+     * @param Photo\Model\Album $album The album to retrieve the photos from
      * @param integer $start the result to start at
      * @param integer $max_results max amount of results to return, null for infinite
      * @return array of photo's

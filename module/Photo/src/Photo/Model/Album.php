@@ -171,7 +171,7 @@ class Album implements ResourceInterface
      *
      * @param \DateTime $startDateTime
      */
-    public function setStartDateTime(\DateTime $startDateTime)
+    public function setStartDateTime(DateTimeInterface $startDateTime)
     {
         $this->startDateTime = $startDateTime;
     }
@@ -181,7 +181,7 @@ class Album implements ResourceInterface
      *
      * @param \DateTime $endDateTime
      */
-    public function setEndDateTime(\DateTime $endDateTime)
+    public function setEndDateTime(DateTimeInterface $endDateTime)
     {
         $this->endDateTime = $endDateTime;
     }

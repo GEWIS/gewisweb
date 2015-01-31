@@ -17,7 +17,7 @@ class Photo extends AbstractService
     /**
      * Get the photo mapper.
      *
-     * @return \Photo\Mapper\Photo
+     * @return Photo\Mapper\Photo
      */
     public function getPhotoMapper()
     {
@@ -60,8 +60,8 @@ class Photo extends AbstractService
      * All upload actions should use this function to prevent "ghost" files 
      * or database entries
      * @param string $path the tempoary path of the uploaded photo
-     * @param \Photo\Model\Album $target_album the album to save the photo in
-     * @return \Photo\Model\Photo
+     * @param Photo\Model\Album $target_album the album to save the photo in
+     * @return Photo\Model\Photo
      */            
     public function storeUploadedPhoto($path, $target_album)
     {
@@ -100,13 +100,13 @@ class Photo extends AbstractService
     public function storeUploadedDirectory($path, $target_album)
     {
         $albumService = $this->getAlbumService();
-        $image = new \Zend\Validator\File\IsImage();
-        if ($handle = \opendir($path)) {
-            while (false !== ($entry = \readdir($handle))) {
+        $image = new Zend\Validator\File\IsImage();
+        if ($handle = opendir($path)) {
+            while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
                     
                     $subpath = $path . '/' . $entry;
-                    if (\is_dir($subpath)){
+                    if (is_dir($subpath)){
                         $subAlbum = $albumService->createAlbum($entry, $target_album);
                         $this->storeUploadedDirectory($subpath, $subAlbum);
                     }
