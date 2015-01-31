@@ -2,19 +2,24 @@
 $escaper = new Zend\Escaper\Escaper('utf-8');
 ?>
     <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
-<?php 
+<?php  // Display title
 echo("<h2 class='company-name'><a href='"); 
+
+// If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
 if ($islist==true) {
 
     //echo ("company/");  
     //echo($company->getAsciiName()); 
-    echo ($this->url('company/companyItem',array('asciiCompanyName' => $company->getAsciiName()),array(),true));
+    echo ($this->url('company/companyItem', // Route url
+        array('asciiCompanyName' => $company->getAsciiName()) // Url parameters
+        ,array() // routeOptions
+        ,true)); // Reuse matched parameters
 }
 else {
     echo($company->getWebsite());
 }
 echo("'>"); 
-echo ($company->getName()); 
+echo ($company->getName()); // Text of the title
 echo ("</a></h2>") ?>
 
     <div class="company-slogan"><?= $company->getSlogan(); ?></div>

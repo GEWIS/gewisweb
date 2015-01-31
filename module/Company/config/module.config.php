@@ -9,7 +9,7 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller'    => 'Company',
-                        'action'        => 'list', // index is reserved for frontpage, but since it is not yet implemented, a company list will be presented.
+                        'action'        => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
                         'actionArgument'=> '',
                     ),
                 ),
