@@ -31,7 +31,6 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                var_dump($request->getPost()['folder_path']);
                 $album = $this->getAlbumService()->getAlbum($request->getPost()['album_id']);
                 $this->getPhotoService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
             }
