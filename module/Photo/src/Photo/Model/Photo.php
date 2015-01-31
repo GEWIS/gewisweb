@@ -342,15 +342,15 @@ class Photo implements ResourceInterface
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
         //update start and end date if the added photo is newere or older
-        if (is_null($this->album->getStartDateTime())) {
-            $this->album->setStartDateTime($this->getDateTime());
-        } else if ($this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()) {
+        if (   is_null($this->album->getStartDateTime()) 
+            || $this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()
+        ) {
             $this->album->setStartDateTime($this->getDateTime());
         }
 
-        if (is_null($this->album->getEndDateTime())) {
-            $this->album->setEndDateTime($this->getDateTime());
-        } else if ($this->album->getStartDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()) {
+        if (   is_null($this->album->getEndDateTime()) 
+            || $this->album->getStartDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
+        ) {
             $this->album->setEndDateTime($this->getDateTime());
         }
     }
