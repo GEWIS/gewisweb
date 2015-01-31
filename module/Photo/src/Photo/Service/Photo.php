@@ -106,7 +106,6 @@ class Photo extends AbstractService
                 if ($entry != "." && $entry != "..") {
                     
                     $subpath = $path . '/' . $entry;
-                    var_dump($subpath);
                     if (\is_dir($subpath)){
                         $subAlbum = $albumService->createAlbum($entry, $target_album);
                         $this->storeUploadedDirectory($subpath, $subAlbum);
