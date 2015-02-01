@@ -34,6 +34,9 @@ class AdminController extends AbstractActionController
             //
             //if ($companyForm->isValid()) {
             //    echo 'success';
+                    
+                $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
+                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
             //}
         }
