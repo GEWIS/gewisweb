@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  */
-class Company //implements RoleInterface, ResourceInterface
+class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for zend2 form)
 {
 
     /**
@@ -301,5 +301,19 @@ class Company //implements RoleInterface, ResourceInterface
     {
         $this->jobs = $jobs;
     }
-
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+    public function exchangeArray(){
+        $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
+        $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
+        $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
+        $this->email=(isset($data['email'])) ? $data['email'] : $this->email;
+        $this->logo=(isset($data['logo'])) ? $data['logo'] : $this->logo;
+        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->phone;
+        $this->description=(isset($data['description'])) ? $data['description'] : $this->description;
+        $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->jobs;
+    }
 }
