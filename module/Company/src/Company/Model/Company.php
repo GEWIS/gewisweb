@@ -306,7 +306,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         return get_object_vars($this);
     }
-    public function exchangeArray(){
+    public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
         $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
         $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
