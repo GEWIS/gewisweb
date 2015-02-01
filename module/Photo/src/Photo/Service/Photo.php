@@ -51,8 +51,8 @@ class Photo extends AbstractService
         if (!file_exists($config['upload_dir'] . '/' . $directory)) {
             mkdir($config['upload_dir'] . '/' . $directory);
         }
-        $storage_path = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
-        return $storage_path;
+        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
+        return $storagePath;
     }
 
     /**
@@ -60,21 +60,21 @@ class Photo extends AbstractService
      * All upload actions should use this function to prevent "ghost" files 
      * or database entries
      * @param string $path the tempoary path of the uploaded photo
-     * @param Photo\Model\Album $target_album the album to save the photo in
+     * @param Photo\Model\Album $targetAlbum the album to save the photo in
      * @return Photo\Model\Photo
      */            
-    public function storeUploadedPhoto($path, $target_album)
+    public function storeUploadedPhoto($path, $targetAlbum)
     {
         $config = $this->getConfig();
-        $storage_path = $this->generateStoragePath($path);
+        $storagePath = $this->generateStoragePath($path);
         //check if photo exists already in the database
-        $photo = $this->getPhotoMapper()->getPhotoByData($storage_path, $target_album);
+        $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
         if (is_null($photo)) {
             $photo = new PhotoModel();
-            $photo->setAlbum($target_album);
+            $photo->setAlbum($targetAlbum);
             $photo = $this->getMetadataService()->populateMetaData($photo, $path);
-            $photo->setPath($storage_path);
+            $photo->setPath($storagePath);
 
             $mapper = $this->getPhotoMapper();
             /**
@@ -85,7 +85,7 @@ class Photo extends AbstractService
              */
             $mapper->persist($photo);
             $mapper->flush();
-            copy($path, $config['upload_dir'] . '/' . $storage_path);
+            copy($path, $config['upload_dir'] . '/' . $storagePath);
         }
         return $photo;
     }
@@ -95,9 +95,9 @@ class Photo extends AbstractService
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
      * @param type $path The path of the directory.
-     * @param type $target_album The album to store the photos.
+     * @param type $targetAlbum The album to store the photos.
      */
-    public function storeUploadedDirectory($path, $target_album)
+    public function storeUploadedDirectory($path, $targetAlbum)
     {
         $albumService = $this->getAlbumService();
         $image = new \Zend\Validator\File\IsImage();
@@ -105,13 +105,13 @@ class Photo extends AbstractService
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
                     
-                    $subpath = $path . '/' . $entry;
-                    if (is_dir($subpath)){
-                        $subAlbum = $albumService->createAlbum($entry, $target_album);
-                        $this->storeUploadedDirectory($subpath, $subAlbum);
+                    $subPath = $path . '/' . $entry;
+                    if (is_dir($subPath)){
+                        $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
+                        $this->storeUploadedDirectory($subPath, $subAlbum);
                     }
-                    elseif ($image->isValid ($subpath)){
-                        $this->getPhotoService()->storeUploadedPhoto($subpath,$target_album);
+                    elseif ($image->isValid ($subPath)){
+                        $this->getPhotoService()->storeUploadedPhoto($subPath,$targetAlbum);
                     }
                 }
             }

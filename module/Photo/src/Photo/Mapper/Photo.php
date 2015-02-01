@@ -74,10 +74,10 @@ class Photo
      * 
      * @param Photo\Model\Album $album The album to retrieve the photos from
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of photo's
      */
-    public function getAlbumPhotos($album, $start = 0, $max_results = null)
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -86,8 +86,8 @@ class Photo
                 ->where('a.album = ?1');
         $qb->setParameter(1, $album);
         $qb->setFirstResult($start);
-        if (!is_null($max_results)) {
-            $qb->setMaxResults($max_results);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
         }
 
         return $qb->getQuery()->getResult();

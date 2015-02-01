@@ -48,15 +48,15 @@ class Album extends AbstractService
     /**
      * Get all the albums in the root directory
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of albums
      */
-    public function getAlbums($album = null, $start = 0, $max_results = null)
+    public function getAlbums($album = null, $start = 0, $maxResults = null)
     {
         if ($album == null) {
             return $this->getAlbumMapper()->getRootAlbums();
         } else {
-            return $this->getAlbumMapper()->getSubAlbums($album, $start, $max_results);
+            return $this->getAlbumMapper()->getSubAlbums($album, $start, $maxResults);
         }
     }
 
@@ -67,14 +67,15 @@ class Album extends AbstractService
      * @param Photo\Model\Album $parent The parent of this album, if any.
      * @return The new album.
      */
-    public function createAlbum($name,$parent = null){
-        
+    public function createAlbum($name, $parent = null)
+    {
+
         $album = new AlbumModel();
         $album->setName($name);
-        if (!is_null($parent)){
+        if (!is_null($parent)) {
             $album->setParent($parent);
         }
-        
+
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
