@@ -21,7 +21,7 @@ class Company extends AbstractACLService
         else{
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to see all the companies')
+                $translator->translate('You are not allowed list the companies')
             );
         }
     }
@@ -38,6 +38,10 @@ class Company extends AbstractACLService
             );
         }
     }
+    public function saveCompany(){
+        $this->getCompanyMapper()->save();
+    }
+
         
     public function getCompaniesWithAsciiName($asciiName)
     {
@@ -46,7 +50,7 @@ class Company extends AbstractACLService
 
     public function getEditableCompaniesWithAsciiName($asciiName)
     {
-        return $this->getCompanyMapper()->findEditableCompaniesWithAsciiName($asciiName);
+        return $this->getCompanyMapper()->findEditableCompaniesWithAsciiName($asciiName, true);
     }
     public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName)
     {
@@ -60,6 +64,14 @@ class Company extends AbstractACLService
     public function getJobList()
     {
         return $this->getJobMapper()->findAll();
+    }
+    /**
+     * Get the Company Edit form.
+     *
+     * @return Company Edit form
+     */
+    public function getCompanyForm(){
+        return $this->sm->get('company_admin_edit_company_form');
     }
 
     public function getActiveJobList()

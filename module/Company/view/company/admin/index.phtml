@@ -3,7 +3,6 @@
     <?php
 
 $escaper = new Zend\Escaper\Escaper('utf-8');
-    
 
 ?>
     
@@ -29,9 +28,11 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
         <tbody>
             <?php
             foreach ($company_list as $company) {
+                $editUrl = $this->url('admin_company/default',array('action'=>'edit', 'asciiCompanyName'=>$company->getAsciiName()));
+                //echo $editUrl;
             ?>
             <tr class="company-list-item">
-                <td><a href="?id=<?= $company->getId(); ?>"><?= $company->getName(); ?></a></td>
+                <td><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= count($company->getJobs()); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>

@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 
 /**
  * Mappers for companies.
@@ -32,6 +33,9 @@ class Company
     {
         $this->em = $em;
     }
+    public function save(){
+        $this->em->flush();
+    }
 
     /**
      * Find all companies.
@@ -47,9 +51,10 @@ class Company
      * Find the company with the given asciiName
      *
      * @param asciiName The 'username' of the company to get.
+     * @param asObject if yes, returns the company as an object in an array, else returns the company as an array of an array
      * @return An array of companies with the given asciiName.
      */
-    public function findEditableCompaniesWithAsciiName($asciiName)
+    public function findEditableCompaniesWithAsciiName($asciiName, $asObject)
     {
 
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
@@ -57,16 +62,22 @@ class Company
         $qb->select('c')->where('c.asciiName=:asciiCompanyName');
         $qb->setParameter('asciiCompanyName', $asciiName);
         $qb->setMaxResults(1);
-        return $qb->getQuery()->getResult();
+        if ($asObject){
+            return $qb->getQuery()->getResult();
+        }
+        else{
+            return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+        }
     }
 
     public function findCompaniesWithAsciiName($asciiName)
     {
 
-        $result = $this->findEditableCompaniesWithAsciiName($asciiName);
+        $result = $this->findEditableCompaniesWithAsciiName($asciiName,true);
         foreach($results as $company){
             $em->detach($company);
         }
+        return $result;
     }
 
     /**
