@@ -29,16 +29,12 @@ class AdminController extends AbstractActionController
             $companyForm=$companyService->getCompanyForm();
             $companyForm->setData($request->getPost());
 
-            // TODO: filter not yet working:
-            // \I18n\Filter component requires the intl PHP extension
-            //
-            //if ($companyForm->isValid()) {
-            //    echo 'success';
-                    
+            // TODO: isValid does not work yet
+//            if ($companyForm->isValid()) {
                 $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
-            //}
+ //           }
         }
 
         return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$companyName),array(),true);   
