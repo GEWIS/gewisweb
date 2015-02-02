@@ -21,6 +21,15 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'asciiName',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => $translate->translate('Permalink'),
+            ),
+        ));
+        $this->add(array(
             'name' => 'name',
             'attributes' => array(
                 'type'  => 'text',

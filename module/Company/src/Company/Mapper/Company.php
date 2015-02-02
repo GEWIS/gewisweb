@@ -37,6 +37,14 @@ class Company
         $this->em->flush();
     }
 
+    public function insert(){
+        $company=new CompanyModel($this->em);
+        
+        $company->setLanguage('en');
+        $company->setHidden(false);
+        $this->em->persist($company);
+        return $company;
+    }
     /**
      * Find all companies.
      *

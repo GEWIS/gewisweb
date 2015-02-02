@@ -42,6 +42,9 @@ class Company extends AbstractACLService
         $this->getCompanyMapper()->save();
     }
 
+    public function insertCompany(){
+        return $this->getCompanyMapper()->insert();
+    }
         
     public function getCompaniesWithAsciiName($asciiName)
     {
