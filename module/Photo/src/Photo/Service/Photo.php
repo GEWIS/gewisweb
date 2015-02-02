@@ -143,12 +143,12 @@ class Photo extends AbstractService
      * 
      * @param Photo\Model\Album $album the album to get the photos from
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of Photo\Model\Album
      */
-    public function getPhotos($album, $start = 0, $max_results = null)
+    public function getPhotos($album, $start = 0, $maxResults = null)
     {
-        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $max_results);
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $maxResults);
     }
 
     /**
