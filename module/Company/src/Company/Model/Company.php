@@ -88,13 +88,26 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     protected $description;
 
     /**
+     * The language that this company record is written in
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $language;
+
+    /**
+     * The company's jobs.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $hidden;
+
+    /**
      * The company's jobs.
      *
      * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
      */
+
     protected $jobs;
-
-
     /**
      * Constructor
      */
@@ -301,6 +314,44 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         $this->jobs = $jobs;
     }
+    /**
+     * Get the company's hidden status.
+     *
+     * @return boolean
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Set the company's language.
+     *
+     * @param string $language
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+    }
+    /**
+     * Get the company's language.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set the company's language.
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
     // For zend2 forms
     public function getArrayCopy()
     {
@@ -308,6 +359,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     }
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
+        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
         $this->address=(isset($data['address'])) ? $data['address'] : $this->address;
         $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
         $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;

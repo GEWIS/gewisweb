@@ -19,12 +19,30 @@ class AdminController extends AbstractActionController
         return $vm;
 
     }
-
+    public function addCompanyAction()
+    {
+        $companyService = $this->getCompanyService();
+        
+        $companyForm=$companyService->getCompanyForm();
+        //$company=$companyService->insertCompany();
+        //$companyForm->bind($company);
+        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'save')));
+        $vm = new ViewModel(array(
+          //  'company' => $company,
+            'companyEditForm' => $companyForm,
+        ));
+        
+        return $vm;
+        
+    }
     public function saveAction()
     {
         $companyName = $this->params('asciiCompanyName');    
         $request = $this->getRequest();
         if ($request->isPost()) {
+            if (!isset($companyName)){
+                $companyName=$request->getPost()['asciiName'];
+            }
             $companyService = $this->getCompanyService();
             $companyForm=$companyService->getCompanyForm();
             $companyForm->setData($request->getPost());
