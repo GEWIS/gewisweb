@@ -30,11 +30,11 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             // TODO: isValid does not work yet
-//            if ($companyForm->isValid()) {
+            if ($companyForm->isValid()) {
                 $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
- //           }
+            }
         }
 
         return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$companyName),array(),true);   
