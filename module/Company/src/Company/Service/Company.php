@@ -1,7 +1,6 @@
 <?php
 
 namespace Company\Service;
-
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
 
@@ -46,6 +45,18 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->insert();
     }
         
+    public function insertJobForCompanyAsciiName($asciiCompanyName){
+        $company = $this->getCompaniesWithAsciiName($asciiCompanyName)[0];
+
+        $result = $this->getJobMapper()->insertIntoCompany($company);
+
+
+        return $result;
+    }
+    public function getJobsWithCompanyAsciiName($companyAsciiName)
+    {
+        return $this->getJobMapper()->findJobsWithCompanyAsciiName($companyAsciiName);
+    }
     public function getCompaniesWithAsciiName($asciiName)
     {
         return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
@@ -77,6 +88,9 @@ class Company extends AbstractACLService
         return $this->sm->get('company_admin_edit_company_form');
     }
 
+    public function getJobForm(){
+        return $this->sm->get('company_admin_edit_job_form');
+    }
     public function getActiveJobList()
     {
         $jl = $this->getJobList();

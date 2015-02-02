@@ -36,7 +36,7 @@ class Job //implements RoleInterface, ResourceInterface
      *
      * @ORM\Column(type="string")
      */
-    protected $ascii_name;
+    protected $asciiName;
     /**
      * The job's status.
      *
@@ -251,6 +251,17 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->company = $company;
     }
-
-
+    public function exchangeArray($data){
+        $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
+        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
+        $this->address=(isset($data['address'])) ? $data['address'] : $this->address;
+        $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
+        $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
+        //$this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
+        $this->email=(isset($data['email'])) ? $data['email'] : $this->email;
+        //$this->logo=(isset($data['logo'])) ? $data['logo'] : $this->logo;
+        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->phone;
+        $this->description=(isset($data['description'])) ? $data['description'] : $this->description;
+        //$this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->jobs;
+    }
 }
