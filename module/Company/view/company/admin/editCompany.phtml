@@ -61,3 +61,11 @@ $form=$companyEditForm;
 
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
+<table class=joblist>
+
+<?php if(!empty($joblist)){ foreach($joblist as $job){ ?>
+<td><tr><?= $job->getName(); ?></tr> <tr><a href="#id">delete</a></tr></td>
+<?php } }?>
+</table>
+<br/>
+<a href=<?= $this->url("admin_company/default", array("action"=>"addJob","asciiCompanyName"=>$company->getAsciiName()));?>>Add job</a>

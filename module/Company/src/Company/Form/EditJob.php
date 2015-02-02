@@ -3,7 +3,8 @@ namespace Company\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
+//use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends Form
 {
@@ -29,9 +30,19 @@ class EditJob extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'asciiName',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => $translate->translate('asciiName'),
+            ),
+        ));
+        $this->add(array(
             'name' => 'active',
             'attributes' => array(
-                'type'  => 'boolean',
+ //               'type'  => 'boolean',
+                'type' => 'Checkbox',
             ),
             'options' => array(
                 'label' => $translate->translate('Active'),
@@ -67,7 +78,7 @@ class EditJob extends Form
         $this->add(array(
             'name' => 'description',
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'textarea',
             ),
             'options' => array(
                 'label' => $translate->translate('Description'),

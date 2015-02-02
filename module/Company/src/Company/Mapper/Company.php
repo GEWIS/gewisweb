@@ -82,8 +82,8 @@ class Company
     {
 
         $result = $this->findEditableCompaniesWithAsciiName($asciiName,true);
-        foreach($results as $company){
-            $em->detach($company);
+        foreach($result as $company){
+            $this->em->detach($company);
         }
         return $result;
     }
