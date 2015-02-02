@@ -61,6 +61,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'company_admin_edit_job_form' => function ($sm) {
+                    return new \Company\Form\EditJob(
+                        $sm->get('translator')
+                    );
+                },
                 'company_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 

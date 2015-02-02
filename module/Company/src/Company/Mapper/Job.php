@@ -47,6 +47,27 @@ class Job
      * @param jobAsciiName The asciiName of the requested job.
      * @return An array of jobs that match the request.
      */
+    public function findJobsWithCompanyAsciiName($companyAsciiName)
+    {
+
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j','c')->join("j.company", "c")->where("c.asciiName=:jobId");
+        $qb->setParameter('jobId', $companyAsciiName);
+
+        return $qb->getQuery()->getResult();
+    }
+    public function insertIntoCompany($company){
+        $job=new JobModel($this->em);
+
+        $job->setCompany($company);
+        $this->em->persist($job);
+        $this->em->persist($job->getCompany());
+        
+        $this->em->merge($company);
+        $this->em->merge($job);
+
+        return $job;
+    }
     public function findJobWithAsciiName($companyAsciiName,$jobAsciiName)
     {
 
