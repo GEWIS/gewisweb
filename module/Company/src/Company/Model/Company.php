@@ -308,6 +308,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     }
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
+        $this->address=(isset($data['address'])) ? $data['address'] : $this->address;
         $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
         $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
         $this->email=(isset($data['email'])) ? $data['email'] : $this->email;
