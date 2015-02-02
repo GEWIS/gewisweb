@@ -246,6 +246,17 @@ class Album implements ResourceInterface
     {
         if (!is_null($this->parent)) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+            if (    is_null($this->parent->getStartDateTime()) 
+                || $this->parent->getStartDateTime()->getTimestamp() > $this->getStartDateTime()->getTimeStamp()
+            ) {
+                $this->parent->setStartDateTime($this->getStartDateTime());
+            }
+
+            if (   is_null($this->parent->getEndDateTime()) 
+                || $this->parent->getEndDateTime()->getTimestamp() < $this->getEndDateTime()->getTimeStamp()
+            ) {
+                $this->parent->setEndDateTime($this->getDateTime());
+            }
         }
     }
 

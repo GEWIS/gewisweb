@@ -349,7 +349,7 @@ class Photo implements ResourceInterface
         }
 
         if (   is_null($this->album->getEndDateTime()) 
-            || $this->album->getStartDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
+            || $this->album->getEndDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
         ) {
             $this->album->setEndDateTime($this->getDateTime());
         }
