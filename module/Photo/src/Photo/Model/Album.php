@@ -99,7 +99,7 @@ class Album implements ResourceInterface
     /**
      * Get the start date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDateTime()
     {
@@ -109,7 +109,7 @@ class Album implements ResourceInterface
     /**
      * Get the end date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDateTime()
     {
@@ -171,7 +171,7 @@ class Album implements ResourceInterface
      *
      * @param \DateTime $startDateTime
      */
-    public function setStartDateTime(DateTimeInterface $startDateTime)
+    public function setStartDateTime(\DateTime $startDateTime)
     {
         $this->startDateTime = $startDateTime;
     }
@@ -181,7 +181,7 @@ class Album implements ResourceInterface
      *
      * @param \DateTime $endDateTime
      */
-    public function setEndDateTime(DateTimeInterface $endDateTime)
+    public function setEndDateTime(\DateTime $endDateTime)
     {
         $this->endDateTime = $endDateTime;
     }
