@@ -242,7 +242,7 @@ class Album implements ResourceInterface
      * @ORM\PrePersist()
      * @ORM\PostUpdate() 
      */
-    public function incrementOnAdd()
+    public function updateOnAdd()
     {
         if (!is_null($this->parent)) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
@@ -266,7 +266,7 @@ class Album implements ResourceInterface
      * @ORM\PreRemove() 
      * @ORM\PreUpdate()
      */
-    public function decrementOnRemove()
+    public function updateOnRemove()
     {
         if (!is_null($this->parent)) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
