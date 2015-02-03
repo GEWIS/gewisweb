@@ -39,7 +39,11 @@ class Activity
         $result = $qb->getQuery()->getResult();
         return count($result) > 0 ? $result[0]: null ;
     }
-
+	/**
+	 * get all activities including options
+	 *
+	 * @return array	 
+	*/
     public function getAllActivities()
     {
         $qb = $this->em->createQueryBuilder();
@@ -47,4 +51,18 @@ class Activity
             ->from('Activity\Model\Activity', 'a');
         return $qb->getQuery()->getResult();
     }
+	/**
+	 * get all activities including options
+	 *
+	 * @return array	 
+	*/
+    public function getAllApproved()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+			->where('a.approved = 1');
+        return $qb->getQuery()->getResult();
+    }
+	
 }

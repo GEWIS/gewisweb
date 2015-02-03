@@ -14,7 +14,7 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
     public function getAcl()
     {
         //todo, this;
-        return $this->getServiceManager()->get('education_acl');
+        return $this->getServiceManager()->get('activity_acl');
     }
 
     /**
@@ -36,9 +36,9 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      * @return Activity\Model\Activity Activity or null if the activity does not exist
      */
     public function getActivity($id) {
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityById($id);
-        return $activity;
+		$activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+		$activity = $activityMapper->getActivityById($id);
+		return $activity;
     }
 
     /**
@@ -47,7 +47,12 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      */
     public function getAllActivities(){
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getAllActivities();
+		$activity = null;
+		if($this->isAllowed('viewOptions')){
+			$activity = $activityMapper->getAllActivities();
+		}else{
+			$activity = $activityMapper->getAllApproved();
+		}
         return $activity;
     }
 
