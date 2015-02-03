@@ -95,7 +95,21 @@ class Activity
      */
     protected $approved;
 
+	/**
+     * Is this activity an option
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $option;
 
+	/**
+     * Activity discription
+     *
+     * @Orm\Column(type="text")
+     */
+    protected $discription;
+	
+	
     // TODO -> where can i find member organ?
     protected $organ;
 
@@ -130,6 +144,7 @@ class Activity
         $this->onlyGEWIS = true;
         $this->creator = 1;
         $this->approved = 0;
+		$this->option = 0;
         return $this;
     }
 
