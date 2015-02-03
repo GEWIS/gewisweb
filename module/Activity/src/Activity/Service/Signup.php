@@ -32,7 +32,7 @@ class Signup extends AbstractAclService
 
     public function isSignedUp(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
     {
-        $signupMapper = $this->getServiceManager()->get('signupMapper');
+        $signupMapper = $this->getServiceManager()->get('activity_mapper_signup');
         return $signupMapper->isSignedUp($activity->get('id'), $user->getLidnr());
 
     }

@@ -39,31 +39,46 @@ class Module
     public function getServiceConfig()
     {
         return array(
+            'invokables' => array(
+                'activity_service_activity' => 'Activity\Service\Activity'
+            ),
             'factories' => array(
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'ActivityService' => function ($sm) {
-                    $ac = new Service\Activity();
-                    $ac->setServiceManager($sm);
-                    return $ac;
-                },
-                'SignupService' => function ($sm) {
+                'activity_service_signup' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-                'ActivityMapper' => function ($sm) {
+                'activity_mapper_activity' => function ($sm) {
                     return new \Activity\Mapper\Activity(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'SignupMapper' => function ($sm) {
+                'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')
                     );
+                },
+				'activity_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+                    // add resource
+                    
+				//list resources and add rights per resource
+				
+				//activity
+					$acl->addResource('activity');
+					//everyone can see submitted and approved activities
+					$acl->allow('guest', 'activity', 'viewApproved');
+					//users can also see options for activities
+					$acl->allow('user', 'activity', 'viewOptions');
+					//admins can also approve options
+					$acl->allow('user', 'activity', 'approve');
+                    
+                    return $acl;
                 }
             )
         );

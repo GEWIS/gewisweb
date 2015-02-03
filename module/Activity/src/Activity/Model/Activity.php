@@ -3,17 +3,12 @@ namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-//input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 /**
  * Activity model
  *
  * @ORM\Entity
  */
-class Activity implements InputFilterAwareInterface
+class Activity
 {
     /**
      * ID for the activity
@@ -76,7 +71,6 @@ class Activity implements InputFilterAwareInterface
      */
     protected $onlyGEWIS;
 
-    // TODO -> FK's
     /**
      * Who did approve this activity
      *
@@ -105,11 +99,6 @@ class Activity implements InputFilterAwareInterface
     // TODO -> where can i find member organ?
     protected $organ;
 
-    /**
-     * Input filter to validate create/edit event form data
-     */
-    protected $inputFilter;
-
     public function get($variable) {
         return $this->$variable;
     }
@@ -119,6 +108,7 @@ class Activity implements InputFilterAwareInterface
      *
      * @param array $params Parameters for the new activity
      * @throws \Exception If a activity is loaded
+     * @throws \Exception If a necessary parameter is not set
      * @return \Activity\Model\Activity the created activity
      */
     public function create(array $params) {
@@ -132,95 +122,15 @@ class Activity implements InputFilterAwareInterface
             $this->$param =  $params[$param];
         }
 
+        $this->beginTime = new \DateTime($this->beginTime);
+        $this->endTime = new \DateTime($this->endTime);
+
         // TODO: These values need to be set correctly
-        $this->beginTime = new \DateTime('0000-00-00 00:00');
-        $this->endTime = new \DateTime('0000-00-00 00:00');
         $this->canSignUp = true;
         $this->onlyGEWIS = true;
         $this->creator = 1;
         $this->approved = 0;
         return $this;
-    }
-
-    /*************** INPUT FILTEr*****************/
-    /** The code below this deals with the input filter
-     * of the create and edit activity form data
-     */
-
-    /**
-     * Get the input filter
-     *
-     * @return InputFilterInterface
-     */
-    public function getInputFilter() {
-        // Check if the input filter is set. If so, serve
-        if ($this->inputFilter) {
-            return $this->inputFilter;
-        }
-
-        $inputFilter = new InputFilter();
-        $factory = new InputFactory();
-        $inputFilter->add($factory->createInput([
-            'name' => 'name',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name'    => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
-                    ],
-                ],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'location',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name'    => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
-                    ],
-                ],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs',
-            'required' => true,
-            'filters' => [
-                ['name' => 'Int'],
-            ],
-            'validators' => [
-                [
-                    'name'    => 'Between',
-                    'options' => [
-                        'min'      => 0,
-                        'max'      => 10000,
-                    ],
-                ],
-            ],
-        ]));
-
-        $this->inputFilter = $inputFilter;
-        return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter) {
-        throw new \Exception("Not used");
     }
 
     /**
@@ -229,5 +139,4 @@ class Activity implements InputFilterAwareInterface
     public function canSignUp() {
         return $this->canSignUp;
     }
-
 }

@@ -13,7 +13,7 @@ class ActivityController extends AbstractActionController {
      * View all activities
      */
     public function indexAction() {
-        $activityService = $this->getServiceLocator()->get('ActivityService');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activities = $activityService->getAllActivities();
         return ['activities' => $activities];
     }
@@ -23,18 +23,17 @@ class ActivityController extends AbstractActionController {
      */
     public function viewAction() {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('ActivityService');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
 
-        $identity =$this->identity();
-        $user = is_null($identity) ? null : $identity->getMember();
-        $signupService = $this->getServiceLocator()->get('SignupService');
+        $identity =$this->getServiceLocator()->get('user_role');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
-            'isLoggedIn' => $user != null,
-            'isSignedUp' => !is_null($user) && $signupService->isSignedUp($activity, $user)
+            'isLoggedIn' => $identity !== 'guest',
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember())
         ];
 	}
 
@@ -45,13 +44,17 @@ class ActivityController extends AbstractActionController {
         $form = new ActivityForm();
         if ($this->getRequest()->isPost()) {
             $activity = new ActivityModel();
-            $form->setInputFilter($activity->getInputFilter());
             $form->setData($this->getRequest()->getPost());
+
             if ($form->isValid()) {
                 $em = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
                 $activity->create($form->getData());
                 $em->persist($activity);
                 $em->flush();
+
+                $this->redirect()->toRoute('activity/view', array(
+                    'id' => $activity->get('id')
+                ));
             }
         }
         return ['form' => $form];
@@ -62,7 +65,7 @@ class ActivityController extends AbstractActionController {
      */
     public function signupAction() {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('ActivityService');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
         $params = $this->viewAction();
 
@@ -74,14 +77,14 @@ class ActivityController extends AbstractActionController {
         }
 
         // Make sure the user is logged in
-        $identity = $this->identity();
-        if (is_null($identity)) {
+        $identity =$this->getServiceLocator()->get('user_role');
+        if ($identity === 'guest') {
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
             return $params;
         }
         $user = $identity->getMember();
 
-        $signupService = $this->getServiceLocator()->get('SignupService');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
         if ($signupService->isSignedUp($activity, $user)) {
             $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
             return $params;
