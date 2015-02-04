@@ -62,7 +62,17 @@ class Module
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')
                     );
-                }
+                },
+                'activity_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+                    $acl->addResource('activity');
+                    $acl->addResource('activitySignup');
+
+                    $acl->allow('guest', 'activity', 'view');
+                    $acl->allow('guest', 'activitySignup', 'signUp');
+                    $acl->allow('guest', 'activitySignup', 'view');
+                    return $acl;
+                },
             )
         );
     }
