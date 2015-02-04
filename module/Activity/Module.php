@@ -63,23 +63,19 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
-				'activity_acl' => function ($sm) {
+                'activity_acl' => function ($sm) {
                     $acl = $sm->get('acl');
-                    // add resource
-                    
-				//list resources and add rights per resource
-				
-				//activity
-					$acl->addResource('activity');
-					//everyone can see submitted and approved activities
-					$acl->allow('guest', 'activity', 'viewApproved');
-					//users can also see options for activities
-					$acl->allow('user', 'activity', 'viewOptions');
-					//admins can also approve options
-					$acl->allow('user', 'activity', 'approve');
-                    
+                    $acl->addResource('activity');
+                    $acl->addResource('activitySignup');
+
+                    $acl->allow('guest', 'activity', 'view');
+                    $acl->allow('guest', 'activitySignup', 'signUp');
+                    $acl->allow('guest', 'activitySignup', 'view');
+
+                    $acl->allow('member', 'activity', 'create');
+					$acl->allow('member', 'activity', 'viewOptionsOnDate');
                     return $acl;
-                }
+                },
             )
         );
     }

@@ -57,4 +57,27 @@ abstract class AbstractAclService extends AbstractService
             $operation
         );
     }
+
+    /**
+     * Checks if an operation is allowed, and if not it throws a 403 error
+     * If no resource is given, this will use the resource given by
+     * {@link getDefaultResourceId()}.
+     *
+     * @param string $operation Operation to be checked.
+     * @param string|ResourceInterface $resource Resource to be checked
+     *
+     * @throws \User\Permission\NotAllowedException if ths user is not allowed to get the resource
+     */
+    public function allowedOrException($operation, $resource = null, $what = null)
+    {
+        if (is_null($what)) {
+            $what = 'this';
+;       }
+
+        if (!$this->isAllowed($operation, $resource)) {
+            throw new \User\Permissions\NotAllowedException(
+                'Not allowed to view ' . $what
+            );
+        }
+    }
 }
