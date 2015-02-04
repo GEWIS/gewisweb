@@ -3,6 +3,7 @@
 namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
+use Activity\Model\Activity as ActivityModel;
 
 class Activity extends AbstractAclService implements \Zend\ServiceManager\ServiceManagerAwareInterface
 {
@@ -34,7 +35,8 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      *
      * @return Activity\Model\Activity Activity or null if the activity does not exist
      */
-    public function getActivity($id) {
+    public function getActivity($id)
+    {
         $this->allowedOrException('view', 'activity', 'activity');
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
@@ -46,11 +48,29 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      * Returns an array of all activities
      * @return array Array of activities
      */
-    public function getAllActivities(){
+    public function getAllActivities()
+    {
         $this->allowedOrException('view', 'activity', 'activity');
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
+        return $activity;
+    }
+
+    /**
+     * Create an activity from parameters
+     *
+     * @param array $params Parameters describing activity
+     * @return ActivityModel Activity that was created.
+     */
+    public function createActivity(array $params)
+    {
+        $this->allowedOrException('create', 'activity', 'activity');
+        $activity = new ActivityModel();
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $activity->create($params);
+        $em->persist($activity);
+        $em->flush();
         return $activity;
     }
 

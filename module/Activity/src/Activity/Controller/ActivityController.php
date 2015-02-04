@@ -43,14 +43,12 @@ class ActivityController extends AbstractActionController {
     public function createAction() {
         $form = new ActivityForm();
         if ($this->getRequest()->isPost()) {
-            $activity = new ActivityModel();
+            $activityService = $this->getServiceLocator()->get('activity_service_activity');
+
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
-                $em = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-                $activity->create($form->getData());
-                $em->persist($activity);
-                $em->flush();
+                $activity = $activityService->createActivity($form->getData());
 
                 $this->redirect()->toRoute('activity/view', array(
                     'id' => $activity->get('id')

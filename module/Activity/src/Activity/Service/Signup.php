@@ -34,7 +34,6 @@ class Signup extends AbstractAclService
     {
         $this->allowedOrException('view', 'activitySignup', 'signup');
 
-
         $signupMapper = $this->getServiceManager()->get('activity_mapper_signup');
         return $signupMapper->isSignedUp($activity->get('id'), $user->getLidnr());
 
