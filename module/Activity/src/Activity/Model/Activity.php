@@ -97,10 +97,11 @@ class Activity
 
 	/**
      * Is this activity an option
+	 * DON'T CALL IT OPTION - ITS RESERVED IN SQL
      *
      * @ORM\Column(type="boolean")
      */
-    protected $option;
+    protected $optie;
 
 	/**
      * Activity discription
@@ -129,7 +130,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception("There is already a loaded activity");
         }
-        foreach(['name', 'beginTime', 'endTime', 'costs', 'location'] as $param) {
+        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'discription'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }
@@ -144,7 +145,7 @@ class Activity
         $this->onlyGEWIS = true;
         $this->creator = 1;
         $this->approved = 0;
-		$this->option = 0;
+		$this->optie = 0;
         return $this;
     }
 

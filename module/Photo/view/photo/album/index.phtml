@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><?= $album->getName(); ?></h1>
+    </div>
+</div>
+<?php if ($lastpage > 0): ?>
+    <div class="row">
+        <nav>        
+            <ul class="pagination">
+                <li class="previous"><a href="/photo<?= is_null($album->getParent()) ? "" : "/album/" . $album->getParent()->getId() ?>">
+                        <span aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
+                <?php if ($activepage !== 0): ?>
+                    <li>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage - 1; ?>">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only"><?= $this->translate('Previous') ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php foreach ($pages as $page): ?>
+                    <li <?= ($page === $activepage) ? 'class="active"' : '' ?>>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $page; ?>"><?= $page + 1; ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                <?php if ($activepage !== $lastpage): ?>
+                    <li>
+                        <a href="/photo/album/<?= $album->getId(); ?>/<?= $activepage + 1; ?>">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only"><?= $this->translate('Next') ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </div>
+<?php endif; ?>
+<?php if (!empty($albums)): ?>
+    <?php foreach ($albums as $album): ?>
+
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="/photo/album/<?= $album->getId(); ?>">
+                <img class="img-responsive" src="<?= is_null($album->getCover()) ? "http://placehold.it/825x550" : $basedir . '/' . $album->getCover()->getPath() ?>" alt="">
+                <div class="caption">
+                    <?= $album->getName(); ?>
+                </div>
+            </a>
+
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+<div class="row">
+    <?php if (!empty($photos)): ?>
+        <?php for ($i = 0; $i < count($photos); $i++): ?>
+            <?= ($i % 4 === 0) ? "</div><div class=\"row\">" : ""; ?>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/photo/view/<?= $photos[$i]->getId(); ?>">
+                    <img class="img-responsive" src="<?= $basedir . '/' . $photos[$i]->getPath() ?>" alt="">
+                </a>
+            </div>
+        <?php endfor; ?>
+    <?php endif; ?>
+</div>
+
+
+
+
+
+
+

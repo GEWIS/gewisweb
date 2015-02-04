@@ -1,35 +1,105 @@
 <?php
+
 return array(
     'router' => array(
         'routes' => array(
             'photo' => array(
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/photo',
+                    'route' => '/photo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Photo\Controller',
-                        'controller'    => 'Photo',
-                        'action'        => 'index',
+                        'controller' => 'Photo',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
+                    'album' => array(
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route' => '/album[/:album_id][/:page]',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Album',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'photo' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/view[/:photo_id]',
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'view',
                             ),
                         ),
                     ),
                 ),
-            ),
+            ), 'admin_photo' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin/photo',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Photo\Controller',
+                        'controller' => 'Admin',
+                        'action' => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/index',
+                        ),
+                    ),
+                    'album' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album/:id',
+                            'defaults' => array(
+                                'action' => 'viewAlbum'
+                            ),
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'albumaction' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/album',
+                            'defaults' => array(
+                                'action' => 'album'
+                            ),
+                        ),
+                    ),
+                    'albumaction' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/album/create',
+                            'defaults' => array(
+                                'action' => 'createAlbum'
+                            ),
+                        ),
+                    ),
+                ),
+            )
         ),
     ),
     'controllers' => array(
         'invokables' => array(
-            'Photo\Controller\Photo' => 'Photo\Controller\PhotoController'
+            'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
+            'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
+            'Photo\Controller\Admin' => 'Photo\Controller\AdminController'
         )
     ),
     'view_manager' => array(

@@ -69,7 +69,25 @@ class Activity extends Form
                 'label' =>  'Costs:'
             ]
         ]);
-
+		$this->add([
+			'name' => 'optie',			
+			'type' => 'Zend\Form\Element\Checkbox',
+			'options' => array(
+				'label' => 'option',
+				'use_hidden_element' => true,
+				'checked_value' => 1,
+				'unchecked_value' => 0
+			)
+		]);
+		$this->add([
+			'name' => 'discription',
+            'attributes' => [
+                'type' => 'textarea'
+            ],
+            'options' => [
+                'label' =>  'discription:'
+            ]
+		]);
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
@@ -162,6 +180,26 @@ class Activity extends Form
                 ],
             ],
         ]));
+		
+		$inputFilter->add($factory->createInput([
+            'name' => 'discription',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+                [
+                    'name'    => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min'      => 1,
+                        'max'      => 100000,
+                    ],
+                ],
+            ],
+        ]));
+
 
         $this->inputFilter = $inputFilter;
         return $this->inputFilter;
