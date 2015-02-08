@@ -63,8 +63,7 @@ class CompanyReview //implements RoleInterface, ResourceInterface
     /**
      * The approver of the review.
      *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
+     * @ORM\OneToMany(targetEntity="Decision\Model\Member", mappedBy="lidnr")
      */
     protected $approver;
 
