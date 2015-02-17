@@ -52,6 +52,14 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
         $activity = $activityMapper->getAllActivities();
         return $activity;
     }
+	
+	public function aclTest()
+    {
+		if($this->isAllowed('add')){
+			return("vooruit dan maar");
+		}
+		return ("meeeeh<br>");
+    }
 
     /**
      * Create an activity from parameters

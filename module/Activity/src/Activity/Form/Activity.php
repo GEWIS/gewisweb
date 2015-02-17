@@ -19,10 +19,8 @@ class Activity extends Form
         $this->add([
             'name' => 'name',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Name:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
 
@@ -32,9 +30,7 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-            ],
-            'options' => [
-                'label' =>  'Begin date and time of the activity: (yyyy-mm-dd hh:mm)'
+				'style' => 'width:100%'
             ]
         ]);
 
@@ -44,36 +40,38 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-            ],
-            'options' => [
-                'label' =>  'End date and time of the activity: (yyyy-mm-dd hh:mm)'
+				'style' => 'width:100%'
             ]
         ]);
 
         $this->add([
             'name' => 'location',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Location:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
 
         $this->add([
             'name' => 'costs',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Costs:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
 		$this->add([
 			'name' => 'optie',			
 			'type' => 'Zend\Form\Element\Checkbox',
 			'options' => array(
-				'label' => 'option',
+				'use_hidden_element' => true,
+				'checked_value' => 1,
+				'unchecked_value' => 0
+			)
+		]);
+		$this->add([
+			'name' => 'approved',			
+			'type' => 'Zend\Form\Element\Checkbox',
+			'options' => array(
 				'use_hidden_element' => true,
 				'checked_value' => 1,
 				'unchecked_value' => 0
@@ -82,10 +80,8 @@ class Activity extends Form
 		$this->add([
 			'name' => 'discription',
             'attributes' => [
-                'type' => 'textarea'
-            ],
-            'options' => [
-                'label' =>  'discription:'
+                'type' => 'textarea',
+				'style' => 'width:100%; height:10em; resize:none'
             ]
 		]);
         $this->add(array(
@@ -199,7 +195,19 @@ class Activity extends Form
                 ],
             ],
         ]));
-
+		$inputFilter->add($factory->createInput([
+            'name' => 'optie',
+            'required' => true,
+            'validators' => [
+                [
+                    'name'    => 'inArray',
+                    'options' => [
+                        'haystack' => array(2,3),
+						'strict'   => 'COMPARE_STRICT'
+                    ],
+                ],
+            ],
+        ]));
 
         $this->inputFilter = $inputFilter;
         return $this->inputFilter;

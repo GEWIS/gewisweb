@@ -15,7 +15,9 @@ class ActivityController extends AbstractActionController {
     public function indexAction() {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activities = $activityService->getAllActivities();
-        return ['activities' => $activities];
+		$roles = $activityService->aclTest();
+        return ['activities' => $activities,
+				'roles' => $roles];
     }
 
     /**

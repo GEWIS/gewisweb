@@ -34,28 +34,47 @@ abstract class AbstractAclService extends AbstractService
         return $this->getServiceManager()->get('user_role');
     }
 
-    /**
-     * Check if a operation is allowed for the current role.
+
+	
+	/**
+     * Check if a operation is allowed for an user.
      *
+	 * If no user is given, this will assume the only role is guest
      * If no resource is given, this will use the resource given by
      * {@link getDefaultResourceId()}.
      *
      * @param string $operation Operation to be checked.
      * @param string|ResourceInterface $resource Resource to be checked
-     *
+	 * @param User $user user to check operation for if null then current user is used     
+	 *
      * @return boolean
      */
-    public function isAllowed($operation, $resource = null)
+    public function isAllowed($operation, $resource=null, $user=null)
     {
+		
         if (null === $resource) {
             $resource = $this->getDefaultResourceId();
         }
-
-        return $this->getAcl()->isAllowed(
-            $this->getRole(),
-            $resource,
-            $operation
-        );
+		if (null === $user){
+			$user = $this -> getRole();
+		}
+		
+		
+		$roles = array();
+		if ($user instanceof User ){
+			$roles = $user->getRoleNames();
+		}else{
+			$roles[] = "guest";
+		}
+		
+		var_dump($roles);
+		
+		foreach($roles as $role){
+			if($this->getAcl()->isAllowed($role, $resource, $operation)){
+				return true;
+			}
+		}
+		return false;
     }
 
     /**
@@ -68,13 +87,13 @@ abstract class AbstractAclService extends AbstractService
      *
      * @throws \User\Permission\NotAllowedException if ths user is not allowed to get the resource
      */
-    public function allowedOrException($operation, $resource = null, $what = null)
+    public function allowedOrException($user = null, $operation, $resource = null, $what = null)
     {
         if (is_null($what)) {
             $what = 'this';
 ;       }
 
-        if (!$this->isAllowed($operation, $resource)) {
+        if (!$this->isAllowed($user, $resource, $operation)) {
             throw new \User\Permissions\NotAllowedException(
                 'Not allowed to view ' . $what
             );
