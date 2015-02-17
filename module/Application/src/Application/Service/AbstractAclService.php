@@ -87,7 +87,7 @@ abstract class AbstractAclService extends AbstractService
      *
      * @throws \User\Permission\NotAllowedException if ths user is not allowed to get the resource
      */
-    public function allowedOrException($user = null, $operation, $resource = null, $what = null)
+    public function allowedOrException($operation, $resource = null, $what = null, $user = null)
     {
         if (is_null($what)) {
             $what = 'this';
