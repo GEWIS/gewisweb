@@ -7,6 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
+use Imagick;
 
 /**
  * Photo service.
@@ -70,11 +71,16 @@ class Photo extends AbstractService
         //check if photo exists already in the database
         $photo = $this->getPhotoMapper()->getPhotoByData($storage_path, $target_album);
         //if the returned object is null, then the photo doesn't exist
-        if (is_null($photo)) {
+        if (is_null($photo)) {            
             $photo = new PhotoModel();
             $photo->setAlbum($target_album);
             $photo = $this->getMetadataService()->populateMetaData($photo, $path);
             $photo->setPath($storage_path);
+            //Create and set the storage paths for thumbnails.
+            //Currently, the maximum sizes of the old website are used. These
+            //values are dependant on the design.
+            $photo->setLargeThumbPath($this->createThumbnail($path, 827, 550));
+            $photo->setSmallThumbPath($this->createThumbnail($path, 180, 120));
 
             $mapper = $this->getPhotoMapper();
             /**
@@ -89,13 +95,36 @@ class Photo extends AbstractService
         }
         return $photo;
     }
+    
+    /**
+     * Creates and stores a thumbnail of specified maximum size from a stored 
+     * image 
+     * 
+     * @param string $path the path of the original image
+     * @param int $width the maximum width of the thumbnail (in px)
+     * @param int $height the maximum height of the thumbnail (in px)
+     * @return string the path of the created thumbnail
+     */
+    protected function createThumbnail($path, $width, $height){
+        
+        $image = new Imagick($path);
+        $image->thumbnailImage($width, $height, true);
+        //Tempfile is used to generate sha1, not sure this is the best method
+        $tempFileName = sys_get_temp_dir() . '/' . 'ThumbImage';
+        $image->writeImage($tempFileName);
+        $newPath = $this->generateStoragePath($path);
+        rename($tempFileName, $newPath);
+        return $newPath;
+    }
+    
+    
     /**
      * Stores an directory in $target_album.
      * If any subdirectory is present, it will be stored in a new album, 
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
-     * @param type $path The path of the directory.
-     * @param type $target_album The album to store the photos.
+     * @param string $path The path of the directory.
+     * @param Photo\Model\Album $target_album The album to store the photos.
      */
     public function storeUploadedDirectory($path, $target_album)
     {
