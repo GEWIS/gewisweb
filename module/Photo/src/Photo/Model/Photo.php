@@ -101,6 +101,22 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $path;
+    
+    /**
+     * The path where the small thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $smallThumbPath;
+
+    /**
+     * The path where the large thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $largeThumbPath;
 
     /**
      * Get the ID.
@@ -221,6 +237,26 @@ class Photo implements ResourceInterface
     {
         return $this->path;
     }
+    
+    /**
+     * Get the path where the large thumbnail is stored.
+     * 
+     * @return string
+     */
+    public function getLargeThumbPath()
+    {
+        return $this->largeThumbPath;
+    }
+    
+    /**
+     * Get the path where the large thumbnail is stored.
+     * 
+     * @return string
+     */
+    public function getSmallThumbPath()
+    {
+        return $this->smallThumbPath;
+    }
 
     /**
      * Set the dateTime.
@@ -325,11 +361,31 @@ class Photo implements ResourceInterface
     /**
      * Set the path where the photo is stored
      *
-     * @param Album $path
+     * @param string $path
      */
     public function setPath($path)
     {
         $this->path = $path;
+    }
+
+    /**
+     * Set the path where the large thumbnail is stored
+     *
+     * @param string $path
+     */
+    public function setLargeThumbPath($path)
+    {
+        $this->largeThumbPath = $path;
+    }
+    
+    /**
+     * Set the path where the small thumbnail is stored
+     *
+     * @param string $path
+     */
+    public function setSmallThumbPath($path)
+    {
+        $this->smallThumbPath = $path;
     }
 
     /**
