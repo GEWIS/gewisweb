@@ -133,11 +133,41 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getRoleNames()
     {
-        $roles = array();
+        $roles = getFunctionalRoleNames();
+		$organs = getOrganRoleNames();
+		$roles = array_merge($roles, $organs);
+        return $roles;
+    }
+	
+	/**
+     * Get the user's functional role names.
+     *
+     * @return array Role names
+     */
+    public function getFunctionalRoleNames()
+    {
+        $roles = array('user');
 
         foreach ($this->getRoles() as $role) {
             $roles[] = $role->getRole();
         }
+
+        return $roles;
+    }
+	
+	/**
+     * Get the user's organ role names.
+     *
+     * @return array Role names
+     */
+    public function getOrganRoleNames()
+    {
+		$roles=array();
+		if(!isNull($this->getMember()){
+			foreach ($this->getMember()->getOrgans() as $organ) {
+				$roles[] = $organ->getAbbr();
+			}
+		}
 
         return $roles;
     }

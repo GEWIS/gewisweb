@@ -53,13 +53,20 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
         return $activity;
     }
 	
-	public function aclTest()
-    {
-		if($this->isAllowed('add')){
-			return("vooruit dan maar");
+	/**
+     * Returns an array of all organs the user may add events for
+     * @return array Array of activities
+     */
+	public function getOrgans(){
+		$sm = $this->getServiceManager();
+		$user = $sm->get("user_role");
+		if($user instanceOf \User\Model\User){
+			var_dump($user->getOrganRoleNames());
+			return $user->getOrganRoleNames();
+		}else{
+			return array();
 		}
-		return ("meeeeh<br>");
-    }
+	}
 
     /**
      * Create an activity from parameters

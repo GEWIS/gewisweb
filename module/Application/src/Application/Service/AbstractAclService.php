@@ -91,7 +91,7 @@ abstract class AbstractAclService extends AbstractService
     {
         if (is_null($what)) {
             $what = 'this';
-;       }
+        }
 
         if (!$this->isAllowed($user, $resource, $operation)) {
             throw new \User\Permissions\NotAllowedException(

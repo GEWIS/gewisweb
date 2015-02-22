@@ -14,6 +14,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * secretary of the board. Hence, this data should not be modified.
  *
  * @ORM\Entity
+ * @ORM\Table(name="Organ",uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"abbr"})})
  */
 class Organ implements ResourceInterface
 {
@@ -56,6 +57,7 @@ class Organ implements ResourceInterface
      *
      * @ORM\ManyToMany(targetEntity="Decision\Model\Member", inversedBy="organs")
      * @ORM\JoinTable(name="MemberOrgan",
+	 *		joinColumns={@ORM\JoinColumn(name="organ_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")})
      */
     protected $members;
@@ -99,6 +101,16 @@ class Organ implements ResourceInterface
     public function getType()
     {
         return $this->type;
+    }
+	
+	/**
+     * Get members.
+     *
+     * @return Array
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 
     /**
