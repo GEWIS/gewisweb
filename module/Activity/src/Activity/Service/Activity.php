@@ -61,7 +61,6 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
 		$sm = $this->getServiceManager();
 		$user = $sm->get("user_role");
 		if($user instanceOf \User\Model\User){
-			var_dump($user->getOrganRoleNames());
 			return $user->getOrganRoleNames();
 		}else{
 			return array();

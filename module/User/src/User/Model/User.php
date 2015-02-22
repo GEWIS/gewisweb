@@ -163,7 +163,7 @@ class User implements RoleInterface, ResourceInterface
     public function getOrganRoleNames()
     {
 		$roles=array();
-		if(!isNull($this->getMember()){
+		if(!is_null($this->getMember())){
 			foreach ($this->getMember()->getOrgans() as $organ) {
 				$roles[] = $organ->getAbbr();
 			}
