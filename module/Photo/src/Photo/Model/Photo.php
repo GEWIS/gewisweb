@@ -101,6 +101,22 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $path;
+    
+    /**
+     * The path where the small thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $smallThumbPath;
+
+    /**
+     * The path where the large thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $largeThumbPath;
 
     /**
      * Get the ID.
