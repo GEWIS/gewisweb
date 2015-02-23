@@ -1,10 +1,10 @@
 <?php
 namespace User;
 
-use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Mvc\MvcEvent;
 use User\Permissions\NotAllowedException;
+use Application\Service\AclWrapper;
 
 class Module
 {
@@ -141,7 +141,7 @@ class Module
                 },
                 'acl' => function ($sm) {
                     // initialize the ACL
-                    $acl = new Acl();
+                    $acl = new AclWrapper();
 
                     // define basic roles
                     $acl->addRole(new Role('guest')); // simple guest
