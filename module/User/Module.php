@@ -154,16 +154,24 @@ class Module
 
                     // add user to registry
                     if ('guest' != $user) {
-					
+						$roles = array();
+						
                         // add organs to registry
-						$roles = $user->getOrganRoleNames();
-						foreach($roles as $organ){
-							$acl->addRole(new Role($organ), "activeMember");
-							$acl->allow($organ, "organ", "member");
+						$organs = $user->getOrganRoleNames();
+						if(count($organs)>0){
+							$roles[] = 'activeMember';
+							$acl->allow("activeMember","organ","active");
+						}
+						foreach($organs as $organ){
+							$acl->addResource($organ, "organ");
+							$acl->allow("activeMember", $organ, "member");
 						}
 						
 						//add functional roles to registery
-						$roles = $user->getFunctionalRoleNames();
+						$functionalRoles = $user->getFunctionalRoleNames();
+						foreach($functionalRoles as $role){
+							$roles[] = $role;
+						}
 						$acl->addRole($user, $roles);
 						
                     }
