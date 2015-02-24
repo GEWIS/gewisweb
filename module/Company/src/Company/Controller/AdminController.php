@@ -112,10 +112,11 @@ class AdminController extends AbstractActionController
             $companyForm->bind($company);
             $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'save','asciiCompanyName'=>$companyName)));
         }
+        $return = $companyService->getJobsWithCompanyAsciiName($companyName);
         $vm = new ViewModel(array(
             'company' => $company,
             //'asciiJobName' => $jobName,
-            'joblist' => $companyService->getJobsWithCompanyAsciiName($companyName),
+            'joblist' => $return, 
             'companyEditForm' => $companyForm,
         ));
         

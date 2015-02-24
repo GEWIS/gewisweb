@@ -46,7 +46,7 @@ class Company extends AbstractACLService
     }
         
     public function insertJobForCompanyAsciiName($asciiCompanyName){
-        $company = $this->getCompaniesWithAsciiName($asciiCompanyName)[0];
+        $company = $this->getEditableCompaniesWithAsciiName($asciiCompanyName)[0];
 
         $result = $this->getJobMapper()->insertIntoCompany($company);
 
@@ -55,7 +55,9 @@ class Company extends AbstractACLService
     }
     public function getJobsWithCompanyAsciiName($companyAsciiName)
     {
-        return $this->getJobMapper()->findJobsWithCompanyAsciiName($companyAsciiName);
+        $return =  $this->getJobMapper()->findJobsWithCompanyAsciiName($companyAsciiName);
+
+        return $return;
     }
     public function getCompaniesWithAsciiName($asciiName)
     {

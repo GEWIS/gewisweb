@@ -32,10 +32,8 @@ echo ("</a></h2>") ?>
         <ul class="company-jobs-list">
         <?php foreach($company->getJobs() as $job) { ?>
         <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
-            [
-                    'asciiCompanyName' => $company->getAsciiName(),
-            'asciiJobName' => explode("_",$job->getAsciiName())[1]
-            ], [],true) ?>
+            ['asciiCompanyName' => $company->getAsciiName(),
+            'asciiJobName' => $job->getAsciiName()),array(),true] ?>
                             "><?= $job->getName(); ?></a></li>
         <?php } ?>
         </ul>
