@@ -158,20 +158,16 @@ class Module
 						
                         // add organs to registry
 						$organs = $user->getOrganRoleNames();
-						if(count($organs)>0){
-							$roles[] = 'activeMember';
-							$acl->allow("activeMember","organ","active");
-						}
+
+						$acl->allow("activeMember","organ","active");
 						foreach($organs as $organ){
+							$acl->addRole($organ,"activeMember");
 							$acl->addResource($organ, "organ");
-							$acl->allow("activeMember", $organ, "member");
+							$acl->allow($organ, $organ, "member");
 						}
 						
 						//add functional roles to registery
-						$functionalRoles = $user->getFunctionalRoleNames();
-						foreach($functionalRoles as $role){
-							$roles[] = $role;
-						}
+						$roles = array_merge($roles, $user->getFunctionalRoleNames());
 						$acl->addRole($user, $roles);
 						
                     }
