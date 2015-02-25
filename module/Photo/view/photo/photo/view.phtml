@@ -1,3 +1,4 @@
+<?php $this->headScript()->appendFile('/js/photo-paging.js'); ?>
 <?php if ($photo != null): ?>
     <div clas="row">
         <nav>
@@ -28,12 +29,12 @@
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
-                        <li><a href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a></li>
+                        <li><a id="previous" href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a></li>
                     <?php
                     endif;
                     if (!is_null($next)):
                         ?>
-                        <li><a href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a></li>
+                        <li><a id="next" href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a></li>
                    <?php endif; ?>
                 </ul>
             </nav>
