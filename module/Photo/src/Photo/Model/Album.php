@@ -255,7 +255,7 @@ class Album implements ResourceInterface
             if (   is_null($this->parent->getEndDateTime()) 
                 || $this->parent->getEndDateTime()->getTimestamp() < $this->getEndDateTime()->getTimeStamp()
             ) {
-                $this->parent->setEndDateTime($this->getDateTime());
+                $this->parent->setEndDateTime($this->getEndDateTime());
             }
         }
     }
