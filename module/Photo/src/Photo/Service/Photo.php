@@ -37,7 +37,7 @@ class Photo extends AbstractService
 
     /**
      * 
-     * @param string $path
+     * @param Imagick $image
      * @return the path at which the photo should be saved
      */
     protected function generateStoragePath($path)
@@ -113,11 +113,14 @@ class Photo extends AbstractService
         
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
+        $image->setimageformat("png");
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/' . 'ThumbImage';
-        $image->writeImage($tempFileName);
-        $newPath = $this->generateStoragePath($path);
-        rename($tempFileName, $newPath);
+        
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() .'.png';
+        $image->writeImage($tempFileName) or die("Can't write imagefile");
+        $newPath = $this->generateStoragePath($tempFileName);
+        $config = $this->getConfig();
+        rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
         return $newPath;
     }
     
@@ -144,7 +147,7 @@ class Photo extends AbstractService
                         $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
                         $this->storeUploadedDirectory($subPath, $subAlbum);
                     }
-                    elseif ($image->isValid ($subPath)){
+                    elseif (true){
                         $this->getPhotoService()->storeUploadedPhoto($subPath,$targetAlbum);
                     }
                 }
