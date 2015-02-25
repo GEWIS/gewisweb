@@ -48,30 +48,38 @@ class Album extends AbstractService
     /**
      * Get all the albums in the root directory
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of albums
      */
-    public function getAlbums($album = null, $start = 0, $max_results = null)
+    public function getAlbums($album = null, $start = 0, $maxResults = null)
     {
         if ($album == null) {
             return $this->getAlbumMapper()->getRootAlbums();
         } else {
-            return $this->getAlbumMapper()->getSubAlbums($album, $start, $max_results);
+            return $this->getAlbumMapper()->getSubAlbums($album, $start, $maxResults);
         }
     }
 
     /**
-     * Get all photos in an album
+     * Creates a new album.
      * 
-     * @param Photo\Model\Album $album the album to get the photos from
-     * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
-     * @return array of Photo\Model\Album
+     * @param String $name The name of the new album.
+     * @param Photo\Model\Album $parent The parent of this album, if any.
+     * @return The new album.
      */
-    public function getPhotos($album, $start = 0, $max_results = null)
+    public function createAlbum($name, $parent = null)
     {
-        $config = $this->getConfig();
-        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $max_results);
+
+        $album = new AlbumModel();
+        $album->setName($name);
+        if (!is_null($parent)) {
+            $album->setParent($parent);
+        }
+
+        $mapper = $this->getAlbumMapper();
+        $mapper->persist($album);
+        $mapper->flush();
+        return $album;
     }
 
     /**
@@ -99,6 +107,16 @@ class Album extends AbstractService
     {
         //TODO: permissions
         return $this->sm->get('photo_form_album_create');
+    }
+
+    /**
+     * Get the PhotoImport form.
+     *
+     * @return \Photo\Form\PhotoImport
+     */
+    public function getPhotoImportForm()
+    {
+        return $this->sm->get('photo_form_import_folder');
     }
 
     /**

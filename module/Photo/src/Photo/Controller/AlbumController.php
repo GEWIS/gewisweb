@@ -10,46 +10,46 @@ class AlbumController extends AbstractActionController
 
     public function indexAction()
     {
-        $album_id = $this->params()->fromRoute('album_id');
-        $activepage = (int) $this->params()->fromRoute('page');
-        $album_service = $this->getAlbumService();
-        $album = $album_service->getAlbum($album_id);
+        $albumId = $this->params()->fromRoute('album_id');
+        $activePage = (int) $this->params()->fromRoute('page');
+        $albumService = $this->getAlbumService();
+        $album = $albumService->getAlbum($albumId);
         if (is_null($album)) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
-        $config = $album_service->getConfig();
+        $config = $albumService->getConfig();
         $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
-        if ($activepage > $lastpage) {
+        if ($activePage > $lastpage) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
         $albums = array();
-        $album_start = $activepage * $config['max_photos_page'];
+        $albumStart = $activePage * $config['max_photos_page'];
         //check if we need to display albums on this page:
-        if ($album_start < $album->getAlbumCount()) {
-            $albums = $album_service->getAlbums($album, $album_start, $config['max_photos_page']);
+        if ($albumStart < $album->getAlbumCount()) {
+            $albums = $albumService->getAlbums($album, $albumStart, $config['max_photos_page']);
         }
         
         $photos = array();
-        $photo_count = $config['max_photos_page'] - count($albums);
+        $photoCount = $config['max_photos_page'] - count($albums);
         //check if we need to display photos on this page:
-        if ($photo_count > 0) {
-            $photo_start = max($activepage * $config['max_photos_page'] - $album->getAlbumCount(), 0);
-            $photos = $this->getAlbumService()->getPhotos($album, $photo_start, $photo_count);
+        if ($photoCount > 0) {
+            $photo_start = max($activePage * $config['max_photos_page'] - $album->getAlbumCount(), 0);
+            $photos = $this->getPhotoService()->getPhotos($album, $photo_start, $photoCount);
         }
 
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $config['upload_dir']);
 
-        $pages = $this->getAlbumPaging($activepage, $lastpage);
+        $pages = $this->getAlbumPaging($activePage, $lastpage);
         return new ViewModel(array(
             'album' => $album,
             'albums' => $albums,
             'photos' => $photos,
             'basedir' => $basedir,
-            'activepage' => $activepage,
+            'activepage' => $activePage,
             'pages' => $pages,
             'lastpage' => $lastpage
         ));
@@ -60,26 +60,26 @@ class AlbumController extends AbstractActionController
      * navigate to. The base idea is to show the two pages before and the 
      * two pages following the currently active page. With special
      * conditions for when the last and the first page are reached.
-     * @param type $lastpage the last page in the album
-     * @param type $activepage the page the user is currently on
+     * @param type $lastPage the last page in the album
+     * @param type $activePage the page the user is currently on
      * @return array the pages to show the user
      */
-    protected function getAlbumPaging($activepage, $lastpage)
+    protected function getAlbumPaging($activePage, $lastPage)
     {
         $pages = array();
-        $startpage = $activepage - 2;
-        $endpage = $activepage + 2;
-        if ($startpage < 0) {
-            $endpage-=$startpage;
-            $startpage = 0;
+        $startPage = $activePage - 2;
+        $endPage = $activePage + 2;
+        if ($startPage < 0) {
+            $endPage-=$startPage;
+            $startPage = 0;
         }
-        if ($endpage > $lastpage) {
-            if ($startpage > 0) {
-                $startpage -= min($endpage - $lastpage, $startpage);
+        if ($endPage > $lastPage) {
+            if ($startPage > 0) {
+                $startPage -= min($endPage - $lastPage, $startPage);
             }
-            $endpage = $lastpage;
+            $endPage = $lastPage;
         }
-        for ($i = $startpage; $i <= $endpage; $i++) {
+        for ($i = $startPage; $i <= $endPage; $i++) {
             $pages[] = $i;
         }
         return $pages;

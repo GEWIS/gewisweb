@@ -32,7 +32,7 @@ class Photo
     /**
      * Returns the next photo in the album to display
      * 
-     * @param \Photo\Model\Photo $photo 
+     * @param Photo\Model\Photo $photo 
      */
     public function getNextPhoto($photo)
     {
@@ -52,7 +52,7 @@ class Photo
     /**
      * Returns the previous photo in the album to display
      * 
-     * @param \Photo\Model\Photo $photo 
+     * @param Photo\Model\Photo $photo 
      */
     public function getPreviousPhoto($photo)
     {
@@ -72,12 +72,12 @@ class Photo
     /**
      * returns all the photos in an album.
      * 
-     * @param \Photo\Model\Album $album The album to retrieve the photos from
+     * @param Photo\Model\Album $album The album to retrieve the photos from
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of photo's
      */
-    public function getAlbumPhotos($album, $start = 0, $max_results = null)
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -86,13 +86,35 @@ class Photo
                 ->where('a.album = ?1');
         $qb->setParameter(1, $album);
         $qb->setFirstResult($start);
-        if (!is_null($max_results)) {
-            $qb->setMaxResults($max_results);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
         }
 
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Checks if the specified photo exists in the database already and returns
+     * it if it does.
+     * 
+     * @param string $path The storage path of the photo
+     * @param Photo\Model\Album $album the album the photo is in
+     * @return Photo\Model\Photo if the photo exists, null otherwise.
+     */
+    public function getPhotoByData($path, $album)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.path = ?1 AND a.album = ?2');
+        $qb->setParameter(1, $path);
+        $qb->setParameter(2, $album);
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];        
+    }
+    
+    
     /**
      * retrieves an album by id from the database
      * 
