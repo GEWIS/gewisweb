@@ -137,7 +137,7 @@ class Photo extends AbstractService
     public function storeUploadedDirectory($path, $targetAlbum)
     {
         $albumService = $this->getAlbumService();
-        $image = new \Zend\Validator\File\IsImage();
+        $image = new \Zend\Validator\File\IsImage(array('magicFile' => false));
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
@@ -147,7 +147,7 @@ class Photo extends AbstractService
                         $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
                         $this->storeUploadedDirectory($subPath, $subAlbum);
                     }
-                    elseif (true){
+                    elseif ($image->isValid ($subPath)){
                         $this->getPhotoService()->storeUploadedPhoto($subPath,$targetAlbum);
                     }
                 }
