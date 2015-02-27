@@ -22,11 +22,27 @@ class AdminController extends AbstractActionController
     public function addCompanyAction()
     {
         $companyService = $this->getCompanyService();
-        
         $companyForm=$companyService->getCompanyForm();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (!isset($companyName)){
+                $companyName=$request->getPost()['asciiName'];
+            }
+            $companyService = $this->getCompanyService();
+            $companyForm=$companyService->getCompanyForm();
+            $companyForm->setData($request->getPost());
+
+            // TODO: isValid does not work yet
+            if ($companyForm->isValid()) {
+                $company=$companyService->insertCompany();
+                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$companyName),array(),true);   
+            }
+        }
         //$company=$companyService->insertCompany();
         //$companyForm->bind($company);
-        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'saveCompany')));
+        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'addCompany')));
         $vm = new ViewModel(array(
           //  'company' => $company,
             'companyEditForm' => $companyForm,
@@ -41,12 +57,30 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('asciiCompanyName');    
         
         $companyForm=$companyService->getJobForm();
-        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'saveJob', 'asciiCompanyName'=>$companyName)));
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (!isset($jobName)){
+                $jobName=$request->getPost()['asciiName'];
+            }
+            $companyService = $this->getCompanyService();
+            $companyForm=$companyService->getJobForm();
+            $companyForm->setData($request->getPost());
+
+            // TODO: isValid does not work yet
+            if ($companyForm->isValid()) {
+                $job=$companyService->insertJobForCompanyAsciiName($asciiCompanyName);
+                $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$asciiCompanyName, 'asciiJobName'=>$jobName),array(),true);   
+            }
+        }
+
+        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'addJob', 'asciiCompanyName'=>$companyName)));
         $vm = new ViewModel(array(
           //  'company' => $company,
             'companyEditForm' => $companyForm,
         ));
-        
         return $vm;
         
     }
@@ -67,6 +101,9 @@ class AdminController extends AbstractActionController
                 $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
+            }
+            else{
+                return $this->forward()->dispatch('Company\Controller\AdminController', array('action'=> 'addCompany','form'=>$companyForm));
             }
         }
 
@@ -95,12 +132,58 @@ class AdminController extends AbstractActionController
 
         return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$asciiCompanyName, 'asciiJobName'=>$jobName),array(),true);   
     }
-    public function editAction()
+    public function editJobAction()
     {
         $companyService = $this->getCompanyService();
         
         $companyName = $this->params('asciiCompanyName');    
-        $jobName = $this->params('asciiJobName');    
+        $asciiCompanyName = $this->params('asciiCompanyName');    
+        $jobName = $this->params('jobName');    
+        $companyForm=$companyService->getJobForm();
+        $company_list = $companyService->getEditableJobsWithAsciiName($jobName, $companyName);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (!isset($jobName)){
+                $jobName=$request->getPost()['asciiName'];
+            }
+            $companyService = $this->getCompanyService();
+            $companyForm=$companyService->getJobForm();
+            $companyForm->setData($request->getPost());
+
+            if ($companyForm->isValid()) {
+                $job=$companyService->insertJobForCompanyAsciiName($asciiCompanyName);
+                $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+            }
+            else{
+                echo "NOT VALID";
+            }
+            return $this->redirect()->toRoute('admin_company/editCompany/editJob', array('asciiCompanyName'=>$asciiCompanyName, 'asciiJobName'=>$jobName),array(),true);   
+        }
+        //echo($this->url()->fromRoute('admin_company/default',array('action'=>'save', 'asciiCompanyName'=>$companyName)));
+        if (empty($company_list)){
+            $company=null;
+        echo "No job found";
+        }
+        else {
+            $company=$company_list[0];
+            $companyForm->bind($company);
+            $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/editCompany/editJob',array('jobName' => $jobName, 'asciiCompanyName'=>$companyName)));
+        }
+        $return = $companyService->getJobsWithCompanyAsciiName($companyName);
+        $vm = new ViewModel(array(
+            'joblist' => $return, 
+            'companyEditForm' => $companyForm,
+        ));
+        
+        return $vm;
+
+    }
+    public function editCompanyAction()
+    {
+        $companyService = $this->getCompanyService();
+        
+        $companyName = $this->params('asciiCompanyName');    
         $companyForm=$companyService->getCompanyForm();
         $company_list = $companyService->getEditableCompaniesWithAsciiName($companyName);
         //echo($this->url()->fromRoute('admin_company/default',array('action'=>'save', 'asciiCompanyName'=>$companyName)));

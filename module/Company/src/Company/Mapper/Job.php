@@ -51,22 +51,20 @@ class Job
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->from("Company\Model\Company", "c")->where("j.company = c AND c.asciiName = :jobID");
-        $qb->setParameter('jobID', $companyAsciiName);
+        $qb->select('j','c')->join("j.company", "c")->where("c.asciiName=:jobId");
+        $qb->setParameter('jobId', $companyAsciiName);
 
-        $return =  $qb->getQuery()->getResult();
-        return $return;
+        return $qb->getQuery()->getResult();
     }
     public function insertIntoCompany($company){
         $job=new JobModel($this->em);
 
         $job->setCompany($company);
-        $company->getJobs()->add($job);
         $this->em->persist($job);
-        //$this->em->persist($job->getCompany());
+        $this->em->persist($job->getCompany());
         
-        //$this->em->merge($company);
-        //$this->em->merge($job);
+        $this->em->merge($company);
+        $this->em->merge($job);
 
         return $job;
     }
@@ -74,9 +72,8 @@ class Job
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->from("Company\Model\Company", "c")->where("j.asciiName=:jobId AND c.asciiName=:companyId");
-        $qb->setParameter('jobId', $jobAsciiName);
-        $qb->setParameter('companyId', $companyAsciiName);
+        $qb->select('j')->join("j.company", "c") ->where("j.asciiName=:jobId");
+        $qb->setParameter('jobId', $companyAsciiName+'_'+$jobAsciiName);
 
         return $qb->getQuery()->getResult();
     }

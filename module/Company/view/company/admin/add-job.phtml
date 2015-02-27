@@ -14,12 +14,22 @@ $form=$companyEditForm;
         <?= $this->formElementErrors($element); ?>
     </dd>
 
-<?php $element = $form->get('address') ?>
+<?php $element = $form->get('asciiName') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
+
+<!-- Not yet in Form
+<?php// $element = $form->get('address') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>-->
+
+
 <?php $element = $form->get('website') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
@@ -32,7 +42,7 @@ $form=$companyEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-<?php $element = $form->get('logo') ?>
+<?php $element = $form->get('active') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>
@@ -50,25 +60,7 @@ $form=$companyEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-<?php $element = $form->get('slogan') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
 </dl>
 
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
-
-<table class=joblist>
-
-<?php if(!empty($joblist)){ foreach($joblist as $job){ ?>
-<tr><td><?= $job->getName(); ?></td> 
-    <td><a href="#id">delete</a></td>
-</tr>
-<?php } } else{ print("Empty");}?>
-</table>
-<br/>
-<a href=<?= $this->url("admin_company/default", array("action"=>"addJob","asciiCompanyName"=>$company->getAsciiName()));?>>Add job</a>

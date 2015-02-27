@@ -68,6 +68,10 @@ class Company extends AbstractACLService
     {
         return $this->getCompanyMapper()->findEditableCompaniesWithAsciiName($asciiName, true);
     }
+    public function getEditableJobsWithAsciiName($asciiName, $jobAsciiName)
+    {
+        return $this->getJobMapper()->findJobWithAsciiName($asciiName, $jobAsciiName);
+    }
     public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName)
     {
         return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);

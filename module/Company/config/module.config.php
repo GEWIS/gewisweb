@@ -86,7 +86,52 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'editCompany' => array(
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/edit/[:asciiCompanyName]',
+                            'defaults' => array(
+                                'action' => 'editCompany'
+                            ),
+                            'constraints' => array(
+                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                            ),
+                             
+                        ),
+                        'may_terminate' => true,
+                        
+                        'child_routes' => array(
+                            'editPacket' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/packet/:packet',
+                                    'defaults' => array(
+                                        'action' => 'editPacket'
+                                    ),
+                                    'constraints' => array(
+                                        'packet'     => '[a-zA-Z0-9_-]*',
+                                    ),
+                                    'may_terminate' => true,
+                                ),
+                            ),
+                            'editJob' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/job/:jobName',
+                                    'defaults' => array(
+                                        'action' => 'editJob',
+                                    ),
+                                    'constraints' => array(
+                                        'jobName'     => '[a-zA-Z0-9_-]*',
+                                    ),
+                                    'may_terminate' => true,
+                                ),
+                            ),
+                        ),
+                    ),
                     'default' => array(
+                        'priority' => 2,
                         'type'    => 'Segment',
                         'options' => array(
                             'route'    => '[/:action[/:asciiCompanyName[/:asciiJobName]]]',
