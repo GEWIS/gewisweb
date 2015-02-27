@@ -242,19 +242,19 @@ class Job //implements RoleInterface, ResourceInterface
         return $this->company;
     }
 
-    /**
-     * Set the job's company.
-     *
-     * @param Company company
-     */
     public function setCompany($company)
     {
         $this->company = $company;
     }
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
         $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
-        $this->address=(isset($data['address'])) ? $data['address'] : $this->address;
+        //$this->address=(isset($data['address'])) ? $data['address'] : $this->address;
         $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
         $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
         //$this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
