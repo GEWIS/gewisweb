@@ -73,7 +73,7 @@ return [
                     ],
                 ],
                 'priority' => 100
-            ),
+            ],
             'admin_company' => [
                 'type' => 'Literal',
                 'options' => [
@@ -82,11 +82,56 @@ return [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller'    => 'Admin',
                         'action'        => 'index'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'editCompany' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/edit/[:asciiCompanyName]',
+                            'defaults' => [
+                                'action' => 'editCompany'
+                            ],
+                            'constraints' => [
+                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                            ],
+                             
+                        ],
+                        'may_terminate' => true,
+                        
+                        'child_routes' => [
+                            'editPacket' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/packet/:packet',
+                                    'defaults' => [
+                                        'action' => 'editPacket'
+                                    ],
+                                    'constraints' => [
+                                        'packet'     => '[a-zA-Z0-9_-]*',
+                                    ],
+                                    'may_terminate' => true,
+                                ],
+                            ],
+                            'editJob' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/job/:jobName',
+                                    'defaults' => [
+                                        'action' => 'editJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobName'     => '[a-zA-Z0-9_-]*',
+                                    ],
+                                    'may_terminate' => true,
+                                ],
+                            ],
+                        ],
+                    ],
                     'default' => [
+                        'priority' => 2,
                         'type'    => 'Segment',
                         'options' => [
                             'route'    => '[/:action[/:asciiCompanyName[/:asciiJobName]]]',
