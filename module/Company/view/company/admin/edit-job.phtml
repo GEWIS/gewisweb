@@ -13,8 +13,12 @@ $form=$companyEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-
-<!--TODO: ad addess-->
+<?php $element = $form->get('asciiName');?>
+    <dt><?= $element->getOption('label'); ?></dt>
+    <dd>
+        <?= $this->formElement($element); ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
 <?php $element = $form->get('website') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
