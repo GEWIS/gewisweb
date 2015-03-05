@@ -1,3 +1,17 @@
+<?php
+function recursiveTree($albums){
+  $out = '<li>';
+  foreach($albums as $v){
+    if(is_array($v)){
+      $out .= '<ul>'.recursiveTree($v).'</ul>';
+    }else{ 
+      $out .= $v;
+    }
+  }
+  return $out.'</li>';
+}
+?>
+
 <style>
     .tree, .tree ul {
         margin:0;
@@ -76,6 +90,9 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <ul class="tree">
+                    <?php foreach($albums as $album): ?>
+                    <?= recursiveTree($albums) ?>
+                    
                     <li><a href="#">2014-2015</a>
                         <ul>
                             <li>Test album #1</li>

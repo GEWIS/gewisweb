@@ -92,12 +92,12 @@ class Album extends AbstractService
         $albums = array();
         if ($album !== null) {
             $subAlbums = $this->getAlbumMapper()->getSubAlbums($album);
-            foreach ($subAlbums as $album) {
-                $albums[$album] = getAlbumTree($album);
+            foreach ($subAlbums as $subAlbum) {
+                $albums[$subAlbum->getId()] = array('albumName' => $subAlbum->getName(), 'subAlbums'=>$this->getAlbumTree($subAlbum));
             }
         } else {
             foreach ($this->getAlbums() as $album) {
-                $albums[$album] = getAlbumTree($album);
+                $albums[$album->getId()] = $this->getAlbumTree($album);
             }
         }
         return $albums;

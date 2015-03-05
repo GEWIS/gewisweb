@@ -10,11 +10,11 @@ class AlbumAdminController extends AbstractActionController
 
     public function indexAction()
     {
-       /* $service = $this->getAlbumService();
-        $albums = $service->getAlbumTree();
+        $albumService = $this->getAlbumService();
+        $albums = $albumService->getAlbumTree();
         return new ViewModel(array(
             'albums' => $albums
-        ));*/
+        ));
     }
 
     public function createAction()
