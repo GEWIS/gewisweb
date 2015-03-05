@@ -109,13 +109,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     protected $jobs;
     
     /**
-     * The company's jobs.
-     *
-     * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
-     */
-    protected $jobs;
-    
-    /**
      * The company's packets.
      *
      * @ORM\OneToMany(targetEntity="CompanyPacket", mappedBy="company")
