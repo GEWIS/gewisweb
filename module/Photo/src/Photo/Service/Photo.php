@@ -217,6 +217,7 @@ class Photo extends AbstractService
      * @param int $id the id of the photo to delete
      */
     public function deletePhoto($id){
+        
         $photo = $this->getPhoto($id);
         if (!is_null($photo)){
             unlink($photo->getPath());
@@ -224,6 +225,17 @@ class Photo extends AbstractService
             unlink($photo->getSmallThumbPath());
             $this->getPhotoMapper()->deletePhoto($photo->getId());
         }
+    }
+    /**
+     * Moves a photo to a new album.
+     * 
+     * @param int $id the id of the photo
+     * @param int $newAlbum the id of the new album
+     */
+    public function movePhoto($id, $newAlbum){
+        
+        $photo = $this->getPhoto($id);
+        $photo->setAlbum($newAlbum);
     }
 
     /**
