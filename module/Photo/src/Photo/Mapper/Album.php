@@ -28,6 +28,19 @@ class Album
     {
         $this->em = $em;
     }
+    
+     /**
+     * Deletes an album from the database
+     * 
+     * @param integer $id the id of the album 
+     */
+    public function deleteAlbum($id)
+    {
+        $album = $this->getAlbumById($id);
+        if (!is_null($album)){
+            $this->em->remove($album);
+        }
+    }
 
     /**
      * retrieves an album by id from the database

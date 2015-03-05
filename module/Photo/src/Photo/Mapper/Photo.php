@@ -118,7 +118,7 @@ class Photo
     public function deletePhoto($id)
     {
         $photo = $this->getPhotoById($id);
-        if (!is_empty($photo)){
+        if (!is_null($photo)){
             $this->em->remove($photo);
         }
     }

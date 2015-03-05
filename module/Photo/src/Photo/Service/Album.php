@@ -107,6 +107,20 @@ class Album extends AbstractService
     }
     
     /**
+     * removes an album and all subalbums recusively, including all photos.
+     * 
+     * @param int $id the id of the album to remove.
+     */
+    public function deleteAlbum($id)
+    {
+        deleteAlbumPhotos($id);
+        foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum){
+            deleteAlbum($subAlbum);
+        }
+        $this->getAlbumMapper()->deleteAlbum($id);
+    }
+    
+    /**
      * Deletes all photos inside the album
      * 
      * @param int $id the id of the album to delete all photos from
