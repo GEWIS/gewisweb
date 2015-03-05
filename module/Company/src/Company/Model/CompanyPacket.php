@@ -46,11 +46,11 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     protected $published;
     
     /**
-     * The packet's company.
+     * The packet's companies.
      *
-     * @ORM\ManyToOne(targetEntity="Company", inversedBy="packets")
+     * @ORM\OneToMany(targetEntity="Company", mappedBy="packet")
      */
-    protected $company;
+    protected $companies;
 
 
     /**
@@ -132,13 +132,13 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     }
     
     /**
-     * Get the packet's company.
-     *
+     * Get the packet's companies.
+     * TODO: One2One?: bespreken op vergadering
      * @return Company
      */
-    public function getCompany()
+    public function getCompanies()
     {
-        return $this->company;
+        return $this->companies;
     }
 
     /**
@@ -146,9 +146,9 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      *
      * @param Company company
      */
-    public function setCompany($company)
+    public function setCompanies($companies)
     {
-        $this->company = $company;
+        $this->companies = $companies;
     }
 
     public function publish()

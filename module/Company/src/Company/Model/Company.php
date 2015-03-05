@@ -18,12 +18,21 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     /**
      * The company id.
      *
-     * @ORM\Id
+     * 
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
-
+    
+    /**
+     * Version (language-unique) id of company representation.
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $version_id;
+        
     /**
      * The company's display name.
      *
@@ -109,11 +118,11 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     protected $jobs;
     
     /**
-     * The company's packets.
+     * The company's packet.
      *
-     * @ORM\OneToMany(targetEntity="CompanyPacket", mappedBy="company")
+     * @ORM\ManyToOne(targetEntity="CompanyPacket", inversedBy="companies")
      */
-    protected $packets;
+    protected $packet;
     
     /**
      * Constructor
@@ -323,23 +332,23 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     }
     
     /**
-     * Get the company's packets.
+     * Get the company's packet.
      *
-     * @return Job[]
+     * @return CompanyPacket
      */
-    public function getPackets()
+    public function getPacket()
     {
-        return $this->packets;
+        return $this->packet;
     }
 
     /**
-     * Set the company's packets.
+     * Set the company's packet.
      *
-     * @param CompanyPacket[] $packets
+     * @param CompanyPacket $packet
      */
-    public function setPackets($packets)
+    public function setPacket($packet)
     {
-        $this->packets = $packets;
+        $this->packet = $packet;
     }
     
     /**
@@ -398,6 +407,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
         $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
         $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
         $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
-        $this->packets=(isset($data['packets'])) ? $data['packets'] : $this->getPackets();
+        $this->packet=(isset($data['packet'])) ? $data['packet'] : $this->getPacket();
     }
 }
