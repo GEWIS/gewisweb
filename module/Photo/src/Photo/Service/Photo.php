@@ -190,7 +190,7 @@ class Photo extends AbstractService
 
     /**
      * 
-     * @param type $id the id of the photo to retrieve
+     * @param int $id the id of the photo to retrieve
      * @return array of data about the photo, which is usefull inside a view
      */
     public function getPhotoData($id)
@@ -209,6 +209,21 @@ class Photo extends AbstractService
             'next' => $next,
             'previous' => $previous
         );
+    }
+    /**
+     * Removes a photo from the database and deletes its files, including thumbs
+     * from the server.
+     * 
+     * @param int $id the id of the photo to delete
+     */
+    public function deletePhoto($id){
+        $photo = $this->getPhoto($id);
+        if (!is_null($photo)){
+            unlink($photo->getPath());
+            unlink($photo->getLargeThumbPath());
+            unlink($photo->getSmallThumbPath());
+            $this->getPhotoMapper()->deletePhoto($photo->getId());
+        }
     }
 
     /**
