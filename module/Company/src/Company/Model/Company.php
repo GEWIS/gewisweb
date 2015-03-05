@@ -18,8 +18,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     /**
      * The company id.
      *
-     * 
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
