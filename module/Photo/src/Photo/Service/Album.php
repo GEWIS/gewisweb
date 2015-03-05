@@ -107,6 +107,18 @@ class Album extends AbstractService
     }
     
     /**
+     * Deletes all photos inside the album
+     * 
+     * @param int $id the id of the album to delete all photos from
+     */
+    public function deleteAlbumPhotos($id)
+    {
+        $album = $this->getAlbum($id);
+        foreach ($this->getAlbumMapper()->getAlbumPhotos($album) as $photo){
+            $this->getPhotoService()->deletePhoto($photo);
+        }
+    }
+    /**
      * Get a recusive list of all (sub)albums
      * 
      * @return multi-level array of albums
@@ -143,6 +155,16 @@ class Album extends AbstractService
         return $this->sm->get('photo_form_import_folder');
     }
 
+     /**
+     * Gets the photo service.
+     * 
+     * @return Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceManager()->get("photo_service_photo");
+    }
+    
     /**
      * Get the photo config
      *
@@ -154,4 +176,5 @@ class Album extends AbstractService
         return $config['photo'];
     }
 
+    
 }
