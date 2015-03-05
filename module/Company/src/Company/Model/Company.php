@@ -20,7 +20,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
      *
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    protected $languageNeutralId;
     
     /**
      * Version (language-unique) id of company representation.
@@ -29,7 +29,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    protected $version_id;
+    protected $id;
         
     /**
      * The company's display name.
