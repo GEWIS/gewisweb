@@ -24,36 +24,45 @@ class EditCompany extends Form
             'name' => 'asciiName',
             'attributes' => array(
                 'type'  => 'text',
+                'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Permalink'),
+                'required' => 'required'
             ),
         ));
         $this->add(array(
             'name' => 'name',
             'attributes' => array(
                 'type'  => 'text',
+                'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Name'),
+                'required' => 'required'
             ),
         ));
         $this->add(array(
             'name' => 'address',
+            'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
-                'type'  => 'text',
+                'required' => 'required',
+                'type' => 'textarea'
             ),
             'options' => array(
                 'label' => $translate->translate('Location'),
+                'required' => 'required'
             ),
         ));
         $this->add(array(
             'name' => 'website',
+            'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
-                'type'  => 'text',
+                'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Website'),
+                'required' => 'required'
             ),
         ));
         $this->add(array(
@@ -69,10 +78,11 @@ class EditCompany extends Form
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => array(
-                'type'  => 'text',
+                'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Email'),
+                'required' => 'required'
             ),
         ));
         $this->add(array(
@@ -98,6 +108,10 @@ class EditCompany extends Form
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
+                'required' => 'required'
+            ),
+            'attributes' => array(
+                'type' => 'textarea'  
             ),
         ));
         $this->add(array(
@@ -128,19 +142,21 @@ class EditCompany extends Form
                         'max' => 127
                     )
                 )
-            )
+            ),
+            'filters' => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim')
+            ),
         ));
         
         $filter->add(array(
             'name' => 'website',
             'required' => true,
+            'filters' => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim')
+            ),
             'validators' => array(
-                array(
-                    'name' => 'regex',
-                    'options' => array(
-                        'pattern' => '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iu'
-                     )     
-                )
             )
         ));
         
@@ -162,8 +178,19 @@ class EditCompany extends Form
             'name' => 'email',
             'required' => true,
             'validators' => array(
-                array('name' => 'email_address'),
-            )
+                array(
+                    'name' => 'EmailAddress',
+                    'options' => array(
+                        'messages' => array(
+                            'emailAddressInvalidFormat' => 'Email address format is not valid'
+                        )
+                    )
+                ),
+            ),
+            'filters' => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim')
+            ),
         ));
 
         $filter->add(array(
@@ -185,12 +212,6 @@ class EditCompany extends Form
             )
         ));
         
-        /**
-         * TODO: Add more filters
-         * 
-         * Email filter: http://stackoverflow.com/questions/20946210/zend2-limiting-e-mail-validation-to-only-one-error-message
-         */
-
         $this->setInputFilter($filter);
     }
 }
