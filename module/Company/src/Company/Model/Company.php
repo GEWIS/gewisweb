@@ -106,8 +106,22 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
      *
      * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
      */
-
     protected $jobs;
+    
+    /**
+     * The company's jobs.
+     *
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
+     */
+    protected $jobs;
+    
+    /**
+     * The company's packets.
+     *
+     * @ORM\OneToMany(targetEntity="CompanyPacket", mappedBy="company")
+     */
+    protected $packets;
+    
     /**
      * Constructor
      */
@@ -314,6 +328,27 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         $this->jobs = $jobs;
     }
+    
+    /**
+     * Get the company's packets.
+     *
+     * @return Job[]
+     */
+    public function getPackets()
+    {
+        return $this->packets;
+    }
+
+    /**
+     * Set the company's packets.
+     *
+     * @param CompanyPacket[] $packets
+     */
+    public function setPackets($packets)
+    {
+        $this->packets = $packets;
+    }
+    
     /**
      * Get the company's hidden status.
      *
@@ -352,21 +387,24 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         $this->language = $language;
     }
+    
     // For zend2 forms
     public function getArrayCopy()
     {
         return get_object_vars($this);
     }
-    public function exchangeArray($data){
-        $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
-        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
-        $this->address=(isset($data['address'])) ? $data['address'] : $this->address;
-        $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
-        $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
-        $this->email=(isset($data['email'])) ? $data['email'] : $this->email;
-        $this->logo=(isset($data['logo'])) ? $data['logo'] : $this->logo;
-        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->phone;
-        $this->description=(isset($data['description'])) ? $data['description'] : $this->description;
-        $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->jobs;
+    
+    public function exchangeArray($data) {
+        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
+        $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
+        $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
+        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->logo=(isset($data['logo'])) ? $data['logo'] : $this->getLogo();
+        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
+        $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
+        $this->packets=(isset($data['packets'])) ? $data['packets'] : $this->getPackets();
     }
 }

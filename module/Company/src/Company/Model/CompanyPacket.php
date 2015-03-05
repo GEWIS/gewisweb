@@ -44,6 +44,13 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="boolean")
      */
     protected $published;
+    
+    /**
+     * The packet's company.
+     *
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="packets")
+     */
+    protected $company;
 
 
     /**
@@ -123,6 +130,26 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     {
         $this->published = $published;
     }
+    
+    /**
+     * Get the packet's company.
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set the packet's company.
+     *
+     * @param Company company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
 
     public function publish()
     {
@@ -171,6 +198,18 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
         }
 
         return true;
+    }
+    
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+    
+    public function exchangeArray($data){
+        $this->startingDate=(isset($data['startingDate'])) ? $data['startingDate'] : $this->getStartingDate();
+        $this->expirationDate=(isset($data['expirationDate'])) ? $data['expirationDate'] : $this->getExpirationDate();
+        $this->published=(isset($data['published'])) ? $data['published'] : $this->getPublished();
     }
 
 
