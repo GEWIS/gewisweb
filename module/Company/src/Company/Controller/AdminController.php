@@ -141,6 +141,16 @@ class AdminController extends AbstractActionController
         $jobName = $this->params('jobName');    
         $companyForm=$companyService->getJobForm();
         $company_list = $companyService->getEditableJobsWithAsciiName($jobName, $companyName);
+        //echo($this->url()->fromRoute('admin_company/default',array('action'=>'save', 'asciiCompanyName'=>$companyName)));
+        if (empty($company_list)){
+            $company=null;
+        echo "No job found";
+        }
+        else {
+            $company=$company_list[0];
+            $companyForm->bind($company);
+            $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/editCompany/editJob',array('jobName' => $jobName, 'asciiCompanyName'=>$companyName)));
+        }
         $request = $this->getRequest();
         if ($request->isPost()) {
             if (!isset($jobName)){
@@ -151,6 +161,7 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             if ($companyForm->isValid()) {
+                 echo "VALID";
                 $job=$companyService->insertJobForCompanyAsciiName($asciiCompanyName);
                 $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
@@ -159,16 +170,6 @@ class AdminController extends AbstractActionController
                 echo "NOT VALID";
             }
             return $this->redirect()->toRoute('admin_company/editCompany/editJob', array('asciiCompanyName'=>$asciiCompanyName, 'asciiJobName'=>$jobName),array(),true);   
-        }
-        //echo($this->url()->fromRoute('admin_company/default',array('action'=>'save', 'asciiCompanyName'=>$companyName)));
-        if (empty($company_list)){
-            $company=null;
-        echo "No job found";
-        }
-        else {
-            $company=$company_list[0];
-            $companyForm->bind($company);
-            $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/editCompany/editJob',array('jobName' => $jobName, 'asciiCompanyName'=>$companyName)));
         }
         $return = $companyService->getJobsWithCompanyAsciiName($companyName);
         $vm = new ViewModel(array(

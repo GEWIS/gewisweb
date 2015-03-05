@@ -42,7 +42,7 @@ class EditJob extends Form
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => $translate->translate('asciiName'),
+                'label' => $translate->translate('Permalink'),
             ),
         ));
         $this->add(array(

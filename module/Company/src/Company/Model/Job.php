@@ -254,6 +254,7 @@ class Job //implements RoleInterface, ResourceInterface
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
         $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
+        $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
         //$this->address=(isset($data['address'])) ? $data['address'] : $this->address;
         $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
         $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
