@@ -1,0 +1,347 @@
+<style>
+    .tree, .tree ul {
+        margin:0;
+        padding:0;
+        list-style:none
+    }
+    .tree ul {
+        margin-left:1em;
+        position:relative
+    }
+    .tree ul ul {
+        margin-left:.5em
+    }
+    .tree ul:before {
+        content:"";
+        display:block;
+        width:0;
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        border-left:1px solid
+    }
+    .tree li {
+        margin:0;
+        padding:0 1em;
+        line-height:2em;
+        color:#369;
+        font-weight:700;
+        position:relative
+    }
+    .tree ul li:before {
+        content:"";
+        display:block;
+        width:10px;
+        height:0;
+        border-top:1px solid;
+        margin-top:-1px;
+        position:absolute;
+        top:1em;
+        left:0
+    }
+    .tree ul li:last-child:before {
+        background:#fff;
+        height:auto;
+        top:1em;
+        bottom:0
+    }
+    .indicator {
+        margin-right:5px;
+    }
+    .tree li a {
+        text-decoration: none;
+        color:#369;
+    }
+    .tree li button, .tree li button:active, .tree li button:focus {
+        text-decoration: none;
+        color:#369;
+        border:none;
+        background:transparent;
+        margin:0px 0px 0px 0px;
+        padding:0px 0px 0px 0px;
+        outline: 0;
+    }
+    .btn-hidden {
+	display:none;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <h1><?= $this->translate('Photo admin') ?></h1><hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="tree">
+                    <li><a href="#">2014-2015</a>
+                        <ul>
+                            <li>Test album #1</li>
+                            <li>Test album #2
+                                <ul>
+                                    <li>Super awesome sub album #1
+                                        <ul>
+                                            <li>Super awesome subsub album #2</li>
+                                            <li>Super awesome subsub album #3</li>
+                                            <li>Super awesome subsub album #4</li>
+                                        </ul>
+                                    </li>
+                                    <li>Super awesome sub album #4</li>
+                                </ul>
+                            </li>
+                            <li>Test album #3</li>
+                        </ul>
+                    </li>
+                    <li><a href="#">2013-2014</a>
+                        <ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul>
+                    </li>
+                    <li><a href="#">2012-2013</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2011-2012</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2010-2011</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2009-2010</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2008-2009</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2007-2008</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                    <li><a href="#">2006-2007</a><ul>
+                            <li>Company Maintenance</li>
+                            <li>Employees
+                                <ul>
+                                    <li>Reports
+                                        <ul>
+                                            <li>Report1</li>
+                                            <li>Report2</li>
+                                            <li>Report3</li>
+                                        </ul>
+                                    </li>
+                                    <li>Employee Maint.</li>
+                                </ul>
+                            </li>
+                            <li>Human Resources</li>
+                        </ul></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <ol class="breadcrumb">
+            <li><a href="#">2014-2015</a></li>
+            <li><a href="#">Test album #2</a></li>
+            <li class="active">Super awesome sub album #4</li>
+        </ol>
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Modify details') ?></button> 
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></button> 
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button> 
+        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
+        <button type="button" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-globe"></span>&nbsp;<?= $this->translate('Make album private') ?></button>
+ 
+        <hr>
+        <div class="row">            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/54">
+                    <img class="img-responsive" src="/data/photo/1b/a05e12b96e2df74ef39984f04097d14e8dece4.jpg" alt="">
+            <input type="checkbox" class="thumbail-checkbox"> 
+</a>
+
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/55">
+                    <img class="img-responsive" src="/data/photo/74/0ccbd6c74680ae1dcfdf7ec093b8c9f874499d.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/56">
+                    <img class="img-responsive" src="/data/photo/69/9d8f50453bb8c0a489ad8b6ff1e6845bc87f77.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/57">
+                    <img class="img-responsive" src="/data/photo/bb/ec39ea06147060040ee5d029a2a00ea7c8f833.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+        </div>
+        <div class="row">            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/58">
+                    <img class="img-responsive" src="/data/photo/fb/c60c4d7e3bb30a73fe0ae0519d085c3594493f.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/59">
+                    <img class="img-responsive" src="/data/photo/ba/ec8e046d3b4924aae1d2df75e42ed318489ac4.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/60">
+                    <img class="img-responsive" src="/data/photo/e9/daa6fe97caa75e65b80c71e99ca4469d981905.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/admin/photo/photo/61">
+                    <img class="img-responsive" src="/data/photo/22/157d65ba2016f7e4ee66ca74377eba30c4f49c.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+var COUNT_SPAN = '<span id="remove-count">5</span>'
+$("#remove-multiple").html($("#remove-multiple").html().replace('%i',COUNT_SPAN));
+var count=0;
+$(".thumbail-checkbox").change(function() {
+    if(this.checked) {
+count++;  
+    } else {
+count--;
+    }
+$("#remove-count").html(count);
+if(count>0)
+{
+console.log("unhide");
+$("#remove-multiple").removeClass("btn-hidden");
+} else {
+$("#remove-multiple").addClass("btn-hidden");
+}
+});
+    $.fn.extend({
+        treed: function () {
+            //initialize each of the top levels
+            var tree = $(this);
+            tree.addClass("tree");
+            tree.find('li').has("ul").each(function () {
+                var branch = $(this); //li with children ul
+                branch.prepend("<i class='indicator glyphicon glyphicon-plus-sign'></i>");
+                branch.addClass('branch');
+                branch.on('click', function (e) {
+                    if (this == e.target) {
+                        var icon = $(this).children('i:first');
+                        icon.toggleClass("glyphicon-minus-sign glyphicon-plus-sign");
+                        $(this).children().children().toggle();
+                    }
+                })
+                branch.children().children().toggle();
+            });
+            //fire event from the dynamically added icon
+            $('.branch .indicator').on('click', function () {
+                $(this).closest('li').click();
+            });
+            //fire event to open branch if the li contains an anchor instead of text
+            $('.branch>a').each(function () {
+                $(this).on('click', function (e) {
+                    $(this).closest('li').click();
+                    e.preventDefault();
+                });
+            });
+        }
+    });
+
+
+    $('.tree').treed();
+</script>

@@ -175,7 +175,7 @@ return array(
                     'photo_index' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/photo[/:photo_id]/',
+                            'route' => '/photo[/:photo_id]',
                             'defaults' => array(
                                 'controller' => 'PhotoAdmin',
                                 'action' => 'index'
