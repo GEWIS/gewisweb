@@ -5,10 +5,43 @@ namespace Photo\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class AdminController extends AbstractActionController
+class AlbumAdminController extends AbstractActionController
 {
 
     public function indexAction()
+    {
+        $service = $this->getAlbumService();
+        $albums = $service->getAlbumTree();
+        return new ViewModel(array(
+            'albums' => $albums
+        ));
+    }
+
+    public function createAction()
+    {
+        $service = $this->getAlbumService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            //TODO: save and create album
+        }
+
+        return new ViewModel(array(
+            'form' => $service->getCreateAlbumForm()
+        ));
+    }
+
+    public function pageAction()
+    {
+        
+    }
+
+    public function editAction()
+    {
+        
+    }
+
+    public function addAction()
     {
         
     }
@@ -18,12 +51,7 @@ class AdminController extends AbstractActionController
         
     }
 
-    public function viewAlbumAction()
-    {
-        
-    }
-
-    public function importFolderAction()
+    public function importAction()
     {
         $form = $this->getAlbumService()->getPhotoImportForm();
 
@@ -40,28 +68,15 @@ class AdminController extends AbstractActionController
             'form' => $form
         ));
     }
-    
-    public function createAlbumAction()
+
+    public function moveAction()
     {
-        $service = $this->getAlbumService();
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            //TODO: save and create album
-        }
-
-        return new ViewModel(array(
-            'form' => $service->getCreateAlbumForm()
-        ));
+        
     }
 
-    public function albumAction()
+    public function deleteAction()
     {
-        $service = $this->getAlbumService();
-        $albums = $service->getAlbumTree();
-        return new ViewModel(array(
-            'albums' => $albums
-        ));
+        
     }
 
     /**
@@ -71,7 +86,7 @@ class AdminController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('photo_service_album');
     }
-    
+
     /**
      * Get the photo service.
      */
