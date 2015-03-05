@@ -116,11 +116,11 @@ class Photo
     
     
     /**
-     * retrieves an album by id from the database
+     * retrieves a photo by id from the database
      * 
-     * @param integer $id the id of the album
+     * @param integer $id the id of the photo
      * 
-     * @return Photo\Model\Album
+     * @return Photo\Model\Photo
      */
     public function getPhotoById($id)
     {
@@ -133,7 +133,19 @@ class Photo
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
     }
-
+    
+    /**
+     * Deletes a photo from the database
+     * 
+     * @param integer $id the id of the photo 
+     */
+    public function deletePhoto($id)
+    {
+        $photo = $this->getPhotoById($id);
+        if (!is_empty($photo)){
+            $this->em->remove($photo);
+        }
+    }
     /**
      * Persist photo
      *
