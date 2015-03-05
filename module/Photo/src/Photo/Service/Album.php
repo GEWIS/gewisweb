@@ -95,6 +95,18 @@ class Album extends AbstractService
     }
     
     /**
+     * Moves an album to new parent album
+     * 
+     * @param int $id the id of the album to be moved
+     * @param int $newParent the id of the new parent
+     */
+    public function moveAlbum($id, $newParent)
+    {
+        $album = $this->getAlbum($id);
+        $album->setParent($newParent);
+    }
+    
+    /**
      * Get a recusive list of all (sub)albums
      * 
      * @return multi-level array of albums
