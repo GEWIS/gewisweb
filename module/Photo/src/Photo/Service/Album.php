@@ -81,7 +81,19 @@ class Album extends AbstractService
         $mapper->flush();
         return $album;
     }
-
+    
+    /**
+     * Updates the name of an existing album
+     * 
+     * @param int $id the id of the album to modify
+     * @param String $name the new name for the album
+     */
+    public function updateAlbumName($id, $name)
+    {
+        $album = $this->getAlbum($id);
+        $album->setName($name);
+    }
+    
     /**
      * Get a recusive list of all (sub)albums
      * 
