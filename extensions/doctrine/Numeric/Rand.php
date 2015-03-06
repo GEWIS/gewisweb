@@ -1,6 +1,7 @@
 <?php
-namespace DoctrineExtensions\Rand;
-
+namespace Numeric;
+use Doctrine\ORM\Query\AST\Functions\FunctionNode;
+use Doctrine\ORM\Query\Lexer;
 /**
  * RandFunction ::= "RAND" "(" ")"
  */

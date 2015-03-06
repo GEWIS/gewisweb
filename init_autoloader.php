@@ -26,5 +26,5 @@ if (!class_exists('Zend\Loader\AutoloaderFactory')) {
 }
 
 //register doctrine extensions
-$classLoader = new \Doctrine\Common\ClassLoader('DoctrineExtensions', "extensions/doctrine");
+$classLoader = new \Doctrine\Common\ClassLoader('Numeric', __DIR__.'/extensions/doctrine');
 $classLoader->register();
