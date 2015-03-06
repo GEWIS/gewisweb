@@ -4,6 +4,7 @@ namespace Photo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class AlbumAdminController extends AbstractActionController
 {
@@ -33,7 +34,13 @@ class AlbumAdminController extends AbstractActionController
 
     public function pageAction()
     {
-        
+        $albumId = $this->params()->fromRoute('album_id');
+        $activePage = (int) $this->params()->fromRoute('page');
+        $albumService = $this->getAlbumService();
+        $album = $albumService->getAlbum($albumId);
+        return new JsonModel(array(
+	    'album' => $album,
+        ));
     }
 
     public function editAction()

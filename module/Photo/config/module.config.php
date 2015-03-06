@@ -226,7 +226,10 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'photo' => __DIR__ . '/../view/'
-        )
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
     'doctrine' => array(
         'driver' => array(
