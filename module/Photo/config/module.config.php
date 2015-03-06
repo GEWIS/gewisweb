@@ -223,6 +223,11 @@ return array(
             'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController'
         )
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'AlbumPlugin' => 'Photo\Controller\Plugin\AlbumPlugin',
+        )
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
             'photo' => __DIR__ . '/../view/'
