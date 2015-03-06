@@ -113,9 +113,9 @@ class Album extends AbstractService
      */
     public function deleteAlbum($id)
     {
-        deleteAlbumPhotos($id);
+        $this->deleteAlbumPhotos($id);
         foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum){
-            deleteAlbum($subAlbum);
+            $this->deleteAlbum($subAlbum);
         }
         $this->getAlbumMapper()->deleteAlbum($id);
     }
