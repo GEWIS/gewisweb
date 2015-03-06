@@ -50,7 +50,7 @@ class Photo extends AbstractService
      * @param Imagick $image
      * @return the path at which the photo should be saved
      */
-    protected function generateStoragePath($path)
+    public function generateStoragePath($path)
     {
         $config = $this->getConfig();
         $hash = sha1_file($path);
