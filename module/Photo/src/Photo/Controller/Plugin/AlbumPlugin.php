@@ -80,7 +80,6 @@ class AlbumPlugin extends AbstractPlugin
             $photos = $photoService->getPhotos($album, $photo_start, $photoCount);
         }
 
-        //we'll fix this ugly thing later vv
         $basedir = $photoService->getBaseDirectory();
         
         $pages = $this->getAlbumPaging($activePage, $lastpage);
