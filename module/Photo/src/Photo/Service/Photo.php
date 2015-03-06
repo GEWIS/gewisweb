@@ -206,8 +206,8 @@ class Photo extends AbstractService
             $next = $this->getNextPhoto($photo);
             $previous = $this->getPreviousPhoto($photo);
         }
-        //we'll fix this ugly thing later vv
-        $basedir = str_replace("public", "", $this->getConfig()['upload_dir']);
+
+        $basedir = $this->getBaseDirectory();
 
         return array(
             'photo' => $photo,
