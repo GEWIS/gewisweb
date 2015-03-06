@@ -42,7 +42,8 @@ class Module
             'invokables' => array(
                 'photo_service_album' => 'Photo\Service\Album',
                 'photo_service_metadata' => 'Photo\Service\Metadata',
-                'photo_service_photo' => 'Photo\Service\Photo'
+                'photo_service_photo' => 'Photo\Service\Photo',
+                'photo_service_album_cover' => 'Photo\Service\AlbumCover'
             ),
             'factories' => array(
                 'photo_form_album_create' => function ($sm) {

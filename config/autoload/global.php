@@ -63,6 +63,15 @@ return array(
         'large_thumb_size' => array(
             'width' => 827,
             'height' => 550
+        ),
+        'album_cover' => array(
+            'width' => 180,
+            'height' => 120,
+            'inner_border' => 2,
+            'outer_border' => 0,
+            'cols' => 2,
+            'rows' => 2,
+            'background' => '#000000'
         )
     ),
     
