@@ -11,7 +11,7 @@ class AlbumAdminController extends AbstractActionController
     public function indexAction()
     {
         $albumService = $this->getAlbumService();
-        $albums = $albumService->getAlbumTree();
+        $albums = $albumService->getAlbums();
         return new ViewModel(array(
             'albums' => $albums
         ));

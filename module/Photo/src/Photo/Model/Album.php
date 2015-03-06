@@ -137,6 +137,15 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Gets an array of all child albums
+     * 
+     * @return array 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+    /**
      * Get the album cover
      * 
      * @return photo
