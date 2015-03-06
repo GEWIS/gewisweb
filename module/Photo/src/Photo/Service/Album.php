@@ -132,26 +132,6 @@ class Album extends AbstractService
             $this->getPhotoService()->deletePhoto($photo);
         }
     }
-    /**
-     * Get a recusive list of all (sub)albums
-     * 
-     * @return multi-level array of albums
-     */
-    public function getAlbumTree($album = null)
-    {
-        $albums = array();
-        if ($album !== null) {
-            $subAlbums = $this->getAlbumMapper()->getSubAlbums($album);
-            foreach ($subAlbums as $subAlbum) {
-                $albums[] = array('albumName' => $subAlbum->getName(), 'subAlbums' => $this->getAlbumTree($subAlbum));
-            }
-        } else {
-            foreach ($this->getAlbums() as $album) {
-                $albums[$album->getId()] = $this->getAlbumTree($album);
-            }
-        }
-        return $albums;
-    }
 
     public function getCreateAlbumForm()
     {
