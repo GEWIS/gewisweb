@@ -67,10 +67,10 @@ class Album implements ResourceInterface
 
     /**
      * The cover photo to display with the album.
-     * @ORM\OneToOne(targetEntity="Photo")
-     * @ORM\JoinColumn(name="cover_id", referencedColumnName="id")
+     * 
+     * @ORM\Column(type="string")
      */
-    protected $cover;
+    protected $coverPath;
 
     /**
      * The amount of photos in this album
@@ -150,9 +150,9 @@ class Album implements ResourceInterface
      * 
      * @return photo
      */
-    public function getCover()
+    public function getCoverPath()
     {
-        return $this->cover;
+        return $this->coverPath;
     }
 
     /**
@@ -220,9 +220,9 @@ class Album implements ResourceInterface
      * 
      * @param photo $photo
      */
-    public function setCover($photo)
+    public function setCoverPath($photo)
     {
-        $this->cover = $photo;
+        $this->coverPath = $photo;
     }
 
     /**

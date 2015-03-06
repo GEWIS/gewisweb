@@ -143,10 +143,10 @@ class Album extends AbstractService
         $album = $this->getAlbum($albumId);
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->getAlbumCoverService()->createCover($album);
-        if (!is_null($album->getCover())) {
-            unlink($config['upload_dir'] . '/' . $album->getCover());
+        if (!is_null($album->getCoverPath())) {
+            unlink($config['upload_dir'] . '/' . $album->getCoverPath());
         }
-        $album->setCover($coverPath);
+        $album->setCoverPath($coverPath);
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
