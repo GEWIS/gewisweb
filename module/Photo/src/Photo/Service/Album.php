@@ -81,7 +81,57 @@ class Album extends AbstractService
         $mapper->flush();
         return $album;
     }
-
+    
+    /**
+     * Updates the name of an existing album
+     * 
+     * @param int $id the id of the album to modify
+     * @param String $name the new name for the album
+     */
+    public function updateAlbumName($id, $name)
+    {
+        $album = $this->getAlbum($id);
+        $album->setName($name);
+    }
+    
+    /**
+     * Moves an album to new parent album
+     * 
+     * @param int $id the id of the album to be moved
+     * @param int $newParent the id of the new parent
+     */
+    public function moveAlbum($id, $newParent)
+    {
+        $album = $this->getAlbum($id);
+        $album->setParent($newParent);
+    }
+    
+    /**
+     * removes an album and all subalbums recusively, including all photos.
+     * 
+     * @param int $id the id of the album to remove.
+     */
+    public function deleteAlbum($id)
+    {
+        deleteAlbumPhotos($id);
+        foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum){
+            deleteAlbum($subAlbum);
+        }
+        $this->getAlbumMapper()->deleteAlbum($id);
+    }
+    
+    /**
+     * Deletes all photos inside the album
+     * 
+     * @param int $id the id of the album to delete all photos from
+     */
+    public function deleteAlbumPhotos($id)
+    {
+        $album = $this->getAlbum($id);
+        foreach ($this->getAlbumMapper()->getAlbumPhotos($album) as $photo){
+            $this->getPhotoService()->deletePhoto($photo);
+        }
+    }
     /**
      * Get a recusive list of all (sub)albums
      * 
@@ -119,6 +169,16 @@ class Album extends AbstractService
         return $this->sm->get('photo_form_import_folder');
     }
 
+     /**
+     * Gets the photo service.
+     * 
+     * @return Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceManager()->get("photo_service_photo");
+    }
+    
     /**
      * Get the photo config
      *
@@ -130,4 +190,5 @@ class Album extends AbstractService
         return $config['photo'];
     }
 
+    
 }

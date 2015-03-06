@@ -28,6 +28,19 @@ class Album
     {
         $this->em = $em;
     }
+    
+     /**
+     * Deletes an album from the database
+     * 
+     * @param integer $id the id of the album 
+     */
+    public function deleteAlbum($id)
+    {
+        $album = $this->getAlbumById($id);
+        if (!is_null($album)){
+            $this->em->remove($album);
+        }
+    }
 
     /**
      * retrieves an album by id from the database
@@ -68,6 +81,30 @@ class Album
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
+        return $qb->getQuery()->getResult();
+    }    
+    
+    /**
+     * returns all the photos in an album.
+     * 
+     * @param Photo\Model\Album $album The album to retrieve the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return, null for infinite
+     * @return array of photo's
+     */
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.album = ?1');
+        $qb->setParameter(1, $album);
+        $qb->setFirstResult($start);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
+        }
+
         return $qb->getQuery()->getResult();
     }
 

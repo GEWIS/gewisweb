@@ -70,30 +70,6 @@ class Photo
     }
 
     /**
-     * returns all the photos in an album.
-     * 
-     * @param Photo\Model\Album $album The album to retrieve the photos from
-     * @param integer $start the result to start at
-     * @param integer $maxResults max amount of results to return, null for infinite
-     * @return array of photo's
-     */
-    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-                ->from('Photo\Model\Photo', 'a')
-                ->where('a.album = ?1');
-        $qb->setParameter(1, $album);
-        $qb->setFirstResult($start);
-        if (!is_null($maxResults)) {
-            $qb->setMaxResults($maxResults);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Checks if the specified photo exists in the database already and returns
      * it if it does.
      * 
@@ -142,7 +118,7 @@ class Photo
     public function deletePhoto($id)
     {
         $photo = $this->getPhotoById($id);
-        if (!is_empty($photo)){
+        if (!is_null($photo)){
             $this->em->remove($photo);
         }
     }
