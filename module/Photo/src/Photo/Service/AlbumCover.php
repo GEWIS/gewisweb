@@ -103,8 +103,19 @@ class AlbumCover extends AbstractService
      */
     protected function getImages($album, $count)
     {
+        $mapper = $this->getAlbumMapper();
         $config = $this->getConfig();
-        $photos = $this->getAlbumMapper()->getRandomAlbumPhotos($album, $count);
+        $photos = $mapper->getRandomAlbumPhotos($album, $count);
+        if (count($photos) < $count) {
+            //retrieve more photo's from subalbums until we have enough
+            foreach ($mapper->getSubAlbums($album) as $subAlbum) {
+                $needed = $count - count($photos);
+                if ($needed < 1) {
+                    break;
+                }
+                $photos=array_merge($photos, $mapper->getRandomAlbumPhotos($subAlbum, $needed));
+            }
+        }
         //convert the photo objects to Imagick objects
         $images = array();
         foreach ($photos as $photo) {
