@@ -39,6 +39,7 @@ class AlbumAdminController extends AbstractActionController
         $data = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage);
         
         //TODO: Fix these ugly hacks below this line!!
+        $data['album'] = (array) $data['album'];
         for ($i = 0; $i < count($data['albums']); $i++) {
             $data['albums'][$i] = (array) $data['albums'][$i];
         }
