@@ -4,7 +4,28 @@
  * Depends: jquery, photo.js
  */
 
-Photo.loadPage = function () {
+Photo.loadPage = function (resource) {
+    $.getJSON(resource, function (data) {
+        $("#album").html('<div class="row"></div>');
+        $.each(data.albums, function (i, album) {
+            console.log(album.name);
+            $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
+                    + '<a class="thumbnail" href="">'
+                    + '<img class="img-responsive" src="/data/photo/'+album.coverPath+'" alt="">'
+                    + '<input type="checkbox" class="thumbail-checkbox">'
+                    +album.name
+                    + '</a>'
+                    + '</div>');
+        });
+        $.each(data.photos, function (i, photo) {
+            $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
+                    + '<a class="thumbnail" href="">'
+                    + '<img class="img-responsive" src="/data/photo/'+photo.smallThumbPath+'" alt="">'
+                    + '<input type="checkbox" class="thumbail-checkbox">'
+                    + '</a>'
+                    + '</div>');
+        });
+    });
 }
 Photo.initAdmin = function () {
     var COUNT_SPAN = '<span id="remove-count"></span>'
@@ -53,6 +74,15 @@ $.fn.extend({
             $(this).on('click', function (e) {
                 $(this).closest('li').click();
                 e.preventDefault();
+                // Photo.loadPage(e.target.href);
+
+            });
+        });
+        tree.find("a").each(function () {
+            $(this).on('click', function (e) {
+                e.preventDefault();
+                Photo.loadPage(e.target.href);
+
             });
         });
     }

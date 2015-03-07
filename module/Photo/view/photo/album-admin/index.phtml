@@ -84,20 +84,21 @@ $this->headScript()
                     <?php
 
                     function showTree($albums)
-                    { ?>
+                    {
+                        ?>
 
-                                <?php foreach ($albums as $album): ?>
-                            <li><a href="<?= $album->getId() ?>"><?= $album->getName() ?></a>
+                        <?php foreach ($albums as $album): ?>
+                            <li><a href="photo/album/<?= $album->getId() ?>"><?= $album->getName() ?></a>
                                 <?php if (count($album->getChildren()) > 0): ?>
                                     <ul>
-                                <?= showTree($album->getChildren()) ?>
+                                        <?= showTree($album->getChildren()) ?>
                                     </ul>
-                            <?php endif ?>
+                                <?php endif ?>
                             </li>
                         <?php endforeach ?>
 
-<?php } ?>
-<?= showTree($albums) ?>
+                    <?php } ?>
+                    <?= showTree($albums) ?>
                 </ul>
             </div>
         </div>
@@ -116,51 +117,53 @@ $this->headScript()
         <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-globe"></span>&nbsp;<?= $this->translate('Make album private') ?></button>
 
         <hr>
-        <div class="row">            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/54">
-                    <img class="img-responsive" src="/data/photo/1b/a05e12b96e2df74ef39984f04097d14e8dece4.jpg" alt="">
-                    <input type="checkbox" class="thumbail-checkbox"> 
-                </a>
+        <div id="album">
+            <div class="row">            
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/54">
+                        <img class="img-responsive" src="/data/photo/1b/a05e12b96e2df74ef39984f04097d14e8dece4.jpg" alt="">
+                        <input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
 
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/55">
+                        <img class="img-responsive" src="/data/photo/74/0ccbd6c74680ae1dcfdf7ec093b8c9f874499d.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/56">
+                        <img class="img-responsive" src="/data/photo/69/9d8f50453bb8c0a489ad8b6ff1e6845bc87f77.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/57">
+                        <img class="img-responsive" src="/data/photo/bb/ec39ea06147060040ee5d029a2a00ea7c8f833.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/55">
-                    <img class="img-responsive" src="/data/photo/74/0ccbd6c74680ae1dcfdf7ec093b8c9f874499d.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/56">
-                    <img class="img-responsive" src="/data/photo/69/9d8f50453bb8c0a489ad8b6ff1e6845bc87f77.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/57">
-                    <img class="img-responsive" src="/data/photo/bb/ec39ea06147060040ee5d029a2a00ea7c8f833.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
+            <div class="row">            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/58">
+                        <img class="img-responsive" src="/data/photo/fb/c60c4d7e3bb30a73fe0ae0519d085c3594493f.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/59">
+                        <img class="img-responsive" src="/data/photo/ba/ec8e046d3b4924aae1d2df75e42ed318489ac4.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/60">
+                        <img class="img-responsive" src="/data/photo/e9/daa6fe97caa75e65b80c71e99ca4469d981905.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="/admin/photo/photo/61">
+                        <img class="img-responsive" src="/data/photo/22/157d65ba2016f7e4ee66ca74377eba30c4f49c.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="row">            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/58">
-                    <img class="img-responsive" src="/data/photo/fb/c60c4d7e3bb30a73fe0ae0519d085c3594493f.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/59">
-                    <img class="img-responsive" src="/data/photo/ba/ec8e046d3b4924aae1d2df75e42ed318489ac4.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/60">
-                    <img class="img-responsive" src="/data/photo/e9/daa6fe97caa75e65b80c71e99ca4469d981905.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/admin/photo/photo/61">
-                    <img class="img-responsive" src="/data/photo/22/157d65ba2016f7e4ee66ca74377eba30c4f49c.jpg" alt=""><input type="checkbox" class="thumbail-checkbox"> 
-                </a>
-            </div>
-        </div>
-
 
     </div>
 </div>
