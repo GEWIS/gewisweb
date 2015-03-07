@@ -19,7 +19,7 @@ class AlbumCover extends AbstractService
     public function createCover($album)
     {
         $cover = $this->generateCover($album);
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
         $cover->writeImage($tempFileName);
         $newPath = $this->getPhotoService()->generateStoragePath($tempFileName);
         $config = $this->getConfig();
@@ -30,36 +30,36 @@ class AlbumCover extends AbstractService
     protected function generateCover($album)
     {
         $config = $this->getConfig();
-        $cols = $config['album_cover']['cols'];
+        $columns = $config['album_cover']['cols'];
         $rows = $config['album_cover']['rows'];
-        $count = $cols * $rows;
+        $count = $columns * $rows;
         $images = $this->getImages($album, $count);
         //if there are not enough images to fill the matrix, reduce the rows and columns
-        while (($cols > 1 || $rows > 1) && count($images) < $count) {
-            if ($cols < $rows) {
+        while (($columns > 1 || $rows > 1) && count($images) < $count) {
+            if ($columns < $rows) {
                 $rows--;
             } else {
-                $cols--;
+                $columns--;
             }
-            $count = $rows * $cols;
+            $count = $rows * $columns;
         }
         $innerWidth = $config['album_cover']['width'] - 2 * $config['album_cover']['outer_border'];
         $innerHeight = $config['album_cover']['height'] - 2 * $config['album_cover']['outer_border'];
-        $image_width = floor(($innerWidth - ($cols - 1) * $config['album_cover']['inner_border']) / $cols);
-        $image_height = floor(($innerHeight - ($rows - 1) * $config['album_cover']['inner_border']) / $rows);
+        $imageWidth = floor(($innerWidth - ($columns - 1) * $config['album_cover']['inner_border']) / $columns);
+        $imageHeight = floor(($innerHeight - ($rows - 1) * $config['album_cover']['inner_border']) / $rows);
         //increase outer border due to flooring of image dimensions
-        $outer_border_x = $config['album_cover']['outer_border'] + ceil(($innerWidth - ($cols * $image_width + ($cols - 1) * $config['album_cover']['inner_border'])) / 2);
-        $outer_border_y = $config['album_cover']['outer_border'] + ceil(($innerHeight - ($rows * $image_height + ($rows - 1) * $config['album_cover']['inner_border'])) / 2);
+        $outerBorderX = $config['album_cover']['outer_border'] + ceil(($innerWidth - ($columns * $imageWidth + ($columns - 1) * $config['album_cover']['inner_border'])) / 2);
+        $outerBorderY = $config['album_cover']['outer_border'] + ceil(($innerHeight - ($rows * $imageHeight + ($rows - 1) * $config['album_cover']['inner_border'])) / 2);
         // Make a blank canvas
         $target = new Imagick();
         $target->newImage($config['album_cover']['width'], $config['album_cover']['height'], $config['album_cover']['background']);
         $index = 0;
         if (count($images) >= $count) {
-            for ($x = 0; $x < $cols; $x++) {
+            for ($x = 0; $x < $columns; $x++) {
                 for ($y = 0; $y < $rows; $y++) {
-                    $image = $this->resizeCropImage($images[$index], $image_width, $image_height);
+                    $image = $this->resizeCropImage($images[$index], $imageWidth, $imageHeight);
                     $index++;
-                    $target->compositeImage($image, imagick::COMPOSITE_COPY, ($image_width + $config['album_cover']['inner_border']) * $x + $outer_border_x, ($image_height + $config['album_cover']['inner_border']) * $y + $outer_border_y);
+                    $target->compositeImage($image, imagick::COMPOSITE_COPY, ($imageWidth + $config['album_cover']['inner_border']) * $x + $outerBorderX, ($imageHeight + $config['album_cover']['inner_border']) * $y + $outerBorderY);
                 }
             }
         }
