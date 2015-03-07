@@ -57,11 +57,11 @@ return array(
         'max_photos_page' => 20,
         'dir_mode' => 0777, // rwx by default
         'small_thumb_size' => array(
-            'width' => 180,
-            'height' => 120
+            'width' => 825,
+            'height' => 550
         ),
         'large_thumb_size' => array(
-            'width' => 827,
+            'width' => 825,
             'height' => 550
         ),
         'album_cover' => array(
