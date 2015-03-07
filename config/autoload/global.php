@@ -65,8 +65,8 @@ return array(
             'height' => 550
         ),
         'album_cover' => array(
-            'width' => 180,
-            'height' => 120,
+            'width' => 825,
+            'height' => 550,
             'inner_border' => 2,
             'outer_border' => 0,
             'cols' => 2,
