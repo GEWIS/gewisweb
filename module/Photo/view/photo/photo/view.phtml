@@ -1,4 +1,4 @@
-<?php $this->headScript()->appendFile('/js/photo-paging.js'); ?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
 <?php if ($photo != null): ?>
     <div clas="row">
         <nav>
