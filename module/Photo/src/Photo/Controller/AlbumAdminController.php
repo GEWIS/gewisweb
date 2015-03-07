@@ -37,14 +37,26 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int) $this->params()->fromRoute('page');
         $data = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage);
-        
+
         //TODO: Fix these ugly hacks below this line!!
         $data['album'] = (array) $data['album'];
+        foreach ($data['album'] as $key => $value) {
+                $data['album'][str_replace("\0*\0","", $key)] = $data['album'][$key];
+                unset($data['album'][$key]);
+            }
         for ($i = 0; $i < count($data['albums']); $i++) {
             $data['albums'][$i] = (array) $data['albums'][$i];
+            foreach ($data['albums'][$i] as $key => $value) {
+                $data['albums'][$i][str_replace("\0*\0","", $key)] = $data['albums'][$i][$key];
+                unset($data['albums'][$i][$key]);
+            }
         }
         for ($i = 0; $i < count($data['photos']); $i++) {
             $data['photos'][$i] = (array) $data['photos'][$i];
+            foreach ($data['photos'][$i] as $key => $value) {
+                $data['photos'][$i][str_replace("\0*\0","", $key)] = $data['photos'][$i][$key];
+                unset($data['photos'][$i][$key]);
+            }
         }
         return new JsonModel($data);
     }
