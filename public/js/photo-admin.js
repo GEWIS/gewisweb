@@ -6,27 +6,73 @@
 
 Photo.loadPage = function (resource) {
     $.getJSON(resource, function (data) {
+        console.log(data);
         $("#album").html('<div class="row"></div>');
         $.each(data.albums, function (i, album) {
-            console.log(album.name);
+            href = 'photo/album/' + album.id
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<a class="thumbnail" href="">'
-                    + '<img class="img-responsive" src="/data/photo/'+album.coverPath+'" alt="">'
+                    + '<a class="thumbnail" href="' + href + '">'
+                    + '<img class="img-responsive" src="/data/photo/' + album.coverPath + '" alt="">'
                     + '<input type="checkbox" class="thumbail-checkbox">'
-                    +album.name
+                    + album.name
                     + '</a>'
                     + '</div>');
         });
+
+        $("#album").find("a").each(function () {
+            $(this).on('click', function (e) {
+                e.preventDefault();
+                Photo.loadPage(e.target.href);
+
+            });
+        });
+
         $.each(data.photos, function (i, photo) {
+            href = 'photo/photo/' + photo.id
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<a class="thumbnail" href="">'
-                    + '<img class="img-responsive" src="/data/photo/'+photo.smallThumbPath+'" alt="">'
+                    + '<a class="thumbnail" href="' + href + '">'
+                    + '<img class="img-responsive" src="/data/photo/' + photo.smallThumbPath + '" alt="">'
                     + '<input type="checkbox" class="thumbail-checkbox">'
                     + '</a>'
                     + '</div>');
+        });
+        $("#paging").html('');
+
+        $.each(data.pages, function (i, page) {
+            href = 'photo/album/' + data.album.id + '/' + page;
+            if (page === data.activepage)
+            {
+                $("#paging").append('<li class="active"><a href="' + href + '">' + (page + 1) + '</a></li>');
+            } else {
+                $("#paging").append('<li><a href="' + href + '">' + (page + 1) + '</a></li>');
+            }
+        });
+        if (data.activepage > 0)
+        {
+            href = 'photo/album/' + data.album.id + '/' + (data.activepage - 1);
+            $("#paging").prepend('<li><a id="previous" href="' + href + '">'
+                    + '<span aria-hidden="true">«</span>'
+                    + '<span class="sr-only">Previous</span>'
+                    + '</a></li>');
+        }
+        if (data.activepage < data.lastpage) {
+            href = 'photo/album/' + data.album.id + '/' + (data.activepage + 1);
+            $("#paging").append('<li><a id="next" href="' + href + '">'
+                    + '<span aria-hidden="true">»</span>'
+                    + '<span class="sr-only">Previous</span>'
+                    + '</a></li>');
+        }
+
+        $("#paging").find("a").each(function () {
+            $(this).on('click', function (e) {
+                e.preventDefault();
+                Photo.loadPage(e.target.href);
+
+            });
         });
     });
 }
+
 Photo.initAdmin = function () {
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
