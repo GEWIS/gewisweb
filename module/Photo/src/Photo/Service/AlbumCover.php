@@ -15,7 +15,13 @@ use Imagick;
  */
 class AlbumCover extends AbstractService
 {
-
+    /**
+     * Creates and returns the path to a cover image, a mozaic generated from 
+     * a random selection of photos in the album or subalbums.
+     * 
+     * @param Photo\Model\Album $album The album to create the cover for.
+     * @return string The path to the cover image.
+     */
     public function createCover($album)
     {
         $cover = $this->generateCover($album);
@@ -27,6 +33,13 @@ class AlbumCover extends AbstractService
         return $newPath;
     }
 
+    /**
+     * Creates a cover image for the given album.
+     * 
+     * @param Photo\Model\Album $album The album to create a cover image for.
+     * @return Imagick The cover image.
+     */
+    //TODO: clean up code.
     protected function generateCover($album)
     {
         $config = $this->getConfig();
@@ -100,6 +113,8 @@ class AlbumCover extends AbstractService
      * Returns the images needed to fill the album cover
      * 
      * @param Photo\Model\Album $album
+     * @param int $count the amount of images needed.
+     * @return Imagick a list of the images.
      */
     protected function getImages($album, $count)
     {
