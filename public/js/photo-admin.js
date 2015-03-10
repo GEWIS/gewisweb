@@ -70,6 +70,8 @@ Photo.loadPage = function (resource) {
 
             });
         });
+        
+        $("#btnAdd").attr('href', 'photo/album/'+data.album.id+'/add');
     });
 }
 

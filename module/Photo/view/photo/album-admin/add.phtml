@@ -1,1 +1,35 @@
-add album
+<?php
+$this->headScript()
+        ->prependFile($this->basePath() . '/js/photo-admin.js')
+        ->prependFile($this->basePath() . '/js/photo.js')
+        ->prependFile($this->basePath() . '/js/dropzone.js');
+$this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css')
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <h1><?= $this->translate('Upload photos') ?></h1><hr>
+        <div class="panel panel-default">
+            <form action="upload" class="dropzone panel-body"></form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1><?= $this->translate('Import photos') ?></h1><hr>
+        <div class="alert alert-warning" role="alert"><?=
+            $this->translate('Make sure that the folder permissions on your import'
+                    . ' folder are set such that the webserver user can read the files'
+                    . ' inside of it. Please note that importing a large amount'
+                    . ' of photos may take a while.')
+            ?></div>
+        <form>
+            <div class="form-group">
+                <label for="folderInput">Import folder</label>
+                <input type="email" class="form-control" id="folderInput" placeholder="/path/to/your/photos">
+            </div>
+
+            <button type="submit" class="btn btn-default">Import</button>
+        </form>
+    </div>
+</div>
