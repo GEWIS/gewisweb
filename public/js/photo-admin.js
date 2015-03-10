@@ -74,6 +74,7 @@ Photo.loadPage = function (resource) {
 }
 
 Photo.initAdmin = function () {
+    $("#albumControls").hide();
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
     var count = 0;
@@ -127,6 +128,7 @@ $.fn.extend({
         tree.find("a").each(function () {
             $(this).on('click', function (e) {
                 e.preventDefault();
+                $("#albumControls").show();
                 Photo.loadPage(e.target.href);
 
             });

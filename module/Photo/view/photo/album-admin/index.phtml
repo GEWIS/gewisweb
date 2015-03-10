@@ -104,22 +104,45 @@ $this->headScript()
         </div>
     </div>
     <div class="col-lg-9">
-        <ol class="breadcrumb">
-            <li><a href="#">2014-2015</a></li>
-            <li><a href="#">Test album #2</a></li>
-            <li class="active">Super awesome sub album #4</li>
-        </ol>
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Modify details') ?></button> 
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></button> 
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button> 
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
-        <button type="button" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
-        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-globe"></span>&nbsp;<?= $this->translate('Make album private') ?></button>
 
+        <a class="btn btn-primary" href="photo/album/create"><span class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
+        <hr>
+        <div id="albumControls">
+            <ol class="breadcrumb">
+                <li><a href="#">2014-2015</a></li>
+                <li><a href="#">Test album #2</a></li>
+                <li class="active">Super awesome sub album #4</li>
+            </ol>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#renameModal"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Rename album') ?></button> 
+            <a class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
+            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button> 
+            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
+            <button type="button" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-globe"></span>&nbsp;<?= $this->translate('Make album private') ?></button>
+        </div>
         <hr>
 
         <nav><ul class="pagination" id="paging"></ul></nav>
         <div id="album"></div>
+    </div>
+</div>
+
+<!-- Rename album modal -->
+<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Rename album</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 <script>
