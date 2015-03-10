@@ -114,7 +114,7 @@ $this->headScript()
                 <li class="active">Super awesome sub album #4</li>
             </ol>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#renameModal"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Rename album') ?></button> 
-            <a class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
+            <a id="btnAdd" class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button> 
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
             <button type="button" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
