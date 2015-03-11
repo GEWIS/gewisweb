@@ -7,6 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
+use Imagick;
 
 /**
  * Photo service.
@@ -36,7 +37,7 @@ class Photo extends AbstractService
 
     /**
      * 
-     * @param string $path
+     * @param Imagick $image
      * @return the path at which the photo should be saved
      */
     protected function generateStoragePath($path)
@@ -70,12 +71,21 @@ class Photo extends AbstractService
         //check if photo exists already in the database
         $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
-        if (is_null($photo)) {
+        if (is_null($photo)) {            
             $photo = new PhotoModel();
             $photo->setAlbum($targetAlbum);
             $photo = $this->getMetadataService()->populateMetaData($photo, $path);
             $photo->setPath($storagePath);
 
+            //Create and set the storage paths for thumbnails.
+            //Currently, the maximum sizes of the old website are used. These
+            //values are dependant on the design.
+            $photo->setLargeThumbPath($this->createThumbnail($path, 
+                    $config['large_thumb_size']['width'],
+                    $config['large_thumb_size']['height']));
+            $photo->setSmallThumbPath($this->createThumbnail($path, 
+                    $config['small_thumb_size']['width'], 
+                    $config['small_thumb_size']['height']));
             $mapper = $this->getPhotoMapper();
             /**
              * TODO: optionally we could use a transactional query here to make it
@@ -89,13 +99,40 @@ class Photo extends AbstractService
         }
         return $photo;
     }
+    
+    /**
+     * Creates and stores a thumbnail of specified maximum size from a stored 
+     * image 
+     * 
+     * @param string $path the path of the original image
+     * @param int $width the maximum width of the thumbnail (in px)
+     * @param int $height the maximum height of the thumbnail (in px)
+     * @return string the path of the created thumbnail
+     */
+    protected function createThumbnail($path, $width, $height){
+        
+        $image = new Imagick($path);
+        $image->thumbnailImage($width, $height, true);
+        $image->setimageformat("png");
+        //Tempfile is used to generate sha1, not sure this is the best method
+        
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() .'.png';
+        $image->writeImage($tempFileName);
+        $newPath = $this->generateStoragePath($tempFileName);
+        $config = $this->getConfig();
+        rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
+        return $newPath;
+    }
+    
+    
     /**
      * Stores an directory in $target_album.
      * If any subdirectory is present, it will be stored in a new album, 
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
-     * @param type $path The path of the directory.
-     * @param type $targetAlbum The album to store the photos.
+     * @param string $path The path of the directory.
+     * @param Photo\Model\Album $target_album The album to store the photos.
+
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
@@ -110,7 +147,7 @@ class Photo extends AbstractService
                         $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
                         $this->storeUploadedDirectory($subPath, $subAlbum);
                     }
-                    elseif ($image->isValid ($subPath)){
+                    elseif (true){
                         $this->getPhotoService()->storeUploadedPhoto($subPath,$targetAlbum);
                     }
                 }
