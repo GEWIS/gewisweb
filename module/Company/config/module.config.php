@@ -113,6 +113,16 @@ return [
                                         'packet'     => '[a-zA-Z0-9_-]*',
                                     ],
                                     'may_terminate' => true,
+                                ),
+                            ),
+                            'addJob' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/addJob',
+                                    'defaults' => [
+                                        'action' => 'addJob'
+                                    ],
+                                    'may_terminate' => true,
                                 ],
                             ],
                             'editJob' => [

@@ -39,10 +39,29 @@ class Company
 
     public function insert(){
         $company=new CompanyModel($this->em);
+
+        $companiesWithSameAsciiName = $this->findEditableCompaniesWithAsciiName($company->getAsciiName(), false);
         
-        $company->setLanguage('en');
+        // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
+        if($company->getLogo == null){
+            $company->setLogo("");
+        }
+        
+        // TODO: implement language
+        if($company->getLanguage == null){
+            $company->setLanguage("en");
+        }
+        if(empty($companiesWithSameAsciiName)){
+            // We have a problem, ID is not set, so we set a placeholder. When the id is known, we change this into the real id. 
+            $company->setLanguageNeutralId(-1);
+        }
+        else{
+            $company->setLanguageNeutralId($companiesWithSameAsciiName[0]->getLanguageNeutralId());
+        }
+
         $company->setHidden(false);
         $this->em->persist($company);
+        echo $company->getId();
         return $company;
     }
     /**

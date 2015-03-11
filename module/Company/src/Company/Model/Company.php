@@ -388,6 +388,24 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
         $this->language = $language;
     }
     
+    /**
+     * Get the company's language.
+     *
+     * @return Integer
+     */
+    public function getLanguageNeutralId()
+    {
+        return $this->languageNeutralId;
+    }
+    /**
+     * Set the company's language neutral id.
+     *
+     * @param Integer $languageNeutralId
+     */
+    public function setLanguageNeutralId($language)
+    {
+        $this->languageNeutralId = $language;
+    }
     // For zend2 forms
     public function getArrayCopy()
     {
@@ -397,6 +415,7 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     public function exchangeArray($data) {
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
         $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+        $this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
         $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
