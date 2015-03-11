@@ -21,6 +21,12 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'languageNeutralId',
+            'attributes' => array(
+                'type'  => 'hidden',
+            ),
+        ));
+        $this->add(array(
             'name' => 'asciiName',
             'attributes' => array(
                 'type'  => 'text',

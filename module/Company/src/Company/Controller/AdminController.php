@@ -37,7 +37,7 @@ class AdminController extends AbstractActionController
                 $company=$companyService->insertCompany();
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
-                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$companyName),array(),true);   
+                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$companyName),array(),false);   
             }
         }
         //$company=$companyService->insertCompany();
@@ -69,14 +69,14 @@ class AdminController extends AbstractActionController
 
             // TODO: isValid does not work yet
             if ($companyForm->isValid()) {
-                $job=$companyService->insertJobForCompanyAsciiName($asciiCompanyName);
-                $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $job=$companyService->insertJobForCompanyAsciiName($companyName);
+                $job->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
-                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'asciiCompanyName'=>$asciiCompanyName, 'asciiJobName'=>$jobName),array(),true);   
+                return $this->redirect()->toRoute('admin_company/editCompany/editJob', array('asciiCompanyName'=>$companyName, 'jobName'=>$jobName),array(),true);   
             }
         }
 
-        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/default',array('action'=>'addJob', 'asciiCompanyName'=>$companyName)));
+        $companyForm->setAttribute('action',$this->url()->fromRoute('admin_company/editCompany/addJob',array('asciiCompanyName'=>$companyName)));
         $vm = new ViewModel(array(
           //  'company' => $company,
             'companyEditForm' => $companyForm,

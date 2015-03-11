@@ -61,10 +61,10 @@ class Job
 
         $job->setCompany($company);
         $this->em->persist($job);
-        $this->em->persist($job->getCompany());
+//        $this->em->persist($job->getCompany());
         
-        $this->em->merge($company);
-        $this->em->merge($job);
+//        $this->em->merge($company);
+//        $this->em->merge($job);
 
         return $job;
     }

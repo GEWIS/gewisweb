@@ -252,17 +252,16 @@ class Job //implements RoleInterface, ResourceInterface
         return get_object_vars($this);
     }
     public function exchangeArray($data){
-        $this->name=(isset($data['name'])) ? $data['name'] : $this->name;
-        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->asciiName;
-        $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
-        //$this->address=(isset($data['address'])) ? $data['address'] : $this->address;
-        $this->website=(isset($data['website'])) ? $data['website'] : $this->website;
-        $this->active=(isset($data['active'])) ? $data['active'] : $this->active;
-        //$this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->slogan;
-        $this->email=(isset($data['email'])) ? $data['email'] : $this->email;
-        //$this->logo=(isset($data['logo'])) ? $data['logo'] : $this->logo;
-        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->phone;
-        $this->description=(isset($data['description'])) ? $data['description'] : $this->description;
-        //$this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->jobs;
+        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+//        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
+        $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
+        $this->active=(isset($data['active'])) ? $data['active'] : $this->getActive();
+        if($this->active==null){
+            $this->setActive(false);
+        }
+        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
     }
 }

@@ -115,6 +115,16 @@ return array(
                                     'may_terminate' => true,
                                 ),
                             ),
+                            'addJob' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/addJob',
+                                    'defaults' => array(
+                                        'action' => 'addJob'
+                                    ),
+                                    'may_terminate' => true,
+                                ),
+                            ),
                             'editJob' => array(
                                 'type' => 'segment',
                                 'options' => array(
