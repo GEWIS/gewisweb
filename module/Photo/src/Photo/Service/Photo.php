@@ -62,7 +62,9 @@ class Photo extends AbstractService
         if (!file_exists($config['upload_dir'] . '/' . $directory)) {
             mkdir($config['upload_dir'] . '/' . $directory);
         }
-        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
+        $parts = explode('.', $path);
+        $fileType = end($parts);
+        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower($fileType);
         return $storagePath;
     }
 
@@ -158,6 +160,11 @@ class Photo extends AbstractService
                 }
             }
             closedir($handle);
+        } else {
+            $translator = $this->getTranslator();
+            throw new \Exception(
+                $translator->translate('The specified path is not valid')
+            );
         }
     }
 
