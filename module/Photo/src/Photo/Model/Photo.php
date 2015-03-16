@@ -101,7 +101,7 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $path;
-    
+
     /**
      * The path where the small thumbnail of the photo is located relative to 
      * the storage directory
@@ -237,7 +237,7 @@ class Photo implements ResourceInterface
     {
         return $this->path;
     }
-    
+
     /**
      * Get the path where the large thumbnail is stored.
      * 
@@ -247,7 +247,7 @@ class Photo implements ResourceInterface
     {
         return $this->largeThumbPath;
     }
-    
+
     /**
      * Get the path where the large thumbnail is stored.
      * 
@@ -377,7 +377,7 @@ class Photo implements ResourceInterface
     {
         $this->largeThumbPath = $path;
     }
-    
+
     /**
      * Set the path where the small thumbnail is stored
      *
@@ -386,6 +386,28 @@ class Photo implements ResourceInterface
     public function setSmallThumbPath($path)
     {
         $this->smallThumbPath = $path;
+    }
+
+    /**
+     * Returns an associative array representation of this object
+     */
+    public function toArray()
+    {
+        $array = array('id' => $this->id,
+            'dateTime' => $this->dateTime,
+            'artist' => $this->artist,
+            'camera' => $this->camera,
+            'flash' => $this->flash,
+            'focalLength' => $this->focalLength,
+            'exposureTime' => $this->exposureTime,
+            'shutterSpeed' => $this->shutterSpeed,
+            'aperture' => $this->aperture,
+            'iso' => $this->iso,
+            'album' => $this->album->toArray(),
+            'path' => $this->path,
+            'smallThumbPath' => $this->smallThumbPath,
+            'largeThumbPath' => $this->largeThumbPath);
+        return $array;
     }
 
     /**
@@ -398,14 +420,12 @@ class Photo implements ResourceInterface
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
         //update start and end date if the added photo is newere or older
-        if (   is_null($this->album->getStartDateTime()) 
-            || $this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()
+        if (is_null($this->album->getStartDateTime()) || $this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()
         ) {
             $this->album->setStartDateTime($this->getDateTime());
         }
 
-        if (   is_null($this->album->getEndDateTime()) 
-            || $this->album->getEndDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
+        if (is_null($this->album->getEndDateTime()) || $this->album->getEndDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
         ) {
             $this->album->setEndDateTime($this->getDateTime());
         }

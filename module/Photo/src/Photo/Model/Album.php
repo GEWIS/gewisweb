@@ -145,6 +145,7 @@ class Album implements ResourceInterface
     {
         return $this->children;
     }
+
     /**
      * Get the album cover
      * 
@@ -246,6 +247,39 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Returns an associative array representation of this object
+     */
+    public function toArray()
+    {
+        $array = array('id' => $this->id,
+            'startDateTime' => $this->startDateTime,
+            'endDateTime' => $this->endDateTime,
+            'name' => $this->name,
+            'parent' => $this->parent,
+            'children' => array(),
+            'photos' => array(),
+            'coverPath' => $this->coverPath,
+            'photoCount' => $this->photoCount,
+            'albumCount' => $this->albumCount);
+        return $array;
+    }
+    
+    /**
+     * Returns an associative array representation of this object
+     * including all child objects
+     */
+    function toArrayWithChildren() {
+        $array = $this->toArray();
+        foreach ($this->photos as $photo) {
+             $array['photos'][] = $photo->toArray();
+        }
+        foreach ($this->children as $album) {
+            $array['children'][] = $album->toArray();
+        }
+        return $array;
+    }
+
+    /**
      * Updates the albumCount in the parent album object.
      * 
      * @ORM\PrePersist()
@@ -255,13 +289,11 @@ class Album implements ResourceInterface
     {
         if (!is_null($this->parent) && !is_null($this->getStartDateTime())) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
-            if (    is_null($this->parent->getStartDateTime()) 
-                || $this->parent->getStartDateTime()->getTimestamp() > 
-                    $this->getStartDateTime()->getTimeStamp() ) {
+            if (is_null($this->parent->getStartDateTime()) || $this->parent->getStartDateTime()->getTimestamp() >
+                    $this->getStartDateTime()->getTimeStamp()) {
                 $this->parent->setStartDateTime($this->getStartDateTime());
             }
-            if (   is_null($this->parent->getEndDateTime()) 
-                || $this->parent->getEndDateTime()->getTimestamp() < 
+            if (is_null($this->parent->getEndDateTime()) || $this->parent->getEndDateTime()->getTimestamp() <
                     $this->getEndDateTime()->getTimeStamp()) {
                 $this->parent->setEndDateTime($this->getEndDateTime());
             }
