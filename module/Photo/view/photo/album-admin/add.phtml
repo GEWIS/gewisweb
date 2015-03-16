@@ -23,13 +23,18 @@ $this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css')
                     . ' inside of it. Please note that importing a large amount'
                     . ' of photos may take a while.')
             ?></div>
-        <form>
+        
             <div class="form-group">
                 <label for="folderInput">Import folder</label>
-                <input type="email" class="form-control" id="folderInput" placeholder="/path/to/your/photos">
+                <input type="text" name="folder_path" class="form-control" id="folderInput" placeholder="/path/to/your/photos">
             </div>
 
-            <button type="submit" class="btn btn-default">Import</button>
-        </form>
+            <button id="btnImport" class="btn btn-default">Import</button>
+        
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        Photo.initAdd();
+    });
+</script>

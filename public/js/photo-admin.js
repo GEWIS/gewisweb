@@ -70,8 +70,8 @@ Photo.loadPage = function (resource) {
 
             });
         });
-        
-        $("#btnAdd").attr('href', 'photo/album/'+data.album.id+'/add');
+
+        $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
     });
 }
 
@@ -95,6 +95,18 @@ Photo.initAdmin = function () {
             $("#remove-multiple").addClass("btn-hidden");
         }
     });
+}
+Photo.initAdd = function () {
+    $("btnImport").click(function () {
+        $.post("import",
+                {
+                    folder_path: $("folderInput").val()
+                },
+        function (data) {
+            console.log(data);
+        });
+    });
+
 }
 $.fn.extend({
     treed: function () {
