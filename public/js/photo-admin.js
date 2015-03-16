@@ -97,14 +97,26 @@ Photo.initAdmin = function () {
     });
 }
 Photo.initAdd = function () {
-    $("btnImport").click(function () {
+    $("#btnImport").click(function () {
+        console.log("Import "+$("#folderInput").val());    
         $.post("import",
                 {
-                    folder_path: $("folderInput").val()
+                    folder_path: $("#folderInput").val()
                 },
         function (data) {
+            $("#spinner").hide();
             console.log(data);
+            if(data.success) {
+                $("#successAlert").show();
+            } else {
+                $("#errorAlert").html(data.message);
+                $("#errorAlert").show();
+                $("#import").show();
+            }
         });
+        $("#errorAlert").hide();
+        $("#spinner").show();
+        $("#import").hide();
     });
 
 }
