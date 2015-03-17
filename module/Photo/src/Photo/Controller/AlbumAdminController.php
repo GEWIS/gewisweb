@@ -60,7 +60,21 @@ class AlbumAdminController extends AbstractActionController
 
     public function uploadAction()
     {
-        
+        $request = $this->getRequest();
+        $result = array();
+        $result['success'] = false;
+        if ($request->isPost()) {
+            $albumId = $this->params()->fromRoute('album_id');
+            $album = $this->getAlbumService()->getAlbum($albumId);
+
+            try {
+                $this->getPhotoService()->upload($request->getFiles(), $album);
+                $result['success'] = true;
+            } catch (\Exception $e) {
+                $result['message'] = $e->getMessage();
+            }
+        }
+        return new JsonModel($result);
     }
 
     public function importAction()

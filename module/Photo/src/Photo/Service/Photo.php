@@ -74,9 +74,10 @@ class Photo extends AbstractService
      * or database entries
      * @param string $path the tempoary path of the uploaded photo
      * @param Photo\Model\Album $targetAlbum the album to save the photo in
+     * @param boolean $move whether to move the photo instead of copying it
      * @return Photo\Model\Photo
      */
-    public function storeUploadedPhoto($path, $targetAlbum)
+    public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
         $config = $this->getConfig();
         $storagePath = $this->generateStoragePath($path);
@@ -103,7 +104,11 @@ class Photo extends AbstractService
              */
             $mapper->persist($photo);
             $mapper->flush();
-            copy($path, $config['upload_dir'] . '/' . $storagePath);
+            if ($move) {
+                rename($path, $config['upload_dir'] . '/' . $storagePath);
+            } else {
+                copy($path, $config['upload_dir'] . '/' . $storagePath);
+            }
         }
         return $photo;
     }
@@ -163,7 +168,40 @@ class Photo extends AbstractService
         } else {
             $translator = $this->getTranslator();
             throw new \Exception(
-                $translator->translate('The specified path is not valid')
+            $translator->translate('The specified path is not valid')
+            );
+        }
+    }
+
+    public function upload($files, $album)
+    {
+        $imageValidator = new \Zend\Validator\File\IsImage(
+                array('magicFile' => false)
+        );
+        $extensionValidator = new \Zend\Validator\File\Extension(
+                array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+        );
+        $translator = $this->getTranslator();
+
+        /**
+         * We re-add the original extension so it can be preserved later on
+         * when moving the file.
+         */
+        $extension = explode('/', $files['file']['type'])[1];
+        $path = $files['file']['tmp_name'] . '.' . $extension;
+        move_uploaded_file($files['file']['tmp_name'], $path);
+
+        if ($imageValidator->isValid($path)) {
+            if ($extensionValidator->isValid($path)) {
+                $this->storeUploadedPhoto($path, $album, true);
+            } else {
+                throw new \Exception(
+                $translator->translate('The uploaded file does not have a valid extension')
+                );
+            }
+        } else {
+            throw new \Exception(
+            $translator->translate('The uploaded file is not a valid image')
             );
         }
     }

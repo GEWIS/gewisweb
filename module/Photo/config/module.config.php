@@ -146,6 +146,19 @@ return array(
                             ),
                         ),
                     ),
+                    'album_upload' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/upload',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'upload'
+                            ),
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
                     'album_move' => array(
                         'type' => 'Segment',
                         'options' => array(
