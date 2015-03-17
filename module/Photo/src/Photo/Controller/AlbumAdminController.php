@@ -71,7 +71,8 @@ class AlbumAdminController extends AbstractActionController
                 $this->getPhotoService()->upload($request->getFiles(), $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
-                $result['message'] = $e->getMessage();
+                $this->getResponse()->setStatusCode(500);
+                $result['error'] = $e->getMessage();
             }
         }
         return new JsonModel($result);
@@ -89,7 +90,8 @@ class AlbumAdminController extends AbstractActionController
                 $this->getPhotoService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
-                $result['message'] = $e->getMessage();
+                $this->getResponse()->setStatusCode(500);
+                $result['error'] = $e->getMessage();
             }
         }
         return new JsonModel($result);

@@ -109,7 +109,7 @@ Photo.initAdd = function () {
             if(data.success) {
                 $("#successAlert").show();
             } else {
-                $("#errorAlert").html(data.message);
+                $("#errorAlert").html(data.error);
                 $("#errorAlert").show();
                 $("#import").show();
             }
