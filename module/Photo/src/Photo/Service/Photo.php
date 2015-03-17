@@ -183,6 +183,11 @@ class Photo extends AbstractService
         );
         $translator = $this->getTranslator();
 
+        if ($files['file']['error'] !== 0) {
+            throw new \Exception(
+            $translator->translate('An unkown error occured during uploading (' . $files['file']['error'] . ')')
+            );
+        }
         /**
          * We re-add the original extension so it can be preserved later on
          * when moving the file.
