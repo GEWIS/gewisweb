@@ -185,6 +185,19 @@ return array(
                             ),
                         ),
                     ),
+                    'album_cover' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/cover',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'cover'
+                            ),
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
                     'photo_index' => array(
                         'type' => 'Segment',
                         'options' => array(

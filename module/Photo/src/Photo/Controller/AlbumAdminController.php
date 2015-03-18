@@ -24,7 +24,7 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-//TODO: save and create album
+            //TODO: save and create album
         }
 
         return new ViewModel(array(
@@ -105,6 +105,18 @@ class AlbumAdminController extends AbstractActionController
     public function deleteAction()
     {
         
+    }
+
+    /**
+     * Regenerates the cover photo for the album
+     */
+    public function coverAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $albumId = $this->params()->fromRoute('album_id');
+            $this->getAlbumService()->generateAlbumCover($albumId);
+        }
+        return new JsonModel(array());
     }
 
     /**

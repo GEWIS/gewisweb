@@ -4,8 +4,10 @@
  * Depends: jquery, photo.js
  */
 
+Photo.activePage = 'photo';
 Photo.loadPage = function (resource) {
     $.getJSON(resource, function (data) {
+        Photo.activePage = resource;
         console.log(data);
         $("#album").html('<div class="row"></div>');
         $.each(data.albums, function (i, album) {
@@ -70,12 +72,17 @@ Photo.loadPage = function (resource) {
         $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
     });
 }
-
+Photo.regenerateCover = function() {
+    $.post(Photo.activePage+'/cover');
+}
 Photo.initAdmin = function () {
     $("#albumControls").hide();
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
     var count = 0;
+    $("#generateCover").on('click', function (e) {
+        Photo.regenerateCover();
+    });
     $(".thumbail-checkbox").change(function () {
         if (this.checked) {
             count++;
