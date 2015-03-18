@@ -4,11 +4,13 @@
  * Depends: jquery, photo.js
  */
 
-Photo.activePage = 'photo';
-Photo.loadPage = function (resource) {
+Photo.Admin = {};
+Photo.Admin.activePage = 'photo';
+Photo.Admin.selectedCount = 0;
+Photo.Admin.loadPage = function (resource) {
     $.getJSON(resource, function (data) {
-        Photo.activePage = resource;
-        console.log(data);
+        Photo.Admin.activePage = resource;
+        Photo.Admin.selectedCount = 0;
         $("#album").html('<div class="row"></div>');
         $.each(data.albums, function (i, album) {
             href = 'photo/album/' + album.id
@@ -22,7 +24,7 @@ Photo.loadPage = function (resource) {
         });
 
         $("#album").find("a").each(function () {
-            $(this).on('click', Photo.albumClicked);
+            $(this).on('click', Photo.Admin.albumClicked);
         });
 
         $.each(data.photos, function (i, photo) {
@@ -64,51 +66,57 @@ Photo.loadPage = function (resource) {
         $("#paging").find("a").each(function () {
             $(this).on('click', function (e) {
                 e.preventDefault();
-                Photo.loadPage(e.target.href);
+                Photo.Admin.loadPage(e.target.href);
 
             });
         });
 
+        $(".thumbail-checkbox").change(Photo.Admin.itemSelected);
         $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
     });
 }
-Photo.regenerateCover = function() {
-    $.post(Photo.activePage+'/cover');
+
+Photo.Admin.regenerateCover = function () {
+    $("#coverPreview").empty();
+    $("#coverPreview").attr('class', 'spinner');
+    $.post(Photo.Admin.activePage + '/cover', function (data) {
+        $.getJSON(Photo.Admin.activePage, function (data) {
+            $("#coverPreview").attr('class', '');
+            $("#coverPreview").html('<img class="cover-preview" src="/data/photo/' + data.album.coverPath + '">');
+        });
+    });
 }
-Photo.initAdmin = function () {
+
+
+Photo.Admin.init = function () {
     $("#albumControls").hide();
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
-    var count = 0;
-    $("#generateCover").on('click', function (e) {
-        Photo.regenerateCover();
-    });
-    $(".thumbail-checkbox").change(function () {
-        if (this.checked) {
-            count++;
-        } else {
-            count--;
-        }
-        $("#remove-count").html(count);
-        if (count > 0)
-        {
-            console.log("unhide");
-            $("#remove-multiple").removeClass("btn-hidden");
-        } else {
-            $("#remove-multiple").addClass("btn-hidden");
-        }
-    });
+    $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
 }
-Photo.initAdd = function () {
+
+Photo.Admin.itemSelected = function () {
+    if (this.checked) {
+        Photo.Admin.selectedCount++;
+    } else {
+        Photo.Admin.selectedCount--;
+    }
+    $("#remove-count").html(Photo.Admin.selectedCount);
+    if (Photo.Admin.selectedCount > 0)
+    {
+        $("#remove-multiple").removeClass("btn-hidden");
+    } else {
+        $("#remove-multiple").addClass("btn-hidden");
+    }
+}
+Photo.Admin.initAdd = function () {
     $("#btnImport").click(function () {
-        console.log("Import " + $("#folderInput").val());
         $.post("import",
                 {
                     folder_path: $("#folderInput").val()
                 },
         function (data) {
             $("#spinner").hide();
-            console.log(data);
             if (data.success) {
                 $("#successAlert").show();
             } else {
@@ -123,13 +131,13 @@ Photo.initAdd = function () {
     });
 
 }
-Photo.updateBreadCrumb = function (target) {
+Photo.Admin.updateBreadCrumb = function (target) {
 
     if (target.attr('class') == 'thumbnail') {
         a = target.clone();
         a.children().remove();
         a.attr('class', '');
-        a.on('click', Photo.albumClicked);
+        a.on('click', Photo.Admin.albumClicked);
         item = $("<li></li>").append(a);
         $("#breadcrumb").append(item)
     } else if (target.parent().parent().attr('id') == 'breadcrumb') {
@@ -140,7 +148,7 @@ Photo.updateBreadCrumb = function (target) {
             if (target.children('a').length > 0)
             {
                 a = target.children('a').clone();
-                a.on('click', Photo.albumClicked);
+                a.on('click', Photo.Admin.albumClicked);
                 item = $("<li></li>").append(a);
                 $("#breadcrumb").prepend(item)
             }
@@ -148,11 +156,11 @@ Photo.updateBreadCrumb = function (target) {
         }
     }
 }
-Photo.albumClicked = function (e) {
+Photo.Admin.albumClicked = function (e) {
     e.preventDefault();
     $("#albumControls").show();
-    Photo.updateBreadCrumb($(this));
-    Photo.loadPage(e.target.href);
+    Photo.Admin.updateBreadCrumb($(this));
+    Photo.Admin.loadPage(e.target.href);
 
 }
 $.fn.extend({
@@ -182,12 +190,12 @@ $.fn.extend({
             $(this).on('click', function (e) {
                 $(this).closest('li').click();
                 e.preventDefault();
-                // Photo.loadPage(e.target.href);
+                // Photo.Admin.loadPage(e.target.href);
 
             });
         });
         tree.find("a").each(function () {
-            $(this).on('click', Photo.albumClicked);
+            $(this).on('click', Photo.Admin.albumClicked);
         });
     }
 });

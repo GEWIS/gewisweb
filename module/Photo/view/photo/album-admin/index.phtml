@@ -1,76 +1,10 @@
 <?php
 $this->headScript()
         ->prependFile($this->basePath() . '/js/photo-admin.js')
-        ->prependFile($this->basePath() . '/js/photo.js')
+        ->prependFile($this->basePath() . '/js/photo.js');
+$this->headLink()
+        ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
 ?>
-<style>
-    .tree, .tree ul {
-        margin:0;
-        padding:0;
-        list-style:none
-    }
-    .tree ul {
-        margin-left:1em;
-        position:relative
-    }
-    .tree ul ul {
-        margin-left:.5em
-    }
-    .tree ul:before {
-        content:"";
-        display:block;
-        width:0;
-        position:absolute;
-        top:0;
-        bottom:0;
-        left:0;
-        border-left:1px solid
-    }
-    .tree li {
-        margin:0;
-        padding:0 1em;
-        line-height:2em;
-        color:#369;
-        font-weight:700;
-        position:relative
-    }
-    .tree ul li:before {
-        content:"";
-        display:block;
-        width:10px;
-        height:0;
-        border-top:1px solid;
-        margin-top:-1px;
-        position:absolute;
-        top:1em;
-        left:0
-    }
-    .tree ul li:last-child:before {
-        background:#fff;
-        height:auto;
-        top:1em;
-        bottom:0
-    }
-    .indicator {
-        margin-right:5px;
-    }
-    .tree li a {
-        text-decoration: none;
-        color:#369;
-    }
-    .tree li button, .tree li button:active, .tree li button:focus {
-        text-decoration: none;
-        color:#369;
-        border:none;
-        background:transparent;
-        margin:0px 0px 0px 0px;
-        padding:0px 0px 0px 0px;
-        outline: 0;
-    }
-    .btn-hidden {
-        display:none;
-    }
-</style>
 <div class="row">
     <div class="col-lg-12">
         <h1><?= $this->translate('Photo admin') ?></h1><hr>
@@ -108,19 +42,15 @@ $this->headScript()
         <a class="btn btn-primary" href="photo/album/create"><span class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
-            <ol id="breadcrumb" class="breadcrumb">
-                <li><a href="#">2014-2015</a></li>
-                <li><a href="#">Test album #2</a></li>
-                <li class="active">Super awesome sub album #4</li>
-            </ol>
+            <ol id="breadcrumb" class="breadcrumb"></ol>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#renameModal"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Rename album') ?></button> 
             <a id="btnAdd" class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
-            <button type="button" id="generateCover" class="btn btn-primary"><span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?></button><br><br>
+            <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate"><span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?></button><br><br>
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
             <button type="button" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
             <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-globe"></span>&nbsp;<?= $this->translate('Make album private') ?></button>
-            
+
         </div>
         <hr>
 
@@ -147,9 +77,28 @@ $this->headScript()
         </div>
     </div>
 </div>
+
+<!-- Regenerate album cover modal -->
+<div class="modal fade" id="coverModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Generate a new cover photo') ?></h4>
+            </div>
+            <div  class="modal-body">
+                <center><div id="coverPreview" class="spinner"></div></center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-regenerate"><?= $this->translate('Regenerate') ?></button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?= $this->translate('Save') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $('.tree').treed();
-        Photo.initAdmin();
+        Photo.Admin.init();
     });
 </script>
