@@ -20,11 +20,7 @@ Photo.loadPage = function (resource) {
         });
 
         $("#album").find("a").each(function () {
-            $(this).on('click', function (e) {
-                e.preventDefault();
-                Photo.loadPage(e.target.href);
-
-            });
+            $(this).on('click', Photo.albumClicked);
         });
 
         $.each(data.photos, function (i, photo) {
@@ -98,7 +94,7 @@ Photo.initAdmin = function () {
 }
 Photo.initAdd = function () {
     $("#btnImport").click(function () {
-        console.log("Import "+$("#folderInput").val());    
+        console.log("Import " + $("#folderInput").val());
         $.post("import",
                 {
                     folder_path: $("#folderInput").val()
@@ -106,7 +102,7 @@ Photo.initAdd = function () {
         function (data) {
             $("#spinner").hide();
             console.log(data);
-            if(data.success) {
+            if (data.success) {
                 $("#successAlert").show();
             } else {
                 $("#errorAlert").html(data.error);
@@ -118,6 +114,38 @@ Photo.initAdd = function () {
         $("#spinner").show();
         $("#import").hide();
     });
+
+}
+Photo.updateBreadCrumb = function (target) {
+
+    if (target.attr('class') == 'thumbnail') {
+        a = target.clone();
+        a.children().remove();
+        a.attr('class', '');
+        a.on('click', Photo.albumClicked);
+        item = $("<li></li>").append(a);
+        $("#breadcrumb").append(item)
+    } else if (target.parent().parent().attr('id') == 'breadcrumb') {
+        target.parent().nextAll().remove();
+    } else {
+        $("#breadcrumb").empty();
+        while (!target.is('div')) {
+            if (target.children('a').length > 0)
+            {
+                a = target.children('a').clone();
+                a.on('click', Photo.albumClicked);
+                item = $("<li></li>").append(a);
+                $("#breadcrumb").prepend(item)
+            }
+            target = target.parent();
+        }
+    }
+}
+Photo.albumClicked = function (e) {
+    e.preventDefault();
+    $("#albumControls").show();
+    Photo.updateBreadCrumb($(this));
+    Photo.loadPage(e.target.href);
 
 }
 $.fn.extend({
@@ -152,12 +180,7 @@ $.fn.extend({
             });
         });
         tree.find("a").each(function () {
-            $(this).on('click', function (e) {
-                e.preventDefault();
-                $("#albumControls").show();
-                Photo.loadPage(e.target.href);
-
-            });
+            $(this).on('click', Photo.albumClicked);
         });
     }
 });
