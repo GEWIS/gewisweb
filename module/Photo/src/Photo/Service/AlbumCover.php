@@ -63,7 +63,7 @@ class AlbumCover extends AbstractService
                 $config['album_cover']['background']);
         
         if (count($images) > 0) {
-            drawComposition($target, $columns, $rows, $images);
+            $this->drawComposition($target, $columns, $rows, $images);
         }
         $target->setImageFormat("png");
         return $target;
