@@ -49,6 +49,13 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="text")
      */
     protected $description;
+    
+    /**
+     * The company's website.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $website;
 
     /**
      * The language that this company record is written in
@@ -151,6 +158,26 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+    
+    /**
+     * Get the company's website.
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set the company's website.
+     *
+     * @param string $website
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
     }
 
     /**
