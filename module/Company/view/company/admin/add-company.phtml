@@ -4,66 +4,8 @@
 $form=$companyEditForm;
 //$form=$this->form($companyEditForm);
 ?>
-
 <?= $this->form()->openTag($form) ?>
-<dl>
-<?php $element = $form->get('name') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-<?php $element = $form->get('asciiName') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('address') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('website') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('description') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('logo') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('phone') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('email') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('slogan') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-</dl>
-
+<?php echo $this->partial('partial/company/admin/editors/company.phtml', array(
+    'form' => $form)); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
