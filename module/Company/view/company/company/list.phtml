@@ -13,6 +13,7 @@ else{
     $islist = true;
     echo("<h1>Companies</h1>");
 
+    //echo($this->partial('partial/filter/body'));
     echo("<fieldset> 
         <legend>Filter</legend> 
         <label>All <input type='text' id='filter-all'></label> 
@@ -29,6 +30,8 @@ if(!isset($company_list)){
 foreach ($company_list as $company) {
     echo($this->partial('partial/company/company/list/company.phtml',array('islist'=>$islist,'company'=>$company)));
 }
+
+//echo($this->partial('partial/filter/script'));
 ?>
 
 <script type="text/javascript">

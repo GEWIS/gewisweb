@@ -13,12 +13,12 @@ class Company extends AbstractACLService
 {
     public function getCompanyList()
     {
+        $translator = $this->getTranslator();
         if($this->isAllowed('list')){
 
-            return $this->getCompanyMapper()->findAll();
+            return $this->getCompanyMapper()->findAll($translator->getLocale());
         }
         else{
-            $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed list the companies')
             );
