@@ -14,13 +14,13 @@ if($company==null){
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
 
-<table class=joblist>
+<table class=packetlist>
 
-<?php if(!empty($joblist)){ foreach($joblist as $job){ ?>
-<tr><td><?= $job->getName(); ?></td> 
-    <td><a href="#id">delete</a></td>
+<?php if(!empty($packetlist)){ foreach($packetlist as $packet){ ?>
+<tr><td><a href="<?= $this->url("admin_company/default", array("action"=>"editPacket","asciiCompanyName"=>$company->getAsciiName()));?>"<?= $this->translate('packet'); ?></td> 
+    <td><a href="#id"><?= $this->translate('delete'); ?></a></td>
 </tr>
 <?php } } else{ print("Empty");}?>
 </table>
 <br/>
-<a href=<?= $this->url("admin_company/default", array("action"=>"addJob","asciiCompanyName"=>$company->getAsciiName()));?>>Add job</a>
+<a href="<?= $this->url("admin_company/default", array("action"=>"addPacket","asciiCompanyName"=>$company->getAsciiName()));?>"><?= $this->translate('Add packet'); ?></a>
