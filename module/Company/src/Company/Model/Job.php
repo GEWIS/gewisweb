@@ -3,16 +3,13 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Job model.
  *
  * @ORM\Entity
  */
-class Job //implements RoleInterface, ResourceInterface
+class Job
 {
 
     /**
@@ -71,22 +68,27 @@ class Job //implements RoleInterface, ResourceInterface
      * @ORM\Column(type="text")
      */
     protected $description;
+    
+    /**
+     * The job's language.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $language;
 
     /**
-     * The job's company.
+     * The job's packet.
      *
-     * @ORM\ManyToOne(targetEntity="Company", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPacket", inversedBy="jobs")
      */
-    protected $company;
-
-
+    protected $packet;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        // todo
+        // noting to do
     }
 
     /**
@@ -108,20 +110,7 @@ class Job //implements RoleInterface, ResourceInterface
     {
         return $this->name;
     }
-
-    public function getAsciiName()
-    {
-        return $this->asciiName;
-    }
-    /**
-     * Set the job's name.
-     *
-     * @param string $name
-     */
-    public function setAsciiName($name)
-    {
-        $this->asciiName = $name;
-    }
+    
     /**
      * Set the job's name.
      *
@@ -130,6 +119,26 @@ class Job //implements RoleInterface, ResourceInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+    
+    /**
+     * Get the job's ascii name.
+     * 
+     * @return string the Jobs ascii name
+     */
+    public function getAsciiName()
+    {
+        return $this->asciiName;
+    }
+    
+    /**
+     * Set the job's ascii name.
+     *
+     * @param string $name
+     */
+    public function setAsciiName($name)
+    {
+        $this->asciiName = $name;
     }
 
     /**
@@ -231,21 +240,45 @@ class Job //implements RoleInterface, ResourceInterface
     {
         $this->description = $description;
     }
+    
+    /**
+     * Get the job's language.
+     * 
+     * @return string language of the job
+     */
+    public function getLanugage() {
+        return $this->language;   
+    }
+    
+    /**
+     * Set the job's language.
+     * 
+     * @param string $language language of the job
+     */
+    public function setLanguage($language) {
+        $this->language = $language;
+    }
+    
+    /**
+     * Get the job's packet.
+     *
+     * @return CompanyPacket
+     */
+    public function getPacket()
+    {
+        return $this->packet;
+    }
 
     /**
-     * Get the job's company.
-     *
-     * @return Company
+     * Set the job's packet.
+     * 
+     * @param CompanyPacket $packet the job's packet
      */
-    public function getCompany()
+    public function setPacket(CompanyPacket $packet)
     {
-        return $this->company;
+        $this->packet = $packet;
     }
-
-    public function setCompany($company)
-    {
-        $this->company = $company;
-    }
+    
     // For zend2 forms
     public function getArrayCopy()
     {

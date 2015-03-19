@@ -3,16 +3,14 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Company model.
  *
  * @ORM\Entity
  */
-class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for zend2 form)
+class Company // implements ArrayHydrator (for zend2 form)
 {
 
     /**
@@ -20,17 +18,16 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
      *
      * @ORM\Column(type="integer")
      */
-    protected $languageNeutralId;
+    protected $id;
     
     /**
-     * Version (language-unique) id of company representation.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * Translations of details of the company.
+     * Are of type \Company\Model\CompanyI18n.
+     * 
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company")
      */
-    protected $id;
-        
+    protected $translations;
+    
     /**
      * The company's display name.
      *
@@ -60,13 +57,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     protected $website;
 
     /**
-     * The company's slogan.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $slogan;
-
-    /**
      * The company's email.
      *
      * @ORM\Column(type="string")
@@ -80,54 +70,28 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
      */
     protected $phone;
 
+    
     /**
-     * The company's logo.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $logo;
-
-    /**
-     * The company's (HTML) description.
-     *
-     * @ORM\Column(type="text")
-     */
-    protected $description;
-
-    /**
-     * The language that this company record is written in
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $language;
-
-    /**
-     * The company's jobs.
+     * Whether the company is hidden.
      *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
 
     /**
-     * The company's jobs.
-     *
-     * @ORM\OneToMany(targetEntity="Job", mappedBy="company")
+     * The company's packets
+     * 
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPacket", mappedBy="company")
      */
-    protected $jobs;
-    
-    /**
-     * The company's packet.
-     *
-     * @ORM\ManyToOne(targetEntity="CompanyPacket", inversedBy="companies")
-     */
-    protected $packet;
+    protected $packets;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        // todo
+        $packets = new ArrayCollection();
+        $translations = new ArrayCollection();
     }
 
     /**
@@ -139,16 +103,37 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         return $this->id;
     }
-
-    public function getAsciiName()
+    
+    /**
+     * Get the company's translations.
+     *
+     * @return array
+     */
+    public function getTranslations()
     {
-        return $this->asciiName;
+        return $this->translations;
     }
 
-    public function setAsciiName($asciiName)
+    /**
+     * Add a translation.
+     *
+     * @param CompanyI18n $translation
+     */
+    public function addTranslation(CompanyI18n $translation)
     {
-        $this->asciiName = $asciiName;
+        $this->translations->add($translation);
     }
+    
+    /**
+     * Remove a translation.
+     * 
+     * @param CompanyI18n $translation Translation to remove
+     */
+    public function removeTranslation(CompanyI18n $translation) 
+    {
+        $this->translations->removeElement($translation);
+    }
+    
     /**
      * Get the company's name.
      *
@@ -169,6 +154,26 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
         $this->name = $name;
     }
 
+    /**
+     * Gets the company's ascii name.
+     * 
+     * @return string the company's ascii name
+     */
+    public function getAsciiName()
+    {
+        return $this->asciiName;
+    }
+
+    /**
+     * Sets the company's ascii name.
+     * 
+     * @param string $asciiName the new ascii name
+     */
+    public function setAsciiName($asciiName)
+    {
+        $this->asciiName = $asciiName;
+    }
+    
     /**
      * Get the company's address.
      *
@@ -210,26 +215,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     }
 
     /**
-     * Get the company's slogan.
-     *
-     * @return string
-     */
-    public function getSlogan()
-    {
-        return $this->slogan;
-    }
-
-    /**
-     * Set the company's slogan.
-     *
-     * @param string $slogan
-     */
-    public function setSlogan($slogan)
-    {
-        $this->slogan = $slogan;
-    }
-
-    /**
      * Get the company's email.
      *
      * @return string
@@ -268,86 +253,6 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     {
         $this->phone = $phone;
     }
-
-    /**
-     * Get the company's logo.
-     *
-     * @return string
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * Set the company's logo.
-     *
-     * @param string $logo
-     */
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    /**
-     * Get the company's description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set the company's description.
-     *
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get the company's jobs.
-     *
-     * @return Job[]
-     */
-    public function getJobs()
-    {
-        return $this->jobs;
-    }
-
-    /**
-     * Set the company's jobs.
-     *
-     * @param Job[] $jobs
-     */
-    public function setJobs($jobs)
-    {
-        $this->jobs = $jobs;
-    }
-    
-    /**
-     * Get the company's packet.
-     *
-     * @return CompanyPacket
-     */
-    public function getPacket()
-    {
-        return $this->packet;
-    }
-
-    /**
-     * Set the company's packet.
-     *
-     * @param CompanyPacket $packet
-     */
-    public function setPacket($packet)
-    {
-        $this->packet = $packet;
-    }
     
     /**
      * Get the company's hidden status.
@@ -357,35 +262,47 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
     public function getHidden()
     {
         return $this->hidden;
+        // TODO check whether packet is not expired
     }
 
     /**
-     * Set the company's language.
+     * Set the company's hidden status.
      *
-     * @param string $language
+     * @param string $hidden
      */
     public function setHidden($hidden)
     {
         $this->hidden = $hidden;
     }
+
     /**
-     * Get the company's language.
+     * Get the company's packets.
      *
-     * @return string
+     * @return CompanyPacket
      */
-    public function getLanguage()
+    public function getPackets()
     {
-        return $this->language;
+        return $this->packets;
     }
 
     /**
-     * Set the company's language.
+     * Add a packet to the company.
      *
-     * @param string $language
+     * @param CompanyPacket $packet
      */
-    public function setLanguage($language)
+    public function addPacket(CompanyPacket $packet)
     {
-        $this->language = $language;
+        $this->packets->add($packet);
+    }
+    
+    /**
+     * Remove a packet from the company.
+     * 
+     * @param CompanyPacket $packet packet to remove
+     */
+    public function removePacket(CompanyPacket $packet) 
+    {
+        $this->packets->removeElement($packet);
     }
     
     /**
@@ -418,12 +335,8 @@ class Company //implements RoleInterface, ResourceInterface, ArrayHydrator (for 
         $this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
         $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
-        $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
         $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->logo=(isset($data['logo'])) ? $data['logo'] : $this->getLogo();
         $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
-        $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
-        $this->packet=(isset($data['packet'])) ? $data['packet'] : $this->getPacket();
+        $this->packets=(isset($data['packets'])) ? $data['packets'] : $this->getPackets();
     }
 }
