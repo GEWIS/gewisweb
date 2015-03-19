@@ -52,13 +52,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $address;
 
     /**
-     * The company's website.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $website;
-
-    /**
      * The company's email.
      *
      * @ORM\Column(type="string")
@@ -194,26 +187,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function setAddress($address)
     {
         $this->address = $address;
-    }
-
-    /**
-     * Get the company's website.
-     *
-     * @return string
-     */
-    public function getWebsite()
-    {
-        return $this->website;
-    }
-
-    /**
-     * Set the company's website.
-     *
-     * @param string $website
-     */
-    public function setWebsite($website)
-    {
-        $this->website = $website;
     }
 
     /**
