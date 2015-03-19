@@ -3,16 +3,14 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * CompanyPacket model.
  *
  * @ORM\Entity
  */
-class CompanyPacket //implements RoleInterface, ResourceInterface
+class CompanyPacket
 {
 
     /**
@@ -46,11 +44,18 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     protected $published;
     
     /**
-     * The packet's companies.
+     * The packet's company.
      *
-     * @ORM\OneToMany(targetEntity="Company", mappedBy="packet")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packets")
      */
-    protected $companies;
+    protected $company;
+    
+    /**
+     * The packet's jobs.
+     *
+     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="packet")
+     */
+    protected $jobs;
 
 
     /**
@@ -58,7 +63,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      */
     public function __construct()
     {
-        // todo
+        $this->jobs = new ArrayCollection();
     }
 
     /**
@@ -116,7 +121,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      *
      * @return boolean
      */
-    public function getPublished()
+    public function isPublished()
     {
         return $this->published;
     }
@@ -132,13 +137,13 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     }
     
     /**
-     * Get the packet's companies.
-     * TODO: One2One?: bespreken op vergadering
+     * Get the packet's company.
+     *
      * @return Company
      */
-    public function getCompanies()
+    public function getCompany()
     {
-        return $this->companies;
+        return $this->company;
     }
 
     /**
@@ -146,36 +151,36 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      *
      * @param Company company
      */
-    public function setCompanies($companies)
+    public function setCompany(Company $company)
     {
-        $this->companies = $companies;
+        $this->company = $company;
     }
-
-    public function publish()
-    {
-        $this->setPublished(true);
-        $this->save();
+    
+    /**
+     * Get the jobs in the packet.
+     * 
+     * @return array jobs in the packet
+     */
+    public function getJobs() {
+        return $this->jobs;
     }
-
-    public function unpublish()
-    {
-        $this->setPublished(false);
-        $this->save();
+    
+    /**
+     * Adds a job to the packet.
+     * 
+     * @param Job $job job to be added
+     */
+    public function addJob(Job $job) {
+        $this->jobs->add($job);
     }
-
-    public function create()
-    {
-        // todo
-    }
-
-    public function save()
-    {
-        // todo
-    }
-
-    public function delete()
-    {
-        // todo
+    
+    /**
+     * Removes a job from the packet.
+     * 
+     * @param Job $job job to be removed
+     */
+    public function removeJob(Job $job) {
+        $this->jobs->removeElement($job);
     }
 
     public function isExpired()
@@ -188,11 +193,11 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
         if ($this->isExpired())
         {
             // unpublish activity
-            $this->unpublish();
+            $this->setPublished(false);
             return false;
         }
 
-        if ($this->getPublished())
+        if ($this->isPublished())
         {
             return false;   
         }
@@ -209,7 +214,7 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     public function exchangeArray($data){
         $this->startingDate=(isset($data['startingDate'])) ? $data['startingDate'] : $this->getStartingDate();
         $this->expirationDate=(isset($data['expirationDate'])) ? $data['expirationDate'] : $this->getExpirationDate();
-        $this->published=(isset($data['published'])) ? $data['published'] : $this->getPublished();
+        $this->published=(isset($data['published'])) ? $data['published'] : $this->isPublished();
     }
 
 
