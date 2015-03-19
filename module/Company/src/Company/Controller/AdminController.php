@@ -84,6 +84,9 @@ class AdminController extends AbstractActionController
         return $vm;
         
     }
+    public function editPacketAction(){
+
+    }
     public function saveCompanyAction()
     {
         $companyName = $this->params('asciiCompanyName');    
