@@ -260,6 +260,14 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $this->packets;
     }
 
+    public function numberOfJobs(){
+        $jobcount = 0;
+        foreach($this->getPackets() as $packet){
+            $jobcount +=  $packet->getJobs()->count();
+        }
+        return $jobcount;
+    }
+
     /**
      * Add a packet to the company.
      *
