@@ -93,6 +93,11 @@ Photo.Admin.init = function () {
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
     $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
+    //auto load album on hash
+    if (location.hash !== "") {
+        $(location.hash).click();
+        $(location.hash).parent().parent().children().toggle();
+    }
 }
 
 Photo.Admin.itemSelected = function () {
@@ -158,6 +163,15 @@ Photo.Admin.updateBreadCrumb = function (target) {
 }
 Photo.Admin.albumClicked = function (e) {
     e.preventDefault();
+    //workaround for preventing page from jumping when changing hash
+    if (history.pushState) {
+        history.pushState(null, null, '#'+$(this).attr('id'));
+    }
+    else {
+        location.hash = $(this).attr('id');
+    }
+
+    location.hash = $(this).attr('id');
     $("#albumControls").show();
     Photo.Admin.updateBreadCrumb($(this));
     Photo.Admin.loadPage(e.target.href);
