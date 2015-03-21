@@ -22,14 +22,6 @@ class CreateAlbum extends Form
         ));
 
         $this->add(array(
-            'name' => 'author',
-            'type' => 'text',
-            'options' => array(
-                'label' => $translate->translate('Author')
-            )
-        ));
-
-        $this->add(array(
             'name' => 'submit',
             'type' => 'submit',
             'options' => array(
@@ -46,18 +38,6 @@ class CreateAlbum extends Form
 
         $filter->add(array(
             'name' => 'name',
-            'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty'),
-                array('name' => 'alnum',
-                    'options' => array(
-                        'allowWhiteSpace' => true
-                    )
-                )
-            )
-        ));
-        $filter->add(array(
-            'name' => 'author',
             'required' => true,
             'validators' => array(
                 array('name' => 'not_empty'),
