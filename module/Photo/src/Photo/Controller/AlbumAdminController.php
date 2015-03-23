@@ -22,7 +22,7 @@ class AlbumAdminController extends AbstractActionController
     {
         $service = $this->getAlbumService();
         $request = $this->getRequest();
-
+        $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             //TODO: save and create album
         }
@@ -104,7 +104,12 @@ class AlbumAdminController extends AbstractActionController
 
     public function deleteAction()
     {
-        
+        $request = $this->getRequest();
+        $albumId = $this->params()->fromRoute('album_id');
+        if ($request->isPost()) {
+            $this->getAlbumService()->deleteAlbum($albumId);
+        }
+        return new JsonModel(array());
     }
 
     /**

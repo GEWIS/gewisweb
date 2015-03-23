@@ -274,12 +274,12 @@ class Photo extends AbstractService
      */
     public function deletePhoto($id)
     {
-
+        $config = $this->getConfig();
         $photo = $this->getPhoto($id);
         if (!is_null($photo)) {
-            unlink($photo->getPath());
-            unlink($photo->getLargeThumbPath());
-            unlink($photo->getSmallThumbPath());
+            unlink($config['upload_dir'] . '/' . $photo->getPath());
+            unlink($config['upload_dir'] . '/' . $photo->getLargeThumbPath());
+            unlink($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
             $this->getPhotoMapper()->deletePhoto($photo->getId());
         }
     }

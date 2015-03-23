@@ -87,12 +87,19 @@ Photo.Admin.regenerateCover = function () {
     });
 }
 
-
+Photo.Admin.deleteAlbum = function () {
+    $("#deleteConfirm").hide();
+    $("#deleteProgress").show();
+    $.post(Photo.Admin.activePage + '/delete');
+    $("#deleteProgress").hide();
+    $("#deleteDone").show();
+}
 Photo.Admin.init = function () {
     $("#albumControls").hide();
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
     $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
+    $("#deleteAlbumButton").on('click', Photo.Admin.deleteAlbum);
     //auto load album on hash
     if (location.hash !== "") {
         $(location.hash).click();
