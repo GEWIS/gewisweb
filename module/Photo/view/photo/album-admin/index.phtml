@@ -87,7 +87,9 @@ $this->headLink()
                 <h4 class="modal-title"><?= $this->translate('Generate a new cover photo') ?></h4>
             </div>
             <div  class="modal-body">
-                <center><div id="coverPreview" class="spinner"></div></center>
+                <center><div id="coverSpinner" class="spinner"></div>
+                <img id="coverPreview" class="cover-preview" src="">
+                </center>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-regenerate"><?= $this->translate('Regenerate') ?></button>

@@ -77,12 +77,13 @@ Photo.Admin.loadPage = function (resource) {
 }
 
 Photo.Admin.regenerateCover = function () {
-    $("#coverPreview").empty();
-    $("#coverPreview").attr('class', 'spinner');
+    $("#coverPreview").hide();
+    $("#coverSpinner").show();
     $.post(Photo.Admin.activePage + '/cover', function (data) {
         $.getJSON(Photo.Admin.activePage, function (data) {
-            $("#coverPreview").attr('class', '');
-            $("#coverPreview").html('<img class="cover-preview" src="/data/photo/' + data.album.coverPath + '">');
+            $("#coverPreview").attr('src', '/data/photo/' + data.album.coverPath);
+            $("#coverPreview").show();
+            $("#coverSpinner").hide();
         });
     });
 }
@@ -98,6 +99,7 @@ Photo.Admin.init = function () {
     $("#albumControls").hide();
     var COUNT_SPAN = '<span id="remove-count"></span>'
     $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
+    //we use class instead of id here to get the button since there are multiple instances
     $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
     $("#deleteAlbumButton").on('click', Photo.Admin.deleteAlbum);
     //auto load album on hash
@@ -172,7 +174,7 @@ Photo.Admin.albumClicked = function (e) {
     e.preventDefault();
     //workaround for preventing page from jumping when changing hash
     if (history.pushState) {
-        history.pushState(null, null, '#'+$(this).attr('id'));
+        history.pushState(null, null, '#' + $(this).attr('id'));
     }
     else {
         location.hash = $(this).attr('id');
