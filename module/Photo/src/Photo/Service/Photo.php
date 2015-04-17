@@ -46,8 +46,9 @@ class Photo extends AbstractService
     }
 
     /**
-     * 
-     * @param Imagick $image
+     * Generates CFS paths
+     *
+     * @param string $path The path of the photo to generate the path for
      * @return the path at which the photo should be saved
      */
     public function generateStoragePath($path)
@@ -72,7 +73,7 @@ class Photo extends AbstractService
      * Move the uploaded photo to the storage and store it in the database.
      * All upload actions should use this function to prevent "ghost" files 
      * or database entries
-     * @param string $path the tempoary path of the uploaded photo
+     * @param string $path the temporary path of the uploaded photo
      * @param Photo\Model\Album $targetAlbum the album to save the photo in
      * @param boolean $move whether to move the photo instead of copying it
      * @return Photo\Model\Photo
@@ -98,7 +99,7 @@ class Photo extends AbstractService
             $mapper = $this->getPhotoMapper();
             /**
              * TODO: optionally we could use a transactional query here to make it
-             * completely failsafe in case something goes wrong when moving the
+             * completely fail-safe in case something goes wrong when moving the
              * photo in the storeUploadedPhoto function. However it's very unlikely
              * anything will go wrong when moving the photo.
              */
@@ -144,7 +145,7 @@ class Photo extends AbstractService
      * (i.e. the function is applied recursively)
      * @param string $path The path of the directory.
      * @param Photo\Model\Album $target_album The album to store the photos.
-
+     * @throws \Exception on invalid path
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
@@ -184,7 +185,7 @@ class Photo extends AbstractService
 
         if ($files['file']['error'] !== 0) {
             throw new \Exception(
-            $translator->translate('An unkown error occured during uploading (' . $files['file']['error'] . ')')
+            $translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
             );
         }
         /**
@@ -246,7 +247,7 @@ class Photo extends AbstractService
     /**
      * 
      * @param int $id the id of the photo to retrieve
-     * @return array of data about the photo, which is usefull inside a view
+     * @return array of data about the photo, which is useful inside a view
      */
     public function getPhotoData($id)
     {
@@ -307,7 +308,7 @@ class Photo extends AbstractService
     public function getBaseDirectory()
     {
         $config = $this->getConfig();
-        return str_replace("public", "", $config['upload_dir']);
+        return str_replace('public', '', $config['upload_dir']);
     }
 
     /**
@@ -328,7 +329,7 @@ class Photo extends AbstractService
      */
     public function getMetadataService()
     {
-        return $this->getServiceManager()->get("photo_service_metadata");
+        return $this->getServiceManager()->get('photo_service_metadata');
     }
 
     /**
@@ -338,7 +339,7 @@ class Photo extends AbstractService
      */
     public function getAlbumService()
     {
-        return $this->getServiceManager()->get("photo_service_album");
+        return $this->getServiceManager()->get('photo_service_album');
     }
 
     /**
@@ -348,7 +349,7 @@ class Photo extends AbstractService
      */
     public function getPhotoService()
     {
-        return $this->getServiceManager()->get("photo_service_photo");
+        return $this->getServiceManager()->get('photo_service_photo');
     }
 
 }

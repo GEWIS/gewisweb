@@ -22,7 +22,6 @@ class AlbumAdminController extends AbstractActionController
     {
         $service = $this->getAlbumService();
         $request = $this->getRequest();
-        $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             //TODO: save and create album
         }

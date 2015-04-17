@@ -112,8 +112,9 @@ class Album
      * available photos is smaller than the requested count, less photos
      * will be returned.
      * 
-     * @param int $albumId
+     * @param int $album
      * @param int $maxResults
+     * @return array of Photo\Model\Photo
      */
     public function getRandomAlbumPhotos($album, $maxResults)
     {
@@ -131,7 +132,7 @@ class Album
     }
 
     /**
-     * return all the subalbums without a parent
+     * return all the sub-albums without a parent
      * 
      * @return array of AlbumModels
      */

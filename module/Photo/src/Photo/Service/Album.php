@@ -46,9 +46,10 @@ class Album extends AbstractService
     }
 
     /**
-     * Get all the albums in the root directory
+     * Get all the albums in the root directory or in the specified album
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
+     * @param Photo\Model\Album $album The album to retrieve sub-albums of
      * @return array of albums
      */
     public function getAlbums($album = null, $start = 0, $maxResults = null)
@@ -136,12 +137,12 @@ class Album extends AbstractService
 
     /**
      * Updates the given album with a newly generated cover photo
-     * @param type $alumId
+     * @param int $id
      */
-    public function generateAlbumCover($albumId)
+    public function generateAlbumCover($id)
     {
         $config = $this->getConfig();
-        $album = $this->getAlbum($albumId);
+        $album = $this->getAlbum($id);
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->getAlbumCoverService()->createCover($album);
         if (!is_null($album->getCoverPath())) {
