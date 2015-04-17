@@ -281,7 +281,9 @@ class Photo extends AbstractService
             unlink($config['upload_dir'] . '/' . $photo->getLargeThumbPath());
             unlink($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
             $this->getPhotoMapper()->deletePhoto($photo->getId());
+            $this->getPhotoMapper()->flush();
         }
+
     }
 
     /**

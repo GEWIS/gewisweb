@@ -118,6 +118,7 @@ class Album extends AbstractService
             $this->deleteAlbum($subAlbum);
         }
         $this->getAlbumMapper()->deleteAlbum($id);
+        $this->getAlbumMapper()->flush();
     }
 
     /**
