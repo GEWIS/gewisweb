@@ -255,7 +255,7 @@ class Album implements ResourceInterface
             'startDateTime' => $this->startDateTime,
             'endDateTime' => $this->endDateTime,
             'name' => $this->name,
-            'parent' => $this->parent,
+            'parent' => is_null($this->parent) ? null : $this->parent->toArray(),
             'children' => array(),
             'photos' => array(),
             'coverPath' => $this->coverPath,
