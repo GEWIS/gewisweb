@@ -90,7 +90,7 @@ return array(
                                 'action' => 'page'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -103,7 +103,7 @@ return array(
                                 'action' => 'page'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -116,7 +116,7 @@ return array(
                                 'action' => 'edit'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -129,7 +129,7 @@ return array(
                                 'action' => 'add'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -142,7 +142,7 @@ return array(
                                 'action' => 'import'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -155,7 +155,7 @@ return array(
                                 'action' => 'upload'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -168,7 +168,7 @@ return array(
                                 'action' => 'move'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -181,7 +181,7 @@ return array(
                                 'action' => 'delete'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -194,7 +194,7 @@ return array(
                                 'action' => 'cover'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'album_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -207,7 +207,7 @@ return array(
                                 'action' => 'index'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'photo_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -220,7 +220,7 @@ return array(
                                 'action' => 'move'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'photo_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -233,7 +233,7 @@ return array(
                                 'action' => 'delete'
                             ),
                             'constraints' => array(
-                                'id' => '[0-9]+',
+                                'photo_id' => '[0-9]+',
                             ),
                         ),
                     ),
