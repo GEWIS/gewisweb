@@ -154,10 +154,14 @@ class Album extends AbstractService
         $mapper->flush();
     }
 
-    public function getCreateAlbumForm()
+    public function getEditAlbumForm($id)
     {
-        //TODO: permissions
-        return $this->sm->get('photo_form_album_create');
+        //TODO: permissions!!
+        $form =  $this->sm->get('photo_form_album_edit');
+        $album = $this->getAlbum($id);
+        $form->bind($album);
+        return $form;
+
     }
 
     /**

@@ -46,8 +46,8 @@ class Module
                 'photo_service_album_cover' => 'Photo\Service\AlbumCover'
             ),
             'factories' => array(
-                'photo_form_album_create' => function ($sm) {
-                    $form = new \Photo\Form\CreateAlbum(
+                'photo_form_album_edit' => function ($sm) {
+                    $form = new \Photo\Form\EditAlbum(
                             $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));

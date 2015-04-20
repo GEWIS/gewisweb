@@ -36,7 +36,6 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int) $this->params()->fromRoute('page');
         $data = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage);
-
         $data['album'] = $data['album']->toArray();
         for ($i = 0; $i < count($data['albums']); $i++) {
             $data['albums'][$i] = $data['albums'][$i]->toArray();
@@ -49,7 +48,15 @@ class AlbumAdminController extends AbstractActionController
 
     public function editAction()
     {
-        
+        $request = $this->getRequest();
+        $albumId = $this->params()->fromRoute('album_id');
+        if ($request->isPost()) {
+            //$this->getAlbumService()->deleteAlbum($albumId);
+        }
+        $form = $this->getAlbumService()->getEditAlbumForm($albumId);
+        return new ViewModel(array(
+            'form' => $form,
+        ));
     }
 
     public function addAction()

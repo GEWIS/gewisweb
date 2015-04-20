@@ -4,9 +4,9 @@ namespace Photo\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\Translator;
+use Zend\MVc\I18n\Translator;
 
-class CreateAlbum extends Form
+class EditAlbum extends Form
 {
 
     public function __construct(Translator $translate)
@@ -22,10 +22,26 @@ class CreateAlbum extends Form
         ));
 
         $this->add(array(
+            'name' => 'startDateTime',
+            'type' => 'DateTime',
+            'options' => array(
+                'label' => $translate->translate('Start date')
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'endDateTime',
+            'type' => 'DateTime',
+            'options' => array(
+                'label' => $translate->translate('End date')
+            )
+        ));
+
+        $this->add(array(
             'name' => 'submit',
             'type' => 'submit',
             'options' => array(
-                'label' => $translate->translate('Create album')
+                'label' => $translate->translate('Save')
             )
         ));
 
@@ -48,6 +64,7 @@ class CreateAlbum extends Form
                 )
             )
         ));
+        //TODO: validation for dateTime should be automatic in zf2, probably should double check this.
         $this->setInputFilter($filter);
     }
 
