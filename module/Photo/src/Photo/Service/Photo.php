@@ -122,9 +122,8 @@ class Photo extends AbstractService
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat("png");
         //Tempfile is used to generate sha1, not sure this is the best method
-
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
-        $image->writeImage($tempFileName) or die("Can't write imagefile");
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() .'.png';
+        $image->writeImage($tempFileName);
         $newPath = $this->generateStoragePath($tempFileName);
         $config = $this->getConfig();
         rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
