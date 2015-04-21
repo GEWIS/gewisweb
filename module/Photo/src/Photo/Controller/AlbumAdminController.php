@@ -51,7 +51,7 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
-            //$this->getAlbumService()->deleteAlbum($albumId);
+            //TODO!
         }
         $form = $this->getAlbumService()->getEditAlbumForm($albumId);
         return new ViewModel(array(
