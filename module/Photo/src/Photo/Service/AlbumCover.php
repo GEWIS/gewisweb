@@ -14,7 +14,7 @@ class AlbumCover extends AbstractService
 {
     /**
      * Creates and returns the path to a cover image, a mozaic generated from
-     * a random selection of photos in the album or subalbums.
+     * a random selection of photos in the album or sub-albums.
      *
      * @param Photo\Model\Album $album The album to create the cover for.
      * @return string The path to the cover image.
@@ -89,12 +89,15 @@ class AlbumCover extends AbstractService
         //calculate the total size of all images inside the outer border
         $innerWidth = $config['album_cover']['width'] - 2 * $outerBorder;
         $innerHeight = $config['album_cover']['height'] - 2 * $outerBorder;
+
+        $innerBorderWidth = ($columns - 1) * $innerBorder;
+        $innerBorderHeight = ($rows - 1) * $innerBorder;
         //calculate required size of images based on inner border
-        $imageWidth = floor(($innerWidth - ($columns - 1) * $innerBorder) / $columns);
-        $imageHeight = floor(($innerHeight - ($rows - 1)  * $innerBorder) / $rows);
+        $imageWidth = floor(($innerWidth - $innerBorderWidth) / $columns);
+        $imageHeight = floor(($innerHeight - $innerBorderHeight) / $rows);
         //increase outer border due to flooring of image dimensions
-        $realInnerWidth = ($columns * $imageWidth + ($columns - 1) * $innerBorder);
-        $realInnerHeight = ($rows * $imageHeight  + ($rows - 1) * $innerBorder);
+        $realInnerWidth = ($columns * $imageWidth + $innerBorderWidth);
+        $realInnerHeight = ($rows * $imageHeight + $innerBorderHeight);
         $outerBorderX = $outerBorder + ceil(($innerWidth - $realInnerWidth) / 2);
         $outerBorderY = $outerBorder + ceil(($innerHeight - $realInnerHeight) / 2);
 
@@ -162,7 +165,8 @@ class AlbumCover extends AbstractService
         //convert the photo objects to Imagick objects
         $images = array();
         foreach ($photos as $photo) {
-            $images[] = new Imagick($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
+            $imagePath = $config['upload_dir'] . '/' . $photo->getSmallThumbPath();
+            $images[] = new Imagick($imagePath);
         }
 
         return $images;
