@@ -84,15 +84,24 @@ class Album extends AbstractService
     }
 
     /**
-     * Updates the name of an existing album
+     * Updates the metadata of an album using post data
      * 
      * @param int $id the id of the album to modify
-     * @param String $name the new name for the album
+     * @param array $data The post data to update
+     *
+     * @return boolean
      */
-    public function updateAlbumName($id, $name)
+    public function updateAlbum($id, $data)
     {
-        $album = $this->getAlbum($id);
-        $album->setName($name);
+        $form = $this->getEditAlbumForm($id);
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $this->getAlbumMapper()->flush();
+        return true;
     }
 
     /**

@@ -48,12 +48,17 @@ class AlbumAdminController extends AbstractActionController
 
     public function editAction()
     {
+        $albumService = $this->getAlbumService();
         $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
-            //TODO!
+            if ($albumService->updateAlbum($albumId, $request->getPost())) {
+                return new ViewModel(array(
+                    'success' => true
+                ));
+            }
         }
-        $form = $this->getAlbumService()->getEditAlbumForm($albumId);
+        $form = $albumService->getEditAlbumForm($albumId);
         return new ViewModel(array(
             'form' => $form,
         ));

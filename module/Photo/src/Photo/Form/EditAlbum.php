@@ -15,7 +15,7 @@ class EditAlbum extends Form
 
         $this->add(array(
             'name' => 'name',
-            'type' => 'text',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => $translate->translate('Album title')
             )
@@ -23,7 +23,7 @@ class EditAlbum extends Form
 
         $this->add(array(
             'name' => 'startDateTime',
-            'type' => 'DateTime',
+            'type' => 'Zend\Form\Element\DateTime',
             'options' => array(
                 'label' => $translate->translate('Start date')
             )
@@ -31,7 +31,7 @@ class EditAlbum extends Form
 
         $this->add(array(
             'name' => 'endDateTime',
-            'type' => 'DateTime',
+            'type' => 'Zend\Form\Element\DateTime',
             'options' => array(
                 'label' => $translate->translate('End date')
             )
@@ -64,7 +64,7 @@ class EditAlbum extends Form
                 )
             )
         ));
-        //TODO: validation for dateTime should be automatic in zf2, probably should double check this.
+        
         $this->setInputFilter($filter);
     }
 
