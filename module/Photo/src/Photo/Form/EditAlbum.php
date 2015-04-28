@@ -64,7 +64,7 @@ class EditAlbum extends Form
                 )
             )
         ));
-        
+
         $this->setInputFilter($filter);
     }
 

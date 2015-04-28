@@ -71,8 +71,9 @@ Photo.Admin.loadPage = function (resource) {
             });
         });
 
-        $(".thumbail-checkbox").change(Photo.Admin.itemSelected);
+        $(".thumbnail-checkbox").change(Photo.Admin.itemSelected);
         $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
+        $("#btnEdit").attr('href', 'photo/album/' + data.album.id + '/edit');
     });
 }
 

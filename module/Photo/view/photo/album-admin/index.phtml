@@ -43,7 +43,7 @@ $this->headLink()
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#renameModal"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Rename album') ?></button> 
+            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?></a>
             <a id="btnAdd" class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
             <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate"><span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?></button><br><br>
