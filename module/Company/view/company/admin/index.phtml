@@ -1,20 +1,34 @@
 
 <div class="company-edit-overview">
-    <?php
-
-$escaper = new Zend\Escaper\Escaper('utf-8');
-
+<?php
+    $escaper = new Zend\Escaper\Escaper('utf-8');
 ?>
     
     
-<fieldset> 
+    <fieldset> 
         <legend>Filter</legend> 
         <label>All <input type='text' id='filter-all'></label> 
         <label>Name <input type='text' id='filter-name'></label> 
         <label>Location <input type='text' id='filter-location'></label> 
-        <label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
-        <label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
-        <label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>
+        <label>Description 
+            <input type='text' id='filter-description'></label> 
+    </fieldset>
+    <fieldset>
+        <legend>Sort</legend> 
+        <label>Column 
+            <select id='sort-column'>
+                <option value='company-name'>[Select column]</option>
+                <option value='company-name'>Company Name</option>
+                <option value='jobs-amount'>Amount of jobs available</option>
+            </select>
+        </label> 
+        <label>Order
+            <select id='sort-order'>
+                <option value='1'>Ascending</option>
+                <option value='-1'>Descending</option>
+            </select>
+        </label>
+    </fieldset>
     
     <table class="">
         <thead>
@@ -27,18 +41,19 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
         </thead>
         <tbody>
             <?php
-            foreach ($company_list as $company) {
-                $editUrl = $this->url('admin_company/editCompany',array('slugCompanyName'=>$company->getSlugName()));
+                foreach ($company_list as $company) {
+                    $editUrl = $this->url('admin_company/editCompany', 
+                                          array('slugCompanyName' => $company->getSlugName()));
                 //echo $editUrl;
             ?>
-            <tr class="company-list-item">
-                <td><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= count($company->getPackets()[0]->getJobs()); ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
-            </tr>
+                    <tr class="company-list-item">
+                        <td><a href="<?= $editUrl; ?>"><?= $company->getName(); ?></a></td>
+                        <td><a href="#?id=<?= $company->getId(); ?>"><?= count($company->getPackets()[0]->getJobs()); ?></a></td>
+                        <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
+                        <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
+                    </tr>
             <?php
-            }
+                }
             ?>
         </tbody>
         <tfoot>

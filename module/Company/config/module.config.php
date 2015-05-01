@@ -23,7 +23,7 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Company\Controller\Company',
                                 'action' => 'list',
-                                'asciiCompanyName' => '',
+                                'slugCompanyName' => '',
                             ),
                         ),
                         'may_terminate' => true,
@@ -32,17 +32,17 @@ return array(
                         'priority' => 2,
                         'type'    => 'segment',
                         'options' => array(
-                            // url will be company/<asciiCompanyName>/jobs/<asciiJobName>/<action>
-                            // asciijobname and asciicompanyname will be in database, and can be set from the admin panel
+                            // url will be company/<slugCompanyName>/jobs/<slugJobName>/<action>
+                            // slugjobname and slugcompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
                             // company/apple/jobs should be list of jobs of apple
                             // company/apple/jobs/ceo should be the page of ceo job
                             // company should give frontpage of company part
                             // company/list should give a list of companies
                             // company/index should give the frontpage
-                            'route'    => '/:asciiCompanyName',
+                            'route'    => '/:slugCompanyName',
                             'constraints' => array(
-                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
                             ),
                         ),
                         'may_terminate' => true,
@@ -61,9 +61,9 @@ return array(
                                     'job_item' => array(
                                         'type' => 'segment',
                                         'options' => array(
-                                            'route' => '[/:asciiJobName]',
+                                            'route' => '[/:slugJobName]',
                                             'constraints' => array(
-                                                'asciiJobName'     => '[a-zA-Z0-9_-]*',
+                                                'slugJobName'     => '[a-zA-Z0-9_-]*',
                                             ),
                                         ),
                                     ),
@@ -90,12 +90,12 @@ return array(
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/edit/[:asciiCompanyName]',
+                            'route' => '/edit/[:slugCompanyName]',
                             'defaults' => array(
                                 'action' => 'editCompany'
                             ),
                             'constraints' => array(
-                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
                             ),
                              
                         ),
@@ -144,7 +144,7 @@ return array(
                         'priority' => 2,
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action[/:asciiCompanyName[/:asciiJobName]]]',
+                            'route'    => '[/:action[/:slugCompanyName[/:slugJobName]]]',
                             'constraints' => array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
