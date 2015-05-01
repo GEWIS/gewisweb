@@ -45,36 +45,36 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->insert();
     }
         
-    public function insertJobForCompanyAsciiName($asciiCompanyName){
-        $company = $this->getEditableCompaniesWithAsciiName($asciiCompanyName)[0];
+    public function insertJobForCompanySlugName($slugCompanyName){
+        $company = $this->getEditableCompaniesWithSlugName($slugCompanyName)[0];
 
         $result = $this->getJobMapper()->insertIntoCompany($company);
 
 
         return $result;
     }
-    public function getJobsWithCompanyAsciiName($companyAsciiName)
+    public function getJobsWithCompanySlugName($companySlugName)
     {
-        $return =  $this->getJobMapper()->findJobsWithCompanyAsciiName($companyAsciiName);
+        $return =  $this->getJobMapper()->findJobsWithCompanySlugName($companySlugName);
 
         return $return;
     }
-    public function getCompaniesWithAsciiName($asciiName)
+    public function getCompaniesWithSlugName($slugName)
     {
-        return $this->getCompanyMapper()->findCompaniesWithAsciiName($asciiName);
+        return $this->getCompanyMapper()->findCompaniesWithSlugName($slugName);
     }
 
-    public function getEditableCompaniesWithAsciiName($asciiName)
+    public function getEditableCompaniesWithSlugName($slugName)
     {
-        return $this->getCompanyMapper()->findEditableCompaniesWithAsciiName($asciiName, true);
+        return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);
     }
-    public function getEditableJobsWithAsciiName($asciiName, $jobAsciiName)
+    public function getEditableJobsWithSlugName($slugName, $jobSlugName)
     {
-        return $this->getJobMapper()->findJobWithAsciiName($asciiName, $jobAsciiName);
+        return $this->getJobMapper()->findJobWithSlugName($slugName, $jobSlugName);
     }
-    public function getJobsWithAsciiName($companyAsciiName,$jobAsciiName)
+    public function getJobsWithSlugName($companySlugName,$jobSlugName)
     {
-        return $this->getJobMapper()->findJobWithAsciiName($companyAsciiName,$jobAsciiName);
+        return $this->getJobMapper()->findJobWithSlugName($companySlugName,$jobSlugName);
     }
     public function getCompanyMapper()
     {

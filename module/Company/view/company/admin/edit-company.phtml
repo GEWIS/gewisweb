@@ -17,10 +17,10 @@ if($company==null){
 <table class=packetlist>
 
 <?php if(!empty($packetlist)){ foreach($packetlist as $packet){ ?>
-<tr><td><a href="<?= $this->url("admin_company/default", array("action"=>"editPacket","asciiCompanyName"=>$company->getAsciiName()));?>"<?= $this->translate('packet'); ?></td> 
+<tr><td><a href="<?= $this->url("admin_company/default", array("action"=>"editPacket","slugCompanyName"=>$company->getSlugName()));?>"<?= $this->translate('packet'); ?></td> 
     <td><a href="#id"><?= $this->translate('delete'); ?></a></td>
 </tr>
 <?php } } else{ print("Empty");}?>
 </table>
 <br/>
-<a href="<?= $this->url("admin_company/default", array("action"=>"addPacket","asciiCompanyName"=>$company->getAsciiName()));?>"><?= $this->translate('Add packet'); ?></a>
+<a href="<?= $this->url("admin_company/default", array("action"=>"addPacket","slugCompanyName"=>$company->getSlugName()));?>"><?= $this->translate('Add packet'); ?></a>
