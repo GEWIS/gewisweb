@@ -69,6 +69,7 @@ class EditPacket extends Form
             'name' => 'startDate',
             'required' => true,
             'validators' => array(
+                array('name' => 'date'),
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
@@ -80,6 +81,7 @@ class EditPacket extends Form
             'name' => 'expirationDate',
             'required' => true,
             'validators' => array(
+                array('name' => 'date'),
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
