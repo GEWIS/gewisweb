@@ -208,7 +208,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     
     public function exchangeArray($data) {
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
         $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();

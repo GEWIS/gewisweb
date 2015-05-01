@@ -27,7 +27,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'asciiName',
+            'name' => 'slugName',
             'attributes' => array(
                 'type'  => 'text',
                 'required' => 'required'

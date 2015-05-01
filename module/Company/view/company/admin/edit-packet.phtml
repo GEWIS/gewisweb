@@ -23,4 +23,4 @@ if($company==null){
 <?php } } else{ print("Empty");}?>
 </table>
 <br/>
-<a href=<?= $this->url("admin_company/default", array("action"=>"addPacket","asciiCompanyName"=>$company->getAsciiName()));?>><?php $this->translate('Add packet'); ?></a>
+<a href=<?= $this->url("admin_company/default", array("action"=>"addPacket","slugCompanyName"=>$company->getSlugName()));?>><?php $this->translate('Add packet'); ?></a>
