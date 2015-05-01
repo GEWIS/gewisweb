@@ -41,6 +41,7 @@ class Job
     {
         return $this->getRepository()->findAll();
     }
+    
     /**
      * Find all jobs with the given job 'username' from the company with the given slug name.
      * @param companySlugName The slugname of the containing company.
@@ -56,8 +57,9 @@ class Job
 
         return $qb->getQuery()->getResult();
     }
+    
     public function insertIntoCompany($company){
-        $job=new JobModel($this->em);
+        $job = new JobModel($this->em);
 
         $job->setCompany($company);
         $this->em->persist($job);
@@ -68,15 +70,17 @@ class Job
 
         return $job;
     }
-    public function findJobWithSlugName($companySlugName,$jobSlugName)
+    
+    public function findJobWithSlugName($companySlugName, $jobSlugName)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join("j.company", "c") ->where("j.slugName=:jobId");
-        $qb->setParameter('jobId', $companySlugName+'_'+$jobSlugName);
+        $qb->setParameter('jobId', $companySlugName + '_' + $jobSlugName);
 
         return $qb->getQuery()->getResult();
     }
+    
     /**
      * Get the repository for this mapper.
      *

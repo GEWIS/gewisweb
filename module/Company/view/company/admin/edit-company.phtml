@@ -2,25 +2,45 @@
 //use Company\Form\EditCompany as EditCompanyForm;
 //$companyEditForm = new EditCompanyForm();
 $form = $companyEditForm;
-//$form=$this->form($companyEditForm);
-if($company==null){
+//$form = $this->form($companyEditForm);
+if ($company == null){
     echo "Company not found";
 }
 ?>
 
 <?= $this->form()->openTag($form) ?>
-<?php echo $this->partial('partial/company/admin/editors/company.phtml', array(
-    'form' => $form)); ?>
+<?php echo $this->partial('partial/company/admin/editors/company.phtml', 
+                          array('form' => $form)
+                         ); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
 
-<table class=packetlist>
-
-<?php if(!empty($packetlist)){ foreach($packetlist as $packet){ ?>
-<tr><td><a href="<?= $this->url("admin_company/default", array("action"=>"editPacket","slugCompanyName"=>$company->getSlugName()));?>"<?= $this->translate('packet'); ?></td> 
-    <td><a href="#id"><?= $this->translate('delete'); ?></a></td>
-</tr>
-<?php } } else{ print("Empty");}?>
+<table class="packetlist">
+    <?php if (!empty($packetlist)) { 
+        foreach($packetlist as $packet) { ?>
+            <tr>
+                <td>
+                    <a href="<?= $this->url("admin_company/default", 
+                                            array("action" => "editPacket", 
+                                                  "slugCompanyName" => $company->getSlugName()
+                                                 )
+                                           ); ?>">
+                        <?= $this->translate('packet'); ?>
+                    </a>
+                </td> 
+                <td>
+                    <a href="#id"><?= $this->translate('delete'); ?></a>
+                </td>
+            </tr>
+    <?php 
+        } 
+    } else { print("Empty"); }
+    ?>
 </table>
 <br/>
-<a href="<?= $this->url("admin_company/default", array("action"=>"addPacket","slugCompanyName"=>$company->getSlugName()));?>"><?= $this->translate('Add packet'); ?></a>
+<a href="<?= $this->url("admin_company/default", 
+                        array("action"=>"addPacket",
+                              "slugCompanyName" => $company->getSlugName())
+                       ); ?>">
+    <?= $this->translate('Add packet'); ?>
+</a>
