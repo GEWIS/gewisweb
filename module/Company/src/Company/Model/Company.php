@@ -38,11 +38,11 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $name;
 
     /**
-     * The company's ascii version of the name. (username)
+     * The company's slug version of the name. (username)
      *
      * @ORM\Column(type="string")
      */
-    protected $asciiName;
+    protected $slugName;
 
     /**
      * The company's address.
@@ -150,23 +150,23 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Gets the company's ascii name.
+     * Gets the company's slug name.
      * 
-     * @return string the company's ascii name
+     * @return string the company's slug name
      */
-    public function getAsciiName()
+    public function getSlugName()
     {
-        return $this->asciiName;
+        return $this->slugName;
     }
 
     /**
-     * Sets the company's ascii name.
+     * Sets the company's slug name.
      * 
-     * @param string $asciiName the new ascii name
+     * @param string $slugName the new slug name
      */
-    public function setAsciiName($asciiName)
+    public function setSlugName($slugName)
     {
-        $this->asciiName = $asciiName;
+        $this->slugName = $slugName;
     }
     
     /**
@@ -314,7 +314,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     
     public function exchangeArray($data) {
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
         $this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
         $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();

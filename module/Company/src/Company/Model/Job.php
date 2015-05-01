@@ -29,11 +29,11 @@ class Job
     protected $name;
 
     /**
-     * The job's ascii name.
+     * The job's slug name.
      *
      * @ORM\Column(type="string")
      */
-    protected $asciiName;
+    protected $slugName;
     /**
      * The job's status.
      *
@@ -122,23 +122,23 @@ class Job
     }
     
     /**
-     * Get the job's ascii name.
+     * Get the job's slug name.
      * 
-     * @return string the Jobs ascii name
+     * @return string the Jobs slug name
      */
-    public function getAsciiName()
+    public function getSlugName()
     {
-        return $this->asciiName;
+        return $this->slugName;
     }
     
     /**
-     * Set the job's ascii name.
+     * Set the job's slug name.
      *
      * @param string $name
      */
-    public function setAsciiName($name)
+    public function setSlugName($name)
     {
-        $this->asciiName = $name;
+        $this->slugName = $name;
     }
 
     /**
@@ -286,7 +286,7 @@ class Job
     }
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->asciiName=(isset($data['asciiName'])) ? $data['asciiName'] : $this->getAsciiName();
+        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
 //        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $this->active=(isset($data['active'])) ? $data['active'] : $this->getActive();

@@ -42,17 +42,17 @@ class Job
         return $this->getRepository()->findAll();
     }
     /**
-     * Find all jobs with the given job 'username' from the company with the given ascii name.
-     * @param companyAsciiName The asciiname of the containing company.
-     * @param jobAsciiName The asciiName of the requested job.
+     * Find all jobs with the given job 'username' from the company with the given slug name.
+     * @param companySlugName The slugname of the containing company.
+     * @param jobSlugName The slugName of the requested job.
      * @return An array of jobs that match the request.
      */
-    public function findJobsWithCompanyAsciiName($companyAsciiName)
+    public function findJobsWithCompanySlugName($companySlugName)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j','c')->join("j.company", "c")->where("c.asciiName=:jobId");
-        $qb->setParameter('jobId', $companyAsciiName);
+        $qb->select('j','c')->join("j.company", "c")->where("c.slugName=:jobId");
+        $qb->setParameter('jobId', $companySlugName);
 
         return $qb->getQuery()->getResult();
     }
@@ -68,12 +68,12 @@ class Job
 
         return $job;
     }
-    public function findJobWithAsciiName($companyAsciiName,$jobAsciiName)
+    public function findJobWithSlugName($companySlugName,$jobSlugName)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join("j.company", "c") ->where("j.asciiName=:jobId");
-        $qb->setParameter('jobId', $companyAsciiName+'_'+$jobAsciiName);
+        $qb->select('j')->join("j.company", "c") ->where("j.slugName=:jobId");
+        $qb->setParameter('jobId', $companySlugName+'_'+$jobSlugName);
 
         return $qb->getQuery()->getResult();
     }

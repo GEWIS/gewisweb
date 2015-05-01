@@ -40,7 +40,7 @@ class Company
     public function insert(){
         $company=new CompanyModel($this->em);
 
-        $companiesWithSameAsciiName = $this->findEditableCompaniesWithAsciiName($company->getAsciiName(), false);
+        $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
         
         // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
         if($company->getLogo == null){
@@ -51,12 +51,12 @@ class Company
         if($company->getLanguage == null){
             $company->setLanguage("en");
         }
-        if(empty($companiesWithSameAsciiName)){
+        if(empty($companiesWithSameSlugName)){
             // We have a problem, ID is not set, so we set a placeholder. When the id is known, we change this into the real id. 
             $company->setLanguageNeutralId(-1);
         }
         else{
-            $company->setLanguageNeutralId($companiesWithSameAsciiName[0]->getLanguageNeutralId());
+            $company->setLanguageNeutralId($companiesWithSameSlugName[0]->getLanguageNeutralId());
         }
 
         $company->setHidden(false);
@@ -75,19 +75,19 @@ class Company
     }
 
     /**
-     * Find the company with the given asciiName
+     * Find the company with the given slugName
      *
-     * @param asciiName The 'username' of the company to get.
+     * @param slugName The 'username' of the company to get.
      * @param asObject if yes, returns the company as an object in an array, else returns the company as an array of an array
-     * @return An array of companies with the given asciiName.
+     * @return An array of companies with the given slugName.
      */
-    public function findEditableCompaniesWithAsciiName($asciiName, $asObject)
+    public function findEditableCompaniesWithSlugName($slugName, $asObject)
     {
 
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.asciiName=:asciiCompanyName');
-        $qb->setParameter('asciiCompanyName', $asciiName);
+        $qb->select('c')->where('c.slugName=:slugCompanyName');
+        $qb->setParameter('slugCompanyName', $slugName);
         $qb->setMaxResults(1);
         if ($asObject){
             return $qb->getQuery()->getResult();
@@ -97,10 +97,10 @@ class Company
         }
     }
 
-    public function findCompaniesWithAsciiName($asciiName)
+    public function findCompaniesWithSlugName($slugName)
     {
 
-        $result = $this->findEditableCompaniesWithAsciiName($asciiName,true);
+        $result = $this->findEditableCompaniesWithSlugName($slugName,true);
         foreach($result as $company){
             $this->em->detach($company);
         }

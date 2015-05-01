@@ -36,8 +36,7 @@ class EditJob extends Form
             ),
         ));
         $this->add(array(
-<<<<<<< HEAD
-            'name' => 'asciiName',
+            'name' => 'slugName',
             'attributes' => array(
                 'type'  => 'text',
             ),
@@ -50,11 +49,6 @@ class EditJob extends Form
             'attributes' => array(
  //               'type'  => 'boolean',
                 'type' => 'Checkbox',
-=======
-            'name' => 'address',
-            'attributes' => array(
-                'type'  => 'text',
->>>>>>> Worked on Form for JobEditor.
             ),
             'options' => array(
                 'label' => $translate->translate('Location'),
@@ -90,13 +84,7 @@ class EditJob extends Form
         ));
         $this->add(array(
             'name' => 'description',
-<<<<<<< HEAD
-            'attributes' => array(
-                'type'  => 'textarea',
-            ),
-=======
             'type' => 'Zend\Form\Element\Textarea',
->>>>>>> Worked on Form for JobEditor.
             'options' => array(
                 'label' => $translate->translate('Description'),
             ),

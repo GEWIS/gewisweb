@@ -28,7 +28,7 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
         <tbody>
             <?php
             foreach ($company_list as $company) {
-                $editUrl = $this->url('admin_company/editCompany',array('asciiCompanyName'=>$company->getAsciiName()));
+                $editUrl = $this->url('admin_company/editCompany',array('slugCompanyName'=>$company->getSlugName()));
                 //echo $editUrl;
             ?>
             <tr class="company-list-item">

@@ -11,9 +11,9 @@ class CompanyController extends AbstractActionController
     public function listAction()
     {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('asciiCompanyName');    
+        $companyName = $this->params('slugCompanyName');    
         if ($companyName != null) {
-            $companies = $companyService->getCompaniesWithAsciiName($companyName);
+            $companies = $companyService->getCompaniesWithSlugName($companyName);
             if (count($companies)!=0){
                 $vm = new ViewModel(array(
                     'company' => $companies[0],
@@ -33,10 +33,10 @@ class CompanyController extends AbstractActionController
     public function jobsAction()
     {
         $companyService = $this->getCompanyService();
-        $jobName = $this->params('asciiJobName');    
-        $companyName = $this->params('asciiCompanyName');    
+        $jobName = $this->params('slugJobName');    
+        $companyName = $this->params('slugCompanyName');    
         if ($jobName != null) {
-            $jobs = $companyService->getJobsWithAsciiName($companyName,$jobName);
+            $jobs = $companyService->getJobsWithSlugName($companyName,$jobName);
             if (count($jobs)!=0){
                 $vm = new ViewModel(array(
                     'job' => $jobs[0]
