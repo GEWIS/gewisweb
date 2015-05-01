@@ -14,51 +14,52 @@ class Company extends AbstractACLService
     public function getCompanyList()
     {
         $translator = $this->getTranslator();
-        if($this->isAllowed('list')){
+        if ($this->isAllowed('list')){
 
             return $this->getCompanyMapper()->findAll($translator->getLocale());
-        }
-        else{
+        } else {
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed list the companies')
             );
         }
     }
     // Company list for admin interface
-    public function getHiddenCompanyList(){
-        if($this->isAllowed('listall')){
+    public function getHiddenCompanyList() 
+    {
+        if ($this->isAllowed('listall')){
 
             return $this->getCompanyMapper()->findAll();
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to see all the companies')
             );
         }
     }
-    public function saveCompany(){
+    
+    public function saveCompany()
+    {
         $this->getCompanyMapper()->save();
     }
 
-    public function insertCompany(){
+    public function insertCompany()
+    {
         return $this->getCompanyMapper()->insert();
     }
         
-    public function insertJobForCompanySlugName($slugCompanyName){
+    public function insertJobForCompanySlugName($slugCompanyName)
+    {
         $company = $this->getEditableCompaniesWithSlugName($slugCompanyName)[0];
-
         $result = $this->getJobMapper()->insertIntoCompany($company);
-
-
         return $result;
     }
+    
     public function getJobsWithCompanySlugName($companySlugName)
     {
-        $return =  $this->getJobMapper()->findJobsWithCompanySlugName($companySlugName);
-
+        $return = $this->getJobMapper()->findJobsWithCompanySlugName($companySlugName);
         return $return;
     }
+    
     public function getCompaniesWithSlugName($slugName)
     {
         return $this->getCompanyMapper()->findCompaniesWithSlugName($slugName);
@@ -68,14 +69,17 @@ class Company extends AbstractACLService
     {
         return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);
     }
+    
     public function getEditableJobsWithSlugName($slugName, $jobSlugName)
     {
         return $this->getJobMapper()->findJobWithSlugName($slugName, $jobSlugName);
     }
-    public function getJobsWithSlugName($companySlugName,$jobSlugName)
+    
+    public function getJobsWithSlugName($companySlugName, $jobSlugName)
     {
-        return $this->getJobMapper()->findJobWithSlugName($companySlugName,$jobSlugName);
+        return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
     }
+    
     public function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');
@@ -85,18 +89,22 @@ class Company extends AbstractACLService
     {
         return $this->getJobMapper()->findAll();
     }
+    
     /**
      * Get the Company Edit form.
      *
      * @return Company Edit form
      */
-    public function getCompanyForm(){
+    public function getCompanyForm()
+    {
         return $this->sm->get('company_admin_edit_company_form');
     }
 
-    public function getJobForm(){
+    public function getJobForm()
+    {
         return $this->sm->get('company_admin_edit_job_form');
     }
+    
     public function getActiveJobList()
     {
         $jl = $this->getJobList();

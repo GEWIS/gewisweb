@@ -38,24 +38,23 @@ class Company
     }
 
     public function insert(){
-        $company=new CompanyModel($this->em);
+        $company = new CompanyModel($this->em);
 
         $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
         
         // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
-        if($company->getLogo == null){
+        if ($company->getLogo == null){
             $company->setLogo("");
         }
         
         // TODO: implement language
-        if($company->getLanguage == null){
+        if ($company->getLanguage == null){
             $company->setLanguage("en");
         }
-        if(empty($companiesWithSameSlugName)){
+        if (empty($companiesWithSameSlugName)){
             // We have a problem, ID is not set, so we set a placeholder. When the id is known, we change this into the real id. 
             $company->setLanguageNeutralId(-1);
-        }
-        else{
+        } else {
             $company->setLanguageNeutralId($companiesWithSameSlugName[0]->getLanguageNeutralId());
         }
 
@@ -91,8 +90,7 @@ class Company
         $qb->setMaxResults(1);
         if ($asObject){
             return $qb->getQuery()->getResult();
-        }
-        else{
+        } else {
             return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
         }
     }
@@ -100,8 +98,8 @@ class Company
     public function findCompaniesWithSlugName($slugName)
     {
 
-        $result = $this->findEditableCompaniesWithSlugName($slugName,true);
-        foreach($result as $company){
+        $result = $this->findEditableCompaniesWithSlugName($slugName, true);
+        foreach ($result as $company){
             $this->em->detach($company);
         }
         return $result;

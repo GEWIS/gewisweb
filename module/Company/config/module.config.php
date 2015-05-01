@@ -23,7 +23,7 @@ return [
                             'defaults' => [
                                 'controller' => 'Company\Controller\Company',
                                 'action' => 'list',
-                                'asciiCompanyName' => '',
+                                'slugCompanyName' => '',
                             ],
                         ],
                         'may_terminate' => true,
@@ -40,11 +40,11 @@ return [
                             // company should give frontpage of company part
                             // company/list should give a list of companies
                             // company/index should give the frontpage
-                            'route'    => '/:asciiCompanyName',
+                            'route'    => '/:slugCompanyName',
                             'constraints' => [
-                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
                             ],
-                        ],
+                        ),
                         'may_terminate' => true,
                         'child_routes' => [
                             'joblist' => [
@@ -61,7 +61,7 @@ return [
                                     'job_item' => [
                                         'type' => 'segment',
                                         'options' => [
-                                            'route' => '[/:asciiJobName]',
+                                            'route' => '[/:slugJobName]',
                                             'constraints' => [
                                                 'asciiJobName'     => '[a-zA-Z0-9_-]*',
                                             ],
@@ -90,14 +90,13 @@ return [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/edit/[:asciiCompanyName]',
+                            'route' => '/edit/[:slugCompanyName]',
                             'defaults' => [
                                 'action' => 'editCompany'
                             ],
                             'constraints' => [
-                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
                             ],
-                             
                         ],
                         'may_terminate' => true,
                         
@@ -144,7 +143,7 @@ return [
                         'priority' => 2,
                         'type'    => 'Segment',
                         'options' => [
-                            'route'    => '[/:action[/:asciiCompanyName[/:asciiJobName]]]',
+                            'route'    => '[/:action[/:slugCompanyName[/:slugJobName]]]',
                             'constraints' => [
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
