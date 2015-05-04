@@ -248,7 +248,6 @@ class Photo extends AbstractService
      */
     public function movePhoto($id, $newAlbum)
     {
-
         $photo = $this->getPhoto($id);
         $photo->setAlbum($newAlbum);
     }

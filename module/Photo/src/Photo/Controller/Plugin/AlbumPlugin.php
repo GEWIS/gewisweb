@@ -46,7 +46,7 @@ class AlbumPlugin extends AbstractPlugin
      * 
      * @param int $albumId the id of the album
      * @param int $activePage the page of the album
-     * @return array
+     * @return array|null Array with data or null if the page does not exist
      */
     public function getAlbumPage($albumId, $activePage)
     {
@@ -55,14 +55,12 @@ class AlbumPlugin extends AbstractPlugin
         $photoService = $this->getPhotoService();
         $album = $albumService->getAlbum($albumId);
         if (is_null($album)) {
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return null;
         }
         $config = $albumService->getConfig();
         $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
         if ($activePage > $lastpage) {
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return null;
         }
 
         $albums = array();
