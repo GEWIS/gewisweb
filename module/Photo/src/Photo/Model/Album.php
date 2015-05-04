@@ -68,7 +68,7 @@ class Album implements ResourceInterface
     /**
      * The cover photo to display with the album.
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
 
