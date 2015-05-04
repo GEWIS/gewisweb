@@ -71,16 +71,6 @@ return array(
                             ),
                         ),
                     ),
-                    'album_create' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => '/album/create',
-                            'defaults' => array(
-                                'controller' => 'AlbumAdmin',
-                                'action' => 'create'
-                            ),
-                        ),
-                    ),
                     'album_index' => array(
                         'type' => 'Segment',
                         'options' => array(
@@ -104,6 +94,7 @@ return array(
                             ),
                             'constraints' => array(
                                 'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -117,6 +108,19 @@ return array(
                             ),
                             'constraints' => array(
                                 'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_create' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/create',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'create'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]*',
                             ),
                         ),
                     ),
