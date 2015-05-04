@@ -67,10 +67,10 @@ class Album implements ResourceInterface
 
     /**
      * The cover photo to display with the album.
-     * @ORM\OneToOne(targetEntity="Photo")
-     * @ORM\JoinColumn(name="cover_id", referencedColumnName="id")
+     * 
+     * @ORM\Column(type="string")
      */
-    protected $cover;
+    protected $coverPath;
 
     /**
      * The amount of photos in this album
@@ -137,13 +137,22 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Gets an array of all child albums
+     * 
+     * @return array 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+    /**
      * Get the album cover
      * 
      * @return photo
      */
-    public function getCover()
+    public function getCoverPath()
     {
-        return $this->cover;
+        return $this->coverPath;
     }
 
     /**
@@ -211,9 +220,9 @@ class Album implements ResourceInterface
      * 
      * @param photo $photo
      */
-    public function setCover($photo)
+    public function setCoverPath($photo)
     {
-        $this->cover = $photo;
+        $this->coverPath = $photo;
     }
 
     /**
@@ -244,17 +253,16 @@ class Album implements ResourceInterface
      */
     public function updateOnAdd()
     {
-        if (!is_null($this->parent)) {
+        if (!is_null($this->parent) && !is_null($this->getStartDateTime())) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
             if (    is_null($this->parent->getStartDateTime()) 
-                || $this->parent->getStartDateTime()->getTimestamp() > $this->getStartDateTime()->getTimeStamp()
-            ) {
+                || $this->parent->getStartDateTime()->getTimestamp() > 
+                    $this->getStartDateTime()->getTimeStamp() ) {
                 $this->parent->setStartDateTime($this->getStartDateTime());
             }
-
             if (   is_null($this->parent->getEndDateTime()) 
-                || $this->parent->getEndDateTime()->getTimestamp() < $this->getEndDateTime()->getTimeStamp()
-            ) {
+                || $this->parent->getEndDateTime()->getTimestamp() < 
+                    $this->getEndDateTime()->getTimeStamp()) {
                 $this->parent->setEndDateTime($this->getEndDateTime());
             }
         }

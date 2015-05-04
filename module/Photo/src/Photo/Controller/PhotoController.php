@@ -12,9 +12,8 @@ class PhotoController extends AbstractActionController
     {
         $albums = $this->getAlbumService()->getAlbums();
         //add any other special behavior which is required for the main photo page here later
-        //we'll fix this ugly thing later vv
-        $config = $this->getPhotoService()->getConfig();
-        $basedir = str_replace("public", "", $config['upload_dir']);
+
+        $basedir = $this->getPhotoService()->getBaseDirectory();
         return new ViewModel(array(
             'albums' => $albums,
             'basedir' => $basedir
