@@ -74,6 +74,7 @@ Photo.Admin.loadPage = function (resource) {
         $(".thumbnail-checkbox").change(Photo.Admin.itemSelected);
         $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
         $("#btnEdit").attr('href', 'photo/album/' + data.album.id + '/edit');
+        $("#btnCreate").attr('href', 'photo/album/' + data.album.id + '/create');
     });
 }
 

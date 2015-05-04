@@ -39,7 +39,7 @@ $this->headLink()
     </div>
     <div class="col-lg-9">
 
-        <a class="btn btn-primary" href="photo/album/create"><span class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
+        <a id="btnCreate" class="btn btn-primary" href="photo/album/create"><span class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
@@ -56,25 +56,6 @@ $this->headLink()
 
         <nav><ul class="pagination" id="paging"></ul></nav>
         <div id="album"></div>
-    </div>
-</div>
-
-<!-- Rename album modal -->
-<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Rename album</h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
     </div>
 </div>
 
