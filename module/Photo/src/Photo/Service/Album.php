@@ -113,12 +113,21 @@ class Album extends AbstractService
      * Moves an album to new parent album
      * 
      * @param int $id the id of the album to be moved
-     * @param int $newParent the id of the new parent
+     * @param int $parentId the id of the new parent
+     *
+     * @return boolean indicating if the move was successful
      */
-    public function moveAlbum($id, $newParent)
+    public function moveAlbum($id, $parentId)
     {
         $album = $this->getAlbum($id);
-        $album->setParent($newParent);
+        $parent = $this->getAlbum($parentId);
+        if(is_null($album) || $id == $parentId) {
+            return false;
+        }
+
+        $album->setParent($parent);
+        $this->getAlbumMapper()->flush();
+        return true;
     }
 
     /**

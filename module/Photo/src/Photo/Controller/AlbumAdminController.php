@@ -115,7 +115,14 @@ class AlbumAdminController extends AbstractActionController
 
     public function moveAction()
     {
-        
+        $request = $this->getRequest();
+        $result = array();
+        if ($request->isPost()) {
+            $albumId = $this->params()->fromRoute('album_id');
+            $parentId = $request->getPost()['parent_id'];
+            $result['success'] = $this->getAlbumService()->moveAlbum($albumId, $parentId);
+        }
+        return new JsonModel($result);
     }
 
     public function deleteAction()
