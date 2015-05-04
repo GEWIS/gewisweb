@@ -63,24 +63,29 @@ class Album extends AbstractService
 
     /**
      * Creates a new album.
-     * 
-     * @param String $name The name of the new album.
-     * @param Photo\Model\Album $parent The parent of this album, if any.
-     * @return The new album.
+     *
+     * @param int $parent the id of the parent album
+     * @param array $data The post data to use for the album
+     *
+     * @return boolean
      */
-    public function createAlbum($name, $parent = null)
+    public function createAlbum($parentId, $data)
     {
 
+        $form = $this->getCreateAlbumForm();
         $album = new AlbumModel();
-        $album->setName($name);
-        if (!is_null($parent)) {
-            $album->setParent($parent);
-        }
+        $form->bind($album);
+        $form->setData($data);
 
-        $mapper = $this->getAlbumMapper();
-        $mapper->persist($album);
-        $mapper->flush();
-        return $album;
+        if (!$form->isValid()) {
+            return false;
+        }
+        if(!is_null($parentId)) {
+            $album->setParent($this->getAlbum($parentId));
+        }
+        $this->getAlbumMapper()->persist($album);
+        $this->getAlbumMapper()->flush();
+        return true;
     }
 
     /**
@@ -170,7 +175,12 @@ class Album extends AbstractService
         $album = $this->getAlbum($id);
         $form->bind($album);
         return $form;
+    }
 
+    public function getCreateAlbumForm()
+    {
+        //TODO: permissions!!
+        return $this->sm->get('photo_form_album_create');
     }
 
     /**

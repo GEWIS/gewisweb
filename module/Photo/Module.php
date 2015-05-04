@@ -47,8 +47,15 @@ class Module
             ),
             'factories' => array(
                 'photo_form_album_edit' => function ($sm) {
-                    $form = new \Photo\Form\EditAlbum(
-                            $sm->get('translator')
+                    $form = new Form\EditAlbum(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('photo_hydrator_album'));
+                    return $form;
+                },
+                'photo_form_album_create' => function ($sm) {
+                    $form = new Form\CreateAlbum(
+                        $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
                     return $form;

@@ -20,14 +20,19 @@ class AlbumAdminController extends AbstractActionController
 
     public function createAction()
     {
-        $service = $this->getAlbumService();
+        $albumService = $this->getAlbumService();
         $request = $this->getRequest();
         if ($request->isPost()) {
-            //TODO: save and create album
+            $albumId = $this->params()->fromRoute('album_id');
+            if ($albumService->createAlbum($albumId, $request->getPost())) {
+                return new ViewModel(array(
+                    'success' => true
+                ));
+            }
         }
-
+        $form = $albumService->getCreateAlbumForm();
         return new ViewModel(array(
-            'form' => $service->getCreateAlbumForm()
+            'form' => $form,
         ));
     }
 
