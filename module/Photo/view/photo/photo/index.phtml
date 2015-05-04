@@ -1,1 +1,16 @@
-<font size="9"> WOUT FAALT </font>
+<div class="row">
+    <?php if (!empty($albums)): ?>
+        <?php for ($i = 0; $i < count($albums); $i++): ?>
+            <?= ($i % 4 === 0) ? "</div><div class=\"row\">" : ""; ?>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="/photo/album/<?= $albums[$i]->getId(); ?>">
+                    <img class="img-responsive" src="<?= is_null($albums[$i]->getCover()) ? "http://placehold.it/825x550" : $basedir . '/' . $albums[$i]->getCover()->getPath() ?>" alt="">
+                    <div class="caption">
+                        <?= $albums[$i]->getName(); ?>
+                    </div>
+                </a>
+
+            </div>
+        <?php endfor; ?>
+    <?php endif; ?>
+</div>
