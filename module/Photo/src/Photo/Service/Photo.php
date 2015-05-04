@@ -189,17 +189,24 @@ class Photo extends AbstractService
     }
 
     /**
-     * 
-     * @param type $id the id of the photo to retrieve
-     * @return array of data about the photo, which is usefull inside a view
+     * Get the photo data belonging to a certain photo
+     *
+     * @param int $id the id of the photo to retrieve
+     * @return array|null of data about the photo, which is usefull inside a view
+     *          or null if the photo was not found
      */
     public function getPhotoData($id)
     {
         $photo = $this->getPhoto($id);
-        if (!is_null($photo)) {
-            $next = $this->getNextPhoto($photo);
-            $previous = $this->getPreviousPhoto($photo);
+
+        // photo does not exist
+        if (is_null($photo)) {
+            return null;
         }
+
+        $next = $this->getNextPhoto($photo);
+        $previous = $this->getPreviousPhoto($photo);
+
         //we'll fix this ugly thing later vv
         $basedir = str_replace("public", "", $this->getConfig()['upload_dir']);
 
