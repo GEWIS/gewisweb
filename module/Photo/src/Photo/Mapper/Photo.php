@@ -90,9 +90,9 @@ class Photo
 
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a')
-            ->where('a.path = ?1 AND a.album = ?2');
+            ->where('a.path = ?1 AND a.album = ?2')
             ->setParameter(1, $path)
-            ->setParameter(2, $album)
+            ->setParameter(2, $album);
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
