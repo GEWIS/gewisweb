@@ -291,13 +291,22 @@ class Photo extends AbstractService
      * Moves a photo to a new album.
      * 
      * @param int $id the id of the photo
-     * @param int $newAlbum the id of the new album
+     * @param int $albumId the id of the new album
+     *
+     * @return bool indicating whether move was successful
      */
-    public function movePhoto($id, $newAlbum)
+    public function movePhoto($id, $albumId)
     {
-
         $photo = $this->getPhoto($id);
-        $photo->setAlbum($newAlbum);
+        $album = $this->getAlbumService()->getAlbum($albumId);
+        if(is_null($photo) || is_null($album)) {
+            return false;
+        }
+
+        $photo->setAlbum($album);
+        $this->getAlbumMapper()->flush();
+        return true;
+
     }
 
     /**
