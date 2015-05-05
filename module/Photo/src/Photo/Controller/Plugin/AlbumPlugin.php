@@ -16,8 +16,10 @@ class AlbumPlugin extends AbstractPlugin
      * navigate to. The base idea is to show the two pages before and the
      * two pages following the currently active page. With special
      * conditions for when the last and the first page are reached.
+     *
      * @param int $lastPage the last page in the album
      * @param int $activePage the page the user is currently on
+     *
      * @return array the pages to show the user
      */
     public function getAlbumPaging($activePage, $lastPage)
@@ -47,6 +49,7 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @param int $albumId the id of the album
      * @param int $activePage the page of the album
+     *
      * @return array|null Array with data or null if the page does not exist
      */
     public function getAlbumPage($albumId, $activePage)

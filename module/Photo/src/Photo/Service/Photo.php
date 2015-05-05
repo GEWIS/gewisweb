@@ -50,6 +50,7 @@ class Photo extends AbstractService
      * Generates CFS paths
      *
      * @param string $path The path of the photo to generate the path for
+     *
      * @return string the path at which the photo should be saved
      */
     public function generateStoragePath($path)
@@ -75,9 +76,11 @@ class Photo extends AbstractService
      * Move the uploaded photo to the storage and store it in the database.
      * All upload actions should use this function to prevent "ghost" files
      * or database entries
+     *
      * @param string $path the temporary path of the uploaded photo
      * @param \Photo\Model\Album $targetAlbum the album to save the photo in
      * @param boolean $move whether to move the photo instead of copying it
+     *
      * @return \Photo\Model\Photo
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
@@ -126,6 +129,7 @@ class Photo extends AbstractService
      * @param string $path the path of the original image
      * @param int $width the maximum width of the thumbnail (in px)
      * @param int $height the maximum height of the thumbnail (in px)
+     *
      * @return string the path of the created thumbnail
      */
     protected function createThumbnail($path, $width, $height)
@@ -149,8 +153,10 @@ class Photo extends AbstractService
      * If any subdirectory is present, it will be stored in a new album,
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
+     *
      * @param string $path The path of the directory.
      * @param \Photo\Model\Album $targetAlbum album The album to store the photos.
+     *
      * @throws \Exception on invalid path
      */
     public function storeUploadedDirectory($path, $targetAlbum)
@@ -221,6 +227,8 @@ class Photo extends AbstractService
      * Returns the next photo in the album to display
      *
      * @param \Photo\Model\Photo $photo
+     *
+     * @return \Photo\Model\Photo The next photo.
      */
     public function getNextPhoto($photo)
     {
@@ -231,6 +239,8 @@ class Photo extends AbstractService
      * Returns the previous photo in the album to display
      *
      * @param \Photo\Model\Photo $photo
+     *
+     * @return \Photo\Model\Photo The next photo.
      */
     public function getPreviousPhoto($photo)
     {
@@ -243,6 +253,7 @@ class Photo extends AbstractService
      * @param \Photo\Model\Album $album the album to get the photos from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
+     *
      * @return array of Photo\Model\Album
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
@@ -254,6 +265,7 @@ class Photo extends AbstractService
      * Get the photo data belonging to a certain photo
      *
      * @param int $id the id of the photo to retrieve
+     *
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
      */
@@ -354,7 +366,7 @@ class Photo extends AbstractService
     /**
      * Gets the metadata service.
      *
-     * @return Photo\Service\Metadata
+     * @return \Photo\Service\Metadata
      */
     public function getMetadataService()
     {
@@ -364,7 +376,7 @@ class Photo extends AbstractService
     /**
      * Gets the album service.
      *
-     * @return Photo\Service\Album
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -374,7 +386,7 @@ class Photo extends AbstractService
     /**
      * Gets the album service.
      *
-     * @return Photo\Service\Album
+     * @return \Photo\Service\Album
      */
     public function getPhotoService()
     {

@@ -38,6 +38,7 @@ class Album extends AbstractService
      * Gets an album using the album id.
      *
      * @param integer $id the id of the album
+     *
      * @return \Photo\Model\Album album matching the given id
      */
     public function getAlbum($id)

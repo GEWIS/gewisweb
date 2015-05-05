@@ -17,6 +17,7 @@ class AlbumCover extends AbstractService
      * a random selection of photos in the album or sub-albums.
      *
      * @param \Photo\Model\Album $album The album to create the cover for.
+     *
      * @return string The path to the cover image.
      */
     public function createCover($album)
@@ -35,6 +36,7 @@ class AlbumCover extends AbstractService
      * Creates a cover image for the given album.
      *
      * @param \Photo\Model\Album $album The album to create a cover image for.
+     *
      * @return Imagick The cover image.
      */
     protected function generateCover($album)
@@ -89,6 +91,7 @@ class AlbumCover extends AbstractService
      *
      * @param \Photo\Model\Album $album
      * @param int $count the amount of images needed.
+     *
      * @return Imagick a list of the images.
      */
     protected function getImages($album, $count)
