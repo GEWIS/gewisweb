@@ -272,18 +272,22 @@ class Photo extends AbstractService
      * from the server.
      * 
      * @param int $id the id of the photo to delete
+     *
+     * @return bool indicating whether the delete was successful
      */
     public function deletePhoto($id)
     {
         $config = $this->getConfig();
         $photo = $this->getPhoto($id);
-        if (!is_null($photo)) {
-            unlink($config['upload_dir'] . '/' . $photo->getPath());
-            unlink($config['upload_dir'] . '/' . $photo->getLargeThumbPath());
-            unlink($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
-            $this->getPhotoMapper()->deletePhoto($photo->getId());
-            $this->getPhotoMapper()->flush();
+        if (is_null($photo)) {
+            return false;
         }
+        unlink($config['upload_dir'] . '/' . $photo->getPath());
+        unlink($config['upload_dir'] . '/' . $photo->getLargeThumbPath());
+        unlink($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
+        $this->getPhotoMapper()->deletePhoto($photo->getId());
+        $this->getPhotoMapper()->flush();
+        return true;
 
     }
 

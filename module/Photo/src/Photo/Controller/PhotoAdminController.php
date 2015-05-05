@@ -11,7 +11,8 @@ class PhotoAdminController extends AbstractActionController
 
     public function indexAction()
     {
-        
+        $photoId = $this->params()->fromRoute('photo_id');
+        return new ViewModel($this->getPhotoService()->getPhotoData($photoId));
     }
 
     public function moveAction()
@@ -28,7 +29,13 @@ class PhotoAdminController extends AbstractActionController
 
     public function deleteAction()
     {
-        
+        $request = $this->getRequest();
+        $result = array();
+        if ($request->isPost()) {
+            $photoId = $this->params()->fromRoute('photo_id');
+            $result['success'] = $this->getPhotoService()->deletePhoto($photoId);
+        }
+        return new JsonModel($result);
     }
 
     /**
