@@ -98,7 +98,14 @@ Photo.Admin.deleteAlbum = function () {
     });
     $("#deleteProgress").hide();
     $("#deleteDone").show();
-    location.reload(); //reload to update album tree (TODO: update album tree dynamically)
+}
+
+Photo.Admin.deletePhoto = function () {
+    $("#deleteConfirm").hide();
+    $("#deleteProgress").show();
+    $.post(location.href + '/delete');
+    $("#deleteProgress").hide();
+    $("#deleteDone").show();
 }
 
 Photo.Admin.moveAlbum = function () {
@@ -109,9 +116,23 @@ Photo.Admin.moveAlbum = function () {
         { parent_id : $("#newAlbumParent").val() }
     ).done(function( data ) {
             location.reload(); //reload to update album tree (TODO: update album tree dynamically)
-    });
+        });
     $("#albumMoveProgress").hide();
     $("#albumMoveDone").show();
+
+}
+
+Photo.Admin.movePhoto = function () {
+    $("#photoMoveSelect").hide();
+    $("#photoMoveProgress").show();
+    $.post(
+        location.href + '/move',
+        { album_id : $("#newPhotoAlbum").val() }
+    ).done(function( data ) {
+            location.reload(); //reload to update view (TODO: update view dynamically)
+        });
+    $("#photoMoveProgress").hide();
+    $("#photoMoveDone").show();
 
 }
 
@@ -130,6 +151,10 @@ Photo.Admin.init = function () {
     }
 }
 
+Photo.Admin.initPhoto = function() {
+    $("#deletePhotoButton").on('click', Photo.Admin.deletePhoto);
+    $("#movePhotoButton").on('click', Photo.Admin.movePhoto);
+}
 Photo.Admin.itemSelected = function () {
     if (this.checked) {
         Photo.Admin.selectedCount++;
