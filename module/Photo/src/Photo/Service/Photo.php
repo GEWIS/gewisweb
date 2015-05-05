@@ -3,9 +3,6 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractService;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
 use Imagick;
 
@@ -99,10 +96,16 @@ class Photo extends AbstractService
             //Create and set the storage paths for thumbnails.
             //Currently, the maximum sizes of the old website are used. These
             //values are dependant on the design.
-            $photo->setLargeThumbPath($this->createThumbnail($path, $config['large_thumb_size']['width'],
-                $config['large_thumb_size']['height']));
-            $photo->setSmallThumbPath($this->createThumbnail($path, $config['small_thumb_size']['width'],
-                $config['small_thumb_size']['height']));
+            $photo->setLargeThumbPath($this->createThumbnail(
+                $path,
+                $config['large_thumb_size']['width'],
+                $config['large_thumb_size']['height']
+            ));
+            $photo->setSmallThumbPath($this->createThumbnail(
+                $path,
+                $config['small_thumb_size']['width'],
+                $config['small_thumb_size']['height']
+            ));
             $mapper = $this->getPhotoMapper();
             /**
              * TODO: optionally we could use a transactional query here to make it

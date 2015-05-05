@@ -3,10 +3,6 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractService;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Photo\Model\Album as AlbumModel;
-use Photo\Model\Photo as PhotoModel;
 
 /**
  * Metadata service. This service implements all functionality related to
