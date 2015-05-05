@@ -48,7 +48,8 @@ $this->headLink()
             <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
             <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate"><span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?></button><br><br>
             <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
-            <button type="button" data-toggle="modal" data-target="#multipleDeleteModal" class="btn btn-danger btn-hidden" id="remove-multiple"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            <button type="button" data-toggle="modal" data-target="#multipleDeleteModal" class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            <button type="button" data-toggle="modal" data-target="#multipleMoveModal" class="btn btn-primary btn-hidden" id="btnMultipleMove"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?></button>
         </div>
         <hr>
 
@@ -154,6 +155,31 @@ $this->headLink()
             <div class="modal-footer">
                 <button type="button" id="multipleDeleteButton" class="btn btn-danger"><?= $this->translate('Delete photos') ?></button>
                 <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move multiple photo modal -->
+<div class="modal fade" id="multipleMoveModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Move the photos to another album') ?></h4>
+            </div>
+            <div  class="modal-body">
+                <div id="multipleMoveSelect">
+                    <!-- TODO: find a user friendly way to do this -->
+                    <p><?= $this->translate('Select a new parent album') ?></p>
+                    <input id="newPhotoAlbum" name="album_id" type="text"/>
+                </div>
+                <div id="multipleMoveDone" style="display:none">
+                    <p><?= $this->translate('The photos have been moved') ?></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="multipleMoveButton" class="btn btn-primary"><?= $this->translate('Move') ?></button>
             </div>
         </div>
     </div>

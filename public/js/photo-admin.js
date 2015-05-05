@@ -121,6 +121,22 @@ Photo.Admin.deleteMultiple = function () {
     $("#multipleDeleteDone").show();
 }
 
+Photo.Admin.moveMultiple = function () {
+    $("#multipleMoveConfirm").hide();
+    $("#multipleMoveProgress").show();
+    var thumbnails = [];
+    $(".thumbnail-checkbox:checked").each(function() {
+        thumbnails.push($(this).parent().parent());
+        $.post($(this).parent().attr('href') + '/move',
+            { album_id : $("#newPhotoAlbum").val() }
+        ).done(function() {
+            thumbnails.pop().remove();
+        });
+    });
+    $("#multipleMoveProgress").hide();
+    $("#multipleMoveDone").show();
+}
+
 Photo.Admin.moveAlbum = function () {
     $("#albumMoveSelect").hide();
     $("#albumMoveProgress").show();
@@ -151,12 +167,14 @@ Photo.Admin.movePhoto = function () {
 
 Photo.Admin.init = function () {
     $("#albumControls").hide();
-    var COUNT_SPAN = '<span id="remove-count"></span>'
-    $("#remove-multiple").html($("#remove-multiple").html().replace('%i', COUNT_SPAN));
+    var COUNT_SPAN = '<span class="selectedCount"></span>'
+    $("#btnMultipleMove").html($("#btnMultipleMove").html().replace('%i', COUNT_SPAN));
+    $("#btnMultipleDelete").html($("#btnMultipleDelete").html().replace('%i', COUNT_SPAN));
     //we use class instead of id here to get the button since there are multiple instances
     $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
     $("#deleteAlbumButton").on('click', Photo.Admin.deleteAlbum);
     $("#multipleDeleteButton").on('click', Photo.Admin.deleteMultiple);
+    $("#multipleMoveButton").on('click', Photo.Admin.moveMultiple);
     $("#moveAlbumButton").on('click', Photo.Admin.moveAlbum);
     //auto load album on hash
     if (location.hash !== "") {
@@ -175,12 +193,14 @@ Photo.Admin.itemSelected = function () {
     } else {
         Photo.Admin.selectedCount--;
     }
-    $("#remove-count").html(Photo.Admin.selectedCount);
+    $(".selectedCount").html(Photo.Admin.selectedCount);
     if (Photo.Admin.selectedCount > 0)
     {
-        $("#remove-multiple").removeClass("btn-hidden");
+        $("#btnMultipleDelete").removeClass("btn-hidden");
+        $("#btnMultipleMove").removeClass("btn-hidden");
     } else {
-        $("#remove-multiple").addClass("btn-hidden");
+        $("#btnMultipleDelete").addClass("btn-hidden");
+        $("#btnMultipleMove").addClass("btn-hidden");
     }
 }
 Photo.Admin.initAdd = function () {
