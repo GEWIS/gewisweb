@@ -27,18 +27,16 @@ $this->headLink()
                         <img class="img-responsive" src="<?= $basedir . '/' . $next->getSmallThumbPath() ?>" alt="">
                     </a>
                 <?php endif; ?>
-
-
             </div>
         </div>
     </div>
 
     <div class="col-lg-9">
         <ol class="breadcrumb">
-            <li><a href="#">2014-2015</a></li>
-            <li><a href="#">Test album #2</a></li>
-            <li><a>Super awesome sub album #4</a></li>
-            <li class="active">Photo #59</li>
+            <?php foreach($path as $album): ?>
+                <li><a href="/admin/photo#<?= $album->getId() ?>"><?= $album->getName() ?></a></li>
+            <?php endforeach; ?>
+            <li class="active">Photo #<?= $photo->getId() ?></li>
         </ol>
         <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Modify details') ?></button>
         <button type="button" data-toggle="modal" data-target="#movePhotoModal" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move photo') ?></button>
