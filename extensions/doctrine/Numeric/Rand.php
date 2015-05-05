@@ -1,7 +1,9 @@
 <?php
 namespace Numeric;
+
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;
+
 /**
  * This extension adds SQL RAND() functionality to DQL for returning random
  * database entries.
@@ -24,4 +26,3 @@ class Rand extends FunctionNode
         return 'RAND()';
     }
 }
-?>
