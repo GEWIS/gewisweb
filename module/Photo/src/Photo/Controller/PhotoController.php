@@ -40,7 +40,7 @@ class PhotoController extends AbstractActionController
     /**
      * Gets the album service.
      *
-     * @return Photo\Service\Album
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -50,7 +50,7 @@ class PhotoController extends AbstractActionController
     /**
      * Gets the photo service.
      *
-     * @return Photo\Service\Photo
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

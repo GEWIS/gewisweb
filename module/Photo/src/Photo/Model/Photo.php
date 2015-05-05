@@ -390,6 +390,8 @@ class Photo implements ResourceInterface
 
     /**
      * Returns an associative array representation of this object
+     *
+     * @return array
      */
     public function toArray()
     {

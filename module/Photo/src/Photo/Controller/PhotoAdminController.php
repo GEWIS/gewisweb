@@ -9,6 +9,9 @@ use Zend\View\Model\JsonModel;
 class PhotoAdminController extends AbstractActionController
 {
 
+    /**
+     * Shows an admin page for the specified photo
+     */
     public function indexAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
@@ -23,6 +26,9 @@ class PhotoAdminController extends AbstractActionController
         return new ViewModel(array_merge($data, array('path' => $path)));
     }
 
+    /**
+     * Places a photo in another album.
+     */
     public function moveAction()
     {
         $request = $this->getRequest();
@@ -36,6 +42,9 @@ class PhotoAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    /**
+     * Removes a photo from an album and deletes it.
+     */
     public function deleteAction()
     {
         $request = $this->getRequest();

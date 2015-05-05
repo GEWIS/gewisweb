@@ -35,10 +35,10 @@ class Album extends AbstractService
     }
 
     /**
-     * Gets an album using the album id
+     * Gets an album using the album id.
      *
      * @param integer $id the id of the album
-     * @return Photo\Model\Album album matching the given id
+     * @return \Photo\Model\Album album matching the given id
      */
     public function getAlbum($id)
     {
@@ -46,10 +46,12 @@ class Album extends AbstractService
     }
 
     /**
-     * Get all the albums in the root directory or in the specified album
+     * Retrieves all the albums in the root directory or in the specified album.
+     *
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
-     * @param Photo\Model\Album $album The album to retrieve sub-albums of
+     * @param \Photo\Model\Album $album The album to retrieve sub-albums of
+     *
      * @return array of albums
      */
     public function getAlbums($album = null, $start = 0, $maxResults = null)
@@ -64,10 +66,10 @@ class Album extends AbstractService
     /**
      * Creates a new album.
      *
-     * @param int $parent the id of the parent album
+     * @param int $parentId the id of the parent album
      * @param array $data The post data to use for the album
      *
-     * @return boolean
+     * @return boolean indicating if the creation was successful
      */
     public function createAlbum($parentId, $data)
     {
@@ -95,7 +97,7 @@ class Album extends AbstractService
      * @param int $id the id of the album to modify
      * @param array $data The post data to update
      *
-     * @return boolean
+     * @return boolean indicating if the update was successful
      */
     public function updateAlbum($id, $data)
     {
@@ -134,7 +136,7 @@ class Album extends AbstractService
     }
 
     /**
-     * removes an album and all subalbums recusively, including all photos.
+     * Removes an album and all subalbums recusively, including all photos.
      *
      * @param int $id the id of the album to remove.
      */
@@ -162,7 +164,8 @@ class Album extends AbstractService
     }
 
     /**
-     * Updates the given album with a newly generated cover photo
+     * Updates the given album with a newly generated cover photo.
+     *
      * @param int $id
      */
     public function generateAlbumCover($id)
@@ -209,7 +212,7 @@ class Album extends AbstractService
     /**
      * Gets the photo service.
      *
-     * @return Photo\Service\Photo
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {
@@ -219,7 +222,7 @@ class Album extends AbstractService
     /**
      * Gets the album cover service.
      *
-     * @return Photo\Service\AlbumCover
+     * @return \Photo\Service\AlbumCover
      */
     public function getAlbumCoverService()
     {
@@ -229,7 +232,7 @@ class Album extends AbstractService
     /**
      * Get the photo config
      *
-     * @return array
+     * @return array containing the config for the module
      */
     public function getConfig()
     {

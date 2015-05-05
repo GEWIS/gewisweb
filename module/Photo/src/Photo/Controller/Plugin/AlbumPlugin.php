@@ -12,12 +12,12 @@ class AlbumPlugin extends AbstractPlugin
 {
 
     /**
-     * This fucntion determines which set of pages to show the user to
+     * This function determines which set of pages to show the user to
      * navigate to. The base idea is to show the two pages before and the
      * two pages following the currently active page. With special
      * conditions for when the last and the first page are reached.
-     * @param type $lastPage the last page in the album
-     * @param type $activePage the page the user is currently on
+     * @param int $lastPage the last page in the album
+     * @param int $activePage the page the user is currently on
      * @return array the pages to show the user
      */
     public function getAlbumPaging($activePage, $lastPage)
@@ -43,7 +43,7 @@ class AlbumPlugin extends AbstractPlugin
     }
 
     /**
-     * Gets all data needed to display a page of an album
+     * Retrieves all data needed to display a page of an album
      *
      * @param int $albumId the id of the album
      * @param int $activePage the page of the album
@@ -97,7 +97,7 @@ class AlbumPlugin extends AbstractPlugin
     /**
      * Gets the album service.
      *
-     * @return Photo\Service\Album
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -107,7 +107,7 @@ class AlbumPlugin extends AbstractPlugin
     /**
      * Gets the photo service.
      *
-     * @return Photo\Service\Photo
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

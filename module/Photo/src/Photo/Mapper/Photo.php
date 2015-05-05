@@ -32,7 +32,9 @@ class Photo
     /**
      * Returns the next photo in the album to display
      *
-     * @param Photo\Model\Photo $photo
+     * @param \Photo\Model\Photo $photo
+     * @return \Photo\Model\Album|null Photo if there is a next
+     * photo, null otherwise
      */
     public function getNextPhoto($photo)
     {
@@ -53,7 +55,10 @@ class Photo
     /**
      * Returns the previous photo in the album to display
      *
-     * @param Photo\Model\Photo $photo
+     * @param \Photo\Model\Photo $photo
+     *
+     * @return \Photo\Model\Album|null Photo if there is a previous
+     * photo, null otherwise
      */
     public function getPreviousPhoto($photo)
     {
@@ -76,8 +81,8 @@ class Photo
      * it if it does.
      *
      * @param string $path The storage path of the photo
-     * @param Photo\Model\Album $album the album the photo is in
-     * @return Photo\Model\Photo if the photo exists, null otherwise.
+     * @param \Photo\Model\Album $album the album the photo is in
+     * @return \Photo\Model\Photo if the photo exists, null otherwise.
      */
     public function getPhotoByData($path, $album)
     {
@@ -95,11 +100,11 @@ class Photo
 
 
     /**
-     * retrieves a photo by id from the database
+     * Retrieves a photo by id from the database.
      *
      * @param integer $id the id of the photo
      *
-     * @return Photo\Model\Photo
+     * @return \Photo\Model\Photo
      */
     public function getPhotoById($id)
     {
@@ -130,7 +135,7 @@ class Photo
     /**
      * Persist photo
      *
-     * @param PhotoModel $photo
+     * @param \Photo\Model\Photo $photo
      */
     public function persist(PhotoModel $photo)
     {
@@ -148,7 +153,7 @@ class Photo
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {

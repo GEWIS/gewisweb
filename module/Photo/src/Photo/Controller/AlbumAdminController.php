@@ -9,6 +9,9 @@ use Zend\View\Model\JsonModel;
 class AlbumAdminController extends AbstractActionController
 {
 
+    /**
+     * Retrieves the main photo admin index page.
+     */
     public function indexAction()
     {
         $albumService = $this->getAlbumService();
@@ -19,6 +22,9 @@ class AlbumAdminController extends AbstractActionController
         ));
     }
 
+    /**
+     * Retrieves the album creation form and saves data if needed.
+     */
     public function createAction()
     {
         $albumService = $this->getAlbumService();
@@ -38,6 +44,9 @@ class AlbumAdminController extends AbstractActionController
         ));
     }
 
+    /**
+     * Retrieves photos on a certain page
+     */
     public function pageAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
@@ -54,6 +63,9 @@ class AlbumAdminController extends AbstractActionController
         return new JsonModel($data);
     }
 
+    /**
+     * Retrieves the album editing form and saves changes.
+     */
     public function editAction()
     {
         $albumService = $this->getAlbumService();
@@ -78,6 +90,9 @@ class AlbumAdminController extends AbstractActionController
 
     }
 
+    /**
+     * Uploads an image file and adds it to an album.
+     */
     public function uploadAction()
     {
         $request = $this->getRequest();
@@ -99,6 +114,9 @@ class AlbumAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    /**
+     * Imports photos from a given path in to an album.
+     */
     public function importAction()
     {
         $request = $this->getRequest();
@@ -119,6 +137,9 @@ class AlbumAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    /**
+     * Moves the album by setting the parent album to another album.
+     */
     public function moveAction()
     {
         $request = $this->getRequest();
@@ -132,6 +153,9 @@ class AlbumAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    /**
+     * Deletes the album.
+     */
     public function deleteAction()
     {
         $request = $this->getRequest();
@@ -144,7 +168,7 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Regenerates the cover photo for the album
+     * Regenerates the cover photo for the album.
      */
     public function coverAction()
     {

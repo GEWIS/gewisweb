@@ -43,11 +43,11 @@ class Album
     }
 
     /**
-     * retrieves an album by id from the database
+     * Retrieves an album by id from the database.
      *
      * @param integer $id the id of the album
      *
-     * @return Photo\Model\Album
+     * @return \Photo\Model\Album
      */
     public function getAlbumById($id)
     {
@@ -63,12 +63,12 @@ class Album
     }
 
     /**
-     * returns all the subalbums of a given album
+     * Returns all the subalbums of a given album.
      *
-     * @param type $parent the parent album to retrieve the subalbum from
+     * @param \Photo\Model\Album $parent the parent album to retrieve the subalbum from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
-     * @return type
+     * @return array|null Array with subalbums or null if there are none
      */
     public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
@@ -87,9 +87,9 @@ class Album
     }
 
     /**
-     * returns all the photos in an album.
+     * Returns all the photos in an album.
      *
-     * @param Photo\Model\Album $album The album to retrieve the photos from
+     * @param \Photo\Model\Album $album The album to retrieve the photos from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of photo's
@@ -137,7 +137,7 @@ class Album
     /**
      * return all the sub-albums without a parent
      *
-     * @return array of AlbumModels
+     * @return array of \Photo\Model\Album
      */
     public function getRootAlbums()
     {
@@ -171,7 +171,7 @@ class Album
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {

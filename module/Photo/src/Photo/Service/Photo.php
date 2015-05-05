@@ -18,7 +18,7 @@ class Photo extends AbstractService
     /**
      * Get the photo mapper.
      *
-     * @return Photo\Mapper\Photo
+     * @return \Photo\Mapper\Photo
      */
     public function getPhotoMapper()
     {
@@ -28,7 +28,7 @@ class Photo extends AbstractService
     /**
      * Get the album mapper.
      *
-     * @return Photo\Mapper\Album
+     * @return \Photo\Mapper\Album
      */
     public function getAlbumMapper()
     {
@@ -36,9 +36,10 @@ class Photo extends AbstractService
     }
 
     /**
+     * Retrieves a photo by an id.
      *
      * @param integer $id the id of the album
-     * @return Photo\Model\Photo photo matching the given id
+     * @return \Photo\Model\Photo photo matching the given id
      */
     public function getPhoto($id)
     {
@@ -49,7 +50,7 @@ class Photo extends AbstractService
      * Generates CFS paths
      *
      * @param string $path The path of the photo to generate the path for
-     * @return the path at which the photo should be saved
+     * @return string the path at which the photo should be saved
      */
     public function generateStoragePath($path)
     {
@@ -75,9 +76,9 @@ class Photo extends AbstractService
      * All upload actions should use this function to prevent "ghost" files
      * or database entries
      * @param string $path the temporary path of the uploaded photo
-     * @param Photo\Model\Album $targetAlbum the album to save the photo in
+     * @param \Photo\Model\Album $targetAlbum the album to save the photo in
      * @param boolean $move whether to move the photo instead of copying it
-     * @return Photo\Model\Photo
+     * @return \Photo\Model\Photo
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
@@ -149,7 +150,7 @@ class Photo extends AbstractService
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
      * @param string $path The path of the directory.
-     * @param Photo\Model\Album $target_album The album to store the photos.
+     * @param \Photo\Model\Album $targetAlbum album The album to store the photos.
      * @throws \Exception on invalid path
      */
     public function storeUploadedDirectory($path, $targetAlbum)
@@ -239,7 +240,7 @@ class Photo extends AbstractService
     /**
      * Get all photos in an album
      *
-     * @param Photo\Model\Album $album the album to get the photos from
+     * @param \Photo\Model\Album $album the album to get the photos from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of Photo\Model\Album
@@ -341,7 +342,7 @@ class Photo extends AbstractService
     /**
      * Get the photo config, as used by this service.
      *
-     * @return array
+     * @return array containing the config for the module
      */
     public function getConfig()
     {

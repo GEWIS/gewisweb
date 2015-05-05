@@ -13,10 +13,10 @@ use Imagick;
 class AlbumCover extends AbstractService
 {
     /**
-     * Creates and returns the path to a cover image, a mozaic generated from
+     * Creates, stores and returns the path to a cover image, a mozaic generated from
      * a random selection of photos in the album or sub-albums.
      *
-     * @param Photo\Model\Album $album The album to create the cover for.
+     * @param \Photo\Model\Album $album The album to create the cover for.
      * @return string The path to the cover image.
      */
     public function createCover($album)
@@ -34,7 +34,7 @@ class AlbumCover extends AbstractService
     /**
      * Creates a cover image for the given album.
      *
-     * @param Photo\Model\Album $album The album to create a cover image for.
+     * @param \Photo\Model\Album $album The album to create a cover image for.
      * @return Imagick The cover image.
      */
     protected function generateCover($album)
@@ -70,6 +70,55 @@ class AlbumCover extends AbstractService
         $target->setImageFormat("png");
 
         return $target;
+    }
+
+    /**
+     * Get the photo config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['photo'];
+    }
+
+    /**
+     * Returns the images needed to fill the album cover
+     *
+     * @param \Photo\Model\Album $album
+     * @param int $count the amount of images needed.
+     * @return Imagick a list of the images.
+     */
+    protected function getImages($album, $count)
+    {
+        $mapper = $this->getAlbumMapper();
+        $config = $this->getConfig();
+        $photos = $mapper->getRandomAlbumPhotos($album, $count);
+        //retrieve more photo's from subalbums
+        foreach ($mapper->getSubAlbums($album) as $subAlbum) {
+            $needed = $count - count($photos);
+            $photos = array_merge($photos, $mapper->getRandomAlbumPhotos($subAlbum, $needed));
+        }
+        //convert the photo objects to Imagick objects
+        $images = array();
+        foreach ($photos as $photo) {
+            $imagePath = $config['upload_dir'] . '/' . $photo->getSmallThumbPath();
+            $images[] = new Imagick($imagePath);
+        }
+
+        return $images;
+    }
+
+    /**
+     * Get the album mapper.
+     *
+     * @return \Photo\Mapper\Album
+     */
+    public function getAlbumMapper()
+    {
+        return $this->sm->get('photo_mapper_album');
     }
 
     /**
@@ -146,58 +195,9 @@ class AlbumCover extends AbstractService
     }
 
     /**
-     * Returns the images needed to fill the album cover
-     *
-     * @param Photo\Model\Album $album
-     * @param int $count the amount of images needed.
-     * @return Imagick a list of the images.
-     */
-    protected function getImages($album, $count)
-    {
-        $mapper = $this->getAlbumMapper();
-        $config = $this->getConfig();
-        $photos = $mapper->getRandomAlbumPhotos($album, $count);
-        //retrieve more photo's from subalbums
-        foreach ($mapper->getSubAlbums($album) as $subAlbum) {
-            $needed = $count - count($photos);
-            $photos = array_merge($photos, $mapper->getRandomAlbumPhotos($subAlbum, $needed));
-        }
-        //convert the photo objects to Imagick objects
-        $images = array();
-        foreach ($photos as $photo) {
-            $imagePath = $config['upload_dir'] . '/' . $photo->getSmallThumbPath();
-            $images[] = new Imagick($imagePath);
-        }
-
-        return $images;
-    }
-
-    /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
      * Gets the photo service.
      *
-     * @return Photo\Service\Photo
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

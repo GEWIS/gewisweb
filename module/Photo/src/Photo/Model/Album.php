@@ -247,7 +247,9 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Returns an associative array representation of this object
+     * Returns an associative array representation of this object.
+     *
+     * @return array
      */
     public function toArray()
     {
@@ -270,6 +272,8 @@ class Album implements ResourceInterface
     /**
      * Returns an associative array representation of this object
      * including all child objects
+     *
+     * @return array
      */
     function toArrayWithChildren()
     {

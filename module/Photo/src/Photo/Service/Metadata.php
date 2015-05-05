@@ -16,9 +16,12 @@ class Metadata extends AbstractService
 {
 
     /**
+     * Populates the metadata of a photo based on the EXIF data of the photo
      *
-     * @param Photo\Model\Photo $photo the photo to add the metadata to
-     * @return Photo\Model\Photo the photo with the added metadata
+     * @param \Photo\Model\Photo $photo the photo to add the metadata to.
+     * @param $path The path where the actual image file is stored
+     *
+     * @return \Photo\Model\Photo the photo with the added metadata
      */
     public function populateMetadata($photo, $path)
     {
@@ -50,7 +53,9 @@ class Metadata extends AbstractService
     /**
      * Convert a string representing a rational number to a string representing
      * the corresponding decimal approximation.
+     *
      * @param string $str the rational number, represented as num+'/'+den
+     *
      * @return float the decimal number, represented as float
      */
     private function frac2dec($str)
@@ -66,6 +71,7 @@ class Metadata extends AbstractService
     /**
      * Computes the shutter speed from the exif data.
      * @param array $exif the exif data extracted from the photo.
+     *
      * @return string the shutter speed, represented as a rational string.
      */
     private function exifGetShutter($exif)
@@ -88,7 +94,8 @@ class Metadata extends AbstractService
     /**
      * Computes the aperture form the exif data.
      * @param array $exif the exif data extracted from the photo.
-     * @return string the aperture, respresented as a rational string.
+     *
+     * @return string the aperture, represented as a rational string.
      */
     private function exifGetFstop($exif)
     {
