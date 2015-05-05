@@ -4,8 +4,6 @@ namespace Photo\Service;
 
 use Application\Service\AbstractService;
 
-use Imagick;
-
 /**
  * Album cover services. Used for (re)generating album covers.
  *
@@ -37,7 +35,7 @@ class AlbumCover extends AbstractService
      *
      * @param \Photo\Model\Album $album The album to create a cover image for.
      *
-     * @return Imagick The cover image.
+     * @return \Imagick The cover image.
      */
     protected function generateCover($album)
     {
@@ -59,7 +57,7 @@ class AlbumCover extends AbstractService
             $count = $rows * $columns;
         }
         // Make a blank canvas
-        $target = new Imagick();
+        $target = new \Imagick();
         $target->newImage(
             $config['album_cover']['width'],
             $config['album_cover']['height'],
@@ -92,7 +90,7 @@ class AlbumCover extends AbstractService
      * @param \Photo\Model\Album $album
      * @param int $count the amount of images needed.
      *
-     * @return Imagick a list of the images.
+     * @return \Imagick a list of the images.
      */
     protected function getImages($album, $count)
     {
@@ -108,7 +106,7 @@ class AlbumCover extends AbstractService
         $images = array();
         foreach ($photos as $photo) {
             $imagePath = $config['upload_dir'] . '/' . $photo->getSmallThumbPath();
-            $images[] = new Imagick($imagePath);
+            $images[] = new \Imagick($imagePath);
         }
 
         return $images;
@@ -127,10 +125,10 @@ class AlbumCover extends AbstractService
     /**
      * Draws the mosaic of photos.
      *
-     * @param Imagick $target The target object to draw to.
+     * @param \Imagick $target The target object to draw to.
      * @param int $columns The amount of columns to fill
      * @param int $rows The amount of rows to fill
-     * @param Imagick $images The list of images to fill the mosaic with.
+     * @param \Imagick $images The list of images to fill the mosaic with.
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {
@@ -163,7 +161,7 @@ class AlbumCover extends AbstractService
                 );
                 $target->compositeImage(
                     $image,
-                    imagick::COMPOSITE_COPY,
+                    \Imagick::COMPOSITE_COPY,
                     ($imageWidth + $innerBorder) * $x + $outerBorderX,
                     ($imageHeight + $innerBorder) * $y + $outerBorderY
                 );
@@ -176,10 +174,10 @@ class AlbumCover extends AbstractService
      * fill the full width and height without damaging the aspect ratio of the
      * photo.
      *
-     * @param Imagick $image The Imagick object to be resized and cropped
+     * @param \Imagick $image The Imagick object to be resized and cropped
      * @param int $width The desired width
      * @param int $height The desired height
-     * @return Imagick $image
+     * @return \Imagick $image
      */
     protected function resizeCropImage($image, $width, $height)
     {
@@ -187,7 +185,7 @@ class AlbumCover extends AbstractService
         $imageWidth = $image->getImageGeometry()['width'];
         $resizeWidth = max($width, floor($imageWidth * $height / $imageHeight));
         $resizeHeight = max($height, floor($imageHeight * $width / $imageWidth));
-        $image->resizeImage($resizeWidth, $resizeHeight, Imagick::FILTER_LANCZOS, 1);
+        $image->resizeImage($resizeWidth, $resizeHeight, \Imagick::FILTER_LANCZOS, 1);
         $cropX = 0;
         if ($width < $resizeWidth) {
             $cropX = floor(($resizeWidth - $width) / 2);
