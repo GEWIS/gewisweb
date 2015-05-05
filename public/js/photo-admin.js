@@ -1,5 +1,5 @@
 /*
- * This script will handle all javascript functions neeeded for the admin
+ * This script will handle all javascript functions needed for the admin
  * pages.
  * Depends: jquery, photo.js
  */
