@@ -1,13 +1,14 @@
 <?php
 $this->headScript()
-        ->prependFile($this->basePath() . '/js/photo-admin.js')
-        ->prependFile($this->basePath() . '/js/photo.js');
+    ->prependFile($this->basePath() . '/js/photo-admin.js')
+    ->prependFile($this->basePath() . '/js/photo.js');
 $this->headLink()
-        ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
+    ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1><?= $this->translate('Photo admin') ?></h1><hr>
+        <h1><?= $this->translate('Photo admin') ?></h1>
+        <hr>
     </div>
 </div>
 <div class="row">
@@ -21,14 +22,15 @@ $this->headLink()
                     {
                         ?>
                         <?php foreach ($albums as $album): ?>
-                            <li><a id="<?= $album->getId() ?>" href="photo/album/<?= $album->getId() ?>"><?= $album->getName() ?></a>
-                                <?php if (count($album->getChildren()) > 0): ?>
-                                    <ul>
-                                        <?= showTree($album->getChildren()) ?>
-                                    </ul>
-                                <?php endif ?>
-                            </li>
-                        <?php endforeach ?>
+                        <li><a id="<?= $album->getId() ?>"
+                               href="photo/album/<?= $album->getId() ?>"><?= $album->getName() ?></a>
+                            <?php if (count($album->getChildren()) > 0): ?>
+                                <ul>
+                                    <?= showTree($album->getChildren()) ?>
+                                </ul>
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach ?>
 
                     <?php } ?>
                     <?= showTree($albums) ?>
@@ -38,21 +40,36 @@ $this->headLink()
     </div>
     <div class="col-lg-9">
 
-        <a id="btnCreate" class="btn btn-primary" href="photo/album/create"><span class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
+        <a id="btnCreate" class="btn btn-primary" href="photo/album/create"><span
+                class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
-            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?></a>
-            <a id="btnAdd" class="btn btn-primary" href=""><span class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a> 
-            <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
-            <button type="button" data-toggle="modal" data-target="#multipleMoveModal" class="btn btn-primary btn-hidden" id="btnMultipleMove"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?></button>
-            <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate"><span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?></button><br><br>
-            <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
-            <button type="button" data-toggle="modal" data-target="#multipleDeleteModal" class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
+            </a>
+            <a id="btnAdd" class="btn btn-primary" href=""><span
+                    class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>
+            <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span
+                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
+            <button type="button" data-toggle="modal" data-target="#multipleMoveModal"
+                    class="btn btn-primary btn-hidden" id="btnMultipleMove"><span
+                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
+            </button>
+            <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate">
+                <span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
+            </button>
+            <br><br>
+            <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
+                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
+            <button type="button" data-toggle="modal" data-target="#multipleDeleteModal"
+                    class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span
+                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
         </div>
         <hr>
 
-        <nav><ul class="pagination" id="paging"></ul></nav>
+        <nav>
+            <ul class="pagination" id="paging"></ul>
+        </nav>
         <div id="album"></div>
     </div>
 </div>
@@ -62,17 +79,21 @@ $this->headLink()
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?= $this->translate('Generate a new cover photo') ?></h4>
             </div>
-            <div  class="modal-body">
-                <center><div id="coverSpinner" class="spinner"></div>
+            <div class="modal-body">
+                <center>
+                    <div id="coverSpinner" class="spinner"></div>
                     <img id="coverPreview" class="cover-preview" src="">
                 </center>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-regenerate"><?= $this->translate('Regenerate') ?></button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><?= $this->translate('Save') ?></button>
+                <button type="button"
+                        class="btn btn-primary btn-regenerate"><?= $this->translate('Regenerate') ?></button>
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal"><?= $this->translate('Save') ?></button>
             </div>
         </div>
     </div>
@@ -83,21 +104,23 @@ $this->headLink()
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?= $this->translate('Move the album') ?></h4>
             </div>
-            <div  class="modal-body">
+            <div class="modal-body">
                 <div id="albumMoveSelect">
-                <!-- TODO: find a user friendly way to do this -->
-                <p><?= $this->translate('Select a new parent for the album') ?></p>
-                <input id="newAlbumParent" name="parent_id" type="text"/>
+                    <!-- TODO: find a user friendly way to do this -->
+                    <p><?= $this->translate('Select a new parent for the album') ?></p>
+                    <input id="newAlbumParent" name="parent_id" type="text"/>
                 </div>
                 <div id="albumMoveDone" style="display:none">
                     <p><?= $this->translate('The album has been moved') ?></p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="moveAlbumButton" class="btn btn-primary"><?= $this->translate('Move') ?></button>
+                <button type="button" id="moveAlbumButton"
+                        class="btn btn-primary"><?= $this->translate('Move') ?></button>
             </div>
         </div>
     </div>
@@ -108,23 +131,27 @@ $this->headLink()
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
             </div>
-            <div  class="modal-body">
+            <div class="modal-body">
                 <div id="deleteConfirm">
                     <p><?= $this->translate('Are you sure you want to delete this album including all photos inside of it? <b>This action can not be reverted.</b>') ?> </p>
                 </div>
                 <div id="deleteProgress" style="display:none">
                     <center><p><?= $this->translate('Please wait while the album is being deleted.') ?></p></center>
-                    <center><div class="spinner"></div></center>
+                    <center>
+                        <div class="spinner"></div>
+                    </center>
                 </div>
                 <div id="deleteDone" style="display:none">
                     <p><?= $this->translate('The album has been deleted') ?> </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="deleteAlbumButton" class="btn btn-danger"><?= $this->translate('Delete album') ?></button>
+                <button type="button" id="deleteAlbumButton"
+                        class="btn btn-danger"><?= $this->translate('Delete album') ?></button>
                 <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
             </div>
         </div>
@@ -136,23 +163,27 @@ $this->headLink()
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
             </div>
-            <div  class="modal-body">
+            <div class="modal-body">
                 <div id="multipleDeleteConfirm">
                     <p><?= $this->translate('Are you sure you want to delete the selected items? <b>This action can not be reverted.</b>') ?> </p>
                 </div>
                 <div id="multipleDeleteProgress" style="display:none">
                     <center><p><?= $this->translate('Please wait while the photos are being deleted.') ?></p></center>
-                    <center><div class="spinner"></div></center>
+                    <center>
+                        <div class="spinner"></div>
+                    </center>
                 </div>
                 <div id="multipleDeleteDone" style="display:none">
                     <p><?= $this->translate('The photos have been been deleted') ?> </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="multipleDeleteButton" class="btn btn-danger"><?= $this->translate('Delete photos') ?></button>
+                <button type="button" id="multipleDeleteButton"
+                        class="btn btn-danger"><?= $this->translate('Delete photos') ?></button>
                 <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
             </div>
         </div>
@@ -164,10 +195,11 @@ $this->headLink()
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?= $this->translate('Move the photos to another album') ?></h4>
             </div>
-            <div  class="modal-body">
+            <div class="modal-body">
                 <div id="multipleMoveSelect">
                     <!-- TODO: find a user friendly way to do this -->
                     <p><?= $this->translate('Select a new parent album') ?></p>
@@ -178,7 +210,8 @@ $this->headLink()
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="multipleMoveButton" class="btn btn-primary"><?= $this->translate('Move') ?></button>
+                <button type="button" id="multipleMoveButton"
+                        class="btn btn-primary"><?= $this->translate('Move') ?></button>
             </div>
         </div>
     </div>

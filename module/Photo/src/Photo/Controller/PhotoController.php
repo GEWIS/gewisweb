@@ -14,6 +14,7 @@ class PhotoController extends AbstractActionController
         //add any other special behavior which is required for the main photo page here later
 
         $basedir = $this->getPhotoService()->getBaseDirectory();
+
         return new ViewModel(array(
             'albums' => $albums,
             'basedir' => $basedir
@@ -22,7 +23,7 @@ class PhotoController extends AbstractActionController
 
     /**
      * Called on viewing a photo
-     * 
+     *
      */
     public function viewAction()
     {
@@ -38,7 +39,7 @@ class PhotoController extends AbstractActionController
 
     /**
      * Gets the album service.
-     * 
+     *
      * @return Photo\Service\Album
      */
     public function getAlbumService()
@@ -48,7 +49,7 @@ class PhotoController extends AbstractActionController
 
     /**
      * Gets the photo service.
-     * 
+     *
      * @return Photo\Service\Photo
      */
     public function getPhotoService()

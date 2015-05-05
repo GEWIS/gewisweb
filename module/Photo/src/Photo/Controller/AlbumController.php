@@ -14,11 +14,12 @@ class AlbumController extends AbstractActionController
     public function indexAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
-        $activePage = (int) $this->params()->fromRoute('page');
+        $activePage = (int)$this->params()->fromRoute('page');
         $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage);
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
+
         return new ViewModel($albumPage);
     }
 

@@ -36,7 +36,7 @@ class Album extends AbstractService
 
     /**
      * Gets an album using the album id
-     * 
+     *
      * @param integer $id the id of the album
      * @return Photo\Model\Album album matching the given id
      */
@@ -80,17 +80,18 @@ class Album extends AbstractService
         if (!$form->isValid()) {
             return false;
         }
-        if(!is_null($parentId)) {
+        if (!is_null($parentId)) {
             $album->setParent($this->getAlbum($parentId));
         }
         $this->getAlbumMapper()->persist($album);
         $this->getAlbumMapper()->flush();
+
         return true;
     }
 
     /**
      * Updates the metadata of an album using post data
-     * 
+     *
      * @param int $id the id of the album to modify
      * @param array $data The post data to update
      *
@@ -106,12 +107,13 @@ class Album extends AbstractService
         }
 
         $this->getAlbumMapper()->flush();
+
         return true;
     }
 
     /**
      * Moves an album to new parent album
-     * 
+     *
      * @param int $id the id of the album to be moved
      * @param int $parentId the id of the new parent
      *
@@ -121,18 +123,19 @@ class Album extends AbstractService
     {
         $album = $this->getAlbum($id);
         $parent = $this->getAlbum($parentId);
-        if(is_null($album) || $id == $parentId) {
+        if (is_null($album) || $id == $parentId) {
             return false;
         }
 
         $album->setParent($parent);
         $this->getAlbumMapper()->flush();
+
         return true;
     }
 
     /**
      * removes an album and all subalbums recusively, including all photos.
-     * 
+     *
      * @param int $id the id of the album to remove.
      */
     public function deleteAlbum($id)
@@ -147,7 +150,7 @@ class Album extends AbstractService
 
     /**
      * Deletes all photos inside the album
-     * 
+     *
      * @param int $id the id of the album to delete all photos from
      */
     public function deleteAlbumPhotos($id)
@@ -180,9 +183,10 @@ class Album extends AbstractService
     public function getEditAlbumForm($id)
     {
         //TODO: permissions!!
-        $form =  $this->sm->get('photo_form_album_edit');
+        $form = $this->sm->get('photo_form_album_edit');
         $album = $this->getAlbum($id);
         $form->bind($album);
+
         return $form;
     }
 
@@ -204,7 +208,7 @@ class Album extends AbstractService
 
     /**
      * Gets the photo service.
-     * 
+     *
      * @return Photo\Service\Photo
      */
     public function getPhotoService()
@@ -214,7 +218,7 @@ class Album extends AbstractService
 
     /**
      * Gets the album cover service.
-     * 
+     *
      * @return Photo\Service\AlbumCover
      */
     public function getAlbumCoverService()
@@ -230,6 +234,7 @@ class Album extends AbstractService
     public function getConfig()
     {
         $config = $this->sm->get('config');
+
         return $config['photo'];
     }
 

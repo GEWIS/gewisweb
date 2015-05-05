@@ -10,7 +10,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- * 
+ *
  */
 class Album implements ResourceInterface
 {
@@ -67,7 +67,7 @@ class Album implements ResourceInterface
 
     /**
      * The cover photo to display with the album.
-     * 
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
@@ -138,8 +138,8 @@ class Album implements ResourceInterface
 
     /**
      * Gets an array of all child albums
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function getChildren()
     {
@@ -148,7 +148,7 @@ class Album implements ResourceInterface
 
     /**
      * Get the album cover
-     * 
+     *
      * @return photo
      */
     public function getCoverPath()
@@ -158,7 +158,7 @@ class Album implements ResourceInterface
 
     /**
      * Get the amount of photos in the album
-     * 
+     *
      * @return integer
      */
     public function getPhotoCount()
@@ -168,7 +168,7 @@ class Album implements ResourceInterface
 
     /**
      * Get the amount of subalbums in the album
-     * 
+     *
      * @return integer
      */
     public function getAlbumCount()
@@ -208,7 +208,7 @@ class Album implements ResourceInterface
 
     /**
      * Set the parent of the album
-     * 
+     *
      * @param album $parent
      */
     public function setParent($parent)
@@ -218,7 +218,7 @@ class Album implements ResourceInterface
 
     /**
      * Set the cover photo for the album
-     * 
+     *
      * @param photo $photo
      */
     public function setCoverPath($photo)
@@ -228,7 +228,7 @@ class Album implements ResourceInterface
 
     /**
      * Set the amount of photos in an album
-     * 
+     *
      * @param integer $count
      */
     public function setPhotoCount($count)
@@ -238,7 +238,7 @@ class Album implements ResourceInterface
 
     /**
      * Set the amount of subalbums in an album
-     * 
+     *
      * @param integer $count
      */
     public function setAlbumCount($count)
@@ -251,7 +251,8 @@ class Album implements ResourceInterface
      */
     public function toArray()
     {
-        $array = array('id' => $this->id,
+        $array = array(
+            'id' => $this->id,
             'startDateTime' => $this->startDateTime,
             'endDateTime' => $this->endDateTime,
             'name' => $this->name,
@@ -260,41 +261,47 @@ class Album implements ResourceInterface
             'photos' => array(),
             'coverPath' => $this->coverPath,
             'photoCount' => $this->photoCount,
-            'albumCount' => $this->albumCount);
+            'albumCount' => $this->albumCount
+        );
+
         return $array;
     }
-    
+
     /**
      * Returns an associative array representation of this object
      * including all child objects
      */
-    function toArrayWithChildren() {
+    function toArrayWithChildren()
+    {
         $array = $this->toArray();
         foreach ($this->photos as $photo) {
-             $array['photos'][] = $photo->toArray();
+            $array['photos'][] = $photo->toArray();
         }
         foreach ($this->children as $album) {
             $array['children'][] = $album->toArray();
         }
+
         return $array;
     }
 
     /**
      * Updates the albumCount in the parent album object.
-     * 
+     *
      * @ORM\PrePersist()
-     * @ORM\PostUpdate() 
+     * @ORM\PostUpdate()
      */
     public function updateOnAdd()
     {
         if (!is_null($this->parent) && !is_null($this->getStartDateTime())) {
             $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
             if (is_null($this->parent->getStartDateTime()) || $this->parent->getStartDateTime()->getTimestamp() >
-                    $this->getStartDateTime()->getTimeStamp()) {
+                $this->getStartDateTime()->getTimeStamp()
+            ) {
                 $this->parent->setStartDateTime($this->getStartDateTime());
             }
             if (is_null($this->parent->getEndDateTime()) || $this->parent->getEndDateTime()->getTimestamp() <
-                    $this->getEndDateTime()->getTimeStamp()) {
+                $this->getEndDateTime()->getTimeStamp()
+            ) {
                 $this->parent->setEndDateTime($this->getEndDateTime());
             }
         }
@@ -302,8 +309,8 @@ class Album implements ResourceInterface
 
     /**
      * Updates the albumCount in the parent album object.
-     * 
-     * @ORM\PreRemove() 
+     *
+     * @ORM\PreRemove()
      * @ORM\PreUpdate()
      */
     public function updateOnRemove()

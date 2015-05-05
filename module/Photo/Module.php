@@ -51,6 +51,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
+
                     return $form;
                 },
                 'photo_form_album_create' => function ($sm) {
@@ -58,27 +59,29 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
+
                     return $form;
                 },
-                'photo_form_import_folder' => function($sm) {
+                'photo_form_import_folder' => function ($sm) {
                     $form = new Form\PhotoImport(
-                            $sm->get('translator')
+                        $sm->get('translator')
                     );
+
                     return $form;
                 },
                 'photo_hydrator_album' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                            $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
+                        $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
                     );
                 },
                 'photo_mapper_album' => function ($sm) {
                     return new Mapper\Album(
-                            $sm->get('photo_doctrine_em')
+                        $sm->get('photo_doctrine_em')
                     );
                 },
                 'photo_mapper_photo' => function ($sm) {
                     return new Mapper\Photo(
-                            $sm->get('photo_doctrine_em')
+                        $sm->get('photo_doctrine_em')
                     );
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory

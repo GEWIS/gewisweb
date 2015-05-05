@@ -43,7 +43,8 @@ return array(
                         ),
                     ),
                 ),
-            ), 'admin_photo' => array(
+            ),
+            'admin_photo' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/admin/photo',

@@ -3,7 +3,8 @@
     <div clas="row">
         <nav>
             <ul class="pager">
-                <li class="previous"><a href="/photo/album/<?= $photo->getAlbum()->getId(); ?>"><span aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
+                <li class="previous"><a href="/photo/album/<?= $photo->getAlbum()->getId(); ?>"><span
+                            aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
             </ul>
         </nav>
     </div>
@@ -14,28 +15,58 @@
         <div class="col-lg-3">
             <table class="table table-condensed">
                 <tboby>
-                    <tr><td><?= $this->translate('Artist') ?></td><td><?= $photo->getArtist() ?></td></tr>
-                    <tr><td><?= $this->translate('Camera') ?></td><td><?= $photo->getCamera() ?></td></tr>
-                    <tr><td><?= $this->translate('Date/time') ?></td><td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td></tr>
-                    <tr><td><?= $this->translate('Flash') ?></td><td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td></tr>
-                    <tr><td><?= $this->translate('Focal length') ?></td><td><?= $photo->getFocalLength() ?></td></tr>
-                    <tr><td><?= $this->translate('Exposure time') ?></td><td><?= $photo->getExposureTime() ?></td></tr>
-                    <tr><td><?= $this->translate('Shutter speed') ?></td><td><?= $photo->getShutterSpeed() ?></td></tr>
-                    <tr><td><?= $this->translate('Aperture') ?></td><td><?= $photo->getAperture() ?></td></tr>
-                    <tr><td><?= $this->translate('ISO') ?></td><td><?= $photo->getIso() ?></td></tr>
+                    <tr>
+                        <td><?= $this->translate('Artist') ?></td>
+                        <td><?= $photo->getArtist() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Camera') ?></td>
+                        <td><?= $photo->getCamera() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Date/time') ?></td>
+                        <td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Flash') ?></td>
+                        <td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Focal length') ?></td>
+                        <td><?= $photo->getFocalLength() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Exposure time') ?></td>
+                        <td><?= $photo->getExposureTime() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Shutter speed') ?></td>
+                        <td><?= $photo->getShutterSpeed() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Aperture') ?></td>
+                        <td><?= $photo->getAperture() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('ISO') ?></td>
+                        <td><?= $photo->getIso() ?></td>
+                    </tr>
                     </tbody>
             </table>
 
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
-                        <li><a id="previous" href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a></li>
+                        <li><a id="previous"
+                               href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a>
+                        </li>
                     <?php
                     endif;
                     if (!is_null($next)):
                         ?>
-                        <li><a id="next" href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a></li>
-                   <?php endif; ?>
+                        <li><a id="next" href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>

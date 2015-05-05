@@ -41,7 +41,8 @@ class CreateAlbum extends Form
             'required' => true,
             'validators' => array(
                 array('name' => 'not_empty'),
-                array('name' => 'alnum',
+                array(
+                    'name' => 'alnum',
                     'options' => array(
                         'allowWhiteSpace' => true
                     )

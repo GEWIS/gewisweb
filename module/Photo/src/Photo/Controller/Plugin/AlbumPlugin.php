@@ -13,7 +13,7 @@ class AlbumPlugin extends AbstractPlugin
 
     /**
      * This fucntion determines which set of pages to show the user to
-     * navigate to. The base idea is to show the two pages before and the 
+     * navigate to. The base idea is to show the two pages before and the
      * two pages following the currently active page. With special
      * conditions for when the last and the first page are reached.
      * @param type $lastPage the last page in the album
@@ -26,7 +26,7 @@ class AlbumPlugin extends AbstractPlugin
         $startPage = $activePage - 2;
         $endPage = $activePage + 2;
         if ($startPage < 0) {
-            $endPage-=$startPage;
+            $endPage -= $startPage;
             $startPage = 0;
         }
         if ($endPage > $lastPage) {
@@ -38,12 +38,13 @@ class AlbumPlugin extends AbstractPlugin
         for ($i = $startPage; $i <= $endPage; $i++) {
             $pages[] = $i;
         }
+
         return $pages;
     }
 
     /**
      * Gets all data needed to display a page of an album
-     * 
+     *
      * @param int $albumId the id of the album
      * @param int $activePage the page of the album
      * @return array|null Array with data or null if the page does not exist
@@ -58,7 +59,7 @@ class AlbumPlugin extends AbstractPlugin
             return null;
         }
         $config = $albumService->getConfig();
-        $lastpage = (int) floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
+        $lastpage = (int)floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
         if ($activePage > $lastpage) {
             return null;
         }
@@ -79,9 +80,9 @@ class AlbumPlugin extends AbstractPlugin
         }
 
         $basedir = $photoService->getBaseDirectory();
-        
+
         $pages = $this->getAlbumPaging($activePage, $lastpage);
-        
+
         return array(
             'album' => $album,
             'albums' => $albums,
@@ -95,7 +96,7 @@ class AlbumPlugin extends AbstractPlugin
 
     /**
      * Gets the album service.
-     * 
+     *
      * @return Photo\Service\Album
      */
     public function getAlbumService()
@@ -105,7 +106,7 @@ class AlbumPlugin extends AbstractPlugin
 
     /**
      * Gets the photo service.
-     * 
+     *
      * @return Photo\Service\Photo
      */
     public function getPhotoService()

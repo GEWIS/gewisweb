@@ -36,7 +36,7 @@ class Photo extends AbstractService
     }
 
     /**
-     * 
+     *
      * @param integer $id the id of the album
      * @return Photo\Model\Photo photo matching the given id
      */
@@ -56,7 +56,7 @@ class Photo extends AbstractService
         $config = $this->getConfig();
         $hash = sha1_file($path);
         /**
-         * the hash is split to obtain a path 
+         * the hash is split to obtain a path
          * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg
          */
         $directory = substr($hash, 0, 2);
@@ -66,12 +66,13 @@ class Photo extends AbstractService
         $parts = explode('.', $path);
         $fileType = end($parts);
         $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower($fileType);
+
         return $storagePath;
     }
 
     /**
      * Move the uploaded photo to the storage and store it in the database.
-     * All upload actions should use this function to prevent "ghost" files 
+     * All upload actions should use this function to prevent "ghost" files
      * or database entries
      * @param string $path the temporary path of the uploaded photo
      * @param Photo\Model\Album $targetAlbum the album to save the photo in
@@ -94,8 +95,10 @@ class Photo extends AbstractService
             //Create and set the storage paths for thumbnails.
             //Currently, the maximum sizes of the old website are used. These
             //values are dependant on the design.
-            $photo->setLargeThumbPath($this->createThumbnail($path, $config['large_thumb_size']['width'], $config['large_thumb_size']['height']));
-            $photo->setSmallThumbPath($this->createThumbnail($path, $config['small_thumb_size']['width'], $config['small_thumb_size']['height']));
+            $photo->setLargeThumbPath($this->createThumbnail($path, $config['large_thumb_size']['width'],
+                $config['large_thumb_size']['height']));
+            $photo->setSmallThumbPath($this->createThumbnail($path, $config['small_thumb_size']['width'],
+                $config['small_thumb_size']['height']));
             $mapper = $this->getPhotoMapper();
             /**
              * TODO: optionally we could use a transactional query here to make it
@@ -111,13 +114,14 @@ class Photo extends AbstractService
                 copy($path, $config['upload_dir'] . '/' . $storagePath);
             }
         }
+
         return $photo;
     }
 
     /**
-     * Creates and stores a thumbnail of specified maximum size from a stored 
-     * image 
-     * 
+     * Creates and stores a thumbnail of specified maximum size from a stored
+     * image
+     *
      * @param string $path the path of the original image
      * @param int $width the maximum width of the thumbnail (in px)
      * @param int $height the maximum height of the thumbnail (in px)
@@ -130,17 +134,18 @@ class Photo extends AbstractService
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat("png");
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() .'.png';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
         $image->writeImage($tempFileName);
         $newPath = $this->generateStoragePath($tempFileName);
         $config = $this->getConfig();
         rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
+
         return $newPath;
     }
 
     /**
      * Stores an directory in $target_album.
-     * If any subdirectory is present, it will be stored in a new album, 
+     * If any subdirectory is present, it will be stored in a new album,
      * with the (temporary) name of the directory.
      * (i.e. the function is applied recursively)
      * @param string $path The path of the directory.
@@ -168,7 +173,7 @@ class Photo extends AbstractService
         } else {
             $translator = $this->getTranslator();
             throw new \Exception(
-            $translator->translate('The specified path is not valid')
+                $translator->translate('The specified path is not valid')
             );
         }
     }
@@ -176,16 +181,16 @@ class Photo extends AbstractService
     public function upload($files, $album)
     {
         $imageValidator = new \Zend\Validator\File\IsImage(
-                array('magicFile' => false)
+            array('magicFile' => false)
         );
         $extensionValidator = new \Zend\Validator\File\Extension(
-                array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
         );
         $translator = $this->getTranslator();
 
         if ($files['file']['error'] !== 0) {
             throw new \Exception(
-            $translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
+                $translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
             );
         }
         /**
@@ -201,20 +206,20 @@ class Photo extends AbstractService
                 $this->storeUploadedPhoto($path, $album, true);
             } else {
                 throw new \Exception(
-                $translator->translate('The uploaded file does not have a valid extension')
+                    $translator->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
             throw new \Exception(
-            $translator->translate('The uploaded file is not a valid image')
+                $translator->translate('The uploaded file is not a valid image')
             );
         }
     }
 
     /**
      * Returns the next photo in the album to display
-     * 
-     * @param \Photo\Model\Photo $photo 
+     *
+     * @param \Photo\Model\Photo $photo
      */
     public function getNextPhoto($photo)
     {
@@ -223,8 +228,8 @@ class Photo extends AbstractService
 
     /**
      * Returns the previous photo in the album to display
-     * 
-     * @param \Photo\Model\Photo $photo 
+     *
+     * @param \Photo\Model\Photo $photo
      */
     public function getPreviousPhoto($photo)
     {
@@ -233,7 +238,7 @@ class Photo extends AbstractService
 
     /**
      * Get all photos in an album
-     * 
+     *
      * @param Photo\Model\Album $album the album to get the photos from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
@@ -276,7 +281,7 @@ class Photo extends AbstractService
     /**
      * Removes a photo from the database and deletes its files, including thumbs
      * from the server.
-     * 
+     *
      * @param int $id the id of the photo to delete
      *
      * @return bool indicating whether the delete was successful
@@ -293,13 +298,14 @@ class Photo extends AbstractService
         unlink($config['upload_dir'] . '/' . $photo->getSmallThumbPath());
         $this->getPhotoMapper()->deletePhoto($photo->getId());
         $this->getPhotoMapper()->flush();
+
         return true;
 
     }
 
     /**
      * Moves a photo to a new album.
-     * 
+     *
      * @param int $id the id of the photo
      * @param int $albumId the id of the new album
      *
@@ -309,24 +315,26 @@ class Photo extends AbstractService
     {
         $photo = $this->getPhoto($id);
         $album = $this->getAlbumService()->getAlbum($albumId);
-        if(is_null($photo) || is_null($album)) {
+        if (is_null($photo) || is_null($album)) {
             return false;
         }
 
         $photo->setAlbum($album);
         $this->getAlbumMapper()->flush();
+
         return true;
 
     }
 
     /**
      * Gets the base directory from which the photo paths should be requested
-     * 
+     *
      * @return string
      */
     public function getBaseDirectory()
     {
         $config = $this->getConfig();
+
         return str_replace('public', '', $config['upload_dir']);
     }
 
@@ -338,12 +346,13 @@ class Photo extends AbstractService
     public function getConfig()
     {
         $config = $this->sm->get('config');
+
         return $config['photo'];
     }
 
     /**
      * Gets the metadata service.
-     * 
+     *
      * @return Photo\Service\Metadata
      */
     public function getMetadataService()
@@ -353,7 +362,7 @@ class Photo extends AbstractService
 
     /**
      * Gets the album service.
-     * 
+     *
      * @return Photo\Service\Album
      */
     public function getAlbumService()
@@ -363,7 +372,7 @@ class Photo extends AbstractService
 
     /**
      * Gets the album service.
-     * 
+     *
      * @return Photo\Service\Album
      */
     public function getPhotoService()

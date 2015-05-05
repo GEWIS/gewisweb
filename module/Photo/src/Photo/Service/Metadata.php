@@ -9,14 +9,14 @@ use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
 
 /**
- * Metadata service. This service implements all functionality related to 
+ * Metadata service. This service implements all functionality related to
  * gathering metadata about photos.
  */
 class Metadata extends AbstractService
 {
 
     /**
-     * 
+     *
      * @param Photo\Model\Photo $photo the photo to add the metadata to
      * @return Photo\Model\Photo the photo with the added metadata
      */
@@ -38,6 +38,7 @@ class Metadata extends AbstractService
         $photo->setShutterSpeed($this->exifGetShutter($exif));
         $photo->setAperture($this->exifGetFstop($exif));
         $photo->setIso($exif['ISOSpeedRatings']);
+
         return $photo;
     }
 
@@ -47,17 +48,18 @@ class Metadata extends AbstractService
      */
 
     /**
-     * Convert a string representing a rational number to a string representing 
-     * the corresponding decimal approximation. 
+     * Convert a string representing a rational number to a string representing
+     * the corresponding decimal approximation.
      * @param string $str the rational number, represented as num+'/'+den
      * @return float the decimal number, represented as float
      */
     private function frac2dec($str)
     {
-        if (strpos($str, '/') === false){
+        if (strpos($str, '/') === false) {
             return $str;
         }
         list($n, $d) = explode('/', $str);
+
         return $n / $d;//I assume stuff like '234/0' is not supported by EXIF.
     }
 
@@ -79,6 +81,7 @@ class Metadata extends AbstractService
         if ($shutter >= 1) {
             return round($shutter) . 's';
         }
+
         return '1/' . round(1 / $shutter) . 's';
     }
 
@@ -97,6 +100,7 @@ class Metadata extends AbstractService
         if ($fstop == 0) {
             return "unknown";
         }
+
         return 'f/' . sprintf("%01.1f", $fstop);
     }
 

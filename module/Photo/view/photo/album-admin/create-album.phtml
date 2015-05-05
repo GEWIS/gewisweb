@@ -9,20 +9,20 @@ $form->setAttribute('role', 'form');
 
 echo $this->form()->openTag($form);
 ?>
-<div class="form-group">
-    <?php
-    $nameField = $form->get('name');
-    $nameField->setAttribute('class', 'form-control');
-    $authorField = $form->get('author');
-    $authorField->setAttribute('class', 'form-control');
-    ?>
-    <?= $this->formLabel($nameField) ?>
-    <?= $this->formInput($nameField) ?>
-    <?= $this->formElementErrors($nameField) ?>
-    <?= $this->formLabel($authorField) ?>
-    <?= $this->formInput($authorField) ?>
-    <?= $this->formElementErrors($authorField) ?>
-</div>
+    <div class="form-group">
+        <?php
+        $nameField = $form->get('name');
+        $nameField->setAttribute('class', 'form-control');
+        $authorField = $form->get('author');
+        $authorField->setAttribute('class', 'form-control');
+        ?>
+        <?= $this->formLabel($nameField) ?>
+        <?= $this->formInput($nameField) ?>
+        <?= $this->formElementErrors($nameField) ?>
+        <?= $this->formLabel($authorField) ?>
+        <?= $this->formInput($authorField) ?>
+        <?= $this->formElementErrors($authorField) ?>
+    </div>
 
 <?php
 $submit = $form->get('submit');

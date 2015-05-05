@@ -13,6 +13,7 @@ class AlbumAdminController extends AbstractActionController
     {
         $albumService = $this->getAlbumService();
         $albums = $albumService->getAlbums();
+
         return new ViewModel(array(
             'albums' => $albums
         ));
@@ -31,6 +32,7 @@ class AlbumAdminController extends AbstractActionController
             }
         }
         $form = $albumService->getCreateAlbumForm();
+
         return new ViewModel(array(
             'form' => $form,
         ));
@@ -39,7 +41,7 @@ class AlbumAdminController extends AbstractActionController
     public function pageAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
-        $activePage = (int) $this->params()->fromRoute('page');
+        $activePage = (int)$this->params()->fromRoute('page');
         $data = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage);
         $data['album'] = $data['album']->toArray();
         for ($i = 0; $i < count($data['albums']); $i++) {
@@ -48,6 +50,7 @@ class AlbumAdminController extends AbstractActionController
         for ($i = 0; $i < count($data['photos']); $i++) {
             $data['photos'][$i] = $data['photos'][$i]->toArray();
         }
+
         return new JsonModel($data);
     }
 
@@ -64,6 +67,7 @@ class AlbumAdminController extends AbstractActionController
             }
         }
         $form = $albumService->getEditAlbumForm($albumId);
+
         return new ViewModel(array(
             'form' => $form,
         ));
@@ -71,7 +75,7 @@ class AlbumAdminController extends AbstractActionController
 
     public function addAction()
     {
-        
+
     }
 
     public function uploadAction()
@@ -91,6 +95,7 @@ class AlbumAdminController extends AbstractActionController
                 $result['error'] = $e->getMessage();
             }
         }
+
         return new JsonModel($result);
     }
 
@@ -110,6 +115,7 @@ class AlbumAdminController extends AbstractActionController
                 $result['error'] = $e->getMessage();
             }
         }
+
         return new JsonModel($result);
     }
 
@@ -122,6 +128,7 @@ class AlbumAdminController extends AbstractActionController
             $parentId = $request->getPost()['parent_id'];
             $result['success'] = $this->getAlbumService()->moveAlbum($albumId, $parentId);
         }
+
         return new JsonModel($result);
     }
 
@@ -132,6 +139,7 @@ class AlbumAdminController extends AbstractActionController
         if ($request->isPost()) {
             $this->getAlbumService()->deleteAlbum($albumId);
         }
+
         return new JsonModel(array());
     }
 
@@ -144,6 +152,7 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             $this->getAlbumService()->generateAlbumCover($albumId);
         }
+
         return new JsonModel(array());
     }
 
