@@ -17,7 +17,6 @@ Photo.Admin.loadPage = function (resource) {
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
                     + '<img class="img-responsive" src="/data/photo/' + album.coverPath + '" alt="">'
-                    + '<input type="checkbox" class="thumbail-checkbox">'
                     + album.name
                     + '</a>'
                     + '</div>');
@@ -32,7 +31,7 @@ Photo.Admin.loadPage = function (resource) {
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
                     + '<img class="img-responsive" src="/data/photo/' + photo.smallThumbPath + '" alt="">'
-                    + '<input type="checkbox" class="thumbail-checkbox">'
+                    + '<input type="checkbox" class="thumbnail-checkbox">'
                     + '</a>'
                     + '</div>');
         });
@@ -108,6 +107,20 @@ Photo.Admin.deletePhoto = function () {
     $("#deleteDone").show();
 }
 
+Photo.Admin.deleteMultiple = function () {
+    $("#multipleDeleteConfirm").hide();
+    $("#multipleDeleteProgress").show();
+    var thumbnails = [];
+    $(".thumbnail-checkbox:checked").each(function() {
+        thumbnails.push($(this).parent().parent());
+        $.post($(this).parent().attr('href') + '/delete').done(function() {
+            thumbnails.pop().remove();
+        });
+    });
+    $("#multipleDeleteProgress").hide();
+    $("#multipleDeleteDone").show();
+}
+
 Photo.Admin.moveAlbum = function () {
     $("#albumMoveSelect").hide();
     $("#albumMoveProgress").show();
@@ -143,6 +156,7 @@ Photo.Admin.init = function () {
     //we use class instead of id here to get the button since there are multiple instances
     $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
     $("#deleteAlbumButton").on('click', Photo.Admin.deleteAlbum);
+    $("#multipleDeleteButton").on('click', Photo.Admin.deleteMultiple);
     $("#moveAlbumButton").on('click', Photo.Admin.moveAlbum);
     //auto load album on hash
     if (location.hash !== "") {
@@ -260,7 +274,6 @@ $.fn.extend({
                 $(this).closest('li').click();
                 e.preventDefault();
                 // Photo.Admin.loadPage(e.target.href);
-
             });
         });
         tree.find("a").each(function () {
