@@ -33,8 +33,13 @@ class EducationController extends AbstractActionController {
         $code = $this->params()->fromRoute('code');
         $course = $this->getExamService()->getCourse($code);
 
+        // if the course did not exist, trigger 404
+        if (is_null($course)) {
+            return $this->notFoundAction();
+        }
+
         // when there is a parent course, redirect to that course
-        if (null !== $course->getParent()) {
+        if (!is_null($course->getParent())) {
             return $this->redirect()->toRoute('education/course', array(
                 'code' => $course->getParent()->getCode()
             ));
