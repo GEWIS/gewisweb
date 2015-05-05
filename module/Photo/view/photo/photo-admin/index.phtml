@@ -38,10 +38,8 @@ $this->headLink()
             <?php endforeach; ?>
             <li class="active">Photo #<?= $photo->getId() ?></li>
         </ol>
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Modify details') ?></button>
         <button type="button" data-toggle="modal" data-target="#movePhotoModal" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move photo') ?></button>
         <button type="button" data-toggle="modal" data-target="#deleteModal"  class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete photo') ?></button>
-
         <hr>
 
         <img class="img-responsive" src="<?= $basedir . '/' . $photo->getLargeThumbPath() ?>" alt="">
