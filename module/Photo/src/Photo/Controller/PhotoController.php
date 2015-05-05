@@ -27,7 +27,13 @@ class PhotoController extends AbstractActionController
     public function viewAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        return new ViewModel($this->getPhotoService()->getPhotoData($photoId));
+        $photoData = $this->getPhotoService()->getPhotoData($photoId);
+
+        if (is_null($photoData)) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel($photoData);
     }
 
     /**
