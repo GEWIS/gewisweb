@@ -4,7 +4,6 @@ namespace Photo\Mapper;
 
 use Photo\Model\Album as AlbumModel;
 use Doctrine\ORM\EntityManager;
-
 /**
  * Mappers for Album.
  * 
@@ -27,6 +26,19 @@ class Album
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * Deletes an album from the database
+     * 
+     * @param integer $id the id of the album 
+     */
+    public function deleteAlbum($id)
+    {
+        $album = $this->getAlbumById($id);
+        if (!is_null($album)) {
+            $this->em->remove($album);
+        }
     }
 
     /**
@@ -68,6 +80,53 @@ class Album
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * returns all the photos in an album.
+     * 
+     * @param Photo\Model\Album $album The album to retrieve the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return, null for infinite
+     * @return array of photo's
+     */
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.album = ?1');
+        $qb->setParameter(1, $album);
+        $qb->setFirstResult($start);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Retrieves some random photos from the specified album. If the amount of
+     * available photos is smaller than the requested count, less photos
+     * will be returned.
+     * 
+     * @param int $albumId
+     * @param int $maxResults
+     */
+    public function getRandomAlbumPhotos($album, $maxResults)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.album = ?1')
+                ->setParameter(1, $album)
+                ->addSelect('RAND() as HIDDEN rand')
+                ->orderBy('rand');
+        $qb->setMaxResults($maxResults);
+        
         return $qb->getQuery()->getResult();
     }
 
