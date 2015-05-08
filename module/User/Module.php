@@ -1,10 +1,10 @@
 <?php
 namespace User;
 
-use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Mvc\MvcEvent;
 use User\Permissions\NotAllowedException;
+use Application\Service\AclWrapper;
 
 class Module
 {
@@ -141,27 +141,45 @@ class Module
                 },
                 'acl' => function ($sm) {
                     // initialize the ACL
-                    $acl = new Acl();
+                    $acl = new AclWrapper();
 
                     // define basic roles
                     $acl->addRole(new Role('guest')); // simple guest
                     $acl->addRole(new Role('user'), 'guest'); // simple user
+					$acl->addRole(new Role('activeMember')); // member who is in at least one organ
                     $acl->addRole(new Role('admin')); // administrator
+					$acl->addResource('organ');
 
                     $user = $sm->get('user_role');
 
                     // add user to registry
                     if ('guest' != $user) {
-                        $roles = $user->getRoleNames();
-                        // if the user has no roles, add the 'user' role by default
-                        if (empty($roles)) {
-                            $roles = array('user');
-                        }
-                        $acl->addRole($user, $roles);
+						$roles = array();
+						
+                        // add organs to registry
+						$organs = $user->getOrganRoleNames();
+						if(count($organs)>0){
+							$roles[] = 'activeMember';
+							$acl->allow("activeMember","organ","active");
+						}
+						foreach($organs as $organ){
+							$acl->addResource($organ, "organ");
+							$acl->allow("activeMember", $organ, "member");
+						}
+						
+						//add functional roles to registery
+						$functionalRoles = $user->getFunctionalRoleNames();
+						foreach($functionalRoles as $role){
+							$roles[] = $role;
+						}
+						$acl->addRole($user, $roles);
+						
                     }
 
                     // admins are allowed to do everything
                     $acl->allow('admin');
+					// be sure a admin is not a committee
+					$acl->deny('admin', 'organ', 'member');
 
                     return $acl;
                 },

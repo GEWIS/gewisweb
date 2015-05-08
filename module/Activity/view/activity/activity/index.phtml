@@ -1,2 +1,30 @@
-<font size="70"> Wout is GROOTS </font>
-<font size="1"> Mike is een mongol </font>
+<?php $i = 0; ?>
+<div class="row">
+	<div class="col-md-12">
+		<button style="width:100%" onclick="window.location.href='activity/create'" class="btn btn-primary">Create Activity</button>
+	</div>
+</div>
+
+<div style="<?php if($i%2==0){echo("background:#CCCCCC;");}$i++; ?> margin-top:30px" class="row">
+    <div class="col-md-1">Id</div>
+    <div class="col-md-2">Naam</div>
+    <div class="col-md-2">Begintijd</div>
+    <div class="col-md-2">Eindtijd</div>
+    <div class="col-md-1">Locatie</div>
+    <div class="col-md-1">Kosten</div>
+</div>
+
+<?php foreach($activities as $activity):?>
+    <div style="<?php if($i%2==0){echo("background:#CCCCCC;");}$i++; ?>" class="row">
+        <div class="col-md-1"><?php echo $activity->get('id');?></div>
+        <div class="col-md-2"><?php echo $activity->get('name');?></div>
+        <div class="col-md-2"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s');?></div>
+        <div class="col-md-2"><?php echo $activity->get('endTime')->format('Y-m-d H:i:s');?></div>
+        <div class="col-md-1"><?php echo $activity->get('location');?></div>
+        <div class="col-md-1"><?php echo $activity->get('costs');?></div>
+        <div class="col-md-1"><a href="<?php echo $this->url('activity/view', array( 'id' => $activity->get('id')))?>">Bekijk</a></div>
+    </div>
+<?php endforeach;?>
+
+
+</table>

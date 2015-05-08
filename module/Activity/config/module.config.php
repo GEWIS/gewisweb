@@ -14,15 +14,39 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
+                    'view' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route'    => '/view/[:id]',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[0-9]*',
                             ),
+                            'defaults' => array(
+                                'action' => 'view'
+                            )
                         ),
                     ),
+                    'signup' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/signup/[:id]',
+                            'constraints' => array(
+                                'action'     => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'action' => 'signup'
+                            )
+                        ),
+                    ),
+                    'create' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/create',
+                            'defaults' => array (
+                                'action' => 'create'
+                            )
+                        )
+                    )
                 ),
             ),
         ),
@@ -30,6 +54,14 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController'
+        ),
+        'factories' => array(
+            'Activity\Controller\Activity' => function ($sm) {
+                $controller = new Activity\Controller\ActivityController;
+                $activity = $sm->getServiceLocator()->get('activity_service');
+                $controller->setActivity($activity);
+                return $controller;
+            }
         )
     ),
     'view_manager' => array(
