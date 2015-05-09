@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: justin
- * Date: 5-5-15
- * Time: 23:34
- */
 
 namespace Photo\Controller\Plugin;
 
-
-class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface {
+/**
+ * Paginator for pages album pages
+ *
+ */
+class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
+{
 
     /**
      * Album
@@ -42,6 +40,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface 
         $this->count = $album->getAlbumCount() + $album->getPhotoCount();
         $this->sm = $sm;
     }
+
     /**
      * Returns an array of items for a page.
      *
@@ -62,8 +61,10 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface 
         $photos = $photoService->getPhotos($this->album, $photoStart, $photoCount);
 
         $items = array_merge($albums, $photos);
+
         return $items;
     }
+
     /**
      * Returns the total number of rows in the array.
      *
