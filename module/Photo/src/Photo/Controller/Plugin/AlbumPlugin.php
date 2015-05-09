@@ -22,6 +22,9 @@ class AlbumPlugin extends AbstractPlugin
     public function getAlbumPageAsArray($albumId, $activePage)
     {
         $page = $this->getAlbumPage($albumId, $activePage);
+        if(is_null($page)) {
+            return null;
+        }
         $paginator = $page['paginator'];
         $photos = array();
         $albums = array();

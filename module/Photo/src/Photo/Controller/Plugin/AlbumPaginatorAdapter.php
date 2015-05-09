@@ -3,7 +3,7 @@
 namespace Photo\Controller\Plugin;
 
 /**
- * Paginator for pages album pages
+ * Paginator for album pages
  *
  */
 class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
