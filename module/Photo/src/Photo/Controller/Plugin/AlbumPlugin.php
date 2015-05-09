@@ -54,14 +54,24 @@ class AlbumPlugin extends AbstractPlugin
      */
     public function getAlbumPage($albumId, $activePage)
     {
-
         $albumService = $this->getAlbumService();
-        $photoService = $this->getPhotoService();
         $album = $albumService->getAlbum($albumId);
         if (is_null($album)) {
             return null;
         }
+        $paginator = new \Zend\Paginator\Paginator(
+            new AlbumPaginatorAdapter(
+                $album,
+                $this->getController()->getServiceLocator()
+            )
+        );
+        $paginator->setCurrentPageNumber($activePage);
+
         $config = $albumService->getConfig();
+        $paginator->setItemCountPerPage($config['max_photos_page']);
+
+        $photoService = $this->getPhotoService();
+        $basedir = $photoService->getBaseDirectory(); /*
         $lastpage = (int)floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
         if ($activePage > $lastpage) {
             return null;
@@ -82,18 +92,15 @@ class AlbumPlugin extends AbstractPlugin
             $photos = $photoService->getPhotos($album, $photo_start, $photoCount);
         }
 
-        $basedir = $photoService->getBaseDirectory();
+
 
         $pages = $this->getAlbumPaging($activePage, $lastpage);
+*/
 
         return array(
             'album' => $album,
-            'albums' => $albums,
-            'photos' => $photos,
             'basedir' => $basedir,
-            'activepage' => $activePage,
-            'pages' => $pages,
-            'lastpage' => $lastpage
+            'paginator' => $paginator,
         );
     }
 

@@ -9,7 +9,7 @@
 namespace Photo\Controller\Plugin;
 
 
-class AlbumPaginatorAdapter implements Zend\Paginator\Adapter\AdapterInterface {
+class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface {
 
     /**
      * Album
