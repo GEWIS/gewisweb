@@ -2,8 +2,8 @@
 
 namespace Photo\Controller\Plugin;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Zend\Paginator;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
@@ -12,36 +12,35 @@ class AlbumPlugin extends AbstractPlugin
 {
 
     /**
-     * This function determines which set of pages to show the user to
-     * navigate to. The base idea is to show the two pages before and the
-     * two pages following the currently active page. With special
-     * conditions for when the last and the first page are reached.
+     * Gets an album page, but returns all objects as assoc arrays
      *
-     * @param int $lastPage the last page in the album
-     * @param int $activePage the page the user is currently on
+     * @param int $albumId the id of the album
+     * @param int $activePage the page of the album
      *
-     * @return array the pages to show the user
+     * @return array|null Array with data or null if the page does not exist
      */
-    public function getAlbumPaging($activePage, $lastPage)
+    public function getAlbumPageAsArray($albumId, $activePage)
     {
-        $pages = array();
-        $startPage = $activePage - 2;
-        $endPage = $activePage + 2;
-        if ($startPage < 0) {
-            $endPage -= $startPage;
-            $startPage = 0;
-        }
-        if ($endPage > $lastPage) {
-            if ($startPage > 0) {
-                $startPage -= min($endPage - $lastPage, $startPage);
+        $page = $this->getAlbumPage($albumId, $activePage);
+        $paginator = $page['paginator'];
+        $photos = array();
+        $albums = array();
+
+        foreach ($paginator as $item) {
+            if ($item->getResourceId() === 'album') {
+                $albums[] = $item->toArray();
+            } else {
+                $photos[] = $item->toArray();
             }
-            $endPage = $lastPage;
-        }
-        for ($i = $startPage; $i <= $endPage; $i++) {
-            $pages[] = $i;
         }
 
-        return $pages;
+        return array(
+            'album' => $page['album']->toArray(),
+            'basedir' => $page['basedir'],
+            'pages' => $paginator->getPages(),
+            'photos' => $photos,
+            'albums' => $albums
+        );
     }
 
     /**
@@ -59,7 +58,7 @@ class AlbumPlugin extends AbstractPlugin
         if (is_null($album)) {
             return null;
         }
-        $paginator = new \Zend\Paginator\Paginator(
+        $paginator = new Paginator\Paginator(
             new AlbumPaginatorAdapter(
                 $album,
                 $this->getController()->getServiceLocator()
@@ -71,31 +70,7 @@ class AlbumPlugin extends AbstractPlugin
         $paginator->setItemCountPerPage($config['max_photos_page']);
 
         $photoService = $this->getPhotoService();
-        $basedir = $photoService->getBaseDirectory(); /*
-        $lastpage = (int)floor(($album->getPhotoCount() + $album->getAlbumCount()) / $config['max_photos_page']);
-        if ($activePage > $lastpage) {
-            return null;
-        }
-
-        $albums = array();
-        $albumStart = $activePage * $config['max_photos_page'];
-        //check if we need to display albums on this page:
-        if ($albumStart < $album->getAlbumCount()) {
-            $albums = $albumService->getAlbums($album, $albumStart, $config['max_photos_page']);
-        }
-
-        $photos = array();
-        $photoCount = $config['max_photos_page'] - count($albums);
-        //check if we need to display photos on this page:
-        if ($photoCount > 0) {
-            $photo_start = max($activePage * $config['max_photos_page'] - $album->getAlbumCount(), 0);
-            $photos = $photoService->getPhotos($album, $photo_start, $photoCount);
-        }
-
-
-
-        $pages = $this->getAlbumPaging($activePage, $lastpage);
-*/
+        $basedir = $photoService->getBaseDirectory();
 
         return array(
             'album' => $album,

@@ -37,28 +37,28 @@ Photo.Admin.loadPage = function (resource) {
         });
         $("#paging").html('');
 
-        $.each(data.pages, function (i, page) {
+        $.each(data.pages.pagesInRange, function (key, page) {
             href = 'photo/album/' + data.album.id + '/' + page;
-            if (page === data.activepage)
+            if (page === data.pages.current)
             {
-                $("#paging").append('<li class="active"><a href="' + href + '">' + (page + 1) + '</a></li>');
+                $("#paging").append('<li class="active"><a href="' + href + '">' + (page) + '</a></li>');
             } else {
-                $("#paging").append('<li><a href="' + href + '">' + (page + 1) + '</a></li>');
+                $("#paging").append('<li><a href="' + href + '">' + (page) + '</a></li>');
             }
         });
-        if (data.activepage > 0)
+        if (typeof data.pages.previous !== 'undefined')
         {
-            href = 'photo/album/' + data.album.id + '/' + (data.activepage - 1);
+            href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
             $("#paging").prepend('<li><a id="previous" href="' + href + '">'
                     + '<span aria-hidden="true">«</span>'
                     + '<span class="sr-only">Previous</span>'
                     + '</a></li>');
         }
-        if (data.activepage < data.lastpage) {
-            href = 'photo/album/' + data.album.id + '/' + (data.activepage + 1);
+        if (typeof data.pages.next !== 'undefined') {
+            href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
             $("#paging").append('<li><a id="next" href="' + href + '">'
                     + '<span aria-hidden="true">»</span>'
-                    + '<span class="sr-only">Previous</span>'
+                    + '<span class="sr-only">Next</span>'
                     + '</a></li>');
         }
 
