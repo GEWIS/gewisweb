@@ -46,7 +46,7 @@ Photo.Admin.loadPage = function (resource) {
                 $("#paging").append('<li><a href="' + href + '">' + (page) + '</a></li>');
             }
         });
-        if (typeof data.pages.previous !== 'undefined')
+        if (data.pages.previous)
         {
             href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
             $("#paging").prepend('<li><a id="previous" href="' + href + '">'
@@ -54,7 +54,7 @@ Photo.Admin.loadPage = function (resource) {
                     + '<span class="sr-only">Previous</span>'
                     + '</a></li>');
         }
-        if (typeof data.pages.next !== 'undefined') {
+        if (data.pages.next) {
             href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
             $("#paging").append('<li><a id="next" href="' + href + '">'
                     + '<span aria-hidden="true">»</span>'
