@@ -12,7 +12,7 @@ use Zend\InputFilter\InputFilterInterface;
 class Activity extends Form
 {
     protected $inputFilter;
-    public function __construct() {
+    public function __construct(array $organs) {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
 
@@ -59,6 +59,15 @@ class Activity extends Form
 				'style' => 'width:100%'
             ]
         ]);
+		
+		$this->add(array(
+			'name' => 'creator',
+			'type' => 'Zend\Form\Element\Select',
+			'options' => array(
+				'value_options' => $organs
+			)
+		));
+		
 		$this->add([
 			'name' => 'optie',			
 			'type' => 'Zend\Form\Element\Checkbox',

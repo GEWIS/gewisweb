@@ -46,18 +46,19 @@ echo $this->form()->openTag($form);
 			</div>
 		</div>
 		<div class="row">
-			<div class = "col-md-4"></div>
+			<div class = "col-md-4">
+				Organisatie
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('creator')); ?>
+			</div>
+		</div>
+		<div class="row">
 			<div class = "col-md-2">
 				Optie
 			</div>
 			<div class = "col-md-2">
 				<?php echo $this->formRow($form->get('optie')); ?>
-			</div>
-			<div class = "col-md-2">
-				Approved
-			</div>
-			<div class = "col-md-2">
-				<?php echo $this->formRow($form->get('approved')); ?>
 			</div>
 		</div>
 	</div>

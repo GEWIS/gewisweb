@@ -43,10 +43,9 @@ class ActivityController extends AbstractActionController {
      * Create an activity
      */
     public function createAction() {
-        $form = new ActivityForm();
+		$activityService = $this->getServiceLocator()->get('activity_service_activity');
+		$form = new ActivityForm($activityService->getOrgans());
         if ($this->getRequest()->isPost()) {
-            $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {

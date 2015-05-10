@@ -143,7 +143,6 @@ class Activity
         // TODO: These values need to be set correctly
         $this->canSignUp = true;
         $this->onlyGEWIS = true;
-        $this->creator = 1;
         $this->approved = 0;
         return $this;
     }
