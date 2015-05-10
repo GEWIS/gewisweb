@@ -41,6 +41,7 @@ class Module
         return array(
             'invokables' => array(
                 'photo_service_album' => 'Photo\Service\Album',
+                'photo_service_metadata' => 'Photo\Service\Metadata',
                 'photo_service_photo' => 'Photo\Service\Photo'
             ),
             'factories' => array(
@@ -49,6 +50,12 @@ class Module
                             $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
+                    return $form;
+                },
+                'photo_form_import_folder' => function($sm) {
+                    $form = new Form\PhotoImport(
+                            $sm->get('translator')
+                    );
                     return $form;
                 },
                 'photo_hydrator_album' => function ($sm) {

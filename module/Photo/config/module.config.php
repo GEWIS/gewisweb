@@ -82,12 +82,12 @@ return array(
                             ),
                         ),
                     ),
-                    'albumaction' => array(
+                    'importaction' => array(
                         'type' => 'literal',
                         'options' => array(
-                            'route' => '/album/create',
+                            'route' => '/album/import',
                             'defaults' => array(
-                                'action' => 'createAlbum'
+                                'action' => 'importFolder'
                             ),
                         ),
                     ),

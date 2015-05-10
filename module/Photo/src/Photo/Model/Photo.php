@@ -30,7 +30,7 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-    
+
     /**
      * Artist/author
      * 
@@ -44,35 +44,35 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $camera;
-    
+
     /**
      * Whether a flash has been used
      * 
      * @ORM\Column(type="boolean")
      */
     protected $flash;
-    
+
     /**
      * The focal length of the lens, in mm.
      * 
      * @ORM\Column(type="float")
      */
     protected $focalLength;
-    
+
     /**
      * The exposure time, in seconds.
      * 
      * @ORM\Column(type="float")
      */
     protected $exposureTime;
-    
+
     /**
      * The shutter speed.
      * 
      * @ORM\Column(type="string")
      */
     protected $shutterSpeed;
-    
+
     /**
      * The lens aperture.
      * 
@@ -86,7 +86,7 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="smallint")
      */
     protected $iso;
-    
+
     /**
      * Album in which the photo is.
      *
@@ -101,6 +101,22 @@ class Photo implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $path;
+    
+    /**
+     * The path where the small thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $smallThumbPath;
+
+    /**
+     * The path where the large thumbnail of the photo is located relative to 
+     * the storage directory
+     * 
+     * @ORM\Column(type="string")
+     */
+    protected $largeThumbPath;
 
     /**
      * Get the ID.
@@ -115,7 +131,7 @@ class Photo implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
@@ -131,7 +147,7 @@ class Photo implements ResourceInterface
     {
         return $this->artist;
     }
-    
+
     /**
      * Get the camera.
      * 
@@ -141,7 +157,7 @@ class Photo implements ResourceInterface
     {
         return $this->camera;
     }
-    
+
     /**
      * Get the flash.
      * 
@@ -151,7 +167,7 @@ class Photo implements ResourceInterface
     {
         return $this->flash;
     }
-    
+
     /**
      * Get the focal length.
      * 
@@ -161,7 +177,7 @@ class Photo implements ResourceInterface
     {
         return $this->focalLength;
     }
-    
+
     /**
      * Get the exposure time.
      * 
@@ -170,8 +186,8 @@ class Photo implements ResourceInterface
     public function getExposureTime()
     {
         return $this->exposureTime;
-    }    
-    
+    }
+
     /**
      * Get the shutter speed.
      * 
@@ -181,7 +197,7 @@ class Photo implements ResourceInterface
     {
         return $this->shutterSpeed;
     }
-    
+
     /**
      * Get the aperture.
      * 
@@ -191,7 +207,7 @@ class Photo implements ResourceInterface
     {
         return $this->aperture;
     }
-    
+
     /**
      * Get the ISO.
      * 
@@ -200,8 +216,8 @@ class Photo implements ResourceInterface
     public function getIso()
     {
         return $this->iso;
-    }    
-    
+    }
+
     /**
      * Get the album.
      *
@@ -221,6 +237,26 @@ class Photo implements ResourceInterface
     {
         return $this->path;
     }
+    
+    /**
+     * Get the path where the large thumbnail is stored.
+     * 
+     * @return string
+     */
+    public function getLargeThumbPath()
+    {
+        return $this->largeThumbPath;
+    }
+    
+    /**
+     * Get the path where the large thumbnail is stored.
+     * 
+     * @return string
+     */
+    public function getSmallThumbPath()
+    {
+        return $this->smallThumbPath;
+    }
 
     /**
      * Set the dateTime.
@@ -231,7 +267,7 @@ class Photo implements ResourceInterface
     {
         $this->dateTime = $dateTime;
     }
-    
+
     /**
      * Set the artist.
      * 
@@ -241,7 +277,7 @@ class Photo implements ResourceInterface
     {
         $this->artist = $artist;
     }
-    
+
     /**
      * Set the camera.
      * 
@@ -251,7 +287,7 @@ class Photo implements ResourceInterface
     {
         $this->camera = $camera;
     }
-    
+
     /**
      * Set the flash.
      * 
@@ -261,7 +297,7 @@ class Photo implements ResourceInterface
     {
         $this->flash = $flash;
     }
-    
+
     /**
      * Set the focal length.
      * 
@@ -271,7 +307,7 @@ class Photo implements ResourceInterface
     {
         $this->focalLength = $focalLength;
     }
-    
+
     /**
      * Set the exposure time.
      * 
@@ -280,8 +316,8 @@ class Photo implements ResourceInterface
     public function setExposureTime($exposureTime)
     {
         $this->exposureTime = $exposureTime;
-    }    
-    
+    }
+
     /**
      * Set the shutter speed.
      * 
@@ -291,7 +327,7 @@ class Photo implements ResourceInterface
     {
         $this->shutterSpeed = $shutterSpeed;
     }
-    
+
     /**
      * Set the aperture.
      * 
@@ -301,7 +337,7 @@ class Photo implements ResourceInterface
     {
         $this->aperture = $aperture;
     }
-    
+
     /**
      * Set the ISO.
      * 
@@ -310,9 +346,8 @@ class Photo implements ResourceInterface
     public function setIso($iso)
     {
         $this->iso = $iso;
-    }    
-    
-    
+    }
+
     /**
      * Set the album
      *
@@ -326,7 +361,7 @@ class Photo implements ResourceInterface
     /**
      * Set the path where the photo is stored
      *
-     * @param Album $path
+     * @param string $path
      */
     public function setPath($path)
     {
@@ -334,14 +369,46 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Updates the photoCount in the album object.
+     * Set the path where the large thumbnail is stored
+     *
+     * @param string $path
+     */
+    public function setLargeThumbPath($path)
+    {
+        $this->largeThumbPath = $path;
+    }
+    
+    /**
+     * Set the path where the small thumbnail is stored
+     *
+     * @param string $path
+     */
+    public function setSmallThumbPath($path)
+    {
+        $this->smallThumbPath = $path;
+    }
+
+    /**
+     * Updates the photoCount and date in the album object.
      * 
      * @ORM\PrePersist()
      * @ORM\PostUpdate() 
      */
-    public function incrementOnAdd()
+    public function updateOnAdd()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
+        //update start and end date if the added photo is newere or older
+        if (   is_null($this->album->getStartDateTime()) 
+            || $this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()
+        ) {
+            $this->album->setStartDateTime($this->getDateTime());
+        }
+
+        if (   is_null($this->album->getEndDateTime()) 
+            || $this->album->getEndDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
+        ) {
+            $this->album->setEndDateTime($this->getDateTime());
+        }
     }
 
     /**
@@ -350,9 +417,14 @@ class Photo implements ResourceInterface
      * @ORM\PreRemove() 
      * @ORM\PreUpdate()
      */
-    public function decrementOnRemove()
+    public function updateOnRemove()
     {
         $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
+        /**
+         * TODO: possibly update the album start and end date after deleting an 
+         * photo, this would however be a hassle to implement. It probably won't
+         * ever occur.
+         */
     }
 
     /**

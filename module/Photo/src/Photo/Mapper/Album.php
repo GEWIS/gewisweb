@@ -53,10 +53,10 @@ class Album
      * 
      * @param type $parent the parent album to retrieve the subalbum from
      * @param integer $start the result to start at
-     * @param integer $max_results max amount of results to return, null for infinite
+     * @param integer $maxResults max amount of results to return, null for infinite
      * @return type
      */
-    public function getSubAlbums($parent, $start = 0, $max_results = null)
+    public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -65,8 +65,8 @@ class Album
                 ->where('a.parent = ?1');
         $qb->setParameter(1, $parent);
         $qb->setFirstResult($start);
-        if (!is_null($max_results)) {
-            $qb->setMaxResults($max_results);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
         }
         return $qb->getQuery()->getResult();
     }

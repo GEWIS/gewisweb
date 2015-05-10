@@ -25,11 +25,18 @@ class Album implements ResourceInterface
     protected $id;
 
     /**
-     * Date album created
+     * First date of photos in album
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $date;
+    protected $startDateTime = null;
+
+    /**
+     * End date of photos in album
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $endDateTime = null;
 
     /**
      * Name of the album.
@@ -70,14 +77,14 @@ class Album implements ResourceInterface
      *
      * @ORM\Column(type="integer")
      */
-    protected $photoCount;
+    protected $photoCount = 0;
 
     /**
      * The amount of subalbums in this album
      *
      * @ORM\Column(type="integer")
      */
-    protected $albumCount;
+    protected $albumCount = 0;
 
     /**
      * Get the ID.
@@ -90,13 +97,23 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Get the date.
+     * Get the start date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate()
+    public function getStartDateTime()
     {
-        return $this->date;
+        return $this->startDateTime;
+    }
+
+    /**
+     * Get the end date.
+     *
+     * @return DateTime
+     */
+    public function getEndDateTime()
+    {
+        return $this->endDateTime;
     }
 
     /**
@@ -108,7 +125,7 @@ class Album implements ResourceInterface
     {
         return $this->name;
     }
-    
+
     /**
      * Get the parent album.
      *
@@ -150,13 +167,23 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Set the date.
+     * Set the start date.
      *
-     * @param \DateTime $date
+     * @param \DateTime $startDateTime
      */
-    public function setDate(\DateTime $date)
+    public function setStartDateTime(\DateTime $startDateTime)
     {
-        $this->date = $date;
+        $this->startDateTime = $startDateTime;
+    }
+
+    /**
+     * Set the end date.
+     *
+     * @param \DateTime $endDateTime
+     */
+    public function setEndDateTime(\DateTime $endDateTime)
+    {
+        $this->endDateTime = $endDateTime;
     }
 
     /**
@@ -215,9 +242,22 @@ class Album implements ResourceInterface
      * @ORM\PrePersist()
      * @ORM\PostUpdate() 
      */
-    public function incrementOnAdd()
+    public function updateOnAdd()
     {
-        $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+        if (!is_null($this->parent)) {
+            $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
+            if (    is_null($this->parent->getStartDateTime()) 
+                || $this->parent->getStartDateTime()->getTimestamp() > $this->getStartDateTime()->getTimeStamp()
+            ) {
+                $this->parent->setStartDateTime($this->getStartDateTime());
+            }
+
+            if (   is_null($this->parent->getEndDateTime()) 
+                || $this->parent->getEndDateTime()->getTimestamp() < $this->getEndDateTime()->getTimeStamp()
+            ) {
+                $this->parent->setEndDateTime($this->getEndDateTime());
+            }
+        }
     }
 
     /**
@@ -226,9 +266,11 @@ class Album implements ResourceInterface
      * @ORM\PreRemove() 
      * @ORM\PreUpdate()
      */
-    public function decrementOnRemove()
+    public function updateOnRemove()
     {
-        $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
+        if (!is_null($this->parent)) {
+            $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
+        }
     }
 
     /**

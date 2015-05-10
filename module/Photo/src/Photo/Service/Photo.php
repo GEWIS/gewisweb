@@ -7,6 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
+use Imagick;
 
 /**
  * Photo service.
@@ -17,7 +18,7 @@ class Photo extends AbstractService
     /**
      * Get the photo mapper.
      *
-     * @return \Photo\Mapper\Photo
+     * @return Photo\Mapper\Photo
      */
     public function getPhotoMapper()
     {
@@ -36,13 +37,12 @@ class Photo extends AbstractService
 
     /**
      * 
-     * @param string $path
+     * @param Imagick $image
      * @return the path at which the photo should be saved
      */
     protected function generateStoragePath($path)
     {
         $config = $this->getConfig();
-        //TODO: check if this is fast enough
         $hash = sha1_file($path);
         /**
          * the hash is split to obtain a path 
@@ -52,8 +52,8 @@ class Photo extends AbstractService
         if (!file_exists($config['upload_dir'] . '/' . $directory)) {
             mkdir($config['upload_dir'] . '/' . $directory);
         }
-        $storage_path = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
-        return $storage_path;
+        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower(end(explode('.', $path)));
+        return $storagePath;
     }
 
     /**
@@ -61,117 +61,100 @@ class Photo extends AbstractService
      * All upload actions should use this function to prevent "ghost" files 
      * or database entries
      * @param string $path the tempoary path of the uploaded photo
-     * @param \Photo\Model\Album $target_album the album to save the photo in
-     * @return \Photo\Model\Photo
-     */
-    public function storeUploadedPhoto($path, $target_album)
+     * @param Photo\Model\Album $targetAlbum the album to save the photo in
+     * @return Photo\Model\Photo
+     */            
+    public function storeUploadedPhoto($path, $targetAlbum)
     {
         $config = $this->getConfig();
-        $storage_path = $this->generateStoragePath($path);
-        $photo = new PhotoModel();
-        $photo->setAlbum($target_album);
-        $photo = $this->populateMetaData($photo, $path);
-        $photo->setPath($storage_path);
+        $storagePath = $this->generateStoragePath($path);
+        //check if photo exists already in the database
+        $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
+        //if the returned object is null, then the photo doesn't exist
+        if (is_null($photo)) {            
+            $photo = new PhotoModel();
+            $photo->setAlbum($targetAlbum);
+            $photo = $this->getMetadataService()->populateMetaData($photo, $path);
+            $photo->setPath($storagePath);
 
-        $mapper = $this->getPhotoMapper();
-        /**
-         * TODO: optionally we could use a transactional query here to make it
-         * completely failsafe in case something goes wrong when moving the
-         * photo in the storeUploadedPhoto function. However it's very unlikely
-         * anything will go wrong when moving the photo.
-         */
-        $mapper->persist($photo);
-        $mapper->flush();
-        rename($path, $config['upload_dir'] . '/' . $storage_path);
+            //Create and set the storage paths for thumbnails.
+            //Currently, the maximum sizes of the old website are used. These
+            //values are dependant on the design.
+            $photo->setLargeThumbPath($this->createThumbnail($path, 
+                    $config['large_thumb_size']['width'],
+                    $config['large_thumb_size']['height']));
+            $photo->setSmallThumbPath($this->createThumbnail($path, 
+                    $config['small_thumb_size']['width'], 
+                    $config['small_thumb_size']['height']));
+            $mapper = $this->getPhotoMapper();
+            /**
+             * TODO: optionally we could use a transactional query here to make it
+             * completely failsafe in case something goes wrong when moving the
+             * photo in the storeUploadedPhoto function. However it's very unlikely
+             * anything will go wrong when moving the photo.
+             */
+            $mapper->persist($photo);
+            $mapper->flush();
+            copy($path, $config['upload_dir'] . '/' . $storagePath);
+        }
         return $photo;
     }
-
+    
     /**
+     * Creates and stores a thumbnail of specified maximum size from a stored 
+     * image 
      * 
-     * @param \Photo\Model\Photo $photo the photo to add the metadata to
-     * @return \Photo\Model\Photo the photo with the added metadata
+     * @param string $path the path of the original image
+     * @param int $width the maximum width of the thumbnail (in px)
+     * @param int $height the maximum height of the thumbnail (in px)
+     * @return string the path of the created thumbnail
      */
-    protected function populateMetadata($photo, $path)
-    {
-        $exif = \read_exif_data($path, 'EXIF');
-        if (isset($exif['Artist'])) {
-            $photo->setArtist($exif['Artist']);
-        } else {
-            $photo->setArtist("Unknown"); //Needs to be t9n'd in the view
-        }
-        //I assume the exif data isn't deliberately stripped, so most values 
-        //are assumed to exist.
-        $photo->setCamera($exif['Model']);
-        $photo->setDateTime(\date_create($exif['DateTimeOriginal']));
-        $photo->setFlash($exif['Flash'] != 0);
-        $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
-        $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-        $photo->setShutterSpeed($this->exifGetShutter($exif));
-        $photo->setAperture($this->exifGetFstop($exif));
-        $photo->setIso($exif['ISOSpeedRatings']);
-        return $photo;
+    protected function createThumbnail($path, $width, $height){
+        
+        $image = new Imagick($path);
+        $image->thumbnailImage($width, $height, true);
+        $image->setimageformat("png");
+        //Tempfile is used to generate sha1, not sure this is the best method
+        
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() .'.png';
+        $image->writeImage($tempFileName);
+        $newPath = $this->generateStoragePath($tempFileName);
+        $config = $this->getConfig();
+        rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
+        return $newPath;
     }
-
-    /*
-     * NOTE: Most code in the following part is copied from 
-     * the old site, mostly because I lack knowledge in photography.
-     */
-
+    
+    
     /**
-     * Convert a string representing a rational number to a string representing 
-     * the corresponding decimal approximation. 
-     * @param string $str the rational number, represented as num+'/'+den
-     * @return float the decimal number, represented as float
-     */
-    private function frac2dec($str)
-    {
-        list($n, $d) = \explode('/', $str);
-        //Old site suppressed errors of previous line. No clue why.
-        if (!empty($d)) {
-            return $n / $d;
-        }
-        return $str;
-    }
+     * Stores an directory in $target_album.
+     * If any subdirectory is present, it will be stored in a new album, 
+     * with the (temporary) name of the directory.
+     * (i.e. the function is applied recursively)
+     * @param string $path The path of the directory.
+     * @param Photo\Model\Album $target_album The album to store the photos.
 
-    /**
-     * Computes the shutter speed from the exif data.
-     * @param array $exif the exif data extracted from the photo.
-     * @return string the shutter speed, represented as a rational string.
      */
-    private function exifGetShutter($exif)
+    public function storeUploadedDirectory($path, $targetAlbum)
     {
-        if (!isset($exif['ShutterSpeedValue'])) {
-            return "unknown";
+        $albumService = $this->getAlbumService();
+        $image = new \Zend\Validator\File\IsImage();
+        if ($handle = opendir($path)) {
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != "." && $entry != "..") {
+                    
+                    $subPath = $path . '/' . $entry;
+                    if (is_dir($subPath)){
+                        $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
+                        $this->storeUploadedDirectory($subPath, $subAlbum);
+                    }
+                    elseif (true){
+                        $this->getPhotoService()->storeUploadedPhoto($subPath,$targetAlbum);
+                    }
+                }
+            }
+            closedir($handle);
         }
-        $apex = $this->frac2dec($exif['ShutterSpeedValue']);
-        $shutter = \pow(2, -$apex);
-        if ($shutter == 0) {
-            return "unknown";
-        }
-        if ($shutter >= 1) {
-            return \round($shutter) . 's';
-        }
-        return '1/' . \round(1 / $shutter) . 's';
     }
-
-    /**
-     * Computes the aperture form the exif data.
-     * @param array $exif the exif data extracted from the photo.
-     * @return string the aperture, respresented as a rational string.
-     */
-    private function exifGetFstop($exif)
-    {
-        if (!isset($exif['ApertureValue'])) {
-            return "unknown";
-        }
-        $apex = $this->frac2dec($exif['ApertureValue']);
-        $fstop = \pow(2, $apex / 2);
-        if ($fstop == 0) {
-            return "unknown";
-        }
-        return 'f/' . \sprintf("%01.1f", $fstop);
-    }
-
     /**
      * Returns the next photo in the album to display
      * 
@@ -190,6 +173,19 @@ class Photo extends AbstractService
     public function getPreviousPhoto($photo)
     {
         return $this->getPhotoMapper()->getPreviousPhoto($photo);
+    }
+
+    /**
+     * Get all photos in an album
+     * 
+     * @param Photo\Model\Album $album the album to get the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return, null for infinite
+     * @return array of Photo\Model\Album
+     */
+    public function getPhotos($album, $start = 0, $maxResults = null)
+    {
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $maxResults);
     }
 
     /**
@@ -224,6 +220,36 @@ class Photo extends AbstractService
     {
         $config = $this->sm->get('config');
         return $config['photo'];
+    }
+
+    /**
+     * Gets the metadata service.
+     * 
+     * @return Photo\Service\Metadata
+     */
+    public function getMetadataService()
+    {
+        return $this->getServiceManager()->get("photo_service_metadata");
+    }
+    
+    /**
+     * Gets the album service.
+     * 
+     * @return Photo\Service\Album
+     */
+    public function getAlbumService()
+    {
+        return $this->getServiceManager()->get("photo_service_album");
+    }
+    
+    /**
+     * Gets the album service.
+     * 
+     * @return Photo\Service\Album
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceManager()->get("photo_service_photo");
     }
 
 }
