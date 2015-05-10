@@ -32,7 +32,7 @@ class Signup extends AbstractAclService
 
     public function isSignedUp(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
     {
-        $this->allowedOrException('view', 'activitySignup', 'signup');
+        //$this->allowedOrException('view', 'activitySignup', 'signup');
 
         $signupMapper = $this->getServiceManager()->get('activity_mapper_signup');
         return $signupMapper->isSignedUp($activity->get('id'), $user->getLidnr());
@@ -41,7 +41,7 @@ class Signup extends AbstractAclService
 
     public function signUp(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
     {
-        $this->allowedOrException('signUp', 'activitySignup', 'signup');
+        //$this->allowedOrException('signUp', 'activitySignup', 'signup');
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 

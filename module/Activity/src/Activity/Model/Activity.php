@@ -130,7 +130,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception("There is already a loaded activity");
         }
-        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'discription', 'optie'] as $param) {
+        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'discription', 'optie', 'creator'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }

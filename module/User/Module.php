@@ -146,8 +146,9 @@ class Module
                     // define basic roles
                     $acl->addRole(new Role('guest')); // simple guest
                     $acl->addRole(new Role('user'), 'guest'); // simple user
-					$acl->addRole(new Role('activeMember')); // member who is in at least one organ
-                    $acl->addRole(new Role('admin')); // administrator
+					$acl->addRole(new Role('member'), 'user'); // Quick fix
+					$acl->addRole(new Role('activeMember'), 'member'); // member who is in at least one organ
+                    $acl->addRole(new Role('admin'), 'activeMember'); // administrator
 					$acl->addResource('organ');
 
                     $user = $sm->get('user_role');

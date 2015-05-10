@@ -12,7 +12,9 @@ use Zend\InputFilter\InputFilterInterface;
 class Activity extends Form
 {
     protected $inputFilter;
-    public function __construct(array $organs) {
+	protected $organs;
+    public function __construct(array $organisations) {
+		$this->organs = $organisations;
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
 
@@ -64,7 +66,7 @@ class Activity extends Form
 			'name' => 'creator',
 			'type' => 'Zend\Form\Element\Select',
 			'options' => array(
-				'value_options' => $organs
+				'value_options' => $this->organs
 			)
 		));
 		
@@ -211,8 +213,22 @@ class Activity extends Form
                 [
                     'name'    => 'inArray',
                     'options' => [
-                        'haystack' => array(2,3),
+                        'haystack' => array(0,1),
 						'strict'   => 'COMPARE_STRICT'
+                    ],
+                ],
+            ],
+        ]));
+		var_dump($this -> organs);
+		$inputFilter->add($factory->createInput([
+            'name' => 'creator',
+            'required' => true,
+            'validators' => [
+                [
+                    'name'    => 'Between',
+                    'options' => [
+                        'min'      => 0,
+                        'max'      => count($this->organs),
                     ],
                 ],
             ],
