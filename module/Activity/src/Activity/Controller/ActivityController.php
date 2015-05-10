@@ -30,7 +30,6 @@ class ActivityController extends AbstractActionController {
 
         $identity =$this->getServiceLocator()->get('user_role');
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-		var_dump($signupService->getSignedUp($activity));
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
@@ -67,8 +66,6 @@ class ActivityController extends AbstractActionController {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
-        $params = $this->viewAction();
-
 
         // Assure you can sign up for this activity
         if (!$activity->canSignup()){
@@ -87,11 +84,39 @@ class ActivityController extends AbstractActionController {
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         if ($signupService->isSignedUp($activity, $user)) {
             $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
+        }else{
+			$signupService->signUp($activity, $user);
+			$params['success'] = true;
+		}
+		$params = $this->viewAction();
+        return $params;
+    }
+	
+	/**
+     * Signup for a activity
+     */
+	public function signoffAction() {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $activity = $activityService->getActivity($id);
+        
+
+        // Make sure the user is logged in
+        $identity =$this->getServiceLocator()->get('user_role');
+        if ($identity === 'guest') {
+            $params['error'] = 'Je moet ingelogd zijn om je uit te kunnen schrijven';
             return $params;
         }
+        $user = $identity->getMember();
 
-        $signupService->signUp($activity, $user);
-        $params['success'] = true;
+        $signupService = $this->getServiceLocator()->get('activity_service_signoff');
+        if (!$signupService->isSignedUp($activity, $user)) {
+            $params['error'] = 'Je hebt je al uitgeschreven voor deze activiteit';
+        }else{
+			$signupService->signOff($activity, $user);
+			$params['success'] = true;
+		}
+		$params = $this->viewAction();
         return $params;
     }
 

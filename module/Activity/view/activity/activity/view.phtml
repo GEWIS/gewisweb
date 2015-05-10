@@ -37,7 +37,8 @@
 <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
     <div class="col-md-12">
 <?php if ($isSignedUp) :?>
-        Je bent ingeschreven voor deze activiteit!
+        Je bent ingeschreven voor deze activiteit!<br/>
+		<a href="<?php echo $this->url('activity/signoff', array( 'id' => $activity->get('id')));?>">Schrijf je uit</a>
 <?php elseif($canSignUp && $isLoggedIn):?>
         <a href="<?php echo $this->url('activity/signup', array( 'id' => $activity->get('id')));?>">Schrijf je in</a>
 <?php elseif ($canSignUp):?>
