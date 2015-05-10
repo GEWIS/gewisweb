@@ -45,6 +45,15 @@
 <?php endif; ?>
 	</div>
 </div>
+<?php $i = 0; ?>
+
+<h2><div class="row"><div class="col-md-12">Al ingeschreven</div></div></h2>
+<?$i=2?>
+<?php foreach($signedUp as $name):?>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-12"><?=$name?></div>
+</div>
+<?php endforeach;?>
 
 
 <div class="row">

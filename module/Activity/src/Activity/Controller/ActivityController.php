@@ -30,12 +30,13 @@ class ActivityController extends AbstractActionController {
 
         $identity =$this->getServiceLocator()->get('user_role');
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-
+		var_dump($signupService->getSignedUp($activity));
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
             'isLoggedIn' => $identity !== 'guest',
-            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember())
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
+			'signedUp' => $signupService->getSignedUp($activity)
         ];
 	}
 
