@@ -57,15 +57,10 @@ class Module
                     $acl = $sm->get('acl');
 
                     // add resources for this module
-					
-					//normally this is necessary but since organs automattically need to have rights on
-					//certain things this resource is created in the default acl
-                    //$acl->addResource('organ');
-					$acl->addResource('member');
+                    $acl->addResource('organ');
 
                     // users are allowed to view the organs
                     $acl->allow('user', 'organ', 'view');
-					$acl->allow('user', 'member', 'find');
 
                     return $acl;
                 },
