@@ -16,7 +16,7 @@ return array(
         'configuration' => array(
             'orm_default' => array(
                 'numeric_functions' => array(
-                    'RAND'  => 'Numeric\Rand'
+                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
                 )                
             )
         )
