@@ -25,6 +25,3 @@ if (!class_exists('Zend\Loader\AutoloaderFactory')) {
     throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
 }
 
-//register doctrine extensions
-$classLoader = new \Doctrine\Common\ClassLoader('Numeric', __DIR__.'/extensions/doctrine');
-$classLoader->register();
