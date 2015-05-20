@@ -1,0 +1,8 @@
+<?php
+if ($success) {
+    //probably redirect or so, we'll decide this later
+    print $this->translate('The album has been created!');
+} else {
+    $form->prepare();
+    echo $this->form()->render($form);
+}

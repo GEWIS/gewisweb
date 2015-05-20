@@ -43,13 +43,14 @@ return array(
                         ),
                     ),
                 ),
-            ), 'admin_photo' => array(
+            ),
+            'admin_photo' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/admin/photo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Photo\Controller',
-                        'controller' => 'Admin',
+                        'controller' => 'AlbumAdmin',
                         'action' => 'index'
                     )
                 ),
@@ -62,32 +63,182 @@ return array(
                         ),
                     ),
                     'album' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => '/album/:id',
-                            'defaults' => array(
-                                'action' => 'viewAlbum'
-                            ),
-                            'constraints' => array(
-                                'id' => '[0-9]+',
-                            ),
-                        ),
-                    ),
-                    'albumaction' => array(
                         'type' => 'literal',
                         'options' => array(
                             'route' => '/album',
                             'defaults' => array(
-                                'action' => 'album'
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'index'
                             ),
                         ),
                     ),
-                    'importaction' => array(
-                        'type' => 'literal',
+                    'album_index' => array(
+                        'type' => 'Segment',
                         'options' => array(
-                            'route' => '/album/import',
+                            'route' => '/album[/:album_id]',
                             'defaults' => array(
-                                'action' => 'importFolder'
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'page'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_page' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id][/:page]',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'page'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/edit',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'edit'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_create' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/create',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'create'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]*',
+                            ),
+                        ),
+                    ),
+                    'album_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/add',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'add'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_import' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/import',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'import'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_upload' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/upload',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'upload'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_move' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/move',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'move'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_delete' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/delete',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'delete'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'album_cover' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/album[/:album_id]/cover',
+                            'defaults' => array(
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'cover'
+                            ),
+                            'constraints' => array(
+                                'album_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'photo_index' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/photo[/:photo_id]',
+                            'defaults' => array(
+                                'controller' => 'PhotoAdmin',
+                                'action' => 'index'
+                            ),
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'photo_move' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/photo[/:photo_id]/move',
+                            'defaults' => array(
+                                'controller' => 'PhotoAdmin',
+                                'action' => 'move'
+                            ),
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
+                            ),
+                        ),
+                    ),
+                    'photo_delete' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/photo[/:photo_id]/delete',
+                            'defaults' => array(
+                                'controller' => 'PhotoAdmin',
+                                'action' => 'delete'
+                            ),
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
                             ),
                         ),
                     ),
@@ -99,13 +250,22 @@ return array(
         'invokables' => array(
             'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
             'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
-            'Photo\Controller\Admin' => 'Photo\Controller\AdminController'
+            'Photo\Controller\AlbumAdmin' => 'Photo\Controller\AlbumAdminController',
+            'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController'
+        )
+    ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'AlbumPlugin' => 'Photo\Controller\Plugin\AlbumPlugin',
         )
     ),
     'view_manager' => array(
         'template_path_stack' => array(
             'photo' => __DIR__ . '/../view/'
-        )
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
     'doctrine' => array(
         'driver' => array(
