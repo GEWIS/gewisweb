@@ -1,0 +1,15 @@
+<?php if(isset($error)):?>
+<div class="alert alert-danger" role="alert"><?php echo $error;?></div>
+<?php endif;?>
+<?php if(isset($success)):?>
+    <div class="alert alert-success" role="alert">Succesvol ingeschreven</div>
+<?php endif;?>
+
+<?php echo $this->partial('activity/activity/view.phtml', array(
+        'activity' => $activity,
+        'isLoggedIn' => $isLoggedIn,
+        'isSignedUp' => $isSignedUp,
+        'canSignUp' => $canSignUp,
+		'signedUp' => $signedUp
+		
+));?>

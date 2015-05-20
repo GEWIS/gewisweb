@@ -33,9 +33,9 @@ class Member
      *
      * @return MemberModel
      */
-    public function findByLidnr($email)
+    public function findByLidnr($number)
     {
-        return $this->getRepository()->findOneBy(array('lidnr' => $email));
+        return $this->getRepository()->findOneBy(array('lidnr' => $number));
     }
 
     /**
