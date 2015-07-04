@@ -141,7 +141,7 @@ class User implements RoleInterface, ResourceInterface
 
         return $roles;
     }
-	
+
     /**
      * Get the user's role ID.
      *

@@ -22,8 +22,8 @@ class Module
         // there is a NotAllowedException
         $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function($e) {
             if (($e->getError() == 'error-exception') &&
-                ($e->getParam('exception', null) != null) &&
-                ($e->getParam('exception') instanceof NotAllowedException)) {
+                    ($e->getParam('exception', null) != null) &&
+                    ($e->getParam('exception') instanceof NotAllowedException)) {
                 $e->getResult()->setTemplate('error/403');
                 $e->getResponse()->setStatusCode(403);
             }
