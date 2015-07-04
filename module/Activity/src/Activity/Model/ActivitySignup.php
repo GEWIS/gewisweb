@@ -2,6 +2,7 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 
 /**
  * Activity model
@@ -20,30 +21,49 @@ class ActivitySignup
     protected $id;
 
     /**
-     * Who is subscribed
+     * Album in which the photo is.
      *
-     * @ORM\Column(nullable=false)
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="roles")
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
+     * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
-    protected $activity_id;
+    protected $activity;
 
     /**
      * Who is subscribed
      *
-     * @ORM\Column(nullable=false)
-     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
-    protected $user_id;
+    protected $user;
 
-    public function setAcitivityId($activityId)
+
+    /**
+     * Set the activity that the user signed up for
+     *
+     * @param Activity $activity
+     */
+    public function setActivity(Activity $activity)
     {
-        $this->activity_id = $activityId;
+        $this->activity = $activity;
     }
 
-    public function setUserId($userId)
+    /**
+     * Set the user for the activity signup
+     *
+     * @param User $user
+     */
+    public function setUser(User $user)
     {
-        $this->user_id = $userId;
+        $this->user = $user;
+    }
+
+    /**
+     * Get the user that is signed up
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

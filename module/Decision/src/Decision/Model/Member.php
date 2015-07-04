@@ -175,4 +175,19 @@ class Member
     {
         $this->firstName = $firstName;
     }
+
+    /**
+     * Get the full name of the user
+     */
+    public function getFullName()
+    {
+        $name = $this->firstName;
+
+        if ($this->middleName !== '') {
+            $name .= ' ' . $this->middleName;
+        }
+
+        $name .= ' ' . $this->lastName;
+        return $name;
+    }
 }

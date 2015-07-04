@@ -39,10 +39,11 @@ class Activity
         $result = $qb->getQuery()->getResult();
         return count($result) > 0 ? $result[0]: null ;
     }
+
 	/**
 	 * get all activities including options
 	 *
-	 * @return array	 
+	 * @return array
 	*/
     public function getAllActivities()
     {
@@ -51,10 +52,11 @@ class Activity
             ->from('Activity\Model\Activity', 'a');
         return $qb->getQuery()->getResult();
     }
+
 	/**
 	 * get all activities including options
 	 *
-	 * @return array	 
+	 * @return array
 	*/
     public function getAllApproved()
     {
@@ -64,5 +66,4 @@ class Activity
 			->where('a.approved = 1');
         return $qb->getQuery()->getResult();
     }
-	
 }

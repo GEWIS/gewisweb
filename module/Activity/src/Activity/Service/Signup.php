@@ -1,9 +1,10 @@
 <?php
-
 namespace Activity\Service;
 
+use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivitySignup;
 use Application\Service\AbstractAclService;
-use User\Model\User;
+use \Decision\Model\Member;
 
 class Signup extends AbstractAclService
 {
@@ -29,37 +30,65 @@ class Signup extends AbstractAclService
     {
         return 'activitySignup';
     }
-	
-	public function getSignedUp($activity){
-		$signupMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        return $signupMapper->getSignedUp($activity->get('id'));
+
+    /**
+     * Get a list of all the members that are signed up for an activity
+     *
+     * @param Activity $activity
+     * @return array
+     */
+	public function getSignedUp(ActivityModel $activity){
+		$signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+        return $signUpMapper->getSignedUp($activity->get('id'));
 	}
 
-    public function isSignedUp(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
+    /**
+     * Check if a member is signed up for an activity
+     *
+     * @param Activity $activity
+     * @param \Decision\Model\Member $user
+     * @return boolean
+     */
+    public function isSignedUp(ActivityModel $activity, Member $user)
     {
-        $signupMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        return $signupMapper->isSignedUp($activity->get('id'), $user->getLidnr());
+        $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+        return $signUpMapper->isSignedUp($activity->get('id'), $user->getLidnr());
     }
 
-    public function signUp(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
+    /**
+     * Sign up  an activity
+     *
+     * @param Activity $activity
+     */
+    public function signUp(ActivityModel $activity)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
-        $signup = new \Activity\Model\ActivitySignup();
-        $signup->setAcitivityId($activity->get('id'));
-        $signup->setUserId($user->getLidnr());
+        // Find the current user
+        $user = $this->getServiceManager()->get('user_role');
+        if ($user === 'guest') {
+            throw new \InvalidArgumentException('Guests can not create activities');
+        }
+        $user = $em->merge($user);
+
+        $signup = new ActivitySignup();
+        $signup->setActivity($activity);
+        $signup->setUser($user);
+
 
         $em->persist($signup);
         $em->flush();
     }
-	
-	public function signOff(\Activity\Model\Activity $activity, \Decision\Model\Member $user)
+
+    /**
+     * Undo an activity sign up
+     *
+     * @param Activity $activity
+     * @param Member $user
+     */
+	public function signOff(ActivityModel $activity, Member $user)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-        $signup = new \Activity\Model\ActivitySignup();
-        $signup->setAcitivityId($activity->get('id'));
-        $signup->setUserId($user->getLidnr());
 
 		$qb = $em->createQueryBuilder();
         $qb->select('a')

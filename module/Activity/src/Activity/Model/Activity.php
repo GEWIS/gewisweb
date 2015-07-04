@@ -102,8 +102,15 @@ class Activity
      * @Orm\Column(type="text")
      */
     protected $description;
-	
-	
+
+
+    /**
+     * all the photo's in this album.
+     * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
+     */
+    protected $signUps;
+
+
     // TODO -> where can i find member organ?
     protected $organ;
 
