@@ -65,8 +65,7 @@ class User
         $qb->select('u, r, m')
             ->from('User\Model\User', 'u')
             ->leftJoin('u.roles', 'r')
-            ->join('u.member', 'm')
-			->join('m.organs', 'o');
+            ->join('u.member', 'm');
 
 
         // depending on login, add correct where clause
