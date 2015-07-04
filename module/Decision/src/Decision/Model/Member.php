@@ -60,11 +60,30 @@ class Member
     /**
      * Organs this member is in.
      *
-     * @ORM\ManyToMany(targetEntity="Decision\Model\Organ", mappedBy="members")
+     * @ORM\ManyToMany(targetEntity="Decision\Model\Organ", mappedBy="members", fetch="EAGER")
      */
     protected $organs;
 
     // TODO: Much, MUCH more fields
+	
+	/**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->organs = new ArrayCollection();
+    }
+	
+	
+	/**
+     * Get the user's roles.
+     *
+     * @return array
+     */
+    public function getOrgans()
+    {
+        return $this->organs;
+    }
 
     /**
      * Get the membership number.

@@ -2,10 +2,70 @@
 $form->setAttribute('action', '');
 $form->prepare();
 echo $this->form()->openTag($form);
-echo $this->formRow($form->get('name'));
-echo $this->formRow($form->get('beginTime'));
-echo $this->formRow($form->get('endTime'));
-echo $this->formRow($form->get('location'));
-echo $this->formRow($form->get('costs'));
+?>
+<div class = "row">
+	<div class="col-md-4">
+		<div class="row">
+			<div class = "col-md-4">
+				Naam
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('name')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-4">
+				Starttijd
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('beginTime')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-4">
+				Eindtijd
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('endTime')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-4">
+				Locatie
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('location')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-4">
+				Kosten
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('costs')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-4">
+				Organisatie
+			</div>
+			<div class = "col-md-8">
+				<?php echo $this->formRow($form->get('creator')); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-2">
+				Optie
+			</div>
+			<div class = "col-md-2">
+				<?php echo $this->formRow($form->get('optie')); ?>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<?php echo $this->formRow($form->get('discription')); ?>
+	</div>
+</div>
+<?php
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();

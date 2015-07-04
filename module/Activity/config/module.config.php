@@ -38,6 +38,18 @@ return array(
                             )
                         ),
                     ),
+					'signoff' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/signoff/[:id]',
+                            'constraints' => array(
+                                'action'     => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'action' => 'signoff'
+                            )
+                        ),
+                    ),
                     'create' => array(
                         'type' => 'Literal',
                         'options' => array(

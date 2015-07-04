@@ -12,17 +12,17 @@ use Zend\InputFilter\InputFilterInterface;
 class Activity extends Form
 {
     protected $inputFilter;
-    public function __construct() {
+	protected $organs;
+    public function __construct(array $organisations) {
+		$this->organs = $organisations;
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
 
         $this->add([
             'name' => 'name',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Name:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
 
@@ -32,9 +32,7 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-            ],
-            'options' => [
-                'label' =>  'Begin date and time of the activity: (yyyy-mm-dd hh:mm)'
+				'style' => 'width:100%'
             ]
         ]);
 
@@ -44,32 +42,59 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-            ],
-            'options' => [
-                'label' =>  'End date and time of the activity: (yyyy-mm-dd hh:mm)'
+				'style' => 'width:100%'
             ]
         ]);
 
         $this->add([
             'name' => 'location',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Location:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
 
         $this->add([
             'name' => 'costs',
             'attributes' => [
-                'type' => 'text'
-            ],
-            'options' => [
-                'label' =>  'Costs:'
+                'type' => 'text',
+				'style' => 'width:100%'
             ]
         ]);
-
+		
+		$this->add(array(
+			'name' => 'creator',
+			'type' => 'Zend\Form\Element\Select',
+			'options' => array(
+				'value_options' => $this->organs
+			)
+		));
+		
+		$this->add([
+			'name' => 'optie',			
+			'type' => 'Zend\Form\Element\Checkbox',
+			'options' => array(
+				'use_hidden_element' => true,
+				'checked_value' => 1,
+				'unchecked_value' => 0
+			)
+		]);
+		$this->add([
+			'name' => 'approved',			
+			'type' => 'Zend\Form\Element\Checkbox',
+			'options' => array(
+				'use_hidden_element' => true,
+				'checked_value' => 1,
+				'unchecked_value' => 0
+			)
+		]);
+		$this->add([
+			'name' => 'discription',
+            'attributes' => [
+                'type' => 'textarea',
+				'style' => 'width:100%; height:10em; resize:none'
+            ]
+		]);
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
@@ -158,6 +183,52 @@ class Activity extends Form
                     'options' => [
                         'min'      => 0,
                         'max'      => 10000,
+                    ],
+                ],
+            ],
+        ]));
+		
+		$inputFilter->add($factory->createInput([
+            'name' => 'discription',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+                [
+                    'name'    => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min'      => 1,
+                        'max'      => 100000,
+                    ],
+                ],
+            ],
+        ]));
+		$inputFilter->add($factory->createInput([
+            'name' => 'optie',
+            'required' => true,
+            'validators' => [
+                [
+                    'name'    => 'inArray',
+                    'options' => [
+                        'haystack' => array(0,1),
+						'strict'   => 'COMPARE_STRICT'
+                    ],
+                ],
+            ],
+        ]));
+		var_dump($this -> organs);
+		$inputFilter->add($factory->createInput([
+            'name' => 'creator',
+            'required' => true,
+            'validators' => [
+                [
+                    'name'    => 'Between',
+                    'options' => [
+                        'min'      => 0,
+                        'max'      => count($this->organs),
                     ],
                 ],
             ],

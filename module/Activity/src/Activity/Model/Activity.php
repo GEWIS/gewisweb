@@ -95,7 +95,22 @@ class Activity
      */
     protected $approved;
 
+	/**
+     * Is this activity an option
+	 * DON'T CALL IT OPTION - ITS RESERVED IN SQL
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $optie;
 
+	/**
+     * Activity discription
+     *
+     * @Orm\Column(type="text")
+     */
+    protected $discription;
+	
+	
     // TODO -> where can i find member organ?
     protected $organ;
 
@@ -115,7 +130,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception("There is already a loaded activity");
         }
-        foreach(['name', 'beginTime', 'endTime', 'costs', 'location'] as $param) {
+        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'discription', 'optie', 'creator'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }
@@ -128,7 +143,6 @@ class Activity
         // TODO: These values need to be set correctly
         $this->canSignUp = true;
         $this->onlyGEWIS = true;
-        $this->creator = 1;
         $this->approved = 0;
         return $this;
     }

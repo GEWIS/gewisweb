@@ -9,17 +9,65 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller'    => 'Company',
-                        'action'        => 'index',
+                        'action'        => 'list', // index is reserved for frontpage, but since it is not yet implemented, a company list will be presented.
+                        'actionArgument'=> '',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
+                    'list' => array(
+                        'priority' => 3,
+                        'type' => 'literal',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route' => '/list',
+                            'defaults' => array(
+                                'controller' => 'Company\Controller\Company',
+                                'action' => 'list',
+                                'asciiCompanyName' => '',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                    ),
+                    'companyItem' => array(
+                        'priority' => 2,
+                        'type'    => 'segment',
+                        'options' => array(
+                            // url will be company/<asciiCompanyName>/jobs/<asciiJobName>/<action>
+                            // asciijobname and asciicompanyname will be in database, and can be set from the admin panel
+                            // company/apple should give page of apple
+                            // company/apple/jobs should be list of jobs of apple
+                            // company/apple/jobs/ceo should be the page of ceo job
+                            // company should give frontpage of company part
+                            // company/list should give a list of companies
+                            // company/index should give the frontpage
+                            'route'    => '/:asciiCompanyName',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'joblist' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/jobs',
+                                    'defaults' => array(
+                                        'controller' => 'Company\Controller\Company',
+                                        'action' => 'jobs'
+                                    ),
+                                ),
+                                'may_terminate' => true,
+                                'child_routes' => array(
+                                    'job_item' => array(
+                                        'type' => 'segment',
+                                        'options' => array(
+                                            'route' => '[/:asciiJobName]',
+                                            'constraints' => array(
+                                                'asciiJobName'     => '[a-zA-Z0-9_-]*',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),

@@ -1,20 +1,15 @@
 <?php
-
 namespace Application\Service;
-
 use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
-
 abstract class AbstractAclService extends AbstractService
 {
-
     /**
      * Get the ACL.
      *
      * @return \Zend\Permissions\Acl\Acl
      */
     abstract public function getAcl();
-
     /**
      * Get the default resource ID.
      *
@@ -23,7 +18,6 @@ abstract class AbstractAclService extends AbstractService
      * @return string
      */
     abstract protected function getDefaultResourceId();
-
     /**
      * Get the current user's role.
      *
@@ -33,7 +27,6 @@ abstract class AbstractAclService extends AbstractService
     {
         return $this->getServiceManager()->get('user_role');
     }
-
     /**
      * Check if a operation is allowed for the current role.
      *
@@ -50,34 +43,10 @@ abstract class AbstractAclService extends AbstractService
         if (null === $resource) {
             $resource = $this->getDefaultResourceId();
         }
-
         return $this->getAcl()->isAllowed(
             $this->getRole(),
             $resource,
             $operation
         );
-    }
-
-    /**
-     * Checks if an operation is allowed, and if not it throws a 403 error
-     * If no resource is given, this will use the resource given by
-     * {@link getDefaultResourceId()}.
-     *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @throws \User\Permission\NotAllowedException if ths user is not allowed to get the resource
-     */
-    public function allowedOrException($operation, $resource = null, $what = null)
-    {
-        if (is_null($what)) {
-            $what = 'this';
-;       }
-
-        if (!$this->isAllowed($operation, $resource)) {
-            throw new \User\Permissions\NotAllowedException(
-                'Not allowed to view ' . $what
-            );
-        }
     }
 }

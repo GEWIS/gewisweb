@@ -17,7 +17,7 @@ return array(
                     'course' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/course/:code',
+                            'route' => '/course[/:code]',
                             'constraints' => array(
                                 'code' => '[a-zA-Z0-9]{5,6}'
                             ),

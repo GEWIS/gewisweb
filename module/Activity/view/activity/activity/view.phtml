@@ -1,54 +1,67 @@
+<div class="row">
+<div class="col-md-4">
+<!-- wrapping applied -->
+<?php $i=0; ?>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Id:</div>
+    <div class="col-md-6"><?php echo $activity->get('id');?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Name:</div>
+    <div class="col-md-6"><?php echo $activity->get('name');?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Begintijd:</div>
+    <div class="col-md-6"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Eindtijd:</div>
+    <div class="col-md-6"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Locatie:</div>
+    <div class="col-md-6"><?php echo $activity->get('location')?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Kosten:</div>
+    <div class="col-md-6"><?php echo $activity->get('costs');?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Inschrijven:</div>
+    <div class="col-md-6"><?php echo $activity->get('canSignUp') ? "Ja": "nee"?></div>
+</div>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-6">Alleen GEWISsers:</div>
+    <div class="col-md-6"><?php echo $activity->get('onlyGEWIS') ? "Ja": "nee"?></div>
+</div>
+<div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
+    <div class="col-md-12">
+<?php if ($isSignedUp) :?>
+        Je bent ingeschreven voor deze activiteit!<br/>
+		<a href="<?php echo $this->url('activity/signoff', array( 'id' => $activity->get('id')));?>">Schrijf je uit</a>
+<?php elseif($canSignUp && $isLoggedIn):?>
+        <a href="<?php echo $this->url('activity/signup', array( 'id' => $activity->get('id')));?>">Schrijf je in</a>
+<?php elseif ($canSignUp):?>
+        Login om je in te schrijven
+<?php endif; ?>
+	</div>
+</div>
+<?php $i = 0; ?>
 
-<table>
-    <tr>
-        <td>Id:</td>
-        <td><?php echo $activity->get('id');?></td>
-    </tr>
-    <tr>
-        <td>Name:</td>
-        <td><?php echo $activity->get('name');?></td>
-    </tr>
-    <tr>
-        <td>Begintijd:</td>
-        <td><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></td>
-    </tr>
-    <tr>
-        <td>Eindtijd:</td>
-        <td><?php echo $activity->get('endTime')->format('Y-m-d H:i:s')?></td>
-    </tr>
-    <tr>
-        <td>Locatie:</td>
-        <td><?php echo $activity->get('location')?></td>
-    </tr>
-    <tr>
-        <td>Kosten:</td>
-        <td><?php echo $activity->get('costs');?></td>
-    </tr>
-    <tr>
-        <td>Inschrijven:</td>
-        <td><?php echo $activity->get('canSignUp') ? "Ja": "nee"?></td>
-    </tr>
-    <tr>
-        <td>Alleen GEWISsers:</td>
-        <td><?php echo $activity->get('onlyGEWIS') ? "Ja": "nee"?></td>
-    </tr>
-    <?php if ($isSignedUp) :?>
-    <tr>
-        <td>
-            Je bent ingeschreven voor deze activiteit!
-        </td>
-    </tr>
-    <?php elseif($canSignUp && $isLoggedIn):?>
-    <tr>
-        <td>
-            <a href="<?php echo $this->url('activity/signup', array( 'id' => $activity->get('id')));?>">Schrijf je in</a>
-        </td>
-    </tr>
-    <?php elseif ($canSignUp):?>
-    <tr>
-        <td>
-            Login om je in te schrijven
-        </td>
-    </tr>
-    <?php endif; ?>
-</table>
+<h2><div class="row"><div class="col-md-12">Al ingeschreven</div></div></h2>
+<?$i=2?>
+<?php foreach($signedUp as $name):?>
+<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+    <div class="col-md-12"><?=$name?></div>
+</div>
+<?php endforeach;?>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<button style="width: 100%" class="btn btn-primary" onclick="window.location.href='../../activity'">terug</button>	
+	</div>
+</div>
+<!-- wrappers -->
+</div>
+</div>

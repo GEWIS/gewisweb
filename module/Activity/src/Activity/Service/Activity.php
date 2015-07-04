@@ -37,8 +37,6 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      */
     public function getActivity($id)
     {
-        $this->allowedOrException('view', 'activity', 'activity');
-
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getActivityById($id);
         return $activity;
@@ -50,12 +48,24 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      */
     public function getAllActivities()
     {
-        $this->allowedOrException('view', 'activity', 'activity');
-
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
         return $activity;
     }
+	
+	/**
+     * Returns an array of all organs the user may add events for
+     * @return array Array of activities
+     */
+	public function getOrgans(){
+		$sm = $this->getServiceManager();
+		$user = $sm->get("user_role");
+		if($user instanceOf \User\Model\User){
+			return $user->getOrganRoleNames();
+		}else{
+			return array();
+		}
+	}
 
     /**
      * Create an activity from parameters
@@ -65,7 +75,6 @@ class Activity extends AbstractAclService implements \Zend\ServiceManager\Servic
      */
     public function createActivity(array $params)
     {
-        $this->allowedOrException('create', 'activity', 'activity');
         $activity = new ActivityModel();
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $activity->create($params);

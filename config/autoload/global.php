@@ -47,7 +47,25 @@ return array(
         'public_dir' => 'data/education',
         'dir_mode' => 0777, // rwx by default
     ),
-
+    
+    /**
+     * Photo's upload directory configuration
+     */
+    'photo' => array(
+        'upload_dir' => 'public/data/photo',
+        'public_dir' => 'data/photo',
+        'max_photos_page' => 20,
+        'dir_mode' => 0777, // rwx by default
+        'small_thumb_size' => array(
+            'width' => 180,
+            'height' => 120
+        ),
+        'large_thumb_size' => array(
+            'width' => 827,
+            'height' => 550
+        )
+    ),
+    
     /**
      * OASE SOAP API configuration.
      *

@@ -53,6 +53,11 @@ class Module
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
+				'activity_service_signoff' => function ($sm) {
+                    $ac = new Service\Signup();
+                    $ac->setServiceManager($sm);
+                    return $ac;
+                },
                 'activity_mapper_activity' => function ($sm) {
                     return new \Activity\Mapper\Activity(
                         $sm->get('activity_doctrine_em')
@@ -72,7 +77,6 @@ class Module
                     $acl->allow('guest', 'activitySignup', 'signUp');
                     $acl->allow('guest', 'activitySignup', 'view');
 
-                    $acl->allow('member', 'activity', 'create');
                     return $acl;
                 },
             )

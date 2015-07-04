@@ -146,18 +146,19 @@ class Module
                     // define basic roles
                     $acl->addRole(new Role('guest')); // simple guest
                     $acl->addRole(new Role('user'), 'guest'); // simple user
-                    $acl->addRole(new Role('admin')); // administrator
+                    $acl->addRole(new Role('admin'), 'user'); // administrator
+					$acl->addResource('organ');
 
                     $user = $sm->get('user_role');
 
                     // add user to registry
                     if ('guest' != $user) {
-                        $roles = $user->getRoleNames();
+						$roles = $user->getRoleNames();
                         // if the user has no roles, add the 'user' role by default
                         if (empty($roles)) {
                             $roles = array('user');
                         }
-                        $acl->addRole($user, $roles);
+                        $acl->addRole($user, $roles);						
                     }
 
                     // admins are allowed to do everything

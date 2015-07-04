@@ -15,7 +15,9 @@ class ActivityController extends AbstractActionController {
     public function indexAction() {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activities = $activityService->getAllActivities();
-        return ['activities' => $activities];
+		$roles = $activityService->getOrgans();
+        return ['activities' => $activities,
+				'roles' => $roles];
     }
 
     /**
@@ -28,12 +30,12 @@ class ActivityController extends AbstractActionController {
 
         $identity =$this->getServiceLocator()->get('user_role');
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
             'isLoggedIn' => $identity !== 'guest',
-            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember())
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
+			'signedUp' => $signupService->getSignedUp($activity)
         ];
 	}
 
@@ -41,10 +43,9 @@ class ActivityController extends AbstractActionController {
      * Create an activity
      */
     public function createAction() {
-        $form = new ActivityForm();
+		$activityService = $this->getServiceLocator()->get('activity_service_activity');
+		$form = new ActivityForm($activityService->getOrgans());
         if ($this->getRequest()->isPost()) {
-            $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
@@ -65,8 +66,6 @@ class ActivityController extends AbstractActionController {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
-        $params = $this->viewAction();
-
 
         // Assure you can sign up for this activity
         if (!$activity->canSignup()){
@@ -85,11 +84,39 @@ class ActivityController extends AbstractActionController {
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         if ($signupService->isSignedUp($activity, $user)) {
             $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
+        }else{
+			$signupService->signUp($activity, $user);
+			$params['success'] = true;
+		}
+		$params = $this->viewAction();
+        return $params;
+    }
+	
+	/**
+     * Signup for a activity
+     */
+	public function signoffAction() {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $activity = $activityService->getActivity($id);
+        
+
+        // Make sure the user is logged in
+        $identity =$this->getServiceLocator()->get('user_role');
+        if ($identity === 'guest') {
+            $params['error'] = 'Je moet ingelogd zijn om je uit te kunnen schrijven';
             return $params;
         }
+        $user = $identity->getMember();
 
-        $signupService->signUp($activity, $user);
-        $params['success'] = true;
+        $signupService = $this->getServiceLocator()->get('activity_service_signoff');
+        if (!$signupService->isSignedUp($activity, $user)) {
+            $params['error'] = 'Je hebt je al uitgeschreven voor deze activiteit';
+        }else{
+			$signupService->signOff($activity, $user);
+			$params['success'] = true;
+		}
+		$params = $this->viewAction();
         return $params;
     }
 
