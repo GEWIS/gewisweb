@@ -22,8 +22,8 @@ class Module
         // there is a NotAllowedException
         $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function($e) {
             if (($e->getError() == 'error-exception') &&
-                    ($e->getParam('exception', null) != null) &&
-                    ($e->getParam('exception') instanceof NotAllowedException)) {
+                ($e->getParam('exception', null) != null) &&
+                ($e->getParam('exception') instanceof NotAllowedException)) {
                 $e->getResult()->setTemplate('error/403');
                 $e->getResponse()->setStatusCode(403);
             }
@@ -146,19 +146,18 @@ class Module
                     // define basic roles
                     $acl->addRole(new Role('guest')); // simple guest
                     $acl->addRole(new Role('user'), 'guest'); // simple user
-                    $acl->addRole(new Role('admin'), 'user'); // administrator
-					$acl->addResource('organ');
+                    $acl->addRole(new Role('admin')); // administrator
 
                     $user = $sm->get('user_role');
 
                     // add user to registry
                     if ('guest' != $user) {
-						$roles = $user->getRoleNames();
+                        $roles = $user->getRoleNames();
                         // if the user has no roles, add the 'user' role by default
                         if (empty($roles)) {
                             $roles = array('user');
                         }
-                        $acl->addRole($user, $roles);						
+                        $acl->addRole($user, $roles);
                     }
 
                     // admins are allowed to do everything
