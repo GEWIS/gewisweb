@@ -89,7 +89,7 @@ class Activity extends Form
 			)
 		]);
 		$this->add([
-			'name' => 'discription',
+			'name' => 'description',
             'attributes' => [
                 'type' => 'textarea',
 				'style' => 'width:100%; height:10em; resize:none'
@@ -189,7 +189,7 @@ class Activity extends Form
         ]));
 		
 		$inputFilter->add($factory->createInput([
-            'name' => 'discription',
+            'name' => 'description',
             'required' => true,
             'filters' => [
                 ['name' => 'StripTags'],
@@ -208,7 +208,7 @@ class Activity extends Form
         ]));
 		$inputFilter->add($factory->createInput([
             'name' => 'optie',
-            'required' => true,
+            'required' => false,
             'validators' => [
                 [
                     'name'    => 'inArray',
@@ -219,7 +219,7 @@ class Activity extends Form
                 ],
             ],
         ]));
-		var_dump($this -> organs);
+
 		$inputFilter->add($factory->createInput([
             'name' => 'creator',
             'required' => true,

@@ -104,11 +104,11 @@ class Activity
     protected $optie;
 
 	/**
-     * Activity discription
+     * Activity description
      *
      * @Orm\Column(type="text")
      */
-    protected $discription;
+    protected $description;
 	
 	
     // TODO -> where can i find member organ?
@@ -130,7 +130,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception("There is already a loaded activity");
         }
-        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'discription', 'optie', 'creator'] as $param) {
+        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'optie', 'creator'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }
