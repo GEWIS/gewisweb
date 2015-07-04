@@ -6,7 +6,6 @@ use Zend\Form\Form;
 //input filter
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 class Activity extends Form
@@ -69,16 +68,7 @@ class Activity extends Form
 				'value_options' => $this->organs
 			)
 		));
-		
-		$this->add([
-			'name' => 'optie',			
-			'type' => 'Zend\Form\Element\Checkbox',
-			'options' => array(
-				'use_hidden_element' => true,
-				'checked_value' => 1,
-				'unchecked_value' => 0
-			)
-		]);
+
 		$this->add([
 			'name' => 'approved',			
 			'type' => 'Zend\Form\Element\Checkbox',
@@ -202,19 +192,6 @@ class Activity extends Form
                         'encoding' => 'UTF-8',
                         'min'      => 1,
                         'max'      => 100000,
-                    ],
-                ],
-            ],
-        ]));
-		$inputFilter->add($factory->createInput([
-            'name' => 'optie',
-            'required' => false,
-            'validators' => [
-                [
-                    'name'    => 'inArray',
-                    'options' => [
-                        'haystack' => array(0,1),
-						'strict'   => 'COMPARE_STRICT'
                     ],
                 ],
             ],
