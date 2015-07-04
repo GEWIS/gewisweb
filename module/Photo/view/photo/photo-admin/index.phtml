@@ -1,0 +1,162 @@
+<?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/photo-admin.js')
+    ->prependFile($this->basePath() . '/js/photo.js');
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <h1><?= $this->translate('Photo admin') ?></h1>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <?php if (!is_null($previous)): ?>
+                    <a class="thumbnail" href="<?= $previous->getId(); ?>">
+                        <img class="img-responsive" src="<?= $basedir . '/' . $previous->getSmallThumbPath() ?>" alt="">
+                    </a>
+                <?php endif; ?>
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="<?= $basedir . '/' . $photo->getSmallThumbPath() ?>" alt="">
+                </a>
+                <?php if (!is_null($next)): ?>
+                    <a class="thumbnail" href="<?= $next->getId(); ?>">
+                        <img class="img-responsive" src="<?= $basedir . '/' . $next->getSmallThumbPath() ?>" alt="">
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <ol class="breadcrumb">
+            <?php foreach ($path as $album): ?>
+                <li><a href="/admin/photo#<?= $album->getId() ?>"><?= $album->getName() ?></a></li>
+            <?php endforeach; ?>
+            <li class="active">Photo #<?= $photo->getId() ?></li>
+        </ol>
+        <button type="button" data-toggle="modal" data-target="#movePhotoModal" class="btn btn-primary"><span
+                class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move photo') ?></button>
+        <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
+                class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete photo') ?></button>
+        <hr>
+
+        <img class="img-responsive" src="<?= $basedir . '/' . $photo->getLargeThumbPath() ?>" alt="">
+        <row>
+            <div class="col-lg-6">
+                <h4>Metadata</h4>
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td><?= $this->translate('Artist') ?></td>
+                        <td><?= $photo->getArtist() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Camera') ?></td>
+                        <td><?= $photo->getCamera() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Date/time') ?></td>
+                        <td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Flash') ?></td>
+                        <td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Focal length') ?></td>
+                        <td><?= $photo->getFocalLength() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Exposure time') ?></td>
+                        <td><?= $photo->getExposureTime() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Shutter speed') ?></td>
+                        <td><?= $photo->getShutterSpeed() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('Aperture') ?></td>
+                        <td><?= $photo->getAperture() ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $this->translate('ISO') ?></td>
+                        <td><?= $photo->getIso() ?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-6">
+                <h4>Tags</h4>
+            </div>
+        </row>
+    </div>
+</div>
+<!-- Move photo modal -->
+<div class="modal fade" id="movePhotoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Move the photo to another album') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="photoMoveSelect">
+                    <!-- TODO: find a user friendly way to do this -->
+                    <p><?= $this->translate('Select a new parent album') ?></p>
+                    <input id="newPhotoAlbum" name="album_id" type="text"/>
+                </div>
+                <div id="photoMoveDone" style="display:none">
+                    <p><?= $this->translate('The photo has been moved') ?></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="movePhotoButton"
+                        class="btn btn-primary"><?= $this->translate('Move') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete photo modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="deleteConfirm">
+                    <p><?= $this->translate('Are you sure you want to delete this photo? <b>This action can not be reverted.</b>') ?> </p>
+                </div>
+                <div id="deleteProgress" style="display:none">
+                    <center><p><?= $this->translate('Please wait while your photo is being deleted.') ?></p></center>
+                    <center>
+                        <div class="spinner"></div>
+                    </center>
+                </div>
+                <div id="deleteDone" style="display:none">
+                    <p><?= $this->translate('The photo has been deleted') ?> </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deletePhotoButton"
+                        class="btn btn-danger"><?= $this->translate('Delete photo') ?></button>
+                <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        Photo.Admin.initPhoto();
+    });
+</script>
