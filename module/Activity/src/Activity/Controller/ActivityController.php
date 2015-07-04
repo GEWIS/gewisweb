@@ -12,12 +12,11 @@ class ActivityController extends AbstractActionController {
     /**
      * View all activities
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activities = $activityService->getAllActivities();
-		$roles = $activityService->getOrgans();
-        return ['activities' => $activities,
-				'roles' => $roles];
+        return ['activities' => $activities];
     }
 
     /**
@@ -44,7 +43,7 @@ class ActivityController extends AbstractActionController {
      */
     public function createAction() {
 		$activityService = $this->getServiceLocator()->get('activity_service_activity');
-		$form = new ActivityForm($activityService->getOrgans());
+		$form = new ActivityForm();
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
 

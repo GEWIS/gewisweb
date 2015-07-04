@@ -121,7 +121,7 @@ class User extends AbstractService
         $authAdapter = $auth->getAdapter();
 
         $authAdapter->setCredentials($form->getData());
-        
+
         $result = $auth->authenticate();
 
         // process the result

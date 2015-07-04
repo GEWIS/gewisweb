@@ -123,7 +123,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception("There is already a loaded activity");
         }
-        foreach(['name', 'beginTime', 'endTime', 'costs', 'location', 'creator'] as $param) {
+        foreach(['description', 'name', 'beginTime', 'endTime', 'costs', 'location', 'creator'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }
@@ -132,6 +132,7 @@ class Activity
 
         $this->beginTime = new \DateTime($this->beginTime);
         $this->endTime = new \DateTime($this->endTime);
+        $this->creator = $this->creator->getLidNr();
 
         // TODO: These values need to be set correctly
         $this->canSignUp = true;

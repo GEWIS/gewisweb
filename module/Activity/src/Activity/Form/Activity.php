@@ -12,8 +12,7 @@ class Activity extends Form
 {
     protected $inputFilter;
 	protected $organs;
-    public function __construct(array $organisations) {
-		$this->organs = $organisations;
+    public function __construct() {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
 
@@ -60,14 +59,7 @@ class Activity extends Form
 				'style' => 'width:100%'
             ]
         ]);
-		
-		$this->add(array(
-			'name' => 'creator',
-			'type' => 'Zend\Form\Element\Select',
-			'options' => array(
-				'value_options' => $this->organs
-			)
-		));
+
 
 		$this->add([
 			'name' => 'approved',			
@@ -197,19 +189,6 @@ class Activity extends Form
             ],
         ]));
 
-		$inputFilter->add($factory->createInput([
-            'name' => 'creator',
-            'required' => true,
-            'validators' => [
-                [
-                    'name'    => 'Between',
-                    'options' => [
-                        'min'      => 0,
-                        'max'      => count($this->organs),
-                    ],
-                ],
-            ],
-        ]));
 
         $this->inputFilter = $inputFilter;
         return $this->inputFilter;
