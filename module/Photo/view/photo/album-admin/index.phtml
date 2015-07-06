@@ -23,7 +23,9 @@ $this->headLink()
                         ?>
                         <?php foreach ($albums as $album): ?>
                         <li><a id="<?= $album->getId() ?>"
-                               href="photo/album/<?= $album->getId() ?>"><?= $album->getName() ?></a>
+                               href="<?= $this->url('photo/album', array('album_id' => $album->getId())); ?>">
+                                <?= $album->getName() ?>
+                            </a>
                             <?php if (count($album->getChildren()) > 0): ?>
                                 <ul>
                                     <?= showTree($album->getChildren()) ?>
