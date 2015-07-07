@@ -71,9 +71,9 @@ class Album extends AbstractService
      */
     public function getAlbumsByYear($year) {
         // A GEWIS year starts July 1st
-        $start = new \DateTime("$year-01-07 0:00:00.000000");
+        $start = \DateTime::createFromFormat('Y-m-d H:i:s', "$year-07-01 0:00:00");
         $endYear = $year + 1;
-        $end = new \DateTime("$endYear-06-30 23:59:59.999999");
+        $end = \DateTime::createFromFormat('Y-m-d H:i:s', "$endYear-06-30 23:59:59");
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
     /**
