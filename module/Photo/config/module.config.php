@@ -51,7 +51,7 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'Photo',
-                                'action' => 'year',
+                                'action' => 'index',
                             ),
                         ),
                     ),
