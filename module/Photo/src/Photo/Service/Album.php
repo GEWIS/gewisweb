@@ -62,6 +62,27 @@ class Album extends AbstractService
     }
 
     /**
+     * Gets a list of all years of which photos are available.
+     * A value of 2010 in this list would represent 2010/2011
+     *
+     * @return array of integers representing years
+     */
+    public function getAlbumYears() {
+        $oldest = $this->getAlbumMapper()->getOldestAlbum();
+        $latest = $this->getAlbumMapper()->getLatestAlbum();
+        $startYear = $oldest->getStartDateTime()->format('Y');
+        $endYear = $latest->getStartDateTime()->format('Y');
+        if($oldest->getStartDateTime()->format('m') < 7) {
+            $startYear -= 1;
+        }
+        if($latest->getStartDateTime()->format('m') < 7) {
+            $endYear -= 1;
+        }
+
+        return range($startYear, $endYear);
+    }
+
+    /**
      * Creates a new album.
      *
      * @param int $parentId the id of the parent album

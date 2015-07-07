@@ -150,6 +150,33 @@ class Album
         return $qb->getQuery()->getResult();
     }
 
+    public function getAlbumsInDateRange($start, $end) {
+
+    }
+    public function getLatestAlbum() {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->setMaxResults(1)
+            ->orderBy('a.startDateTime', 'DESC');
+
+        //TODO: this is going to break
+        return $qb->getQuery()->getResult()[0];
+    }
+
+    public function getOldestAlbum() {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->setMaxResults(1)
+            ->orderBy('a.startDateTime', 'ASC');
+
+        return $qb->getQuery()->getResult()[0];
+    }
     /**
      * Persist album
      *
