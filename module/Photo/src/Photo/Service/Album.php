@@ -62,8 +62,23 @@ class Album extends AbstractService
     }
 
     /**
+     * Returns all albums for a given year.
+     * Example: When supplied 2010, this would return all albums from 2010/2011
+     *
+     * @param $year integer the year in which the albums have been created
+     *
+     * @return array of \Photo\Model\Albums
+     */
+    public function getAlbumsByYear($year) {
+        // A GEWIS year starts July 1st
+        $start = new \DateTime("$year-07-01 0:00:00.000000");
+        $endYear = $year + 1;
+        $end = new \DateTime("$endYear-30-06 23:59:59.999999");
+        return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
+    }
+    /**
      * Gets a list of all years of which photos are available.
-     * A value of 2010 in this list would represent 2010/2011
+     * Example: A value of 2010 in this list would represent 2010/2011
      *
      * @return array of integers representing years
      */
