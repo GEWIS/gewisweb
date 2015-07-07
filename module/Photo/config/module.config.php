@@ -42,6 +42,19 @@ return array(
                             ),
                         ),
                     ),
+                    'year' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:year]',
+                            'constraints' => array(
+                                'year' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'year',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'admin_photo' => array(
