@@ -72,6 +72,8 @@ class Album extends AbstractService
         $latest = $this->getAlbumMapper()->getLatestAlbum();
         $startYear = $oldest->getStartDateTime()->format('Y');
         $endYear = $latest->getStartDateTime()->format('Y');
+
+        // A GEWIS year starts July 1st
         if($oldest->getStartDateTime()->format('m') < 7) {
             $startYear -= 1;
         }
@@ -79,6 +81,7 @@ class Album extends AbstractService
             $endYear -= 1;
         }
 
+        // We make the reasonable assumption that at least 1 photo is take every year
         return range($startYear, $endYear);
     }
 
