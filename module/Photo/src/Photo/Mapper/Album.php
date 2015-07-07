@@ -150,9 +150,32 @@ class Album
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Gets all root albums containing photos made between the specified dates
+     *
+     * @param $start \DateTime start date and time
+     * @param $end \DateTime end date and time
+     *
+     * @return array of \Photo\Model\Album
+     */
     public function getAlbumsInDateRange($start, $end) {
+        $qb = $this->em->createQueryBuilder();
 
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->where('a.startDateTime BETWEEN ?1 AND ?2')
+            ->setParameter(1, $start)
+            ->setParameter(2, $end);
+
+        return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Returns the root album containing the most recent photos
+     *
+     * @return \Photo\Model\Album
+     */
     public function getLatestAlbum() {
         $qb = $this->em->createQueryBuilder();
 
@@ -166,6 +189,11 @@ class Album
         return $qb->getQuery()->getResult()[0];
     }
 
+    /**
+     * Returns the root album containing the oldest photos
+     *
+     * @return \Photo\Model\Album
+     */
     public function getOldestAlbum() {
         $qb = $this->em->createQueryBuilder();
 
