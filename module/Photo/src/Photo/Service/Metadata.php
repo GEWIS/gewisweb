@@ -22,22 +22,22 @@ class Metadata extends AbstractService
     public function populateMetadata($photo, $path)
     {
         $exif = read_exif_data($path, 'EXIF');
-        if (isset($exif['Artist'])) {
-            $photo->setArtist($exif['Artist']);
-        } else {
-            $photo->setArtist("Unknown"); //Needs to be t9n'd in the view
-        }
-        //I assume the exif data isn't deliberately stripped, so most values 
-        //are assumed to exist.
-        $photo->setCamera($exif['Model']);
-        $photo->setDateTime(date_create($exif['DateTimeOriginal']));
-        $photo->setFlash($exif['Flash'] != 0);
-        $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
-        $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-        $photo->setShutterSpeed($this->exifGetShutter($exif));
-        $photo->setAperture($this->exifGetFstop($exif));
-        $photo->setIso($exif['ISOSpeedRatings']);
 
+        if($exif) {
+            $photo->setArtist($exif['Artist']);
+            $photo->setCamera($exif['Model']);
+            $photo->setDateTime(new \DateTime($exif['DateTimeOriginal']));
+            $photo->setFlash($exif['Flash'] != 0);
+            $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
+            $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
+            $photo->setShutterSpeed($this->exifGetShutter($exif));
+            $photo->setAperture($this->exifGetFstop($exif));
+            $photo->setIso($exif['ISOSpeedRatings']);
+        } else {
+            // We must have a date/time for a photo
+            // Since no date is known, we use the current one
+            $photo->setDateTime(new \DateTime());
+        }
         return $photo;
     }
 
