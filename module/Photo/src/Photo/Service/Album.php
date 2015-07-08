@@ -96,7 +96,7 @@ class Album extends AbstractService
             $endYear -= 1;
         }
 
-        // We make the reasonable assumption that at least 1 photo is take every year
+        // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
     }
 
@@ -173,7 +173,7 @@ class Album extends AbstractService
     }
 
     /**
-     * Removes an album and all subalbums recusively, including all photos.
+     * Removes an album and all subalbums recursively, including all photos.
      *
      * @param int $id the id of the album to remove.
      */
