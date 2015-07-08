@@ -30,8 +30,8 @@ class Metadata extends AbstractService
             $photo->setFlash($exif['Flash'] != 0);
             $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
             $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-            $photo->setShutterSpeed($this->exifGetShutter($exif));
-            $photo->setAperture($this->exifGetFstop($exif));
+            $photo->setShutterSpeed($this->exifGetShutter($exif['ShutterSpeedValue']));
+            $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
             $photo->setIso($exif['ISOSpeedRatings']);
         } else {
             // We must have a date/time for a photo
@@ -66,19 +66,20 @@ class Metadata extends AbstractService
 
     /**
      * Computes the shutter speed from the exif data.
-     * @param array $exif the exif data extracted from the photo.
+     *
+     * @param string $shutterSpeed the shutter speed as listed in the photo's exif data.
      *
      * @return string the shutter speed, represented as a rational string.
      */
-    private function exifGetShutter($exif)
+    private function exifGetShutter($shutterSpeed)
     {
-        if (!isset($exif['ShutterSpeedValue'])) {
-            return "unknown";
+        if (!isset($shutterSpeed)) {
+            return null;
         }
-        $apex = $this->frac2dec($exif['ShutterSpeedValue']);
+        $apex = $this->frac2dec($shutterSpeed);
         $shutter = pow(2, -$apex);
         if ($shutter == 0) {
-            return "unknown";
+            return null;
         }
         if ($shutter >= 1) {
             return round($shutter) . 's';
@@ -88,20 +89,21 @@ class Metadata extends AbstractService
     }
 
     /**
-     * Computes the aperture form the exif data.
-     * @param array $exif the exif data extracted from the photo.
+     * Computes the relative aperture from the exif data.
+     *
+     * @param string $apertureValue the aperture value as listed in the photo's exif data.
      *
      * @return string the aperture, represented as a rational string.
      */
-    private function exifGetFstop($exif)
+    private function exifGetFstop($apertureValue)
     {
-        if (!isset($exif['ApertureValue'])) {
-            return "unknown";
+        if (!isset($apertureValue)) {
+            return null;
         }
-        $apex = $this->frac2dec($exif['ApertureValue']);
+        $apex = $this->frac2dec($apertureValue);
         $fstop = pow(2, $apex / 2);
         if ($fstop == 0) {
-            return "unknown";
+            return null;
         }
 
         return 'f/' . sprintf("%01.1f", $fstop);
