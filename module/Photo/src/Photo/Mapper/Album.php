@@ -164,7 +164,8 @@ class Album
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
-            ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
+            ->andWhere('a.startDateTime >= ?1')
+            ->andWhere('a.endDateTime <= ?2')
             ->setParameter(1, $start)
             ->setParameter(2, $end);
 
