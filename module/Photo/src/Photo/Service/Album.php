@@ -11,6 +11,9 @@ use Photo\Model\Album as AlbumModel;
 class Album extends AbstractService
 {
 
+    const ASSOCIATION_YEAR_START_MONTH = 7;
+    const ASSOCIATION_YEAR_START_DAY = 1;
+
     /**
      * Get the album mapper.
      *
@@ -71,9 +74,12 @@ class Album extends AbstractService
      */
     public function getAlbumsByYear($year) {
         // A GEWIS year starts July 1st
-        $start = \DateTime::createFromFormat('Y-m-d', "$year-07-01");
-        $endYear = $year + 1;
-        $end = $start->sub(new DateInterval('PT1S'));
+        $start = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+        $end = clone $start;
+        $end->add(new \DateInterval('P1Y'));
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
     /**
@@ -89,10 +95,10 @@ class Album extends AbstractService
         $endYear = $latest->getStartDateTime()->format('Y');
 
         // A GEWIS year starts July 1st
-        if($oldest->getStartDateTime()->format('n') < 7) {
+        if($oldest->getStartDateTime()->format('n') < ASSOCIATION_YEAR_START_MONTH) {
             $startYear -= 1;
         }
-        if($latest->getStartDateTime()->format('n') < 7) {
+        if($latest->getStartDateTime()->format('n') < ASSOCIATION_YEAR_START_MONTH) {
             $endYear -= 1;
         }
 
