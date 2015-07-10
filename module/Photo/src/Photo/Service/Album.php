@@ -100,9 +100,9 @@ class Album extends AbstractService
     public function getAlbumYears() {
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $latest = $this->getAlbumMapper()->getLatestAlbum();
-        
-        $startYear = $this->getAssociationYear($oldest);
-        $endYear = $this->getAssociationYear($latest);
+
+        $startYear = $this->getAssociationYear($oldest->getStartDateTime());
+        $endYear = $this->getAssociationYear($latest->getEndDateTime());
 
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
@@ -240,7 +240,7 @@ class Album extends AbstractService
      * @return int representing an association year.
      */
     public function getAssociationYear($date) {
-        if($date->format('n') < ASSOCIATION_YEAR_START_MONTH) {
+        if($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
             return $date->format('Y') - 1;
         } else {
             return $date->format('Y');
