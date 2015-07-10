@@ -42,6 +42,7 @@ return array(
                             ),
                         ),
                     ),
+                    // Route for categorizing albums by association year.
                     'year' => array(
                         'type' => 'Segment',
                         'options' => array(
