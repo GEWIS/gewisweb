@@ -177,7 +177,7 @@ class Album
      *
      * @return \Photo\Model\Album
      */
-    public function getLatestAlbum() {
+    public function getNewestAlbum() {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
