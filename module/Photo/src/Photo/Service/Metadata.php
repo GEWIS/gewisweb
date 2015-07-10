@@ -69,7 +69,7 @@ class Metadata extends AbstractService
      *
      * @param string $shutterSpeed the shutter speed as listed in the photo's exif data.
      *
-     * @return string the shutter speed, represented as a rational string.
+     * @return string|null
      */
     private function exifGetShutter($shutterSpeed)
     {
@@ -93,7 +93,7 @@ class Metadata extends AbstractService
      *
      * @param string $apertureValue the aperture value as listed in the photo's exif data.
      *
-     * @return string the aperture, represented as a rational string.
+     * @return string|null
      */
     private function exifGetFstop($apertureValue)
     {
