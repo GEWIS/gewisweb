@@ -11,6 +11,9 @@ use Photo\Model\Album as AlbumModel;
 class Album extends AbstractService
 {
 
+    /**
+     * A GEWIS association year starts 01-07
+     */
     const ASSOCIATION_YEAR_START_MONTH = 7;
     const ASSOCIATION_YEAR_START_DAY = 1;
 
@@ -65,8 +68,11 @@ class Album extends AbstractService
     }
 
     /**
-     * Returns all albums for a given year.
-     * Example: When supplied 2010, this would return all albums from 2010/2011
+     * Returns all albums for a given association year.
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
      *
      * @param $year integer the year in which the albums have been created
      *
@@ -83,24 +89,20 @@ class Album extends AbstractService
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
     /**
-     * Gets a list of all years of which photos are available.
-     * Example: A value of 2010 in this list would represent 2010/2011
+     * Gets a list of all association years of which photos are available.
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
      *
      * @return array of integers representing years
      */
     public function getAlbumYears() {
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $latest = $this->getAlbumMapper()->getLatestAlbum();
-        $startYear = $oldest->getStartDateTime()->format('Y');
-        $endYear = $latest->getStartDateTime()->format('Y');
-
-        // A GEWIS year starts July 1st
-        if($oldest->getStartDateTime()->format('n') < ASSOCIATION_YEAR_START_MONTH) {
-            $startYear -= 1;
-        }
-        if($latest->getStartDateTime()->format('n') < ASSOCIATION_YEAR_START_MONTH) {
-            $endYear -= 1;
-        }
+        
+        $startYear = $this->getAssociationYear($oldest);
+        $endYear = $this->getAssociationYear($latest);
 
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
@@ -224,6 +226,25 @@ class Album extends AbstractService
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
+    }
+
+    /**
+     * Returns the association year to which a certain date belongs
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
+     *
+     * @param \DateTime $date
+     *
+     * @return int representing an association year.
+     */
+    public function getAssociationYear($date) {
+        if($date->format('n') < ASSOCIATION_YEAR_START_MONTH) {
+            return $date->format('Y') - 1;
+        } else {
+            return $date->format('Y');
+        }
     }
 
     public function getEditAlbumForm($id)
