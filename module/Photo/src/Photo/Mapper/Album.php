@@ -186,8 +186,9 @@ class Album
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'DESC');
 
-        //TODO: this is going to break
-        return $qb->getQuery()->getResult()[0];
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
     }
 
     /**
@@ -204,7 +205,9 @@ class Album
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'ASC');
 
-        return $qb->getQuery()->getResult()[0];
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
     }
     /**
      * Persist album
