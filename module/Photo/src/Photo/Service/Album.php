@@ -71,9 +71,9 @@ class Album extends AbstractService
      */
     public function getAlbumsByYear($year) {
         // A GEWIS year starts July 1st
-        $start = \DateTime::createFromFormat('Y-m-d H:i:s', "$year-07-01 0:00:00");
+        $start = \DateTime::createFromFormat('Y-m-d', "$year-07-01");
         $endYear = $year + 1;
-        $end = \DateTime::createFromFormat('Y-m-d H:i:s', "$endYear-06-30 23:59:59");
+        $end = $start->sub(new DateInterval('PT1S'));
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
     /**
@@ -89,10 +89,10 @@ class Album extends AbstractService
         $endYear = $latest->getStartDateTime()->format('Y');
 
         // A GEWIS year starts July 1st
-        if($oldest->getStartDateTime()->format('m') < 7) {
+        if($oldest->getStartDateTime()->format('n') < 7) {
             $startYear -= 1;
         }
-        if($latest->getStartDateTime()->format('m') < 7) {
+        if($latest->getStartDateTime()->format('n') < 7) {
             $endYear -= 1;
         }
 
