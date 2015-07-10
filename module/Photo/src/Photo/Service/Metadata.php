@@ -30,8 +30,12 @@ class Metadata extends AbstractService
             $photo->setFlash($exif['Flash'] != 0);
             $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
             $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-            $photo->setShutterSpeed($this->exifGetShutter($exif['ShutterSpeedValue']));
-            $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
+            if(isset($exif['ShutterSpeedValue'])) {
+                $photo->setShutterSpeed($this->exifGetShutter($exif['ShutterSpeedValue']));
+            }
+            if(isset($exif['ShutterSpeedValue'])) {
+                $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
+            }
             $photo->setIso($exif['ISOSpeedRatings']);
         } else {
             // We must have a date/time for a photo
@@ -73,9 +77,6 @@ class Metadata extends AbstractService
      */
     private function exifGetShutter($shutterSpeed)
     {
-        if (!isset($shutterSpeed)) {
-            return null;
-        }
         $apex = $this->frac2dec($shutterSpeed);
         $shutter = pow(2, -$apex);
         if ($shutter == 0) {
@@ -97,9 +98,6 @@ class Metadata extends AbstractService
      */
     private function exifGetFstop($apertureValue)
     {
-        if (!isset($apertureValue)) {
-            return null;
-        }
         $apex = $this->frac2dec($apertureValue);
         $fstop = pow(2, $apex / 2);
         if ($fstop == 0) {
