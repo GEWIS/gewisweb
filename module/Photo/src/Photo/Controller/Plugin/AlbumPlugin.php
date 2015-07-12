@@ -4,6 +4,7 @@ namespace Photo\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Paginator;
+use Zend\View\Helper;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.

@@ -55,7 +55,27 @@ class AlbumAdminController extends AbstractActionController
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
-
+        // Add some urls
+        $albumPage['urls'] = array(
+            'edit' => $this->url()->fromRoute(
+                'admin_photo/album_edit', array('album_id' => $albumId)
+            ),
+            'create' => $this->url()->fromRoute(
+                'admin_photo/album_delete', array('album_id' => $albumId)
+            ),
+            'add' => $this->url()->fromRoute(
+                'admin_photo/album_add', array('album_id' => $albumId)
+            ),
+            'move' => $this->url()->fromRoute(
+                'admin_photo/album_move', array('album_id' => $albumId)
+            ),
+            'delete' => $this->url()->fromRoute(
+                'admin_photo/album_delete', array('album_id' => $albumId)
+            ),
+            'cover' => $this->url()->fromRoute(
+                'admin_photo/album_cover', array('album_id' => $albumId)
+            ),
+        );
         return new JsonModel($albumPage);
     }
 
