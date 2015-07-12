@@ -46,12 +46,21 @@
                                           array('slugCompanyName' => $company->getSlugName()));
                 //echo $editUrl;
             ?>
+<<<<<<< Updated upstream
                     <tr class="company-list-item">
                         <td><a href="<?= $editUrl; ?>"><?= $company->getName(); ?></a></td>
                         <td><a href="#?id=<?= $company->getId(); ?>"><?= count($company->getPackets()[0]->getJobs()); ?></a></td>
                         <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
                         <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
                     </tr>
+=======
+            <tr class="company-list-item">
+                <td><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->numberOfJobs(); ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
+            </tr>
+>>>>>>> Stashed changes
             <?php
                 }
             ?>

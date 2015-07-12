@@ -32,7 +32,13 @@
         <?= $this->formElementErrors($element); ?>
     </dd>    
 </dl>
-
+<?php $element = $this->form->get('languages') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formMultiCheckbox($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>    
+</dl>
 <dl><!-- english elements -->
 <?php $element = $this->form->get('en.website') ?>
     <dt><?= $element->getOption('label') ?></dt>

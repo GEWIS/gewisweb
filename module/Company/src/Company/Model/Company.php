@@ -106,7 +106,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslations()
     {
-        return $this->translations;
+        if ($this->translations !== null){
+            return $this->translations;
+        }
+        return array();
     }
 
     /**
@@ -311,15 +314,35 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         return get_object_vars($this);
     }
+
+    
     
     public function exchangeArray($data) {
-        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
-        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
-        $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
-        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->packets=(isset($data['packets'])) ? $data['packets'] : $this->getPackets();
+        $languages = $data['languages'];
+        #$languages.add(¨¨);
+        foreach ($languages as $language){
+
+            if($language !== ''){
+            echo $language;
+            $companyLanguages = array_map(function ($value){
+                        return $value->getLanguage();
+                    } ,$this->getTranslations());
+                if(!in_array($language, $companyLanguages)){
+                    continue;
+                }
+                $translations = 
+
+                $language = $language . '.';
+            }
+            
+            $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
+            $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+            //$this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
+            $this->address=(isset($data[$language.'address'])) ? $data[$language.'address'] : $this->getAddress();
+            $this->website=(isset($data[$language.'website'])) ? $data[$language.'website'] : $this->getWebsite();
+            $this->email=(isset($data[$language.'email'])) ? $data[$language.'email'] : $this->getEmail();
+            $this->phone=(isset($data[$language.'phone'])) ? $data[$language.'phone'] : $this->getPhone();
+            //$this->packets=(isset($data[$language.'packets'])) ? $data[$language.'packets'] : $this->getPackets();
+        }
     }
 }
