@@ -18,29 +18,31 @@ $this->headLink()
                 <ul class="tree">
                     <?php
 
-                    function showTree($albums)
+                    function showTree($albums, $context)
                     {
                         ?>
                         <?php foreach ($albums as $album): ?>
                         <li><a id="<?= $album->getId() ?>"
-                               href="photo/album/<?= $album->getId() ?>"><?= $album->getName() ?></a>
+                               href="<?= $context->url('photo/album', array('album_id' => $album->getId())); ?>">
+                                <?= $album->getName() ?>
+                            </a>
                             <?php if (count($album->getChildren()) > 0): ?>
                                 <ul>
-                                    <?= showTree($album->getChildren()) ?>
+                                    <?= showTree($album->getChildren(), $context) ?>
                                 </ul>
                             <?php endif ?>
                         </li>
                     <?php endforeach ?>
 
                     <?php } ?>
-                    <?= showTree($albums) ?>
+                    <?= showTree($albums, $this) ?>
                 </ul>
             </div>
         </div>
     </div>
     <div class="col-lg-9">
 
-        <a id="btnCreate" class="btn btn-primary" href="photo/album/create"><span
+        <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>"><span
                 class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
