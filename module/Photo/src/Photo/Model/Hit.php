@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * PhotoHit, represents a .
+ * Hit, represents a hit for a photo.
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -25,13 +25,15 @@ class Hit implements ResourceInterface
     protected $id;
 
     /**
-     * Date and time when the photo was taken.
+     * Date and time when the photo was viewed.
      *
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
 
     /**
+     * The photo which was viewed.
+     * 
      * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="hits")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
