@@ -119,6 +119,12 @@ class Photo implements ResourceInterface
     protected $largeThumbPath;
 
     /**
+     * All the hits of this photo.
+     * @ORM\OneToMany(targetEntity="Hit", mappedBy="photo")
+     */
+    protected $hits;
+
+    /**
      * Get the ID.
      *
      * @return int
