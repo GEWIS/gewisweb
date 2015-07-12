@@ -3,7 +3,7 @@
     <div clas="row">
         <nav>
             <ul class="pager">
-                <li class="previous"><a href="/photo/album/<?= $photo->getAlbum()->getId(); ?>"><span
+                <li class="previous"><a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
                             aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
             </ul>
         </nav>
@@ -58,13 +58,18 @@
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
                         <li><a id="previous"
-                               href="/photo/view/<?= $previous->getId(); ?>"><?= $this->translate('Previous') ?></a>
+                                href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
+                                <?= $this->translate('Previous') ?>
+                            </a>
                         </li>
                     <?php
                     endif;
                     if (!is_null($next)):
                         ?>
-                        <li><a id="next" href="/photo/view/<?= $next->getId(); ?>"><?= $this->translate('Next') ?></a>
+                        <li><a id="next" 
+                                href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
+                                <?= $this->translate('Next') ?>
+                            </a>
                         </li>
                     <?php endif; ?>
                 </ul>

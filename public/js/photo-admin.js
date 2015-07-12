@@ -6,17 +6,19 @@
 
 Photo.Admin = {};
 Photo.Admin.activePage = 'photo';
+Photo.Admin.activeData = null;
 Photo.Admin.selectedCount = 0;
 Photo.Admin.loadPage = function (resource) {
     $.getJSON(resource, function (data) {
         Photo.Admin.activePage = resource;
+        Photo.Admin.activeData = data;
         Photo.Admin.selectedCount = 0;
         $("#album").html('<div class="row"></div>');
         $.each(data.albums, function (i, album) {
-            href = 'photo/album/' + album.id
+            href = Photo.Admin.getURL('album_index', album.id);
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/photo/' + album.coverPath + '" alt="">'
+                    + '<img class="img-responsive" src="' +data.basedir + '/' + album.coverPath + '" alt="">'
                     + album.name
                     + '</a>'
                     + '</div>');
@@ -27,7 +29,7 @@ Photo.Admin.loadPage = function (resource) {
         });
 
         $.each(data.photos, function (i, photo) {
-            href = 'photo/photo/' + photo.id
+            href = Photo.Admin.getURL('photo_index', photo.id);
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
                     + '<img class="img-responsive" src="/data/photo/' + photo.smallThumbPath + '" alt="">'
@@ -38,7 +40,7 @@ Photo.Admin.loadPage = function (resource) {
         $("#paging").html('');
 
         $.each(data.pages.pagesInRange, function (key, page) {
-            href = 'photo/album/' + data.album.id + '/' + page;
+            href = Photo.Admin.getURL('album_page', data.album.id, page);
             if (page === data.pages.current)
             {
                 $("#paging").append('<li class="active"><a href="' + href + '">' + (page) + '</a></li>');
@@ -48,14 +50,14 @@ Photo.Admin.loadPage = function (resource) {
         });
         if (data.pages.previous)
         {
-            href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
+            href = Photo.Admin.getURL('album_page', data.album.id, data.pages.previous);
             $("#paging").prepend('<li><a id="previous" href="' + href + '">'
                     + '<span aria-hidden="true">«</span>'
                     + '<span class="sr-only">Previous</span>'
                     + '</a></li>');
         }
         if (data.pages.next) {
-            href = 'photo/album/' + data.album.id + '/' + (data.pages.next);
+            href = Photo.Admin.getURL('album_page', data.album.id, data.pages.next);
             $("#paging").append('<li><a id="next" href="' + href + '">'
                     + '<span aria-hidden="true">»</span>'
                     + '<span class="sr-only">Next</span>'
@@ -71,18 +73,18 @@ Photo.Admin.loadPage = function (resource) {
         });
 
         $(".thumbnail-checkbox").change(Photo.Admin.itemSelected);
-        $("#btnAdd").attr('href', 'photo/album/' + data.album.id + '/add');
-        $("#btnEdit").attr('href', 'photo/album/' + data.album.id + '/edit');
-        $("#btnCreate").attr('href', 'photo/album/' + data.album.id + '/create');
+        $("#btnAdd").attr('href', Photo.Admin.getURL('album_add', data.album.id));
+        $("#btnEdit").attr('href', Photo.Admin.getURL('album_edit', data.album.id));
+        $("#btnCreate").attr('href', Photo.Admin.getURL('album_create', data.album.id));
     });
 }
 
 Photo.Admin.regenerateCover = function () {
     $("#coverPreview").hide();
     $("#coverSpinner").show();
-    $.post(Photo.Admin.activePage + '/cover', function (data) {
+    $.post(Photo.Admin.getURL('album_cover', Photo.Admin.activeData.album.id), function (data) {
         $.getJSON(Photo.Admin.activePage, function (data) {
-            $("#coverPreview").attr('src', '/data/photo/' + data.album.coverPath);
+            $("#coverPreview").attr('src', data.basedir + '/' + data.album.coverPath);
             $("#coverPreview").show();
             $("#coverSpinner").hide();
         });
@@ -92,7 +94,7 @@ Photo.Admin.regenerateCover = function () {
 Photo.Admin.deleteAlbum = function () {
     $("#deleteConfirm").hide();
     $("#deleteProgress").show();
-    $.post(Photo.Admin.activePage + '/delete').done(function( data ) {
+    $.post(Photo.Admin.getURL('album_delete', Photo.Admin.activeData.album.id)).done(function( data ) {
         location.reload(); //reload to update album tree (TODO: update album tree dynamically)
     });
     $("#deleteProgress").hide();
@@ -141,7 +143,7 @@ Photo.Admin.moveAlbum = function () {
     $("#albumMoveSelect").hide();
     $("#albumMoveProgress").show();
     $.post(
-        Photo.Admin.activePage + '/move',
+        Photo.Admin.getURL('album_move', Photo.Admin.activeData.album.id),
         { parent_id : $("#newAlbumParent").val() }
     ).done(function( data ) {
             location.reload(); //reload to update album tree (TODO: update album tree dynamically)
@@ -187,6 +189,7 @@ Photo.Admin.initPhoto = function() {
     $("#deletePhotoButton").on('click', Photo.Admin.deletePhoto);
     $("#movePhotoButton").on('click', Photo.Admin.movePhoto);
 }
+
 Photo.Admin.itemSelected = function () {
     if (this.checked) {
         Photo.Admin.selectedCount++;
@@ -266,6 +269,22 @@ Photo.Admin.albumClicked = function (e) {
     Photo.Admin.loadPage(e.target.href);
 
 }
+
+Photo.Admin.getURL= function() {
+
+    var theString = decodeURIComponent(Photo.Admin.activeData.urls[arguments[0]]);
+
+    // start with the second argument (i = 1)
+    for (var i = 1; i < arguments.length; i++) {
+        // "gm" = RegEx options for Global search (more than one instance)
+        // and for Multiline search
+        var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+        theString = theString.replace(regEx, arguments[i]);
+    }
+
+    return theString;
+}
+
 $.fn.extend({
     treed: function () {
         //initialize each of the top levels
