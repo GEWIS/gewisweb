@@ -353,8 +353,7 @@ class Photo extends AbstractService
         $hit = new HitModel();
         $hit->setDateTime(new \DateTime());
         $photo->addHit($hit);
-
-        $this->getPhotoMapper()->persist($photo);
+        
         $this->getPhotoMapper()->flush();
     }
     /**

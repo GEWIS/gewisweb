@@ -33,7 +33,7 @@ class Hit implements ResourceInterface
 
     /**
      * The photo which was viewed.
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="hits")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
