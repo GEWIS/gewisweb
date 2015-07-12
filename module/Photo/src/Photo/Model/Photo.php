@@ -125,6 +125,12 @@ class Photo implements ResourceInterface
     protected $hits;
 
     /**
+     * All the tags for this photo.
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"})
+     */
+    protected $tags;
+
+    /**
      * Get the ID.
      *
      * @return int
@@ -265,6 +271,14 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * @return \Photo\Model\Tag
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * Set the dateTime.
      *
      * @param \DateTime $dateTime
@@ -397,6 +411,15 @@ class Photo implements ResourceInterface
     public function addHit($hit) {
         $hit->setPhoto($this);
         $this->hits[] = $hit;
+    }
+    /**
+     * Add a tag to a photo.
+     *
+     * @param \Photo\Model\Photo $tag
+     */
+    public function addTag($tag) {
+        $tag->setPhoto($this);
+        $this->tags[] = $tag;
     }
     /**
      * Returns an associative array representation of this object
