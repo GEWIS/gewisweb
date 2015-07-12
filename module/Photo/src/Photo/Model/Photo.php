@@ -119,6 +119,12 @@ class Photo implements ResourceInterface
     protected $largeThumbPath;
 
     /**
+     * All the hits of this photo.
+     * @ORM\OneToMany(targetEntity="Hit", mappedBy="photo", cascade={"persist", "remove"})
+     */
+    protected $hits;
+
+    /**
      * Get the ID.
      *
      * @return int
@@ -388,6 +394,10 @@ class Photo implements ResourceInterface
         $this->smallThumbPath = $path;
     }
 
+    public function addHit($hit) {
+        $hit->setPhoto($this);
+        $this->hits[] = $hit;
+    }
     /**
      * Returns an associative array representation of this object
      *
