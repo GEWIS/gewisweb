@@ -4,7 +4,7 @@ namespace Photo\Service;
 
 use Application\Service\AbstractService;
 use Photo\Model\Photo as PhotoModel;
-use Photo\Model\Tag as TagModel;
+use Photo\Model\Hit as HitModel;
 use Imagick;
 use Zend\Code\Generator\DocBlock\Tag;
 
@@ -350,10 +350,12 @@ class Photo extends AbstractService
      * @param \Photo\Model\Photo $photo
      */
     public function countHit($photo) {
-        $tag = new TagModel();
-        $tag->setDate(new \DateTime());
-        $photo->addTag($tag);
+        $hit = new HitModel();
+        $hit->setDateTime(new \DateTime());
+        $photo->addHit($hit);
+
         $this->getPhotoMapper()->persist($photo);
+        $this->getPhotoMapper()->flush();
     }
     /**
      * Gets the base directory from which the photo paths should be requested

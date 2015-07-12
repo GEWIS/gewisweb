@@ -38,6 +38,54 @@ class Hit implements ResourceInterface
     protected $photo;
 
     /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @return \Photo\Model\Photo
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     */
+    public function setDateTime($dateTime)
+    {
+        $this->dateTime = $dateTime;
+    }
+
+    /**
+     * @param \Photo\Model\Photo $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
      * Get the resource ID.
      *
      * @return string
