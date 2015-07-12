@@ -23,7 +23,7 @@ $this->headLink()
                         ?>
                         <?php foreach ($albums as $album): ?>
                         <li><a id="<?= $album->getId() ?>"
-                               href="<?= $context->url('photo/album', array('album_id' => $album->getId())); ?>">
+                               href="<?= $context->url('admin_photo/album_index', array('album_id' => $album->getId())); ?>">
                                 <?= $album->getName() ?>
                             </a>
                             <?php if (count($album->getChildren()) > 0): ?>

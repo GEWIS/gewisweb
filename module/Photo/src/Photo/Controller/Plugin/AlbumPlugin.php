@@ -4,6 +4,7 @@ namespace Photo\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Paginator;
+use Zend\View\Helper;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
@@ -22,7 +23,7 @@ class AlbumPlugin extends AbstractPlugin
     public function getAlbumPageAsArray($albumId, $activePage)
     {
         $page = $this->getAlbumPage($albumId, $activePage);
-        if(is_null($page)) {
+        if (is_null($page)) {
             return null;
         }
         $paginator = $page['paginator'];

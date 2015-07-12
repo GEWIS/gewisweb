@@ -12,6 +12,12 @@ class Album extends AbstractService
 {
 
     /**
+     * A GEWIS association year starts 01-07
+     */
+    const ASSOCIATION_YEAR_START_MONTH = 7;
+    const ASSOCIATION_YEAR_START_DAY = 1;
+
+    /**
      * Get the album mapper.
      *
      * @return \Photo\Mapper\Album
@@ -59,6 +65,47 @@ class Album extends AbstractService
         } else {
             return $this->getAlbumMapper()->getSubAlbums($album, $start, $maxResults);
         }
+    }
+
+    /**
+     * Returns all albums for a given association year.
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
+     *
+     * @param $year integer the year in which the albums have been created
+     *
+     * @return array of \Photo\Model\Albums
+     */
+    public function getAlbumsByYear($year) {
+        // A GEWIS year starts July 1st
+        $start = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+        $end = clone $start;
+        $end->add(new \DateInterval('P1Y'));
+        return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
+    }
+    /**
+     * Gets a list of all association years of which photos are available.
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
+     *
+     * @return array of integers representing years
+     */
+    public function getAlbumYears() {
+        $oldest = $this->getAlbumMapper()->getOldestAlbum();
+        $newest = $this->getAlbumMapper()->getNewestAlbum();
+
+        $startYear = $this->getAssociationYear($oldest->getStartDateTime());
+        $endYear = $this->getAssociationYear($newest->getEndDateTime());
+
+        // We make the reasonable assumption that at least one photo is taken every year
+        return range($startYear, $endYear);
     }
 
     /**
@@ -134,7 +181,7 @@ class Album extends AbstractService
     }
 
     /**
-     * Removes an album and all subalbums recusively, including all photos.
+     * Removes an album and all subalbums recursively, including all photos.
      *
      * @param int $id the id of the album to remove.
      */
@@ -179,6 +226,25 @@ class Album extends AbstractService
         $mapper = $this->getAlbumMapper();
         $mapper->persist($album);
         $mapper->flush();
+    }
+
+    /**
+     * Returns the association year to which a certain date belongs
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
+     *
+     * @param \DateTime $date
+     *
+     * @return int representing an association year.
+     */
+    public function getAssociationYear($date) {
+        if($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
+            return $date->format('Y') - 1;
+        } else {
+            return $date->format('Y');
+        }
     }
 
     public function getEditAlbumForm($id)
