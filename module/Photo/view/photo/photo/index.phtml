@@ -1,3 +1,10 @@
+<ul class="nav nav-pills">
+    <?php foreach($years as $year): ?>
+    <li role="presentation" <?= $year == $activeYear ? 'class="active"' : '' ?>>
+        <a href="<?= $this->url('photo/year', array('year' => $year)); ?>"><?= $year ?>/<?= $year + 1 ?></a>
+    </li>
+    <?php endforeach; ?>
+</ul>
 <div class="row">
     <?php if (!empty($albums)): ?>
         <?php for ($i = 0; $i < count($albums); $i++): ?>

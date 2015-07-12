@@ -42,6 +42,20 @@ return array(
                             ),
                         ),
                     ),
+                    // Route for categorizing albums by association year.
+                    'year' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:year]',
+                            'constraints' => array(
+                                'year' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'admin_photo' => array(
