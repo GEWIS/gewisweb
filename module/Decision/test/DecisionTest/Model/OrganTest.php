@@ -15,27 +15,17 @@ class OrganTest extends PHPUnit_Framework_TestCase
         $this->assertNull($organ->getId());
         $this->assertNull($organ->getAbbr());
         $this->assertNull($organ->getName());
-        $this->assertEquals(Organ::TYPE_COMMITTEE, $organ->getType());
+        $this->assertNull($organ->getType());
     }
 
     public function testOrganSetType()
     {
         $organ = new Organ();
 
-        $organ->setType(Organ::TYPE_FRATERNITY);
-        $this->assertEquals(Organ::TYPE_FRATERNITY, $organ->getType());
+        $organ->setType(Organ::ORGAN_TYPE_FRATERNITY);
+        $this->assertEquals(Organ::ORGAN_TYPE_FRATERNITY, $organ->getType());
 
-        $organ->setType(Organ::TYPE_COMMITTEE);
-        $this->assertEquals(Organ::TYPE_COMMITTEE, $organ->getType());
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testOrganSetTypeThrowsException()
-    {
-        $organ = new Organ();
-
-        $organ->setType('wrong');
+        $organ->setType(Organ::ORGAN_TYPE_COMMITTEE);
+        $this->assertEquals(Organ::ORGAN_TYPE_COMMITTEE, $organ->getType());
     }
 }
