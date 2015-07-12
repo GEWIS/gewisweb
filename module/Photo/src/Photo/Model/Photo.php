@@ -34,56 +34,56 @@ class Photo implements ResourceInterface
     /**
      * Artist/author
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $artist;
 
     /**
      * The type of camera used
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true))
      */
     protected $camera;
 
     /**
      * Whether a flash has been used
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true))
      */
     protected $flash;
 
     /**
      * The focal length of the lens, in mm.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true))
      */
     protected $focalLength;
 
     /**
      * The exposure time, in seconds.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true))
      */
     protected $exposureTime;
 
     /**
      * The shutter speed.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true))
      */
     protected $shutterSpeed;
 
     /**
      * The lens aperture.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true))
      */
     protected $aperture;
 
     /**
      * Indicates the ISO Speed and ISO Latitude of the camera
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true))
      */
     protected $iso;
 
