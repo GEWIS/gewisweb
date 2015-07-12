@@ -22,22 +22,26 @@ class Metadata extends AbstractService
     public function populateMetadata($photo, $path)
     {
         $exif = read_exif_data($path, 'EXIF');
-        if (isset($exif['Artist'])) {
-            $photo->setArtist($exif['Artist']);
-        } else {
-            $photo->setArtist("Unknown"); //Needs to be t9n'd in the view
-        }
-        //I assume the exif data isn't deliberately stripped, so most values 
-        //are assumed to exist.
-        $photo->setCamera($exif['Model']);
-        $photo->setDateTime(date_create($exif['DateTimeOriginal']));
-        $photo->setFlash($exif['Flash'] != 0);
-        $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
-        $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-        $photo->setShutterSpeed($this->exifGetShutter($exif));
-        $photo->setAperture($this->exifGetFstop($exif));
-        $photo->setIso($exif['ISOSpeedRatings']);
 
+        if($exif) {
+            $photo->setArtist($exif['Artist']);
+            $photo->setCamera($exif['Model']);
+            $photo->setDateTime(new \DateTime($exif['DateTimeOriginal']));
+            $photo->setFlash($exif['Flash'] != 0);
+            $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
+            $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
+            if(isset($exif['ShutterSpeedValue'])) {
+                $photo->setShutterSpeed($this->exifGetShutter($exif['ShutterSpeedValue']));
+            }
+            if(isset($exif['ShutterSpeedValue'])) {
+                $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
+            }
+            $photo->setIso($exif['ISOSpeedRatings']);
+        } else {
+            // We must have a date/time for a photo
+            // Since no date is known, we use the current one
+            $photo->setDateTime(new \DateTime());
+        }
         return $photo;
     }
 
@@ -66,19 +70,17 @@ class Metadata extends AbstractService
 
     /**
      * Computes the shutter speed from the exif data.
-     * @param array $exif the exif data extracted from the photo.
      *
-     * @return string the shutter speed, represented as a rational string.
+     * @param string $shutterSpeed the shutter speed as listed in the photo's exif data.
+     *
+     * @return string|null
      */
-    private function exifGetShutter($exif)
+    private function exifGetShutter($shutterSpeed)
     {
-        if (!isset($exif['ShutterSpeedValue'])) {
-            return "unknown";
-        }
-        $apex = $this->frac2dec($exif['ShutterSpeedValue']);
+        $apex = $this->frac2dec($shutterSpeed);
         $shutter = pow(2, -$apex);
         if ($shutter == 0) {
-            return "unknown";
+            return null;
         }
         if ($shutter >= 1) {
             return round($shutter) . 's';
@@ -88,20 +90,18 @@ class Metadata extends AbstractService
     }
 
     /**
-     * Computes the aperture form the exif data.
-     * @param array $exif the exif data extracted from the photo.
+     * Computes the relative aperture from the exif data.
      *
-     * @return string the aperture, represented as a rational string.
+     * @param string $apertureValue the aperture value as listed in the photo's exif data.
+     *
+     * @return string|null
      */
-    private function exifGetFstop($exif)
+    private function exifGetFstop($apertureValue)
     {
-        if (!isset($exif['ApertureValue'])) {
-            return "unknown";
-        }
-        $apex = $this->frac2dec($exif['ApertureValue']);
+        $apex = $this->frac2dec($apertureValue);
         $fstop = pow(2, $apex / 2);
         if ($fstop == 0) {
-            return "unknown";
+            return null;
         }
 
         return 'f/' . sprintf("%01.1f", $fstop);
