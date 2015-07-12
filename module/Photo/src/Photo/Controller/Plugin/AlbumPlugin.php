@@ -23,7 +23,7 @@ class AlbumPlugin extends AbstractPlugin
     public function getAlbumPageAsArray($albumId, $activePage)
     {
         $page = $this->getAlbumPage($albumId, $activePage);
-        if(is_null($page)) {
+        if (is_null($page)) {
             return null;
         }
         $paginator = $page['paginator'];
@@ -80,6 +80,50 @@ class AlbumPlugin extends AbstractPlugin
             'album' => $album,
             'basedir' => $basedir,
             'paginator' => $paginator,
+        );
+    }
+
+    public function getURLs()
+    {
+        return array(
+            'album_edit' => $this->url()->fromRoute(
+                'admin_photo/album_edit', array('album_id' => '{0}')
+            ),
+            'album_create' => $this->url()->fromRoute(
+                'admin_photo/album_delete', array('album_id' => '{0}')
+            ),
+            'album_add' => $this->url()->fromRoute(
+                'admin_photo/album_add', array('album_id' => '{0}')
+            ),
+            'album_move' => $this->url()->fromRoute(
+                'admin_photo/album_move', array('album_id' => '{0}')
+            ),
+            'album_delete' => $this->url()->fromRoute(
+                'admin_photo/album_delete', array('album_id' => '{0}')
+            ),
+            'album_create' => $this->url()->fromRoute(
+                'admin_photo/album_create', array('album_id' => '{0}')
+            ),
+            'album_cover' => $this->url()->fromRoute(
+                'admin_photo/album_cover', array('album_id' => '{0}')
+            ),
+            'album_page' => $this->url()->fromRoute(
+                'admin_photo/album_page', array('album_id' => '{0}', 'page' => '{1}')
+            ),
+            'album_index' => $this->url()->fromRoute(
+                'admin_photo/album_index', array('album_id' => '{0}')
+            ),
+            'photo_index' => $this->url()->fromRoute(
+                'admin_photo/photo_index', array('photo_id' => '{0}')
+            ),
+            'photo_delete' => $this->url()->fromRoute(
+                'admin_photo/photo_delete', array('photo_id' => '{0}')
+            ),
+            'photo_move' => $this->url()->fromRoute(
+                'admin_photo/photo_move', array('photo_id' => '{0}')
+            ),
+
+
         );
     }
 
