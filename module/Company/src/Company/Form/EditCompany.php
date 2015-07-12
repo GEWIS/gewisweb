@@ -49,6 +49,17 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'languages',
+            'type' => 'MultiCheckbox',
+            'options' => array(
+                'label' => $translate->translate('Languages'),
+                'value_options' => array(
+                    'en' => $translate->translate('English'),
+                    'nl' => $translate->translate('Dutch'),
+                ),
+            )
+        ));
+        $this->add(array(
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
@@ -60,19 +71,41 @@ class EditCompany extends Form
                 'required' => 'required'
             ),
         ));
+        // English version
         $this->add(array(
-            'name' => 'website',
+            'name' => 'en.website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
-                'required' => 'required'
+                //'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Website'),
-                'required' => 'required'
+                //'required' => 'required'
+            ),
+        ));
+        // Dutch version
+        $this->add(array(
+            'name' => 'nl.website',
+            'type' => 'Zend\Form\Element\Url',
+            'attributes' => array(
+                //'required' => 'required'
+            ),
+            'options' => array(
+                'label' => $translate->translate('Website'),
+                //'required' => 'required'
             ),
         ));
         $this->add(array(
-            'name' => 'slogan',
+            'name' => 'en.slogan',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => $translate->translate('Slogan'),
+            ),
+        ));
+        $this->add(array(
+            'name' => 'nl.slogan',
             'attributes' => array(
                 'type'  => 'text',
             ),
@@ -101,7 +134,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'logo',
+            'name' => 'nl.logo',
             'attributes' => array(
                 'type'  => 'file',
             ),
@@ -110,16 +143,37 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'description',
+            'name' => 'en.logo',
+            'attributes' => array(
+                'type'  => 'file',
+            ),
+            'options' => array(
+                'label' => $translate->translate('Logo'),
+            ),
+        ));
+        $this->add(array(
+            'name' => 'en.description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
-                'required' => 'required'
+                //'required' => 'required'
             ),
             'attributes' => array(
                 'type' => 'textarea'  
             ),
         ));
+        $this->add(array(
+            'name' => 'nl.description',
+            'type' => 'Zend\Form\Element\Textarea',
+            'options' => array(
+                'label' => $translate->translate('Description'),
+                //'required' => 'required'
+            ),
+            'attributes' => array(
+                'type' => 'textarea'  
+            ),
+        ));
+        
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
@@ -130,6 +184,7 @@ class EditCompany extends Form
         ));
         
         $this->initFilters();
+
     }
     
     protected function initFilters()
@@ -155,8 +210,8 @@ class EditCompany extends Form
             ),
         ));
         
-        $filter->add(array(
-            'name' => 'website',
+        /*$filter->add(array(
+            'name' => 'en.website',
             'required' => true,
             'filters' => array(
                 array('name' => 'StripTags'),
@@ -167,7 +222,17 @@ class EditCompany extends Form
         ));
         
         $filter->add(array(
-            'name' => 'description',
+            'name' => 'nl.website',
+            'required' => true,
+            'filters' => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim')
+            ),
+            'validators' => array(
+            )
+        ));
+        $filter->add(array(
+            'name' => 'en.description',
             'required' => true,
             'validators' => array(
                 array(
@@ -179,6 +244,19 @@ class EditCompany extends Form
                 )
             )
         ));
+        $filter->add(array(
+            'name' => 'nl.description',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'string_length',
+                    'options' => array(
+                        'min' => 2,
+                        'max' => 10000
+                    )
+                )
+            )
+        ));*/
         
         $filter->add(array(
             'name' => 'email',
@@ -200,7 +278,25 @@ class EditCompany extends Form
         ));
 
         $filter->add(array(
-            'name' => 'logo',
+            'name' => 'en.logo',
+            'required' => false,
+            'validators' => array(
+                array(
+                    'name' => 'File\Extension',
+                    'options' => array(
+                        'extension' => 'png'
+                    )
+                ),
+                array(
+                    'name' => 'File\MimeType',
+                    'options' => array(
+                        'mimeType' => 'image/png'
+                    )
+                )
+            )
+        ));
+        $filter->add(array(
+            'name' => 'nl.logo',
             'required' => false,
             'validators' => array(
                 array(

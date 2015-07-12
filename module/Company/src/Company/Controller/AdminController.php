@@ -34,15 +34,21 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             // TODO: isValid does not work yet
-            if ($companyForm->isValid()) {
-                $company = $companyService->insertCompany();
-                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+            //if ($companyForm->isValid()) {
+            //    $company = $companyService->insertCompany();
+            //    $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+            //    $companyService->saveCompany();
+            //    return $this->redirect()->toRoute('admin_company/default', 
+             //                                     array('action'=>'edit', 
+             //                                           'slugCompanyName' => $companyName), 
+             //                                     array(), false);   
+            //}
+            //if ($companyForm->isValid()) {
+                $company=$companyService->insertCompany();
+                $company->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
-                return $this->redirect()->toRoute('admin_company/default', 
-                                                  array('action'=>'edit', 
-                                                        'slugCompanyName' => $companyName), 
-                                                  array(), false);   
-            }
+                return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'slugCompanyName'=>$companyName),array(),false);   
+            //}
         }
         //$company = $companyService->insertCompany();
         //$companyForm->bind($company);
@@ -75,7 +81,6 @@ class AdminController extends AbstractActionController
             $companyForm = $companyService->getJobForm();
             $companyForm->setData($request->getPost());
 
-            // TODO: isValid does not work yet
             if ($companyForm->isValid()) {
                 $job = $companyService->insertJobForCompanySlugName($companyName);
                 $job->exchangeArray($request->getPost()); 
@@ -115,7 +120,6 @@ class AdminController extends AbstractActionController
             $companyForm = $companyService->getCompanyForm();
             $companyForm->setData($request->getPost());
 
-            // TODO: isValid does not work yet
             if ($companyForm->isValid()) {
                 $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
