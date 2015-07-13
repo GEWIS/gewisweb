@@ -17,25 +17,39 @@ $this->headLink()
             <div class="panel-body">
                 <ul class="tree">
                     <?php
-
                     function showTree($albums, $context)
                     {
-                        ?>
-                        <?php foreach ($albums as $album): ?>
-                        <li><a id="<?= $album->getId() ?>"
-                               href="<?= $context->url('admin_photo/album_index', array('album_id' => $album->getId())); ?>">
-                                <?= $album->getName() ?>
-                            </a>
-                            <?php if (count($album->getChildren()) > 0): ?>
-                                <ul>
-                                    <?= showTree($album->getChildren(), $context) ?>
-                                </ul>
-                            <?php endif ?>
-                        </li>
-                    <?php endforeach ?>
+                        foreach ($albums as $album) {
+                            echo sprintf(
+                                '<li><a id="%d" href="%s">%s</a>',
+                                $album->getId(),
+                                $context->url(
+                                    'admin_photo/album_index',
+                                    array('album_id' => $album->getId())
+                                ),
+                                $album->getName()
+                            );
 
-                    <?php } ?>
-                    <?= showTree($albums, $this) ?>
+                            if (!empty($album->getChildren())) {
+                                echo '<ul>';
+                                showTree($album->getChildren(), $context);
+                                echo '</ul>';
+                            }
+                            echo '</li>';
+                        }
+                    }
+
+                    foreach ($albumsByYear as $year => $albums) {
+                        if (!empty($albums)) {
+
+                            $nextYear = $year + 1;
+                            echo "<li>$year/$nextYear<ul>";
+                            showTree($albums, $this);
+                            echo '</ul></li>';
+                        }
+                    }
+                    ?>
+
                 </ul>
             </div>
         </div>

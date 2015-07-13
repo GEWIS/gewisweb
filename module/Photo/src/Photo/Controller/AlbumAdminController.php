@@ -15,10 +15,13 @@ class AlbumAdminController extends AbstractActionController
     public function indexAction()
     {
         $albumService = $this->getAlbumService();
-        $albums = $albumService->getAlbums();
-
+        $years = $albumService->getAlbumYears();
+        $albumsByYear = array();
+        foreach($years as $year) {
+            $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
+        }
         return new ViewModel(array(
-            'albums' => $albums
+            'albumsByYear' => $albumsByYear
         ));
     }
 
