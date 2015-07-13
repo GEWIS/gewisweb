@@ -33,7 +33,8 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             if ($albumService->createAlbum($albumId, $request->getPost())) {
                 return new ViewModel(array(
-                    'success' => true
+                    'success' => true,
+                    'albumId' => $albumId
                 ));
             }
         }

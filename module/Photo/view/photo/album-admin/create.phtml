@@ -1,8 +1,34 @@
-<?php
-if ($success) {
-    //probably redirect or so, we'll decide this later
-    print $this->translate('The album has been created!');
-} else {
+<?php if ($success): ?>
+    <div class="alert alert-success" role="alert"><?= $this->translate('The album has been created') ?></div>
+    <a href="<?= $this->url('admin_photo') ?>#<?= $albumId ?>" class="btn btn-primary">
+        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        <?= $this->translate('Return to the album') ?>
+    </a>
+<?php else:
     $form->prepare();
-    echo $this->form()->render($form);
-}
+    $form->setAttribute('method', 'post');
+    $form->setAttribute('role', 'form');
+
+    echo $this->form()->openTag($form);
+    ?>
+    <div class="form-group">
+        <?php
+        $element = $form->get('name');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('placeholder', $this->translate('Album title'));
+        ?>
+        <?= $this->formLabel($element) ?>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Create album'));
+$submit->setAttribute('class', 'btn btn-default');
+?>
+<?= $this->formButton($submit) ?>
+
+<?= $this->form()->closeTag(); ?>
+
+<?php endif ?>
