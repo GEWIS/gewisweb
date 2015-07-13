@@ -31,10 +31,12 @@ Photo.Admin.loadPage = function (resource) {
         $.each(data.photos, function (i, photo) {
             href = Photo.Admin.getURL('photo_index', photo.id);
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<a class="thumbnail" href="' + href + '">'
+                    + '<div class="thumbnail">'
+                    + '<a href="' + href + '">'
                     + '<img class="img-responsive" src="/data/photo/' + photo.smallThumbPath + '" alt="">'
-                    + '<input type="checkbox" class="thumbnail-checkbox">'
                     + '</a>'
+                    + '<input type="checkbox" class="thumbnail-checkbox">'
+                    + '</div>'
                     + '</div>');
         });
         $("#paging").html('');
