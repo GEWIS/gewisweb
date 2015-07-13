@@ -202,7 +202,7 @@ Photo.Admin.init = function () {
     //auto load album on hash
     if (location.hash !== "") {
         $(location.hash).click();
-        $(location.hash).parent().parent().children().toggle();
+        //$(location.hash).parent().parent().children().toggle();
     }
 }
 
