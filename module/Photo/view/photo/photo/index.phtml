@@ -1,9 +1,16 @@
+<ul class="nav nav-pills">
+    <?php foreach($years as $year): ?>
+    <li role="presentation" <?= $year == $activeYear ? 'class="active"' : '' ?>>
+        <a href="<?= $this->url('photo/year', array('year' => $year)); ?>"><?= $year ?>/<?= $year + 1 ?></a>
+    </li>
+    <?php endforeach; ?>
+</ul>
 <div class="row">
     <?php if (!empty($albums)): ?>
         <?php for ($i = 0; $i < count($albums); $i++): ?>
             <?= ($i % 4 === 0) ? "</div><div class=\"row\">" : ""; ?>
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/photo/album/<?= $albums[$i]->getId(); ?>">
+                <a class="thumbnail" href="<?= $this->url('photo/album', array("album_id" => $albums[$i]->getId() )); ?>">
                     <img class="img-responsive" src="<?= $basedir . '/' . $albums[$i]->getCoverPath() ?>" alt="">
 
                     <div class="caption">

@@ -151,6 +151,64 @@ class Album
     }
 
     /**
+     * Gets all root albums with a start date between the specified dates
+     *
+     * @param $start \DateTime start date and time
+     * @param $end \DateTime end date and time
+     *
+     * @return array of \Photo\Model\Album
+     */
+    public function getAlbumsInDateRange($start, $end) {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
+            ->setParameter(1, $start)
+            ->setParameter(2, $end);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Returns the root album containing the most recent photos
+     *
+     * @return \Photo\Model\Album
+     */
+    public function getNewestAlbum() {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->setMaxResults(1)
+            ->orderBy('a.startDateTime', 'DESC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Returns the root album containing the oldest photos
+     *
+     * @return \Photo\Model\Album
+     */
+    public function getOldestAlbum() {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->setMaxResults(1)
+            ->orderBy('a.startDateTime', 'ASC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+    /**
      * Persist album
      *
      * @param AlbumModel $album

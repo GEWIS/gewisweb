@@ -10,7 +10,7 @@
     'elastic',
     'partial/paginator.phtml',
     array(
-        'path' => '/photo/album/' . $album->getId()
+        'path' => $this->url('photo/album', array('album_id' => $album->getId()))
     )
 )
 ?>
@@ -18,7 +18,7 @@
     <?php foreach ($paginator as $item): ?>
         <?php if ($item->getResourceId() === 'album'): ?>
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/photo/album/<?= $item->getId(); ?>">
+                <a class="thumbnail" href="<?= $this->url('photo/album', array('album_id' => $item->getId())); ?>">
                     <img class="img-responsive" src="<?= $basedir . '/' . $item->getCoverPath() ?>" alt="">
 
                     <div class="caption">
@@ -28,7 +28,7 @@
             </div>
         <?php else: ?>
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="/photo/view/<?= $item->getId(); ?>">
+                <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
                     <img class="img-responsive" src="<?= $basedir . '/' . $item->getSmallThumbPath() ?>" alt="">
                 </a>
             </div>

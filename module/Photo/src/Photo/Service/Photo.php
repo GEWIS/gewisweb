@@ -4,7 +4,9 @@ namespace Photo\Service;
 
 use Application\Service\AbstractService;
 use Photo\Model\Photo as PhotoModel;
+use Photo\Model\Hit as HitModel;
 use Imagick;
+use Zend\Code\Generator\DocBlock\Tag;
 
 /**
  * Photo service.
@@ -342,6 +344,18 @@ class Photo extends AbstractService
 
     }
 
+    /**
+     * Count a hit for the specified photo. Should be called whenever a photo is viewed.
+     *
+     * @param \Photo\Model\Photo $photo
+     */
+    public function countHit($photo) {
+        $hit = new HitModel();
+        $hit->setDateTime(new \DateTime());
+        $photo->addHit($hit);
+        
+        $this->getPhotoMapper()->flush();
+    }
     /**
      * Gets the base directory from which the photo paths should be requested
      *
