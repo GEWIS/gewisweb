@@ -82,17 +82,20 @@ class Signup
                 1 => $activityId
             ]);
 
-        /* @var $activity \Activity\Model\Activity */
-        $activity = $qb->getQuery()->getResult();
+
+        $activityArray = $qb->getQuery()->getResult();
 
         // If we do not get any result, there were no members signed up
         if (!isset($activity[0])) {
             return [];
         }
 
+        /* @var $activity \Activity\Model\Activity */
+        $activity = $activityArray[0];
+
         $members = [];
         /* @var $signUp \Activity\Model\ActivitySignUp*/
-        foreach ($activity[0]->get('signUps') as $signUp) {
+        foreach ($activity->get('signUps') as $signUp) {
             $members[] =$signUp->getUser()->getMember();
         }
 

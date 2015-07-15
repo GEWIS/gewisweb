@@ -4,8 +4,9 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use \Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class Activity extends AbstractAclService implements \Zend\ServiceManager\ServiceManagerAwareInterface
+class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
      * Get the ACL.

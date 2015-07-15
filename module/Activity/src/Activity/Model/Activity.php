@@ -2,6 +2,7 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 
 /**
  * Activity model
@@ -137,9 +138,12 @@ class Activity
             $this->$param =  $params[$param];
         }
 
+        /** @var $user User*/
+        $user = $params['creator'];
+
         $this->beginTime = new \DateTime($this->beginTime);
         $this->endTime = new \DateTime($this->endTime);
-        $this->creator = $this->creator->getLidNr();
+        $this->creator = $user->getLidNr();
 
         // TODO: These values need to be set correctly
         $this->canSignUp = true;

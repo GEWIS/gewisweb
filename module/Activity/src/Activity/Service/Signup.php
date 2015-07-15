@@ -15,7 +15,6 @@ class Signup extends AbstractAclService
      */
     public function getAcl()
     {
-        //todo, this;
         return $this->getServiceManager()->get('activity_acl');
     }
 
@@ -34,7 +33,7 @@ class Signup extends AbstractAclService
     /**
      * Get a list of all the members that are signed up for an activity
      *
-     * @param Activity $activity
+     * @param ActivityModel $activity
      * @return array
      */
 	public function getSignedUp(ActivityModel $activity){
@@ -45,7 +44,7 @@ class Signup extends AbstractAclService
     /**
      * Check if a member is signed up for an activity
      *
-     * @param Activity $activity
+     * @param ActivityModel $activity
      * @param \Decision\Model\Member $user
      * @return boolean
      */
@@ -58,7 +57,7 @@ class Signup extends AbstractAclService
     /**
      * Sign up  an activity
      *
-     * @param Activity $activity
+     * @param ActivityModel $activity
      */
     public function signUp(ActivityModel $activity)
     {
@@ -83,7 +82,7 @@ class Signup extends AbstractAclService
     /**
      * Undo an activity sign up
      *
-     * @param Activity $activity
+     * @param ActivityModel $activity
      * @param Member $user
      */
 	public function signOff(ActivityModel $activity, Member $user)

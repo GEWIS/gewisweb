@@ -2,12 +2,13 @@
 
 namespace Activity\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use \Activity\Model\Activity as ActivityModel;
+use Activity\Model\Activity;
+use Activity\Service\Signup;
+use Zend\Mvc\Controller\AbstractActionController;;
 use \Activity\Form\Activity as ActivityForm;
 
-class ActivityController extends AbstractActionController {
-    private $modelActivity;
+class ActivityController extends AbstractActionController
+{
 
     /**
      * View all activities
@@ -25,9 +26,12 @@ class ActivityController extends AbstractActionController {
     public function viewAction() {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+
+        /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
 
         $identity =$this->getServiceLocator()->get('user_role');
+        /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         return [
             'activity' => $activity,
@@ -64,6 +68,8 @@ class ActivityController extends AbstractActionController {
     public function signupAction() {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+
+        /** @var  $activity Activity */
         $activity = $activityService->getActivity($id);
 
         // Assure you can sign up for this activity
