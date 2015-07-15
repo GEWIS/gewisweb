@@ -4,7 +4,7 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
-use \Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -31,20 +31,22 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Get the information of one activity from the database
+     * Get the information of one activity from the database.
      *
-     * @param integer $id The activity id to be searched for
+     * @param int $id The activity id to be searched for
+     *
      * @return \Activity\Model\Activity Activity or null if the activity does not exist
      */
     public function getActivity($id)
     {
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getActivityById($id);
+
         return $activity;
     }
 
     /**
-     * Returns an array of all activities
+     * Returns an array of all activities.
      *
      * @return array Array of activities
      */
@@ -52,13 +54,15 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
+
         return $activity;
     }
 
     /**
-     * Create an activity from parameters
+     * Create an activity from parameters.
      *
      * @param array $params Parameters describing activity
+     *
      * @return ActivityModel Activity that was created.
      */
     public function createActivity(array $params)
@@ -76,7 +80,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
+
         return $activity;
     }
-
 }

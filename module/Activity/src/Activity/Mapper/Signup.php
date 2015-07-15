@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 class Signup
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -15,7 +14,7 @@ class Signup
     protected $em;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      */
@@ -25,10 +24,11 @@ class Signup
     }
 
     /**
-     * Check if a user is signed up for an activity
+     * Check if a user is signed up for an activity.
      *
      * @param $activityId
      * @param $userId
+     *
      * @return bool
      */
     public function isSignedUp($activityId, $userId)
@@ -37,10 +37,11 @@ class Signup
     }
 
     /**
-     * Get the signup object for an usedid/activityid if it exists
+     * Get the signup object for an usedid/activityid if it exists.
      *
-     * @param integer $activityId
-     * @param integer $userId
+     * @param int $activityId
+     * @param int $userId
+     *
      * @return \Activity\Model\ActivitySignup
      */
     public function getSignUp($activityId, $userId)
@@ -54,7 +55,7 @@ class Signup
             ->andWhere('ac.id = ?2')
             ->setParameters([
                 1 => $userId,
-                2 => $activityId
+                2 => $activityId,
             ]);
         $result = $qb->getQuery()->getResult();
 
@@ -62,16 +63,17 @@ class Signup
     }
 
     /**
-     * Get all the users that are signed up for an activity
+     * Get all the users that are signed up for an activity.
      *
      * @param $activityId
+     *
      * @return array
      */
-	public function getSignedUp($activityId)
+    public function getSignedUp($activityId)
     {
         $qb = $this->em->createQueryBuilder();
 
-		//get all users that have signed up for the activity
+        //get all users that have signed up for the activity
         $qb->select('ac, a, u, m')
             ->from('Activity\Model\Activity', 'ac')
             ->leftJoin('ac.signUps', 'a')
@@ -79,9 +81,8 @@ class Signup
             ->join('u.member', 'm')
             ->where('ac.id = ?1')
             ->setParameters([
-                1 => $activityId
+                1 => $activityId,
             ]);
-
 
         $activityArray = $qb->getQuery()->getResult();
 
@@ -96,10 +97,9 @@ class Signup
         $members = [];
         /* @var $signUp \Activity\Model\ActivitySignUp*/
         foreach ($activity->get('signUps') as $signUp) {
-            $members[] =$signUp->getUser()->getMember();
+            $members[] = $signUp->getUser()->getMember();
         }
 
         return $members;
     }
-
 }

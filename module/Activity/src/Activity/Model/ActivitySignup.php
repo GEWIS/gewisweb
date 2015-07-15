@@ -1,18 +1,19 @@
 <?php
+
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
 
 /**
- * Activity model
+ * Activity model.
  *
  * @ORM\Entity
  */
 class ActivitySignup
 {
     /**
-     * ID for the activity
+     * ID for the activity.
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -29,16 +30,15 @@ class ActivitySignup
     protected $activity;
 
     /**
-     * Who is subscribed
+     * Who is subscribed.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
     protected $user;
 
-
     /**
-     * Set the activity that the user signed up for
+     * Set the activity that the user signed up for.
      *
      * @param Activity $activity
      */
@@ -48,7 +48,7 @@ class ActivitySignup
     }
 
     /**
-     * Set the user for the activity signup
+     * Set the user for the activity signup.
      *
      * @param User $user
      */
@@ -58,7 +58,7 @@ class ActivitySignup
     }
 
     /**
-     * Get the user that is signed up
+     * Get the user that is signed up.
      *
      * @return User
      */

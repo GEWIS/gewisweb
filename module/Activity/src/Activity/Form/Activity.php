@@ -1,8 +1,8 @@
 <?php
+
 namespace Activity\Form;
 
 use Zend\Form\Form;
-
 //input filter
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -11,8 +11,9 @@ use Zend\InputFilter\InputFilterInterface;
 class Activity extends Form
 {
     protected $inputFilter;
-	protected $organs;
-    public function __construct() {
+    protected $organs;
+    public function __construct()
+    {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
 
@@ -20,8 +21,8 @@ class Activity extends Form
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
-				'style' => 'width:100%'
-            ]
+                'style' => 'width:100%',
+            ],
         ]);
 
         $this->add([
@@ -30,8 +31,8 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-				'style' => 'width:100%'
-            ]
+                'style' => 'width:100%',
+            ],
         ]);
 
         $this->add([
@@ -40,47 +41,46 @@ class Activity extends Form
             'attributes' => [
                 'min' => '2010-01-01T00:00:00Z',
                 'step' => '1', // minutes; default step interval is 1 min
-				'style' => 'width:100%'
-            ]
+                'style' => 'width:100%',
+            ],
         ]);
 
         $this->add([
             'name' => 'location',
             'attributes' => [
                 'type' => 'text',
-				'style' => 'width:100%'
-            ]
+                'style' => 'width:100%',
+            ],
         ]);
 
         $this->add([
             'name' => 'costs',
             'attributes' => [
                 'type' => 'text',
-				'style' => 'width:100%'
-            ]
+                'style' => 'width:100%',
+            ],
         ]);
 
-
-		$this->add([
-			'name' => 'approved',			
-			'type' => 'Zend\Form\Element\Checkbox',
-			'options' => array(
-				'use_hidden_element' => true,
-				'checked_value' => 1,
-				'unchecked_value' => 0
-			)
-		]);
-		$this->add([
-			'name' => 'description',
+        $this->add([
+            'name' => 'approved',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ),
+        ]);
+        $this->add([
+            'name' => 'description',
             'attributes' => [
                 'type' => 'textarea',
-				'style' => 'width:100%; height:10em; resize:none'
-            ]
-		]);
+                'style' => 'width:100%; height:10em; resize:none',
+            ],
+        ]);
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => 'Create',
             ),
         ));
@@ -88,15 +88,16 @@ class Activity extends Form
 
     /*************** INPUT FILTER*****************/
     /** The code below this deals with the input filter
-     * of the create and edit activity form data
+     * of the create and edit activity form data.
      */
 
     /**
-     * Get the input filter
+     * Get the input filter.
      *
      * @return InputFilterInterface
      */
-    public function getInputFilter() {
+    public function getInputFilter()
+    {
         // Check if the input filter is set. If so, serve
         if ($this->inputFilter) {
             return $this->inputFilter;
@@ -112,7 +113,7 @@ class Activity extends Form
 
         $inputFilter->add($factory->createInput([
             'name' => 'endTime',
-            'required'=> true
+            'required' => true,
         ]));
 
         $inputFilter->add($factory->createInput([
@@ -120,15 +121,15 @@ class Activity extends Form
             'required' => true,
             'filters' => [
                 ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
+                ['name' => 'StringTrim'],
             ],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name' => 'StringLength',
                     'options' => [
                         'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
+                        'min' => 1,
+                        'max' => 100,
                     ],
                 ],
             ],
@@ -139,15 +140,15 @@ class Activity extends Form
             'required' => true,
             'filters' => [
                 ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
+                ['name' => 'StringTrim'],
             ],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name' => 'StringLength',
                     'options' => [
                         'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100,
+                        'min' => 1,
+                        'max' => 100,
                     ],
                 ],
             ],
@@ -161,40 +162,41 @@ class Activity extends Form
             ],
             'validators' => [
                 [
-                    'name'    => 'Between',
+                    'name' => 'Between',
                     'options' => [
-                        'min'      => 0,
-                        'max'      => 10000,
+                        'min' => 0,
+                        'max' => 10000,
                     ],
                 ],
             ],
         ]));
-		
-		$inputFilter->add($factory->createInput([
+
+        $inputFilter->add($factory->createInput([
             'name' => 'description',
             'required' => true,
             'filters' => [
                 ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
+                ['name' => 'StringTrim'],
             ],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name' => 'StringLength',
                     'options' => [
                         'encoding' => 'UTF-8',
-                        'min'      => 1,
-                        'max'      => 100000,
+                        'min' => 1,
+                        'max' => 100000,
                     ],
                 ],
             ],
         ]));
 
-
         $this->inputFilter = $inputFilter;
+
         return $this->inputFilter;
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter) {
-        throw new \Exception("Not used");
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception('Not used');
     }
 }

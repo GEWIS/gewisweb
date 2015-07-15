@@ -1,10 +1,11 @@
 <?php
+
 namespace Activity\Service;
 
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivitySignup;
 use Application\Service\AbstractAclService;
-use \Decision\Model\Member;
+use Decision\Model\Member;
 
 class Signup extends AbstractAclService
 {
@@ -31,31 +32,36 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Get a list of all the members that are signed up for an activity
+     * Get a list of all the members that are signed up for an activity.
      *
      * @param ActivityModel $activity
+     *
      * @return array
      */
-	public function getSignedUp(ActivityModel $activity){
-		$signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+    public function getSignedUp(ActivityModel $activity)
+    {
+        $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+
         return $signUpMapper->getSignedUp($activity->get('id'));
-	}
+    }
 
     /**
-     * Check if a member is signed up for an activity
+     * Check if a member is signed up for an activity.
      *
-     * @param ActivityModel $activity
+     * @param ActivityModel          $activity
      * @param \Decision\Model\Member $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSignedUp(ActivityModel $activity, Member $user)
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+
         return $signUpMapper->isSignedUp($activity->get('id'), $user->getLidnr());
     }
 
     /**
-     * Sign up  an activity
+     * Sign up  an activity.
      *
      * @param ActivityModel $activity
      */
@@ -74,21 +80,20 @@ class Signup extends AbstractAclService
         $signup->setActivity($activity);
         $signup->setUser($user);
 
-
         $em->persist($signup);
         $em->flush();
     }
 
     /**
-     * Undo an activity sign up
+     * Undo an activity sign up.
      *
      * @param ActivityModel $activity
-     * @param Member $user
+     * @param Member        $user
      */
-	public function signOff(ActivityModel $activity, Member $user)
+    public function signOff(ActivityModel $activity, Member $user)
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        $signUp =  $signUpMapper->getSignUp($activity->get('id'), $user->getLidnr());
+        $signUp = $signUpMapper->getSignUp($activity->get('id'), $user->getLidnr());
 
         // If the user was not signed up, no need to signoff anyway
         if (is_null($signUp)) {
@@ -96,7 +101,7 @@ class Signup extends AbstractAclService
         }
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-		$em->remove($signUp);
-		$em->flush();
+        $em->remove($signUp);
+        $em->flush();
     }
 }
