@@ -3,22 +3,21 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractService;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Photo\Model\Album as AlbumModel;
-use Photo\Model\Photo as PhotoModel;
 
 /**
- * Metadata service. This service implements all functionality related to 
+ * Metadata service. This service implements all functionality related to
  * gathering metadata about photos.
  */
 class Metadata extends AbstractService
 {
 
     /**
-     * 
-     * @param Photo\Model\Photo $photo the photo to add the metadata to
-     * @return Photo\Model\Photo the photo with the added metadata
+     * Populates the metadata of a photo based on the EXIF data of the photo
+     *
+     * @param \Photo\Model\Photo $photo the photo to add the metadata to.
+     * @param $path The path where the actual image file is stored
+     *
+     * @return \Photo\Model\Photo the photo with the added metadata
      */
     public function populateMetadata($photo, $path)
     {
@@ -38,6 +37,7 @@ class Metadata extends AbstractService
         $photo->setShutterSpeed($this->exifGetShutter($exif));
         $photo->setAperture($this->exifGetFstop($exif));
         $photo->setIso($exif['ISOSpeedRatings']);
+
         return $photo;
     }
 
@@ -47,23 +47,27 @@ class Metadata extends AbstractService
      */
 
     /**
-     * Convert a string representing a rational number to a string representing 
-     * the corresponding decimal approximation. 
+     * Convert a string representing a rational number to a string representing
+     * the corresponding decimal approximation.
+     *
      * @param string $str the rational number, represented as num+'/'+den
+     *
      * @return float the decimal number, represented as float
      */
     private function frac2dec($str)
     {
-        if (strpos($str, '/') === false){
+        if (strpos($str, '/') === false) {
             return $str;
         }
         list($n, $d) = explode('/', $str);
+
         return $n / $d;//I assume stuff like '234/0' is not supported by EXIF.
     }
 
     /**
      * Computes the shutter speed from the exif data.
      * @param array $exif the exif data extracted from the photo.
+     *
      * @return string the shutter speed, represented as a rational string.
      */
     private function exifGetShutter($exif)
@@ -79,13 +83,15 @@ class Metadata extends AbstractService
         if ($shutter >= 1) {
             return round($shutter) . 's';
         }
+
         return '1/' . round(1 / $shutter) . 's';
     }
 
     /**
      * Computes the aperture form the exif data.
      * @param array $exif the exif data extracted from the photo.
-     * @return string the aperture, respresented as a rational string.
+     *
+     * @return string the aperture, represented as a rational string.
      */
     private function exifGetFstop($exif)
     {
@@ -97,6 +103,7 @@ class Metadata extends AbstractService
         if ($fstop == 0) {
             return "unknown";
         }
+
         return 'f/' . sprintf("%01.1f", $fstop);
     }
 

@@ -12,9 +12,9 @@ class PhotoController extends AbstractActionController
     {
         $albums = $this->getAlbumService()->getAlbums();
         //add any other special behavior which is required for the main photo page here later
-        //we'll fix this ugly thing later vv
-        $config = $this->getPhotoService()->getConfig();
-        $basedir = str_replace("public", "", $config['upload_dir']);
+
+        $basedir = $this->getPhotoService()->getBaseDirectory();
+
         return new ViewModel(array(
             'albums' => $albums,
             'basedir' => $basedir
@@ -23,18 +23,24 @@ class PhotoController extends AbstractActionController
 
     /**
      * Called on viewing a photo
-     * 
+     *
      */
     public function viewAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        return new ViewModel($this->getPhotoService()->getPhotoData($photoId));
+        $photoData = $this->getPhotoService()->getPhotoData($photoId);
+
+        if (is_null($photoData)) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel($photoData);
     }
 
     /**
      * Gets the album service.
-     * 
-     * @return Photo\Service\Album
+     *
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -43,8 +49,8 @@ class PhotoController extends AbstractActionController
 
     /**
      * Gets the photo service.
-     * 
-     * @return Photo\Service\Photo
+     *
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

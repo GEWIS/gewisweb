@@ -24,3 +24,4 @@ if (file_exists('vendor/autoload.php')) {
 if (!class_exists('Zend\Loader\AutoloaderFactory')) {
     throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
 }
+

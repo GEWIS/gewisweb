@@ -1,7 +1,9 @@
 /*
- * This handles paging for the photo module.
+ * This script will handle all common javascript functions within the photo
+ * module.
  * Depends: jquery
  */
+
 var LEFT_ARROW = 37;
 var RIGHT_ARROW = 39;
 

@@ -6,7 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\MVc\I18n\Translator;
 
-class CreateAlbum extends Form
+class EditAlbum extends Form
 {
 
     public function __construct(Translator $translate)
@@ -22,10 +22,26 @@ class CreateAlbum extends Form
         ));
 
         $this->add(array(
+            'name' => 'startDateTime',
+            'type' => 'Zend\Form\Element\DateTime',
+            'options' => array(
+                'label' => $translate->translate('Start date')
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'endDateTime',
+            'type' => 'Zend\Form\Element\DateTime',
+            'options' => array(
+                'label' => $translate->translate('End date')
+            )
+        ));
+
+        $this->add(array(
             'name' => 'submit',
             'type' => 'submit',
             'options' => array(
-                'label' => $translate->translate('Create')
+                'label' => $translate->translate('Save')
             )
         ));
 
