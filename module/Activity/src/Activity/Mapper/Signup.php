@@ -33,6 +33,18 @@ class Signup
      */
     public function isSignedUp($activityId, $userId)
     {
+        return $this->getSignUp($activityId, $userId) !== null;
+    }
+
+    /**
+     * Get the signup object for an usedid/activityid if it exists
+     *
+     * @param integer $activityId
+     * @param integer $userId
+     * @return \Activity\Model\ActivitySignup
+     */
+    public function getSignUp($activityId, $userId)
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivitySignup', 'a')
@@ -45,7 +57,8 @@ class Signup
                 2 => $activityId
             ]);
         $result = $qb->getQuery()->getResult();
-        return count($result) != 0;
+
+        return isset($result[0]) ? $result[0] : null;
     }
 
     /**
@@ -71,6 +84,11 @@ class Signup
 
         /* @var $activity \Activity\Model\Activity */
         $activity = $qb->getQuery()->getResult();
+
+        // If we do not get any result, there were no members signed up
+        if (!isset($activity[0])) {
+            return [];
+        }
 
         $members = [];
         /* @var $signUp \Activity\Model\ActivitySignUp*/

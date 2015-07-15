@@ -88,19 +88,16 @@ class Signup extends AbstractAclService
      */
 	public function signOff(ActivityModel $activity, Member $user)
     {
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+        $signUp =  $signUpMapper->getSignUp($activity->get('id'), $user->getLidnr());
 
-		$qb = $em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivitySignup', 'a')
-            ->where('a.user_id = ?1')
-            ->andWhere('a.activity_id = ?2')
-            ->setParameters([
-                1 => $user->getLidnr(),
-                2 => $activity->get('id')
-            ]);
-        $result = $qb->getQuery()->getResult();
-		$em->remove($result[0]);
+        // If the user was not signed up, no need to signoff anyway
+        if (is_null($signUp)) {
+            return;
+        }
+
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+		$em->remove($signUp);
 		$em->flush();
     }
 }
