@@ -277,7 +277,8 @@ class Photo extends AbstractService
         $escaper = new \Zend\Escaper\Escaper('utf-8');
 
         $albumName = str_replace(' ', '-', $photo->getAlbum()->getName());
-        $photoName = $albumName . '-' . $photo->getId() . '.jpg';
+        $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
+        $photoName = $albumName . '-' . $photo->getId() . $extension;
         //TODO: could use some nicer escaping/stripping here
         // escaping is required to prevent invalid characters in filenames.
         return $escaper->escapeUrl($photoName);
