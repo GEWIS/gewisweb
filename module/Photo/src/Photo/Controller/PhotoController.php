@@ -44,6 +44,11 @@ class PhotoController extends AbstractActionController
         return new ViewModel($photoData);
     }
 
+    public function downloadAction()
+    {
+
+    }
+
     /**
      * Gets the album service.
      *
