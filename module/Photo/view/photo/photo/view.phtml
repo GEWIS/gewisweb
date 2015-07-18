@@ -53,7 +53,7 @@
                     </tr>
                     </tbody>
             </table>
-
+            <a class="btn btn-default" href="<?= $this->url('photo/photo_download', array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
