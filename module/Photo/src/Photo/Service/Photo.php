@@ -267,6 +267,45 @@ class Photo extends AbstractService
     }
 
     /**
+     * Returns a unique file name for a photo.
+     *
+     * @param \Photo\Model\Photo $photo the photo to get a name for
+     *
+     * @return string
+     */
+    public function getPhotoFileName($photo) {
+        $escaper = new \Zend\Escaper\Escaper('utf-8');
+
+        $albumName = str_replace(' ', '-', $photo->getAlbum()->getName());
+        $photoName = $albumName . '-' . $photo->getId() . '.jpg';
+        //TODO: could use some nicer escaping/stripping here
+        // escaping is required to prevent invalid characters in filenames.
+        return $escaper->escapeUrl($photoName);
+    }
+
+    public function getPhotoDownload($photo) {
+        $config = $this->getConfig();
+        $file = $config['upload_dir'] . '/' .  $photo->getPath();
+        $fileName = $this->getPhotoFileName($photo);
+        //TODO: ACL
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($file, 'r'));
+        $response->setStatusCode(200);
+        $response->setStreamName($fileName);
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaders(array(
+            'Content-Disposition' => 'attachment; filename="' . $fileName .'"',
+            'Content-Type' => 'application/octet-stream',
+            'Content-Length' => filesize($file),
+            // zf2 parses date as a string for a \DateTime() object:
+            'Expires' => '@0',
+            'Cache-Control' => 'must-revalidate',
+            'Pragma' => 'public'
+        ));
+        $response->setHeaders($headers);
+        return $response;
+    }
+    /**
      * Get the photo data belonging to a certain photo
      *
      * @param int $id the id of the photo to retrieve
