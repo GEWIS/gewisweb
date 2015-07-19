@@ -68,6 +68,36 @@ return array(
                                 'action' => 'queue'
                             )
                         )
+                    ),
+                    'admin_view' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/admin/view/[:id]',
+                            'defaults' => array(
+                                'controller' => 'admin',
+                                'action' => 'view'
+                            )
+                        )
+                    ),
+                    'admin_approve' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/admin/approve/[:id]',
+                            'defaults' => array(
+                                'controller' => 'admin',
+                                'action' => 'approve'
+                            )
+                        )
+                    ),
+                    'admin_disapprove' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/admin/disapprove/[:id]',
+                            'defaults' => array(
+                                'controller' => 'admin',
+                                'action' => 'disapprove'
+                            )
+                        )
                     )
                 ),
             ),
@@ -84,7 +114,7 @@ return array(
                 $activity = $sm->getServiceLocator()->get('activity_service');
                 $controller->setActivity($activity);
                 return $controller;
-            }
+            },
         )
     ),
     'view_manager' => array(
