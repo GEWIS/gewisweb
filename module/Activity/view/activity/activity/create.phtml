@@ -45,6 +45,14 @@ echo $this->form()->openTag($form);
 				<?php echo $this->formRow($form->get('costs')); ?>
 			</div>
 		</div>
+        <div class="row">
+            <div class = "col-md-4">
+                <?php echo $this->translate('Can Sign up?');?>:
+            </div>
+            <div class = "col-md-8">
+                <?php echo $this->formRow($form->get('canSignUp')); ?>
+            </div>
+        </div>
 	</div>
 	<div class="col-md-8">
         <?php echo $this->translate('Description');?>: <br />
