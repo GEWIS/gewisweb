@@ -104,7 +104,7 @@ class Album extends AbstractService
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $newest = $this->getAlbumMapper()->getNewestAlbum();
         if(is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
-            return array();
+            return array(null);
         }
 
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
