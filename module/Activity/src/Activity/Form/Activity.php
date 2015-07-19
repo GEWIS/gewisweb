@@ -119,10 +119,6 @@ class Activity extends Form
         $inputFilter->add($factory->createInput([
             'name' => 'name',
             'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
@@ -138,10 +134,6 @@ class Activity extends Form
         $inputFilter->add($factory->createInput([
             'name' => 'location',
             'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
@@ -174,10 +166,6 @@ class Activity extends Form
         $inputFilter->add($factory->createInput([
             'name' => 'description',
             'required' => true,
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
