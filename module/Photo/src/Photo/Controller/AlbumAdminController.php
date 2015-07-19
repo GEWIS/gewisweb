@@ -20,8 +20,11 @@ class AlbumAdminController extends AbstractActionController
         foreach($years as $year) {
             $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
         }
+
+        $albumsWithoutDate = $albumService->getAlbumsWithoutDate();
         return new ViewModel(array(
-            'albumsByYear' => $albumsByYear
+            'albumsByYear' => $albumsByYear,
+            'albumsWithoutDate' => $albumsWithoutDate
         ));
     }
 

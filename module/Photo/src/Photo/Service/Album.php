@@ -91,6 +91,10 @@ class Album extends AbstractService
         $end->add(new \DateInterval('P1Y'));
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
+
+    public function getAlbumsWithoutDate() {
+        return $this->getAlbumMapper()->getAlbumsWithoutDate();
+    }
     /**
      * Gets a list of all association years of which photos are available.
      * In this context an association year is defined as the year which contains
