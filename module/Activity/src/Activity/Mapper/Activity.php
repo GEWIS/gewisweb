@@ -74,7 +74,7 @@ class Activity
      *
      * @return array
      */
-    public function getAllApproved()
+    public function getApprovedActivities()
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
