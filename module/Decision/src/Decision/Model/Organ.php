@@ -3,26 +3,24 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * An organ of GEWIS.
+ * Organ entity.
  *
- * NOTE: The actual data for this model in the database will probably be
- * generated from the actual GEWIS database, which is maintained by the
- * secretary of the board. Hence, this data should not be modified.
+ * Note that this entity is derived from the decisions themself.
  *
  * @ORM\Entity
  */
-class Organ implements ResourceInterface
+class Organ
 {
 
-    const TYPE_COMMITTEE = 'committee';
-    const TYPE_FRATERNITY = 'fraternity';
+    const ORGAN_TYPE_COMMITTEE = 'committee';
+    const ORGAN_TYPE_AV_COMMITTEE = 'avc';
+    const ORGAN_TYPE_FRATERNITY = 'fraternity';
 
     /**
-     * Id of the organ.
+     * Id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -31,44 +29,87 @@ class Organ implements ResourceInterface
     protected $id;
 
     /**
-     * Abbreviation.
+     * Abbreviation (only for when organs are created)
      *
      * @ORM\Column(type="string")
      */
     protected $abbr;
 
     /**
-     * Full name.
+     * Name (only for when organs are created)
      *
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * Type
+     * Type of the organ.
      *
      * @ORM\Column(type="string")
      */
-    protected $type = self::TYPE_COMMITTEE;
+    protected $type;
 
     /**
-     * Members in this organ.
+     * Reference to foundation of organ.
      *
-     * @ORM\ManyToMany(targetEntity="Decision\Model\Member", inversedBy="organs")
-     * @ORM\JoinTable(name="MemberOrgan",
-     *      inverseJoinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")})
+     * @ORM\OneToOne(targetEntity="Decision\Model\SubDecision\Foundation",inversedBy="organ")
+     * @ORM\JoinColumns({
+     *  @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
+     *  @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
+     *  @ORM\JoinColumn(name="r_decision_point", referencedColumnName="decision_point"),
+     *  @ORM\JoinColumn(name="r_decision_number", referencedColumnName="decision_number"),
+     *  @ORM\JoinColumn(name="r_number", referencedColumnName="number")
+     * })
+     */
+    protected $foundation;
+
+    /**
+     * Foundation date.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $foundationDate;
+
+    /**
+     * Abrogation date.
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $abrogationDate;
+
+    /**
+     * Reference to members.
+     *
+     * @ORM\OneToMany(targetEntity="OrganMember",mappedBy="organ")
      */
     protected $members;
 
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     /**
-     * Get the id.
+     * Get the ID.
      *
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set the ID.
+     *
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -82,13 +123,33 @@ class Organ implements ResourceInterface
     }
 
     /**
-     * Get the full name.
+     * Set the abbreviation.
+     *
+     * @param string $abbr
+     */
+    public function setAbbr($abbr)
+    {
+        $this->abbr = $abbr;
+    }
+
+    /**
+     * Get the name.
      *
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -102,47 +163,82 @@ class Organ implements ResourceInterface
     }
 
     /**
-     * Set the abbreviation.
-     *
-     * @param string $abbr
-     */
-    public function setAbbr($abbr)
-    {
-        $this->abbr = $abbr;
-}
-
-    /**
-     * Set the name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * Set the type.
      *
      * @param string $type
-     *
-     * @throws InvalidArgumentException when the wrong type is given
      */
     public function setType($type)
     {
-        if (!in_array($type, array(self::TYPE_COMMITTEE, self::TYPE_FRATERNITY))) {
-            throw new \InvalidArgumentException("Nonexisting type given.");
-        }
         $this->type = $type;
     }
 
     /**
-     * Get the resource ID.
+     * Get the foundation.
      *
-     * @return string
+     * @return Decision\Model\SubDecision\Foundation
      */
-    public function getResourceId()
+    public function getFoundation()
     {
-        return 'organ';
+        return $this->foundation;
+    }
+
+    /**
+     * Set the foundation.
+     *
+     * @param Decision\Model\SubDecision\Foundation $foundation
+     */
+    public function setFoundation($foundation)
+    {
+        $this->foundation = $foundation;
+    }
+
+    /**
+     * Get the foundation date.
+     *
+     * @return DateTime
+     */
+    public function getFoundationDate()
+    {
+        return $this->foundationDate;
+    }
+
+    /**
+     * Set the foundation date.
+     *
+     * @param DateTime $foundationDate
+     */
+    public function setFoundationDate(\DateTime $foundationDate)
+    {
+        $this->foundationDate = $foundationDate;
+    }
+
+    /**
+     * Get the abrogation date.
+     *
+     * @return DateTime
+     */
+    public function getAbrogationDate()
+    {
+        return $this->abrogationDate;
+    }
+
+    /**
+     * Set the abrogation date.
+     *
+     * @param DateTime $abrogationDate
+     */
+    public function setAbrogationDate(\DateTime $abrogationDate)
+    {
+        $this->abrogationDate = $abrogationDate;
+    }
+
+    /**
+     * Get the members.
+     *
+     * @return OrganMember
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 }
