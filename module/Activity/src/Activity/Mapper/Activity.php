@@ -55,6 +55,21 @@ class Activity
     }
 
     /**
+     * Get all the unapproved activities
+     *
+     * @return array
+     */
+    public function getUnapprovedActivities()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.approved = 0');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * get all activities including options.
      *
      * @return array

@@ -58,6 +58,16 @@ return array(
                                 'action' => 'create'
                             )
                         )
+                    ),
+                    'admin_queue' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/admin/queue',
+                            'defaults' => array(
+                                'controller' => 'admin',
+                                'action' => 'queue'
+                            )
+                        )
                     )
                 ),
             ),
@@ -65,7 +75,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Activity\Controller\Activity' => 'Activity\Controller\ActivityController'
+            'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
+            'Activity\Controller\Admin' => 'Activity\Controller\AdminController'
         ),
         'factories' => array(
             'Activity\Controller\Activity' => function ($sm) {
