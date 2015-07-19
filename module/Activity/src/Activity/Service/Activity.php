@@ -59,6 +59,19 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
+     * Get all the activities that are yet to be approved
+     *
+     * @return array Array of activities
+     */
+    public function getUnapprovedActivities()
+    {
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getUnapprovedActivities();
+
+        return $activity;
+    }
+
+    /**
      * Create an activity from parameters.
      *
      * @param array $params Parameters describing activity

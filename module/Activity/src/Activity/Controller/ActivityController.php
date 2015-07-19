@@ -105,7 +105,7 @@ class ActivityController extends AbstractActionController
         return $params;
     }
 
-/**
+    /**
      * Signup for a activity.
      */
     public function signoffAction()
@@ -114,7 +114,7 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activity = $activityService->getActivity($id);
 
-// Make sure the user is logged in
+        // Make sure the user is logged in
         $identity = $this->getServiceLocator()->get('user_role');
         if ($identity === 'guest') {
             $params['error'] = 'Je moet ingelogd zijn om je uit te kunnen schrijven';
