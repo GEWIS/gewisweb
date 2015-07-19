@@ -1,9 +1,11 @@
 <?php $i = 0; ?>
-    <div class="row">
+<?php if ($this->hasPermission('activity', 'activity', 'create')):?>
+<div class="row">
 	<div class="col-md-12">
 		<button style="width:100%" onclick="window.location.href='activity/create'" class="btn btn-primary"><?php echo $this->translate('Create Activity'); ?></button>
 	</div>
 </div>
+<?php endif; ?>
 
 <div style="<?php if($i%2==0){echo("background:#CCCCCC;");}$i++; ?> margin-top:30px" class="row">
     <div class="col-md-1"><?php echo $this->translate('Id');?>:</div>
