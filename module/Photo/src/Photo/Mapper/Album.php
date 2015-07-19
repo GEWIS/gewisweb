@@ -182,6 +182,7 @@ class Album
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
+            ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'DESC');
 
@@ -201,6 +202,7 @@ class Album
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
+            ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'ASC');
 

@@ -104,7 +104,7 @@ class Album extends AbstractService
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $newest = $this->getAlbumMapper()->getNewestAlbum();
         if(is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
-            return array();
+            return array(null);
         }
 
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
@@ -120,7 +120,7 @@ class Album extends AbstractService
      * @param int $parentId the id of the parent album
      * @param array $data The post data to use for the album
      *
-     * @return boolean indicating if the creation was successful
+     * @return \Photo\Model\Album|boolean
      */
     public function createAlbum($parentId, $data)
     {
@@ -139,7 +139,7 @@ class Album extends AbstractService
         $this->getAlbumMapper()->persist($album);
         $this->getAlbumMapper()->flush();
 
-        return true;
+        return $album;
     }
 
     /**

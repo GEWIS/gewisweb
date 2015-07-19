@@ -16,7 +16,7 @@ $this->headLink()
         <div class="panel panel-default">
             <div class="panel-body">
                 <?php if (!is_null($previous)): ?>
-                    <a class="thumbnail" href="<?= $previous->getId(); ?>">
+                    <a class="thumbnail next-on-delete" href="<?= $previous->getId(); ?>">
                         <img class="img-responsive" src="<?= $basedir . '/' . $previous->getSmallThumbPath() ?>" alt="">
                     </a>
                 <?php endif; ?>
@@ -24,7 +24,7 @@ $this->headLink()
                     <img class="img-responsive" src="<?= $basedir . '/' . $photo->getSmallThumbPath() ?>" alt="">
                 </a>
                 <?php if (!is_null($next)): ?>
-                    <a class="thumbnail" href="<?= $next->getId(); ?>">
+                    <a class="thumbnail next-on-delete" href="<?= $next->getId(); ?>">
                         <img class="img-responsive" src="<?= $basedir . '/' . $next->getSmallThumbPath() ?>" alt="">
                     </a>
                 <?php endif; ?>

@@ -15,10 +15,13 @@ class AlbumAdminController extends AbstractActionController
     public function indexAction()
     {
         $albumService = $this->getAlbumService();
-        $albums = $albumService->getAlbums();
-
+        $years = $albumService->getAlbumYears();
+        $albumsByYear = array();
+        foreach($years as $year) {
+            $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
+        }
         return new ViewModel(array(
-            'albums' => $albums
+            'albumsByYear' => $albumsByYear
         ));
     }
 
@@ -31,10 +34,9 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            if ($albumService->createAlbum($albumId, $request->getPost())) {
-                return new ViewModel(array(
-                    'success' => true
-                ));
+            $album = $albumService->createAlbum($albumId, $request->getPost());
+            if ($album) {
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
             }
         }
         $form = $albumService->getCreateAlbumForm();

@@ -31,10 +31,12 @@ Photo.Admin.loadPage = function (resource) {
         $.each(data.photos, function (i, photo) {
             href = Photo.Admin.getURL('photo_index', photo.id);
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<a class="thumbnail" href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/photo/' + photo.smallThumbPath + '" alt="">'
-                    + '<input type="checkbox" class="thumbnail-checkbox">'
+                    + '<div class="thumbnail">'
+                    + '<a href="' + href + '">'
+                    + '<img class="img-responsive" src="' +data.basedir + '/' + photo.smallThumbPath + '" alt="">'
                     + '</a>'
+                    + '<input type="checkbox" class="thumbnail-checkbox">'
+                    + '</div>'
                     + '</div>');
         });
         $("#paging").html('');
@@ -104,7 +106,9 @@ Photo.Admin.deleteAlbum = function () {
 Photo.Admin.deletePhoto = function () {
     $("#deleteConfirm").hide();
     $("#deleteProgress").show();
-    $.post(location.href + '/delete');
+    $.post(location.href + '/delete').always(function( data ){
+        window.location = $('.next-on-delete').first().attr('href');
+    });
     $("#deleteProgress").hide();
     $("#deleteDone").show();
 }
@@ -112,31 +116,54 @@ Photo.Admin.deletePhoto = function () {
 Photo.Admin.deleteMultiple = function () {
     $("#multipleDeleteConfirm").hide();
     $("#multipleDeleteProgress").show();
-    var thumbnails = [];
+    var toDelete = [];
     $(".thumbnail-checkbox:checked").each(function() {
-        thumbnails.push($(this).parent().parent());
-        $.post($(this).parent().attr('href') + '/delete').done(function() {
-            thumbnails.pop().remove();
+        toDelete.push($(this).parent());
+    });
+    console.log(toDelete);
+    $.each(toDelete, function( i, item ) {
+        $.post(item.attr('href') + '/delete').always(function() {
+            item.parent().remove();
+            toDelete.splice(toDelete.indexOf(item), 1);
+            if(toDelete.length == 0) {
+                Photo.Admin.resetDeleteMultiple();
+            }
         });
     });
-    $("#multipleDeleteProgress").hide();
-    $("#multipleDeleteDone").show();
+}
+
+Photo.Admin.resetDeleteMultiple = function() {
+    $('#multipleDeleteModal').modal('hide');
+    $('#multipleDeleteConfirm').show();
+    $('#multipleDeleteProgress').hide();
+    Photo.Admin.clearSelection();
 }
 
 Photo.Admin.moveMultiple = function () {
     $("#multipleMoveConfirm").hide();
     $("#multipleMoveProgress").show();
-    var thumbnails = [];
+    var toMove = [];
     $(".thumbnail-checkbox:checked").each(function() {
-        thumbnails.push($(this).parent().parent());
-        $.post($(this).parent().attr('href') + '/move',
+        toMove.push($(this).parent());
+    });
+    $.each(toMove, function( i, item ) {
+        $.post(item.attr('href') + '/move',
             { album_id : $("#newPhotoAlbum").val() }
-        ).done(function() {
-            thumbnails.pop().remove();
+        ).always(function() {
+            item.parent().remove();
+            toMove.splice(toMove.indexOf(item), 1);
+            if(toMove.length == 0) {
+                Photo.Admin.resetMoveMultiple();
+            }
         });
     });
-    $("#multipleMoveProgress").hide();
-    $("#multipleMoveDone").show();
+}
+
+Photo.Admin.resetMoveMultiple = function() {
+    $('#multipleMoveModal').modal('hide');
+    $('#multipleMoveConfirm').show();
+    $('#multipleMoveProgress').hide();
+    Photo.Admin.clearSelection();
 }
 
 Photo.Admin.moveAlbum = function () {
@@ -147,9 +174,7 @@ Photo.Admin.moveAlbum = function () {
         { parent_id : $("#newAlbumParent").val() }
     ).done(function( data ) {
             location.reload(); //reload to update album tree (TODO: update album tree dynamically)
-        });
-    $("#albumMoveProgress").hide();
-    $("#albumMoveDone").show();
+    });
 
 }
 
@@ -181,7 +206,7 @@ Photo.Admin.init = function () {
     //auto load album on hash
     if (location.hash !== "") {
         $(location.hash).click();
-        $(location.hash).parent().parent().children().toggle();
+        //$(location.hash).parent().parent().children().toggle();
     }
 }
 
@@ -205,6 +230,13 @@ Photo.Admin.itemSelected = function () {
         $("#btnMultipleDelete").addClass("btn-hidden");
         $("#btnMultipleMove").addClass("btn-hidden");
     }
+}
+
+Photo.Admin.clearSelection = function() {
+    Photo.Admin.selectedCount = 0;
+    $(".selectedCount").html(0);
+    $("#btnMultipleDelete").addClass("btn-hidden");
+    $("#btnMultipleMove").addClass("btn-hidden");
 }
 Photo.Admin.initAdd = function () {
     $("#btnImport").click(function () {
