@@ -79,7 +79,10 @@ class Album extends AbstractService
      * @return array of \Photo\Model\Albums
      */
     public function getAlbumsByYear($year) {
-        // A GEWIS year starts July 1st
+        if(!is_int($year)) {
+            return array();
+        }
+
         $start = \DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
@@ -100,6 +103,9 @@ class Album extends AbstractService
     public function getAlbumYears() {
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $newest = $this->getAlbumMapper()->getNewestAlbum();
+        if(is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
+            return array();
+        }
 
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
         $endYear = $this->getAssociationYear($newest->getEndDateTime());
