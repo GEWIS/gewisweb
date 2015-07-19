@@ -77,6 +77,16 @@ class Activity extends Form
                 'style' => 'width:100%; height:10em; resize:none',
             ],
         ]);
+
+        $this->add([
+            'name' => 'canSignUp',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ),
+        ]);
+
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
@@ -176,6 +186,11 @@ class Activity extends Form
                     ],
                 ],
             ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'canSignUp',
+            'required' => true
         ]));
 
         $this->inputFilter = $inputFilter;

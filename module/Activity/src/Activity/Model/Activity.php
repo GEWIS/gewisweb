@@ -132,7 +132,7 @@ class Activity
         if ($this->id != null) {
             throw new \Exception('There is already a loaded activity');
         }
-        foreach (['description', 'name', 'beginTime', 'endTime', 'costs', 'location', 'creator'] as $param) {
+        foreach (['description', 'name', 'beginTime', 'endTime', 'costs', 'location', 'creator', 'canSignUp'] as $param) {
             if (!isset($params[$param])) {
                 throw new \Exception("create: parameter $param not set");
             }
@@ -147,7 +147,6 @@ class Activity
         $this->creator = $user->getLidNr();
 
         // TODO: These values need to be set correctly
-        $this->canSignUp = true;
         $this->onlyGEWIS = true;
         $this->approved = 0;
 

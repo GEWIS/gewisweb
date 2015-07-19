@@ -50,15 +50,19 @@
 <?php endif; ?>
 	</div>
 </div>
-<h2><div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div></h2>
 
-<?php $i = 2;?>
-<?php foreach($signedUp as $member):?>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-12"><?= $member->getFullName()?></div>
-</div>
-<?php endforeach;?>
+<?php if ($activity->get('canSignUp')): ?>
+    <h2>
+        <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
+    </h2>
 
+    <?php $i = 2;?>
+    <?php foreach($signedUp as $member):?>
+    <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+        <div class="col-md-12"><?= $member->getFullName()?></div>
+    </div>
+    <?php endforeach;?>
+<?php endif;?>
 
 <div class="row">
 	<div class="col-md-12">
