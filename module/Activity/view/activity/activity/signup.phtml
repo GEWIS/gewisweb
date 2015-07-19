@@ -2,7 +2,7 @@
 <div class="alert alert-danger" role="alert"><?php echo $error;?></div>
 <?php endif;?>
 <?php if(isset($success)):?>
-    <div class="alert alert-success" role="alert">Succesvol ingeschreven</div>
+    <div class="alert alert-success" role="alert"><?php echo $this->translate('Successfully subscribed');?></div>
 <?php endif;?>
 
 <?php echo $this->partial('activity/activity/view.phtml', array(
