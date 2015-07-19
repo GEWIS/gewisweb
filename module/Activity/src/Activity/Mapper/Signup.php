@@ -87,7 +87,7 @@ class Signup
         $activityArray = $qb->getQuery()->getResult();
 
         // If we do not get any result, there were no members signed up
-        if (!isset($activity[0])) {
+        if (!isset($activityArray[0])) {
             return [];
         }
 
