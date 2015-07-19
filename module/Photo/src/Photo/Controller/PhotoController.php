@@ -16,8 +16,9 @@ class PhotoController extends AbstractActionController
         // If no year is supplied, use the latest year.
         if(is_null($year)) {
             $year = max($years);
+        } else {
+            $year = (int) $year;
         }
-
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
         $basedir = $this->getPhotoService()->getBaseDirectory();
 
