@@ -74,7 +74,7 @@ class Activity
     /**
      * Who did approve this activity.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
     protected $approver;

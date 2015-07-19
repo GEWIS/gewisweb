@@ -24,7 +24,7 @@ class ActivitySignup
     /**
      * Album in which the photo is.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="signUps")
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
