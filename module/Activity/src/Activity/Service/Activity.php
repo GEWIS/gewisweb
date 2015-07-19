@@ -109,4 +109,18 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         return $activity;
     }
+
+
+    /**
+     * Approve of an activity
+     *
+     * @param ActivityModel $activity
+     */
+    public function approve(ActivityModel $activity)
+    {
+        $activity->setApproved(true);
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em->persist($activity);
+        $em->flush();
+    }
 }

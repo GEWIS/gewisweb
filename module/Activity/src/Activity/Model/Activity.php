@@ -112,6 +112,20 @@ class Activity
     // TODO -> where can i find member organ?
     protected $organ;
 
+    /**
+     * Set the approval status of the activity
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+    }
+
+    /**
+     * Get the status of a variable
+     *
+     * @param $variable
+     * @return mixed
+     */
     public function get($variable)
     {
         return $this->$variable;
