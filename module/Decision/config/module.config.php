@@ -52,16 +52,31 @@ return array(
                 ),
             ),
             'member' => array(
-                'type' => 'Literal',
+                'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/member',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller'    => 'Member',
-                        'action'        => 'index'
-                    )
-                )
-            )
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'search' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/search[/:name]',
+                            'constraints' => array(
+                                'name'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'action' => 'search',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
     'controllers' => array(

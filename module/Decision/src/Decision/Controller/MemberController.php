@@ -4,6 +4,7 @@ namespace Decision\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
@@ -15,6 +16,15 @@ class MemberController extends AbstractActionController
     {
         return new ViewModel(array(
             'member' => $this->getMemberService()->getMembershipInfo()
+        ));
+    }
+
+    public function searchAction()
+    {
+        $name = $this->params()->fromRoute('name');
+        return new JsonModel(array(
+            'members' => $this->getMemberService()->findMemberByName($name)
+
         ));
     }
 
