@@ -284,6 +284,12 @@ class Photo extends AbstractService
         return $escaper->escapeUrl($photoName);
     }
 
+    /**
+     * Returns a zend response to be used for downloading a photo.
+     *
+     * @param \Photo\Model\Photo $photo
+     * @return \Zend\Http\Response\Stream
+     */
     public function getPhotoDownload($photo) {
         $config = $this->getConfig();
         $file = $config['upload_dir'] . '/' .  $photo->getPath();
