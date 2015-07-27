@@ -94,6 +94,12 @@ class Album extends AbstractService
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
 
+    /**
+     * Retrieves all root albums which do not have a startDateTime specified.
+     * This is in most cases analogous to returning all empty albums.
+     *
+     * @return array of \Photo\Model\Album
+     */
     public function getAlbumsWithoutDate()
     {
         return $this->getAlbumMapper()->getAlbumsWithoutDate();
@@ -263,6 +269,12 @@ class Album extends AbstractService
         }
     }
 
+    /**
+     * Retrieves the form for editing the specified album.
+     *
+     * @param integer $id of the album
+     * @return \Photo\Form\EditAlbum
+     */
     public function getEditAlbumForm($id)
     {
         //TODO: permissions!!
@@ -273,6 +285,11 @@ class Album extends AbstractService
         return $form;
     }
 
+    /**
+     * Retrieves the form for creating a new album.
+     *
+     * @return \Photo\Form\CreateAlbum
+     */
     public function getCreateAlbumForm()
     {
         //TODO: permissions!!
