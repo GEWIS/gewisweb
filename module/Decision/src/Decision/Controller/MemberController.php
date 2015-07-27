@@ -8,13 +8,7 @@ use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
-
-    public function indexAction() {
-        //TODO
-    }
-    /**
-     * Search action, allows searching for members.
-     */
+    
     public function indexAction()
     {
         return new ViewModel(array(
@@ -22,12 +16,19 @@ class MemberController extends AbstractActionController
         ));
     }
 
+    /**
+     * Search action, allows searching for members.
+     */
     public function searchAction()
     {
         $name = $this->params()->fromRoute('name');
+        $members = array();
+        foreach($this->getMemberService()->findMemberByName($name) as $member) {
+            //TODO: this returns a lot of data, much more than is needed in most cases.
+            $members[] = $member->toArray();
+        }
         return new JsonModel(array(
-            'members' => $this->getMemberService()->findMemberByName($name)
-
+            'members' => $members
         ));
     }
 
