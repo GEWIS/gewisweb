@@ -39,13 +39,23 @@ class Member
     }
 
     /**
-     * Find a member by (part of) its name.
+     * Finds members by (part of) their name.
      *
-     * @param string $name (part of) the name of a member
+     * @param string $firstName (part of) the first name of a member
+     * @param string $lastName (part of) the last name of a member
+     *
+     * @return array
      */
-    public function findByName($name)
+    public function findByName($firstName, $lastName)
     {
+        $qb = $this->getRepository()->createQueryBuilder('m');
 
+        $qb->where('m.firstName LIKE ?1')
+            ->orWhere('m.lastName LIKE ?2')
+            ->setParameter(1, $firstName . '%')
+            ->setParameter(2, $lastName . '%');
+
+        return $qb->getQuery()->getResult();
     }
     /**
      * Persist a member model.
