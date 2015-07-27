@@ -9,7 +9,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Tag.
  *
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
  *
  */
 class Tag implements ResourceInterface
@@ -92,6 +91,6 @@ class Tag implements ResourceInterface
      */
     public function getResourceId()
     {
-        return 'photo';
+        return 'tag';
     }
 }
