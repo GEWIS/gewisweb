@@ -158,7 +158,8 @@ class Album
      *
      * @return array of \Photo\Model\Album
      */
-    public function getAlbumsInDateRange($start, $end) {
+    public function getAlbumsInDateRange($start, $end)
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -177,7 +178,8 @@ class Album
      *
      * @return array
      */
-    public function getAlbumsWithoutDate() {
+    public function getAlbumsWithoutDate()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -193,7 +195,8 @@ class Album
      *
      * @return \Photo\Model\Album
      */
-    public function getNewestAlbum() {
+    public function getNewestAlbum()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -213,7 +216,8 @@ class Album
      *
      * @return \Photo\Model\Album
      */
-    public function getOldestAlbum() {
+    public function getOldestAlbum()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -227,6 +231,7 @@ class Album
 
         return empty($res) ? null : $res[0];
     }
+
     /**
      * Persist album
      *

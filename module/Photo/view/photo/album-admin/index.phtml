@@ -49,14 +49,14 @@ $this->headLink()
                             </li>
                         <?php endif;
                     endforeach;
-                    if(!empty($albumsWithoutDate)):
-                    ?>
-                    <li>
-                        <?= $this->translate('Other albums'); ?>
-                        <ul>
-                            <?php showTree($albumsWithoutDate, $this); ?>
-                        </ul>
-                    </li>
+                    if (!empty($albumsWithoutDate)):
+                        ?>
+                        <li>
+                            <?= $this->translate('Other albums'); ?>
+                            <ul>
+                                <?php showTree($albumsWithoutDate, $this); ?>
+                            </ul>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </div>
