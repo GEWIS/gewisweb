@@ -39,6 +39,15 @@ class Member
     }
 
     /**
+     * Find a member by (part of) its name.
+     *
+     * @param string $name (part of) the name of a member
+     */
+    public function findByName($name)
+    {
+
+    }
+    /**
      * Persist a member model.
      *
      * @param MemberModel $member Member to persist.
