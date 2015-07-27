@@ -9,8 +9,11 @@ use Zend\View\Model\JsonModel;
 class MemberController extends AbstractActionController
 {
 
+    public function indexAction() {
+        //TODO
+    }
     /**
-     * Index action, shows all organs.
+     * Search action, allows searching for members.
      */
     public function indexAction()
     {
