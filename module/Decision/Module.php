@@ -67,6 +67,9 @@ class Module
 
                     $acl->allow('user', 'member', 'view');
 
+                    // users are allowed to search for members
+                    $acl->allow('user', 'member', 'search');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
