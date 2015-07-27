@@ -48,8 +48,13 @@ class Member extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to search for members.')
             );
         }
+        $parts = explode(' ', $name);
+        if (count($parts) == 1) {
+            return $this->getMemberMapper()->findByName($name, $name);
+        } else {
+            return $this->getMemberMapper()->findByName($parts[0], last($parts));
+        }
 
-        return $this->getMemberMapper()->findByName($name);
     }
 
     /**

@@ -53,7 +53,7 @@ class Member
         $qb->where('m.firstName LIKE ?1')
             ->orWhere('m.lastName LIKE ?2')
             ->setParameter(1, $firstName . '%')
-            ->setParameter(2, $lastName . '%');
+            ->setParameter(2, '%' . $lastName . '%');
 
         return $qb->getQuery()->getResult();
     }
