@@ -273,15 +273,20 @@ class Photo extends AbstractService
      *
      * @return string
      */
-    public function getPhotoFileName($photo) {
-        $escaper = new \Zend\Escaper\Escaper('utf-8');
+    public function getPhotoFileName($photo)
+    {
+        // filtering is required to prevent invalid characters in file names.
+        $filter = new \Zend\I18n\Filter\Alnum(true);
+        $albumName = $filter->filter($photo->getAlbum()->getName());
 
-        $albumName = str_replace(' ', '-', $photo->getAlbum()->getName());
+        // don't put spaces in file names
+        $albumName = str_replace(' ', '-', $albumName);
+
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
-        $photoName = $albumName . '-' . $photo->getId() . $extension;
-        //TODO: could use some nicer escaping/stripping here
-        // escaping is required to prevent invalid characters in filenames.
-        return $escaper->escapeUrl($photoName);
+
+        $photoName = $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . $photo->getId() . $extension;
+
+        return $photoName;
     }
 
     /**
@@ -290,9 +295,10 @@ class Photo extends AbstractService
      * @param \Photo\Model\Photo $photo
      * @return \Zend\Http\Response\Stream
      */
-    public function getPhotoDownload($photo) {
+    public function getPhotoDownload($photo)
+    {
         $config = $this->getConfig();
-        $file = $config['upload_dir'] . '/' .  $photo->getPath();
+        $file = $config['upload_dir'] . '/' . $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
         //TODO: ACL
         $response = new \Zend\Http\Response\Stream();
@@ -301,7 +307,7 @@ class Photo extends AbstractService
         $response->setStreamName($fileName);
         $headers = new \Zend\Http\Headers();
         $headers->addHeaders(array(
-            'Content-Disposition' => 'attachment; filename="' . $fileName .'"',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => filesize($file),
             // zf2 parses date as a string for a \DateTime() object:
@@ -310,8 +316,10 @@ class Photo extends AbstractService
             'Pragma' => 'public'
         ));
         $response->setHeaders($headers);
+
         return $response;
     }
+
     /**
      * Get the photo data belonging to a certain photo
      *
@@ -395,13 +403,15 @@ class Photo extends AbstractService
      *
      * @param \Photo\Model\Photo $photo
      */
-    public function countHit($photo) {
+    public function countHit($photo)
+    {
         $hit = new HitModel();
         $hit->setDateTime(new \DateTime());
         $photo->addHit($hit);
-        
+
         $this->getPhotoMapper()->flush();
     }
+
     /**
      * Gets the base directory from which the photo paths should be requested
      *
