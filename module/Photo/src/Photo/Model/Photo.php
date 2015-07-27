@@ -413,6 +413,7 @@ class Photo implements ResourceInterface
         $hit->setPhoto($this);
         $this->hits[] = $hit;
     }
+
     /**
      * Add a tag to a photo.
      *
@@ -422,6 +423,7 @@ class Photo implements ResourceInterface
         $tag->setPhoto($this);
         $this->tags[] = $tag;
     }
+    
     /**
      * Returns an associative array representation of this object
      *
