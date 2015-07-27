@@ -55,6 +55,39 @@ return array(
                             ),
                         ),
                     ),
+                    'tag' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/tag[/:photo_id]',
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Tag',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'add' => array(
+                                'type' => 'Literal',
+                                'options' => array(
+                                    'route' => '/add',
+                                    'defaults' => array(
+                                        'action' => 'add',
+                                    ),
+                                ),
+                            ),
+                            'remove' => array(
+                                'type' => 'Literal',
+                                'options' => array(
+                                    'route' => '/remove',
+                                    'defaults' => array(
+                                        'action' => 'remove',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
                     // Route for categorizing albums by association year.
                     'year' => array(
                         'type' => 'Segment',
@@ -278,7 +311,8 @@ return array(
             'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
             'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
             'Photo\Controller\AlbumAdmin' => 'Photo\Controller\AlbumAdminController',
-            'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController'
+            'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController',
+            'Photo\Controller\Tag' => 'Photo\Controller\TagController'
         )
     ),
     'controller_plugins' => array(
