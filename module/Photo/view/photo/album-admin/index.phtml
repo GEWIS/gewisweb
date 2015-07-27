@@ -48,8 +48,16 @@ $this->headLink()
                                 </ul>
                             </li>
                         <?php endif;
-                    endforeach; ?>
-
+                    endforeach;
+                    if (!empty($albumsWithoutDate)):
+                        ?>
+                        <li>
+                            <?= $this->translate('Other albums'); ?>
+                            <ul>
+                                <?php showTree($albumsWithoutDate, $this); ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

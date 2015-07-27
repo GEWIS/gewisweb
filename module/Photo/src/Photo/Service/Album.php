@@ -78,8 +78,9 @@ class Album extends AbstractService
      *
      * @return array of \Photo\Model\Albums
      */
-    public function getAlbumsByYear($year) {
-        if(!is_int($year)) {
+    public function getAlbumsByYear($year)
+    {
+        if (!is_int($year)) {
             return array();
         }
 
@@ -89,8 +90,21 @@ class Album extends AbstractService
         );
         $end = clone $start;
         $end->add(new \DateInterval('P1Y'));
+
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
+
+    /**
+     * Retrieves all root albums which do not have a startDateTime specified.
+     * This is in most cases analogous to returning all empty albums.
+     *
+     * @return array of \Photo\Model\Album
+     */
+    public function getAlbumsWithoutDate()
+    {
+        return $this->getAlbumMapper()->getAlbumsWithoutDate();
+    }
+
     /**
      * Gets a list of all association years of which photos are available.
      * In this context an association year is defined as the year which contains
@@ -100,10 +114,11 @@ class Album extends AbstractService
      *
      * @return array of integers representing years
      */
-    public function getAlbumYears() {
+    public function getAlbumYears()
+    {
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $newest = $this->getAlbumMapper()->getNewestAlbum();
-        if(is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
+        if (is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
             return array(null);
         }
 
@@ -245,14 +260,21 @@ class Album extends AbstractService
      *
      * @return int representing an association year.
      */
-    public function getAssociationYear($date) {
-        if($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
+    public function getAssociationYear($date)
+    {
+        if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
             return $date->format('Y') - 1;
         } else {
             return $date->format('Y');
         }
     }
 
+    /**
+     * Retrieves the form for editing the specified album.
+     *
+     * @param integer $id of the album
+     * @return \Photo\Form\EditAlbum
+     */
     public function getEditAlbumForm($id)
     {
         //TODO: permissions!!
@@ -263,6 +285,11 @@ class Album extends AbstractService
         return $form;
     }
 
+    /**
+     * Retrieves the form for creating a new album.
+     *
+     * @return \Photo\Form\CreateAlbum
+     */
     public function getCreateAlbumForm()
     {
         //TODO: permissions!!

@@ -158,7 +158,8 @@ class Album
      *
      * @return array of \Photo\Model\Album
      */
-    public function getAlbumsInDateRange($start, $end) {
+    public function getAlbumsInDateRange($start, $end)
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -172,11 +173,30 @@ class Album
     }
 
     /**
+     * Retrieves all root albums which do not have a startDateTime specified.
+     * This is in most cases analogous to returning all empty albums.
+     *
+     * @return array
+     */
+    public function getAlbumsWithoutDate()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Album', 'a')
+            ->where('a.parent IS NULL')
+            ->andWhere('a.startDateTime IS NULL');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Returns the root album containing the most recent photos
      *
      * @return \Photo\Model\Album
      */
-    public function getNewestAlbum() {
+    public function getNewestAlbum()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -196,7 +216,8 @@ class Album
      *
      * @return \Photo\Model\Album
      */
-    public function getOldestAlbum() {
+    public function getOldestAlbum()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -210,6 +231,7 @@ class Album
 
         return empty($res) ? null : $res[0];
     }
+
     /**
      * Persist album
      *
