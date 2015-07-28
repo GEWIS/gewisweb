@@ -459,9 +459,24 @@ class Photo extends AbstractService
         }
     }
 
-    public function removeTag($tagId)
+    /**
+     * Removes a tag
+     *
+     * @param integer $photoId
+     * @param integer $lidnr
+     *
+     * @return boolean indicating whether removing the tag succeeded.
+     */
+    public function removeTag($photoId, $lidnr)
     {
-
+        $tag = $this->findTag($photoId, $lidnr);
+        if(!is_null($tag)) {
+            $this->getTagMapper()->remove($tag);
+            $this->getTagMapper()->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

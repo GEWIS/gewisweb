@@ -18,6 +18,12 @@ Photo = {
             $('#next')[0].click();
         }
     },
+    initTagging: function() {
+        $('#tagList').find(".remove-tag").each(function () {
+            $(this).on('click', Photo.removeTag);
+        });
+        Photo.initTagSearch();
+    },
     initTagSearch: function () {
         $('#tagSearch').autocomplete({
             lookup: function (query, done) {
@@ -38,14 +44,28 @@ Photo = {
                 }
             },
             onSelect: function (suggestion) {
-                $.post($('#tagForm').attr('action'),
+                console.log($('#tagForm').attr('action').replace('lidnr', suggestion.data));
+                $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
                     { lidnr : suggestion.data }
                 , function(data) {
-                        console.log(data);
+                        if(data.success) {
+                            $('#tagList').append('<li><a href="#">' + suggestion.value +'</a></li>');
+                        }
+                        $('#tagSearch').val('');
                     });
             }
         });
 
+    },
+
+    removeTag: function(e) {
+        e.preventDefault()
+        parent = $(this).parent();
+        $.post($(this).attr('href'), function(data) {
+                if(data.success) {
+                    parent.remove();
+                }
+            });
     }
 }
 

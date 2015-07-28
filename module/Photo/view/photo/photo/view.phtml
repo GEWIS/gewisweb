@@ -79,14 +79,19 @@
             </nav>
             <div>
                 <h4><?= $this->translate('People in this photo') ?></h4>
-                <ul>
+                <ul id="tagList">
                     <?php foreach($photo->getTags() as $tag): ?>
-                        <li><a href="#"><?= $tag->getMember()->getFullName() ?></a></li>
+                        <li>
+                            <a href="#"><?= $tag->getMember()->getFullName() ?></a>&nbsp;
+                            <a href="<?= $this->url('photo/photo/tag/remove', array('photo_id' => $photo->getId(), 'lidnr' => $tag->getMember()->getLidnr())); ?>" class="remove-tag">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
             <div>
-                <form action="<?= $this->url('photo/tag/add', array('photo_id' => $photo->getId())); ?>" id="tagForm" class="form-inline">
+                <form action="<?= $this->url('photo/photo/tag/add', array('photo_id' => $photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">
                 <div class="form-group">
                     <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
                     <input type="text" class="form-control" name="tagSearch" id="tagSearch">
@@ -97,7 +102,7 @@
     </div>
     <script>
         $(document).ready(function () {
-            Photo.initTagSearch();
+            Photo.initTagging();
         });
     </script>
 <?php endif; ?>
