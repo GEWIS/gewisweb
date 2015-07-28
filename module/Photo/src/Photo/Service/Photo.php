@@ -35,6 +35,15 @@ class Photo extends AbstractService
     }
 
     /**
+     * Get the tag mapper.
+     *
+     * @return \Photo\Mapper\Tag
+     */
+    public function getTagMapper()
+    {
+        return $this->sm->get('photo_mapper_tag');
+    }
+    /**
      * Retrieves a photo by an id.
      *
      * @param integer $id the id of the album
@@ -412,6 +421,19 @@ class Photo extends AbstractService
         $this->getPhotoMapper()->flush();
     }
     /**
+     * Retrieves a tag if it exists.
+     *
+     * @param integer $photoId
+     * @param integer $lidnr
+     *
+     * @return \Photo\Model\Tag|null
+     */
+    public function findTag($photoId, $lidnr)
+    {
+        return $this->getTagMapper()->findTag($photoId, $lidnr);
+    }
+
+    /**
      * Tags a user in the specified photo.
      *
      * @param integer $photoId
@@ -419,18 +441,26 @@ class Photo extends AbstractService
      *
      * @return \Photo\Model\Tag|null
      */
-    public function addTag($photoId, $lidnr) {
-        $photo = $this->getPhoto($photoId);
-        $member = $this->getMemberService()->findMemberByLidnr($lidnr);
-        $tag = new TagModel();
-        $tag->setMember($member);
-        $photo->addTag($tag);
+    public function addTag($photoId, $lidnr)
+    {
+        if(is_null($this->findTag($photoId, $lidnr))) {
+            $photo = $this->getPhoto($photoId);
+            $member = $this->getMemberService()->findMemberByLidnr($lidnr);
+            $tag = new TagModel();
+            $tag->setMember($member);
+            $photo->addTag($tag);
 
-        $this->getPhotoMapper()->flush();
-        return $tag;
+            $this->getPhotoMapper()->flush();
+
+            return $tag;
+        } else {
+            // Tag exists
+            return null;
+        }
     }
 
-    public function removeTag($tagId) {
+    public function removeTag($tagId)
+    {
 
     }
 
