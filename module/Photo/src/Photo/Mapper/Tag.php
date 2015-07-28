@@ -40,8 +40,12 @@ class Tag
         return $this->getRepository()->find($tagId);
     }
 
-    public function findTag($photoId, $lidnr) {
-
+    public function findTag($photoId, $lidnr)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'photo' => $photoId,
+            'member' => $lidnr
+        ));
     }
 
     /**
