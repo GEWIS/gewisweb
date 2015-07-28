@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-03 10:42+0100\n"
+"POT-Creation-Date: 2015-07-28 22:45+0200\n"
 "PO-Revision-Date: 2014-03-03 10:42+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
@@ -127,25 +127,39 @@ msgstr "GEWIS"
 msgid "Home"
 msgstr "Home"
 
-#: module/Application/view/layout/layout.phtml:45
+#: module/Application/view/layout/layout.phtml:42
+#, fuzzy
+msgid "Education"
+msgstr "Education admin"
+
+#: module/Application/view/layout/layout.phtml:43
+#, fuzzy
+msgid "Activity"
+msgstr "Activate"
+
+#: module/Application/view/layout/layout.phtml:44
+msgid "Photos"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:48
 #: module/User/src/User/Form/Login.php:40
 msgid "Login"
 msgstr "Login"
 
-#: module/Application/view/layout/layout.phtml:49
+#: module/Application/view/layout/layout.phtml:52
 msgid "Logout"
 msgstr "Logout"
 
-#: module/Application/view/layout/layout.phtml:65
+#: module/Application/view/layout/layout.phtml:68
 #, php-format
 msgid "Signed in as %s"
 msgstr "Signed in as %s"
 
-#: module/Application/view/layout/layout.phtml:75
+#: module/Application/view/layout/layout.phtml:78
 msgid "by WebCommissie GEWIS."
 msgstr "by WebCommissie GEWIS."
 
-#: module/Application/view/layout/layout.phtml:75
+#: module/Application/view/layout/layout.phtml:78
 msgid "All rights reserved."
 msgstr "All rights reserved."
 
@@ -201,6 +215,7 @@ msgid "You have been registered. An email has been sent to %s for activation."
 msgstr "You have been registered. An email has been sent to %s for activation."
 
 #: module/User/view/user/user/register.phtml:19
+#: module/Decision/view/decision/member/index.phtml:10
 #: module/User/src/User/Form/Register.php:27
 msgid "Membership number"
 msgstr "Membership number"
@@ -247,6 +262,113 @@ msgstr "You are logged out."
 msgid "Are you sure you want to logout?"
 msgstr "Are you sure you want to logout?"
 
+#: module/Activity/view/activity/activity/index.phtml:5
+msgid "Create Activity"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:11
+#: module/Activity/view/activity/activity/view.phtml:6
+msgid "Id"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:12
+#: module/Activity/view/activity/activity/view.phtml:10
+#: module/Activity/view/activity/activity/create.phtml:10
+#: module/Decision/view/decision/decision/index.phtml:8
+msgid "Name"
+msgstr "Name"
+
+#: module/Activity/view/activity/activity/index.phtml:13
+#: module/Activity/view/activity/activity/view.phtml:14
+#: module/Activity/view/activity/activity/create.phtml:18
+msgid "Start time"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:14
+#: module/Activity/view/activity/activity/view.phtml:18
+#: module/Activity/view/activity/activity/create.phtml:26
+msgid "End time"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:15
+#: module/Activity/view/activity/activity/view.phtml:22
+#: module/Activity/view/activity/activity/create.phtml:34
+msgid "Location"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:16
+#: module/Activity/view/activity/activity/view.phtml:26
+#: module/Activity/view/activity/activity/create.phtml:42
+msgid "Costs"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:28
+msgid "View"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:30
+#: module/Activity/view/activity/activity/view.phtml:46
+msgid "Subscribe"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:31
+#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Photo/view/photo/photo/view.phtml:32
+#: module/Photo/view/photo/photo-admin/index.phtml:69
+#: module/User/src/User/Form/Logout.php:20
+msgid "Yes"
+msgstr "Yes"
+
+#: module/Activity/view/activity/activity/view.phtml:31
+#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Photo/view/photo/photo/view.phtml:32
+#: module/Photo/view/photo/photo-admin/index.phtml:69
+#: module/User/src/User/Form/Logout.php:28
+msgid "No"
+msgstr "No"
+
+#: module/Activity/view/activity/activity/view.phtml:34
+#, fuzzy
+msgid "Only GEWIS"
+msgstr "GEWIS"
+
+#: module/Activity/view/activity/activity/view.phtml:40
+msgid "You have already signed up for this activity!"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:42
+msgid "Unsubscribe"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:49
+msgid "Login to subscribe"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:56
+msgid "Already subscribed"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:69
+msgid "Back"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:50
+msgid "Can Sign up?"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:58
+msgid "Description"
+msgstr ""
+
+#: module/Activity/view/activity/activity/signup.phtml:5
+#, fuzzy
+msgid "Successfully subscribed"
+msgstr "Exam successfully uploaded!"
+
+#: module/Activity/view/activity/activity/signoff.phtml:7
+msgid "Successfully unsubscribed"
+msgstr ""
+
 #: module/Education/view/education/education/index.phtml:16
 #: module/Education/src/Education/Form/SearchCourse.php:20
 msgid "Search query"
@@ -257,16 +379,27 @@ msgstr "Search query"
 msgid "Search"
 msgstr "Search"
 
-#: module/Education/view/education/education/course.phtml:10
+#: module/Education/view/education/education/index.phtml:36
+#: module/Education/view/education/admin/upload.phtml:19
+#: module/Education/src/Education/Form/Upload.php:20
+msgid "Course code"
+msgstr "Course code"
+
+#: module/Education/view/education/education/index.phtml:37
+#, fuzzy
+msgid "Course description"
+msgstr "Course code"
+
+#: module/Education/view/education/education/course.phtml:11
 msgid "Course parts"
 msgstr "Course parts"
 
-#: module/Education/view/education/education/course.phtml:18
+#: module/Education/view/education/education/course.phtml:19
 msgid "Exams and summaries"
 msgstr "Exams and summaries"
 
-#: module/Education/view/education/education/course.phtml:25
-#: module/Education/view/education/education/course.phtml:31
+#: module/Education/view/education/education/course.phtml:26
+#: module/Education/view/education/education/course.phtml:32
 #, php-format
 msgid "Exam of %s"
 msgstr "Exam of %s"
@@ -279,11 +412,6 @@ msgstr "Education admin"
 msgid "Exam successfully uploaded!"
 msgstr "Exam successfully uploaded!"
 
-#: module/Education/view/education/admin/upload.phtml:19
-#: module/Education/src/Education/Form/Upload.php:20
-msgid "Course code"
-msgstr "Course code"
-
 #: module/Education/view/education/admin/upload.phtml:47
 msgid "Upload"
 msgstr "Upload"
@@ -291,10 +419,6 @@ msgstr "Upload"
 #: module/Decision/view/decision/decision/index.phtml:7
 msgid "Abbreviation"
 msgstr "Abbreviation"
-
-#: module/Decision/view/decision/decision/index.phtml:8
-msgid "Name"
-msgstr "Name"
 
 #: module/Decision/view/decision/decision/index.phtml:9
 msgid "Type"
@@ -307,6 +431,391 @@ msgstr "Committee"
 #: module/Decision/view/decision/decision/index.phtml:23
 msgid "Fraternity"
 msgstr "Fraternity"
+
+#: module/Decision/view/decision/member/index.phtml:14
+msgid "Initials"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:18
+msgid "First name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:22
+msgid "Middle name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:26
+msgid "Last name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:30
+msgid "Sex"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:34
+msgid "Male"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:37
+msgid "Female"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:40
+msgid "Other"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:46
+msgid "Email"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:50
+msgid "Birth date"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:54
+msgid "Generation"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:58
+#, fuzzy
+msgid "Membership type"
+msgstr "Membership number"
+
+#: module/Decision/view/decision/member/index.phtml:62
+msgid "Ordinary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:65
+msgid "Prolonged"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:68
+msgid "External"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:71
+msgid "Extraordinary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:74
+msgid "Honorary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:80
+#, fuzzy
+msgid "Last membership change"
+msgstr "Membership number"
+
+#: module/Decision/view/decision/member/index.phtml:84
+msgid "End date of membership"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:88
+msgid "Membership of committees and fraternities"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:96
+msgid "Adresses"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:101
+msgid "Home address (parents)"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:104
+msgid "Student address"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:107
+#, fuzzy
+msgid "Mail address"
+msgstr "Email address:"
+
+#: module/Decision/view/decision/member/index.phtml:113
+msgid "Country"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:117
+msgid "Street and number"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:121
+msgid "City and postal code"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:125
+msgid "Phone number"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:7
+msgid "Return to album"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:19
+#: module/Photo/view/photo/photo-admin/index.phtml:56
+msgid "Artist"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:20
+#: module/Photo/view/photo/photo/view.phtml:24
+#: module/Photo/view/photo/photo/view.phtml:36
+#: module/Photo/view/photo/photo/view.phtml:40
+#: module/Photo/view/photo/photo/view.phtml:44
+#: module/Photo/view/photo/photo/view.phtml:48
+#: module/Photo/view/photo/photo/view.phtml:52
+msgid "Unknown"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:23
+#: module/Photo/view/photo/photo-admin/index.phtml:60
+msgid "Camera"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:27
+#: module/Photo/view/photo/photo-admin/index.phtml:64
+msgid "Date/time"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:31
+#: module/Photo/view/photo/photo-admin/index.phtml:68
+msgid "Flash"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:35
+#: module/Photo/view/photo/photo-admin/index.phtml:72
+msgid "Focal length"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:39
+#: module/Photo/view/photo/photo-admin/index.phtml:76
+msgid "Exposure time"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:43
+#: module/Photo/view/photo/photo-admin/index.phtml:80
+msgid "Shutter speed"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:47
+#: module/Photo/view/photo/photo-admin/index.phtml:84
+msgid "Aperture"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:51
+#: module/Photo/view/photo/photo-admin/index.phtml:88
+msgid "ISO"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:62
+#: module/Photo/view/partial/paginator.phtml:9
+msgid "Previous"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:71
+#: module/Photo/view/partial/paginator.phtml:23
+msgid "Next"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:10
+#: module/Photo/view/photo/photo-admin/index.phtml:10
+#, fuzzy
+msgid "Photo admin"
+msgstr "Education admin"
+
+#: module/Photo/view/photo/album-admin/index.phtml:55
+msgid "Other albums"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:68
+msgid "Create new album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:72
+msgid "Edit album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:75
+msgid "Add photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:77
+msgid "Move album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:80
+msgid "Move %i photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:83
+msgid "Regenerate album cover"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:87
+#: module/Photo/view/photo/album-admin/index.phtml:178
+msgid "Delete album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:90
+msgid "Delete %i photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:108
+msgid "Generate a new cover photo"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:118
+msgid "Regenerate"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:120
+#: module/Photo/src/Photo/Form/EditAlbum.php:44
+msgid "Save"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:133
+msgid "Move the album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:138
+msgid "Select a new parent for the album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:142
+msgid "The album has been moved"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:147
+#: module/Photo/view/photo/album-admin/index.phtml:238
+#: module/Photo/view/photo/photo-admin/index.phtml:122
+msgid "Move"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:160
+#: module/Photo/view/photo/album-admin/index.phtml:192
+#: module/Photo/view/photo/photo-admin/index.phtml:135
+#, fuzzy
+msgid "Delete confirmation"
+msgstr "Skeleton Application"
+
+#: module/Photo/view/photo/album-admin/index.phtml:164
+msgid ""
+"Are you sure you want to delete this album including all photos inside of "
+"it? <b>This action can not be reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:167
+msgid "Please wait while the album is being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:173
+msgid "The album has been deleted"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:179
+#: module/Photo/view/photo/album-admin/index.phtml:211
+#: module/Photo/view/photo/photo-admin/index.phtml:154
+msgid "Cancel"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:196
+msgid ""
+"Are you sure you want to delete the selected items? <b>This action can not "
+"be reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:199
+msgid "Please wait while the photos are being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:205
+msgid "The photos have been been deleted"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:210
+msgid "Delete photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:224
+msgid "Move the photos to another album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:229
+#: module/Photo/view/photo/photo-admin/index.phtml:113
+msgid "Select a new parent album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:233
+msgid "The photos have been moved"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:2
+msgid "The album has been created"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:5
+msgid "Return to the album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:18
+#: module/Photo/src/Photo/Form/CreateAlbum.php:20
+#: module/Photo/src/Photo/Form/EditAlbum.php:20
+msgid "Album title"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:27
+msgid "Create album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:10
+#, fuzzy
+msgid "Upload photos"
+msgstr "Upload"
+
+#: module/Photo/view/photo/album-admin/add.phtml:21
+msgid "Import photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:24
+msgid "The photos have been imported succesfully"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:34
+msgid ""
+"Make sure that the folder permissions on your import folder are set such "
+"that the webserver user can read the files inside of it. Please note that "
+"importing a large amount of photos may take a while."
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:44
+msgid "Move photo"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:46
+#: module/Photo/view/photo/photo-admin/index.phtml:153
+msgid "Delete photo"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:108
+msgid "Move the photo to another album"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:117
+msgid "The photo has been moved"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:139
+msgid ""
+"Are you sure you want to delete this photo? <b>This action can not be "
+"reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:142
+msgid "Please wait while your photo is being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:148
+msgid "The photo has been deleted"
+msgstr ""
 
 #: module/User/src/User/Form/Register.php:61
 msgid "This email address does not be long to the given member."
@@ -328,14 +837,6 @@ msgstr "Your password"
 #: module/User/src/User/Form/Activate.php:29
 msgid "Verify your password"
 msgstr "Verify your password"
-
-#: module/User/src/User/Form/Logout.php:20
-msgid "Yes"
-msgstr "Yes"
-
-#: module/User/src/User/Form/Logout.php:28
-msgid "No"
-msgstr "No"
 
 #: module/User/src/User/Form/Login.php:24
 msgid "Membership number or email address"
@@ -362,16 +863,48 @@ msgstr "Exam to upload"
 msgid "Submit"
 msgstr "Submit"
 
-#: module/Education/src/Education/Service/Exam.php:157
+#: module/Education/src/Education/Service/Exam.php:179
 msgid "You are not allowed to upload exams"
+msgstr "You are not allowed to upload exams"
+
+#: module/Decision/src/Decision/Service/Member.php:23
+#, fuzzy
+msgid "You are not allowed to view membership info."
 msgstr "You are not allowed to upload exams"
 
 #: module/Decision/src/Decision/Service/Organ.php:25
 msgid "Not allowed to view the list of organs."
 msgstr "Not allowed to view the list of organs."
 
-#~ msgid "Skeleton Application"
-#~ msgstr "Skeleton Application"
+#: module/Photo/src/Photo/Form/CreateAlbum.php:28
+msgid "Create"
+msgstr ""
+
+#: module/Photo/src/Photo/Form/EditAlbum.php:28
+#, fuzzy
+msgid "Start date"
+msgstr "Exam date"
+
+#: module/Photo/src/Photo/Form/EditAlbum.php:36
+#, fuzzy
+msgid "End date"
+msgstr "Exam date"
+
+#: module/Photo/src/Photo/Service/Photo.php:188
+msgid "The specified path is not valid"
+msgstr ""
+
+#: module/Photo/src/Photo/Service/Photo.php:205
+msgid "An unknown error occurred during uploading ("
+msgstr ""
+
+#: module/Photo/src/Photo/Service/Photo.php:221
+msgid "The uploaded file does not have a valid extension"
+msgstr ""
+
+#: module/Photo/src/Photo/Service/Photo.php:226
+msgid "The uploaded file is not a valid image"
+msgstr ""
 
 #~ msgid "Welcome to %sZend Framework 2%s"
 #~ msgstr "Welcome to %sZend Framework 2%s"
