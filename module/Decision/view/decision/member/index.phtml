@@ -8,85 +8,85 @@ $member = $role->getMember();
     <h1><?= $member->getFullName() ?></h1>
     <table class="table table-bordered">
         <tr>
-            <th>Lidnummer</th>
+            <th><?= $this->translate('Membership number') ?></th>
             <td><?= $member->getLidnr() ?></td>
         </tr>
         <tr>
-            <th>Voorletters</th>
+            <th><?= $this->translate('Initials') ?></th>
             <td><?= $member->getInitials() ?></td>
         </tr>
         <tr>
-            <th>Voornaam</th>
+            <th><?= $this->translate('First name') ?></th>
             <td><?= $member->getFirstName() ?></td>
         </tr>
         <tr>
-            <th>Tussenvoegsels</th>
+            <th><?= $this->translate('Middle name') ?></th>
             <td><?= $member->getMiddleName() ?></td>
         </tr>
         <tr>
-            <th>Achternaam</th>
+            <th><?= $this->translate('Last name') ?></th>
             <td><?= $member->getLastName() ?></td>
         </tr>
         <tr>
-            <th>Geslacht</th>
+            <th><?= $this->translate('Sex') ?></th>
             <td><?php
 switch ($member->getGender()) {
 case Member::GENDER_MALE:
-    echo 'Man';
+    echo $this->translate('Male');
     break;
 case Member::GENDER_FEMALE:
-    echo 'Vrouw';
+    echo $this->translate('Female');
     break;
 case Member::GENDER_OTHER:
-    echo 'Anders';
+    echo $this->translate('Other');
     break;
 }
 ?></td>
         </tr>
         <tr>
-            <th>Email</th>
+            <th><?= $this->translate('Email') ?></th>
             <td><a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a></td>
         </tr>
         <tr>
-            <th>Geboortedatum</th>
+            <th><?= $this->translate('Birth date') ?></th>
             <td><?= $member->getBirth()->format('l j F Y') ?></td>
         </tr>
         <tr>
-            <th>Generatie</th>
+            <th><?= $this->translate('Generation') ?></th>
             <td><?= $member->getGeneration() ?></td>
         </tr>
         <tr>
-            <th>Type lid</th>
+        <th><?= $this->translate('Membership type') ?></th>
             <td><?php
 switch ($member->getType()) {
 case Member::TYPE_ORDINARY:
-    echo 'Gewoon';
+    echo $this->translate('Ordinary');
     break;
 case Member::TYPE_PROLONGED:
-    echo 'Verlengd';
+    echo $this->translate('Prolonged');
     break;
 case Member::TYPE_EXTERNAL:
-    echo 'Extern';
+    echo $this->translate('External');
     break;
 case Member::TYPE_EXTRAORDINARY:
-    echo 'Buitengewoon';
+    echo $this->translate('Extraordinary');
     break;
 case Member::TYPE_HONORARY:
-    echo 'Erelid';
+    echo $this->translate('Honorary');
     break;
 }
 ?></td>
         </tr>
         <tr>
-            <th>Laatste wijziging lidmaatshap</th>
+            <th><?= $this->translate('Last membership change') ?></th>
             <td><?= $member->getChangedOn()->format('l j F Y') ?></td>
         </tr>
         <tr>
-            <th>Verloopdatum lidmaatschap</th>
+            <th><?= $this->translate('End date of membership') ?></th>
             <td><?= $member->getExpiration()->format('l j F Y') ?></td>
         </tr>
     </table>
-<h3>Lidmaatschap commissies en disputen</h3>
+    <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
 <ul>
 <?php foreach ($member->getInstallations() as $install): ?>
     <li><?= $install->getFoundation()->getAbbr() ?></li>
@@ -94,38 +94,38 @@ case Member::TYPE_HONORARY:
 </ul>
 </div>
 <div class="col-md-6">
-<h3>Adressen</h3>
+<h3><?= $this->translate('Adresses') ?></h3>
 <?php $addresses = array() ?>
 <?php foreach ($member->getAddresses() as $address): ?>
 <?php $addresses[$address->getType()] = $address ?>
 <h4><?php
 switch ($address->getType()) {
 case Address::TYPE_HOME:
-    echo 'Thuisadres (ouders)';
+    echo $this->translate('Home address (parents)');
     break;
 case Address::TYPE_STUDENT:
-    echo 'Kameradres';
+    echo $this->translate('Student address');
     break;
 case Address::TYPE_MAIL:
-    echo 'Postadres';
+    echo $this->translate('Mail address');
     break;
 }
 ?></h4>
 <table class="table table-bordered">
     <tr>
-        <th>Land</th>
+        <th><?= $this->translate('Country') ?></th>
         <td><?= $address->getCountry() ?></td>
     </tr>
     <tr>
-        <th>Straat en huisnummer</th>
+        <th><?= $this->translate('Street and number') ?></th>
         <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
     </tr>
     <tr>
-        <th>Woonplaats en Postcode</th>
+        <th><?= $this->translate('City and postal code') ?></th>
         <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
     </tr>
     <tr>
-        <th>Telefoonnummer</th>
+        <th><?= $this->translate('Phone number') ?></th>
         <td><?= $address->getPhone() ?></td>
     </tr>
 </table>
