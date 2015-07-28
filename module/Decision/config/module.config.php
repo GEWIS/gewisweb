@@ -3,23 +3,23 @@ return array(
     'router' => array(
         'routes' => array(
             'decision' => array(
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/decision',
+                    'route' => '/decision',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller'    => 'Decision',
-                        'action'        => 'index',
+                        'controller' => 'Decision',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'default' => array(
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route' => '[/:action]',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                         ),
                     ),
@@ -52,23 +52,23 @@ return array(
                 ),
             ),
             'member' => array(
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/member',
+                    'route' => '/member',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller'    => 'Member',
-                        'action'        => 'index',
+                        'controller' => 'Member',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'search' => array(
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/search[/:name]',
+                            'route' => '/search[/:name]',
                             'constraints' => array(
-                                'name'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
                                 'action' => 'search',

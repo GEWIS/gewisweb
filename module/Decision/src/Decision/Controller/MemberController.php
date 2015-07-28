@@ -8,7 +8,7 @@ use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
-    
+
     public function indexAction()
     {
         return new ViewModel(array(
