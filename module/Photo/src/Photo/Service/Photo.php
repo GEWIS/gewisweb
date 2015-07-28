@@ -43,6 +43,7 @@ class Photo extends AbstractService
     {
         return $this->sm->get('photo_mapper_tag');
     }
+
     /**
      * Retrieves a photo by an id.
      *
@@ -443,7 +444,7 @@ class Photo extends AbstractService
      */
     public function addTag($photoId, $lidnr)
     {
-        if(is_null($this->findTag($photoId, $lidnr))) {
+        if (is_null($this->findTag($photoId, $lidnr))) {
             $photo = $this->getPhoto($photoId);
             $member = $this->getMemberService()->findMemberByLidnr($lidnr);
             $tag = new TagModel();
@@ -470,9 +471,10 @@ class Photo extends AbstractService
     public function removeTag($photoId, $lidnr)
     {
         $tag = $this->findTag($photoId, $lidnr);
-        if(!is_null($tag)) {
+        if (!is_null($tag)) {
             $this->getTagMapper()->remove($tag);
             $this->getTagMapper()->flush();
+
             return true;
         } else {
             return false;
