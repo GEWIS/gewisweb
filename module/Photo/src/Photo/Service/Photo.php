@@ -483,7 +483,7 @@ class Photo extends AbstractService
      */
     public function getMemberService()
     {
-        return $this->getServiceLocator()->get('decision_service_member');
+        return $this->getServiceManager()->get('decision_service_member');
     }
 
     /**
