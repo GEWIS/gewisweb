@@ -1,0 +1,134 @@
+<?php
+use Decision\Model\Member;
+use Decision\Model\Address;
+$member = $role->getMember();
+?>
+<div class="row">
+<div class="col-md-6">
+    <h1><?= $member->getFullName() ?></h1>
+    <table class="table table-bordered">
+        <tr>
+            <th>Lidnummer</th>
+            <td><?= $member->getLidnr() ?></td>
+        </tr>
+        <tr>
+            <th>Voorletters</th>
+            <td><?= $member->getInitials() ?></td>
+        </tr>
+        <tr>
+            <th>Voornaam</th>
+            <td><?= $member->getFirstName() ?></td>
+        </tr>
+        <tr>
+            <th>Tussenvoegsels</th>
+            <td><?= $member->getMiddleName() ?></td>
+        </tr>
+        <tr>
+            <th>Achternaam</th>
+            <td><?= $member->getLastName() ?></td>
+        </tr>
+        <tr>
+            <th>Geslacht</th>
+            <td><?php
+switch ($member->getGender()) {
+case Member::GENDER_MALE:
+    echo 'Man';
+    break;
+case Member::GENDER_FEMALE:
+    echo 'Vrouw';
+    break;
+case Member::GENDER_OTHER:
+    echo 'Anders';
+    break;
+}
+?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a></td>
+        </tr>
+        <tr>
+            <th>Geboortedatum</th>
+            <td><?= $member->getBirth()->format('l j F Y') ?></td>
+        </tr>
+        <tr>
+            <th>Generatie</th>
+            <td><?= $member->getGeneration() ?></td>
+        </tr>
+        <tr>
+            <th>Type lid</th>
+            <td><?php
+switch ($member->getType()) {
+case Member::TYPE_ORDINARY:
+    echo 'Gewoon';
+    break;
+case Member::TYPE_PROLONGED:
+    echo 'Verlengd';
+    break;
+case Member::TYPE_EXTERNAL:
+    echo 'Extern';
+    break;
+case Member::TYPE_EXTRAORDINARY:
+    echo 'Buitengewoon';
+    break;
+case Member::TYPE_HONORARY:
+    echo 'Erelid';
+    break;
+}
+?></td>
+        </tr>
+        <tr>
+            <th>Laatste wijziging lidmaatshap</th>
+            <td><?= $member->getChangedOn()->format('l j F Y') ?></td>
+        </tr>
+        <tr>
+            <th>Verloopdatum lidmaatschap</th>
+            <td><?= $member->getExpiration()->format('l j F Y') ?></td>
+        </tr>
+    </table>
+<h3>Lidmaatschap commissies en disputen</h3>
+<ul>
+<?php foreach ($member->getInstallations() as $install): ?>
+    <li><?= $install->getFoundation()->getAbbr() ?></li>
+<?php endforeach; ?>
+</ul>
+</div>
+<div class="col-md-6">
+<h3>Adressen</h3>
+<?php $addresses = array() ?>
+<?php foreach ($member->getAddresses() as $address): ?>
+<?php $addresses[$address->getType()] = $address ?>
+<h4><?php
+switch ($address->getType()) {
+case Address::TYPE_HOME:
+    echo 'Thuisadres (ouders)';
+    break;
+case Address::TYPE_STUDENT:
+    echo 'Kameradres';
+    break;
+case Address::TYPE_MAIL:
+    echo 'Postadres';
+    break;
+}
+?></h4>
+<table class="table table-bordered">
+    <tr>
+        <th>Land</th>
+        <td><?= $address->getCountry() ?></td>
+    </tr>
+    <tr>
+        <th>Straat en huisnummer</th>
+        <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
+    </tr>
+    <tr>
+        <th>Woonplaats en Postcode</th>
+        <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+    </tr>
+    <tr>
+        <th>Telefoonnummer</th>
+        <td><?= $address->getPhone() ?></td>
+    </tr>
+</table>
+<?php endforeach ?>
+</div>
+</div>

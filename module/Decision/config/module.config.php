@@ -25,11 +25,23 @@ return array(
                     ),
                 ),
             ),
+            'member' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/member',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller'    => 'Member',
+                        'action'        => 'index'
+                    )
+                )
+            )
         ),
     ),
     'controllers' => array(
         'invokables' => array(
-            'Decision\Controller\Decision' => 'Decision\Controller\DecisionController'
+            'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
+            'Decision\Controller\Member' => 'Decision\Controller\MemberController'
         )
     ),
     'view_manager' => array(
