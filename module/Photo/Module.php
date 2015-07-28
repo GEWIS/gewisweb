@@ -85,7 +85,7 @@ class Module
                     );
                 },
                 'photo_mapper_tag' => function ($sm) {
-                    return new Mapper\Photo(
+                    return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
                     );
                 },
