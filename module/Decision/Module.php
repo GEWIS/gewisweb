@@ -59,9 +59,11 @@ class Module
 
                     // add resources for this module
                     $acl->addResource('organ');
+                    $acl->addResource('member');
 
                     // users are allowed to view the organs
                     $acl->allow('user', 'organ', 'view');
+                    $acl->allow('user', 'member', 'view');
 
                     return $acl;
                 },

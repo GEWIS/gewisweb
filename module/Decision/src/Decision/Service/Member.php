@@ -17,6 +17,12 @@ class Member extends AbstractAclService
      */
     public function getMembershipInfo()
     {
+        if (!$this->isAllowed('view')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view membership info.')
+            );
+        }
         return $this->getMemberMapper()->findByLidnr($this->getRole()->getLidnr());
     }
 
