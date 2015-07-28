@@ -5,8 +5,8 @@ namespace Photo\Service;
 use Application\Service\AbstractService;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\Hit as HitModel;
+use Photo\Model\Tag as TagModel;
 use Imagick;
-use Zend\Code\Generator\DocBlock\Tag;
 
 /**
  * Photo service.
@@ -411,6 +411,28 @@ class Photo extends AbstractService
 
         $this->getPhotoMapper()->flush();
     }
+    /**
+     * Tags a user in the specified photo.
+     *
+     * @param integer $photoId
+     * @param integer $lidnr
+     *
+     * @return \Photo\Model\Tag|null
+     */
+    public function addTag($photoId, $lidnr) {
+        $photo = $this->getPhoto($photoId);
+        $member = $this->getMemberService()->findMemberByLidnr($lidnr);
+        $tag = new TagModel();
+        $tag->setMember($member);
+        $photo->addTag($tag);
+
+        $this->getPhotoMapper()->flush();
+        return $tag;
+    }
+
+    public function removeTag($tagId) {
+
+    }
 
     /**
      * Gets the base directory from which the photo paths should be requested
@@ -454,6 +476,14 @@ class Photo extends AbstractService
     public function getAlbumService()
     {
         return $this->getServiceManager()->get('photo_service_album');
+    }
+
+    /**
+     * Get the member service.
+     */
+    public function getMemberService()
+    {
+        return $this->getServiceLocator()->get('decision_service_member');
     }
 
     /**

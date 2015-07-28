@@ -28,6 +28,14 @@ class Member extends AbstractAclService
     }
 
     /**
+     *
+     */
+    public function findMemberByLidNr($lidnr)
+    {
+        return $this->getMemberMapper()->findByLidnr($lidnr);
+    }
+
+    /**
      * Find a member by (part of) its name.
      *
      * @param string $name (part of) the name of a member
