@@ -9,7 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Tag.
  *
  * @ORM\Entity
- *
+ * @ORM\Table(name="Tag",uniqueConstraints={@ORM\UniqueConstraint(name="tag_idx", columns={"photo_id", "member_id"})})
  */
 class Tag implements ResourceInterface
 {
