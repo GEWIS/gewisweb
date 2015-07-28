@@ -17,6 +17,31 @@ Photo = {
         if ($('#next').length > 0) {
             $('#next')[0].click();
         }
+    },
+    initTagSearch: function () {
+        $('#tagSearch').autocomplete({
+            lookup: function (query, done) {
+                console.log(query);
+                if (query.length >= 3) {
+                    $.getJSON('/member/search/' + query, function (data) {
+                        var result = { suggestions: [] };
+
+                        $.each(data.members, function (i, member) {
+                            result.suggestions.push({
+                                'value': member.fullName, 'data': member.lidnr
+                            })
+                        });
+                        console.log(result);
+
+                        done(result);
+                    });
+                }
+            },
+            onSelect: function (suggestion) {
+                alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+            }
+        });
+
     }
 }
 
@@ -29,3 +54,4 @@ $(function () {
         }
     });
 });
+

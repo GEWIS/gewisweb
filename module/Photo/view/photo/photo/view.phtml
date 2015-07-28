@@ -1,4 +1,7 @@
-<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
+<?php
+    $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+                        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+?>
 <?php if ($photo != null): ?>
     <div clas="row">
         <nav>
@@ -74,6 +77,19 @@
                     <?php endif; ?>
                 </ul>
             </nav>
+            <div>
+                <form class="form-inline">
+                <div class="form-group">
+                    <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
+                    <input type="text" class="form-control" name="tagSearch" id="tagSearch">
+                </div>
+                </form>
+            </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            Photo.initTagSearch();
+        });
+    </script>
 <?php endif; ?>
