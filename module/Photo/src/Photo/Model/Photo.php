@@ -409,6 +409,11 @@ class Photo implements ResourceInterface
         $this->smallThumbPath = $path;
     }
 
+    /**
+     * Add a hit to a photo
+     *
+     * @param \Photo\Model\Hit $hit
+     */
     public function addHit($hit) {
         $hit->setPhoto($this);
         $this->hits[] = $hit;
@@ -417,7 +422,7 @@ class Photo implements ResourceInterface
     /**
      * Add a tag to a photo.
      *
-     * @param \Photo\Model\Photo $tag
+     * @param \Photo\Model\Tag $tag
      */
     public function addTag($tag) {
         $tag->setPhoto($this);
