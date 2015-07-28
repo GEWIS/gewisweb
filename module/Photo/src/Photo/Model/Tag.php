@@ -92,7 +92,7 @@ class Tag implements ResourceInterface
         return array(
             'id' => $this->getId(),
             'photo_id' => $this->getPhoto()->getId(),
-            'member_id' => $this->getMember()->getId()
+            'member_id' => $this->getMember()->getLidnr()
         );
     }
     /**
