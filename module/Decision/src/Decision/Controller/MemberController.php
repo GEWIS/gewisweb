@@ -14,7 +14,17 @@ class MemberController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel(array(
-            'role' => $this->getServiceLocator()->get('user_role')
+            'member' => $this->getMemberService()->getMembershipInfo()
         ));
+    }
+
+    /**
+     * Get the member service.
+     *
+     * @return Decision\Service\Member
+     */
+    public function getMemberService()
+    {
+        return $this->getServiceLocator()->get('decision_service_member');
     }
 }

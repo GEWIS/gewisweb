@@ -40,7 +40,8 @@ class Module
     {
         return array(
             'invokables' => array(
-                'decision_service_organ' => 'Decision\Service\Organ'
+                'decision_service_organ' => 'Decision\Service\Organ',
+                'decision_service_member' => 'Decision\Service\Member'
             ),
             'factories' => array(
                 'decision_mapper_member' => function ($sm) {
