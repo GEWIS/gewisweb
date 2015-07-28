@@ -83,7 +83,18 @@ class Tag implements ResourceInterface
         $this->member = $member;
     }
 
-
+    /**
+     * Returns the Tag as an associative array.
+     *
+     * @return array
+     */
+    public function toArray() {
+        return array(
+            'id' => $this->getId(),
+            'photo_id' => $this->getPhoto()->getId(),
+            'member_id' => $this->getMember()->getId()
+        );
+    }
     /**
      * Get the resource ID.
      *

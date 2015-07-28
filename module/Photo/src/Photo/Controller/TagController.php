@@ -19,7 +19,7 @@ class TagController extends AbstractActionController
                 $result['success'] = false;
             } else {
                 $result['success'] = true;
-                $result['tag'] = $tag;
+                $result['tag'] = $tag->toArray();
             }
         }
 
