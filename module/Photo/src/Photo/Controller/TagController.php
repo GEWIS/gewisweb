@@ -13,7 +13,7 @@ class TagController extends AbstractActionController
         $result = array();
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
-            $lidnr = $request->getPost()['lidnr'];
+            $lidnr = $this->params()->fromRoute('lidnr');
             $tag = $this->getPhotoService()->addTag($photoId, $lidnr);
             if (is_null($tag)) {
                 $result['success'] = false;
@@ -28,7 +28,14 @@ class TagController extends AbstractActionController
 
     public function removeAction()
     {
-        return new JsonModel(array());
+        $request = $this->getRequest();
+        $result = array();
+        if ($request->isPost()) {
+            $photoId = $this->params()->fromRoute('photo_id');
+            $lidnr = $this->params()->fromRoute('lidnr');
+            $result['success'] = $this->getPhotoService()->removeTag($photoId, $lidnr);
+        }
+        return new JsonModel(array($result));
     }
 
     /**

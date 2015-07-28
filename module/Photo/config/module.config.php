@@ -41,6 +41,42 @@ return array(
                                 'action' => 'view',
                             ),
                         ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'tag' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/tag[/:lidnr]',
+                                    'constraints' => array(
+                                        'lidnr' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'Tag',
+                                    ),
+                                ),
+                                'may_terminate' => true,
+                                'child_routes' => array(
+                                    'add' => array(
+                                        'type' => 'Literal',
+                                        'options' => array(
+                                            'route' => '/add',
+                                            'defaults' => array(
+                                                'action' => 'add',
+                                            ),
+                                        ),
+                                    ),
+                                    'remove' => array(
+                                        'type' => 'Literal',
+                                        'options' => array(
+                                            'route' => '/remove',
+                                            'defaults' => array(
+                                                'action' => 'remove',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                     'photo_download' => array(
                         'type' => 'Segment',
@@ -52,39 +88,6 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Photo',
                                 'action' => 'download',
-                            ),
-                        ),
-                    ),
-                    'tag' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => '/tag[/:photo_id]',
-                            'constraints' => array(
-                                'photo_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'controller' => 'Tag',
-                            ),
-                        ),
-                        'may_terminate' => true,
-                        'child_routes' => array(
-                            'add' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/add',
-                                    'defaults' => array(
-                                        'action' => 'add',
-                                    ),
-                                ),
-                            ),
-                            'remove' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/remove',
-                                    'defaults' => array(
-                                        'action' => 'remove',
-                                    ),
-                                ),
                             ),
                         ),
                     ),
