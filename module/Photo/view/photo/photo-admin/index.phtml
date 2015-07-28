@@ -94,6 +94,13 @@ $this->headLink()
 
             <div class="col-lg-6">
                 <h4>Tags</h4>
+                <ul id="tagList">
+                    <?php foreach($photo->getTags() as $tag): ?>
+                        <li>
+                            <a href="#"><?= $tag->getMember()->getFullName() ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </row>
     </div>
