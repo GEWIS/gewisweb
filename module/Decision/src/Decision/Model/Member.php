@@ -520,6 +520,16 @@ class Member
     }
 
     /**
+     * Get the organ installations.
+     *
+     * @return ArrayCollection
+     */
+    public function getOrganInstallations()
+    {
+        return $this->organInstallations;
+    }
+
+    /**
      * Convert to array.
      *
      * @return array

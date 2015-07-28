@@ -40,7 +40,8 @@ class Module
     {
         return array(
             'invokables' => array(
-                'decision_service_organ' => 'Decision\Service\Organ'
+                'decision_service_organ' => 'Decision\Service\Organ',
+                'decision_service_member' => 'Decision\Service\Member'
             ),
             'factories' => array(
                 'decision_mapper_member' => function ($sm) {
@@ -58,9 +59,11 @@ class Module
 
                     // add resources for this module
                     $acl->addResource('organ');
+                    $acl->addResource('member');
 
                     // users are allowed to view the organs
                     $acl->allow('user', 'organ', 'view');
+                    $acl->allow('user', 'member', 'view');
 
                     return $acl;
                 },
