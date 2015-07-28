@@ -87,7 +87,7 @@ case Member::TYPE_HONORARY:
     </table>
     <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
 <ul>
-<?php foreach ($member->getInstallations() as $install): ?>
+<?php foreach ($member->getOrganInstallations() as $install): ?>
     <li><?= $install->getFoundation()->getAbbr() ?></li>
 <?php endforeach; ?>
 </ul>
