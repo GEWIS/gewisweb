@@ -78,6 +78,14 @@
                 </ul>
             </nav>
             <div>
+                <h4><?= $this->translate('People in this photo') ?></h4>
+                <ul>
+                    <?php foreach($photo->getTags() as $tag): ?>
+                        <li><a href="#"><?= $tag->getMember()->getFullName() ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div>
                 <form action="<?= $this->url('photo/tag/add', array('photo_id' => $photo->getId())); ?>" id="tagForm" class="form-inline">
                 <div class="form-group">
                     <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
