@@ -9,6 +9,9 @@ use Zend\View\Model\JsonModel;
 class MemberController extends AbstractActionController
 {
 
+    /**
+     * Index action, shows all organs.
+     */
     public function indexAction()
     {
         return new ViewModel(array(
@@ -23,10 +26,11 @@ class MemberController extends AbstractActionController
     {
         $name = $this->params()->fromRoute('name');
         $members = array();
-        foreach($this->getMemberService()->findMemberByName($name) as $member) {
+        foreach ($this->getMemberService()->findMemberByName($name) as $member) {
             //TODO: this returns a lot of data, much more than is needed in most cases.
             $members[] = $member->toArray();
         }
+
         return new JsonModel(array(
             'members' => $members
         ));
