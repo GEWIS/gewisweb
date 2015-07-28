@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-28 22:45+0200\n"
-"PO-Revision-Date: 2014-03-03 10:44+0100\n"
+"PO-Revision-Date: 2015-07-28 22:59+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #: module/Application/view/application/index/index.phtml:2
 #, php-format
@@ -140,7 +140,7 @@ msgstr "Activeer"
 
 #: module/Application/view/layout/layout.phtml:44
 msgid "Photos"
-msgstr ""
+msgstr "Foto's"
 
 #: module/Application/view/layout/layout.phtml:48
 #: module/User/src/User/Form/Login.php:40
@@ -267,12 +267,12 @@ msgstr "Weet je zeker dat je wilt uitloggen?"
 
 #: module/Activity/view/activity/activity/index.phtml:5
 msgid "Create Activity"
-msgstr ""
+msgstr "Maak nieuwe activiteit"
 
 #: module/Activity/view/activity/activity/index.phtml:11
 #: module/Activity/view/activity/activity/view.phtml:6
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: module/Activity/view/activity/activity/index.phtml:12
 #: module/Activity/view/activity/activity/view.phtml:10
@@ -285,34 +285,34 @@ msgstr "Naam"
 #: module/Activity/view/activity/activity/view.phtml:14
 #: module/Activity/view/activity/activity/create.phtml:18
 msgid "Start time"
-msgstr ""
+msgstr "Starttijd"
 
 #: module/Activity/view/activity/activity/index.phtml:14
 #: module/Activity/view/activity/activity/view.phtml:18
 #: module/Activity/view/activity/activity/create.phtml:26
 msgid "End time"
-msgstr ""
+msgstr "Eindtijd"
 
 #: module/Activity/view/activity/activity/index.phtml:15
 #: module/Activity/view/activity/activity/view.phtml:22
 #: module/Activity/view/activity/activity/create.phtml:34
 msgid "Location"
-msgstr ""
+msgstr "Locatie"
 
 #: module/Activity/view/activity/activity/index.phtml:16
 #: module/Activity/view/activity/activity/view.phtml:26
 #: module/Activity/view/activity/activity/create.phtml:42
 msgid "Costs"
-msgstr ""
+msgstr "Kosten"
 
 #: module/Activity/view/activity/activity/index.phtml:28
 msgid "View"
-msgstr ""
+msgstr "Laat zien"
 
 #: module/Activity/view/activity/activity/view.phtml:30
 #: module/Activity/view/activity/activity/view.phtml:46
 msgid "Subscribe"
-msgstr ""
+msgstr "Inschrijven"
 
 #: module/Activity/view/activity/activity/view.phtml:31
 #: module/Activity/view/activity/activity/view.phtml:35
@@ -337,31 +337,31 @@ msgstr "GEWIS"
 
 #: module/Activity/view/activity/activity/view.phtml:40
 msgid "You have already signed up for this activity!"
-msgstr ""
+msgstr "Je bent al ingeschreven voor deze activiteit!"
 
 #: module/Activity/view/activity/activity/view.phtml:42
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Uitschrijven"
 
 #: module/Activity/view/activity/activity/view.phtml:49
 msgid "Login to subscribe"
-msgstr ""
+msgstr "Login om in te schrijven"
 
 #: module/Activity/view/activity/activity/view.phtml:56
 msgid "Already subscribed"
-msgstr ""
+msgstr "Je bent al ingeschreven"
 
 #: module/Activity/view/activity/activity/view.phtml:69
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 #: module/Activity/view/activity/activity/create.phtml:50
 msgid "Can Sign up?"
-msgstr ""
+msgstr "Kan ingeschreven worden?"
 
 #: module/Activity/view/activity/activity/create.phtml:58
 msgid "Description"
-msgstr ""
+msgstr "Beschrijving"
 
 #: module/Activity/view/activity/activity/signup.phtml:5
 #, fuzzy
@@ -370,7 +370,7 @@ msgstr "Tentamen geupload!"
 
 #: module/Activity/view/activity/activity/signoff.phtml:7
 msgid "Successfully unsubscribed"
-msgstr ""
+msgstr "Succesvol uitgeschreven"
 
 #: module/Education/view/education/education/index.phtml:16
 #: module/Education/src/Education/Form/SearchCourse.php:20
@@ -437,47 +437,47 @@ msgstr "Dispuut"
 
 #: module/Decision/view/decision/member/index.phtml:14
 msgid "Initials"
-msgstr ""
+msgstr "Initialen"
 
 #: module/Decision/view/decision/member/index.phtml:18
 msgid "First name"
-msgstr ""
+msgstr "Voornaam"
 
 #: module/Decision/view/decision/member/index.phtml:22
 msgid "Middle name"
-msgstr ""
+msgstr "Tussenvoegsels"
 
 #: module/Decision/view/decision/member/index.phtml:26
 msgid "Last name"
-msgstr ""
+msgstr "Achternaam"
 
 #: module/Decision/view/decision/member/index.phtml:30
 msgid "Sex"
-msgstr ""
+msgstr "Geslacht"
 
 #: module/Decision/view/decision/member/index.phtml:34
 msgid "Male"
-msgstr ""
+msgstr "Man"
 
 #: module/Decision/view/decision/member/index.phtml:37
 msgid "Female"
-msgstr ""
+msgstr "Vrouw"
 
 #: module/Decision/view/decision/member/index.phtml:40
 msgid "Other"
-msgstr ""
+msgstr "Anders"
 
 #: module/Decision/view/decision/member/index.phtml:46
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: module/Decision/view/decision/member/index.phtml:50
 msgid "Birth date"
-msgstr ""
+msgstr "Geboortedatum"
 
 #: module/Decision/view/decision/member/index.phtml:54
 msgid "Generation"
-msgstr ""
+msgstr "Generatie"
 
 #: module/Decision/view/decision/member/index.phtml:58
 #, fuzzy
@@ -486,23 +486,23 @@ msgstr "Lidmaatschapsnummer"
 
 #: module/Decision/view/decision/member/index.phtml:62
 msgid "Ordinary"
-msgstr ""
+msgstr "Gewoon"
 
 #: module/Decision/view/decision/member/index.phtml:65
 msgid "Prolonged"
-msgstr ""
+msgstr "Geprolongeerd"
 
 #: module/Decision/view/decision/member/index.phtml:68
 msgid "External"
-msgstr ""
+msgstr "Extern"
 
 #: module/Decision/view/decision/member/index.phtml:71
 msgid "Extraordinary"
-msgstr ""
+msgstr "Buitengewoon"
 
 #: module/Decision/view/decision/member/index.phtml:74
 msgid "Honorary"
-msgstr ""
+msgstr "Erelidmaatschap"
 
 #: module/Decision/view/decision/member/index.phtml:80
 #, fuzzy
@@ -511,23 +511,23 @@ msgstr "Lidmaatschapsnummer"
 
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "End date of membership"
-msgstr ""
+msgstr "Einddatum van lidmaatschap"
 
 #: module/Decision/view/decision/member/index.phtml:88
 msgid "Membership of committees and fraternities"
-msgstr ""
+msgstr "Lidmaatschap van commissies en disputen"
 
 #: module/Decision/view/decision/member/index.phtml:96
 msgid "Adresses"
-msgstr ""
+msgstr "Adressen"
 
 #: module/Decision/view/decision/member/index.phtml:101
 msgid "Home address (parents)"
-msgstr ""
+msgstr "Thuisadres (ouders)"
 
 #: module/Decision/view/decision/member/index.phtml:104
 msgid "Student address"
-msgstr ""
+msgstr "Studentadres"
 
 #: module/Decision/view/decision/member/index.phtml:107
 #, fuzzy
@@ -536,28 +536,28 @@ msgstr "E-mail adres:"
 
 #: module/Decision/view/decision/member/index.phtml:113
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #: module/Decision/view/decision/member/index.phtml:117
 msgid "Street and number"
-msgstr ""
+msgstr "Straat en huisnummer"
 
 #: module/Decision/view/decision/member/index.phtml:121
 msgid "City and postal code"
-msgstr ""
+msgstr "Woonplaats en postcode"
 
 #: module/Decision/view/decision/member/index.phtml:125
 msgid "Phone number"
-msgstr ""
+msgstr "Telefoonnummer"
 
 #: module/Photo/view/photo/photo/view.phtml:7
 msgid "Return to album"
-msgstr ""
+msgstr "Terug naar album"
 
 #: module/Photo/view/photo/photo/view.phtml:19
 #: module/Photo/view/photo/photo-admin/index.phtml:56
 msgid "Artist"
-msgstr ""
+msgstr "Artiest"
 
 #: module/Photo/view/photo/photo/view.phtml:20
 #: module/Photo/view/photo/photo/view.phtml:24
@@ -567,57 +567,57 @@ msgstr ""
 #: module/Photo/view/photo/photo/view.phtml:48
 #: module/Photo/view/photo/photo/view.phtml:52
 msgid "Unknown"
-msgstr ""
+msgstr "Onbekend"
 
 #: module/Photo/view/photo/photo/view.phtml:23
 #: module/Photo/view/photo/photo-admin/index.phtml:60
 msgid "Camera"
-msgstr ""
+msgstr "Camera"
 
 #: module/Photo/view/photo/photo/view.phtml:27
 #: module/Photo/view/photo/photo-admin/index.phtml:64
 msgid "Date/time"
-msgstr ""
+msgstr "Datum/tijd"
 
 #: module/Photo/view/photo/photo/view.phtml:31
 #: module/Photo/view/photo/photo-admin/index.phtml:68
 msgid "Flash"
-msgstr ""
+msgstr "Flits"
 
 #: module/Photo/view/photo/photo/view.phtml:35
 #: module/Photo/view/photo/photo-admin/index.phtml:72
 msgid "Focal length"
-msgstr ""
+msgstr "Brandpuntsafstand"
 
 #: module/Photo/view/photo/photo/view.phtml:39
 #: module/Photo/view/photo/photo-admin/index.phtml:76
 msgid "Exposure time"
-msgstr ""
+msgstr "Belichtingstijd"
 
 #: module/Photo/view/photo/photo/view.phtml:43
 #: module/Photo/view/photo/photo-admin/index.phtml:80
 msgid "Shutter speed"
-msgstr ""
+msgstr "Sluitertijd"
 
 #: module/Photo/view/photo/photo/view.phtml:47
 #: module/Photo/view/photo/photo-admin/index.phtml:84
 msgid "Aperture"
-msgstr ""
+msgstr "Aperture"
 
 #: module/Photo/view/photo/photo/view.phtml:51
 #: module/Photo/view/photo/photo-admin/index.phtml:88
 msgid "ISO"
-msgstr ""
+msgstr "ISO"
 
 #: module/Photo/view/photo/photo/view.phtml:62
 #: module/Photo/view/partial/paginator.phtml:9
 msgid "Previous"
-msgstr ""
+msgstr "Vorige"
 
 #: module/Photo/view/photo/photo/view.phtml:71
 #: module/Photo/view/partial/paginator.phtml:23
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
@@ -627,71 +627,71 @@ msgstr "Onderwijs admin"
 
 #: module/Photo/view/photo/album-admin/index.phtml:55
 msgid "Other albums"
-msgstr ""
+msgstr "Andere albums"
 
 #: module/Photo/view/photo/album-admin/index.phtml:68
 msgid "Create new album"
-msgstr ""
+msgstr "Maak nieuw album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:72
 msgid "Edit album"
-msgstr ""
+msgstr "Wijzig album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:75
 msgid "Add photos"
-msgstr ""
+msgstr "Voeg foto's toe"
 
 #: module/Photo/view/photo/album-admin/index.phtml:77
 msgid "Move album"
-msgstr ""
+msgstr "Verplaats album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:80
 msgid "Move %i photos"
-msgstr ""
+msgstr "Verplaats %i foto's"
 
 #: module/Photo/view/photo/album-admin/index.phtml:83
 msgid "Regenerate album cover"
-msgstr ""
+msgstr "Genereer album cover opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:87
 #: module/Photo/view/photo/album-admin/index.phtml:178
 msgid "Delete album"
-msgstr ""
+msgstr "Verwijder album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:90
 msgid "Delete %i photos"
-msgstr ""
+msgstr "Verwijder %i foto's"
 
 #: module/Photo/view/photo/album-admin/index.phtml:108
 msgid "Generate a new cover photo"
-msgstr ""
+msgstr "Genereer nieuwe cover foto"
 
 #: module/Photo/view/photo/album-admin/index.phtml:118
 msgid "Regenerate"
-msgstr ""
+msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:120
 #: module/Photo/src/Photo/Form/EditAlbum.php:44
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: module/Photo/view/photo/album-admin/index.phtml:133
 msgid "Move the album"
-msgstr ""
+msgstr "Verplaats het album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:138
 msgid "Select a new parent for the album"
-msgstr ""
+msgstr "Selecteer een nieuwe bovenliggende album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:142
 msgid "The album has been moved"
-msgstr ""
+msgstr "Het album is verplaatst"
 
 #: module/Photo/view/photo/album-admin/index.phtml:147
 #: module/Photo/view/photo/album-admin/index.phtml:238
 #: module/Photo/view/photo/photo-admin/index.phtml:122
 msgid "Move"
-msgstr ""
+msgstr "Verplaats"
 
 #: module/Photo/view/photo/album-admin/index.phtml:160
 #: module/Photo/view/photo/album-admin/index.phtml:192
@@ -705,69 +705,73 @@ msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <b>This action can not be reverted.</b>"
 msgstr ""
+"Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze "
+"actie kan niet ongedaan gemaakt worden</strong>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:167
 msgid "Please wait while the album is being deleted."
-msgstr ""
+msgstr "Wacht terwijl dit album verwijderd wordt."
 
 #: module/Photo/view/photo/album-admin/index.phtml:173
 msgid "The album has been deleted"
-msgstr ""
+msgstr "Dit album kan verwijderd worden."
 
 #: module/Photo/view/photo/album-admin/index.phtml:179
 #: module/Photo/view/photo/album-admin/index.phtml:211
 #: module/Photo/view/photo/photo-admin/index.phtml:154
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #: module/Photo/view/photo/album-admin/index.phtml:196
 msgid ""
 "Are you sure you want to delete the selected items? <b>This action can not "
 "be reverted.</b>"
 msgstr ""
+"Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze "
+"actie kan niet ongedaan gemaakt worden</strong>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:199
 msgid "Please wait while the photos are being deleted."
-msgstr ""
+msgstr "Wacht a.u.b. terwijl de foto's verwijderd worden."
 
 #: module/Photo/view/photo/album-admin/index.phtml:205
 msgid "The photos have been been deleted"
-msgstr ""
+msgstr "De foto's zijn verwijderd"
 
 #: module/Photo/view/photo/album-admin/index.phtml:210
 msgid "Delete photos"
-msgstr ""
+msgstr "Verwijder foto's"
 
 #: module/Photo/view/photo/album-admin/index.phtml:224
 msgid "Move the photos to another album"
-msgstr ""
+msgstr "Verplaats de foto's naar een ander album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:229
 #: module/Photo/view/photo/photo-admin/index.phtml:113
 msgid "Select a new parent album"
-msgstr ""
+msgstr "Selecteer een nieuwe bovenliggende album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:233
 msgid "The photos have been moved"
-msgstr ""
+msgstr "De foto's zijn verplaatst"
 
 #: module/Photo/view/photo/album-admin/create.phtml:2
 msgid "The album has been created"
-msgstr ""
+msgstr "Het album is opnieuw gemaakt"
 
 #: module/Photo/view/photo/album-admin/create.phtml:5
 msgid "Return to the album"
-msgstr ""
+msgstr "Keer terug naar het album"
 
 #: module/Photo/view/photo/album-admin/create.phtml:18
 #: module/Photo/src/Photo/Form/CreateAlbum.php:20
 #: module/Photo/src/Photo/Form/EditAlbum.php:20
 msgid "Album title"
-msgstr ""
+msgstr "Album titel"
 
 #: module/Photo/view/photo/album-admin/create.phtml:27
 msgid "Create album"
-msgstr ""
+msgstr "Nieuw album"
 
 #: module/Photo/view/photo/album-admin/add.phtml:10
 #, fuzzy
@@ -776,11 +780,11 @@ msgstr "Upload"
 
 #: module/Photo/view/photo/album-admin/add.phtml:21
 msgid "Import photos"
-msgstr ""
+msgstr "Importeer foto's"
 
 #: module/Photo/view/photo/album-admin/add.phtml:24
 msgid "The photos have been imported succesfully"
-msgstr ""
+msgstr "De foto's zijn succesvol geimporteerd."
 
 #: module/Photo/view/photo/album-admin/add.phtml:34
 msgid ""
@@ -788,37 +792,42 @@ msgid ""
 "that the webserver user can read the files inside of it. Please note that "
 "importing a large amount of photos may take a while."
 msgstr ""
+"Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de "
+"bestanden in de map kan bereiken. Het importeren van een grote hoeveelheid "
+"foto's kan een lange tijd duren."
 
 #: module/Photo/view/photo/photo-admin/index.phtml:44
 msgid "Move photo"
-msgstr ""
+msgstr "Verplaats foto"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:46
 #: module/Photo/view/photo/photo-admin/index.phtml:153
 msgid "Delete photo"
-msgstr ""
+msgstr "Verwijder foto"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:108
 msgid "Move the photo to another album"
-msgstr ""
+msgstr "Verplaats de foto naar een ander album"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:117
 msgid "The photo has been moved"
-msgstr ""
+msgstr "De foto is verplaatst"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:139
 msgid ""
 "Are you sure you want to delete this photo? <b>This action can not be "
 "reverted.</b>"
 msgstr ""
+"Weet je zeker dat je deze foto wil verwijderen? <strong>Deze actie kan niet "
+"ongedaan gemaakt worden</strong>"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:142
 msgid "Please wait while your photo is being deleted."
-msgstr ""
+msgstr "Wacht terwijl de foto verwijderd wordt."
 
 #: module/Photo/view/photo/photo-admin/index.phtml:148
 msgid "The photo has been deleted"
-msgstr ""
+msgstr "De foto is verwijderd"
 
 #: module/User/src/User/Form/Register.php:61
 msgid "This email address does not be long to the given member."
@@ -881,7 +890,7 @@ msgstr "Het is niet toegestaan om de lijst met organen te bekijken."
 
 #: module/Photo/src/Photo/Form/CreateAlbum.php:28
 msgid "Create"
-msgstr ""
+msgstr "Maak"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:28
 #, fuzzy
@@ -895,19 +904,19 @@ msgstr "Datum tentamen"
 
 #: module/Photo/src/Photo/Service/Photo.php:188
 msgid "The specified path is not valid"
-msgstr ""
+msgstr "Het gespecificeerde pad is niet valide"
 
 #: module/Photo/src/Photo/Service/Photo.php:205
 msgid "An unknown error occurred during uploading ("
-msgstr ""
+msgstr "Een onbekende error vond plaats tijdens het uploaden van ("
 
 #: module/Photo/src/Photo/Service/Photo.php:221
 msgid "The uploaded file does not have a valid extension"
-msgstr ""
+msgstr "Het geuploade bestand heeft geen valide extensie"
 
 #: module/Photo/src/Photo/Service/Photo.php:226
 msgid "The uploaded file is not a valid image"
-msgstr ""
+msgstr "Het geuploade bestand is geen valide plaatje"
 
 #~ msgid "Welcome to %sZend Framework 2%s"
 #~ msgstr "Welkom bij %sZend Framework 2%s"
