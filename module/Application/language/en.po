@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-28 22:45+0200\n"
-"PO-Revision-Date: 2014-03-03 10:42+0100\n"
+"PO-Revision-Date: 2015-07-28 23:01+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #: module/Application/view/application/index/index.phtml:2
 #, php-format
@@ -139,7 +139,7 @@ msgstr "Activate"
 
 #: module/Application/view/layout/layout.phtml:44
 msgid "Photos"
-msgstr ""
+msgstr "Photos"
 
 #: module/Application/view/layout/layout.phtml:48
 #: module/User/src/User/Form/Login.php:40
@@ -264,12 +264,12 @@ msgstr "Are you sure you want to logout?"
 
 #: module/Activity/view/activity/activity/index.phtml:5
 msgid "Create Activity"
-msgstr ""
+msgstr "Create Activity"
 
 #: module/Activity/view/activity/activity/index.phtml:11
 #: module/Activity/view/activity/activity/view.phtml:6
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: module/Activity/view/activity/activity/index.phtml:12
 #: module/Activity/view/activity/activity/view.phtml:10
@@ -282,34 +282,34 @@ msgstr "Name"
 #: module/Activity/view/activity/activity/view.phtml:14
 #: module/Activity/view/activity/activity/create.phtml:18
 msgid "Start time"
-msgstr ""
+msgstr "Start time"
 
 #: module/Activity/view/activity/activity/index.phtml:14
 #: module/Activity/view/activity/activity/view.phtml:18
 #: module/Activity/view/activity/activity/create.phtml:26
 msgid "End time"
-msgstr ""
+msgstr "End time"
 
 #: module/Activity/view/activity/activity/index.phtml:15
 #: module/Activity/view/activity/activity/view.phtml:22
 #: module/Activity/view/activity/activity/create.phtml:34
 msgid "Location"
-msgstr ""
+msgstr "Location"
 
 #: module/Activity/view/activity/activity/index.phtml:16
 #: module/Activity/view/activity/activity/view.phtml:26
 #: module/Activity/view/activity/activity/create.phtml:42
 msgid "Costs"
-msgstr ""
+msgstr "Costs"
 
 #: module/Activity/view/activity/activity/index.phtml:28
 msgid "View"
-msgstr ""
+msgstr "View"
 
 #: module/Activity/view/activity/activity/view.phtml:30
 #: module/Activity/view/activity/activity/view.phtml:46
 msgid "Subscribe"
-msgstr ""
+msgstr "Subscribe"
 
 #: module/Activity/view/activity/activity/view.phtml:31
 #: module/Activity/view/activity/activity/view.phtml:35
@@ -334,31 +334,31 @@ msgstr "GEWIS"
 
 #: module/Activity/view/activity/activity/view.phtml:40
 msgid "You have already signed up for this activity!"
-msgstr ""
+msgstr "You have already signed up for this activity!"
 
 #: module/Activity/view/activity/activity/view.phtml:42
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Unsubscribe"
 
 #: module/Activity/view/activity/activity/view.phtml:49
 msgid "Login to subscribe"
-msgstr ""
+msgstr "Login to subscribe"
 
 #: module/Activity/view/activity/activity/view.phtml:56
 msgid "Already subscribed"
-msgstr ""
+msgstr "Already subscribed"
 
 #: module/Activity/view/activity/activity/view.phtml:69
 msgid "Back"
-msgstr ""
+msgstr "Back"
 
 #: module/Activity/view/activity/activity/create.phtml:50
 msgid "Can Sign up?"
-msgstr ""
+msgstr "Can Sign up?"
 
 #: module/Activity/view/activity/activity/create.phtml:58
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: module/Activity/view/activity/activity/signup.phtml:5
 #, fuzzy
@@ -367,7 +367,7 @@ msgstr "Exam successfully uploaded!"
 
 #: module/Activity/view/activity/activity/signoff.phtml:7
 msgid "Successfully unsubscribed"
-msgstr ""
+msgstr "Successfully unsubscribed"
 
 #: module/Education/view/education/education/index.phtml:16
 #: module/Education/src/Education/Form/SearchCourse.php:20
@@ -434,47 +434,47 @@ msgstr "Fraternity"
 
 #: module/Decision/view/decision/member/index.phtml:14
 msgid "Initials"
-msgstr ""
+msgstr "Initials"
 
 #: module/Decision/view/decision/member/index.phtml:18
 msgid "First name"
-msgstr ""
+msgstr "First name"
 
 #: module/Decision/view/decision/member/index.phtml:22
 msgid "Middle name"
-msgstr ""
+msgstr "Middle name"
 
 #: module/Decision/view/decision/member/index.phtml:26
 msgid "Last name"
-msgstr ""
+msgstr "Last name"
 
 #: module/Decision/view/decision/member/index.phtml:30
 msgid "Sex"
-msgstr ""
+msgstr "Sex"
 
 #: module/Decision/view/decision/member/index.phtml:34
 msgid "Male"
-msgstr ""
+msgstr "Male"
 
 #: module/Decision/view/decision/member/index.phtml:37
 msgid "Female"
-msgstr ""
+msgstr "Female"
 
 #: module/Decision/view/decision/member/index.phtml:40
 msgid "Other"
-msgstr ""
+msgstr "Other"
 
 #: module/Decision/view/decision/member/index.phtml:46
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: module/Decision/view/decision/member/index.phtml:50
 msgid "Birth date"
-msgstr ""
+msgstr "Birth date"
 
 #: module/Decision/view/decision/member/index.phtml:54
 msgid "Generation"
-msgstr ""
+msgstr "Generation"
 
 #: module/Decision/view/decision/member/index.phtml:58
 #, fuzzy
@@ -483,23 +483,23 @@ msgstr "Membership number"
 
 #: module/Decision/view/decision/member/index.phtml:62
 msgid "Ordinary"
-msgstr ""
+msgstr "Ordinary"
 
 #: module/Decision/view/decision/member/index.phtml:65
 msgid "Prolonged"
-msgstr ""
+msgstr "Prolonged"
 
 #: module/Decision/view/decision/member/index.phtml:68
 msgid "External"
-msgstr ""
+msgstr "External"
 
 #: module/Decision/view/decision/member/index.phtml:71
 msgid "Extraordinary"
-msgstr ""
+msgstr "Extraordinary"
 
 #: module/Decision/view/decision/member/index.phtml:74
 msgid "Honorary"
-msgstr ""
+msgstr "Honorary"
 
 #: module/Decision/view/decision/member/index.phtml:80
 #, fuzzy
@@ -508,23 +508,23 @@ msgstr "Membership number"
 
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "End date of membership"
-msgstr ""
+msgstr "End date of membership"
 
 #: module/Decision/view/decision/member/index.phtml:88
 msgid "Membership of committees and fraternities"
-msgstr ""
+msgstr "Membership of committees and fraternities"
 
 #: module/Decision/view/decision/member/index.phtml:96
 msgid "Adresses"
-msgstr ""
+msgstr "Adresses"
 
 #: module/Decision/view/decision/member/index.phtml:101
 msgid "Home address (parents)"
-msgstr ""
+msgstr "Home address (parents)"
 
 #: module/Decision/view/decision/member/index.phtml:104
 msgid "Student address"
-msgstr ""
+msgstr "Student address"
 
 #: module/Decision/view/decision/member/index.phtml:107
 #, fuzzy
@@ -533,28 +533,28 @@ msgstr "Email address:"
 
 #: module/Decision/view/decision/member/index.phtml:113
 msgid "Country"
-msgstr ""
+msgstr "Country"
 
 #: module/Decision/view/decision/member/index.phtml:117
 msgid "Street and number"
-msgstr ""
+msgstr "Street and number"
 
 #: module/Decision/view/decision/member/index.phtml:121
 msgid "City and postal code"
-msgstr ""
+msgstr "City and postal code"
 
 #: module/Decision/view/decision/member/index.phtml:125
 msgid "Phone number"
-msgstr ""
+msgstr "Phone number"
 
 #: module/Photo/view/photo/photo/view.phtml:7
 msgid "Return to album"
-msgstr ""
+msgstr "Return to album"
 
 #: module/Photo/view/photo/photo/view.phtml:19
 #: module/Photo/view/photo/photo-admin/index.phtml:56
 msgid "Artist"
-msgstr ""
+msgstr "Artist"
 
 #: module/Photo/view/photo/photo/view.phtml:20
 #: module/Photo/view/photo/photo/view.phtml:24
@@ -564,57 +564,57 @@ msgstr ""
 #: module/Photo/view/photo/photo/view.phtml:48
 #: module/Photo/view/photo/photo/view.phtml:52
 msgid "Unknown"
-msgstr ""
+msgstr "Unknown"
 
 #: module/Photo/view/photo/photo/view.phtml:23
 #: module/Photo/view/photo/photo-admin/index.phtml:60
 msgid "Camera"
-msgstr ""
+msgstr "Camera"
 
 #: module/Photo/view/photo/photo/view.phtml:27
 #: module/Photo/view/photo/photo-admin/index.phtml:64
 msgid "Date/time"
-msgstr ""
+msgstr "Date/time"
 
 #: module/Photo/view/photo/photo/view.phtml:31
 #: module/Photo/view/photo/photo-admin/index.phtml:68
 msgid "Flash"
-msgstr ""
+msgstr "Flash"
 
 #: module/Photo/view/photo/photo/view.phtml:35
 #: module/Photo/view/photo/photo-admin/index.phtml:72
 msgid "Focal length"
-msgstr ""
+msgstr "Focal length"
 
 #: module/Photo/view/photo/photo/view.phtml:39
 #: module/Photo/view/photo/photo-admin/index.phtml:76
 msgid "Exposure time"
-msgstr ""
+msgstr "Exposure time"
 
 #: module/Photo/view/photo/photo/view.phtml:43
 #: module/Photo/view/photo/photo-admin/index.phtml:80
 msgid "Shutter speed"
-msgstr ""
+msgstr "Shutter speed"
 
 #: module/Photo/view/photo/photo/view.phtml:47
 #: module/Photo/view/photo/photo-admin/index.phtml:84
 msgid "Aperture"
-msgstr ""
+msgstr "Aperture"
 
 #: module/Photo/view/photo/photo/view.phtml:51
 #: module/Photo/view/photo/photo-admin/index.phtml:88
 msgid "ISO"
-msgstr ""
+msgstr "ISO"
 
 #: module/Photo/view/photo/photo/view.phtml:62
 #: module/Photo/view/partial/paginator.phtml:9
 msgid "Previous"
-msgstr ""
+msgstr "Previous"
 
 #: module/Photo/view/photo/photo/view.phtml:71
 #: module/Photo/view/partial/paginator.phtml:23
 msgid "Next"
-msgstr ""
+msgstr "Next"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
@@ -624,71 +624,71 @@ msgstr "Education admin"
 
 #: module/Photo/view/photo/album-admin/index.phtml:55
 msgid "Other albums"
-msgstr ""
+msgstr "Other albums"
 
 #: module/Photo/view/photo/album-admin/index.phtml:68
 msgid "Create new album"
-msgstr ""
+msgstr "Create new album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:72
 msgid "Edit album"
-msgstr ""
+msgstr "Edit album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:75
 msgid "Add photos"
-msgstr ""
+msgstr "Add photos"
 
 #: module/Photo/view/photo/album-admin/index.phtml:77
 msgid "Move album"
-msgstr ""
+msgstr "Move album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:80
 msgid "Move %i photos"
-msgstr ""
+msgstr "Move %i photos"
 
 #: module/Photo/view/photo/album-admin/index.phtml:83
 msgid "Regenerate album cover"
-msgstr ""
+msgstr "Regenerate album cover"
 
 #: module/Photo/view/photo/album-admin/index.phtml:87
 #: module/Photo/view/photo/album-admin/index.phtml:178
 msgid "Delete album"
-msgstr ""
+msgstr "Delete album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:90
 msgid "Delete %i photos"
-msgstr ""
+msgstr "Delete %i photos"
 
 #: module/Photo/view/photo/album-admin/index.phtml:108
 msgid "Generate a new cover photo"
-msgstr ""
+msgstr "Generate a new cover photo"
 
 #: module/Photo/view/photo/album-admin/index.phtml:118
 msgid "Regenerate"
-msgstr ""
+msgstr "Regenerate"
 
 #: module/Photo/view/photo/album-admin/index.phtml:120
 #: module/Photo/src/Photo/Form/EditAlbum.php:44
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: module/Photo/view/photo/album-admin/index.phtml:133
 msgid "Move the album"
-msgstr ""
+msgstr "Move the album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:138
 msgid "Select a new parent for the album"
-msgstr ""
+msgstr "Select a new parent for the album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:142
 msgid "The album has been moved"
-msgstr ""
+msgstr "The album has been moved"
 
 #: module/Photo/view/photo/album-admin/index.phtml:147
 #: module/Photo/view/photo/album-admin/index.phtml:238
 #: module/Photo/view/photo/photo-admin/index.phtml:122
 msgid "Move"
-msgstr ""
+msgstr "Move"
 
 #: module/Photo/view/photo/album-admin/index.phtml:160
 #: module/Photo/view/photo/album-admin/index.phtml:192
@@ -702,69 +702,73 @@ msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <b>This action can not be reverted.</b>"
 msgstr ""
+"Are you sure you want to delete this album including all photos inside of "
+"it? <b>This action can not be reverted.</b>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:167
 msgid "Please wait while the album is being deleted."
-msgstr ""
+msgstr "Please wait while the album is being deleted."
 
 #: module/Photo/view/photo/album-admin/index.phtml:173
 msgid "The album has been deleted"
-msgstr ""
+msgstr "The album has been deleted"
 
 #: module/Photo/view/photo/album-admin/index.phtml:179
 #: module/Photo/view/photo/album-admin/index.phtml:211
 #: module/Photo/view/photo/photo-admin/index.phtml:154
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: module/Photo/view/photo/album-admin/index.phtml:196
 msgid ""
 "Are you sure you want to delete the selected items? <b>This action can not "
 "be reverted.</b>"
 msgstr ""
+"Are you sure you want to delete the selected items? <b>This action can not "
+"be reverted.</b>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:199
 msgid "Please wait while the photos are being deleted."
-msgstr ""
+msgstr "Please wait while the photos are being deleted."
 
 #: module/Photo/view/photo/album-admin/index.phtml:205
 msgid "The photos have been been deleted"
-msgstr ""
+msgstr "The photos have been been deleted"
 
 #: module/Photo/view/photo/album-admin/index.phtml:210
 msgid "Delete photos"
-msgstr ""
+msgstr "Delete photos"
 
 #: module/Photo/view/photo/album-admin/index.phtml:224
 msgid "Move the photos to another album"
-msgstr ""
+msgstr "Move the photos to another album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:229
 #: module/Photo/view/photo/photo-admin/index.phtml:113
 msgid "Select a new parent album"
-msgstr ""
+msgstr "Select a new parent album"
 
 #: module/Photo/view/photo/album-admin/index.phtml:233
 msgid "The photos have been moved"
-msgstr ""
+msgstr "The photos have been moved"
 
 #: module/Photo/view/photo/album-admin/create.phtml:2
 msgid "The album has been created"
-msgstr ""
+msgstr "The album has been created"
 
 #: module/Photo/view/photo/album-admin/create.phtml:5
 msgid "Return to the album"
-msgstr ""
+msgstr "Return to the album"
 
 #: module/Photo/view/photo/album-admin/create.phtml:18
 #: module/Photo/src/Photo/Form/CreateAlbum.php:20
 #: module/Photo/src/Photo/Form/EditAlbum.php:20
 msgid "Album title"
-msgstr ""
+msgstr "Album title"
 
 #: module/Photo/view/photo/album-admin/create.phtml:27
 msgid "Create album"
-msgstr ""
+msgstr "Create album"
 
 #: module/Photo/view/photo/album-admin/add.phtml:10
 #, fuzzy
@@ -773,11 +777,11 @@ msgstr "Upload"
 
 #: module/Photo/view/photo/album-admin/add.phtml:21
 msgid "Import photos"
-msgstr ""
+msgstr "Import photos"
 
 #: module/Photo/view/photo/album-admin/add.phtml:24
 msgid "The photos have been imported succesfully"
-msgstr ""
+msgstr "The photos have been imported succesfully"
 
 #: module/Photo/view/photo/album-admin/add.phtml:34
 msgid ""
@@ -785,37 +789,42 @@ msgid ""
 "that the webserver user can read the files inside of it. Please note that "
 "importing a large amount of photos may take a while."
 msgstr ""
+"Make sure that the folder permissions on your import folder are set such "
+"that the webserver user can read the files inside of it. Please note that "
+"importing a large amount of photos may take a while."
 
 #: module/Photo/view/photo/photo-admin/index.phtml:44
 msgid "Move photo"
-msgstr ""
+msgstr "Move photo"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:46
 #: module/Photo/view/photo/photo-admin/index.phtml:153
 msgid "Delete photo"
-msgstr ""
+msgstr "Delete photo"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:108
 msgid "Move the photo to another album"
-msgstr ""
+msgstr "Move the photo to another album"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:117
 msgid "The photo has been moved"
-msgstr ""
+msgstr "The photo has been moved"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:139
 msgid ""
 "Are you sure you want to delete this photo? <b>This action can not be "
 "reverted.</b>"
 msgstr ""
+"Are you sure you want to delete this photo? <b>This action can not be "
+"reverted.</b>"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:142
 msgid "Please wait while your photo is being deleted."
-msgstr ""
+msgstr "Please wait while your photo is being deleted."
 
 #: module/Photo/view/photo/photo-admin/index.phtml:148
 msgid "The photo has been deleted"
-msgstr ""
+msgstr "The photo has been deleted"
 
 #: module/User/src/User/Form/Register.php:61
 msgid "This email address does not be long to the given member."
@@ -878,7 +887,7 @@ msgstr "Not allowed to view the list of organs."
 
 #: module/Photo/src/Photo/Form/CreateAlbum.php:28
 msgid "Create"
-msgstr ""
+msgstr "Create"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:28
 #, fuzzy
@@ -892,19 +901,19 @@ msgstr "Exam date"
 
 #: module/Photo/src/Photo/Service/Photo.php:188
 msgid "The specified path is not valid"
-msgstr ""
+msgstr "The specified path is not valid"
 
 #: module/Photo/src/Photo/Service/Photo.php:205
 msgid "An unknown error occurred during uploading ("
-msgstr ""
+msgstr "An unknown error occurred during uploading ("
 
 #: module/Photo/src/Photo/Service/Photo.php:221
 msgid "The uploaded file does not have a valid extension"
-msgstr ""
+msgstr "The uploaded file does not have a valid extension"
 
 #: module/Photo/src/Photo/Service/Photo.php:226
 msgid "The uploaded file is not a valid image"
-msgstr ""
+msgstr "The uploaded file is not a valid image"
 
 #~ msgid "Welcome to %sZend Framework 2%s"
 #~ msgstr "Welcome to %sZend Framework 2%s"
