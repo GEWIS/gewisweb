@@ -78,7 +78,7 @@
                 </ul>
             </nav>
             <div>
-                <form class="form-inline">
+                <form action="<?= $this->url('photo/tag/add', array('photo_id' => $photo->getId())); ?>" id="tagForm" class="form-inline">
                 <div class="form-group">
                     <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
                     <input type="text" class="form-control" name="tagSearch" id="tagSearch">

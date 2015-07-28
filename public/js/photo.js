@@ -38,7 +38,11 @@ Photo = {
                 }
             },
             onSelect: function (suggestion) {
-                alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                $.post($('#tagForm').attr('action'),
+                    { lidnr : suggestion.data }
+                , function(data) {
+                        console.log(data);
+                    });
             }
         });
 
