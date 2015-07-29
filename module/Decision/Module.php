@@ -85,7 +85,7 @@ class Module
                     // users are allowed to view and search members
                     $acl->allow('user', 'member', array('view', 'search'));
 
-                    $acl->allow('user', 'decision', 'search');
+                    $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
 
                     return $acl;
                 },

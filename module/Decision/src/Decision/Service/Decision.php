@@ -17,6 +17,13 @@ class Decision extends AbstractAclService
      */
     public function getMeetings()
     {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
+        }
+
         return $this->getMeetingMapper()->findAll();
     }
 
@@ -30,6 +37,13 @@ class Decision extends AbstractAclService
      */
     public function getMeeting($type, $number)
     {
+        if (!$this->isAllowed('view_meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meetings.')
+            );
+        }
+
         return $this->getMeetingMapper()->find($type, $number);
     }
 
