@@ -42,6 +42,19 @@ return array(
                             ),
                         ),
                     ),
+                    'photo_download' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/download[/:photo_id]',
+                            'constraints' => array(
+                                'photo_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'download',
+                            ),
+                        ),
+                    ),
                     // Route for categorizing albums by association year.
                     'year' => array(
                         'type' => 'Segment',
