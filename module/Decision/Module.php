@@ -41,6 +41,7 @@ class Module
         return array(
             'invokables' => array(
                 'decision_service_organ' => 'Decision\Service\Organ',
+                'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member'
             ),
             'factories' => array(
@@ -54,21 +55,32 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_mapper_decision' => function ($sm) {
+                    return new \Decision\Mapper\Decision(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
+                'decision_form_searchdecision' => function ($sm) {
+                    return new \Decision\Form\SearchDecision(
+                        $sm->get('translator')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
                     // add resources for this module
                     $acl->addResource('organ');
                     $acl->addResource('member');
+                    $acl->addResource('decision');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
 
-                    $acl->allow('user', 'member', 'view');
+                    // users are allowed to view and search members
+                    $acl->allow('user', 'member', array('view', 'search'));
 
-                    // users are allowed to search for members
-                    $acl->allow('user', 'member', 'search');
+                    $acl->allow('user', 'decision', 'search');
 
                     return $acl;
                 },
