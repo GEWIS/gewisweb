@@ -27,7 +27,7 @@ Photo = {
     initTagSearch: function () {
         $('#tagSearch').autocomplete({
             lookup: function (query, done) {
-                if (query.length >= 3) {
+                if (query.length >= 2) {
                     $.getJSON('/member/search/' + query, function (data) {
                         var result = { suggestions: [] };
 

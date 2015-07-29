@@ -10,6 +10,7 @@ use Application\Service\AbstractAclService;
 class Member extends AbstractAclService
 {
 
+    const MIN_SEARCH_QUERY_LENGTH = 2;
 
     /**
      * Obtain information about the current user.
@@ -39,15 +40,15 @@ class Member extends AbstractAclService
      * Find a member by (part of) its name.
      *
      * @param string $query (part of) the full name of a member
-     * @pre $name must be at least 3 characters
+     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *
      * @return array|null
      */
     public function searchMembersByName($query)
     {
-        if (strlen($query) < 3) {
+        if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
             throw new \Zend\Code\Exception\InvalidArgumentException(
-                $this->getTranslator()->translate('Name must be at least 3 characters')
+                $this->getTranslator()->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
             );
         }
 
