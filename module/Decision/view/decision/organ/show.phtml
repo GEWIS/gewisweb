@@ -1,1 +1,48 @@
+<div class="row">
+    <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
+
+<?php
+// prepare memberships
+$oldMembers = array();
+$currentMembers = array();
+foreach ($organ->getMembers() as $install) {
+    if (null === $install->getDischargeDate()) {
+        // current member
+        if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
+            $currentMembers[$install->getMember()->getLidnr()] = array(
+                'member' => $install->getMember(),
+                'functions' => array()
+            );
+        }
+        if ($install->getFunction() != 'Lid') {
+            $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+        }
+    } else {
+        // old member
+        if (!isset($oldMembers[$install->getMember()->getLidnr()])) {
+            $oldMembers[$install->getMember()->getLidnr()] = $install->getMember();
+        }
+    }
+}
+$oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) {
+    return !isset($currentMembers[$member->getLidnr()]);
+});
+?>
+    <div class="col-md-6">
+        <h2><?= $this->translate('Current members') ?></h2>
+        <ul>
+        <?php foreach ($currentMembers as $membership): ?>
+            <li><?= $membership['member']->getFullName() ?> <?php if (!empty($membership['functions'])): ?> (<?= implode(', ', $membership['functions']) ?>)<?php endif ?></li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2><?= $this->translate('Old members') ?></h2>
+        <ul>
+        <?php foreach ($oldMembers as $member): ?>
+            <li><?= $member->getFullName() ?></li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+</div>
 <?php var_dump($organ) ?>
