@@ -19,6 +19,14 @@ class OrganController extends AbstractActionController
     }
 
     /**
+     * Show an organ.
+     */
+    public function showAction()
+    {
+        return new ViewModel(array());
+    }
+
+    /**
      * Get the organ service.
      */
     public function getOrganService()

@@ -37,13 +37,16 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
+                    'show' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route'    => '/show/:organ',
                             'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'organ' => '[0-9]+',
                             ),
+                            'defaults' => array(
+                                'action' => 'show'
+                            )
                         ),
                     ),
                 ),
