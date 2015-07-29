@@ -11,6 +11,16 @@ class Decision extends AbstractAclService
 {
 
     /**
+     * Get all meetings.
+     *
+     * @return array Of all meetings
+     */
+    public function getMeetings()
+    {
+        return $this->getMeetingMapper()->findAll();
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data
@@ -36,7 +46,7 @@ class Decision extends AbstractAclService
 
         $data = $form->getData();
 
-        return $this->getdecisionMapper()->search($data['query']);
+        return $this->getDecisionMapper()->search($data['query']);
     }
 
     /**
@@ -47,6 +57,16 @@ class Decision extends AbstractAclService
     public function getSearchDecisionForm()
     {
         return $this->sm->get('decision_form_searchdecision');
+    }
+
+    /**
+     * Get the meeting mapper.
+     *
+     * @return Decision\Mapper\Meeting
+     */
+    public function getMeetingMapper()
+    {
+        return $this->sm->get('decision_mapper_meeting');
     }
 
     /**

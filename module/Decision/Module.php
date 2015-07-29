@@ -55,6 +55,11 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_mapper_meeting' => function ($sm) {
+                    return new \Decision\Mapper\Meeting(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_mapper_decision' => function ($sm) {
                     return new \Decision\Mapper\Decision(
                         $sm->get('decision_doctrine_em')

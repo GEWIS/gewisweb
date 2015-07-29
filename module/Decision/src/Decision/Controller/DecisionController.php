@@ -13,7 +13,9 @@ class DecisionController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'meetings' => $this->getDecisionService()->getMeetings()
+        ));
     }
 
     /**
