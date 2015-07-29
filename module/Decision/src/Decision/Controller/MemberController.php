@@ -23,15 +23,20 @@ class MemberController extends AbstractActionController
     public function searchAction()
     {
         $name = $this->params()->fromQuery('q');
-        $members = array();
-        foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
-            //TODO: this returns a lot of data, much more than is needed in most cases.
-            $members[] = $member->toArray();
+
+        if (!empty($name)) {
+            $members = array();
+            foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
+                //TODO: this returns a lot of data, much more than is needed in most cases.
+                $members[] = $member->toArray();
+            }
+
+            return new JsonModel(array(
+                'members' => $members
+            ));
         }
 
-        return new JsonModel(array(
-            'members' => $members
-        ));
+        return new ViewModel(array());
     }
 
     /**
