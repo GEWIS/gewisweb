@@ -9,30 +9,23 @@ class DecisionController extends AbstractActionController
 {
 
     /**
-     * Index action, shows all organs.
-     */
-    public function indexAction()
-    {
-        return new ViewModel(array(
-            'organs' => $this->getOrganService()->getOrgans()
-        ));
-    }
-
-    /**
      * Search decisions.
      */
     public function searchAction()
     {
+        $service = $this->getDecisionService();
+
         return new ViewModel(array(
-            'form' => $this->getServiceLocator()->get('decision_form_searchdecision')
+            'form' => $service->getSearchDecisionForm()
         ));
     }
 
     /**
-     * Get the organ service.
+     * Get the decision service.
      */
-    public function getOrganService()
+    public function getDecisionService()
     {
-        return $this->getServiceLocator()->get('decision_service_organ');
+        return $this->getServiceLocator()->get('decision_service_decision');
     }
+
 }
