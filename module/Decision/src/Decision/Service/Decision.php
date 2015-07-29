@@ -32,6 +32,16 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the decision mapper.
+     *
+     * @return Decision\Mapper\Decision
+     */
+    public function getDecisionMapper()
+    {
+        return $this->sm->get('decision_mapper_decision');
+    }
+
+    /**
      * Get the default resource ID.
      *
      * @return string
