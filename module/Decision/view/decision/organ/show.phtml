@@ -28,16 +28,8 @@ $oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) 
     return !isset($currentMembers[$member->getLidnr()]);
 });
 ?>
-    <div class="col-md-6">
-        <h2><?= $this->translate('Organ mutations') ?></h2>
-        <ul>
-        <?php foreach ($organ->getFoundation()->getReferences() as $reference): ?>
-            <li><?= $reference->getContent() ?></li>
-        <?php endforeach ?>
-        </ul>
-    </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h2><?= $this->translate('Current members') ?></h2>
         <ul>
         <?php foreach ($currentMembers as $membership): ?>
@@ -49,6 +41,15 @@ $oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) 
         <ul>
         <?php foreach ($oldMembers as $member): ?>
             <li><?= $member->getFullName() ?></li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+
+    <div class="col-md-8">
+        <h2><?= $this->translate('Organ mutations') ?></h2>
+        <ul>
+        <?php foreach ($organ->getFoundation()->getReferences() as $reference): ?>
+            <li><?= $reference->getContent() ?></li>
         <?php endforeach ?>
         </ul>
     </div>

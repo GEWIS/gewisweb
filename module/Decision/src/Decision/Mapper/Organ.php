@@ -65,9 +65,10 @@ class Organ
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
-        $qb->select('o, om, m')
+        $qb->select('o, om, m, f')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
+            ->join('o.foundation', 'f')
             ->where('o.id = :id');
 
         $qb->setParameter('id', $id);
