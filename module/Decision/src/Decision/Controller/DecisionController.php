@@ -19,6 +19,14 @@ class DecisionController extends AbstractActionController
     }
 
     /**
+     * Search decisions.
+     */
+    public function searchAction()
+    {
+        return new ViewModel(array());
+    }
+
+    /**
      * Get the organ service.
      */
     public function getOrganService()
