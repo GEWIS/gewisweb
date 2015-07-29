@@ -40,6 +40,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
         $acl->addRole('user', array('guest'));
         $acl->addResource('organ');
         $acl->allow('user', 'organ', 'view');
+        $acl->allow('user', 'organ', 'list');
     }
 
     /**
