@@ -23,6 +23,19 @@ return array(
                             ),
                         ),
                     ),
+                    'meeting' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/:type/:number',
+                            'constraints' => array(
+                                'type' => 'BV|AV|VV|Virt',
+                                'number' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'action' => 'view'
+                            )
+                        )
+                    )
                 ),
             ),
             'organ' => array(
