@@ -17,6 +17,52 @@ Photo = {
         if ($('#next').length > 0) {
             $('#next')[0].click();
         }
+    },
+    initTagging: function() {
+        $('#tagList').find(".remove-tag").each(function () {
+            $(this).on('click', Photo.removeTag);
+        });
+        Photo.initTagSearch();
+    },
+    initTagSearch: function () {
+        $('#tagSearch').autocomplete({
+            lookup: function (query, done) {
+                if (query.length >= 2) {
+                    $.getJSON('/member/search/' + query, function (data) {
+                        var result = { suggestions: [] };
+
+                        $.each(data.members, function (i, member) {
+                            result.suggestions.push({
+                                'value': member.fullName, 'data': member.lidnr
+                            })
+                        });
+
+                        done(result);
+                    });
+                }
+            },
+            onSelect: function (suggestion) {
+                $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
+                    { lidnr : suggestion.data }
+                , function(data) {
+                        if(data.success) {
+                            $('#tagList').append('<li><a href="#">' + suggestion.value +'</a></li>');
+                        }
+                        $('#tagSearch').val('');
+                    });
+            }
+        });
+
+    },
+
+    removeTag: function(e) {
+        e.preventDefault()
+        parent = $(this).parent();
+        $.post($(this).attr('href'), function(data) {
+                if(data.success) {
+                    parent.remove();
+                }
+            });
     }
 }
 
@@ -29,3 +75,4 @@ $(function () {
         }
     });
 });
+

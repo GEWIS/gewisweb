@@ -10,6 +10,8 @@ use Application\Service\AbstractAclService;
 class Member extends AbstractAclService
 {
 
+    const MIN_SEARCH_QUERY_LENGTH = 2;
+
     /**
      * Obtain information about the current user.
      *
@@ -27,9 +29,43 @@ class Member extends AbstractAclService
     }
 
     /**
+     *
+     */
+    public function findMemberByLidNr($lidnr)
+    {
+        return $this->getMemberMapper()->findByLidnr($lidnr);
+    }
+
+    /**
+     * Find a member by (part of) its name.
+     *
+     * @param string $query (part of) the full name of a member
+     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
+     *
+     * @return array|null
+     */
+    public function searchMembersByName($query)
+    {
+        if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
+            throw new \Zend\Code\Exception\InvalidArgumentException(
+                $this->getTranslator()->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
+            );
+        }
+
+        if (!$this->isAllowed('search')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to search for members.')
+            );
+        }
+
+        return $this->getMemberMapper()->searchByName($query);
+
+    }
+
+    /**
      * Get the member mapper.
      *
-     * @return Decision\Mapper\Member
+     * @return \Decision\Mapper\Member
      */
     public function getMemberMapper()
     {

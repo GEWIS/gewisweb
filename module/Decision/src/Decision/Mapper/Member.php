@@ -39,6 +39,27 @@ class Member
     }
 
     /**
+     * Finds members by (part of) their name.
+     *
+     * @param string $query (part of) the full name of a member
+     * @param integer $maxResults
+     *
+     * @return array
+     */
+    public function searchByName($query, $maxResults = 32)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('m')
+            ->from('Decision\Model\Member', 'm')
+            ->where("CONCAT(LOWER(m.firstName), ' ', LOWER(m.lastName)) LIKE :name")
+            ->orWhere("CONCAT(LOWER(m.firstName), ' ', LOWER(m.middleName), ' ', LOWER(m.lastName)) LIKE :name")
+            ->setMaxResults($maxResults)
+            ->setFirstResult(0);
+        $qb->setParameter(':name', '%' . strtolower($query) . '%');
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist a member model.
      *
      * @param MemberModel $member Member to persist.

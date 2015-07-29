@@ -1,4 +1,7 @@
-<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
+<?php
+    $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+                        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+?>
 <?php if ($photo != null): ?>
     <div clas="row">
         <nav>
@@ -74,6 +77,32 @@
                     <?php endif; ?>
                 </ul>
             </nav>
+            <div>
+                <h4><?= $this->translate('People in this photo') ?></h4>
+                <ul id="tagList">
+                    <?php foreach($photo->getTags() as $tag): ?>
+                        <li>
+                            <a href="#"><?= $tag->getMember()->getFullName() ?></a>&nbsp;
+                            <a href="<?= $this->url('photo/photo/tag/remove', array('photo_id' => $photo->getId(), 'lidnr' => $tag->getMember()->getLidnr())); ?>" class="remove-tag">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div>
+                <form action="<?= $this->url('photo/photo/tag/add', array('photo_id' => $photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">
+                <div class="form-group">
+                    <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
+                    <input type="text" class="form-control" name="tagSearch" id="tagSearch">
+                </div>
+                </form>
+            </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            Photo.initTagging();
+        });
+    </script>
 <?php endif; ?>
