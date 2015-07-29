@@ -26,6 +26,27 @@ class Decision
     }
 
     /**
+     * Search decisions.
+     *
+     * @param string $query
+     *
+     * @return array
+     */
+    public function search($query)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('d');
+
+        $qb->select('d, m')
+            ->where('d.content LIKE :query')
+            ->join('d.meeting', 'm')
+            ->orderBy('m.date', 'DESC');
+
+        $qb->setParameter('query', "%$query%");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist a decision model.
      *
      * @param DecisionmberModel $decision Decision to persist.

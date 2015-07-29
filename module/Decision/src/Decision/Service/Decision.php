@@ -27,7 +27,9 @@ class Decision extends AbstractAclService
             return null;
         }
 
-        return array();
+        $data = $form->getData();
+
+        return $this->getdecisionMapper()->search($data['query']);
     }
 
     /**
