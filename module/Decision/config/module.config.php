@@ -25,6 +25,32 @@ return array(
                     ),
                 ),
             ),
+            'organ' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/organ',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller'    => 'Organ',
+                        'action'        => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'show' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/show/:organ',
+                            'constraints' => array(
+                                'organ' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'show'
+                            )
+                        ),
+                    ),
+                ),
+            ),
             'member' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -41,6 +67,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
+            'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController'
         )
     ),

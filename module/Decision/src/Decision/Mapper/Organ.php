@@ -33,6 +33,18 @@ class Organ
     }
 
     /**
+     * Find all active organs.
+     *
+     * @return array
+     */
+    public function findActive()
+    {
+        return $this->getRepository()->findBy(array(
+            'abrogationDate' => null
+        ));
+    }
+
+    /**
      * Find all organs.
      *
      * @return array
@@ -40,6 +52,27 @@ class Organ
     public function findAll()
     {
         return $this->getRepository()->findAll();
+    }
+
+    /**
+     * Find an organ with all information.
+     *
+     * @param int $id
+     *
+     * @return Decision\Model\Organ
+     */
+    public function find($id)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o, om, m')
+            ->leftJoin('o.members', 'om')
+            ->leftJoin('om.member', 'm')
+            ->where('o.id = :id');
+
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**

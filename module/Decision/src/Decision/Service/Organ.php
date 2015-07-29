@@ -20,13 +20,31 @@ class Organ extends AbstractAclService
      */
     public function getOrgans()
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->isAllowed('list')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view the list of organs.')
             );
         }
 
-        return $this->getOrganMapper()->findAll();
+        return $this->getOrganMapper()->findActive();
+    }
+
+    /**
+     * Get one organ.
+     *
+     * @param int $id
+     *
+     * @return OrganModel
+     */
+    public function getOrgan($id)
+    {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view organ information')
+            );
+        }
+
+        return $this->getOrganMapper()->find($id);
     }
 
     /**
