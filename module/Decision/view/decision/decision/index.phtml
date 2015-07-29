@@ -1,1 +1,23 @@
-<?php var_dump($meetings) ?>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Vergadernummer</th>
+        <th>Datum</th>
+    </tr>
+    </thead>
+    <tbody>
+<?php foreach ($meetings as $meeting): ?>
+    <tr>
+        <td><?= $meeting->getType() ?></td>
+        <td><?= $meeting->getNumber() ?></td>
+        <td><?= $this->dateFormat(
+            $meeting->getDate(),
+            \IntlDateFormatter::FULL,
+            \IntlDateFormatter::NONE,
+            'nl_NL'
+        ) ?></td>
+    </tr>
+<?php endforeach; ?>
+    </tbody>
+</table>
