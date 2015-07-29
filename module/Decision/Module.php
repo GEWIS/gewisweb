@@ -71,15 +71,16 @@ class Module
                     // add resources for this module
                     $acl->addResource('organ');
                     $acl->addResource('member');
+                    $acl->addResource('decision');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
 
-                    $acl->allow('user', 'member', 'view');
+                    // users are allowed to view and search members
+                    $acl->allow('user', 'member', array('view', 'search'));
 
-                    // users are allowed to search for members
-                    $acl->allow('user', 'member', 'search');
+                    $acl->allow('user', 'decision', 'search');
 
                     return $acl;
                 },

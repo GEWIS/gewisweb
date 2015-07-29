@@ -19,6 +19,13 @@ class Decision extends AbstractAclService
      */
     public function search($data)
     {
+        if (!$this->isAllowed('search')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to search decisions.')
+            );
+        }
+
         $form = $this->getSearchDecisionForm();
 
         $form->setData($data);
