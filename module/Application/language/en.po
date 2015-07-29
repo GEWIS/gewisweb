@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-29 21:36+0200\n"
-"PO-Revision-Date: 2015-07-28 23:01+0200\n"
+"PO-Revision-Date: 2015-07-29 21:44+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -444,11 +444,11 @@ msgstr "Fraternity"
 
 #: module/Decision/view/decision/organ/show.phtml:33
 msgid "Current members"
-msgstr ""
+msgstr "Current members"
 
 #: module/Decision/view/decision/organ/show.phtml:40
 msgid "Old members"
-msgstr ""
+msgstr "Old members"
 
 #: module/Decision/view/decision/member/index.phtml:14
 msgid "Initials"
@@ -626,7 +626,7 @@ msgstr "ISO"
 
 #: module/Photo/view/photo/photo/view.phtml:59
 msgid "Full resolution"
-msgstr ""
+msgstr "Full resolution"
 
 #: module/Photo/view/photo/photo/view.phtml:65
 #: module/Photo/view/partial/paginator.phtml:9
@@ -645,7 +645,7 @@ msgstr "Delete photo"
 
 #: module/Photo/view/photo/photo/view.phtml:96
 msgid "Tag someone"
-msgstr ""
+msgstr "Tag someone"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
@@ -914,7 +914,7 @@ msgstr "You are not allowed to upload exams"
 
 #: module/Decision/src/Decision/Service/Member.php:70
 msgid "Name must be at least "
-msgstr ""
+msgstr "Name must be at least "
 
 #: module/Decision/src/Decision/Service/Member.php:76
 #, fuzzy

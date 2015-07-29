@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-29 21:36+0200\n"
-"PO-Revision-Date: 2015-07-28 22:59+0200\n"
+"PO-Revision-Date: 2015-07-29 21:44+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -447,11 +447,11 @@ msgstr "Dispuut"
 
 #: module/Decision/view/decision/organ/show.phtml:33
 msgid "Current members"
-msgstr ""
+msgstr "Huidige leden"
 
 #: module/Decision/view/decision/organ/show.phtml:40
 msgid "Old members"
-msgstr ""
+msgstr "Oud leden"
 
 #: module/Decision/view/decision/member/index.phtml:14
 msgid "Initials"
@@ -629,7 +629,7 @@ msgstr "ISO"
 
 #: module/Photo/view/photo/photo/view.phtml:59
 msgid "Full resolution"
-msgstr ""
+msgstr "Volledige resolutie"
 
 #: module/Photo/view/photo/photo/view.phtml:65
 #: module/Photo/view/partial/paginator.phtml:9
@@ -648,7 +648,7 @@ msgstr "Verwijder foto"
 
 #: module/Photo/view/photo/photo/view.phtml:96
 msgid "Tag someone"
-msgstr ""
+msgstr "Tag iemand"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
@@ -917,7 +917,7 @@ msgstr "Het is niet toegestaan om tentamens te uploaden"
 
 #: module/Decision/src/Decision/Service/Member.php:70
 msgid "Name must be at least "
-msgstr ""
+msgstr "Naam moet op zijn minst "
 
 #: module/Decision/src/Decision/Service/Member.php:76
 #, fuzzy
