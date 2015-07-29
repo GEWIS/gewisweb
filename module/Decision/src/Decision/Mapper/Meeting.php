@@ -32,9 +32,13 @@ class Meeting
      */
     public function findAll()
     {
-        $qb = $this->getRepository()->createQueryBuilder('m');
+        $qb = $this->em->createQueryBuilder();
 
-        $qb->orderBy('m.date', 'DESC');
+        $qb->select('m, COUNT(d)')
+            ->from('Decision\Model\Meeting', 'm')
+            ->leftJoin('m.decisions', 'd')
+            ->groupBy('m')
+            ->orderBy('m.date', 'DESC');
 
         return $qb->getQuery()->getResult();
     }

@@ -4,10 +4,12 @@
         <th>Type</th>
         <th>Vergadernummer</th>
         <th>Datum</th>
+        <th># Besluiten</th>
     </tr>
     </thead>
     <tbody>
-<?php foreach ($meetings as $meeting): ?>
+<?php foreach ($meetings as $info): ?>
+    <?php $meeting = $info[0] ?>
     <tr>
         <td><?= $meeting->getType() ?></td>
         <td><?= $meeting->getNumber() ?></td>
@@ -17,6 +19,7 @@
             \IntlDateFormatter::NONE,
             'nl_NL'
         ) ?></td>
+        <td><?= $info[1] ?></td>
     </tr>
 <?php endforeach; ?>
     </tbody>
