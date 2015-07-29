@@ -55,7 +55,7 @@ class Organ
     }
 
     /**
-     * Find an organ.
+     * Find an organ with all information.
      *
      * @param int $id
      *
@@ -63,7 +63,16 @@ class Organ
      */
     public function find($id)
     {
-        return $this->getRepository()->find($id);
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o, om, m')
+            ->leftJoin('o.members', 'om')
+            ->leftJoin('om.member', 'm')
+            ->where('o.id = :id');
+
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
