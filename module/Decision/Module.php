@@ -54,6 +54,11 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_form_searchdecision' => function ($sm) {
+                    return new \Decision\Form\SearchDecision(
+                        $sm->get('translator')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 

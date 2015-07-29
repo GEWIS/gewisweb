@@ -23,7 +23,9 @@ class DecisionController extends AbstractActionController
      */
     public function searchAction()
     {
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'form' => $this->getServiceLocator()->get('decision_form_searchdecision')
+        ));
     }
 
     /**
