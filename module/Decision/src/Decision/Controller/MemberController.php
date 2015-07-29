@@ -14,9 +14,7 @@ class MemberController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel(array(
-            'member' => $this->getMemberService()->getMembershipInfo()
-        ));
+        return new ViewModel($this->getMemberService()->getMembershipInfo());
     }
 
     /**

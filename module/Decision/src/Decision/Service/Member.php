@@ -25,7 +25,26 @@ class Member extends AbstractAclService
                 $translator->translate('You are not allowed to view membership info.')
             );
         }
-        return $this->getMemberMapper()->findByLidnr($this->getRole()->getLidnr());
+
+        $member = $this->getMemberMapper()->findByLidnr($this->getRole()->getLidnr());
+
+        $memberships = array();
+        foreach ($member->getOrganInstallations() as $install) {
+            if (null !== $install->getDischargeDate()) {
+                continue;
+            }
+            if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
+                $memberships[$install->getOrgan()->getAbbr()] = array();
+            }
+            if ($install->getFunction() != 'Lid') {
+                $memberships[$install->getOrgan()->getAbbr()][] = $install->getFunction();
+            }
+        }
+
+        return array(
+            'member' => $member,
+            'memberships' => $memberships
+        );
     }
 
     /**
