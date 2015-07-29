@@ -26,7 +26,7 @@ class MemberController extends AbstractActionController
     {
         $name = $this->params()->fromRoute('name');
         $members = array();
-        foreach ($this->getMemberService()->findMemberByName($name) as $member) {
+        foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
             //TODO: this returns a lot of data, much more than is needed in most cases.
             $members[] = $member->toArray();
         }

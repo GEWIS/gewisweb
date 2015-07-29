@@ -41,22 +41,24 @@ class Member
     /**
      * Finds members by (part of) their name.
      *
-     * @param string $firstName (part of) the first name of a member
-     * @param string $lastName (part of) the last name of a member
+     * @param string $query (part of) the full name of a member
+     * @param integer $maxResults
      *
      * @return array
      */
-    public function findByName($firstName, $lastName)
+    public function searchByName($query, $maxResults = 32)
     {
-        $qb = $this->getRepository()->createQueryBuilder('m');
-
-        $qb->where('m.firstName LIKE ?1')
-            ->orWhere('m.lastName LIKE ?2')
-            ->setParameter(1, $firstName . '%')
-            ->setParameter(2, '%' . $lastName . '%');
-
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('m')
+            ->from('Decision\Model\Member', 'm')
+            ->where("CONCAT(LOWER(m.firstName), ' ', LOWER(m.lastName)) LIKE :name")
+            ->orWhere("CONCAT(LOWER(m.firstName), ' ', LOWER(m.middleName), ' ', LOWER(m.lastName)) LIKE :name")
+            ->setMaxResults($maxResults)
+            ->setFirstResult(0);
+        $qb->setParameter(':name', '%' . strtolower($query) . '%');
         return $qb->getQuery()->getResult();
     }
+
     /**
      * Persist a member model.
      *

@@ -38,14 +38,14 @@ class Member extends AbstractAclService
     /**
      * Find a member by (part of) its name.
      *
-     * @param string $name (part of) the name of a member
+     * @param string $query (part of) the full name of a member
      * @pre $name must be at least 3 characters
      *
      * @return array|null
      */
-    public function findMemberByName($name)
+    public function searchMembersByName($query)
     {
-        if (strlen($name) < 3) {
+        if (strlen($query) < 3) {
             throw new \Zend\Code\Exception\InvalidArgumentException(
                 $this->getTranslator()->translate('Name must be at least 3 characters')
             );
@@ -56,12 +56,8 @@ class Member extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to search for members.')
             );
         }
-        $parts = explode(' ', $name);
-        if (count($parts) == 1) {
-            return $this->getMemberMapper()->findByName($name, $name);
-        } else {
-            return $this->getMemberMapper()->findByName($parts[0], last($parts));
-        }
+
+        return $this->getMemberMapper()->searchByName($query);
 
     }
 
