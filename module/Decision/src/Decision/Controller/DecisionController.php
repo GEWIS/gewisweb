@@ -14,6 +14,18 @@ class DecisionController extends AbstractActionController
     public function searchAction()
     {
         $service = $this->getDecisionService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $result = $service->search($request->getPost());
+
+            if (null !== $result) {
+                return new ViewModel(array(
+                    'result' => $result,
+                    'form' => $service->getSearchDecisionForm()
+                ));
+            }
+        }
 
         return new ViewModel(array(
             'form' => $service->getSearchDecisionForm()

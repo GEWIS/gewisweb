@@ -17,8 +17,17 @@ class Decision extends AbstractAclService
      *
      * @return array Search results
      */
-    protected function search($data)
+    public function search($data)
     {
+        $form = $this->getSearchDecisionForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        return array();
     }
 
     /**
