@@ -32,7 +32,11 @@ class Meeting
      */
     public function findAll()
     {
-        return $this->getRepository()->findAll();
+        $qb = $this->getRepository()->createQueryBuilder('m');
+
+        $qb->orderBy('m.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
