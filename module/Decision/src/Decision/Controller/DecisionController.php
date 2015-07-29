@@ -9,6 +9,14 @@ class DecisionController extends AbstractActionController
 {
 
     /**
+     * Index action, shows meetings.
+     */
+    public function indexAction()
+    {
+        return new ViewModel(array());
+    }
+
+    /**
      * Search decisions.
      */
     public function searchAction()
