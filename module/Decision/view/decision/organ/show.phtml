@@ -29,10 +29,10 @@ $oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) 
 });
 ?>
     <div class="col-md-6">
-        <h2><?= $this->translate('Organ decisions') ?></h2>
+        <h2><?= $this->translate('Organ mutations') ?></h2>
         <ul>
         <?php foreach ($organ->getFoundation()->getReferences() as $reference): ?>
-            <li><?= $reference->getDecision()->getContent() ?></li>
+            <li><?= $reference->getContent() ?></li>
         <?php endforeach ?>
         </ul>
     </div>
