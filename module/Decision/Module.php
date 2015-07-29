@@ -62,8 +62,9 @@ class Module
                     $acl->addResource('member');
 
                     // users are allowed to view the organs
+                    $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
-                    $acl->allow('user', 'organ', 'show');
+
                     $acl->allow('user', 'member', 'view');
 
                     return $acl;
