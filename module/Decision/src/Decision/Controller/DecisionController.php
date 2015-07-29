@@ -19,6 +19,14 @@ class DecisionController extends AbstractActionController
     }
 
     /**
+     * View a meeting.
+     */
+    public function viewAction()
+    {
+        return new ViewModel(array());
+    }
+
+    /**
      * Search decisions.
      */
     public function searchAction()
