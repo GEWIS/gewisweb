@@ -67,9 +67,6 @@ return array(
                         'type' => 'Segment',
                         'options' => array(
                             'route' => '/search[/:name]',
-                            'constraints' => array(
-                                'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
                             'defaults' => array(
                                 'action' => 'search',
                             ),
