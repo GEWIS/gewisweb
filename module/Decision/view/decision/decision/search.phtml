@@ -29,5 +29,9 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?= $this->form()->closeTag() ?>
 
 <?php if (isset($result)): ?>
-<?php var_dump($result) ?>
+<ul>
+<?php foreach ($result as $decision): ?>
+    <li><?= $decision->getMeeting()->getType() ?> <?= $decision->getMeeting()->getNumber() ?>.<?= $decision->getPoint() ?>.<?= $decision->getNumber() ?> <?= $decision->getContent() ?>
+<?php endforeach ?>
+</ul>
 <?php endif ?>
