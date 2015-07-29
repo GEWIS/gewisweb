@@ -23,7 +23,9 @@ class OrganController extends AbstractActionController
      */
     public function showAction()
     {
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'organ' => $this->getOrganService()->getOrgan($this->params()->fromRoute('organ'))
+        ));
     }
 
     /**

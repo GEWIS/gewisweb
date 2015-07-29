@@ -55,6 +55,18 @@ class Organ
     }
 
     /**
+     * Find an organ.
+     *
+     * @param int $id
+     *
+     * @return array
+     */
+    public function find($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

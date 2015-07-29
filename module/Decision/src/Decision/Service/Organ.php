@@ -30,6 +30,18 @@ class Organ extends AbstractAclService
     }
 
     /**
+     * Get one organ.
+     *
+     * @param int $id
+     *
+     * @return OrganModel
+     */
+    public function getOrgan($id)
+    {
+        return $this->getOrganMapper()->find($id);
+    }
+
+    /**
      * Get the organ mapper.
      *
      * @return OrganMapper.
