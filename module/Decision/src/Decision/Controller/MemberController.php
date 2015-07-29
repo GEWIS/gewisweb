@@ -22,7 +22,7 @@ class MemberController extends AbstractActionController
      */
     public function searchAction()
     {
-        $name = $this->params()->fromRoute('name');
+        $name = $this->params()->fromQuery('q');
         $members = array();
         foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
             //TODO: this returns a lot of data, much more than is needed in most cases.
