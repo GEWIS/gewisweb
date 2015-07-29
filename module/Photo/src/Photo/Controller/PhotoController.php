@@ -46,6 +46,13 @@ class PhotoController extends AbstractActionController
         return new ViewModel($photoData);
     }
 
+    public function downloadAction()
+    {
+        $photoId = $this->params()->fromRoute('photo_id');
+        $photo = $this->getPhotoService()->getPhoto($photoId);
+        return $this->getPhotoService()->getPhotoDownload($photo);
+    }
+
     /**
      * Gets the album service.
      *
