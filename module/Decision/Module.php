@@ -63,6 +63,7 @@ class Module
 
                     // users are allowed to view the organs
                     $acl->allow('user', 'organ', 'view');
+                    $acl->allow('user', 'organ', 'show');
                     $acl->allow('user', 'member', 'view');
 
                     return $acl;

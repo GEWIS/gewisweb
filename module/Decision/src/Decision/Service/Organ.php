@@ -38,6 +38,12 @@ class Organ extends AbstractAclService
      */
     public function getOrgan($id)
     {
+        if (!$this->isAllowed('show')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view organ information')
+            );
+        }
+
         return $this->getOrganMapper()->find($id);
     }
 
