@@ -27,7 +27,6 @@ Photo = {
     initTagSearch: function () {
         $('#tagSearch').autocomplete({
             lookup: function (query, done) {
-                console.log(query);
                 if (query.length >= 3) {
                     $.getJSON('/member/search/' + query, function (data) {
                         var result = { suggestions: [] };
@@ -37,14 +36,12 @@ Photo = {
                                 'value': member.fullName, 'data': member.lidnr
                             })
                         });
-                        console.log(result);
 
                         done(result);
                     });
                 }
             },
             onSelect: function (suggestion) {
-                console.log($('#tagForm').attr('action').replace('lidnr', suggestion.data));
                 $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
                     { lidnr : suggestion.data }
                 , function(data) {
