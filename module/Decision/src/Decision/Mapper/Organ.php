@@ -59,16 +59,15 @@ class Organ
      *
      * @param int $id
      *
-     * @return array
+     * @return Decision\Model\Organ
      */
     public function find($id)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
-        $qb->select('o, om, m, f')
+        $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
-            ->join('o.foundation', 'f')
             ->where('o.id = :id');
 
         $qb->setParameter('id', $id);
