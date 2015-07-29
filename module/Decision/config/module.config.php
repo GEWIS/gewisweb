@@ -64,9 +64,9 @@ return array(
                 'may_terminate' => true,
                 'child_routes' => array(
                     'search' => array(
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => array(
-                            'route' => '/search[/:name]',
+                            'route' => '/search',
                             'defaults' => array(
                                 'action' => 'search',
                             ),
