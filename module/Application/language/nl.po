@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-29 21:36+0200\n"
-"PO-Revision-Date: 2015-07-29 21:44+0200\n"
+"PO-Revision-Date: 2015-07-29 21:49+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -129,14 +129,12 @@ msgid "Home"
 msgstr "Home"
 
 #: module/Application/view/layout/layout.phtml:42
-#, fuzzy
 msgid "Education"
-msgstr "Onderwijs admin"
+msgstr "Onderwijs"
 
 #: module/Application/view/layout/layout.phtml:43
-#, fuzzy
 msgid "Activity"
-msgstr "Activeer"
+msgstr "Activiteit"
 
 #: module/Application/view/layout/layout.phtml:44
 msgid "Photos"
@@ -332,9 +330,8 @@ msgid "No"
 msgstr "Nee"
 
 #: module/Activity/view/activity/activity/view.phtml:34
-#, fuzzy
 msgid "Only GEWIS"
-msgstr "GEWIS"
+msgstr "Alleen GEWIS"
 
 #: module/Activity/view/activity/activity/view.phtml:40
 msgid "You have already signed up for this activity!"
@@ -365,9 +362,8 @@ msgid "Description"
 msgstr "Beschrijving"
 
 #: module/Activity/view/activity/activity/signup.phtml:5
-#, fuzzy
 msgid "Successfully subscribed"
-msgstr "Tentamen geupload!"
+msgstr "Succesvol geregistreerd"
 
 #: module/Activity/view/activity/activity/signoff.phtml:7
 msgid "Successfully unsubscribed"
@@ -390,9 +386,8 @@ msgid "Course code"
 msgstr "Vakcode"
 
 #: module/Education/view/education/education/index.phtml:37
-#, fuzzy
 msgid "Course description"
-msgstr "Vakcode"
+msgstr "Vakomschrijving"
 
 #: module/Education/view/education/education/course.phtml:11
 msgid "Course parts"
@@ -436,9 +431,8 @@ msgid "Committee"
 msgstr "Commissie"
 
 #: module/Decision/view/decision/organ/index.phtml:24
-#, fuzzy
 msgid "AV Committee"
-msgstr "Commissie"
+msgstr "AV Commissie"
 
 #: module/Decision/view/decision/organ/index.phtml:27
 #: module/Decision/view/decision/decision/index.phtml:23
@@ -498,9 +492,8 @@ msgid "Generation"
 msgstr "Generatie"
 
 #: module/Decision/view/decision/member/index.phtml:58
-#, fuzzy
 msgid "Membership type"
-msgstr "Lidmaatschapsnummer"
+msgstr "Type lidmaatschap"
 
 #: module/Decision/view/decision/member/index.phtml:62
 msgid "Ordinary"
@@ -523,9 +516,8 @@ msgid "Honorary"
 msgstr "Erelidmaatschap"
 
 #: module/Decision/view/decision/member/index.phtml:80
-#, fuzzy
 msgid "Last membership change"
-msgstr "Lidmaatschapsnummer"
+msgstr "Laatste wijziging lidmaatschap"
 
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "End date of membership"
@@ -548,9 +540,8 @@ msgid "Student address"
 msgstr "Studentadres"
 
 #: module/Decision/view/decision/member/index.phtml:107
-#, fuzzy
 msgid "Mail address"
-msgstr "E-mail adres:"
+msgstr "E-mail adres"
 
 #: module/Decision/view/decision/member/index.phtml:113
 msgid "Country"
@@ -642,9 +633,8 @@ msgid "Next"
 msgstr "Volgende"
 
 #: module/Photo/view/photo/photo/view.phtml:81
-#, fuzzy
 msgid "People in this photo"
-msgstr "Verwijder foto"
+msgstr "Mensen in deze foto"
 
 #: module/Photo/view/photo/photo/view.phtml:96
 msgid "Tag someone"
@@ -652,9 +642,8 @@ msgstr "Tag iemand"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
-#, fuzzy
 msgid "Photo admin"
-msgstr "Onderwijs admin"
+msgstr "Foto admin"
 
 #: module/Photo/view/photo/album-admin/index.phtml:55
 msgid "Other albums"
@@ -727,9 +716,8 @@ msgstr "Verplaats"
 #: module/Photo/view/photo/album-admin/index.phtml:160
 #: module/Photo/view/photo/album-admin/index.phtml:192
 #: module/Photo/view/photo/photo-admin/index.phtml:142
-#, fuzzy
 msgid "Delete confirmation"
-msgstr "Applicatie fundering"
+msgstr "Bevestig verwijderen"
 
 #: module/Photo/view/photo/album-admin/index.phtml:164
 msgid ""
@@ -805,9 +793,8 @@ msgid "Create album"
 msgstr "Nieuw album"
 
 #: module/Photo/view/photo/album-admin/add.phtml:10
-#, fuzzy
 msgid "Upload photos"
-msgstr "Upload"
+msgstr "Upload foto's"
 
 #: module/Photo/view/photo/album-admin/add.phtml:21
 msgid "Import photos"
@@ -911,41 +898,36 @@ msgid "You are not allowed to upload exams"
 msgstr "Het is niet toegestaan om tentamens te uploaden"
 
 #: module/Decision/src/Decision/Service/Member.php:25
-#, fuzzy
 msgid "You are not allowed to view membership info."
-msgstr "Het is niet toegestaan om tentamens te uploaden"
+msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
 #: module/Decision/src/Decision/Service/Member.php:70
 msgid "Name must be at least "
 msgstr "Naam moet op zijn minst "
 
 #: module/Decision/src/Decision/Service/Member.php:76
-#, fuzzy
 msgid "Not allowed to search for members."
-msgstr "Het is niet toegestaan om de lijst met organen te bekijken."
+msgstr "Het is niet toegestaan om te zoeken op leden."
 
 #: module/Decision/src/Decision/Service/Organ.php:25
 msgid "Not allowed to view the list of organs."
 msgstr "Het is niet toegestaan om de lijst met organen te bekijken."
 
 #: module/Decision/src/Decision/Service/Organ.php:43
-#, fuzzy
 msgid "Not allowed to view organ information"
-msgstr "Het is niet toegestaan om de lijst met organen te bekijken."
+msgstr "Het is niet toegestaan om informatie over organen in te zien."
 
 #: module/Photo/src/Photo/Form/CreateAlbum.php:28
 msgid "Create"
 msgstr "Maak"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:28
-#, fuzzy
 msgid "Start date"
-msgstr "Datum tentamen"
+msgstr "Startdatum"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:36
-#, fuzzy
 msgid "End date"
-msgstr "Datum tentamen"
+msgstr "Einddatum"
 
 #: module/Photo/src/Photo/Service/Photo.php:198
 msgid "The specified path is not valid"

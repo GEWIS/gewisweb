@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-29 21:36+0200\n"
-"PO-Revision-Date: 2015-07-29 21:44+0200\n"
+"PO-Revision-Date: 2015-07-29 21:46+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -128,14 +128,12 @@ msgid "Home"
 msgstr "Home"
 
 #: module/Application/view/layout/layout.phtml:42
-#, fuzzy
 msgid "Education"
-msgstr "Education admin"
+msgstr "Education"
 
 #: module/Application/view/layout/layout.phtml:43
-#, fuzzy
 msgid "Activity"
-msgstr "Activate"
+msgstr "Activity"
 
 #: module/Application/view/layout/layout.phtml:44
 msgid "Photos"
@@ -329,9 +327,8 @@ msgid "No"
 msgstr "No"
 
 #: module/Activity/view/activity/activity/view.phtml:34
-#, fuzzy
 msgid "Only GEWIS"
-msgstr "GEWIS"
+msgstr "Only GEWIS"
 
 #: module/Activity/view/activity/activity/view.phtml:40
 msgid "You have already signed up for this activity!"
@@ -362,9 +359,8 @@ msgid "Description"
 msgstr "Description"
 
 #: module/Activity/view/activity/activity/signup.phtml:5
-#, fuzzy
 msgid "Successfully subscribed"
-msgstr "Exam successfully uploaded!"
+msgstr "Successfully subscribed"
 
 #: module/Activity/view/activity/activity/signoff.phtml:7
 msgid "Successfully unsubscribed"
@@ -387,9 +383,8 @@ msgid "Course code"
 msgstr "Course code"
 
 #: module/Education/view/education/education/index.phtml:37
-#, fuzzy
 msgid "Course description"
-msgstr "Course code"
+msgstr "Course description"
 
 #: module/Education/view/education/education/course.phtml:11
 msgid "Course parts"
@@ -433,9 +428,8 @@ msgid "Committee"
 msgstr "Committee"
 
 #: module/Decision/view/decision/organ/index.phtml:24
-#, fuzzy
 msgid "AV Committee"
-msgstr "Committee"
+msgstr "AV Committee"
 
 #: module/Decision/view/decision/organ/index.phtml:27
 #: module/Decision/view/decision/decision/index.phtml:23
@@ -495,9 +489,8 @@ msgid "Generation"
 msgstr "Generation"
 
 #: module/Decision/view/decision/member/index.phtml:58
-#, fuzzy
 msgid "Membership type"
-msgstr "Membership number"
+msgstr "Membership type"
 
 #: module/Decision/view/decision/member/index.phtml:62
 msgid "Ordinary"
@@ -520,9 +513,8 @@ msgid "Honorary"
 msgstr "Honorary"
 
 #: module/Decision/view/decision/member/index.phtml:80
-#, fuzzy
 msgid "Last membership change"
-msgstr "Membership number"
+msgstr "Last membership change"
 
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "End date of membership"
@@ -545,9 +537,8 @@ msgid "Student address"
 msgstr "Student address"
 
 #: module/Decision/view/decision/member/index.phtml:107
-#, fuzzy
 msgid "Mail address"
-msgstr "Email address:"
+msgstr "Mail address"
 
 #: module/Decision/view/decision/member/index.phtml:113
 msgid "Country"
@@ -639,9 +630,8 @@ msgid "Next"
 msgstr "Next"
 
 #: module/Photo/view/photo/photo/view.phtml:81
-#, fuzzy
 msgid "People in this photo"
-msgstr "Delete photo"
+msgstr "People in this photo"
 
 #: module/Photo/view/photo/photo/view.phtml:96
 msgid "Tag someone"
@@ -649,9 +639,8 @@ msgstr "Tag someone"
 
 #: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/photo-admin/index.phtml:10
-#, fuzzy
 msgid "Photo admin"
-msgstr "Education admin"
+msgstr "Photo admin"
 
 #: module/Photo/view/photo/album-admin/index.phtml:55
 msgid "Other albums"
@@ -724,9 +713,8 @@ msgstr "Move"
 #: module/Photo/view/photo/album-admin/index.phtml:160
 #: module/Photo/view/photo/album-admin/index.phtml:192
 #: module/Photo/view/photo/photo-admin/index.phtml:142
-#, fuzzy
 msgid "Delete confirmation"
-msgstr "Skeleton Application"
+msgstr "Delete confirmation"
 
 #: module/Photo/view/photo/album-admin/index.phtml:164
 msgid ""
@@ -802,9 +790,8 @@ msgid "Create album"
 msgstr "Create album"
 
 #: module/Photo/view/photo/album-admin/add.phtml:10
-#, fuzzy
 msgid "Upload photos"
-msgstr "Upload"
+msgstr "Upload photos"
 
 #: module/Photo/view/photo/album-admin/add.phtml:21
 msgid "Import photos"
@@ -908,41 +895,36 @@ msgid "You are not allowed to upload exams"
 msgstr "You are not allowed to upload exams"
 
 #: module/Decision/src/Decision/Service/Member.php:25
-#, fuzzy
 msgid "You are not allowed to view membership info."
-msgstr "You are not allowed to upload exams"
+msgstr "You are not allowed to view membership info."
 
 #: module/Decision/src/Decision/Service/Member.php:70
 msgid "Name must be at least "
 msgstr "Name must be at least "
 
 #: module/Decision/src/Decision/Service/Member.php:76
-#, fuzzy
 msgid "Not allowed to search for members."
-msgstr "Not allowed to view the list of organs."
+msgstr "Not allowed to search for members."
 
 #: module/Decision/src/Decision/Service/Organ.php:25
 msgid "Not allowed to view the list of organs."
 msgstr "Not allowed to view the list of organs."
 
 #: module/Decision/src/Decision/Service/Organ.php:43
-#, fuzzy
 msgid "Not allowed to view organ information"
-msgstr "Not allowed to view the list of organs."
+msgstr "Not allowed to view organ information"
 
 #: module/Photo/src/Photo/Form/CreateAlbum.php:28
 msgid "Create"
 msgstr "Create"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:28
-#, fuzzy
 msgid "Start date"
-msgstr "Exam date"
+msgstr "Start date"
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:36
-#, fuzzy
 msgid "End date"
-msgstr "Exam date"
+msgstr "End date"
 
 #: module/Photo/src/Photo/Service/Photo.php:198
 msgid "The specified path is not valid"
