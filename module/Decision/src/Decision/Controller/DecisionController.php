@@ -23,7 +23,12 @@ class DecisionController extends AbstractActionController
      */
     public function viewAction()
     {
-        return new ViewModel(array());
+        $type = $this->params()->fromRoute('type');
+        $number = $this->params()->fromRoute('number');
+
+        return new ViewModel(array(
+            'meeting' => $this->getDecisionService()->getMeeting($type, $number)
+        ));
     }
 
     /**

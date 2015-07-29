@@ -44,6 +44,33 @@ class Meeting
     }
 
     /**
+     * Find a meeting with all decisions.
+     *
+     * @param string $type
+     * @param int $number
+     *
+     * @return MeetingModel
+     */
+    public function find($type, $number)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('m, d, db')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.type = :type')
+            ->andWhere('m.number = :number')
+            ->leftJoin('m.decisions', 'd')
+            ->leftJoin('d.destroyedby', 'db')
+            ->orderBy('d.point')
+            ->addOrderBy('d.number');
+
+        $qb->setParameter(':type', $type);
+        $qb->setParameter(':number', $number);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
      * Persist a meeting model.
      *
      * @param MeetingModel $meeting Meeting to persist.

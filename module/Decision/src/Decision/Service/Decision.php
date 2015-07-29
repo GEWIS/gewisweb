@@ -21,6 +21,19 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get information about one meeting.
+     *
+     * @param string $type
+     * @param int $number
+     *
+     * @return Decision\Model\Meeting
+     */
+    public function getMeeting($type, $number)
+    {
+        return $this->getMeetingMapper()->find($type, $number);
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data
