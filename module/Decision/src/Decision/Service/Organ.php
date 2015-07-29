@@ -26,7 +26,7 @@ class Organ extends AbstractAclService
             );
         }
 
-        return $this->getOrganMapper()->findAll();
+        return $this->getOrganMapper()->findActive();
     }
 
     /**

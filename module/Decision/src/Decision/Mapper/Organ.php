@@ -33,6 +33,18 @@ class Organ
     }
 
     /**
+     * Find all active organs.
+     *
+     * @return array
+     */
+    public function findActive()
+    {
+        return $this->getRepository()->findBy(array(
+            'abrogationDate' => null
+        ));
+    }
+
+    /**
      * Find all organs.
      *
      * @return array
