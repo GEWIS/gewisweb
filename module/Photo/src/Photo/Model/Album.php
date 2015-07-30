@@ -247,6 +247,26 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Add a photo to an album.
+     *
+     * @param \Photo\Model\Photo $photo
+     */
+    public function addPhoto($photo) {
+        $photo->setAlbum($this);
+        $this->photos[] = $photo;
+    }
+
+    /**
+     * Add a sub album to an album.
+     *
+     * @param \Photo\Model\Album $album
+     */
+    public function addAlbum($album) {
+        $album->setParent($this);
+        $this->children[] = $album;
+    }
+
+    /**
      * Returns an associative array representation of this object.
      *
      * @return array
