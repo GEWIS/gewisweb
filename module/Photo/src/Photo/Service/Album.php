@@ -208,27 +208,10 @@ class Album extends AbstractService
      */
     public function deleteAlbum($id)
     {
-        $album = $this->getAlbumById($id);
+        $album = $this->getAlbum($id);
         if (!is_null($album)) {
-            $this->deleteAlbumPhotos($id);
-            foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum) {
-                $this->deleteAlbum($subAlbum);
-            }
             $this->getAlbumMapper()->remove($album);
             $this->getAlbumMapper()->flush();
-        }
-    }
-
-    /**
-     * Deletes all photos inside the album
-     *
-     * @param int $id the id of the album to delete all photos from
-     */
-    public function deleteAlbumPhotos($id)
-    {
-        $album = $this->getAlbum($id);
-        foreach ($this->getPhotoMapper()->getAlbumPhotos($album) as $photo) {
-            $this->getPhotoService()->deletePhoto($photo);
         }
     }
 
