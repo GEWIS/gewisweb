@@ -32,21 +32,13 @@ class Album
     /**
      * Retrieves an album by id from the database.
      *
-     * @param integer $id the id of the album
+     * @param integer $albumId the id of the album
      *
-     * @return \Photo\Model\Album
+     * @return \Photo\Model\Album|null
      */
-    public function getAlbumById($id)
+    public function getAlbumById($albumId)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
-            ->where('a.id = ?1')
-            ->setParameter(1, $id);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->find($albumId);
     }
 
     /**
@@ -253,7 +245,7 @@ class Album
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Photo\Mapper\Album');
+        return $this->em->getRepository('Photo\Model\Album');
     }
 
 }
