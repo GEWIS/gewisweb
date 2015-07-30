@@ -9,7 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Album.
  *
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"Photo\Listener\Album"})
  *
  */
 class Album implements ResourceInterface
@@ -306,42 +306,6 @@ class Album implements ResourceInterface
         }
 
         return $array;
-    }
-
-    /**
-     * Updates the albumCount in the parent album object.
-     *
-     * @ORM\PrePersist()
-     * @ORM\PostUpdate()
-     */
-    public function updateOnAdd()
-    {
-        if (!is_null($this->parent) && !is_null($this->getStartDateTime())) {
-            $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
-            if (is_null($this->parent->getStartDateTime()) || $this->parent->getStartDateTime()->getTimestamp() >
-                $this->getStartDateTime()->getTimeStamp()
-            ) {
-                $this->parent->setStartDateTime($this->getStartDateTime());
-            }
-            if (is_null($this->parent->getEndDateTime()) || $this->parent->getEndDateTime()->getTimestamp() <
-                $this->getEndDateTime()->getTimeStamp()
-            ) {
-                $this->parent->setEndDateTime($this->getEndDateTime());
-            }
-        }
-    }
-
-    /**
-     * Updates the albumCount in the parent album object.
-     *
-     * @ORM\PreRemove()
-     * @ORM\PreUpdate()
-     */
-    public function updateOnRemove()
-    {
-        if (!is_null($this->parent)) {
-            $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
-        }
     }
 
     /**

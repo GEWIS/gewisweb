@@ -9,7 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Photo.
  *
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"Photo\Listener\Photo"})
  *
  */
 class Photo implements ResourceInterface
@@ -144,7 +144,7 @@ class Photo implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -454,43 +454,6 @@ class Photo implements ResourceInterface
         );
 
         return $array;
-    }
-
-    /**
-     * Updates the photoCount and date in the album object.
-     *
-     * @ORM\PrePersist()
-     * @ORM\PostUpdate()
-     */
-    public function updateOnAdd()
-    {
-        $this->album->setPhotoCount($this->album->getPhotoCount() + 1);
-        //update start and end date if the added photo is newere or older
-        if (is_null($this->album->getStartDateTime()) || $this->album->getStartDateTime()->getTimestamp() > $this->getDateTime()->getTimeStamp()
-        ) {
-            $this->album->setStartDateTime($this->getDateTime());
-        }
-
-        if (is_null($this->album->getEndDateTime()) || $this->album->getEndDateTime()->getTimestamp() < $this->getDateTime()->getTimeStamp()
-        ) {
-            $this->album->setEndDateTime($this->getDateTime());
-        }
-    }
-
-    /**
-     * Updates the photoCount in the album object.
-     *
-     * @ORM\PreRemove()
-     * @ORM\PreUpdate()
-     */
-    public function updateOnRemove()
-    {
-        $this->album->setPhotoCount($this->album->getPhotoCount() - 1);
-        /**
-         * TODO: possibly update the album start and end date after deleting an
-         * photo, this would however be a hassle to implement. It probably won't
-         * ever occur.
-         */
     }
 
     /**
