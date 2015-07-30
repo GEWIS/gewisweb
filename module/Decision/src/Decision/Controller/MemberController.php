@@ -22,7 +22,7 @@ class MemberController extends AbstractActionController
      */
     public function viewAction()
     {
-        return new ViewModel(array());
+        return new ViewModel($this->getMemberService()->getMembershipInfo($this->params()->fromRoute('lidnr')));
     }
 
     /**
