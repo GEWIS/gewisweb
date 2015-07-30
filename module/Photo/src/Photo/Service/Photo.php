@@ -3,10 +3,8 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractService;
-use Photo\Model\Photo as PhotoModel;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
-use Imagick;
 
 /**
  * Photo service.

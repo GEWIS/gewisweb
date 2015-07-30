@@ -2,6 +2,9 @@
 
 namespace Photo\Service;
 use Application\Service\AbstractService;
+use Photo\Model\Photo as PhotoModel;
+use Imagick;
+
 /**
  * Admin service for all photo admin related functions.
  */
@@ -70,7 +73,7 @@ class Admin extends AbstractService
      */
     public function movePhoto($photoId, $albumId)
     {
-        $photo = $this->getPhoto($photoId);
+        $photo = $this->getPhotoService()->getPhoto($photoId);
         $album = $this->getAlbumService()->getAlbum($albumId);
         if (is_null($photo) || is_null($album)) {
             return false;
