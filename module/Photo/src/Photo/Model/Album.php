@@ -207,31 +207,11 @@ class Album implements ResourceInterface
     /**
      * Set the cover photo for the album
      *
-     * @param photo $photo
+     * @param string $photo
      */
     public function setCoverPath($photo)
     {
         $this->coverPath = $photo;
-    }
-
-    /**
-     * Set the amount of photos in an album
-     *
-     * @param integer $count
-     */
-    public function setPhotoCount($count)
-    {
-        $this->photoCount = $count;
-    }
-
-    /**
-     * Set the amount of subalbums in an album
-     *
-     * @param integer $count
-     */
-    public function setAlbumCount($count)
-    {
-        $this->albumCount = $count;
     }
 
     /**
