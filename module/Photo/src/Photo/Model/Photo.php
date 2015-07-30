@@ -437,20 +437,20 @@ class Photo implements ResourceInterface
     public function toArray()
     {
         $array = array(
-            'id' => $this->id,
-            'dateTime' => $this->dateTime,
-            'artist' => $this->artist,
-            'camera' => $this->camera,
-            'flash' => $this->flash,
-            'focalLength' => $this->focalLength,
-            'exposureTime' => $this->exposureTime,
-            'shutterSpeed' => $this->shutterSpeed,
-            'aperture' => $this->aperture,
-            'iso' => $this->iso,
-            'album' => $this->album->toArray(),
-            'path' => $this->path,
-            'smallThumbPath' => $this->smallThumbPath,
-            'largeThumbPath' => $this->largeThumbPath
+            'id' => $this->getId(),
+            'dateTime' => $this->getDateTime(),
+            'artist' => $this->getArtist(),
+            'camera' => $this->getCamera(),
+            'flash' => $this->getFlash(),
+            'focalLength' => $this->getFocalLength(),
+            'exposureTime' => $this->getExposureTime(),
+            'shutterSpeed' => $this->getShutterSpeed(),
+            'aperture' => $this->getAperture(),
+            'iso' => $this->getIso(),
+            'album' => $this->getAlbum()->toArray(),
+            'path' => $this->getPath(),
+            'smallThumbPath' => $this->getSmallThumbPath(),
+            'largeThumbPath' => $this->getLargeThumbPath()
         );
 
         return $array;

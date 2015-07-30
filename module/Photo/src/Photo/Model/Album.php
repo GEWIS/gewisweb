@@ -262,16 +262,16 @@ class Album implements ResourceInterface
     public function toArray()
     {
         $array = array(
-            'id' => $this->id,
-            'startDateTime' => $this->startDateTime,
-            'endDateTime' => $this->endDateTime,
-            'name' => $this->name,
-            'parent' => is_null($this->parent) ? null : $this->parent->toArray(),
+            'id' => $this->getId(),
+            'startDateTime' => $this->getStartDateTime(),
+            'endDateTime' => $this->getEndDateTime(),
+            'name' => $this->getName(),
+            'parent' => is_null($this->getParent()) ? null : $this->getParent()->toArray(),
             'children' => array(),
             'photos' => array(),
-            'coverPath' => $this->coverPath,
-            'photoCount' => $this->photoCount,
-            'albumCount' => $this->albumCount
+            'coverPath' => $this->getCoverPath(),
+            'photoCount' => $this->getPhotoCount(),
+            'albumCount' => $this->getAlbumCount()
         );
 
         return $array;
