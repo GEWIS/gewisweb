@@ -87,7 +87,7 @@ class Album implements ResourceInterface
     /**
      * Get the start date.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getStartDateTime()
     {
@@ -97,7 +97,7 @@ class Album implements ResourceInterface
     /**
      * Get the end date.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getEndDateTime()
     {

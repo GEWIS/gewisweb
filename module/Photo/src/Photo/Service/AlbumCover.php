@@ -214,7 +214,7 @@ class AlbumCover extends AbstractService
      */
     public function getPhotoService()
     {
-        return $this->getServiceManager()->get("photo_service_photo");
+        return $this->sm->get("photo_service_photo");
     }
 
 }

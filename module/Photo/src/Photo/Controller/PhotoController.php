@@ -49,8 +49,7 @@ class PhotoController extends AbstractActionController
     public function downloadAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        $photo = $this->getPhotoService()->getPhoto($photoId);
-        return $this->getPhotoService()->getPhotoDownload($photo);
+        return $this->getPhotoService()->getPhotoDownload($photoId);
     }
 
     /**

@@ -13,37 +13,6 @@ use Imagick;
  */
 class Photo extends AbstractService
 {
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
-     * Get the tag mapper.
-     *
-     * @return \Photo\Mapper\Tag
-     */
-    public function getTagMapper()
-    {
-        return $this->sm->get('photo_mapper_tag');
-    }
-
     /**
      * Retrieves a photo by an id.
      *
@@ -302,11 +271,12 @@ class Photo extends AbstractService
     /**
      * Returns a zend response to be used for downloading a photo.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param integer $photoId
      * @return \Zend\Http\Response\Stream
      */
-    public function getPhotoDownload($photo)
+    public function getPhotoDownload($photoId)
     {
+        $photo = $this->getPhoto($photoId);
         $config = $this->getConfig();
         $file = $config['upload_dir'] . '/' . $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
@@ -333,14 +303,14 @@ class Photo extends AbstractService
     /**
      * Get the photo data belonging to a certain photo
      *
-     * @param int $id the id of the photo to retrieve
+     * @param int $photoId the id of the photo to retrieve
      *
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
      */
-    public function getPhotoData($id)
+    public function getPhotoData($photoId)
     {
-        $photo = $this->getPhoto($id);
+        $photo = $this->getPhoto($photoId);
 
         // photo does not exist
         if (is_null($photo)) {
@@ -364,13 +334,13 @@ class Photo extends AbstractService
      * Removes a photo from the database and deletes its files, including thumbs
      * from the server.
      *
-     * @param int $id the id of the photo to delete
+     * @param int $photoId the id of the photo to delete
      *
      * @return bool indicating whether the delete was successful
      */
-    public function deletePhoto($id)
+    public function deletePhoto($photoId)
     {
-        $photo = $this->getPhoto($id);
+        $photo = $this->getPhoto($photoId);
         if (is_null($photo)) {
             return false;
         }
@@ -415,14 +385,14 @@ class Photo extends AbstractService
     /**
      * Moves a photo to a new album.
      *
-     * @param int $id the id of the photo
+     * @param int $photoId the id of the photo
      * @param int $albumId the id of the new album
      *
      * @return bool indicating whether move was successful
      */
-    public function movePhoto($id, $albumId)
+    public function movePhoto($photoId, $albumId)
     {
-        $photo = $this->getPhoto($id);
+        $photo = $this->getPhoto($photoId);
         $album = $this->getAlbumService()->getAlbum($albumId);
         if (is_null($photo) || is_null($album)) {
             return false;
@@ -533,13 +503,43 @@ class Photo extends AbstractService
     }
 
     /**
+     * Get the photo mapper.
+     *
+     * @return \Photo\Mapper\Photo
+     */
+    public function getPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_photo');
+    }
+
+    /**
+     * Get the album mapper.
+     *
+     * @return \Photo\Mapper\Album
+     */
+    public function getAlbumMapper()
+    {
+        return $this->sm->get('photo_mapper_album');
+    }
+
+    /**
+     * Get the tag mapper.
+     *
+     * @return \Photo\Mapper\Tag
+     */
+    public function getTagMapper()
+    {
+        return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
      * Gets the metadata service.
      *
      * @return \Photo\Service\Metadata
      */
     public function getMetadataService()
     {
-        return $this->getServiceManager()->get('photo_service_metadata');
+        return $this->sm->get('photo_service_metadata');
     }
 
     /**
@@ -549,7 +549,7 @@ class Photo extends AbstractService
      */
     public function getAlbumService()
     {
-        return $this->getServiceManager()->get('photo_service_album');
+        return $this->sm->get('photo_service_album');
     }
 
     /**
@@ -557,7 +557,7 @@ class Photo extends AbstractService
      */
     public function getMemberService()
     {
-        return $this->getServiceManager()->get('decision_service_member');
+        return $this->sm->get('decision_service_member');
     }
 
     /**
@@ -567,7 +567,7 @@ class Photo extends AbstractService
      */
     public function getPhotoService()
     {
-        return $this->getServiceManager()->get('photo_service_photo');
+        return $this->sm->get('photo_service_photo');
     }
 
 }

@@ -7,14 +7,15 @@ namespace Photo\Listener;
  * Do not instantiate this class manually.
  */
 
-class AlbumDate {
+class AlbumDate
+{
 
     public function prePersist($eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if($entity->getResourceId() === 'album') {
+        if ($entity->getResourceId() === 'album') {
             $this->albumPersisted($entity);
-        } elseif($entity->getResourceId() === 'photo') {
+        } elseif ($entity->getResourceId() === 'photo') {
             $this->photoPersisted($entity);
         }
     }
