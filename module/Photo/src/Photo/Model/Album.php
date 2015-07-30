@@ -55,13 +55,13 @@ class Album implements ResourceInterface
 
     /**
      * all the subalbums
-     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent", cascade={"persist", "remove"})
      */
     protected $children;
 
     /**
      * all the photo's in this album.
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"persist", "remove"})
      */
     protected $photos;
 
