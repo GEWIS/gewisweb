@@ -118,9 +118,9 @@ Photo.Admin.deleteMultiple = function () {
     $("#multipleDeleteProgress").show();
     var toDelete = [];
     $(".thumbnail-checkbox:checked").each(function() {
-        toDelete.push($(this).parent());
+        toDelete.push($(this).parent().find('a'));
     });
-    console.log(toDelete);
+
     $.each(toDelete, function( i, item ) {
         $.post(item.attr('href') + '/delete').always(function() {
             item.parent().remove();
@@ -144,7 +144,7 @@ Photo.Admin.moveMultiple = function () {
     $("#multipleMoveProgress").show();
     var toMove = [];
     $(".thumbnail-checkbox:checked").each(function() {
-        toMove.push($(this).parent());
+        toMove.push($(this).parent().find('a'));
     });
     $.each(toMove, function( i, item ) {
         $.post(item.attr('href') + '/move',
