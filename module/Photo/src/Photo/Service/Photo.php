@@ -145,6 +145,82 @@ class Photo extends AbstractService
         );
     }
 
+
+    /**
+     * Removes a photo from the database and deletes its files, including thumbs
+     * from the server.
+     *
+     * @param int $photoId the id of the photo to delete
+     *
+     * @return bool indicating whether the delete was successful
+     */
+    public function deletePhoto($photoId)
+    {
+        $photo = $this->getPhoto($photoId);
+        if (is_null($photo)) {
+            return false;
+        }
+        $this->getPhotoMapper()->remove($photo);
+        $this->getPhotoMapper()->flush();
+
+        return true;
+
+    }
+
+    /**
+     * Deletes a stored photo at a given path.
+     *
+     * @param string $path
+     * @return bool indicated whether deleting the photo was successful.
+     */
+    public function deletePhotoFile($path)
+    {
+        $config = $this->getConfig();
+        $fullPath = $config['upload_dir'] . '/' . $path;
+
+        if (!file_exists($fullPath)) {
+            return false;
+        } else {
+            return unlink($fullPath);
+        }
+
+    }
+
+    /**
+     * Deletes all files associated with a photo.
+     *
+     * @param \Photo\Model\Photo $photo
+     */
+    public function deletePhotoFiles($photo)
+    {
+        $this->deletePhotoFile($photo->getPath());
+        $this->deletePhotoFile($photo->getLargeThumbPath());
+        $this->deletePhotoFile($photo->getSmallThumbPath());
+    }
+
+    /**
+     * Moves a photo to a new album.
+     *
+     * @param int $photoId the id of the photo
+     * @param int $albumId the id of the new album
+     *
+     * @return bool indicating whether move was successful
+     */
+    public function movePhoto($photoId, $albumId)
+    {
+        $photo = $this->getPhoto($photoId);
+        $album = $this->getAlbumService()->getAlbum($albumId);
+        if (is_null($photo) || is_null($album)) {
+            return false;
+        }
+
+        $photo->setAlbum($album);
+        $this->getAlbumMapper()->flush();
+
+        return true;
+
+    }
+
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
@@ -300,16 +376,6 @@ class Photo extends AbstractService
     public function getMemberService()
     {
         return $this->sm->get('decision_service_member');
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return \Photo\Service\Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get('photo_service_photo');
     }
 
 }

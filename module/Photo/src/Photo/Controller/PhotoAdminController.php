@@ -36,7 +36,7 @@ class PhotoAdminController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $albumId = $request->getPost()['album_id'];
-            $result['success'] = $this->getAdminService()->movePhoto($photoId, $albumId);
+            $result['success'] = $this->getPhotoService()->movePhoto($photoId, $albumId);
         }
 
         return new JsonModel($result);
@@ -51,7 +51,7 @@ class PhotoAdminController extends AbstractActionController
         $result = array();
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
-            $result['success'] = $this->getAdminService()->deletePhoto($photoId);
+            $result['success'] = $this->getPhotoService()->deletePhoto($photoId);
         }
 
         return new JsonModel($result);
