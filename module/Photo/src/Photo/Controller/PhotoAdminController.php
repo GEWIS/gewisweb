@@ -16,6 +16,9 @@ class PhotoAdminController extends AbstractActionController
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $data = $this->getPhotoService()->getPhotoData($photoId);
+        if (is_null($data)) {
+            return $this->notFoundAction();
+        }
         $path = array(); //The path to use in the breadcrumb navigation bar
         $parent = $data['photo']->getAlbum();
         while (!is_null($parent)) {

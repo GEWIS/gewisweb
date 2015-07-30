@@ -97,7 +97,7 @@ return array(
                         'options' => array(
                             'route' => '[/:year]',
                             'constraints' => array(
-                                'year' => '[0-9]+',
+                                'year' => '\d{4}',
                             ),
                             'defaults' => array(
                                 'controller' => 'Photo',

@@ -37,11 +37,12 @@ class PhotoController extends AbstractActionController
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $photoData = $this->getPhotoService()->getPhotoData($photoId);
-        $this->getPhotoService()->countHit($photoData['photo']);
 
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
+
+        $this->getPhotoService()->countHit($photoData['photo']);
 
         return new ViewModel($photoData);
     }
