@@ -273,7 +273,7 @@ class Photo extends AbstractService
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
-        return $this->getAlbumMapper()->getAlbumPhotos($album, $start, $maxResults);
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $maxResults);
     }
 
     /**

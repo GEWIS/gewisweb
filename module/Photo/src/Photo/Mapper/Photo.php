@@ -30,6 +30,54 @@ class Photo
     }
 
     /**
+     * Returns all the photos in an album.
+     *
+     * @param \Photo\Model\Album $album The album to retrieve the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return, null for infinite
+     * @return array of photo's
+     */
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a')
+            ->where('a.album = ?1')
+            ->setParameter(1, $album)
+            ->setFirstResult($start);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Retrieves some random photos from the specified album. If the amount of
+     * available photos is smaller than the requested count, less photos
+     * will be returned.
+     *
+     * @param int $album
+     * @param int $maxResults
+     * @return array of Photo\Model\Photo
+     */
+    public function getRandomAlbumPhotos($album, $maxResults)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a')
+            ->where('a.album = ?1')
+            ->setParameter(1, $album)
+            ->addSelect('RAND() as HIDDEN rand')
+            ->orderBy('rand');
+        $qb->setMaxResults($maxResults);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Returns the next photo in the album to display
      *
      * @param \Photo\Model\Photo $photo
@@ -98,7 +146,6 @@ class Photo
         return empty($res) ? null : $res[0];
     }
 
-
     /**
      * Retrieves a photo by id from the database.
      *
@@ -120,6 +167,7 @@ class Photo
     {
         $this->em->remove($photo);
     }
+
     /**
      * Persist photo
      *

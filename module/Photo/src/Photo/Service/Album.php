@@ -227,7 +227,7 @@ class Album extends AbstractService
     public function deleteAlbumPhotos($id)
     {
         $album = $this->getAlbum($id);
-        foreach ($this->getAlbumMapper()->getAlbumPhotos($album) as $photo) {
+        foreach ($this->getPhotoMapper()->getAlbumPhotos($album) as $photo) {
             $this->getPhotoService()->deletePhoto($photo);
         }
     }
