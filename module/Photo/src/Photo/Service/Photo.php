@@ -296,6 +296,8 @@ class Photo extends AbstractService
 
     /**
      * Get the member service.
+     *
+     * @return \Decision\Service\Member
      */
     public function getMemberService()
     {
@@ -303,9 +305,9 @@ class Photo extends AbstractService
     }
 
     /**
-     * Gets the album service.
+     * Gets the photo service.
      *
-     * @return \Photo\Service\Album
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

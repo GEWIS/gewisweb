@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: justin
- * Date: 30-7-15
- * Time: 22:47
- */
 
 namespace Photo\Service;
-
+use Application\Service\AbstractService;
 /**
  * Admin service for all photo admin related functions.
  */
-class Admin {
+class Admin extends AbstractService
+{
 
     /**
      * Removes a photo from the database and deletes its files, including thumbs
@@ -23,7 +18,7 @@ class Admin {
      */
     public function deletePhoto($photoId)
     {
-        $photo = $this->getPhoto($photoId);
+        $photo = $this->getPhotoService()->getPhoto($photoId);
         if (is_null($photo)) {
             return false;
         }
@@ -336,6 +331,8 @@ class Admin {
 
     /**
      * Get the member service.
+     *
+     * @return \Decision\Service\Member
      */
     public function getMemberService()
     {
@@ -343,9 +340,9 @@ class Admin {
     }
 
     /**
-     * Gets the album service.
+     * Gets the photo service.
      *
-     * @return \Photo\Service\Album
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {

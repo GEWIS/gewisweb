@@ -234,6 +234,8 @@ class AlbumAdminController extends AbstractActionController
 
     /**
      * Get the album service.
+     *
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {

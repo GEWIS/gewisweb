@@ -59,6 +59,8 @@ class PhotoAdminController extends AbstractActionController
 
     /**
      * Get the photo service.
+     *
+     * @return \Photo\Service\Photo
      */
     public function getPhotoService()
     {
