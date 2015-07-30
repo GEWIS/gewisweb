@@ -206,9 +206,6 @@ class AlbumAdminController extends AbstractActionController
             'album_delete' => $this->url()->fromRoute(
                 'admin_photo/album_delete', array('album_id' => '{0}')
             ),
-            'album_create' => $this->url()->fromRoute(
-                'admin_photo/album_create', array('album_id' => '{0}')
-            ),
             'album_cover' => $this->url()->fromRoute(
                 'admin_photo/album_cover', array('album_id' => '{0}')
             ),

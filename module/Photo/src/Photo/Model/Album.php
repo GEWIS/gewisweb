@@ -117,7 +117,7 @@ class Album implements ResourceInterface
     /**
      * Get the parent album.
      *
-     * @return string $parent
+     * @return \Photo\Model\Album $parent
      */
     public function getParent()
     {
@@ -137,7 +137,7 @@ class Album implements ResourceInterface
     /**
      * Get the album cover
      *
-     * @return photo
+     * @return string
      */
     public function getCoverPath()
     {

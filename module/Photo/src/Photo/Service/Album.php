@@ -271,16 +271,6 @@ class Album extends AbstractService
     }
 
     /**
-     * Get the PhotoImport form.
-     *
-     * @return \Photo\Form\PhotoImport
-     */
-    public function getPhotoImportForm()
-    {
-        return $this->sm->get('photo_form_import_folder');
-    }
-
-    /**
      * Get the album mapper.
      *
      * @return \Photo\Mapper\Album
