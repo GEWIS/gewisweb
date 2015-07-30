@@ -47,7 +47,7 @@ class Album
      * @param \Photo\Model\Album $parent the parent album to retrieve the subalbum from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
-     * @return array|null Array with subalbums or null if there are none
+     * @return array of subalbums or null if there are none
      */
     public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
@@ -216,7 +216,8 @@ class Album
      *
      * @param AlbumModel $album
      */
-    public function remove(AlbumModel $album) {
+    public function remove(AlbumModel $album)
+    {
         $this->em->remove($album);
     }
 
