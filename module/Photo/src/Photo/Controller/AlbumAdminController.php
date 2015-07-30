@@ -105,7 +105,7 @@ class AlbumAdminController extends AbstractActionController
             $album = $this->getAlbumService()->getAlbum($albumId);
 
             try {
-                $this->getPhotoService()->upload($request->getFiles(), $album);
+                $this->getAdminService()->upload($request->getFiles(), $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -128,7 +128,7 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             $album = $this->getAlbumService()->getAlbum($albumId);
             try {
-                $this->getPhotoService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
+                $this->getAdminService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -241,11 +241,12 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Get the photo service.
+     * Get the photo admin service.
+     *
+     * @return \Photo\Service\Admin
      */
-    public function getPhotoService()
+    public function getAdminService()
     {
-        return $this->getServiceLocator()->get('photo_service_photo');
+        return $this->getServiceLocator()->get("photo_service_admin");
     }
-
 }

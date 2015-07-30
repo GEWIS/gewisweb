@@ -23,7 +23,7 @@ class AlbumCover extends AbstractService
         $cover = $this->generateCover($album);
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
         $cover->writeImage($tempFileName);
-        $newPath = $this->getPhotoService()->generateStoragePath($tempFileName);
+        $newPath = $this->getAdminService()->generateStoragePath($tempFileName);
         $config = $this->getConfig();
         rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
 
@@ -70,18 +70,6 @@ class AlbumCover extends AbstractService
         $target->setImageFormat("png");
 
         return $target;
-    }
-
-    /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
     }
 
     /**
@@ -215,6 +203,28 @@ class AlbumCover extends AbstractService
     public function getPhotoService()
     {
         return $this->sm->get("photo_service_photo");
+    }
+
+    /**
+     * Gets the photo admin service.
+     *
+     * @return \Photo\Service\Admin
+     */
+    public function getAdminService()
+    {
+        return $this->sm->get("photo_service_admin");
+    }
+
+    /**
+     * Get the photo config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['photo'];
     }
 
 }

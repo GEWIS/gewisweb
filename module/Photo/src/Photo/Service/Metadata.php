@@ -15,7 +15,7 @@ class Metadata extends AbstractService
      * Populates the metadata of a photo based on the EXIF data of the photo
      *
      * @param \Photo\Model\Photo $photo the photo to add the metadata to.
-     * @param $path The path where the actual image file is stored
+     * @param string $path The path where the actual image file is stored
      *
      * @return \Photo\Model\Photo the photo with the added metadata
      */

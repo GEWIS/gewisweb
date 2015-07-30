@@ -220,7 +220,7 @@ class Album extends AbstractService
      */
     public function deleteAlbumCover($album)
     {
-        $this->getPhotoService()->deletePhotoFile($album->getCoverPath());
+        $this->getAdminService()->deletePhotoFile($album->getCoverPath());
     }
 
     /**
@@ -299,7 +299,7 @@ class Album extends AbstractService
     {
         return $this->sm->get('photo_mapper_photo');
     }
-    
+
     /**
      * Gets the photo service.
      *
@@ -318,6 +318,16 @@ class Album extends AbstractService
     public function getAlbumCoverService()
     {
         return $this->sm->get("photo_service_album_cover");
+    }
+
+    /**
+     * Gets the photo admin service.
+     *
+     * @return \Photo\Service\Admin
+     */
+    public function getAdminService()
+    {
+        return $this->sm->get("photo_service_admin");
     }
 
     /**
