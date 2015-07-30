@@ -55,7 +55,8 @@ class Module
                 'photo_service_album' => 'Photo\Service\Album',
                 'photo_service_metadata' => 'Photo\Service\Metadata',
                 'photo_service_photo' => 'Photo\Service\Photo',
-                'photo_service_album_cover' => 'Photo\Service\AlbumCover'
+                'photo_service_album_cover' => 'Photo\Service\AlbumCover',
+                'photo_service_admin' => 'Photo\Service\Admin'
             ),
             'factories' => array(
                 'photo_form_album_edit' => function ($sm) {
