@@ -253,6 +253,16 @@ class Album extends AbstractService
     }
 
     /**
+     * Deletes the file belonging to the album cover for an album.
+     *
+     * @param \Photo\Model\Album $album
+     */
+    public function deleteAlbumCover($album)
+    {
+        $this->getPhotoService()->deletePhotoFile($album->getCoverPath());
+    }
+
+    /**
      * Returns the association year to which a certain date belongs
      * In this context an association year is defined as the year which contains
      * the first day of the association year.

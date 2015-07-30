@@ -4,6 +4,7 @@ namespace Photo;
 
 use Zend\Mvc\MvcEvent;
 use Photo\Listener\AlbumDate as AlbumDateListener;
+use Photo\Listener\Remove as RemoveListener;
 
 class Module
 {
@@ -13,6 +14,7 @@ class Module
         $em = $sm->get('photo_doctrine_em');
         $dem = $em->getEventManager();
         $dem->addEventListener(array(\Doctrine\ORM\Events::prePersist), new AlbumDateListener());
+        $dem->addEventListener(array(\Doctrine\ORM\Events::preRemove), new RemoveListener($sm));
     }
 
     /**
