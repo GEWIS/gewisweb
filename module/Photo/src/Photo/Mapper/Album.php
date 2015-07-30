@@ -30,19 +30,6 @@ class Album
     }
 
     /**
-     * Deletes an album from the database
-     *
-     * @param integer $id the id of the album
-     */
-    public function deleteAlbum($id)
-    {
-        $album = $this->getAlbumById($id);
-        if (!is_null($album)) {
-            $this->em->remove($album);
-        }
-    }
-
-    /**
      * Retrieves an album by id from the database.
      *
      * @param integer $id the id of the album
@@ -230,6 +217,15 @@ class Album
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Removes an album.
+     *
+     * @param AlbumModel $album
+     */
+    public function remove(AlbumModel $album) {
+        $this->em->remove($album);
     }
 
     /**

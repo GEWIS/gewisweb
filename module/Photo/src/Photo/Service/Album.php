@@ -208,12 +208,15 @@ class Album extends AbstractService
      */
     public function deleteAlbum($id)
     {
-        $this->deleteAlbumPhotos($id);
-        foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum) {
-            $this->deleteAlbum($subAlbum);
+        $album = $this->getAlbumById($id);
+        if (!is_null($album)) {
+            $this->deleteAlbumPhotos($id);
+            foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum) {
+                $this->deleteAlbum($subAlbum);
+            }
+            $this->getAlbumMapper()->remove($album);
+            $this->getAlbumMapper()->flush();
         }
-        $this->getAlbumMapper()->deleteAlbum($id);
-        $this->getAlbumMapper()->flush();
     }
 
     /**
