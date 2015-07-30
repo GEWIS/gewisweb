@@ -31,7 +31,7 @@ class Tag
     /**
      * Retrieves a tag by id from the database.
      *
-     * @param integer $id the id of the tag
+     * @param integer $tagId the id of the tag
      *
      * @return \Photo\Model\Tag
      */
@@ -51,7 +51,7 @@ class Tag
     /**
      * Removes a tag.
      *
-     * @param $tag
+     * @param \Photo\Model\Tag $tag
      */
     public function remove($tag)
     {

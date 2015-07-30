@@ -134,16 +134,10 @@ class Photo
      */
     public function getPhotoByData($path, $album)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.path = ?1 AND a.album = ?2')
-            ->setParameter(1, $path)
-            ->setParameter(2, $album);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->findOneBy(array(
+            'path' => $path,
+            'album' => $album->getId()
+        ));
     }
 
     /**
