@@ -82,7 +82,7 @@ class Photo
      *
      * @param string $path The storage path of the photo
      * @param \Photo\Model\Album $album the album the photo is in
-     * @return \Photo\Model\Photo if the photo exists, null otherwise.
+     * @return \Photo\Model\Photo|null
      */
     public function getPhotoByData($path, $album)
     {
@@ -102,36 +102,24 @@ class Photo
     /**
      * Retrieves a photo by id from the database.
      *
-     * @param integer $id the id of the photo
+     * @param integer $photoId the id of the photo
      *
      * @return \Photo\Model\Photo
      */
-    public function getPhotoById($id)
+    public function getPhotoById($photoId)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.id = ?1')
-            ->setParameter(1, $id);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->find($photoId);
     }
 
     /**
-     * Deletes a photo from the database
+     * Removes a photo
      *
-     * @param integer $id the id of the photo
+     * @param \Photo\Model\Photo $photo
      */
-    public function deletePhoto($id)
+    public function remove(PhotoModel $photo)
     {
-        $photo = $this->getPhotoById($id);
-        if (!is_null($photo)) {
-            $this->em->remove($photo);
-        }
+        $this->em->remove($photo);
     }
-
     /**
      * Persist photo
      *
@@ -157,7 +145,7 @@ class Photo
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Photo\Mapper\Photo');
+        return $this->em->getRepository('Photo\Model\Photo');
     }
 
 }
