@@ -2,21 +2,20 @@
 
 namespace Photo\Listener;
 
-use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Doctrine event listener class for Album entities.
+ * This class is instantiated by the doctrine EventManager.
+ * Do not instantiate this class manually.
+ */
 class Album
 {
     /**
-     * Updates the albumCount and dates in the parent album object.
-     *
-     * @ORM\PrePersist()
-     * @ORM\PostUpdate()
+     * Updates the dates in the parent album object.
      */
-    public function updateOnAdd($album, $event)
+    public function prePersist($album, $event)
     {
         $parent = $album->getParent();
         if (!is_null($parent) && !is_null($album->getStartDateTime())) {
-            $parent->setAlbumCount($parent->getAlbumCount() + 1);
             if (is_null($parent->getStartDateTime()) || $parent->getStartDateTime()->getTimestamp() >
                 $album->getStartDateTime()->getTimeStamp()
             ) {
@@ -27,20 +26,6 @@ class Album
             ) {
                 $parent->setEndDateTime($album->getEndDateTime());
             }
-        }
-    }
-
-    /**
-     * Updates the albumCount in the parent album object.
-     *
-     * @ORM\PreRemove()
-     * @ORM\PreUpdate()
-     */
-    public function updateOnRemove($album, $event)
-    {
-        $parent = $album->getParent();
-        if (!is_null($parent)) {
-            $parent->setAlbumCount($parent->getAlbumCount() - 1);
         }
     }
 }

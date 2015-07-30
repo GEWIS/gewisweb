@@ -55,13 +55,15 @@ class Album implements ResourceInterface
 
     /**
      * all the subalbums
-     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent", cascade={"persist", "remove"})
+     * Note: These are fetched extra lazy so we can efficiently retrieve an album count
+     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $children;
 
     /**
      * all the photo's in this album.
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"persist", "remove"})
+     * Note: These are fetched extra lazy so we can efficiently retrieve an photo count
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $photos;
 
@@ -71,20 +73,6 @@ class Album implements ResourceInterface
      * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
-
-    /**
-     * The amount of photos in this album
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $photoCount = 0;
-
-    /**
-     * The amount of subalbums in this album
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $albumCount = 0;
 
     /**
      * Get the ID.
@@ -163,7 +151,7 @@ class Album implements ResourceInterface
      */
     public function getPhotoCount()
     {
-        return $this->photoCount;
+        return $this->photos->count();
     }
 
     /**
@@ -173,7 +161,7 @@ class Album implements ResourceInterface
      */
     public function getAlbumCount()
     {
-        return $this->albumCount;
+        return $this->children->count();
     }
 
     /**
