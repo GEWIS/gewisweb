@@ -9,7 +9,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Photo.
  *
  * @ORM\Entity
- * @ORM\EntityListeners({"Photo\Listener\Photo"})
+ * @ORM\HasLifecycleCallbacks
  *
  */
 class Photo implements ResourceInterface

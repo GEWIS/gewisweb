@@ -2,8 +2,18 @@
 
 namespace Photo;
 
+use Zend\Mvc\MvcEvent;
+use Photo\Listener\AlbumDate as AlbumDateListener;
+
 class Module
 {
+    public function onBootstrap(MvcEvent $e)
+    {
+        $sm = $e->getApplication()->getServiceManager();
+        $em = $sm->get('photo_doctrine_em');
+        $dem = $em->getEventManager();
+        $dem->addEventListener(array(\Doctrine\ORM\Events::prePersist), new AlbumDateListener());
+    }
 
     /**
      * Get the autoloader configuration.
@@ -88,6 +98,9 @@ class Module
                     return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
                     );
+                },
+                'photo_listener_photo' => function($sm) {
+                  return new Listener\Album();
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
