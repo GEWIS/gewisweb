@@ -18,6 +18,14 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * View information about a member.
+     */
+    public function viewAction()
+    {
+        return new ViewModel(array());
+    }
+
+    /**
      * Search action, allows searching for members.
      */
     public function searchAction()
