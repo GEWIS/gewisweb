@@ -4,6 +4,8 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Decision\Model\Member as MemberModel;
+
 /**
  * Member service.
  */
@@ -73,6 +75,18 @@ class Member extends AbstractAclService
             );
         }
         return $this->getMemberMapper()->findBirthdayMembers($days);
+    }
+
+    /**
+     * Get the organs a member is part of.
+     *
+     * @param MemberModel $member
+     *
+     * @return array
+     */
+    public function getOrgans(MemberModel $member)
+    {
+        return $this->getMemberMapper()->findOrgans($member);
     }
 
     /**
