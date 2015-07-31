@@ -72,6 +72,15 @@ return array(
                             ),
                         ),
                     ),
+                    'birthdays' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/birthdays',
+                            'defaults' => array(
+                                'action' => 'birthdays'
+                            )
+                        )
+                    )
                 ),
             ),
         ),
