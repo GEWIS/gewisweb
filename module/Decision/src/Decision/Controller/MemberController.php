@@ -22,7 +22,13 @@ class MemberController extends AbstractActionController
      */
     public function viewAction()
     {
-        return new ViewModel($this->getMemberService()->getMembershipInfo($this->params()->fromRoute('lidnr')));
+        $info = $this->getMemberService()->getMembershipInfo($this->params()->fromRoute('lidnr'));
+
+        if (null === $info) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel($info);
     }
 
     /**

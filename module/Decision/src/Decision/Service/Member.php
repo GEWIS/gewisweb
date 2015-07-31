@@ -37,6 +37,10 @@ class Member extends AbstractAclService
 
         $member = $this->getMemberMapper()->findByLidnr($lidnr);
 
+        if (null === $member) {
+            return null;
+        }
+
         $memberships = array();
         foreach ($member->getOrganInstallations() as $install) {
             if (null !== $install->getDischargeDate()) {
