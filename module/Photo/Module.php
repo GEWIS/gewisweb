@@ -75,13 +75,6 @@ class Module
 
                     return $form;
                 },
-                'photo_form_import_folder' => function ($sm) {
-                    $form = new Form\PhotoImport(
-                        $sm->get('translator')
-                    );
-
-                    return $form;
-                },
                 'photo_hydrator_album' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
@@ -101,9 +94,6 @@ class Module
                     return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
                     );
-                },
-                'photo_listener_photo' => function($sm) {
-                  return new Listener\Album();
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
