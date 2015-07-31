@@ -39,7 +39,9 @@ class MemberController extends AbstractActionController
      */
     public function birthdaysAction()
     {
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'members' => $this->getMemberService()->getBirthdayMembers(7)
+        ));
     }
 
     /**
