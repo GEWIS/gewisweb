@@ -17,46 +17,8 @@ $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
             <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $photo->getLargeThumbPath() ?>" alt="">
         </div>
         <div class="col-lg-3">
-            <table class="table table-condensed">
-                <tbody>
-                    <tr>
-                        <td><?= $this->translate('Artist') ?></td>
-                        <td><?= is_null($photo->getArtist()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($photo->getArtist()) ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Camera') ?></td>
-                        <td><?= is_null($photo->getCamera()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($photo->getCamera()) ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Date/time') ?></td>
-                        <td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Flash') ?></td>
-                        <td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Focal length') ?></td>
-                        <td><?= is_null($photo->getFocalLength()) ? $this->translate("Unknown") : $photo->getFocalLength() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Exposure time') ?></td>
-                        <td><?= is_null($photo->getExposureTime()) ? $this->translate("Unknown") : $photo->getExposureTime() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Shutter speed') ?></td>
-                        <td><?= is_null($photo->getShutterSpeed()) ? $this->translate("Unknown") : $photo->getShutterSpeed() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Aperture') ?></td>
-                        <td><?= is_null($photo->getAperture()) ? $this->translate("Unknown") : $photo->getAperture() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('ISO') ?></td>
-                        <td><?= is_null($photo->getIso()) ? $this->translate("Unknown") : $photo->getIso() ?></td>
-                    </tr>
-                    </tbody>
-            </table>
+            <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
+
             <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
                 array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
             <nav>
@@ -79,30 +41,7 @@ $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
                     <?php endif; ?>
                 </ul>
             </nav>
-            <div>
-                <h4><?= $this->translate('People in this photo') ?></h4>
-                <ul id="tagList">
-                    <?php foreach ($photo->getTags() as $tag): ?>
-                        <li>
-                            <a href="#"><?= $tag->getMember()->getFullName() ?></a>&nbsp;
-                            <a href="<?= $this->url('photo/photo/tag/remove',
-                                array('photo_id' => $photo->getId(), 'lidnr' => $tag->getMember()->getLidnr())); ?>"
-                               class="remove-tag">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div>
-                <form action="<?= $this->url('photo/photo/tag/add',
-                    array('photo_id' => $photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">
-                    <div class="form-group">
-                        <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
-                        <input type="text" class="form-control" name="tagSearch" id="tagSearch">
-                    </div>
-                </form>
-            </div>
+            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
         </div>
     </div>
     <script>
