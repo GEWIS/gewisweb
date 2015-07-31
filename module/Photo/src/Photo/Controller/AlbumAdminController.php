@@ -17,11 +17,12 @@ class AlbumAdminController extends AbstractActionController
         $albumService = $this->getAlbumService();
         $years = $albumService->getAlbumYears();
         $albumsByYear = array();
-        foreach($years as $year) {
+        foreach ($years as $year) {
             $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
         }
 
         $albumsWithoutDate = $albumService->getAlbumsWithoutDate();
+
         return new ViewModel(array(
             'albumsByYear' => $albumsByYear,
             'albumsWithoutDate' => $albumsWithoutDate
@@ -61,7 +62,8 @@ class AlbumAdminController extends AbstractActionController
             return $this->notFoundAction();
         }
         // Add some urls
-        $albumPage['urls'] =$this->getURLs();
+        $albumPage['urls'] = $this->getURLs();
+
         return new JsonModel($albumPage);
     }
 

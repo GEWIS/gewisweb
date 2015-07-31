@@ -1,12 +1,13 @@
 <?php
-    $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
-                        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
 ?>
 <?php if ($photo != null): ?>
     <div clas="row">
         <nav>
             <ul class="pager">
-                <li class="previous"><a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
+                <li class="previous"><a
+                        href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
                             aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
             </ul>
         </nav>
@@ -56,12 +57,13 @@
                     </tr>
                     </tbody>
             </table>
-            <a class="btn btn-default" href="<?= $this->url('photo/photo_download', array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
+            <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
+                array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
                         <li><a id="previous"
-                                href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
+                               href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
                                 <?= $this->translate('Previous') ?>
                             </a>
                         </li>
@@ -69,8 +71,8 @@
                     endif;
                     if (!is_null($next)):
                         ?>
-                        <li><a id="next" 
-                                href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
+                        <li><a id="next"
+                               href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
                                 <?= $this->translate('Next') ?>
                             </a>
                         </li>
@@ -80,10 +82,12 @@
             <div>
                 <h4><?= $this->translate('People in this photo') ?></h4>
                 <ul id="tagList">
-                    <?php foreach($photo->getTags() as $tag): ?>
+                    <?php foreach ($photo->getTags() as $tag): ?>
                         <li>
                             <a href="#"><?= $tag->getMember()->getFullName() ?></a>&nbsp;
-                            <a href="<?= $this->url('photo/photo/tag/remove', array('photo_id' => $photo->getId(), 'lidnr' => $tag->getMember()->getLidnr())); ?>" class="remove-tag">
+                            <a href="<?= $this->url('photo/photo/tag/remove',
+                                array('photo_id' => $photo->getId(), 'lidnr' => $tag->getMember()->getLidnr())); ?>"
+                               class="remove-tag">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
                         </li>
@@ -91,11 +95,12 @@
                 </ul>
             </div>
             <div>
-                <form action="<?= $this->url('photo/photo/tag/add', array('photo_id' => $photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">
-                <div class="form-group">
-                    <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
-                    <input type="text" class="form-control" name="tagSearch" id="tagSearch">
-                </div>
+                <form action="<?= $this->url('photo/photo/tag/add',
+                    array('photo_id' => $photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">
+                    <div class="form-group">
+                        <label for="tagSearch"><?= $this->translate('Tag someone') ?></label>
+                        <input type="text" class="form-control" name="tagSearch" id="tagSearch">
+                    </div>
                 </form>
             </div>
         </div>

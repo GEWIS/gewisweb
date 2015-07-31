@@ -14,10 +14,10 @@ class PhotoController extends AbstractActionController
         $years = $this->getAlbumService()->getAlbumYears();
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.
-        if(is_null($year)) {
+        if (is_null($year)) {
             $year = max($years);
         } else {
-            $year = (int) $year;
+            $year = (int)$year;
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
         $basedir = $this->getPhotoService()->getBaseDirectory();
@@ -29,6 +29,7 @@ class PhotoController extends AbstractActionController
             'basedir' => $basedir
         ));
     }
+
     /**
      * Called on viewing a photo
      *
@@ -50,6 +51,7 @@ class PhotoController extends AbstractActionController
     public function downloadAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
+
         return $this->getPhotoService()->getPhotoDownload($photoId);
     }
 

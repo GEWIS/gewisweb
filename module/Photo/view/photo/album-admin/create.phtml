@@ -22,13 +22,13 @@
         <?= $this->formElementErrors($element) ?>
     </div>
 
-<?php
-$submit = $form->get('submit');
-$submit->setLabel($this->translate('Create album'));
-$submit->setAttribute('class', 'btn btn-default');
-?>
-<?= $this->formButton($submit) ?>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Create album'));
+    $submit->setAttribute('class', 'btn btn-default');
+    ?>
+    <?= $this->formButton($submit) ?>
 
-<?= $this->form()->closeTag(); ?>
+    <?= $this->form()->closeTag(); ?>
 
 <?php endif ?>

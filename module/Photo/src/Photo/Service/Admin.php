@@ -1,6 +1,7 @@
 <?php
 
 namespace Photo\Service;
+
 use Application\Service\AbstractService;
 use Photo\Model\Photo as PhotoModel;
 use Imagick;

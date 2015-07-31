@@ -234,6 +234,7 @@ class Photo extends AbstractService
 
         $this->getPhotoMapper()->flush();
     }
+
     /**
      * Retrieves a tag if it exists.
      *

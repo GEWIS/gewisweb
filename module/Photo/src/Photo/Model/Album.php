@@ -219,7 +219,8 @@ class Album implements ResourceInterface
      *
      * @param \Photo\Model\Photo $photo
      */
-    public function addPhoto($photo) {
+    public function addPhoto($photo)
+    {
         $photo->setAlbum($this);
         $this->photos[] = $photo;
     }
@@ -229,7 +230,8 @@ class Album implements ResourceInterface
      *
      * @param \Photo\Model\Album $album
      */
-    public function addAlbum($album) {
+    public function addAlbum($album)
+    {
         $album->setParent($this);
         $this->children[] = $album;
     }

@@ -88,13 +88,15 @@ class Tag implements ResourceInterface
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return array(
             'id' => $this->getId(),
             'photo_id' => $this->getPhoto()->getId(),
             'member_id' => $this->getMember()->getLidnr()
         );
     }
+
     /**
      * Get the resource ID.
      *

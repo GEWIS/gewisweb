@@ -414,7 +414,8 @@ class Photo implements ResourceInterface
      *
      * @param \Photo\Model\Hit $hit
      */
-    public function addHit($hit) {
+    public function addHit($hit)
+    {
         $hit->setPhoto($this);
         $this->hits[] = $hit;
     }
@@ -424,11 +425,12 @@ class Photo implements ResourceInterface
      *
      * @param \Photo\Model\Tag $tag
      */
-    public function addTag($tag) {
+    public function addTag($tag)
+    {
         $tag->setPhoto($this);
         $this->tags[] = $tag;
     }
-    
+
     /**
      * Returns an associative array representation of this object
      *
