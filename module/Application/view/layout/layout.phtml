@@ -35,15 +35,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('GEWIS') ?></a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                        <li><a href="#"><?php echo $this->translate('Association') ?></a></li>
+                        <li><a href="#"><?php echo $this->translate('Companies') ?></a></li>
                         <li><a href="<?php echo $this->url('education') ?>"><?php echo $this->translate('Education') ?></a></li>
                         <li><a href="<?php echo $this->url('activity') ?>"><?php echo $this->translate('Activity') ?></a></li>
                         <li><a href="<?php echo $this->url('photo') ?>"><?php echo $this->translate('Photos') ?></a></li>
+                        <li><a href="#"><?php echo $this->translate('Members') ?></a></li>
                     </ul>
+                    <?php /*
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (null === $this->identity()): ?>
                             <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
@@ -69,6 +72,7 @@
                         <?= sprintf($this->translate('Signed in as %s'), $member->getFirstName() . ' ' . $member->getLastName()) ?>
                     </p>
                     <?php endif; ?>
+                    */ ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>

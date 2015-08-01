@@ -1,10 +1,21 @@
 body {
     color: #414141;
     font-family: "Raleway",sans-serif;
+    padding-top: 90px;
+    padding-bottom: 40px;
 }
 
+/* navigation */
+.navbar {
+    border: none;
+}
 .navbar-default {
     background-color: #fff;
+}
+.navbar-default .navbar-nav a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-transform: uppercase;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .active > a,
@@ -13,4 +24,9 @@ body {
 .navbar-default .navbar-nav > .active > a:hover {
     background-color: #BC5F5F;
     color: #fff;
+}
+
+/* main container */
+body > div.container {
+    background-color: #f0f0f0;
 }
