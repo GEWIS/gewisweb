@@ -83,7 +83,7 @@ class Module
                     $acl->allow('user', 'organ', 'view');
 
                     // users are allowed to view and search members
-                    $acl->allow('user', 'member', array('view', 'search'));
+                    $acl->allow('user', 'member', array('view', 'search', 'birthdays'));
 
                     $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
 
