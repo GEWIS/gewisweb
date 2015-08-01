@@ -57,7 +57,8 @@ class Album
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent = ?1')
             ->setParameter(1, $parent)
-            ->setFirstResult($start);
+            ->setFirstResult($start)
+            ->orderBy('a.startDateTime', 'ASC');
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
@@ -76,7 +77,8 @@ class Album
 
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
-            ->where('a.parent IS NULL');
+            ->where('a.parent IS NULL')
+            ->orderBy('a.startDateTime', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -98,7 +100,8 @@ class Album
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
             ->setParameter(1, $start)
-            ->setParameter(2, $end);
+            ->setParameter(2, $end)
+            ->orderBy('a.startDateTime', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
