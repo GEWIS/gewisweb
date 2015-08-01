@@ -1,0 +1,16 @@
+body {
+    color: #414141;
+    font-family: "Raleway",sans-serif;
+}
+
+.navbar-default {
+    background-color: #fff;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .active > a:hover {
+    background-color: #BC5F5F;
+    color: #fff;
+}
