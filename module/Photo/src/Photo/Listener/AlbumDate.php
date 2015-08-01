@@ -13,9 +13,9 @@ class AlbumDate
     public function prePersist($eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity->getResourceId() === 'album') {
+        if ($entity instanceof \Photo\Model\Album) {
             $this->albumPersisted($entity);
-        } elseif ($entity->getResourceId() === 'photo') {
+        } elseif ($entity instanceof \Photo\Model\Photo) {
             $this->photoPersisted($entity);
         }
     }

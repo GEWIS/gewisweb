@@ -21,9 +21,9 @@ class Remove
     public function preRemove($eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity->getResourceId() === 'album') {
+        if ($entity instanceof \Photo\Model\Album) {
             $this->albumRemoved($entity);
-        } elseif ($entity->getResourceId() === 'photo') {
+        } elseif ($entity instanceof \Photo\Model\Photo) {
             $this->photoRemoved($entity);
         }
     }
