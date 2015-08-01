@@ -9,6 +9,33 @@ class DecisionController extends AbstractActionController
 {
 
     /**
+     * Index action, shows meetings.
+     */
+    public function indexAction()
+    {
+        return new ViewModel(array(
+            'meetings' => $this->getDecisionService()->getMeetings()
+        ));
+    }
+
+    /**
+     * View a meeting.
+     */
+    public function viewAction()
+    {
+        $type = $this->params()->fromRoute('type');
+        $number = $this->params()->fromRoute('number');
+
+        try {
+            return new ViewModel(array(
+                'meeting' => $this->getDecisionService()->getMeeting($type, $number)
+            ));
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
+    }
+
+    /**
      * Search decisions.
      */
     public function searchAction()

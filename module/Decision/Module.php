@@ -55,6 +55,11 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_mapper_meeting' => function ($sm) {
+                    return new \Decision\Mapper\Meeting(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_mapper_decision' => function ($sm) {
                     return new \Decision\Mapper\Decision(
                         $sm->get('decision_doctrine_em')
@@ -80,7 +85,7 @@ class Module
                     // users are allowed to view and search members
                     $acl->allow('user', 'member', array('view', 'search'));
 
-                    $acl->allow('user', 'decision', 'search');
+                    $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
 
                     return $acl;
                 },

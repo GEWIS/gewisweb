@@ -1,0 +1,14 @@
+<h1><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
+    <small><?= $this->dateFormat(
+        $meeting->getDate(),
+        \IntlDateFormatter::FULL,
+        \IntlDateFormatter::NONE,
+        'nl_NL'
+    ) ?></small></h1>
+
+<ul>
+<?php foreach ($meeting->getDecisions() as $decision): ?>
+    <li><?= $meeting->getType()?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>.<?= $decision->getNumber() ?>
+        <?= $decision->getContent() ?></li>
+<?php endforeach ?>
+</ul>

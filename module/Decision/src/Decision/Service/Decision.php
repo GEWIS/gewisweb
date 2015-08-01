@@ -11,6 +11,43 @@ class Decision extends AbstractAclService
 {
 
     /**
+     * Get all meetings.
+     *
+     * @return array Of all meetings
+     */
+    public function getMeetings()
+    {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
+        }
+
+        return $this->getMeetingMapper()->findAll();
+    }
+
+    /**
+     * Get information about one meeting.
+     *
+     * @param string $type
+     * @param int $number
+     *
+     * @return Decision\Model\Meeting
+     */
+    public function getMeeting($type, $number)
+    {
+        if (!$this->isAllowed('view_meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meetings.')
+            );
+        }
+
+        return $this->getMeetingMapper()->find($type, $number);
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data
@@ -36,7 +73,7 @@ class Decision extends AbstractAclService
 
         $data = $form->getData();
 
-        return $this->getdecisionMapper()->search($data['query']);
+        return $this->getDecisionMapper()->search($data['query']);
     }
 
     /**
@@ -47,6 +84,16 @@ class Decision extends AbstractAclService
     public function getSearchDecisionForm()
     {
         return $this->sm->get('decision_form_searchdecision');
+    }
+
+    /**
+     * Get the meeting mapper.
+     *
+     * @return Decision\Mapper\Meeting
+     */
+    public function getMeetingMapper()
+    {
+        return $this->sm->get('decision_mapper_meeting');
     }
 
     /**
