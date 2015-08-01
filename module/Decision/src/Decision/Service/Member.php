@@ -24,7 +24,7 @@ class Member extends AbstractAclService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view membership info.')
             );
-        } else if (null === $lidnr && !$this->isAllowed('view')) {
+        } else if (null !== $lidnr && !$this->isAllowed('view')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view members.')
