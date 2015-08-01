@@ -91,6 +91,29 @@ class Member
     }
 
     /**
+     * Find all organs of this member.
+     *
+     * @param MemberModel $member
+     *
+     * @return array Of organs
+     */
+    public function findOrgans(MemberModel $member)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('DISTINCT o')
+            ->from('Decision\Model\Organ', 'o')
+            ->join('o.members', 'om')
+            ->join('om.member', 'm')
+            ->where('m.lidnr = :lidnr')
+            ->andWhere('om.dischargeDate IS NULL');
+
+        $qb->setParameter('lidnr', $member->getLidnr());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist a member model.
      *
      * @param MemberModel $member Member to persist.
