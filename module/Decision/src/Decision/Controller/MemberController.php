@@ -35,6 +35,16 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * Show birthdays of members.
+     */
+    public function birthdaysAction()
+    {
+        return new ViewModel(array(
+            'members' => $this->getMemberService()->getBirthdayMembers(7)
+        ));
+    }
+
+    /**
      * Get the member service.
      *
      * @return Decision\Service\Member

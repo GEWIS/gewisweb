@@ -56,6 +56,26 @@ class Member extends AbstractAclService
     }
 
     /**
+     * Get the members of which their birthday falls in the next $days days.
+     *
+     * When $days equals 0 or isn't given, it will give all birthdays of today.
+     *
+     * @param int $days The number of days to look ahead.
+     *
+     * @return array Of members sorted by birthday
+     */
+    public function getBirthdayMembers($days = 0)
+    {
+        if (!$this->isAllowed('birthdays')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the list of birthdays.')
+            );
+        }
+        return $this->getMemberMapper()->findBirthdayMembers($days);
+    }
+
+    /**
      * Find a member by (part of) its name.
      *
      * @param string $query (part of) the full name of a member
