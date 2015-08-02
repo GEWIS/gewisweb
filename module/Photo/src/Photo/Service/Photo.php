@@ -296,6 +296,17 @@ class Photo extends AbstractService
     }
 
     /**
+     * Gets all photos in which a member has been tagged.
+     *
+     * @param \Decision\Model\Member $member
+     *
+     * @return array
+     */
+    public function getTagsForMember($member)
+    {
+        return $this->getTagMapper()->getTagsByLidnr($member->getLidnr());
+    }
+    /**
      * Gets the base directory from which the photo paths should be requested
      *
      * @return string

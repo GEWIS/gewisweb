@@ -56,9 +56,15 @@ class Member extends AbstractAclService
             }
         }
 
+        $tags = $this->getPhotoService()->getTagsForMember($member);
+        // Base directory for retrieving photos
+        $basedir = $this->getPhotoService()->getBaseDirectory();
+
         return array(
             'member' => $member,
-            'memberships' => $memberships
+            'memberships' => $memberships,
+            'tags' => $tags,
+            'basedir' => $basedir
         );
     }
 
@@ -136,6 +142,17 @@ class Member extends AbstractAclService
     public function getMemberMapper()
     {
         return $this->sm->get('decision_mapper_member');
+    }
+
+
+    /**
+     * Get the photo service.
+     *
+     * @return \Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->sm->get('photo_service_photo');
     }
 
     /**
