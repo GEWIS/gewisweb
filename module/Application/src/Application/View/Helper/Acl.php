@@ -21,7 +21,7 @@ class Acl extends AbstractHelper
      * @return User|string
      */
     protected $role;
-    
+
     /**
      * Check if a operation is allowed for the current role.
      *
@@ -77,15 +77,5 @@ class Acl extends AbstractHelper
     public function setRole($role)
     {
         $this->role = $role;
-    }
-
-    /**
-     * Get the authentication service.
-     *
-     * @return ExamService
-     */
-    public function getExamService()
-    {
-        return $this->examService;
     }
 }
