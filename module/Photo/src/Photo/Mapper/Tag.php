@@ -54,6 +54,31 @@ class Tag
             'member' => $lidnr
         ));
     }
+
+    /**
+     * Returns the most recent photo of a give member. Returns null if there are none
+     *
+     * @param \Decision\Model\Member $member
+     *
+     * @return \Photo\Model\Tag|null
+     */
+    public function getRandomMemberTag($member)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('t')
+            ->from('Photo\Model\Tag', 't')
+            ->where('t.member = ?1')
+            ->setMaxResults(1)
+            ->setParameter(1, $member)
+            ->addSelect('RAND() as HIDDEN rand')
+            ->orderBy('rand');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
     /**
      * Removes a tag.
      *

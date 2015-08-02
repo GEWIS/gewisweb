@@ -15,36 +15,57 @@ class Frontpage extends AbstractAclService
      */
     public function getHomePageData()
     {
-        $birthdays = $this->getBirthdays();
+        $birthdayInfo = $this->getBirthdayInfo();
         return array(
-            'birthdays' => $birthdays
+            'birthdays' => $birthdayInfo['birthdays'],
+            'birthdayPhoto' => $birthdayInfo['photo']
         );
     }
 
     /**
      * Retrieves all birthdays happening today, which should be shown on the home page.
-     * Includes the age.
+     * Includes the age and a random photo of someone whom has a birthday.
+     *
+     * @return array
      */
-    public function getBirthdays()
+    public function getBirthdayInfo()
     {
         $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
         $today = new \DateTime();
         $birthdays = array();
+        $photos = array();
         foreach($birthdayMembers as $member) {
             $age = $today->diff($member->getBirth())->y;
-            //TODO: check member's privacy settings
+            $photos[] = $this->getMemberPhoto($member);
+                //TODO: check member's privacy settings
             $birthdays[] = array('member' => $member, 'age' => $age);
+
         }
 
-        return $birthdays;
+        $k = array_rand($photos);
+        $photo = $photos[$k];
+
+        return array(
+            'birthdays' => $birthdays,
+            'photo' => $photo
+        );
     }
 
     /**
-     * Retrieves a photo of a member whom has a birthday.
+     * Retrieves a random photo of a member.
+     *
+     * @param \Decision\Model\Member $member
+     *
+     * @return \Photo\Model\Photo|null
      */
-    public function getBirthdayPhoto($birthdays)
+    public function getMemberPhoto($member)
     {
-
+        $tag = $this->getTagMapper()->getRandomMemberTag($member);
+        if(is_null($tag)) {
+            return null;
+        } else {
+            return $tag->getPhoto();
+        }
     }
 
     /**
@@ -56,6 +77,16 @@ class Frontpage extends AbstractAclService
     {
         $config = $this->sm->get('config');
         return $config['frontpage'];
+    }
+
+    /**
+     * Get the photo module's tag mapper.
+     *
+     * @return \Photo\Mapper\Tag
+     */
+    public function getTagMapper()
+    {
+        return $this->sm->get('photo_mapper_tag');
     }
 
     /**
