@@ -19,16 +19,29 @@ class Member extends AbstractAclService
      *
      * @return Decision\Model\Member
      */
-    public function getMembershipInfo()
+    public function getMembershipInfo($lidnr = null)
     {
-        if (!$this->isAllowed('view')) {
+        if (null === $lidnr && !$this->isAllowed('view_self')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view membership info.')
             );
+        } else if (null !== $lidnr && !$this->isAllowed('view')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view members.')
+            );
         }
 
-        $member = $this->getMemberMapper()->findByLidnr($this->getRole()->getLidnr());
+        if (null === $lidnr) {
+            $lidnr = $this->getRole()->getLidnr();
+        }
+
+        $member = $this->getMemberMapper()->findByLidnr($lidnr);
+
+        if (null === $member) {
+            return null;
+        }
 
         $memberships = array();
         foreach ($member->getOrganInstallations() as $install) {

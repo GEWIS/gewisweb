@@ -7,26 +7,6 @@ use Decision\Model\Address;
     <h1><?= $member->getFullName() ?></h1>
     <table class="table table-bordered">
         <tr>
-            <th><?= $this->translate('Membership number') ?></th>
-            <td><?= $member->getLidnr() ?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('Initials') ?></th>
-            <td><?= $member->getInitials() ?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('First name') ?></th>
-            <td><?= $member->getFirstName() ?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('Middle name') ?></th>
-            <td><?= $member->getMiddleName() ?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('Last name') ?></th>
-            <td><?= $member->getLastName() ?></td>
-        </tr>
-        <tr>
             <th><?= $this->translate('Gender') ?></th>
             <td><?php
 switch ($member->getGender()) {
@@ -55,35 +35,6 @@ case Member::GENDER_OTHER:
             <td><?= $member->getGeneration() ?></td>
         </tr>
         <tr>
-        <th><?= $this->translate('Membership type') ?></th>
-            <td><?php
-switch ($member->getType()) {
-case Member::TYPE_ORDINARY:
-    echo $this->translate('Ordinary');
-    break;
-case Member::TYPE_PROLONGED:
-    echo $this->translate('Prolonged');
-    break;
-case Member::TYPE_EXTERNAL:
-    echo $this->translate('External');
-    break;
-case Member::TYPE_EXTRAORDINARY:
-    echo $this->translate('Extraordinary');
-    break;
-case Member::TYPE_HONORARY:
-    echo $this->translate('Honorary');
-    break;
-}
-?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('Last membership change') ?></th>
-            <td><?= $member->getChangedOn()->format('l j F Y') ?></td>
-        </tr>
-        <tr>
-            <th><?= $this->translate('End date of membership') ?></th>
-            <td><?= $member->getExpiration()->format('l j F Y') ?></td>
-        </tr>
     </table>
     <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
 <ul>
@@ -120,10 +71,6 @@ case Address::TYPE_MAIL:
     <tr>
         <th><?= $this->translate('City and postal code') ?></th>
         <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
-    </tr>
-    <tr>
-        <th><?= $this->translate('Phone number') ?></th>
-        <td><?= $address->getPhone() ?></td>
     </tr>
 </table>
 <?php endforeach ?>

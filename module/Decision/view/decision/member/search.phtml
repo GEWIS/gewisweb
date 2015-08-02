@@ -1,0 +1,68 @@
+<script>
+var urlTemplate = '<?= $this->url('member/view', array('lidnr' => '__LIDNR__')) ?>';
+$(document).ready(function () {
+    var maxResults = 32;
+    var footer = $("#members-result tfoot");
+    var last = 0;
+    var prev = 0;
+
+    var searchMember = function (term) {
+        var curLast = ++last;
+        if (term.length >= 2) {
+            $.ajax({
+                dataType: 'json',
+                url: '<?= $this->url('member/search') ?>?q=' + term,
+                context: document.body
+            }).done(function (data) {
+                if (prev > curLast)
+                    return;
+                prev = curLast;
+                var table = '';
+                $.each(data.members, function (idx, member) {
+                    var link = '<a style="display: block; width: 100%; height: 100%;" href="' + urlTemplate.replace('__LIDNR__', member.lidnr) + '">';
+                    table += '<tr>';
+                    table += '<td>' + link + member.lidnr + '</a></td>';
+                    table += '<td>' + link + member.fullName + '</a></td>';
+                    table += '<td>' + link + member.generation + '</a></td>';
+                    table += '</tr>';
+                });
+                $('#members-result tbody').html(table);
+                if (data.members.length >= maxResults) {
+                    footer.show();
+                } else {
+                    footer.hide();
+                }
+            });
+        } else {
+            $('#members-result tbody').html('');
+        }
+    };
+    $('#member-search').keyup(function (e) {
+        term = $(e.target).val();
+        searchMember(term)
+    });
+});
+</script>
+<form role="form">
+    <div class="form-group">
+        <label for="">Zoeken op lid</label>
+        <input type="text" class="form-control" placeholder="Zoek" id="member-search" autofocus>
+    </div>
+</form>
+
+<table class="table table-hover" id="members-result">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Naam</th>
+        <th>Generatie</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot style="display: none">
+    <tr>
+        <td colspan="4"> Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten te zien.</td>
+    </tr>
+    </tfoot>
+</table>

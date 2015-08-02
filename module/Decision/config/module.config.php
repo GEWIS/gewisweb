@@ -93,6 +93,18 @@ return array(
                                 'action' => 'birthdays'
                             )
                         )
+                    ),
+                    'view' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/:lidnr',
+                            'constraints' => array(
+                                'lidnr' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'action' => 'view'
+                            )
+                        )
                     )
                 ),
             ),

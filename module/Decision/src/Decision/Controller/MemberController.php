@@ -18,20 +18,39 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * View information about a member.
+     */
+    public function viewAction()
+    {
+        $info = $this->getMemberService()->getMembershipInfo($this->params()->fromRoute('lidnr'));
+
+        if (null === $info) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel($info);
+    }
+
+    /**
      * Search action, allows searching for members.
      */
     public function searchAction()
     {
         $name = $this->params()->fromQuery('q');
-        $members = array();
-        foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
-            //TODO: this returns a lot of data, much more than is needed in most cases.
-            $members[] = $member->toArray();
+
+        if (!empty($name)) {
+            $members = array();
+            foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
+                //TODO: this returns a lot of data, much more than is needed in most cases.
+                $members[] = $member->toArray();
+            }
+
+            return new JsonModel(array(
+                'members' => $members
+            ));
         }
 
-        return new JsonModel(array(
-            'members' => $members
-        ));
+        return new ViewModel(array());
     }
 
     /**
