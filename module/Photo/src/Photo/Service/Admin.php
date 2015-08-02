@@ -2,14 +2,14 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 use Photo\Model\Photo as PhotoModel;
 use Imagick;
 
 /**
  * Admin service for all photo admin related functions.
  */
-class Admin extends AbstractService
+class Admin extends AbstractAclService
 {
     /**
      * Generates CFS paths
@@ -50,6 +50,12 @@ class Admin extends AbstractService
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
+        if (!$this->isAllowed('photo', 'add')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to add photos.')
+            );
+        }
+
         $config = $this->getConfig();
         $storagePath = $this->generateStoragePath($path);
         //check if photo exists already in the database
@@ -110,7 +116,6 @@ class Admin extends AbstractService
      */
     protected function createThumbnail($path, $width, $height)
     {
-
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat("png");
@@ -137,6 +142,12 @@ class Admin extends AbstractService
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
+        if (!$this->isAllowed('photo', 'import')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to import photos.')
+            );
+        }
+
         $albumService = $this->getAlbumService();
         $image = new \Zend\Validator\File\IsImage(array('magicFile' => false));
         if ($handle = opendir($path)) {
@@ -164,6 +175,12 @@ class Admin extends AbstractService
 
     public function upload($files, $album)
     {
+        if (!$this->isAllowed('photo', 'upload')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to upload photos.')
+            );
+        }
+
         $imageValidator = new \Zend\Validator\File\IsImage(
             array('magicFile' => false)
         );
@@ -280,6 +297,16 @@ class Admin extends AbstractService
     public function getPhotoService()
     {
         return $this->sm->get('photo_service_photo');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'admin';
     }
 
     /**
