@@ -15,7 +15,7 @@ class Metadata extends AbstractService
      * Populates the metadata of a photo based on the EXIF data of the photo
      *
      * @param \Photo\Model\Photo $photo the photo to add the metadata to.
-     * @param $path The path where the actual image file is stored
+     * @param string $path The path where the actual image file is stored
      *
      * @return \Photo\Model\Photo the photo with the added metadata
      */
@@ -23,17 +23,17 @@ class Metadata extends AbstractService
     {
         $exif = read_exif_data($path, 'EXIF');
 
-        if($exif) {
+        if ($exif) {
             $photo->setArtist($exif['Artist']);
             $photo->setCamera($exif['Model']);
             $photo->setDateTime(new \DateTime($exif['DateTimeOriginal']));
             $photo->setFlash($exif['Flash'] != 0);
             $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
             $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
-            if(isset($exif['ShutterSpeedValue'])) {
+            if (isset($exif['ShutterSpeedValue'])) {
                 $photo->setShutterSpeed($this->exifGetShutter($exif['ShutterSpeedValue']));
             }
-            if(isset($exif['ShutterSpeedValue'])) {
+            if (isset($exif['ShutterSpeedValue'])) {
                 $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
             }
             $photo->setIso($exif['ISOSpeedRatings']);
@@ -42,6 +42,7 @@ class Metadata extends AbstractService
             // Since no date is known, we use the current one
             $photo->setDateTime(new \DateTime());
         }
+
         return $photo;
     }
 

@@ -18,35 +18,15 @@ class Album extends AbstractService
     const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
-    }
-
-    /**
      * Gets an album using the album id.
      *
-     * @param integer $id the id of the album
+     * @param integer $albumId the id of the album
      *
      * @return \Photo\Model\Album album matching the given id
      */
-    public function getAlbum($id)
+    public function getAlbum($albumId)
     {
-        return $this->getAlbumMapper()->getAlbumById($id);
+        return $this->getAlbumMapper()->getAlbumById($albumId);
     }
 
     /**
@@ -160,14 +140,14 @@ class Album extends AbstractService
     /**
      * Updates the metadata of an album using post data
      *
-     * @param int $id the id of the album to modify
+     * @param int $albumId the id of the album to modify
      * @param array $data The post data to update
      *
      * @return boolean indicating if the update was successful
      */
-    public function updateAlbum($id, $data)
+    public function updateAlbum($albumId, $data)
     {
-        $form = $this->getEditAlbumForm($id);
+        $form = $this->getEditAlbumForm($albumId);
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -182,16 +162,16 @@ class Album extends AbstractService
     /**
      * Moves an album to new parent album
      *
-     * @param int $id the id of the album to be moved
+     * @param int $albumId the id of the album to be moved
      * @param int $parentId the id of the new parent
      *
      * @return boolean indicating if the move was successful
      */
-    public function moveAlbum($id, $parentId)
+    public function moveAlbum($albumId, $parentId)
     {
-        $album = $this->getAlbum($id);
+        $album = $this->getAlbum($albumId);
         $parent = $this->getAlbum($parentId);
-        if (is_null($album) || $id == $parentId) {
+        if (is_null($album) || $albumId == $parentId) {
             return false;
         }
 
@@ -204,49 +184,43 @@ class Album extends AbstractService
     /**
      * Removes an album and all subalbums recursively, including all photos.
      *
-     * @param int $id the id of the album to remove.
+     * @param int $albumId the id of the album to remove.
      */
-    public function deleteAlbum($id)
+    public function deleteAlbum($albumId)
     {
-        $this->deleteAlbumPhotos($id);
-        foreach ($this->getAlbumMapper()->getSubAlbums($id) as $subAlbum) {
-            $this->deleteAlbum($subAlbum);
-        }
-        $this->getAlbumMapper()->deleteAlbum($id);
-        $this->getAlbumMapper()->flush();
-    }
-
-    /**
-     * Deletes all photos inside the album
-     *
-     * @param int $id the id of the album to delete all photos from
-     */
-    public function deleteAlbumPhotos($id)
-    {
-        $album = $this->getAlbum($id);
-        foreach ($this->getAlbumMapper()->getAlbumPhotos($album) as $photo) {
-            $this->getPhotoService()->deletePhoto($photo);
+        $album = $this->getAlbum($albumId);
+        if (!is_null($album)) {
+            $this->getAlbumMapper()->remove($album);
+            $this->getAlbumMapper()->flush();
         }
     }
 
     /**
      * Updates the given album with a newly generated cover photo.
      *
-     * @param int $id
+     * @param int $albumId
      */
-    public function generateAlbumCover($id)
+    public function generateAlbumCover($albumId)
     {
         $config = $this->getConfig();
-        $album = $this->getAlbum($id);
+        $album = $this->getAlbum($albumId);
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->getAlbumCoverService()->createCover($album);
         if (!is_null($album->getCoverPath())) {
             unlink($config['upload_dir'] . '/' . $album->getCoverPath());
         }
         $album->setCoverPath($coverPath);
-        $mapper = $this->getAlbumMapper();
-        $mapper->persist($album);
-        $mapper->flush();
+        $this->getAlbumMapper()->flush();
+    }
+
+    /**
+     * Deletes the file belonging to the album cover for an album.
+     *
+     * @param \Photo\Model\Album $album
+     */
+    public function deleteAlbumCover($album)
+    {
+        $this->getPhotoService()->deletePhotoFile($album->getCoverPath());
     }
 
     /**
@@ -272,14 +246,14 @@ class Album extends AbstractService
     /**
      * Retrieves the form for editing the specified album.
      *
-     * @param integer $id of the album
+     * @param integer $albumId of the album
      * @return \Photo\Form\EditAlbum
      */
-    public function getEditAlbumForm($id)
+    public function getEditAlbumForm($albumId)
     {
         //TODO: permissions!!
         $form = $this->sm->get('photo_form_album_edit');
-        $album = $this->getAlbum($id);
+        $album = $this->getAlbum($albumId);
         $form->bind($album);
 
         return $form;
@@ -297,13 +271,23 @@ class Album extends AbstractService
     }
 
     /**
-     * Get the PhotoImport form.
+     * Get the album mapper.
      *
-     * @return \Photo\Form\PhotoImport
+     * @return \Photo\Mapper\Album
      */
-    public function getPhotoImportForm()
+    public function getAlbumMapper()
     {
-        return $this->sm->get('photo_form_import_folder');
+        return $this->sm->get('photo_mapper_album');
+    }
+
+    /**
+     * Get the photo mapper.
+     *
+     * @return \Photo\Mapper\Photo
+     */
+    public function getPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_photo');
     }
 
     /**
@@ -313,7 +297,7 @@ class Album extends AbstractService
      */
     public function getPhotoService()
     {
-        return $this->getServiceManager()->get("photo_service_photo");
+        return $this->sm->get("photo_service_photo");
     }
 
     /**
@@ -323,7 +307,7 @@ class Album extends AbstractService
      */
     public function getAlbumCoverService()
     {
-        return $this->getServiceManager()->get("photo_service_album_cover");
+        return $this->sm->get("photo_service_album_cover");
     }
 
     /**

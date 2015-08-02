@@ -30,36 +30,15 @@ class Album
     }
 
     /**
-     * Deletes an album from the database
-     *
-     * @param integer $id the id of the album
-     */
-    public function deleteAlbum($id)
-    {
-        $album = $this->getAlbumById($id);
-        if (!is_null($album)) {
-            $this->em->remove($album);
-        }
-    }
-
-    /**
      * Retrieves an album by id from the database.
      *
-     * @param integer $id the id of the album
+     * @param integer $albumId the id of the album
      *
-     * @return \Photo\Model\Album
+     * @return \Photo\Model\Album|null
      */
-    public function getAlbumById($id)
+    public function getAlbumById($albumId)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
-            ->where('a.id = ?1')
-            ->setParameter(1, $id);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->find($albumId);
     }
 
     /**
@@ -68,7 +47,7 @@ class Album
      * @param \Photo\Model\Album $parent the parent album to retrieve the subalbum from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return, null for infinite
-     * @return array|null Array with subalbums or null if there are none
+     * @return array of subalbums or null if there are none
      */
     public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
@@ -78,58 +57,11 @@ class Album
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent = ?1')
             ->setParameter(1, $parent)
-            ->setFirstResult($start);
+            ->setFirstResult($start)
+            ->orderBy('a.startDateTime', 'ASC');
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Returns all the photos in an album.
-     *
-     * @param \Photo\Model\Album $album The album to retrieve the photos from
-     * @param integer $start the result to start at
-     * @param integer $maxResults max amount of results to return, null for infinite
-     * @return array of photo's
-     */
-    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.album = ?1')
-            ->setParameter(1, $album)
-            ->setFirstResult($start);
-        if (!is_null($maxResults)) {
-            $qb->setMaxResults($maxResults);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Retrieves some random photos from the specified album. If the amount of
-     * available photos is smaller than the requested count, less photos
-     * will be returned.
-     *
-     * @param int $album
-     * @param int $maxResults
-     * @return array of Photo\Model\Photo
-     */
-    public function getRandomAlbumPhotos($album, $maxResults)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.album = ?1')
-            ->setParameter(1, $album)
-            ->addSelect('RAND() as HIDDEN rand')
-            ->orderBy('rand');
-        $qb->setMaxResults($maxResults);
 
         return $qb->getQuery()->getResult();
     }
@@ -145,7 +77,8 @@ class Album
 
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
-            ->where('a.parent IS NULL');
+            ->where('a.parent IS NULL')
+            ->orderBy('a.startDateTime', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -167,7 +100,8 @@ class Album
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
             ->setParameter(1, $start)
-            ->setParameter(2, $end);
+            ->setParameter(2, $end)
+            ->orderBy('a.startDateTime', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -233,6 +167,16 @@ class Album
     }
 
     /**
+     * Removes an album.
+     *
+     * @param AlbumModel $album
+     */
+    public function remove(AlbumModel $album)
+    {
+        $this->em->remove($album);
+    }
+
+    /**
      * Persist album
      *
      * @param AlbumModel $album
@@ -257,7 +201,7 @@ class Album
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Photo\Mapper\Album');
+        return $this->em->getRepository('Photo\Model\Album');
     }
 
 }

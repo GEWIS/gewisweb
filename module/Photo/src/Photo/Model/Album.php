@@ -55,13 +55,15 @@ class Album implements ResourceInterface
 
     /**
      * all the subalbums
-     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent")
+     * Note: These are fetched extra lazy so we can efficiently retrieve an album count
+     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $children;
 
     /**
      * all the photo's in this album.
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album")
+     * Note: These are fetched extra lazy so we can efficiently retrieve an photo count
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $photos;
 
@@ -71,20 +73,6 @@ class Album implements ResourceInterface
      * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
-
-    /**
-     * The amount of photos in this album
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $photoCount = 0;
-
-    /**
-     * The amount of subalbums in this album
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $albumCount = 0;
 
     /**
      * Get the ID.
@@ -99,7 +87,7 @@ class Album implements ResourceInterface
     /**
      * Get the start date.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getStartDateTime()
     {
@@ -109,7 +97,7 @@ class Album implements ResourceInterface
     /**
      * Get the end date.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getEndDateTime()
     {
@@ -129,7 +117,7 @@ class Album implements ResourceInterface
     /**
      * Get the parent album.
      *
-     * @return string $parent
+     * @return \Photo\Model\Album $parent
      */
     public function getParent()
     {
@@ -149,7 +137,7 @@ class Album implements ResourceInterface
     /**
      * Get the album cover
      *
-     * @return photo
+     * @return string
      */
     public function getCoverPath()
     {
@@ -163,7 +151,11 @@ class Album implements ResourceInterface
      */
     public function getPhotoCount()
     {
-        return $this->photoCount;
+        $count = $this->photos->count();
+        foreach($this->children as $album) {
+            $count += $album->getPhotoCount();
+        }
+        return $count;
     }
 
     /**
@@ -173,7 +165,7 @@ class Album implements ResourceInterface
      */
     public function getAlbumCount()
     {
-        return $this->albumCount;
+        return $this->children->count();
     }
 
     /**
@@ -219,7 +211,7 @@ class Album implements ResourceInterface
     /**
      * Set the cover photo for the album
      *
-     * @param photo $photo
+     * @param string $photo
      */
     public function setCoverPath($photo)
     {
@@ -227,23 +219,25 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Set the amount of photos in an album
+     * Add a photo to an album.
      *
-     * @param integer $count
+     * @param \Photo\Model\Photo $photo
      */
-    public function setPhotoCount($count)
+    public function addPhoto($photo)
     {
-        $this->photoCount = $count;
+        $photo->setAlbum($this);
+        $this->photos[] = $photo;
     }
 
     /**
-     * Set the amount of subalbums in an album
+     * Add a sub album to an album.
      *
-     * @param integer $count
+     * @param \Photo\Model\Album $album
      */
-    public function setAlbumCount($count)
+    public function addAlbum($album)
     {
-        $this->albumCount = $count;
+        $album->setParent($this);
+        $this->children[] = $album;
     }
 
     /**
@@ -254,16 +248,16 @@ class Album implements ResourceInterface
     public function toArray()
     {
         $array = array(
-            'id' => $this->id,
-            'startDateTime' => $this->startDateTime,
-            'endDateTime' => $this->endDateTime,
-            'name' => $this->name,
-            'parent' => is_null($this->parent) ? null : $this->parent->toArray(),
+            'id' => $this->getId(),
+            'startDateTime' => $this->getStartDateTime(),
+            'endDateTime' => $this->getEndDateTime(),
+            'name' => $this->getName(),
+            'parent' => is_null($this->getParent()) ? null : $this->getParent()->toArray(),
             'children' => array(),
             'photos' => array(),
-            'coverPath' => $this->coverPath,
-            'photoCount' => $this->photoCount,
-            'albumCount' => $this->albumCount
+            'coverPath' => $this->getCoverPath(),
+            'photoCount' => $this->getPhotoCount(),
+            'albumCount' => $this->getAlbumCount()
         );
 
         return $array;
@@ -286,42 +280,6 @@ class Album implements ResourceInterface
         }
 
         return $array;
-    }
-
-    /**
-     * Updates the albumCount in the parent album object.
-     *
-     * @ORM\PrePersist()
-     * @ORM\PostUpdate()
-     */
-    public function updateOnAdd()
-    {
-        if (!is_null($this->parent) && !is_null($this->getStartDateTime())) {
-            $this->parent->setAlbumCount($this->parent->getAlbumCount() + 1);
-            if (is_null($this->parent->getStartDateTime()) || $this->parent->getStartDateTime()->getTimestamp() >
-                $this->getStartDateTime()->getTimeStamp()
-            ) {
-                $this->parent->setStartDateTime($this->getStartDateTime());
-            }
-            if (is_null($this->parent->getEndDateTime()) || $this->parent->getEndDateTime()->getTimestamp() <
-                $this->getEndDateTime()->getTimeStamp()
-            ) {
-                $this->parent->setEndDateTime($this->getEndDateTime());
-            }
-        }
-    }
-
-    /**
-     * Updates the albumCount in the parent album object.
-     *
-     * @ORM\PreRemove()
-     * @ORM\PreUpdate()
-     */
-    public function updateOnRemove()
-    {
-        if (!is_null($this->parent)) {
-            $this->parent->setAlbumCount($this->parent->getAlbumCount() - 1);
-        }
     }
 
     /**

@@ -17,11 +17,12 @@ class AlbumAdminController extends AbstractActionController
         $albumService = $this->getAlbumService();
         $years = $albumService->getAlbumYears();
         $albumsByYear = array();
-        foreach($years as $year) {
+        foreach ($years as $year) {
             $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
         }
 
         $albumsWithoutDate = $albumService->getAlbumsWithoutDate();
+
         return new ViewModel(array(
             'albumsByYear' => $albumsByYear,
             'albumsWithoutDate' => $albumsWithoutDate
@@ -61,7 +62,8 @@ class AlbumAdminController extends AbstractActionController
             return $this->notFoundAction();
         }
         // Add some urls
-        $albumPage['urls'] =$this->getURLs();
+        $albumPage['urls'] = $this->getURLs();
+
         return new JsonModel($albumPage);
     }
 
@@ -105,7 +107,7 @@ class AlbumAdminController extends AbstractActionController
             $album = $this->getAlbumService()->getAlbum($albumId);
 
             try {
-                $this->getPhotoService()->upload($request->getFiles(), $album);
+                $this->getAdminService()->upload($request->getFiles(), $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -128,7 +130,7 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             $album = $this->getAlbumService()->getAlbum($albumId);
             try {
-                $this->getPhotoService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
+                $this->getAdminService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -206,9 +208,6 @@ class AlbumAdminController extends AbstractActionController
             'album_delete' => $this->url()->fromRoute(
                 'admin_photo/album_delete', array('album_id' => '{0}')
             ),
-            'album_create' => $this->url()->fromRoute(
-                'admin_photo/album_create', array('album_id' => '{0}')
-            ),
             'album_cover' => $this->url()->fromRoute(
                 'admin_photo/album_cover', array('album_id' => '{0}')
             ),
@@ -234,6 +233,8 @@ class AlbumAdminController extends AbstractActionController
 
     /**
      * Get the album service.
+     *
+     * @return \Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -241,11 +242,12 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Get the photo service.
+     * Get the photo admin service.
+     *
+     * @return \Photo\Service\Admin
      */
-    public function getPhotoService()
+    public function getAdminService()
     {
-        return $this->getServiceLocator()->get('photo_service_photo');
+        return $this->getServiceLocator()->get("photo_service_admin");
     }
-
 }

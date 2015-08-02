@@ -1,7 +1,8 @@
 <?php
 $this->headScript()
     ->prependFile($this->basePath() . '/js/photo-admin.js')
-    ->prependFile($this->basePath() . '/js/photo.js');
+    ->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
 ?>
@@ -35,8 +36,8 @@ $this->headLink()
     <div class="col-lg-9">
         <ol class="breadcrumb">
             <?php foreach ($path as $album): ?>
-                <li><a href="<?= $this->url('admin_photo',array(),array("fragment" => $album->getId())); ?>">
-                <?= $album->getName() ?></a></li>
+                <li><a href="<?= $this->url('admin_photo', array(), array("fragment" => $album->getId())); ?>">
+                        <?= $album->getName() ?></a></li>
             <?php endforeach; ?>
             <li class="active">Photo #<?= $photo->getId() ?></li>
         </ol>
@@ -50,58 +51,10 @@ $this->headLink()
         <row>
             <div class="col-lg-6">
                 <h4>Metadata</h4>
-                <table class="table table-condensed">
-                    <tbody>
-                    <tr>
-                        <td><?= $this->translate('Artist') ?></td>
-                        <td><?= is_null($photo->getArtist()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($photo->getArtist()) ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Camera') ?></td>
-                        <td><?= is_null($photo->getCamera()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($photo->getCamera()) ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Date/time') ?></td>
-                        <td><?= $photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Flash') ?></td>
-                        <td><?= $photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Focal length') ?></td>
-                        <td><?= is_null($photo->getFocalLength()) ? $this->translate("Unknown") : $photo->getFocalLength() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Exposure time') ?></td>
-                        <td><?= is_null($photo->getExposureTime()) ? $this->translate("Unknown") : $photo->getExposureTime() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Shutter speed') ?></td>
-                        <td><?= is_null($photo->getShutterSpeed()) ? $this->translate("Unknown") : $photo->getShutterSpeed() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Aperture') ?></td>
-                        <td><?= is_null($photo->getAperture()) ? $this->translate("Unknown") : $photo->getAperture() ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('ISO') ?></td>
-                        <td><?= is_null($photo->getIso()) ? $this->translate("Unknown") : $photo->getIso() ?></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
             </div>
 
-            <div class="col-lg-6">
-                <h4>Tags</h4>
-                <ul id="tagList">
-                    <?php foreach($photo->getTags() as $tag): ?>
-                        <li>
-                            <a href="#"><?= $tag->getMember()->getFullName() ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
+            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
         </row>
     </div>
 </div>
@@ -166,5 +119,6 @@ $this->headLink()
 <script>
     $(document).ready(function () {
         Photo.Admin.initPhoto();
+        Photo.initTagging();
     });
 </script>

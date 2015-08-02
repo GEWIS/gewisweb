@@ -35,6 +35,7 @@ class TagController extends AbstractActionController
             $lidnr = $this->params()->fromRoute('lidnr');
             $result['success'] = $this->getPhotoService()->removeTag($photoId, $lidnr);
         }
+
         return new JsonModel($result);
     }
 

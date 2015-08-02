@@ -2,8 +2,20 @@
 
 namespace Photo;
 
+use Zend\Mvc\MvcEvent;
+use Photo\Listener\AlbumDate as AlbumDateListener;
+use Photo\Listener\Remove as RemoveListener;
+
 class Module
 {
+    public function onBootstrap(MvcEvent $e)
+    {
+        $sm = $e->getApplication()->getServiceManager();
+        $em = $sm->get('photo_doctrine_em');
+        $dem = $em->getEventManager();
+        $dem->addEventListener(array(\Doctrine\ORM\Events::prePersist), new AlbumDateListener());
+        $dem->addEventListener(array(\Doctrine\ORM\Events::preRemove), new RemoveListener($sm));
+    }
 
     /**
      * Get the autoloader configuration.
@@ -43,7 +55,8 @@ class Module
                 'photo_service_album' => 'Photo\Service\Album',
                 'photo_service_metadata' => 'Photo\Service\Metadata',
                 'photo_service_photo' => 'Photo\Service\Photo',
-                'photo_service_album_cover' => 'Photo\Service\AlbumCover'
+                'photo_service_album_cover' => 'Photo\Service\AlbumCover',
+                'photo_service_admin' => 'Photo\Service\Admin'
             ),
             'factories' => array(
                 'photo_form_album_edit' => function ($sm) {
@@ -59,13 +72,6 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('photo_hydrator_album'));
-
-                    return $form;
-                },
-                'photo_form_import_folder' => function ($sm) {
-                    $form = new Form\PhotoImport(
-                        $sm->get('translator')
-                    );
 
                     return $form;
                 },

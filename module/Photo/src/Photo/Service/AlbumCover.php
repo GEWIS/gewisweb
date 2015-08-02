@@ -23,7 +23,7 @@ class AlbumCover extends AbstractService
         $cover = $this->generateCover($album);
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
         $cover->writeImage($tempFileName);
-        $newPath = $this->getPhotoService()->generateStoragePath($tempFileName);
+        $newPath = $this->getAdminService()->generateStoragePath($tempFileName);
         $config = $this->getConfig();
         rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
 
@@ -73,18 +73,6 @@ class AlbumCover extends AbstractService
     }
 
     /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    /**
      * Returns the images needed to fill the album cover
      *
      * @param \Photo\Model\Album $album
@@ -94,13 +82,14 @@ class AlbumCover extends AbstractService
      */
     protected function getImages($album, $count)
     {
-        $mapper = $this->getAlbumMapper();
+        $albumMapper = $this->getAlbumMapper();
+        $photoMapper = $this->getPhotoMapper();
         $config = $this->getConfig();
-        $photos = $mapper->getRandomAlbumPhotos($album, $count);
+        $photos = $photoMapper->getRandomAlbumPhotos($album, $count);
         //retrieve more photo's from subalbums
-        foreach ($mapper->getSubAlbums($album) as $subAlbum) {
+        foreach ($albumMapper->getSubAlbums($album) as $subAlbum) {
             $needed = $count - count($photos);
-            $photos = array_merge($photos, $mapper->getRandomAlbumPhotos($subAlbum, $needed));
+            $photos = array_merge($photos, $photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
         }
         //convert the photo objects to Imagick objects
         $images = array();
@@ -110,16 +99,6 @@ class AlbumCover extends AbstractService
         }
 
         return $images;
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
     }
 
     /**
@@ -195,6 +174,27 @@ class AlbumCover extends AbstractService
         return $image;
     }
 
+
+    /**
+     * Get the album mapper.
+     *
+     * @return \Photo\Mapper\Album
+     */
+    public function getAlbumMapper()
+    {
+        return $this->sm->get('photo_mapper_album');
+    }
+
+    /**
+     * Get the photo mapper.
+     *
+     * @return \Photo\Mapper\Photo
+     */
+    public function getPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_photo');
+    }
+
     /**
      * Gets the photo service.
      *
@@ -202,7 +202,29 @@ class AlbumCover extends AbstractService
      */
     public function getPhotoService()
     {
-        return $this->getServiceManager()->get("photo_service_photo");
+        return $this->sm->get("photo_service_photo");
+    }
+
+    /**
+     * Gets the photo admin service.
+     *
+     * @return \Photo\Service\Admin
+     */
+    public function getAdminService()
+    {
+        return $this->sm->get("photo_service_admin");
+    }
+
+    /**
+     * Get the photo config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['photo'];
     }
 
 }

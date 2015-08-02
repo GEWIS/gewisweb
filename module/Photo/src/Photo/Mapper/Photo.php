@@ -30,6 +30,54 @@ class Photo
     }
 
     /**
+     * Returns all the photos in an album.
+     *
+     * @param \Photo\Model\Album $album The album to retrieve the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return, null for infinite
+     * @return array of photo's
+     */
+    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a')
+            ->where('a.album = ?1')
+            ->setParameter(1, $album)
+            ->setFirstResult($start);
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Retrieves some random photos from the specified album. If the amount of
+     * available photos is smaller than the requested count, less photos
+     * will be returned.
+     *
+     * @param int $album
+     * @param int $maxResults
+     * @return array of Photo\Model\Photo
+     */
+    public function getRandomAlbumPhotos($album, $maxResults)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a')
+            ->where('a.album = ?1')
+            ->setParameter(1, $album)
+            ->addSelect('RAND() as HIDDEN rand')
+            ->orderBy('rand');
+        $qb->setMaxResults($maxResults);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Returns the next photo in the album to display
      *
      * @param \Photo\Model\Photo $photo
@@ -82,54 +130,36 @@ class Photo
      *
      * @param string $path The storage path of the photo
      * @param \Photo\Model\Album $album the album the photo is in
-     * @return \Photo\Model\Photo if the photo exists, null otherwise.
+     * @return \Photo\Model\Photo|null
      */
     public function getPhotoByData($path, $album)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.path = ?1 AND a.album = ?2')
-            ->setParameter(1, $path)
-            ->setParameter(2, $album);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->findOneBy(array(
+            'path' => $path,
+            'album' => $album->getId()
+        ));
     }
-
 
     /**
      * Retrieves a photo by id from the database.
      *
-     * @param integer $id the id of the photo
+     * @param integer $photoId the id of the photo
      *
      * @return \Photo\Model\Photo
      */
-    public function getPhotoById($id)
+    public function getPhotoById($photoId)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.id = ?1')
-            ->setParameter(1, $id);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $this->getRepository()->find($photoId);
     }
 
     /**
-     * Deletes a photo from the database
+     * Removes a photo
      *
-     * @param integer $id the id of the photo
+     * @param \Photo\Model\Photo $photo
      */
-    public function deletePhoto($id)
+    public function remove(PhotoModel $photo)
     {
-        $photo = $this->getPhotoById($id);
-        if (!is_null($photo)) {
-            $this->em->remove($photo);
-        }
+        $this->em->remove($photo);
     }
 
     /**
@@ -151,13 +181,22 @@ class Photo
     }
 
     /**
+     * Get the entity manager connection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     */
+    public function getConnection()
+    {
+        return $this->em->getConnection();
+    }
+    /**
      * Get the repository for this mapper.
      *
      * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Photo\Mapper\Photo');
+        return $this->em->getRepository('Photo\Model\Photo');
     }
 
 }
