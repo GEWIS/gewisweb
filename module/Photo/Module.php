@@ -100,6 +100,11 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_mapper_weekly_photo' => function ($sm) {
+                    return new Mapper\WeeklyPhoto(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 // reused code from the eduction module

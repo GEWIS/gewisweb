@@ -5,6 +5,7 @@ namespace Photo\Service;
 use Application\Service\AbstractService;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
 /**
  * Photo service.
@@ -221,7 +222,7 @@ class Photo extends AbstractService
 
     }
     /**
-     * Generates the PhotoOfTheWeek 
+     * Generates the PhotoOfTheWeek and adds it to the list
      * if at least one photo has been viewed in the specified time. 
      * The parameters determine the week to check the photos of.  
      * 
@@ -232,20 +233,46 @@ class Photo extends AbstractService
      */
     public function generatePhotoOfTheWeek($begindate, $enddate)
     {
-        $photos = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
-        if (empty(photos)){
+        $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
+        if (is_null($bestPhoto)){
             return null;
         }
-        $bestPhoto = [1 => null, 2 => null];
-        foreach  ($photos as $photo){
-            if ($this->photoPreference($photo[1], $photo[2]) 
-                    > $this->photoPreference($bestPhoto[1], $bestPhoto[2])){
-                $bestPhoto = $photo;
-            }
-        }        
-        
-        return $this->getPhotoMapper()->getPhotoById($bestPhoto[1]);       
+        $weeklyPhoto = new WeeklyPhotoModel();
+        $weeklyPhoto->setPhoto($bestPhoto);
+        $weeklyPhoto->setWeek($begindate);
+        $mapper = $this->getWeeklyPhotoMapper();
+        $mapper->persist($weeklyPhoto);
+        $mapper->flush();
+        return $bestPhoto;
     }
+    
+    /**
+     * Determine which photo is the photo of the week
+     * 
+     * @param \DateTime $begindate
+     * @param \DateTime $enddate
+     * @return \Photo\Model\Photo|null
+     */
+    private function determinePhotoOfTheWeek($begindate, $enddate)
+    {
+        $results = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
+        if (empty($results)){
+            return null;
+        }
+        $bestPref = -1;
+        foreach ($results as $res){
+            $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
+            if (!$this->getWeeklyPhotoMapper()->isPhotoOfTheWeek($photo)
+                && $this->photoPreference($photo, $res[2])
+                    > $bestPref){
+                $bestPhoto = $photo;
+                $bestPref = $this->photoPreference($photo, $res[2]);
+            }
+        }
+        return $bestPhoto;
+    }
+    
+    
     /**
      * Determine the preference rating of the photo.
      * 
@@ -253,18 +280,14 @@ class Photo extends AbstractService
      * @param integer $occurences
      * @return float
      */
-    private function photoPreference($photoId, $occurences)
+    private function photoPreference($photo, $occurences)
     {
-        if ($photoId === null || $occurences === null){
-            return -1;
-        }
-        $photo = $this->getPhotoMapper()->getPhotoById($photoId);
         $tagged = $photo->getTags()->count() > 0;
         $now = new \DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
         $res = $occurences * (1 + 1 / $age);
         return $tagged ? 1.5 * $res : $res;
-    }        
+    }
      
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
@@ -399,6 +422,15 @@ class Photo extends AbstractService
         return $this->sm->get('photo_mapper_hit');
     }
 
+    /**
+     * Get the weekly photo mapper.
+     * 
+     * @return \Photo\Mapper\WeeklyPhoto
+     */
+    public function getWeeklyPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_weekly_photo');
+    }
     /**
      * Gets the metadata service.
      *

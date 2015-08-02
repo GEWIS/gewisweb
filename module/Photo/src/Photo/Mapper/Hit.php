@@ -3,7 +3,6 @@
 namespace Photo\Mapper;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * Mappers for Hit.

@@ -24,7 +24,7 @@ class WeeklyPhoto implements ResourceInterface
     protected $id;
 
     /**
-     * A date in the week the photo belongs to.
+     * The start date of the week the photo is based on.
      *
      * @ORM\Column(type="datetime")
      */
@@ -75,7 +75,7 @@ class WeeklyPhoto implements ResourceInterface
      */
     public function setWeek($week)
     {
-        $this->dateTime = $week;
+        $this->week = $week;
     }
 
     /**
