@@ -20,6 +20,7 @@ body {
     padding-bottom: 30px;
     text-transform: uppercase;
 }
+.navbar-default .navbar-nav .dropdown > a,
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > li > a:focus,
@@ -30,6 +31,17 @@ body {
 .navbar-default .navbar-nav > .active > a:hover {
     background-color: #BC5F5F;
     color: #fff;
+}
+
+/* Dropdown navigation */
+.navbar-nav > li > .dropdown-menu {
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}
+.navbar-nav .dropdown-menu li a {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 /* main container */
