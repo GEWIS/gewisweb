@@ -7,7 +7,7 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'frontpage' => array(
+            'home' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/',
