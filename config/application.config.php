@@ -9,6 +9,7 @@ return array(
         'Application',
         'Company',
         'Decision',
+        'Frontpage',
         'Activity',
         'Photo',
         'Education'
