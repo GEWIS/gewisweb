@@ -34,7 +34,7 @@ class WeeklyPhoto
      * @param Photo\Model\Photo $photo
      * @return boolean
      */
-    public function isPhotoOfTheWeek($photo)
+    public function hasBeenPhotoOfTheWeek($photo)
     {
         return !is_null($this->getRepository()->findOneBy(array('photo' => $photo)));
     }
