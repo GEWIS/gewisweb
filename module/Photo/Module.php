@@ -121,7 +121,7 @@ class Module
                     $acl->allow('user', 'tag', array('view', 'add', 'remove'));
 
                     // Users are allowed to download photos
-                    $acl->allow('user', 'photo', 'download');
+                    $acl->allow('user', 'photo', array('download', 'view_metadata'));
 
                     return $acl;
                 },
