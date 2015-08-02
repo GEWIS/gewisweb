@@ -51,7 +51,6 @@ body {
 /* main container */
 body > div.container {
     background-color: #f0f0f0;
-    margin-top: -10px;
 }
 
 /* Jumbotron */
@@ -64,6 +63,7 @@ body > div.container {
     padding-top: 20px;
     padding-bottom: 20px;
     margin-top: -90px;
+    margin-bottom: 0;
 }
 .jumbotron:after {
     content: '';
