@@ -469,4 +469,14 @@ class Photo extends AbstractService
         return $this->sm->get('decision_service_member');
     }
 
+    /**
+     * Get the Acl.
+     *
+     * @return \Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->sm->get('photo_acl');
+    }
+
 }
