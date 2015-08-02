@@ -1,4 +1,4 @@
-<?php if($this->isAllowed('view', 'tag')): ?>
+<?php if($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
 <div>
     <h4><?= $this->translate('People in this photo') ?></h4>
     <ul id="tagList">
@@ -15,7 +15,7 @@
     </ul>
 </div>
 <?php endif; ?>
-<?php if($this->isAllowed('add', 'tag')): ?>
+<?php if($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
 <div>
     <form action="<?= $this->url('photo/photo/tag/add',
         array('photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr')); ?>" id="tagForm" class="form-inline">

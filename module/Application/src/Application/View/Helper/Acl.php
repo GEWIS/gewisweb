@@ -9,54 +9,24 @@ class Acl extends AbstractHelper
 {
 
     /**
-     * Acl
+     * Service locator
      *
-     * @var \Zend\Permissions\Acl\Acl
+     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    protected $locator;
+
+    /**
+     * Acl
      */
     protected $acl;
 
-    /**
-     * Get the current user's role.
-     *
-     * @return User|string
-     */
-    protected $role;
-
-    /**
-     * Check if a operation is allowed for the current role.
-     *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @return boolean
-     */
-    public function __invoke($operation, $resource)
+    public function isAllowed($resource, $operation)
     {
-        return $this->getAcl()->isAllowed(
+        return $this->acl->isAllowed(
             $this->getRole(),
             $resource,
             $operation
         );
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return string
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Set the Acl.
-     *
-     * @param \Zend\Permissions\Acl\Acl $acl
-     */
-    public function setAcl($acl)
-    {
-        $this->acl = $acl;
     }
 
     /**
@@ -66,16 +36,39 @@ class Acl extends AbstractHelper
      */
     public function getRole()
     {
-        return $this->role;
+        return $this->getServiceLocator()->get('user_role');
     }
 
     /**
-     * Set the current user's role.
+     * Returns the Acl for a specific module
      *
-     * @param User|string
+     * @param string $factory Acl factory to load
+     *
+     * @return \Application\View\Helper\Acl
      */
-    public function setRole($role)
+    public function __invoke($factory)
     {
-        $this->role = $role;
+        $this->acl = $this->getServiceLocator()->get($factory);
+        return $this;
+    }
+
+    /**
+     * Get the service locator.
+     *
+     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->locator;
+    }
+
+    /**
+     * Set the service locator
+     *
+     * @param \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public function setServiceLocator($locator)
+    {
+        $this->locator = $locator;
     }
 }

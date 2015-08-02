@@ -78,8 +78,7 @@ class Module
                 'isAllowed' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\Acl();
-                    $helper->setRole($locator->get('user_role'));
-                    $helper->setAcl($locator->get('photo_acl'));
+                    $helper->setServiceLocator($locator);
                     return $helper;
                 }
             )
