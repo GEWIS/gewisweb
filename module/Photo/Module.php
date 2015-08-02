@@ -154,24 +154,4 @@ class Module
         );
     }
 
-    /**
-     * Get view helper configuration.
-     *
-     * @return array
-     */
-    public function getViewHelperConfig()
-    {
-        return array(
-            'factories' => array(
-                'isAllowed' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Acl();
-                    $helper->setRole($locator->get('user_role'));
-                    $helper->setAcl($locator->get('photo_acl'));
-                    return $helper;
-                }
-            )
-        );
-    }
-
 }
