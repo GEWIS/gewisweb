@@ -40,10 +40,22 @@ body > div.container {
 /* Jumbotron */
 .container .jumbotron {
     background: url(../img/header-bg.png);
+    background-size: cover;
     border-radius: 0;
     padding-top: 100px;
     padding-bottom: 100px;
     margin-left: -15px;
     margin-right: -15px;
     margin-top: -90px;
+}
+.container footer {
+    padding: 20px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: -10px;
+    color: #fff;
+    background-color: #bc5f5f;
+}
+.container footer a {
+    color: #fff;
 }
