@@ -11,6 +11,7 @@ class PhotoController extends AbstractActionController
     public function indexAction()
     {
         //add any other special behavior which is required for the main photo page here later
+        $this->getPhotoService()->generatePhotoOfTheWeek();
         $years = $this->getAlbumService()->getAlbumYears();
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.

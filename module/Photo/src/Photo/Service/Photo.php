@@ -220,7 +220,15 @@ class Photo extends AbstractService
         return true;
 
     }
-
+    /**
+     * Generates the PhotoOfTheWeek.
+     * 
+     * @return \Photo\Model\Photo
+     */
+    public function generatePhotoOfTheWeek()
+    {
+        var_dump($this->getHitMapper()->getHitsInRange(new \DateTime('2000-01-01'), new \DateTime('3000-01-01')));
+    }
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
@@ -347,6 +355,11 @@ class Photo extends AbstractService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+    
+    public function getHitMapper()
+    {
+        return $this->sm->get('photo_mapper_hit');
     }
 
     /**
