@@ -1,0 +1,73 @@
+body {
+    color: #414141;
+    font-family: "Raleway",sans-serif;
+    padding-top: 90px;
+    padding-bottom: 40px;
+}
+
+/* navigation */
+.navbar {
+    border: none;
+}
+.navbar-default {
+    background: transparent;
+}
+.navbar-default .navbar-nav {
+    background-color: #fff;
+}
+.navbar-default .navbar-nav a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-transform: uppercase;
+}
+.navbar-default .navbar-nav .dropdown > a,
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .active > a:hover {
+    background-color: #BC5F5F;
+    color: #fff;
+}
+
+/* Dropdown navigation */
+.navbar-nav > li > .dropdown-menu {
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}
+.navbar-nav .dropdown-menu li a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* main container */
+body > div.container {
+    background-color: #f0f0f0;
+}
+
+/* Jumbotron */
+.container .jumbotron {
+    background: url(../img/header-bg.png);
+    background-size: cover;
+    border-radius: 0;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: -90px;
+}
+.container footer {
+    padding: 20px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: -10px;
+    color: #fff;
+    background-color: #bc5f5f;
+}
+.container footer a {
+    color: #fff;
+}
