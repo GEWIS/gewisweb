@@ -221,14 +221,51 @@ class Photo extends AbstractService
 
     }
     /**
-     * Generates the PhotoOfTheWeek.
+     * Generates the PhotoOfTheWeek 
+     * if at least one photo has been viewed in the specified time. 
+     * The parameters determine the week to check the photos of.  
      * 
-     * @return \Photo\Model\Photo
+     * @param \DateTime $begindate
+     * @param \DateTime $enddate
+     * 
+     * @return \Photo\Model\Photo|null
      */
-    public function generatePhotoOfTheWeek()
+    public function generatePhotoOfTheWeek($begindate, $enddate)
     {
-        var_dump($this->getHitMapper()->getHitsInRange(new \DateTime('2000-01-01'), new \DateTime('3000-01-01')));
+        $photos = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
+        if (empty(photos)){
+            return null;
+        }
+        $bestPhoto = [1 => null, 2 => null];
+        foreach  ($photos as $photo){
+            if ($this->photoPreference($photo[1], $photo[2]) 
+                    > $this->photoPreference($bestPhoto[1], $bestPhoto[2])){
+                $bestPhoto = $photo;
+            }
+        }        
+        
+        return $this->getPhotoMapper()->getPhotoById($bestPhoto[1]);       
     }
+    /**
+     * Determine the preference rating of the photo.
+     * 
+     * @param integer $photoId
+     * @param integer $occurences
+     * @return float
+     */
+    private function photoPreference($photoId, $occurences)
+    {
+        if ($photoId === null || $occurences === null){
+            return -1;
+        }
+        $photo = $this->getPhotoMapper()->getPhotoById($photoId);
+        $tagged = $photo->getTags()->count() > 0;
+        $now = new \DateTime();
+        $age = $now->diff($photo->getDateTime(), true)->days;
+        $res = $occurences * (1 + 1 / $age);
+        return $tagged ? 1.5 * $res : $res;
+    }        
+     
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
