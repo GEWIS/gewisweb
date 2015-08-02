@@ -151,7 +151,11 @@ class Album implements ResourceInterface
      */
     public function getPhotoCount()
     {
-        return $this->photos->count();
+        $count = $this->photos->count();
+        foreach($this->children as $album) {
+            $count += $album->getPhotoCount();
+        }
+        return $count;
     }
 
     /**
