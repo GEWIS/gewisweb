@@ -64,6 +64,14 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * Action to go to dreamspark.
+     */
+    public function dreamsparkAction()
+    {
+        return new ViewModel();
+    }
+
+    /**
      * Get the member service.
      *
      * @return Decision\Service\Member
