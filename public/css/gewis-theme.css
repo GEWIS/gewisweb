@@ -10,6 +10,9 @@ body {
     border: none;
 }
 .navbar-default {
+    background: transparent;
+}
+.navbar-default .navbar-nav {
     background-color: #fff;
 }
 .navbar-default .navbar-nav a {
@@ -19,6 +22,9 @@ body {
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .active > a:focus,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .active > a:hover {
@@ -29,4 +35,14 @@ body {
 /* main container */
 body > div.container {
     background-color: #f0f0f0;
+}
+
+/* Jumbotron */
+.container .jumbotron {
+    background: url(../img/header-bg.png);
+    border-radius: 0;
+    padding-top: 80px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: -90px;
 }
