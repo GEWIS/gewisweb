@@ -181,6 +181,15 @@ class Photo
     }
 
     /**
+     * Get the entity manager connection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     */
+    public function getConnection()
+    {
+        return $this->em->getConnection();
+    }
+    /**
      * Get the repository for this mapper.
      *
      * @return \Doctrine\ORM\EntityRepository

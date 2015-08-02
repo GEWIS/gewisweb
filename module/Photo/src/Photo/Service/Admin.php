@@ -46,7 +46,7 @@ class Admin extends AbstractService
      * @param \Photo\Model\Album $targetAlbum the album to save the photo in
      * @param boolean $move whether to move the photo instead of copying it
      *
-     * @return \Photo\Model\Photo
+     * @return \Photo\Model\Photo|boolean
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
@@ -61,32 +61,37 @@ class Admin extends AbstractService
             $photo = $this->getMetadataService()->populateMetaData($photo, $path);
             $photo->setPath($storagePath);
 
-            //Create and set the storage paths for thumbnails.
-            //Currently, the maximum sizes of the old website are used. These
-            //values are dependant on the design.
-            $photo->setLargeThumbPath($this->createThumbnail(
-                $path,
-                $config['large_thumb_size']['width'],
-                $config['large_thumb_size']['height']
-            ));
-            $photo->setSmallThumbPath($this->createThumbnail(
-                $path,
-                $config['small_thumb_size']['width'],
-                $config['small_thumb_size']['height']
-            ));
             $mapper = $this->getPhotoMapper();
-            /**
-             * TODO: optionally we could use a transactional query here to make it
-             * completely fail-safe in case something goes wrong when moving the
-             * photo in the storeUploadedPhoto function. However it's very unlikely
-             * anything will go wrong when moving the photo.
-             */
-            $mapper->persist($photo);
-            $mapper->flush();
-            if ($move) {
-                rename($path, $config['upload_dir'] . '/' . $storagePath);
-            } else {
-                copy($path, $config['upload_dir'] . '/' . $storagePath);
+            $mapper->getConnection()->beginTransaction();
+            try {
+                /*
+                 * Create and set the storage paths for thumbnails.
+                 */
+                $photo->setLargeThumbPath($this->createThumbnail(
+                    $path,
+                    $config['large_thumb_size']['width'],
+                    $config['large_thumb_size']['height']
+                ));
+                $photo->setSmallThumbPath($this->createThumbnail(
+                    $path,
+                    $config['small_thumb_size']['width'],
+                    $config['small_thumb_size']['height']
+                ));
+
+                if ($move) {
+                    rename($path, $config['upload_dir'] . '/' . $storagePath);
+                } else {
+                    copy($path, $config['upload_dir'] . '/' . $storagePath);
+                }
+
+                $mapper->persist($photo);
+                $mapper->flush();
+                $mapper->getConnection()->commit();
+            } catch (Exception $e) {
+                // Rollback if anything went wrong
+                $mapper->getConnection()->rollBack();
+                $this->getPhotoService()->deletePhotoFiles($photo);
+                return false;
             }
         }
 
