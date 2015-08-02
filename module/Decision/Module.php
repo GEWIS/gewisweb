@@ -82,6 +82,7 @@ class Module
                     // add resources for this module
                     $acl->addResource('organ');
                     $acl->addResource('member');
+                    $acl->addResource('dreamspark');
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
 
@@ -93,12 +94,13 @@ class Module
                     $acl->allow('guest', 'member', 'birthdays_today');
 
                     // users are allowed to view and search members
-                    $acl->allow('user', 'member', array('view', 'search', 'birthdays'));
                     $acl->allow('user', 'member', array('view', 'view_self', 'search', 'birthdays'));
 
                     $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
 
                     $acl->allow('user', 'meeting', array('view', 'view_notes'));
+
+                    $acl->allow('user', 'dreamspark', array('login', 'students'));
 
                     return $acl;
                 },
