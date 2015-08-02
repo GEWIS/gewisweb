@@ -54,7 +54,7 @@ body > div.container {
 }
 
 /* Jumbotron */
-.jumbotron {
+.jumbotron-header {
     position: relative;
     background: url(../img/Panorama.jpg);
     background-size: cover;
@@ -65,7 +65,7 @@ body > div.container {
     margin-top: -90px;
     margin-bottom: 0;
 }
-.jumbotron:after {
+.jumbotron-header:after {
     content: '';
     position: absolute;
     left: 0;
@@ -75,18 +75,18 @@ body > div.container {
     background-color: rgba(255, 255, 255, 0.2);
     z-index: 512;
 }
-.jumbotron a img {
+.jumbotron-header a img {
     position: relative;
     z-index: 2048;
     height: 130px;
     width: auto;
 }
 /* Large version of jumbotron, for the frontpage */
-.jumbotron.jumbotron-large {
+.jumbotron-header.jumbotron-large {
     padding-top: 100px;
     padding-bottom: 100px;
 }
-.jumbotron.jumbotron-large a img {
+.jumbotron-header.jumbotron-large a img {
     height: auto;
 }
 
