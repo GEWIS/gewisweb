@@ -1,5 +1,17 @@
 <div class="jumbotron">
+    <a href="<?= $this->url('home') ?>">
+        <img src="<?= $this->basePath() ?>/img/logo.png" />
+    </a>
+<?php /*
     <h1><?= sprintf($this->translate('Welcome to %sGEWIS%s'), '<span class="gewis-red">', '</span>') ?></h1>
     <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
     <p><a class="btn btn-success btn-lg" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
+ */ ?>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2><?= $this->translate('Study association GEWIS') ?></h2>
+        <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
+        <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
+    </div>
 </div>

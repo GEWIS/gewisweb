@@ -41,7 +41,8 @@ body > div.container {
 .container .jumbotron {
     background: url(../img/header-bg.png);
     border-radius: 0;
-    padding-top: 80px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     margin-left: -15px;
     margin-right: -15px;
     margin-top: -90px;
