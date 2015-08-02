@@ -68,7 +68,9 @@ class MemberController extends AbstractActionController
      */
     public function dreamsparkAction()
     {
-        return new ViewModel();
+        $url = $this->getMemberService()->getDreamsparkUrl();
+
+        return $this->redirect()->toUrl($url);
     }
 
     /**

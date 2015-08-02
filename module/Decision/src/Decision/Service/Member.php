@@ -77,6 +77,19 @@ class Member extends AbstractAclService
     }
 
     /**
+     * Get the dreamspark URL for the current user.
+     */
+    public function getDreamsparkUrl()
+    {
+        if (!$this->isAllowed('login', 'dreamspark')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed login into dreamspark.')
+            );
+        }
+    }
+
+    /**
      * Get the members of which their birthday falls in the next $days days.
      *
      * When $days equals 0 or isn't given, it will give all birthdays of today.
