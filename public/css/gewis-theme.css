@@ -15,9 +15,13 @@ body {
 .navbar-default .navbar-nav {
     background-color: #fff;
 }
+@media (min-width: 768px) {
+    .navbar-default .navbar-nav a {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}
 .navbar-default .navbar-nav a {
-    padding-top: 30px;
-    padding-bottom: 30px;
     text-transform: uppercase;
 }
 .navbar-default .navbar-nav .dropdown > a,
@@ -47,6 +51,7 @@ body {
 /* main container */
 body > div.container {
     background-color: #f0f0f0;
+    margin-top: -10px;
 }
 
 /* Jumbotron */
