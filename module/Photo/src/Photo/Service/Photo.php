@@ -262,7 +262,7 @@ class Photo extends AbstractService
         $bestPref = -1;
         foreach ($results as $res){
             $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
-            if (!$this->getWeeklyPhotoMapper()->isPhotoOfTheWeek($photo)
+            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
                 && $this->photoPreference($photo, $res[2])
                     > $bestPref){
                 $bestPhoto = $photo;
