@@ -19,9 +19,10 @@ $this->scriptUrl()->requireUrl('member/search');
         </div>
         <div class="col-lg-3">
             <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
-
+            <?php if($this->isAllowed('download', 'photo')): ?>
             <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
                 array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
+            <?php endif; ?>
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>

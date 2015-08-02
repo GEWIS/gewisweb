@@ -120,6 +120,9 @@ class Module
                     // Users are allowed to view, remove and add tags
                     $acl->allow('user', 'tag', array('view', 'add', 'remove'));
 
+                    // Users are allowed to download photos
+                    $acl->allow('user', 'photo', 'download');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
@@ -145,6 +148,26 @@ class Module
                     $locator = $sm->getServiceLocator();
                     $helper = new \Photo\View\Helper\PhotoUrl();
                     $helper->setPhotoService($locator->get('photo_service_photo'));
+                    return $helper;
+                }
+            )
+        );
+    }
+
+    /**
+     * Get view helper configuration.
+     *
+     * @return array
+     */
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'isAllowed' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\Acl();
+                    $helper->setRole($locator->get('user_role'));
+                    $helper->setAcl($locator->get('photo_acl'));
                     return $helper;
                 }
             )
