@@ -15,7 +15,10 @@ class Frontpage extends AbstractAclService
      */
     public function getHomePageData()
     {
-
+        $birthdays = $this->getBirthdays();
+        return array(
+            'birthdays' => $birthdays
+        );
     }
 
     /**
@@ -24,7 +27,23 @@ class Frontpage extends AbstractAclService
      */
     public function getBirthdays()
     {
-        //TODO: privacy options
+        $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
+        $today = new \DateTime();
+        $birthdays = array();
+        foreach($birthdayMembers as $member) {
+            $age = $today->diff($member->getBirth())->y;
+            //TODO: check member's privacy settings
+            $birthdays[] = array('member' => $member, 'age' => $age);
+        }
+
+        return $birthdays;
+    }
+
+    /**
+     * Retrieves a photo of a member whom has a birthday.
+     */
+    public function getBirthdayPhoto($birthdays)
+    {
 
     }
 
@@ -47,6 +66,16 @@ class Frontpage extends AbstractAclService
     public function getPhotoService()
     {
         return $this->sm->get('photo_service_photo');
+    }
+
+    /**
+     * Get the member service.
+     *
+     * @return \Decision\Service\Member
+     */
+    public function getMemberService()
+    {
+        return $this->sm->get('Decision_service_member');
     }
 
     /**

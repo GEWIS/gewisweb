@@ -14,7 +14,7 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller'    => 'Frontpage',
-                        'action'        => 'index',
+                        'action'        => 'home',
                     ),
                 ),
                 'may_terminate' => true,

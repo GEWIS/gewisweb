@@ -87,7 +87,8 @@ class Member extends AbstractAclService
      */
     public function getBirthdayMembers($days = 0)
     {
-        if (!$this->isAllowed('birthdays')) {
+        // Allow everyone to view birthdays of today.
+        if ($days > 0 && !$this->isAllowed('birthdays')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the list of birthdays.')
