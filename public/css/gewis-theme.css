@@ -55,19 +55,17 @@ body > div.container {
 }
 
 /* Jumbotron */
-.container .jumbotron {
+.jumbotron {
     position: relative;
     background: url(../img/Panorama.jpg);
     background-size: cover;
     background-position: center;
     border-radius: 0;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    margin-left: -15px;
-    margin-right: -15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin-top: -90px;
 }
-.container .jumbotron:after {
+.jumbotron:after {
     content: '';
     position: absolute;
     left: 0;
@@ -77,11 +75,23 @@ body > div.container {
     background-color: rgba(255, 255, 255, 0.2);
     z-index: 512;
 }
-.container .jumbotron a img {
+.jumbotron a img {
     position: relative;
     z-index: 1024;
+    height: 130px;
+    width: auto;
 }
-.container footer {
+/* Large version of jumbotron, for the frontpage */
+.jumbotron.jumbotron-large {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.jumbotron.jumbotron-large a img {
+    height: auto;
+}
+
+/* Footer */
+footer {
     padding: 20px;
     margin-left: -15px;
     margin-right: -15px;
@@ -89,6 +99,6 @@ body > div.container {
     color: #fff;
     background-color: #bc5f5f;
 }
-.container footer a {
+footer a {
     color: #fff;
 }
