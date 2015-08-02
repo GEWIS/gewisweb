@@ -48,6 +48,12 @@ class Tag
         ));
     }
 
+    public function getTagsByLidnr($lidnr)
+    {
+        return $this->getRepository()->findBy(array(
+            'member' => $lidnr
+        ));
+    }
     /**
      * Removes a tag.
      *
