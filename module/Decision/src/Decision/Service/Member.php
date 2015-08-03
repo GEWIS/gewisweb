@@ -87,6 +87,10 @@ class Member extends AbstractAclService
                 $translator->translate('You are not allowed login into dreamspark.')
             );
         }
+
+        $config = $this->getServiceManager()->get('config');
+        var_dump($config['dreamspark']);
+        echo '<br /><br /><br /><br /><br /><br /><br /><br />';
     }
 
     /**

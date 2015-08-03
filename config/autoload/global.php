@@ -56,7 +56,17 @@ return array(
         'public_dir' => 'data/meeting-notes',
         'dir_mode' => 0777, // rwx by default
     ),
-    
+
+    /**
+     * Dreamspark configuration.
+     */
+    'dreamspark' => array(
+        'url' => 'https://e5.onthehub.com/WebStore/Security/AuthenticateUser.aspx?account=%ACCOUNT%&username=%EMAIL%&key=%KEY%&academic_statuses=%GROUPS%',
+        // configured locally
+        'account' => '',
+        'key' => ''
+    ),
+
     /**
      * Photo's upload directory configuration
      */
