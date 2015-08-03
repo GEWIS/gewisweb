@@ -22,7 +22,7 @@ class Notes extends Form implements InputFilterProviderInterface
         foreach ($mapper->findAll() as $meeting) {
             $meeting = $meeting[0];
             $name = $meeting->getType() . ' ' . $meeting->getNumber();
-            $options[$name] = $name;
+            $options[$name] = $name . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
         $this->add(array(
