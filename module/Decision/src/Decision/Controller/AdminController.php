@@ -17,7 +17,11 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $service->uploadNotes($request->getPost(), $request->getFiles());
+            if ($service->uploadNotes($request->getPost(), $request->getFiles())) {
+                return new ViewModel(array(
+                    'success' => true
+                ));
+            }
         }
 
         return new ViewModel(array(
