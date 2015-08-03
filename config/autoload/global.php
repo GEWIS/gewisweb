@@ -47,6 +47,15 @@ return array(
         'public_dir' => 'data/education',
         'dir_mode' => 0777, // rwx by default
     ),
+
+    /**
+     * Meeting notes upload directory configration.
+     */
+    'meeting-notes' => array(
+        'upload_dir' => 'public/data/meeting-notes',
+        'public_dir' => 'data/meeting-notes',
+        'dir_mode' => 0777, // rwx by default
+    ),
     
     /**
      * Photo's upload directory configuration
