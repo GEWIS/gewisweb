@@ -14,10 +14,10 @@
     )
 )
 ?>
-<div class="row">
+<div class="row photos">
     <?php foreach ($paginator as $item): ?>
         <?php if ($item instanceof \Photo\Model\Album): ?>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumb">
                 <a class="thumbnail" href="<?= $this->url('photo/album', array('album_id' => $item->getId())); ?>">
                     <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $item->getCoverPath() ?>" alt="">
 
@@ -27,7 +27,7 @@
                 </a>
             </div>
         <?php else: ?>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumb">
                 <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
                     <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $item->getSmallThumbPath() ?>" alt="">
                 </a>

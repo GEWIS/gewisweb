@@ -2,7 +2,7 @@ body {
     color: #414141;
     font-family: "Raleway",sans-serif;
     padding-top: 90px;
-    padding-bottom: 40px;
+    padding-bottom: 0;
 }
 
 /* navigation */
@@ -51,9 +51,27 @@ body {
 /* main container */
 body > div.container {
     background-color: #f0f0f0;
+    padding-top: 15px;
 }
 
-/* Jumbotron */
+/* forms */
+.form-control {
+    border-radius: 0;
+}
+
+/* buttons */
+.btn {
+    border-radius: 0;
+}
+
+/* general jumbotron*/
+.container .jumbotron,
+.container-fluid .jumbotron {
+    background-color: #DDD;
+    border-radius: 0;
+}
+
+/* Jumbotron header */
 .jumbotron-header {
     position: relative;
     background: url(../img/Panorama.jpg);
@@ -89,6 +107,15 @@ body > div.container {
 .jumbotron-header.jumbotron-large a img {
     height: auto;
 }
+@media (max-width: 992px) {
+    .jumbotron-header.jumbotron-large {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    .jumbotron-header.jumbotron-large a img {
+        height: 165px;
+    }
+}
 
 /* Footer */
 footer {
@@ -101,4 +128,63 @@ footer {
 }
 footer a {
     color: #fff;
+}
+
+/* Photos page */
+.photos {
+    line-height: 0;
+}
+/* to make the photos page responsive */
+.photos {
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 1;
+    -moz-column-gap: 0px;
+    column-count: 1;
+    column-gap: 0px;
+}
+@media (min-width: 400px) {
+    .photos {
+        -webkit-column-count: 2;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 2;
+        -moz-column-gap: 0px;
+        column-count: 2;
+        column-gap: 0px;
+    }
+}
+@media (min-width: 768px) {
+    .photos {
+        -webkit-column-count: 3;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 3;
+        -moz-column-gap: 0px;
+        column-count: 3;
+        column-gap: 0px;
+    }
+}
+@media (min-width: 992px) {
+    .photos {
+        -webkit-column-count: 4;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 4;
+        -moz-column-gap: 0px;
+        column-count: 4;
+        column-gap: 0px;
+    }
+}
+@media (min-width: 1200px) {
+    .photos {
+        -webkit-column-count: 5;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 5;
+        -moz-column-gap: 0px;
+        column-count: 5;
+        column-gap: 0px;
+    }
+}
+
+.photos div {
+    width: 100%;
+    height: auto;
 }

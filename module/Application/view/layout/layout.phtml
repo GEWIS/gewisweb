@@ -12,7 +12,7 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet('http://fonts.googleapis.com/css?family=Raleway:700,400,300')
+                        ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
                         ->prependStylesheet($this->basePath() . '/css/gewis-theme.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
@@ -26,6 +26,23 @@
 
     </head>
     <body>
+<?php
+function isActive($view, array $condition)
+{
+    $viewModel = current($view->viewModel()->getCurrent()->getChildren());
+    $script = explode('/', $viewModel->getTemplate());
+    foreach ($condition as $key => $cond) {
+        if (null !== $cond && $script[$key] != $cond) {
+            return false;
+        }
+    }
+    return true;
+}
+function getIsActiveClass($view, array $condition)
+{
+    return isActive($view, $condition) ? 'active' : '';
+}
+?>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -37,20 +54,34 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#"><?php echo $this->translate('Association') ?></a></li>
-                        <li><a href="#"><?php echo $this->translate('Companies') ?></a></li>
-                        <li><a href="<?php echo $this->url('education') ?>"><?php echo $this->translate('Education') ?></a></li>
-                        <li><a href="<?php echo $this->url('activity') ?>"><?php echo $this->translate('Activity') ?></a></li>
-                        <li><a href="<?php echo $this->url('photo') ?>"><?php echo $this->translate('Photos') ?></a></li>
+                        <li class="hidden-sm hidden-md hidden-lg"><a href="<?= $this->url('home') ?>"><?= $this->translate('Home') ?></a></li>
+                        <li class="hidden-sm"><a href="#"><?= $this->translate('Association') ?></a></li>
+                        <li class="hidden-xs hidden-md hidden-lg dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Association') ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><?= $this->translate('Association') ?></a></li>
+                                <li><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
+                                <li><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
+                                <?php if (null !== $this->identity()): ?>
+                                    <li><a href="#"><?= $this->translate('Members') ?></a></li>
+                                <?php endif ?>
+                            </ul>
+                        </li>
+                        <li><a href="#"><?= $this->translate('Companies') ?></a></li>
+                        <li class="<?= getIsActiveClass($this, array('education')) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
+                        <li class="hidden-sm <?= getIsActiveClass($this, array('activity')) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
+                        <li class="hidden-sm <?= getIsActiveClass($this, array('photo')) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
 
                         <?php if (null === $this->identity()): ?>
                             <li class="open"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
                         <?php else: ?>
-                            <li><a href="#"><?php echo $this->translate('Members') ?></a></li>
+                            <li class="hidden-sm <?= getIsActiveClass($this, array('decision')) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
                             <?php $member = $this->identity()->getMember() ?>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <?= sprintf($this->translate('Signed in as %s'), $member->getFirstName()) ?>
+                                    <span class="visible-lg-inline"><?= $this->translate('Signed in as') ?> </span><?= $member->getFirstName() ?>
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -61,50 +92,16 @@
                                     )) ?>"><?= $this->translate('Logout') ?></a></li>
                                 </ul>
                             </li>
-<?php /* <li class="open"><a href="<?= $this->url('user/default', array(
-                                'action' => 'logout'
-                            )) ?>"><?= $this->translate('Logout') ?></a></li> */ ?>
                         <?php endif; ?>
                     </ul>
-                    <?php /*
-                    <ul class="nav navbar-nav navbar-right">
-                        <?php if (null === $this->identity()): ?>
-                            <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
-                        <?php else: ?>
-                            <li><a href="<?= $this->url('user/default', array(
-                                'action' => 'logout'
-                            )) ?>"><?= $this->translate('Logout') ?></a></li>
-                        <?php endif; ?>
-                        <li>
-                            <a href="<?= $this->url('lang', array(
-                                'lang' => 'nl'
-                            )); ?>"><img src="<?= $this->basePath() ?>/img/nl.png" style="height: 18px" /></a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('lang', array(
-                                'lang' => 'en'
-                            )); ?>"><img src="<?= $this->basePath() ?>/img/en.png" style="height: 18px" /></a>
-                        </li>
-                    </ul>
-                    <?php if (null !== $this->identity()): ?>
-                    <?php $member = $this->identity()->getMember() ?>
-                    <p class="navbar-text navbar-right">
-                        <?= sprintf($this->translate('Signed in as %s'), $member->getFirstName() . ' ' . $member->getLastName()) ?>
-                    </p>
-                    <?php endif; ?>
-                    */ ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-<?php
-$viewModel = current($this->viewModel()->getCurrent()->getChildren());
-$script = explode('/', $viewModel->getTemplate());
-?>
 
-        <div class="jumbotron jumbotron-header <?= $script[0] == 'application' ? ' jumbotron-large' : '' ?>">
-            <div class="container">
+        <div class="jumbotron jumbotron-header<?= isActive($this, array('application')) ? ' jumbotron-large' : '' ?>">
+            <div class="container hidden-xs">
                 <a href="<?= $this->url('home') ?>">
-                    <img src="<?= $this->basePath() ?>/img/logo.png" />
+                    <img src="<?= $this->basePath() ?>/img/logo.png" class="img-circle" />
                 </a>
             </div>
         </div>
@@ -113,10 +110,10 @@ $script = explode('/', $viewModel->getTemplate());
             <?php echo $this->content; ?>
             <hr>
             <footer class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-4">
                     <img src="<?= $this->basePath() ?>/img/logo-white.png" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-8">
                     <h3>Studievereniging GEWIS</h3>
                     <address>
                         MF 3.155<br>
@@ -126,7 +123,7 @@ $script = explode('/', $viewModel->getTemplate());
                         <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
                     </address>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-12">
                     <p>&copy; 2013 - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
                 </div>
             </footer>
