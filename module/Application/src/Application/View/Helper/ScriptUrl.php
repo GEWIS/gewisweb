@@ -13,12 +13,21 @@ use Zend\View\Exception;
  */
 class ScriptUrl extends AbstractHelper
 {
+    /**
+     * @return \Application\View\Helper\ScriptUrl
+     */
     public function __invoke()
     {
         return $this;
     }
 
-    public function requireUrl($name, $params)
+    /**
+     * Makes an url route available to the javascript url helper.
+     *
+     * @param string $name Name of the route.
+     * @param array $params of the route to make available.
+     */
+    public function requireUrl($name, $params = array())
     {
         $scriptParams = array();
 
@@ -29,7 +38,7 @@ class ScriptUrl extends AbstractHelper
         $url = $this->getView()->url($name, $scriptParams);
         // Include data as inline script
         $this->getView()->inlineScript()->captureStart();
-        echo 'URLHelper.addUrl("'. urldecode($url) . '");';
+        echo 'URLHelper.addUrl("'. $name . '", "'. urldecode($url) . '");';
         $this->getView()->inlineScript()->captureEnd();
     }
 }
