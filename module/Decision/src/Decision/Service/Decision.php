@@ -148,6 +148,12 @@ class Decision extends AbstractAclService
      */
     public function getNotesform()
     {
+        if (!$this->isAllowed('upload_notes', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload notes.')
+            );
+        }
         return $this->sm->get('decision_form_notes');
     }
 
