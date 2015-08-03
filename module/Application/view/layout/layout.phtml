@@ -67,7 +67,7 @@ function getIsActiveClass($view, array $condition)
                             <?php $member = $this->identity()->getMember() ?>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <?= $member->getFirstName() ?>
+                                    <span class="visible-lg-inline"><?= $this->translate('Signed in as') ?> </span><?= $member->getFirstName() ?>
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
