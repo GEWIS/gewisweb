@@ -24,7 +24,7 @@ class Frontpage extends AbstractAclService
 
     /**
      * Retrieves all birthdays happening today, which should be shown on the home page.
-     * Includes the age and a random photo of someone whom has a birthday.
+     * Includes the age and a recent tag of the most active member whom has a birthday.
      *
      * @return array
      */
@@ -33,39 +33,21 @@ class Frontpage extends AbstractAclService
         $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
         $today = new \DateTime();
         $birthdays = array();
-        $photos = array();
+        $members = array();
         foreach($birthdayMembers as $member) {
             $age = $today->diff($member->getBirth())->y;
-            $photos[] = $this->getMemberPhoto($member);
+            $members[] = $member;
                 //TODO: check member's privacy settings
             $birthdays[] = array('member' => $member, 'age' => $age);
 
         }
 
-        $k = array_rand($photos);
-        $photo = $photos[$k];
+        $tag = $this->getTagMapper()->getMostActiveMemberTag($members);
 
         return array(
             'birthdays' => $birthdays,
-            'photo' => $photo
+            'tag' => $tag
         );
-    }
-
-    /**
-     * Retrieves a random photo of a member.
-     *
-     * @param \Decision\Model\Member $member
-     *
-     * @return \Photo\Model\Photo|null
-     */
-    public function getMemberPhoto($member)
-    {
-        $tag = $this->getTagMapper()->getRandomMemberTag($member);
-        if(is_null($tag)) {
-            return null;
-        } else {
-            return $tag->getPhoto();
-        }
     }
 
     /**

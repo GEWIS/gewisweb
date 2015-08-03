@@ -56,27 +56,42 @@ class Tag
     }
 
     /**
-     * Returns the most recent photo of a give member. Returns null if there are none
+     * Returns a recent tag for the member whom has the most tags from a set of members.
      *
-     * @param \Decision\Model\Member $member
+     * @param array $members
      *
      * @return \Photo\Model\Tag|null
      */
-    public function getRandomMemberTag($member)
+    public function getMostActiveMemberTag($members)
     {
         $qb = $this->em->createQueryBuilder();
 
-        $qb->select('t')
+        $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')
             ->from('Photo\Model\Tag', 't')
-            ->where('t.member = ?1')
+            ->where('t.member IN (?1)')
+            ->setParameter(1, $members)
+            ->groupBy('t.member')
             ->setMaxResults(1)
-            ->setParameter(1, $member)
-            ->addSelect('RAND() as HIDDEN rand')
-            ->orderBy('rand');
+            ->orderBy('tag_count', 'DESC');
 
-        $res = $qb->getQuery()->getResult();
+        $res = $qb->getQuery()->getSingleResult();
+        if (empty($res)) {
+            return null;
+        } else {
+            $lidnr = $res[1];
 
-        return empty($res) ? null : $res[0];
+            $qb2 = $this->em->createQueryBuilder();
+
+            $qb2->select('t')
+                ->from('Photo\Model\Tag', 't')
+                ->where('t.member = ?1')
+                ->setParameter(1, $lidnr)
+                ->setMaxResults(1)
+                ->orderBy('t.id', 'DESC');
+
+            return $qb2->getQuery()->getSingleResult();
+        }
+
     }
 
     /**
