@@ -54,6 +54,11 @@ body > div.container {
     padding-top: 15px;
 }
 
+/* buttons */
+.btn {
+    border-radius: 0;
+}
+
 /* general jumbotron*/
 .container .jumbotron,
 .container-fluid .jumbotron {
