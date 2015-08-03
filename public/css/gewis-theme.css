@@ -54,6 +54,11 @@ body > div.container {
     padding-top: 15px;
 }
 
+/* forms */
+.form-control {
+    border-radius: 0;
+}
+
 /* buttons */
 .btn {
     border-radius: 0;
