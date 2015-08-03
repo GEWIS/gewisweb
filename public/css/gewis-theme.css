@@ -124,12 +124,45 @@ footer a {
 /* Photos page */
 .photos {
     line-height: 0;
-    -webkit-column-count: 5;
+}
+/* to make the photos page responsive */
+.photos {
+    -webkit-column-count: 1;
     -webkit-column-gap: 0px;
-    -moz-column-count: 5;
+    -moz-column-count: 1;
     -moz-column-gap: 0px;
-    column-count: 5;
+    column-count: 1;
     column-gap: 0px;
+}
+@media (min-width: 768px) {
+    .photos {
+        -webkit-column-count: 3;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 3;
+        -moz-column-gap: 0px;
+        column-count: 3;
+        column-gap: 0px;
+    }
+}
+@media (min-width: 992px) {
+    .photos {
+        -webkit-column-count: 4;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 4;
+        -moz-column-gap: 0px;
+        column-count: 4;
+        column-gap: 0px;
+    }
+}
+@media (min-width: 1200px) {
+    .photos {
+        -webkit-column-count: 5;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 5;
+        -moz-column-gap: 0px;
+        column-count: 5;
+        column-gap: 0px;
+    }
 }
 
 .photos div {
