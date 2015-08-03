@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12">
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('admin_decision/default', array('action' => 'notes')));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+?>
+<?php echo $this->form()->openTag($form); ?>
+
+    <div class="form-group">
+<?php
+$element = $form->get('meeting');
+//$element->setAttribute('class', 'form-control');
+//$element->setAttribute('placeholder', $this->translate('Course code'));
+//$element->setAttribute('required', 'required');
+?>
+        <?php /* echo $this->formLabel($element); */ ?>
+        <?php echo $this->formSelect($element); ?>
+        <?php echo $this->formElementErrors($element); ?>
+    </div>
+
+    <div class="form-group">
+        <?php $fileElement = $form->get('upload'); ?>
+        <?php echo $this->formLabel($fileElement); ?>
+        <?php echo $this->formFile($fileElement); ?>
+        <?php echo $this->formElementErrors($fileElement); ?>
+    </div>
+
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Upload'));
+$submit->setAttribute('class', 'btn btn-default');
+?>
+<?= $this->formButton($submit) ?>
+
+<?php echo $this->form()->closeTag(); ?>
+    </div>
+</div>

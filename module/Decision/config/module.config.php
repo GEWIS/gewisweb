@@ -38,7 +38,7 @@ return array(
                     )
                 ),
             ),
-            'decision_admin' => array(
+            'admin_decision' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/admin/decision',

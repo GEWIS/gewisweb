@@ -70,6 +70,12 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'decision_form_notes' => function ($sm) {
+                    return new \Decision\Form\Notes(
+                        $sm->get('translator'),
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 

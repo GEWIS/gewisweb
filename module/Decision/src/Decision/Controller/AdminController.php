@@ -9,11 +9,12 @@ class AdminController extends AbstractActionController
 {
 
     /**
-     * Index action.
+     * Notes upload action.
      */
-    public function indexAction()
+    public function notesAction()
     {
         return new ViewModel(array(
+            'form' => $this->getServiceLocator()->get('decision_form_notes')
         ));
     }
 
