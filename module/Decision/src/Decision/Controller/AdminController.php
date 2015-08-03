@@ -13,8 +13,15 @@ class AdminController extends AbstractActionController
      */
     public function notesAction()
     {
+        $service = $this->getDecisionService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $service->uploadNotes($request->getPost(), $request->getFiles());
+        }
+
         return new ViewModel(array(
-            'form' => $this->getServiceLocator()->get('decision_form_notes')
+            'form' => $service->getNotesForm()
         ));
     }
 

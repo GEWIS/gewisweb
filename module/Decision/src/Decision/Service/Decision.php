@@ -69,6 +69,33 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Upload meeting notes.
+     *
+     * @param array|Traversable $post
+     * @param array|Traversable $files
+     *
+     * @return boolean If uploading was a success
+     */
+    public function uploadNotes($post, $files)
+    {
+        $form = $this->getNotesForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        var_dump($form->getData());
+        var_dump($form->get('meeting')->getValue());
+        ini_set('xdebug.var_display_max_depth', 5);
+        var_dump($form->get('meeting')->getValueOptions());
+        echo '<br><br><br><br><br><br>';
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data
@@ -95,6 +122,16 @@ class Decision extends AbstractAclService
         $data = $form->getData();
 
         return $this->getDecisionMapper()->search($data['query']);
+    }
+
+    /**
+     * Get the Notes form.
+     *
+     * @return Decision\Form\Notes
+     */
+    public function getNotesform()
+    {
+        return $this->sm->get('decision_form_notes');
     }
 
     /**
