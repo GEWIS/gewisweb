@@ -25,6 +25,14 @@ class Notes extends Form implements InputFilterProviderInterface
                 'label_generator' => function($meeting) {
                     return $meeting->getType() . ' ' . $meeting->getNumber();
                 },
+                'optgroup_identifier' => 'type',
+                'find_method' => array(
+                    'name' => 'findBy',
+                    'params' => array(
+                        'criteria' => array(),
+                        'orderBy' => array('date' => 'DESC')
+                    )
+                ),
                 'label' => $translator->translate('Meeting')
             )
         ));
