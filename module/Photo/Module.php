@@ -105,4 +105,23 @@ class Module
         );
     }
 
+    /**
+     * Get view helper configuration.
+     *
+     * @return array
+     */
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'photoUrl' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Photo\View\Helper\PhotoUrl();
+                    $helper->setPhotoService($locator->get('photo_service_photo'));
+                    return $helper;
+                }
+            )
+        );
+    }
+
 }
