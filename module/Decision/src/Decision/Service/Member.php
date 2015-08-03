@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 
 use Decision\Model\Member as MemberModel;
 
+use Zend\Http\Client as HttpClient;
+
 /**
  * Member service.
  */
@@ -111,8 +113,17 @@ class Member extends AbstractAclService
         $url = str_replace('%EMAIL%', $user->getEmail(), $url);
         $url = str_replace('%GROUPS%', implode(',', $groups), $url);
 
-        var_dump($url, $config);
-        echo '<br /><br /><br /><br /><br /><br /><br /><br />';
+        $client = new HttpClient($url);
+        $response = $client->send();
+
+        if ($response->getStatusCode() != 200) {
+            $translator = $this->getTranslator();
+            throw new \Exception(
+                $translator->translate('Login to dreamspark failed. If this persists, contact the WebCommittee.')
+            );
+        }
+
+        return $response->getBody();
     }
 
     /**
