@@ -42,7 +42,11 @@ class Frontpage extends AbstractAclService
 
         }
 
-        $tag = $this->getTagMapper()->getMostActiveMemberTag($members);
+        try {
+            $tag = $this->getTagMapper()->getMostActiveMemberTag($members);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $tag = null;
+        }
 
         return array(
             'birthdays' => $birthdays,
