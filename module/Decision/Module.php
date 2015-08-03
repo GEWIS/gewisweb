@@ -70,6 +70,12 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'decision_form_notes' => function ($sm) {
+                    return new \Decision\Form\Notes(
+                        $sm->get('translator'),
+                        $sm->get('decision_mapper_meeting')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
@@ -77,6 +83,7 @@ class Module
                     $acl->addResource('organ');
                     $acl->addResource('member');
                     $acl->addResource('decision');
+                    $acl->addResource('meeting');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -87,6 +94,8 @@ class Module
                     $acl->allow('user', 'member', array('view', 'view_self', 'search', 'birthdays'));
 
                     $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
+
+                    $acl->allow('user', 'meeting', array('view', 'view_notes'));
 
                     return $acl;
                 },

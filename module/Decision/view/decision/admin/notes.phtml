@@ -1,0 +1,50 @@
+<?php if (isset($success) && $success): ?>
+<?= $this->translate('Meeting notes uploaded') ?>
+<?php else: ?>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('admin_decision/default', array('action' => 'notes')));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('class', 'form-horizontal');
+?>
+<?= $this->form()->openTag($form); ?>
+
+    <div class="form-group">
+<?php
+$element = $form->get('meeting');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $this->translate('Meeting'));
+$element->setAttribute('required', 'required');
+?>
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formSelect($element); ?>
+            <?= $this->formElementErrors($element); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?php $fileElement = $form->get('upload'); ?>
+        <label for="<?= $fileElement->getName() ?>" class="control-label col-sm-2"><?= $fileElement->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formFile($fileElement); ?>
+            <?= $this->formElementErrors($fileElement); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <?php
+            $submit = $form->get('submit');
+            $submit->setLabel($this->translate('Upload'));
+            $submit->setAttribute('class', 'btn btn-default');
+            ?>
+            <?= $this->formButton($submit) ?>
+        </div>
+    </div>
+
+<?= $this->form()->closeTag(); ?>
+<?php endif ?>

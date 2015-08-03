@@ -27,8 +27,10 @@ class DecisionController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
 
         try {
+            $meeting = $this->getDecisionService()->getMeeting($type, $number);
             return new ViewModel(array(
-                'meeting' => $this->getDecisionService()->getMeeting($type, $number)
+                'meeting' => $meeting,
+                'notes'   => $this->getDecisionService()->getMeetingNotes($meeting)
             ));
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();

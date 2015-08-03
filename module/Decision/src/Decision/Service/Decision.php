@@ -4,6 +4,8 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Decision\Form\Notes;
+
 /**
  * Decision service.
  */
@@ -37,7 +39,7 @@ class Decision extends AbstractAclService
      */
     public function getMeeting($type, $number)
     {
-        if (!$this->isAllowed('view_meeting')) {
+        if (!$this->isAllowed('view', 'meeting')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view meetings.')
@@ -45,6 +47,75 @@ class Decision extends AbstractAclService
         }
 
         return $this->getMeetingMapper()->find($type, $number);
+    }
+
+    /**
+     * Check if there are notes for a meeting and get the URL if so.
+     *
+     * @param Decision\Model\Meeting $meeting
+     *
+     * @return string|null
+     */
+    public function getMeetingNotes(\Decision\Model\Meeting $meeting)
+    {
+        if (!$this->isAllowed('view_notes', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meeting notes.')
+            );
+        }
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-notes'];
+
+        $filename = $meeting->getType() . '/' . $meeting->getNumber() . '.pdf';
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            return $config['public_dir'] . '/' . $filename;
+        }
+        return null;
+    }
+
+    /**
+     * Upload meeting notes.
+     *
+     * @param array|Traversable $post
+     * @param array|Traversable $files
+     *
+     * @return boolean If uploading was a success
+     */
+    public function uploadNotes($post, $files)
+    {
+        $form = $this->getNotesForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-notes'];
+
+        $filename = $data['meeting'] . '.pdf';
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            $form->setError(Notes::ERROR_FILE_EXISTS);
+            return false;
+        }
+
+        // finish upload
+
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), $config['dir_mode'], true);
+        }
+        move_uploaded_file($data['upload']['tmp_name'], $path);
+        return true;
     }
 
     /**
@@ -74,6 +145,22 @@ class Decision extends AbstractAclService
         $data = $form->getData();
 
         return $this->getDecisionMapper()->search($data['query']);
+    }
+
+    /**
+     * Get the Notes form.
+     *
+     * @return Decision\Form\Notes
+     */
+    public function getNotesform()
+    {
+        if (!$this->isAllowed('upload_notes', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload notes.')
+            );
+        }
+        return $this->sm->get('decision_form_notes');
     }
 
     /**
