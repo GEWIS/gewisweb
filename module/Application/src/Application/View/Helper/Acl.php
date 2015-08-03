@@ -49,7 +49,13 @@ class Acl extends AbstractHelper
     public function __invoke($factory)
     {
         $this->acl = $this->getServiceLocator()->get($factory);
-        return $this;
+        if($this->acl instanceof \Zend\Permissions\Acl\Acl) {
+            return $this;
+        } else {
+            throw new \Zend\Code\Exception\InvalidArgumentException(
+                'Provided factory does not exist or does not return an Acl instance'
+            );
+        }
     }
 
     /**
