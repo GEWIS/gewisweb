@@ -39,7 +39,7 @@ class Decision extends AbstractAclService
      */
     public function getMeeting($type, $number)
     {
-        if (!$this->isAllowed('view_meeting')) {
+        if (!$this->isAllowed('view', 'meeting')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view meetings.')
@@ -58,6 +58,12 @@ class Decision extends AbstractAclService
      */
     public function getMeetingNotes(\Decision\Model\Meeting $meeting)
     {
+        if (!$this->isAllowed('view_notes', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meeting notes.')
+            );
+        }
         $config = $this->getServiceManager()->get('config');
         $config = $config['meeting-notes'];
 
