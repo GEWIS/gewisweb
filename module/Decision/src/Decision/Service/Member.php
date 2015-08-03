@@ -93,6 +93,7 @@ class Member extends AbstractAclService
         $user = $this->getServiceManager()->get('user_role');
 
         $config = $this->getServiceManager()->get('config');
+        $sslcapath = $config['sslcapath'];
         $config = $config['dreamspark'];
 
         // determine groups for dreamspark
@@ -113,7 +114,9 @@ class Member extends AbstractAclService
         $url = str_replace('%EMAIL%', $user->getEmail(), $url);
         $url = str_replace('%GROUPS%', implode(',', $groups), $url);
 
-        $client = new HttpClient($url);
+        $client = new HttpClient($url, array(
+            'sslcapath' => $sslcapath
+        ));
         $response = $client->send();
 
         if ($response->getStatusCode() != 200) {

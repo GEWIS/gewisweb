@@ -68,6 +68,11 @@ return array(
     ),
 
     /**
+     * CA Path for SSL certificates, override this locally if necessary.
+     */
+    'sslcapath' => '/etc/ssl/certs',
+
+    /**
      * Photo's upload directory configuration
      */
     'photo' => array(
