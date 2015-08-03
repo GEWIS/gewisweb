@@ -73,7 +73,7 @@ class Module
                 'decision_form_notes' => function ($sm) {
                     return new \Decision\Form\Notes(
                         $sm->get('translator'),
-                        $sm->get('decision_doctrine_em')
+                        $sm->get('decision_mapper_meeting')
                     );
                 },
                 'decision_acl' => function ($sm) {

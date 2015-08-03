@@ -9,31 +9,29 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
+use Decision\Mapper\Meeting as MeetingMapper;
+
 class Notes extends Form implements InputFilterProviderInterface
 {
 
-    public function __construct(Translator $translator, ObjectManager $om)
+    public function __construct(Translator $translator, MeetingMapper $mapper)
     {
         parent::__construct();
 
+        $options = array();
+        foreach ($mapper->findAll() as $meeting) {
+            $meeting = $meeting[0];
+            $name = $meeting->getType() . ' ' . $meeting->getNumber();
+            $options[$name] = $name;
+        }
+
         $this->add(array(
             'name' => 'meeting',
-            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            'type' => 'select',
             'options' => array(
-                'object_manager' => $om,
-                'target_class' => 'Decision\Model\Meeting',
-                'label_generator' => function($meeting) {
-                    return $meeting->getType() . ' ' . $meeting->getNumber();
-                },
-                'optgroup_identifier' => 'type',
-                'find_method' => array(
-                    'name' => 'findBy',
-                    'params' => array(
-                        'criteria' => array(),
-                        'orderBy' => array('date' => 'DESC')
-                    )
-                ),
-                'label' => $translator->translate('Meeting')
+                'label' => $translator->translate('Meeting'),
+                'empty_option' => $translator->translate('Choose a meeting'),
+                'value_options' => $options
             )
         ));
 
