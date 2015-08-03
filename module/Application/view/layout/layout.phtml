@@ -98,7 +98,7 @@ function getIsActiveClass($view, array $condition)
             </div>
         </nav>
 
-        <div class="jumbotron jumbotron-header<?= isActive($this, array('application')) ? ' jumbotron-large' : '' ?>">
+        <div class="jumbotron jumbotron-header<?= isActive($this, array('frontpage', 'frontpage', 'home')) ? ' jumbotron-large' : '' ?>">
             <div class="container hidden-xs">
                 <a href="<?= $this->url('home') ?>">
                     <img src="<?= $this->basePath() ?>/img/logo.png" class="img-circle" />
