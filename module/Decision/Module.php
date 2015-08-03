@@ -82,6 +82,9 @@ class Module
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
 
+                    // guests are allowed to view birthdays on the homepage
+                    $acl->allow('guest', 'member', 'birthdays_today');
+
                     // users are allowed to view and search members
                     $acl->allow('user', 'member', array('view', 'search', 'birthdays'));
                     $acl->allow('user', 'member', array('view', 'view_self', 'search', 'birthdays'));
