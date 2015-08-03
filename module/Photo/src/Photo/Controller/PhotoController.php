@@ -20,13 +20,11 @@ class PhotoController extends AbstractActionController
             $year = (int)$year;
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
-        $basedir = $this->getPhotoService()->getBaseDirectory();
 
         return new ViewModel(array(
             'activeYear' => $year,
             'years' => $years,
-            'albums' => $albums,
-            'basedir' => $basedir
+            'albums' => $albums
         ));
     }
 

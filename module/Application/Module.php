@@ -55,4 +55,27 @@ class Module
             ),
         );
     }
+
+    /**
+     * Get view helper configuration.
+     *
+     * @return array
+     */
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'acl' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\Acl();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
+                'scriptUrl' => function ($sm) {
+                    $helper = new \Application\View\Helper\ScriptUrl();
+                    return $helper;
+                }
+            )
+        );
+    }
 }
