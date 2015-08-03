@@ -381,7 +381,7 @@ class Album extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'photo';
+        return 'album';
     }
 
     /**
