@@ -135,11 +135,8 @@ class Photo extends AbstractService
         $next = $this->getNextPhoto($photo);
         $previous = $this->getPreviousPhoto($photo);
 
-        $basedir = $this->getBaseDirectory();
-
         return array(
             'photo' => $photo,
-            'basedir' => $basedir,
             'next' => $next,
             'previous' => $previous
         );
