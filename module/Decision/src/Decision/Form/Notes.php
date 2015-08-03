@@ -24,7 +24,8 @@ class Notes extends Form implements InputFilterProviderInterface
                 'target_class' => 'Decision\Model\Meeting',
                 'label_generator' => function($meeting) {
                     return $meeting->getType() . ' ' . $meeting->getNumber();
-                }
+                },
+                'label' => $translator->translate('Meeting')
             )
         ));
 
