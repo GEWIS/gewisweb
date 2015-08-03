@@ -19,6 +19,12 @@ Installation
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
 
+Dreamspark configuration (only works on the GEWIS-server)
+---------------------------------------------------------
+
+- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and
+  configure the Dreamspark credentials.
+
 Optional debugging configuration
 --------------------------------
 
