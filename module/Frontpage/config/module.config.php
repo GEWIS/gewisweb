@@ -17,21 +17,6 @@ return array(
                         'action'        => 'home',
                     ),
                 ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'page' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:category[/:name]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
             ),
         ),
     ),
