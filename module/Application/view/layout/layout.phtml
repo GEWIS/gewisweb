@@ -92,38 +92,8 @@ function getIsActiveClass($view, array $condition)
                                     )) ?>"><?= $this->translate('Logout') ?></a></li>
                                 </ul>
                             </li>
-<?php /* <li class="open"><a href="<?= $this->url('user/default', array(
-                                'action' => 'logout'
-                            )) ?>"><?= $this->translate('Logout') ?></a></li> */ ?>
                         <?php endif; ?>
                     </ul>
-                    <?php /*
-                    <ul class="nav navbar-nav navbar-right">
-                        <?php if (null === $this->identity()): ?>
-                            <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
-                        <?php else: ?>
-                            <li><a href="<?= $this->url('user/default', array(
-                                'action' => 'logout'
-                            )) ?>"><?= $this->translate('Logout') ?></a></li>
-                        <?php endif; ?>
-                        <li>
-                            <a href="<?= $this->url('lang', array(
-                                'lang' => 'nl'
-                            )); ?>"><img src="<?= $this->basePath() ?>/img/nl.png" style="height: 18px" /></a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('lang', array(
-                                'lang' => 'en'
-                            )); ?>"><img src="<?= $this->basePath() ?>/img/en.png" style="height: 18px" /></a>
-                        </li>
-                    </ul>
-                    <?php if (null !== $this->identity()): ?>
-                    <?php $member = $this->identity()->getMember() ?>
-                    <p class="navbar-text navbar-right">
-                        <?= sprintf($this->translate('Signed in as %s'), $member->getFirstName() . ' ' . $member->getLastName()) ?>
-                    </p>
-                    <?php endif; ?>
-                    */ ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
