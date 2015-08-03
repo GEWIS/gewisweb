@@ -107,6 +107,15 @@ body > div.container {
 .jumbotron-header.jumbotron-large a img {
     height: auto;
 }
+@media (max-width: 992px) {
+    .jumbotron-header.jumbotron-large {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    .jumbotron-header.jumbotron-large a img {
+        height: 165px;
+    }
+}
 
 /* Footer */
 footer {
