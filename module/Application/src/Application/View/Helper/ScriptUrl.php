@@ -25,7 +25,9 @@ class ScriptUrl extends AbstractHelper
      * Makes an url route available to the javascript url helper.
      *
      * @param string $name Name of the route.
-     * @param array $params of the route to make available.
+     * @param array $params List of route parameters to make available.
+     *
+     * @return \Application\View\Helper\ScriptUrl
      */
     public function requireUrl($name, $params = array())
     {
@@ -40,5 +42,23 @@ class ScriptUrl extends AbstractHelper
         $this->getView()->inlineScript()->captureStart();
         echo 'URLHelper.addUrl("'. $name . '", "'. urldecode($url) . '");';
         $this->getView()->inlineScript()->captureEnd();
+        return $this;
+    }
+
+    /**
+     * Make multiple url routes available to the javascript url helper.
+     * Only works with urls which have the same parameters.
+     *
+     * @param array $names List of route names.
+     * @param array $params List of route parameters to make available.
+     *
+     * @return \Application\View\Helper\ScriptUrl
+     */
+    public function requireUrls($names, $params)
+    {
+        foreach($names as $name) {
+            $this->requireUrl($name, $params);
+        }
+        return $this;
     }
 }

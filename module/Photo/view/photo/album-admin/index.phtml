@@ -3,7 +3,25 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/photo-admin.js')
     ->prependFile($this->basePath() . '/js/photo.js');
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
+    ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
+
+$this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page'))
+    ->requireUrls(
+        array(
+            'admin_photo/album_edit',
+            'admin_photo/album_delete',
+            'admin_photo/album_add',
+            'admin_photo/album_move',
+            'admin_photo/album_delete',
+            'admin_photo/album_cover',
+            'admin_photo/album_index'
+        ),
+        array('album_id')
+    )
+    ->requireUrls(
+        array('admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'),
+        array('photo_id')
+    );
 ?>
 <div class="row">
     <div class="col-lg-12">
