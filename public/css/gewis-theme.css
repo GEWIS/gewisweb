@@ -54,7 +54,14 @@ body > div.container {
     padding-top: 15px;
 }
 
-/* Jumbotron */
+/* general jumbotron*/
+.container .jumbotron,
+.container-fluid .jumbotron {
+    background-color: #DDD;
+    border-radius: 0;
+}
+
+/* Jumbotron header */
 .jumbotron-header {
     position: relative;
     background: url(../img/Panorama.jpg);
