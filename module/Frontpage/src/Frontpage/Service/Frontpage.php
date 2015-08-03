@@ -34,7 +34,7 @@ class Frontpage extends AbstractAclService
         $today = new \DateTime();
         $birthdays = array();
         $members = array();
-        foreach($birthdayMembers as $member) {
+        foreach ($birthdayMembers as $member) {
             $age = $today->diff($member->getBirth())->y;
             $members[] = $member;
                 //TODO: check member's privacy settings
