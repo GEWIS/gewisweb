@@ -4,6 +4,8 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Decision\Form\Notes;
+
 /**
  * Decision service.
  */
@@ -88,11 +90,26 @@ class Decision extends AbstractAclService
             return false;
         }
 
-        var_dump($form->getData());
-        var_dump($form->get('meeting')->getValue());
-        ini_set('xdebug.var_display_max_depth', 5);
-        var_dump($form->get('meeting')->getValueOptions());
-        echo '<br><br><br><br><br><br>';
+        $data = $form->getData();
+
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-notes'];
+
+        $filename = $data['meeting'] . '.pdf';
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            $form->setError(Notes::ERROR_FILE_EXISTS);
+            return false;
+        }
+
+        // finish upload
+
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), $config['dir_mode'], true);
+        }
+        move_uploaded_file($data['upload']['tmp_name'], $path);
+        return true;
     }
 
     /**

@@ -14,15 +14,21 @@ use Decision\Mapper\Meeting as MeetingMapper;
 class Notes extends Form implements InputFilterProviderInterface
 {
 
+    const ERROR_FILE_EXISTS = 'file_exists';
+
+    protected $translator;
+
     public function __construct(Translator $translator, MeetingMapper $mapper)
     {
         parent::__construct();
+        $this->translator = $translator;
 
         $options = array();
         foreach ($mapper->findAll() as $meeting) {
             $meeting = $meeting[0];
-            $name = $meeting->getType() . ' ' . $meeting->getNumber();
-            $options[$name] = $name . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
+            $name = $meeting->getType() . '/' . $meeting->getNumber();
+            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
+                            . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
         $this->add(array(
@@ -51,6 +57,24 @@ class Notes extends Form implements InputFilterProviderInterface
                 'value' => $translator->translate('Submit')
             )
         ));
+    }
+
+    /**
+     * Set an error.
+     *
+     * @param string $error
+     */
+    public function setError($error)
+    {
+        switch ($error) {
+        case self::ERROR_FILE_EXISTS:
+            $this->setMessages(array(
+                'meeting' => array(
+                    $this->translator->translate('There already are notes for this meeting')
+                )
+            ));
+            break;
+        }
     }
 
     /**
