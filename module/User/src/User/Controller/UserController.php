@@ -37,22 +37,9 @@ class UserController extends AbstractActionController
      */
     public function logoutAction()
     {
-        $userService = $this->getUserService();
+        $this->getUserService()->logout();
 
-        if ($this->getRequest()->isPost()) {
-            if ($userService->logout($this->getRequest()->getPost())) {
-                return new ViewModel(array(
-                    'logout' => true
-                ));
-            }
-            // when the user is not logged out, return the user to the homepage
-            return $this->redirect()->toRoute('home');
-        }
-
-        // show form
-        return new ViewModel(array(
-            'form' => $userService->getLogoutform()
-        ));
+        return new ViewModel();
     }
 
     /**
