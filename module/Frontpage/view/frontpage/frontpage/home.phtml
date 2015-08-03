@@ -1,0 +1,23 @@
+<div class="jumbotron">
+    <h2><?= $this->translate('Study association GEWIS') ?></h2>
+    <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
+    <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="well">
+            <h3><strong><?= $this->translate('Birthdays today!') ?></strong></h3>
+
+            <?php if (!empty($birthdays)): ?>
+                <ul>
+                    <?php foreach ($birthdays as $birthday): ?>
+                        <li><?= sprintf($this->translate('%s wil be %s years old today!'), $birthday['member']->getFullName(),
+                                $birthday['age']) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <?= $this->translate('Nobody seems to have a birthday today, be the first one!') ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

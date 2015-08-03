@@ -54,6 +54,49 @@ class Tag
             'member' => $lidnr
         ));
     }
+
+    /**
+     * Returns a recent tag for the member whom has the most tags from a set of members.
+     *
+     * @param array $members
+     *
+     * @return \Photo\Model\Tag|null
+     */
+    public function getMostActiveMemberTag($members)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        // Retrieve the lidnr of the member with the most tags
+        $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')
+            ->from('Photo\Model\Tag', 't')
+            ->where('t.member IN (?1)')
+            ->setParameter(1, $members)
+            ->groupBy('t.member')
+            ->setMaxResults(1)
+            ->orderBy('tag_count', 'DESC');
+
+        $res = $qb->getQuery()->getSingleResult();
+
+        if (empty($res)) {
+            return null;
+        } else {
+            $lidnr = $res[1];
+
+            $qb2 = $this->em->createQueryBuilder();
+
+            // Retrieve the most recent tag of a member
+            $qb2->select('t')
+                ->from('Photo\Model\Tag', 't')
+                ->where('t.member = ?1')
+                ->setParameter(1, $lidnr)
+                ->setMaxResults(1)
+                ->orderBy('t.id', 'DESC');
+
+            return $qb2->getQuery()->getSingleResult();
+        }
+
+    }
+
     /**
      * Removes a tag.
      *
