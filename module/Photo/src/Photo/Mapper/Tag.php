@@ -66,6 +66,7 @@ class Tag
     {
         $qb = $this->em->createQueryBuilder();
 
+        // Retrieve the lidnr of the member with the most tags
         $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')
             ->from('Photo\Model\Tag', 't')
             ->where('t.member IN (?1)')
@@ -75,6 +76,7 @@ class Tag
             ->orderBy('tag_count', 'DESC');
 
         $res = $qb->getQuery()->getSingleResult();
+
         if (empty($res)) {
             return null;
         } else {
@@ -82,6 +84,7 @@ class Tag
 
             $qb2 = $this->em->createQueryBuilder();
 
+            // Retrieve the most recent tag of a member
             $qb2->select('t')
                 ->from('Photo\Model\Tag', 't')
                 ->where('t.member = ?1')

@@ -18,7 +18,7 @@ class Frontpage extends AbstractAclService
         $birthdayInfo = $this->getBirthdayInfo();
         return array(
             'birthdays' => $birthdayInfo['birthdays'],
-            'birthdayPhoto' => $birthdayInfo['photo']
+            'birthdayTag' => $birthdayInfo['tag']
         );
     }
 
