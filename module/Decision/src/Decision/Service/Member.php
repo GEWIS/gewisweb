@@ -88,8 +88,30 @@ class Member extends AbstractAclService
             );
         }
 
+        $user = $this->getServiceManager()->get('user_role');
+
         $config = $this->getServiceManager()->get('config');
-        var_dump($config['dreamspark']);
+        $config = $config['dreamspark'];
+
+        // determine groups for dreamspark
+        $groups = array();
+        if ($this->isAllowed('students', 'dreamspark')) {
+            $groups[] = 'students';
+        }
+        if ($this->isAllowed('faculty', 'dreamspark')) {
+            $groups[] = 'faculty';
+        }
+        if ($this->isAllowed('staff', 'dreamspark')) {
+            $groups[] = 'staff';
+        }
+
+        $url = $config['url'];
+        $url = str_replace('%ACCOUNT%', $config['account'], $url);
+        $url = str_replace('%KEY%', $config['key'], $url);
+        $url = str_replace('%EMAIL%', $user->getEmail(), $url);
+        $url = str_replace('%GROUPS%', implode(',', $groups), $url);
+
+        var_dump($url, $config);
         echo '<br /><br /><br /><br /><br /><br /><br /><br />';
     }
 
