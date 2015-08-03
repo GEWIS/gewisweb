@@ -38,6 +38,29 @@ return array(
                     )
                 ),
             ),
+            'decision_admin' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin/decision',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller' => 'Admin',
+                        'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:action]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'organ' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -114,6 +137,7 @@ return array(
         'invokables' => array(
             'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
             'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
+            'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController'
         )
     ),
