@@ -1,6 +1,7 @@
 <?php
 $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
     ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->scriptUrl()->requireUrl('member/search');
 ?>
 <?php if ($photo != null): ?>
     <div clas="row">
