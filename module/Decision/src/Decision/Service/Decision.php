@@ -48,6 +48,27 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Check if there are notes for a meeting and get the URL if so.
+     *
+     * @param Decision\Model\Meeting $meeting
+     *
+     * @return string|null
+     */
+    public function getMeetingNotes(\Decision\Model\Meeting $meeting)
+    {
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-notes'];
+
+        $filename = $meeting->getType() . '/' . $meeting->getNumber() . '.pdf';
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            return $config['public_dir'] . '/' . $filename;
+        }
+        return null;
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data

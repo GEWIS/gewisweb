@@ -5,7 +5,9 @@
         \IntlDateFormatter::NONE,
         'nl_NL'
     ) ?></small></h1>
-
+<?php if (null !== $notes): ?>
+    <a href="<?= $this->basePath() . '/' . $notes ?>"><?= $this->translate('Notes for this meeting') ?></a>
+<?php endif ?>
 <ul>
 <?php foreach ($meeting->getDecisions() as $decision): ?>
     <li><?= $meeting->getType()?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>.<?= $decision->getNumber() ?>
