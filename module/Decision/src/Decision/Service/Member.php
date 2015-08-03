@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 
 use Decision\Model\Member as MemberModel;
 
+use Zend\Http\Client as HttpClient;
+
 /**
  * Member service.
  */
@@ -74,6 +76,57 @@ class Member extends AbstractAclService
     public function findMemberByLidNr($lidnr)
     {
         return $this->getMemberMapper()->findByLidnr($lidnr);
+    }
+
+    /**
+     * Get the dreamspark URL for the current user.
+     */
+    public function getDreamsparkUrl()
+    {
+        if (!$this->isAllowed('login', 'dreamspark')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed login into dreamspark.')
+            );
+        }
+
+        $user = $this->getServiceManager()->get('user_role');
+
+        $config = $this->getServiceManager()->get('config');
+        $sslcapath = $config['sslcapath'];
+        $config = $config['dreamspark'];
+
+        // determine groups for dreamspark
+        $groups = array();
+        if ($this->isAllowed('students', 'dreamspark')) {
+            $groups[] = 'students';
+        }
+        if ($this->isAllowed('faculty', 'dreamspark')) {
+            $groups[] = 'faculty';
+        }
+        if ($this->isAllowed('staff', 'dreamspark')) {
+            $groups[] = 'staff';
+        }
+
+        $url = $config['url'];
+        $url = str_replace('%ACCOUNT%', $config['account'], $url);
+        $url = str_replace('%KEY%', $config['key'], $url);
+        $url = str_replace('%EMAIL%', $user->getEmail(), $url);
+        $url = str_replace('%GROUPS%', implode(',', $groups), $url);
+
+        $client = new HttpClient($url, array(
+            'sslcapath' => $sslcapath
+        ));
+        $response = $client->send();
+
+        if ($response->getStatusCode() != 200) {
+            $translator = $this->getTranslator();
+            throw new \Exception(
+                $translator->translate('Login to dreamspark failed. If this persists, contact the WebCommittee.')
+            );
+        }
+
+        return $response->getBody();
     }
 
     /**

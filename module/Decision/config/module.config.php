@@ -117,6 +117,15 @@ return array(
                             )
                         )
                     ),
+                    'dreamspark' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/dreamspark',
+                            'defaults' => array(
+                                'action' => 'dreamspark'
+                            )
+                        )
+                    ),
                     'view' => array(
                         'type' => 'Segment',
                         'options' => array(

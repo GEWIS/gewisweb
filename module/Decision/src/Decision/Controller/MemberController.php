@@ -64,6 +64,16 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * Action to go to dreamspark.
+     */
+    public function dreamsparkAction()
+    {
+        $url = $this->getMemberService()->getDreamsparkUrl();
+
+        return $this->redirect()->toUrl($url);
+    }
+
+    /**
      * Get the member service.
      *
      * @return Decision\Service\Member

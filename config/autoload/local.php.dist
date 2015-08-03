@@ -12,4 +12,11 @@
  */
 
 return array(
+    /**
+     * Dreamspark credentials.
+     */
+    'dreamspark' => array(
+        'account' => '',
+        'key' => ''
+    )
 );
