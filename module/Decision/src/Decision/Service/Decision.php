@@ -168,7 +168,7 @@ class Decision extends AbstractAclService
      *
      * @return Decision\Form\Notes
      */
-    public function getNotesform()
+    public function getNotesForm()
     {
         if (!$this->isAllowed('upload_notes', 'meeting')) {
             $translator = $this->getTranslator();
@@ -177,6 +177,22 @@ class Decision extends AbstractAclService
             );
         }
         return $this->sm->get('decision_form_notes');
+    }
+
+    /**
+     * Get the Document form.
+     *
+     * @return Decision\Form\Document
+     */
+    public function getDocumentForm()
+    {
+        if (!$this->isAllowed('upload_document', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload meeting documents.')
+            );
+        }
+        return $this->sm->get('decision_form_document');
     }
 
     /**
