@@ -81,15 +81,15 @@ return array(
         'max_photos_page' => 20,
         'dir_mode' => 0777, // rwx by default
         'small_thumb_size' => array(
-            'width' => 825,
+            'width' => 370,
             'height' => 550
         ),
         'large_thumb_size' => array(
-            'width' => 825,
+            'width' => 370,
             'height' => 550
         ),
         'album_cover' => array(
-            'width' => 825,
+            'width' => 370,
             'height' => 550,
             'inner_border' => 2,
             'outer_border' => 0,
