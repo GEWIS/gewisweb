@@ -29,9 +29,8 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     protected $company;
         
-    /*
+    /**
      * The company's slogan.
-     *
      * @ORM\Column(type="string")
      */
     protected $slogan;
@@ -43,6 +42,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     protected $logo;
 
+    // TODO: Check if description is not reserved by PHP
     /**
      * The company's (HTML) description.
      *
@@ -69,7 +69,8 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     public function __construct()
     {
-        // nothing to do
+        $this->description = "";
+        $this->website = "";
     }
 
     /**
