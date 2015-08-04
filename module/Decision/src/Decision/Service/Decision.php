@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 
 use Decision\Form\Notes;
 
+use Decision\Model\MeetingDocument;
+
 /**
  * Decision service.
  */
@@ -131,6 +133,51 @@ class Decision extends AbstractAclService
             mkdir(dirname($path), $config['dir_mode'], true);
         }
         move_uploaded_file($data['upload']['tmp_name'], $path);
+        return true;
+    }
+
+    /**
+     * Upload a meeting document.
+     *
+     * @param array|Traversable $post
+     * @param array|Traversable $files
+     *
+     * @return boolean If uploading was a success
+     */
+    public function uploadDocument($post, $files)
+    {
+        $form = $this->getDocumentForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-documents'];
+
+        $filename = $data['meeting'] . '/' .$data['upload']['name'];
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            $form->setError(Notes::ERROR_FILE_EXISTS);
+            return false;
+        }
+
+        // TODO: insert into the database
+
+        // finish upload
+
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), $config['dir_mode'], true);
+        }
+        move_uploaded_file($data['upload']['tmp_name'], $path);
+
         return true;
     }
 
