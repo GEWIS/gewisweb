@@ -109,36 +109,6 @@ class AdminController extends AbstractActionController
 
     }
     
-    /*public function saveCompanyAction()
-    {
-        $companyName = $this->params('slugCompanyName');    
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            if (!isset($companyName)){
-                $companyName = $request->getPost()['slugName'];
-            }
-            $companyService = $this->getCompanyService();
-            $companyForm = $companyService->getCompanyForm();
-            $companyForm->setData($request->getPost());
-
-            if ($companyForm->isValid()) {
-                $company=$companyService->getEditableCompaniesWithAsciiName($companyName)[0]; // Assumes the company is found. However, we know that it is found because it has been found when loading the form.
-                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
-                $companyService->saveCompany();
-            } else {
-                return $this->forward()->dispatch('Company\Controller\AdminController', 
-                                                  array('action'=> 'addCompany', 
-                                                        'form' => $companyForm)
-                                                 );
-            }
-        }
-
-        return $this->redirect()->toRoute('admin_company/default', 
-                                          array('action'=>'edit', 
-                                                'slugCompanyName' => $companyName), 
-                                          array(), true);   
-    }*/
-      
     public function saveJobAction()
     {
         $jobName = $this->params('slugJobName');    
