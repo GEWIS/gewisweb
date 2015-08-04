@@ -39,7 +39,8 @@ class Module
     {
         return array(
             'invokables' => array(
-                'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage'
+                'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
+                'frontpage_service_page' => 'Frontpage\Service\Page'
             ),
             'factories' => array(
                 'frontpage_acl' => function ($sm) {
