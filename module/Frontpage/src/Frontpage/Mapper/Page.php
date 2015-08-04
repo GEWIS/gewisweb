@@ -45,6 +45,14 @@ class Page
         ));
     }
 
+    /**
+     * Returns all available pages.
+     */
+    public function getAllPages()
+    {
+        return $this->getRepository()->findAll();
+    }
+
 
     /**
      * Removes a page.

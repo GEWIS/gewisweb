@@ -10,7 +10,11 @@ class PageAdminController extends AbstractActionController
 
     public function indexAction()
     {
+        $pages = $this->getPageService()->getPages();
 
+        return new ViewModel(array(
+            'pages' => $pages
+        ));
     }
 
     public function createAction()
