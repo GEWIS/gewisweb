@@ -1,6 +1,6 @@
 <?php
 
-namespace Photo\Mapper;
+namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
 

@@ -43,6 +43,11 @@ class Module
                 'frontpage_service_page' => 'Frontpage\Service\Page'
             ),
             'factories' => array(
+                'frontpage_mapper_page' => function ($sm) {
+                    return new Mapper\Page(
+                        $sm->get('frontpage_doctrine_em')
+                    );
+                },
                 'frontpage_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 

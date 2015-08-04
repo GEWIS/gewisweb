@@ -12,7 +12,8 @@ class Page extends AbstractAclService
 
     public function getPage($category, $subCategory, $name)
     {
-        return array();
+        $page = $this->getPageMapper()->findPage($category, $subCategory, $name);
+        return $page;
     }
     /**
      * Get the frontpage config, as used by this service.
@@ -23,6 +24,16 @@ class Page extends AbstractAclService
     {
         $config = $this->sm->get('config');
         return $config['frontpage'];
+    }
+
+    /**
+     * Get the page mapper.
+     *
+     * @return \Frontpage\Mapper\Page
+     */
+    public function getPageMapper()
+    {
+        return $this->sm->get('frontpage_mapper_page');
     }
 
     /**
