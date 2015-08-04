@@ -24,11 +24,18 @@ class Page implements ResourceInterface
     protected $id;
 
     /**
-     * Title of the page
+     * Dutch title of the page
      *
      * @ORM\Column(type="string")
      */
-    protected $title;
+    protected $dutchTitle;
+
+    /**
+     * English title of the page
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $englishTitle;
 
     /**
      * Category of the page
@@ -83,9 +90,17 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getDutchTitle()
     {
-        return $this->title;
+        return $this->dutchTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnglishTitle()
+    {
+        return $this->englishTitle;
     }
 
     /**
@@ -145,11 +160,19 @@ class Page implements ResourceInterface
     }
 
     /**
-     * @param string $title
+     * @param string $dutchTitle
      */
-    public function setTitle($title)
+    public function setDutchTitle($dutchTitle)
     {
-        $this->title = $title;
+        $this->dutchTitle = $dutchTitle;
+    }
+
+    /**
+     * @param string $englishTitle
+     */
+    public function setEnglishTitle($englishTitle)
+    {
+        $this->englishTitle = $englishTitle;
     }
 
     /**
