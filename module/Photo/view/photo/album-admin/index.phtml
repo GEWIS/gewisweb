@@ -24,7 +24,7 @@ $this->headLink()
                                     id="<?= $album->getId() ?>"
                                     href="<?= $context->url('admin_photo/album_index',
                                         array('album_id' => $album->getId())) ?>">
-                                    <?= $this->escapeHtml($album->getName()) ?>
+                                    <?= $context->escapeHtml($album->getName()) ?>
                                 </a>
 
                                 <?php if (!empty($album->getChildren())): ?>
