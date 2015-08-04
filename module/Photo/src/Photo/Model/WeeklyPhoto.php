@@ -26,14 +26,14 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * The start date of the week the photo is based on.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     protected $week;
 
     /**
      * The photo of the week.
      *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="week")
+     * @ORM\OneToOne(targetEntity="Photo\Model\Photo")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
