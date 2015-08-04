@@ -54,13 +54,10 @@ body > div.container {
     padding-top: 15px;
 }
 
-/* changing border radius */
-.form-control {
-    border-radius: 0;
-}
-.btn {
-    border-radius: 0;
-}
+/* removing border radius */
+.navbar-toggle,
+.form-control,
+.btn,
 .well {
     border-radius: 0;
 }
