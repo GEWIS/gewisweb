@@ -34,6 +34,13 @@ class MeetingDocument
     protected $meeting;
 
     /**
+     * Name of the document.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
      * Path of the document, relative to the storage directory.
      *
      * @ORM\Column(type="string")
@@ -65,9 +72,29 @@ class MeetingDocument
      *
      * @param Meeting $meeting
      */
-    public function setMeeting($meeting)
+    public function setMeeting(Meeting $meeting)
     {
         $this->meeting = $meeting;
+    }
+
+    /**
+     * Get the name of the document.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the name of the document.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
