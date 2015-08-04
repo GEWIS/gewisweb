@@ -48,6 +48,13 @@ class Meeting
     protected $decisions;
 
     /**
+     * Documents.
+     *
+     * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
+     */
+    protected $documents;
+
+    /**
      * Get all allowed meeting types.
      */
     public static function getTypes()
