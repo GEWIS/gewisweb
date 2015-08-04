@@ -34,13 +34,6 @@ class MeetingDocument
     protected $meeting;
 
     /**
-     * Meeting number.
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $number;
-
-    /**
      * Path of the document, relative to the storage directory.
      *
      * @ORM\Column(type="string")
