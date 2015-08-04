@@ -77,6 +77,22 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the base path for meeting documents.
+     *
+     * @param Decision\Model\Meeting $meeting
+     *
+     * @return string
+     */
+    public function getMeetingDocumentBasePath(\Decision\Model\Meeting $meeting)
+    {
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-documents'];
+
+        return $config['public_dir'] . '/'
+             . $meeting->getType() . '/' . $meeting->getNumber();
+    }
+
+    /**
      * Upload meeting notes.
      *
      * @param array|Traversable $post

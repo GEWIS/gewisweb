@@ -15,7 +15,7 @@
 <div class="col-md-6">
 <ul>
 <?php foreach($meeting->getDocuments() as $document): ?>
-    <li><?= $document->getPath() ?></li>
+    <li><a href="<?= $this->basePath() . '/' . $documentPath . '/' . $document->getPath() ?>"><?= $document->getName() ?></a></li>
 <?php endforeach ?>
 </ul>
 </div>
