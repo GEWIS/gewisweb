@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
+            'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
         ),
     ),
     'router' => array(
@@ -38,6 +39,54 @@ return array(
                         'priority' => -1
                     ),
                 ),
+            ),
+            'admin_page' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/admin/page',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'PageAdmin',
+                        'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'create' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/create',
+                            'defaults' => array(
+                                'action' => 'create',
+                            ),
+                        ),
+                    ),
+                    'edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:page_id]/edit',
+                            'constraints' => array(
+                                'page_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'edit',
+                            ),
+                        ),
+                    ),
+                    'delete' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:page_id]/delete',
+                            'constraints' => array(
+                                'page_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'delete',
+                            ),
+                        ),
+                    ),
+                ),
+                'priority' => 100
             ),
         ),
     ),
