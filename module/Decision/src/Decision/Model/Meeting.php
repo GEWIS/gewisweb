@@ -169,4 +169,37 @@ class Meeting
             $this->addDecision($decision);
         }
     }
+
+    /**
+     * Get the documents.
+     *
+     * @return array
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * Add a document.
+     *
+     * @param Document $document
+     */
+    public function addDocument(Document $document)
+    {
+        $this->documents[] = $document;
+    }
+
+    /**
+     * Add multiple documents.
+     *
+     * @param array $documents
+     */
+    public function addDocuments($documents)
+    {
+        foreach ($documents as $document) {
+            $this->addDocument($document);
+        }
+    }
+
 }
