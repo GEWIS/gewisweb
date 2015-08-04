@@ -37,7 +37,7 @@ $this->headLink()
         <ol class="breadcrumb">
             <?php foreach ($path as $album): ?>
                 <li><a href="<?= $this->url('admin_photo', array(), array("fragment" => $album->getId())); ?>">
-                        <?= $album->getName() ?></a></li>
+                        <?= $this->escapeHtml($album->getName()) ?></a></li>
             <?php endforeach; ?>
             <li class="active">Photo #<?= $photo->getId() ?></li>
         </ol>

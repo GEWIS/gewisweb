@@ -40,11 +40,12 @@ class CreateAlbum extends Form
             'name' => 'name',
             'required' => true,
             'validators' => array(
-                array('name' => 'not_empty'),
                 array(
-                    'name' => 'alnum',
+                    'name' => 'string_length',
                     'options' => array(
-                        'allowWhiteSpace' => true
+                        'encoding' => 'UTF-8',
+                        'min' => 3,
+                        'max' => 75
                     )
                 )
             )

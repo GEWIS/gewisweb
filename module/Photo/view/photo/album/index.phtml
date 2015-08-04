@@ -1,7 +1,7 @@
 <?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header"><?= $album->getName(); ?></h1>
+        <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?></h1>
     </div>
 </div>
 <?= $this->paginationControl(
@@ -22,7 +22,7 @@
                     <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $item->getCoverPath() ?>" alt="">
 
                     <div class="caption">
-                        <?= $item->getName(); ?>
+                        <?= $this->escapeHtml($item->getName()); ?>
                     </div>
                 </a>
             </div>
