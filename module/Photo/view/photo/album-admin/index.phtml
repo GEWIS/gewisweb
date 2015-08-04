@@ -26,10 +26,10 @@ $this->headLink()
                                         array('album_id' => $album->getId())) ?>">
                                     <?= $album->getName() ?>
                                 </a>
-
-                                <?php if (!empty($album->getChildren())): ?>
+<?php $children = $album->getChildren() ?>
+                                <?php if (!empty($children)): ?>
                                     <ul>
-                                        <?php showTree($album->getChildren(), $context); ?>
+                                        <?php showTree($children, $context); ?>
                                     </ul>
                                 <?php endif; ?>
                             </li>
