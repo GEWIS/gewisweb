@@ -253,20 +253,20 @@ class Photo extends AbstractService
      * @param \DateTime $enddate
      * @return \Photo\Model\Photo|null
      */
-    private function determinePhotoOfTheWeek($begindate, $enddate)
+    public function determinePhotoOfTheWeek($begindate, $enddate)
     {
         $results = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
         if (empty($results)){
             return null;
         }
-        $bestPref = -1;
+        $bestRating = -1;
         foreach ($results as $res){
             $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
             if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
                 && $this->photoPreference($photo, $res[2])
-                    > $bestPref){
+                    > $bestRating){
                 $bestPhoto = $photo;
-                $bestPref = $this->photoPreference($photo, $res[2]);
+                $bestRating = $this->ratePhoto($photo, $res[2]);
             }
         }
         return $bestPhoto;
@@ -276,11 +276,11 @@ class Photo extends AbstractService
     /**
      * Determine the preference rating of the photo.
      * 
-     * @param integer $photoId
+     * @param \Photo\Model\Photo $photo
      * @param integer $occurences
      * @return float
      */
-    private function photoPreference($photo, $occurences)
+    public function ratePhoto($photo, $occurences)
     {
         $tagged = $photo->getTags()->count() > 0;
         $now = new \DateTime();
