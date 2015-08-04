@@ -130,5 +130,10 @@ function getIsActiveClass($view, array $condition)
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
+        <script>
+            <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
+            URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
+            <?php endforeach; ?>
+        </script>
     </body>
 </html>
