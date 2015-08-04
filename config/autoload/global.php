@@ -85,7 +85,7 @@ return array(
             'height' => 550
         ),
         'large_thumb_size' => array(
-            'width' => 370,
+            'width' => 825,
             'height' => 550
         ),
         'album_cover' => array(
