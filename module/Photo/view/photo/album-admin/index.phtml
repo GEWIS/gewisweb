@@ -44,7 +44,8 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page
                                         array('album_id' => $album->getId())) ?>">
                                     <?= $album->getName() ?>
                                 </a>
-<?php $children = $album->getChildren() ?>
+
+                                <?php $children = $album->getChildren() ?>
                                 <?php if (!empty($children)): ?>
                                     <ul>
                                         <?php showTree($children, $context); ?>
