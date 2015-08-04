@@ -3,6 +3,7 @@
 namespace Frontpage\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
 
 class PageController extends AbstractActionController
@@ -18,8 +19,11 @@ class PageController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        $session = new SessionContainer('lang');
+
         return new ViewModel(array(
-            'page' => $page
+            'page' => $page,
+            'lang' => $session->lang
         ));
     }
 
