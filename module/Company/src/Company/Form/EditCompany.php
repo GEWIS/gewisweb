@@ -21,6 +21,12 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'translations',
+            'attributes' => array(
+                'type'  => 'hidden',
+            ),
+        ));
+        $this->add(array(
             'name' => 'languageNeutralId',
             'attributes' => array(
                 'type'  => 'hidden',
@@ -73,7 +79,7 @@ class EditCompany extends Form
         ));
         // English version
         $this->add(array(
-            'name' => 'en.website',
+            'name' => 'en_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
                 //'required' => 'required'
@@ -85,7 +91,7 @@ class EditCompany extends Form
         ));
         // Dutch version
         $this->add(array(
-            'name' => 'nl.website',
+            'name' => 'nl_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
                 //'required' => 'required'
@@ -96,7 +102,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'en.slogan',
+            'name' => 'en_slogan',
             'attributes' => array(
                 'type'  => 'text',
             ),
@@ -105,7 +111,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'nl.slogan',
+            'name' => 'nl_slogan',
             'attributes' => array(
                 'type'  => 'text',
             ),
@@ -134,7 +140,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'nl.logo',
+            'name' => 'nl_logo',
             'attributes' => array(
                 'type'  => 'file',
             ),
@@ -143,7 +149,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'en.logo',
+            'name' => 'en_logo',
             'attributes' => array(
                 'type'  => 'file',
             ),
@@ -152,7 +158,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'en.description',
+            'name' => 'en_description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
@@ -163,7 +169,7 @@ class EditCompany extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'nl.description',
+            'name' => 'nl_description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
@@ -296,7 +302,7 @@ class EditCompany extends Form
             )
         ));
         $filter->add(array(
-            'name' => 'nl.logo',
+            'name' => 'nl_logo',
             'required' => false,
             'validators' => array(
                 array(

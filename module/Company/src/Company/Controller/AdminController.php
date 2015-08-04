@@ -47,6 +47,7 @@ class AdminController extends AbstractActionController
                 $company=$companyService->insertCompany();
                 $company->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
+                //var_dump($company);
                 return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'slugCompanyName'=>$companyName),array(),false);   
             //}
         }
@@ -108,7 +109,7 @@ class AdminController extends AbstractActionController
 
     }
     
-    public function saveCompanyAction()
+    /*public function saveCompanyAction()
     {
         $companyName = $this->params('slugCompanyName');    
         $request = $this->getRequest();
@@ -136,7 +137,7 @@ class AdminController extends AbstractActionController
                                           array('action'=>'edit', 
                                                 'slugCompanyName' => $companyName), 
                                           array(), true);   
-    }
+    }*/
       
     public function saveJobAction()
     {
@@ -228,6 +229,27 @@ class AdminController extends AbstractActionController
         $companyForm = $companyService->getCompanyForm();
         $companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
         //echo($this->url()->fromRoute('admin_company/default', array('action'=>'save', 'slugCompanyName'=>$companyName)));
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (!isset($companyName)){
+                $companyName = $request->getPost()['slugName'];
+            }
+            $companyService = $this->getCompanyService();
+            $companyForm = $companyService->getCompanyForm();
+            $companyForm->setData($request->getPost());
+
+            //if ($companyForm->isValid()) {
+                $company = $companyService->insertCompany();
+                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+            //} else {
+            //    die();
+            //    return $this->forward()->dispatch('Company\Controller\AdminController', 
+            //                                      array('action'=> 'editCompany', 
+            //                                            'form' => $companyForm)
+            //                                     );
+            //}
+        }
         if (empty($companyList)){
             $company = null;
         } else {
@@ -235,9 +257,10 @@ class AdminController extends AbstractActionController
             $companyForm->bind($company);
             $companyForm->setAttribute('action', 
                                        $this->url()->fromRoute('admin_company/default', 
-                                                               array('action' => 'save', 
+                                                               array('action' => 'editCompany', 
                                                                      'slugCompanyName' => $companyName))
                                       );
+            $companyForm->get('languages')->setValue($company->getArrayCopy()["languages"]);
         }
         $return = $companyService->getJobsWithCompanySlugName($companyName);
         $vm = new ViewModel(array(

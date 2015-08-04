@@ -85,8 +85,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function __construct()
     {
-        $packets = new ArrayCollection();
-        $translations = new ArrayCollection();
+        $this->packets = new ArrayCollection();
+        $this->translations = new ArrayCollection();
+
+
     }
 
     /**
@@ -265,6 +267,9 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     public function getNumberOfJobs(){
         $jobcount = 0;
+        if ($this->getPackets() == NULL){
+            return $jobcount;
+        }
         foreach($this->getPackets() as $packet){
             $jobcount +=  $packet->getJobs()->count();
         }
@@ -312,37 +317,64 @@ class Company // implements ArrayHydrator (for zend2 form)
     // For zend2 forms
     public function getArrayCopy()
     {
-        return get_object_vars($this);
+        $arraycopy = get_object_vars($this);
+        $arraycopy["languages"] = new ArrayCollection();
+        foreach($this->getTranslations() as $translation){
+            $arraycopy[$translation->getLanguage()."_"."slogan"] = $translation->getSlogan();
+            $arraycopy[$translation->getLanguage()."_"."website"] = $translation->getWebsite();
+            $arraycopy[$translation->getLanguage()."_"."description"] = $translation->getDescription();
+            $arraycopy[$translation->getLanguage()."_"."logo"] = $translation->getLogo();
+            $arraycopy["languages"]->add($translation->getLanguage());
+        }
+
+        return $arraycopy;
     }
 
     
     
     public function exchangeArray($data) {
+        //echo var_dump($data)."<br>";
         $languages = $data['languages'];
-        #$languages.add(¨¨);
+        //$languages.add(¨¨);
+        
+        
+        $this->translations=(isset($data['translations'])) ? $data['translations'] : $this->getTranslations();
+        
+
+        //var_dump($languages);
         foreach ($languages as $language){
 
             if($language !== ''){
-            echo $language;
-            $companyLanguages = array_map(function ($value){
-                        return $value->getLanguage();
-                    } ,$this->getTranslations());
-                if(!in_array($language, $companyLanguages)){
+                $companyLanguages =  $this->getTranslations()->map(function ($value){
+                    return $value->getLanguage();
+                } );
+                if(!$companyLanguages->contains($language)){
                     continue;
                 }
-                $translations = 
 
-                $language = $language . '.';
+                $translation = $this->getTranslations()[$companyLanguages->indexOf($language)];
+
+                $language = $language . '_';
+
+                #var_dump($data);
+                #die();
+
+                // Translated properties
+                $translation->setWebsite((isset($data[$language.'website'])) ? $data[$language.'website'] : $translation->getWebsite());
+                $translation->setSlogan((isset($data[$language.'slogan'])) ? $data[$language.'slogan'] : $translation->getSlogan());
+                $translation->setDescription((isset($data[$language.'description'])) ? $data[$language.'description'] : $translation->getDescription());
+                $translation->setLogo((isset($data[$language.'logo'])) ? $data[$language.'logo'] : $translation->getLogo());
             }
             
-            $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-            $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-            //$this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
-            $this->address=(isset($data[$language.'address'])) ? $data[$language.'address'] : $this->getAddress();
-            $this->website=(isset($data[$language.'website'])) ? $data[$language.'website'] : $this->getWebsite();
-            $this->email=(isset($data[$language.'email'])) ? $data[$language.'email'] : $this->getEmail();
-            $this->phone=(isset($data[$language.'phone'])) ? $data[$language.'phone'] : $this->getPhone();
-            //$this->packets=(isset($data[$language.'packets'])) ? $data[$language.'packets'] : $this->getPackets();
         }
+        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+        //$this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;
+        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
+        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        //TODO: do something about packets
+        //$this->packets=(isset($data[$language.'packets'])) ? $data[$language.'packets'] : $this->getPackets();
+        //echo var_dump($this)."<br>";
     }
 }

@@ -52,8 +52,8 @@ class Job
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j','c')->join("j.company", "c")->where("c.slugName=:jobId");
-        $qb->setParameter('jobId', $companySlugName);
+        $qb->select('j')->join("j.packet", "p")->join("p.company", "c")->where("c.slugName=:companyId")->andWhere("j.active=1")->andWhere("c.hidden=0")->andWhere("p.expires > CURRENT_DATE()");
+        $qb->setParameter('companyId', $companySlugName);
 
         return $qb->getQuery()->getResult();
     }
