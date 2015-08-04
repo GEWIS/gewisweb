@@ -20,7 +20,8 @@ return array(
                         'action'        => 'lang',
                         'lang'          => 'nl'
                     )
-                )
+                ),
+                'priority' => 100
             )
         ),
     ),

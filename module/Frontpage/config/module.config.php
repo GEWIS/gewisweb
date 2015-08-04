@@ -35,6 +35,7 @@ return array(
                                 'action' => 'page',
                             ),
                         ),
+                        'priority' => -1
                     ),
                 ),
             ),

@@ -36,6 +36,7 @@ return array(
                         ),
                     )
                 ),
+                'priority' => 100
             ),
             'admin_education' => array(
                 'type' => 'Literal',
@@ -59,6 +60,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             )
         )
     ),

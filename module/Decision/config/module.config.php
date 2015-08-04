@@ -37,6 +37,7 @@ return array(
                         )
                     )
                 ),
+                'priority' => 100
             ),
             'admin_decision' => array(
                 'type' => 'Literal',
@@ -60,6 +61,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             ),
             'organ' => array(
                 'type' => 'Literal',
@@ -86,6 +88,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             ),
             'member' => array(
                 'type' => 'Literal',
@@ -139,6 +142,7 @@ return array(
                         )
                     )
                 ),
+                'priority' => 100
             ),
         ),
     ),
