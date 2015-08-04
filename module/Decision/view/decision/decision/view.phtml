@@ -5,11 +5,13 @@
         \IntlDateFormatter::NONE,
         'nl_NL'
     ) ?></small></h1>
+<div class="row">
 <div class="col-md-6">
 <?php if (null !== $notes): ?>
     <a href="<?= $this->basePath() . '/' . $notes ?>"><?= $this->translate('Notes for this meeting') ?></a>
 <?php endif ?>
 </div>
+
 <div class="col-md-6">
 <ul>
 <?php foreach($meeting->getDocuments() as $document): ?>
@@ -17,9 +19,15 @@
 <?php endforeach ?>
 </ul>
 </div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
 <ul>
 <?php foreach ($meeting->getDecisions() as $decision): ?>
     <li><?= $meeting->getType()?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>.<?= $decision->getNumber() ?>
         <?= $decision->getContent() ?></li>
 <?php endforeach ?>
 </ul>
+</div>
+</div>
