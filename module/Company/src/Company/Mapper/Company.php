@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
+use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 
@@ -43,9 +44,6 @@ class Company
         $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
         
         // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
-        //if($company->getLogo == null){
-        //    $company->setLogo("");
-        //}
         
         
         // TODO: implement language
@@ -58,6 +56,24 @@ class Company
         } else {
             $company->setLanguageNeutralId($companiesWithSameSlugName[0]->getLanguageNeutralId());
         }
+
+        // TODO: make this more dynamic
+        $en = new CompanyI18n();
+        $en->setLanguage("en");
+        $en->setCompany($company);
+        if($en->getLogo() == null){
+            $en->setLogo("");
+        }
+        $this->em->persist($en);
+        $company->addTranslation($en);
+        $nl = new CompanyI18n();
+        $nl->setLanguage("nl");
+        $nl->setCompany($company);
+        if($nl->getLogo() == null){
+            $nl->setLogo("");
+        }
+        $this->em->persist($nl);
+        $company->addTranslation($nl);
 
         $company->setHidden(false);
         $this->em->persist($company);
