@@ -13,6 +13,7 @@ class Page extends AbstractAclService
 
     /**
      * Returns a single page
+     *
      * @param string $category
      * @param string $subCategory
      * @param string $name
@@ -24,6 +25,12 @@ class Page extends AbstractAclService
         return $page;
     }
 
+    /**
+     * Returns a single page by its id
+     *
+     * @param integer $pageId
+     * @return \Frontpage\Model\Page|null
+     */
     public function getPageById($pageId)
     {
         return $this->getPageMapper()->findPageById($pageId);
@@ -59,6 +66,12 @@ class Page extends AbstractAclService
         return $pageArray;
     }
 
+    /**
+     * Creates a new Page.
+     *
+     * @param array $data form post data
+     * @return bool|PageModel false if creation was not successful.
+     */
     public function createPage($data)
     {
         $form = $this->getPageForm();
@@ -79,6 +92,11 @@ class Page extends AbstractAclService
         return $page;
     }
 
+    /**
+     * @param integer $pageId
+     * @param array $data form post data
+     * @return bool
+     */
     public function updatePage($pageId, $data)
     {
         $form = $this->getPageForm($pageId);

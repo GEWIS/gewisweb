@@ -45,6 +45,12 @@ class Page
         ));
     }
 
+    /**
+     * Returns a page based on its id.
+     *
+     * @param integer $pageId
+     * @return \Frontpage\Model\Page|null
+     */
     public function findPageById($pageId)
     {
         return $this->getRepository()->find($pageId);
