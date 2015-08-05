@@ -62,6 +62,13 @@ body > div.container {
     border-radius: 0;
 }
 
+/* Navbar start fix */
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin: 0 -15px;
+    }
+}
+
 /* general jumbotron*/
 .container .jumbotron,
 .container-fluid .jumbotron {
