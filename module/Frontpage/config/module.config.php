@@ -26,9 +26,9 @@ return array(
                         'options' => array(
                             'route' => '[:category[/:sub_category][/:name]]',
                             'constraints' => array(
-                                'category' => '[a-zA-Z][a-zA-Z0-9_-]+',
-                                'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]+',
-                                'name' => '[a-zA-Z][a-zA-Z0-9_-]+',
+                                'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
                                 '__NAMESPACE__' => 'Frontpage\Controller',

@@ -3,6 +3,7 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Frontpage\Model\Page as PageModel;
 
 /**
  * Page service, used for content management.
@@ -52,6 +53,36 @@ class Page extends AbstractAclService
 
         return $pageArray;
     }
+
+    public function createPage($data)
+    {
+        $form = $this->getPageForm();
+        $page = new PageModel();
+        $form->bind($page);
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        //TODO: fix this
+        $page->setRequiredRole('guest');
+
+        $this->getPageMapper()->persist($page);
+        $this->getPageMapper()->flush();
+
+        return $page;
+    }
+    /**
+     * Get the Page form.
+     *
+     * @return \Frontpage\Form\Page
+     */
+    public function getPageForm()
+    {
+        return $this->sm->get('frontpage_form_page');
+    }
+
     /**
      * Get the frontpage config, as used by this service.
      *
