@@ -24,6 +24,11 @@ class Page extends AbstractAclService
         return $page;
     }
 
+    public function getPageById($pageId)
+    {
+        return $this->getPageMapper()->findPageById($pageId);
+    }
+
     /**
      * Returns an associative array of all pages in a tree-like structure.
      *
@@ -73,14 +78,38 @@ class Page extends AbstractAclService
 
         return $page;
     }
+
+    public function updatePage($pageId, $data)
+    {
+        $form = $this->getPageForm($pageId);
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $this->getPageMapper()->flush();
+
+        return true;
+    }
+
     /**
      * Get the Page form.
      *
+     * @param integer $pageId
+     *
      * @return \Frontpage\Form\Page
      */
-    public function getPageForm()
+    public function getPageForm($pageId = null)
     {
-        return $this->sm->get('frontpage_form_page');
+        $form = $this->sm->get('frontpage_form_page');
+
+        if(!is_null($pageId)) {
+            $page = $this->getPageById($pageId);
+            $form->bind($page);
+        }
+
+        return $form;
     }
 
     /**

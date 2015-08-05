@@ -45,6 +45,11 @@ class Page
         ));
     }
 
+    public function findPageById($pageId)
+    {
+        return $this->getRepository()->find($pageId);
+    }
+
     /**
      * Returns all available pages.
      */

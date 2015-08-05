@@ -87,6 +87,9 @@ class Page extends Form
                     )
                 ),
             ),
+            'filters' => array(
+                array('name' => 'string_to_lower')
+            )
         ));
 
         $filter->add(array(
@@ -101,6 +104,10 @@ class Page extends Form
                     )
                 ),
             ),
+            'filters' => array(
+                array('name' => 'string_to_lower'),
+                array('name' => 'to_null')
+            )
         ));
 
         $filter->add(array(
@@ -115,6 +122,10 @@ class Page extends Form
                     )
                 ),
             ),
+            'filters' => array(
+                array('name' => 'string_to_lower'),
+                array('name' => 'to_null')
+            )
         ));
 
         $filter->add(array(

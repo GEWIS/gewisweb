@@ -94,6 +94,9 @@ return array(
         'template_path_stack' => array(
             'Frontpage' => __DIR__ . '/../view',
         ),
+        'template_map' => array(
+            'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
+        ),
     ),
     'doctrine' => array(
         'driver' => array(
