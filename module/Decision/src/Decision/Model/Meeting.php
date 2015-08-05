@@ -43,7 +43,7 @@ class Meeting
     /**
      * Decisions.
      *
-     * @ORM\OneToMany(targetEntity="Decision", mappedBy="meeting", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Decision", mappedBy="meeting")
      */
     protected $decisions;
 
@@ -185,7 +185,7 @@ class Meeting
      *
      * @param Document $document
      */
-    public function addDocument(Document $document)
+    public function addDocument(MeetingDocument $document)
     {
         $this->documents[] = $document;
     }

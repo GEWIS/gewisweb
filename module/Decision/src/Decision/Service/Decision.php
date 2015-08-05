@@ -169,14 +169,21 @@ class Decision extends AbstractAclService
             return false;
         }
 
-        // TODO: insert into the database
+        $meeting = explode('/', $data['meeting']);
+        $meeting = $this->getMeeting($meeting[0], $meeting[1]);
 
-        // finish upload
+        $document = new MeetingDocument();
+        $document->setPath($data['upload']['name']);
+        $document->setName($data['name']);
+        $document->setMeeting($meeting);
 
+        // finish upload and save in the database
         if (!is_dir(dirname($path))) {
             mkdir(dirname($path), $config['dir_mode'], true);
         }
         move_uploaded_file($data['upload']['tmp_name'], $path);
+
+        $this->getMeetingMapper()->persistDocument($document);
 
         return true;
     }

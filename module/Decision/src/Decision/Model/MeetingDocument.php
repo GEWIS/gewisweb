@@ -74,6 +74,7 @@ class MeetingDocument
      */
     public function setMeeting(Meeting $meeting)
     {
+        $meeting->addDocument($this);
         $this->meeting = $meeting;
     }
 
