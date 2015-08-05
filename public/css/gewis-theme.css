@@ -68,6 +68,9 @@ body > div.container {
         margin: 0 -15px;
     }
 }
+.navbar-collapse {
+    border: none;
+}
 
 /* general jumbotron*/
 .container .jumbotron,
