@@ -3,10 +3,15 @@ $this->headScript()->prependFile($this->basePath() . '/js/tree.js');
 $this->headLink()->prependStylesheet($this->basePath() . '/css/tree.css')
 ?>
 <h3><?= $this->translate('Pages') ?></h3>
+
+<a href="<?= $this->url('admin_page/create') ?>" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;
+    <?= $this->translate('Create a new page') ?>
+</a>
+<?= $this->translate('Or select a page to edit below.') ?>
 <hr>
-<?= $this->translate('Select a page to edit or create a new page') ?>
 <div class="row">
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-body">
                 <ul class="tree">
