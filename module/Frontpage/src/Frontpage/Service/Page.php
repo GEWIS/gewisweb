@@ -22,7 +22,7 @@ class Page extends AbstractAclService
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->getPageMapper()->findPage($category, $subCategory, $name);
-        if (!$this->isPageAllowed($page)) {
+        if (!(is_null($page) || $this->isPageAllowed($page))) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to view this page.')
             );
@@ -65,6 +65,11 @@ class Page extends AbstractAclService
      */
     public function getPages()
     {
+        if (!$this->isAllowed('list')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to view the list of pages.')
+            );
+        }
         $pages = $this->getPageMapper()->getAllPages();
         $pageArray = array();
         foreach($pages as $page) {
@@ -118,6 +123,11 @@ class Page extends AbstractAclService
      */
     public function updatePage($pageId, $data)
     {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit pages.')
+            );
+        }
         $form = $this->getPageForm($pageId);
         $form->setData($data);
 
@@ -139,6 +149,11 @@ class Page extends AbstractAclService
      */
     public function getPageForm($pageId = null)
     {
+        if (!$this->isAllowed('create')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to create new pages.')
+            );
+        }
         $form = $this->sm->get('frontpage_form_page');
 
         if(!is_null($pageId)) {

@@ -64,6 +64,8 @@ class Module
                 'frontpage_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
+                    $acl->addResource('page');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
