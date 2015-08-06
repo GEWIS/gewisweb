@@ -61,6 +61,15 @@ class Page extends Form
         ));
 
         $this->add(array(
+            'name' => 'requiredRole',
+            'type' => 'text',
+            'options' => array(
+                'label' => $translator->translate('Required role'),
+                'value' => 'guest'
+            )
+        ));
+
+        $this->add(array(
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => array(
@@ -163,6 +172,11 @@ class Page extends Form
 
         $filter->add(array(
             'name' => 'englishContent',
+            'required' => true,
+        ));
+
+        $filter->add(array(
+            'name' => 'requiredRole',
             'required' => true,
         ));
 

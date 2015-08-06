@@ -22,6 +22,11 @@ class Page extends AbstractAclService
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->getPageMapper()->findPage($category, $subCategory, $name);
+        if (!$this->isPageAllowed($page)) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to view this page.')
+            );
+        }
         return $page;
     }
 
@@ -34,6 +39,23 @@ class Page extends AbstractAclService
     public function getPageById($pageId)
     {
         return $this->getPageMapper()->findPageById($pageId);
+    }
+
+    /**
+     * Checks if the current user is allowed to view the given page
+     *
+     * @param \Frontpage\Model\Page $page
+     *
+     * @return bool
+     */
+    public function isPageAllowed($page)
+    {
+        $acl = $this->getAcl();
+        $requiredRole = $page->getRequiredRole();
+        $resource = 'page_' . $page->getId();
+        $acl->addResource($resource);
+        $acl->allow($requiredRole, $resource, 'view');
+        return $this->isAllowed('view', $resource);
     }
 
     /**
@@ -83,9 +105,6 @@ class Page extends AbstractAclService
             return false;
         }
 
-        //TODO: fix this
-        $page->setRequiredRole('guest');
-
         $this->getPageMapper()->persist($page);
         $this->getPageMapper()->flush();
 
@@ -128,6 +147,16 @@ class Page extends AbstractAclService
         }
 
         return $form;
+    }
+
+    /**
+     * Get the role of the current user.
+     *
+     * @return \User\Model\User|string
+     */
+    public function getRole()
+    {
+        return $this->sm->get('user_role');
     }
 
     /**

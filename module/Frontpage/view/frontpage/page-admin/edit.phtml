@@ -89,6 +89,20 @@ $this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js');
 </div>
 
 <hr>
+<h3><?= $this->translate('Permissions') ?></h3>
+Set the minimal role required to view this page. All visitors whom have this role may view the page.
+<div class="form-group">
+    <?php
+    $element = $form->get('requiredRole');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    $element->setAttribute('value', 'guest');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+<hr>
     <?php
     $submit = $form->get('submit');
     $submit->setLabel($this->translate('Save'));
