@@ -204,9 +204,18 @@ footer a {
 
 .agenda {
     border-radius: 0px;
-    margin-top: -100px;
     background-color: #fff;
     height: 300px;
+}
+
+@media (min-width: 992px) {
+    .agenda {
+        margin-top: -100px;
+    }
+}
+
+.agenda h4 {
+    display: inline;
 }
 
 .agenda-item {

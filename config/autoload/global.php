@@ -98,6 +98,10 @@ return array(
             'background' => '#000000'
         )
     ),
+
+    'frontpage' => array(
+        'activity_count' => 3 // Number of activities to display
+    ),
     
     /**
      * OASE SOAP API configuration.
