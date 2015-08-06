@@ -16,9 +16,11 @@ class Frontpage extends AbstractAclService
     public function getHomePageData()
     {
         $birthdayInfo = $this->getBirthdayInfo();
+        $activities = $this->getUpcomingActivities();
         return array(
             'birthdays' => $birthdayInfo['birthdays'],
-            'birthdayTag' => $birthdayInfo['tag']
+            'birthdayTag' => $birthdayInfo['tag'],
+            'activities' => $activities
         );
     }
 
@@ -54,6 +56,12 @@ class Frontpage extends AbstractAclService
         );
     }
 
+    public function getUpcomingActivities()
+    {
+        $count = $this->getConfig()['activity_count'];
+        return $this->getActivityMapper()->getUpcomingActivities($count);
+
+    }
     /**
      * Get the frontpage config, as used by this service.
      *
@@ -73,6 +81,16 @@ class Frontpage extends AbstractAclService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
+     * Get the activity module's activity mapper.
+     *
+     * @return \Activity\Mapper\Activity
+     */
+    public function getActivityMapper()
+    {
+        return $this->sm->get('activity_mapper_activity');
     }
 
     /**
