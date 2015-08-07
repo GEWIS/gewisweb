@@ -24,7 +24,7 @@ return array(
                     'page' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '[:category[/:sub_category][/:name]]',
+                            'route' => '[:category[/:sub_category][/:name]][/]',
                             'constraints' => array(
                                 'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]*',
