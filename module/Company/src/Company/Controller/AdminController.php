@@ -65,7 +65,24 @@ class AdminController extends AbstractActionController
         return $vm;
         
     }
-    
+    public function deleteCompanyAction(){
+        $companyService = $this->getCompanyService();
+        $slugName = $this->params('slugCompanyName');    
+        $request = $this->getRequest();
+         if ($request->isPost()) {
+             $del = $request->getPost('del', 'No');
+             if ($del == 'Yes') {
+                 $companyService->deleteCompaniesWithSlug($slugName);
+             }
+
+             return $this->redirect()->toRoute('admin_company');
+         }
+        return new ViewModel(array(
+            'companies' => $companyService->getEditableCompaniesWithSlugName($slugName),
+            'translator' => $companyService->getTranslator()
+        ));
+    }
+
     public function addJobAction()
     {
         $companyService = $this->getCompanyService();

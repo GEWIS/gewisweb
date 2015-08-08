@@ -38,6 +38,17 @@ class Company
         $this->em->flush();
     }
 
+    public function deleteWithSlug($slug)
+    {
+        foreach ($this->findEditableCompaniesWithSlugName($slug, true) as $company){
+            foreach ($company->getTranslations() as $translation){
+                $this->em->remove($translation);
+            }
+            // TODO: delete jobs
+            $this->em->remove($company);
+        }
+        $this->em->flush();
+    }
     public function insert(){
         $company = new CompanyModel($this->em);
 
