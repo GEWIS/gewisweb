@@ -44,6 +44,24 @@ return array(
     ),
 
     /**
+     * Exam and Summary temporary upload directory configration.
+     */
+    'education_temp' => array(
+        'upload_dir' => 'public/data/education_temp',
+        'public_dir' => 'data/education_temp',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
+    /**
+     * Meeting notes upload directory configration.
+     */
+    'meeting-notes' => array(
+        'upload_dir' => 'public/data/meeting-notes',
+        'public_dir' => 'data/meeting-notes',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
+    /**
      * Dreamspark configuration.
      */
     'dreamspark' => array(
