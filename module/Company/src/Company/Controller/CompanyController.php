@@ -24,7 +24,8 @@ class CompanyController extends AbstractActionController
         }
         else {
             $vm = new ViewModel(array(
-                'companyList' => $companyService->getCompanyList()
+                'companyList' => $companyService->getCompanyList(),
+                'translator' => $companyService->getTranslator()
             ));
         }
         return $vm;
