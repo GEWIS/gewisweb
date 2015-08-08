@@ -17,6 +17,7 @@ class CompanyController extends AbstractActionController
             if (count($companies) != 0){
                 $vm = new ViewModel(array(
                     'company' => $companies[0],
+                    'translator' => $companyService->getTranslator()
                 ));
             } else { 
                 $vm = new ViewModel(); 
