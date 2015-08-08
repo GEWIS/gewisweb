@@ -4,6 +4,7 @@
 $form = $companyEditForm;
 //$form = $this->form($companyEditForm);
 ?>
+<h1> <?= $this->translate('Add Company'); ?> </h1>
 <?= $this->form()->openTag($form) ?>
 <?php echo $this->partial('partial/company/admin/editors/company.phtml', array(
     'form' => $form)); ?>
