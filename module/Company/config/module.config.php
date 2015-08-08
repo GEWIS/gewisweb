@@ -86,6 +86,21 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'deleteCompany' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/delete/[:slugCompanyName]',
+                            'defaults' => [
+                                'action' => 'deleteCompany'
+                            ],
+                            'constraints' => [
+                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
+                            ],
+                             
+                        ),
+                        'may_terminate' => true,
+                    ),
                     'editCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',

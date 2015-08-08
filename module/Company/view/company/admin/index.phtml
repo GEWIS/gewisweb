@@ -37,6 +37,7 @@
                 <th><?= $this->translate('Jobs') ?></th>
                 <th><?= $this->translate('Packet expiry dates') ?></th>
                 <th><?= $this->translate('Packet statuses') ?></th>
+                <th><?= $this->translate('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->getNumberOfJobs(); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packets */ ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packet statuses */ ?></a></td>
+                <td><a href=<?= $this->url('admin_company/deleteCompany', array('slugCompanyName' => $company->getSlugName()))?>><?= $this->translate('Delete') ?></a></td>
             </tr>
             <?php
                 }
