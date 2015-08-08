@@ -16,17 +16,17 @@ if ($islist==true) {
         ,true)); // Reuse matched parameters
 }
 else {
-    echo($company->getTranslations()[0]->getWebsite());
+    echo($company->getTranslationFromLocale($locale)->getWebsite());
 }
 echo("'>"); 
 echo ($company->getName()); // Text of the title
 echo ("</a></h2>") ?>
 
-    <div class="company-slogan"><?= $company->getTranslations()[0]->getSlogan(); ?></div>
-    <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getTranslations()[0]->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
+    <div class="company-slogan"><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></div>
+    <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
     <div class="company-address"><?= $company->getAddress(); ?></div>
     <div class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></div>
-    <div class="company-website"><a href="<?= $company->getTranslations()[0]->getWebsite(); ?>">Visit website</a></div>
+    <div class="company-website"><a href="<?= $company->getTranslationFromLocale($locale)->getWebsite(); ?>">Visit website</a></div>
     <div class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></div>
     <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
         <ul class="company-jobs-list">
@@ -37,6 +37,6 @@ echo ("</a></h2>") ?>
         <?php } ?>
         </ul>
     </div>
-    <div class="company-description"><?= $company->getTranslations()[0]->getDescription(); ?></div>
+    <div class="company-description"><?= $company->getTranslationFromLocale($locale)->getDescription(); ?></div>
 
     </div>

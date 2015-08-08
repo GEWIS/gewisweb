@@ -2,6 +2,7 @@
 <div class="company-list">
 <?php
 
+$locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
 if(isset($company)){
@@ -30,7 +31,7 @@ if (!isset($companyList)){
 
 foreach ($companyList as $company) {
     echo $this->partial('partial/company/company/list/company.phtml', 
-                        ['islist' => $islist, 'company' => $company]);
+                        ['islist' => $islist, 'company' => $company, 'locale' => $locale]);
 }
 
 //echo($this->partial('partial/filter/script'));
