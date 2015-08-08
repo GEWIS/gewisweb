@@ -318,19 +318,33 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getArrayCopy()
     {
         $arraycopy = get_object_vars($this);
-        $arraycopy["languages"] = new ArrayCollection();
+        //$arraycopy["languages"] = new ArrayCollection();
+        $arraycopy["languages"] = Array();
         foreach($this->getTranslations() as $translation){
             $arraycopy[$translation->getLanguage()."_"."slogan"] = $translation->getSlogan();
             $arraycopy[$translation->getLanguage()."_"."website"] = $translation->getWebsite();
             $arraycopy[$translation->getLanguage()."_"."description"] = $translation->getDescription();
             $arraycopy[$translation->getLanguage()."_"."logo"] = $translation->getLogo();
-            $arraycopy["languages"]->add($translation->getLanguage());
+            $arraycopy["languages"][] = $translation->getLanguage();
         }
 
         return $arraycopy;
     }
 
     
+    public function getTranslationFromLocale($locale) {
+
+                $companyLanguages =  $this->getTranslations()->map(function ($value){
+                    return $value->getLanguage();
+                } );
+                if(!$companyLanguages->contains($locale)){
+                    continue;
+                }
+
+                $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
+                return $translation;
+    }
+
     
     public function exchangeArray($data) {
         //echo var_dump($data)."<br>";
@@ -345,15 +359,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         foreach ($languages as $language){
 
             if($language !== ''){
-                $companyLanguages =  $this->getTranslations()->map(function ($value){
-                    return $value->getLanguage();
-                } );
-                if(!$companyLanguages->contains($language)){
-                    continue;
-                }
-
-                $translation = $this->getTranslations()[$companyLanguages->indexOf($language)];
-
+                $translation = $this->getTranslationFromLocale($language);
                 $language = $language . '_';
 
                 #var_dump($data);
