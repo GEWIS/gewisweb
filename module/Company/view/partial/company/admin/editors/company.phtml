@@ -1,4 +1,3 @@
-
 <dl><!-- common elements -->
 <?php $element = $this->form->get('name') ?>
     <dt><?= $element->getOption('label') ?></dt>
@@ -41,6 +40,7 @@
 </dl>
 <dl><!-- english elements -->
 <?php $element = $this->form->get('en_website') ?>
+<h2> <?= $this->translate('English')?> </h2>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formInput($element) ?>
@@ -70,6 +70,7 @@
 
 <dl><!-- dutch elements -->
 <?php $element = $this->form->get('nl_website') ?>
+<h2> <?= $this->translate('Dutch')?> </h2>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formInput($element) ?>

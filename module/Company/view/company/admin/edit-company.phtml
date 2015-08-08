@@ -5,8 +5,10 @@ $form = $companyEditForm;
 //$form = $this->form($companyEditForm);
 if ($company == null){
     echo "Company not found";
+    return;
 }
 ?>
+<h1> <?= $this->translate('Edit Company'); ?> </h1>
 
 <?= $this->form()->openTag($form) ?>
 <?php echo $this->partial('partial/company/admin/editors/company.phtml', 
