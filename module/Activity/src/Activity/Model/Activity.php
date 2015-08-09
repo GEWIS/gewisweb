@@ -103,12 +103,19 @@ class Activity
     protected $description;
 
     /**
-     * all the photo's in this album.
+     * all the signups for this activity.
      *
      * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
      */
     protected $signUps;
 
+    /**
+     * All additional fields belonging to the activity.
+     * 
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
+     */
+    protected $fields;
+    
     // TODO -> where can i find member organ?
     protected $organ;
 
