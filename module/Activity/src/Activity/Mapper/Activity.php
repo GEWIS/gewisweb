@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use \Activity\Model\Activity as ActivityModel;
 
 class Activity
 {
@@ -64,7 +65,7 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where('a.approved = 0');
+            ->where('a.status = ' . ActivityModel::STATUS_TO_APPROVE);
 
         return $qb->getQuery()->getResult();
     }
@@ -79,7 +80,7 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where('a.approved = 1');
+            ->where('a.status = ' . ActivityModel::STATUS_APPROVED);
 
         return $qb->getQuery()->getResult();
     }

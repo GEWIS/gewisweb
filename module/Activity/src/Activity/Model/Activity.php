@@ -13,6 +13,13 @@ use User\Model\User;
 class Activity
 {
     /**
+     * Status codes for the activity
+     */
+    const STATUS_TO_APPROVE = 1; // Activity needs to be approved
+    const STATUS_APPROVED = 2;  // The activity is approved
+    const STATUS_DISAPPROVED = 3; // The board disapproved the activity
+
+    /**
      * ID for the activity.
      *
      * @ORM\Id
@@ -83,17 +90,17 @@ class Activity
      * Who created this activity.
      *
      * @ORM\Column(nullable=false)
-     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
     protected $creator;
 
     /**
-     * Is this activity approved.
+     * What is the approval status      .
      *
      * @ORM\Column(type="boolean")
      */
-    protected $approved;
+    protected $status;
 
     /**
      * Activity description.
@@ -114,10 +121,15 @@ class Activity
 
     /**
      * Set the approval status of the activity
+     *
+     * @param int $status
      */
-    public function setApproved($approved)
+    public function setStatus($status)
     {
-        $this->approved = $approved;
+        if (!in_array($status, [static::STATUS_TO_APPROVE, static::STATUS_APPROVED, static::STATUS_DISAPPROVED])) {
+            throw new \InvalidArgumentException('No such status ' . $status);
+        }
+        $this->status = $status;
     }
 
     /**
@@ -162,7 +174,7 @@ class Activity
 
         // TODO: These values need to be set correctly
         $this->onlyGEWIS = true;
-        $this->approved = 0;
+        $this->status = static::STATUS_TO_APPROVE;
 
         return $this;
     }
