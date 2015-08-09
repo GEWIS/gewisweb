@@ -133,6 +133,16 @@ class Activity
     }
 
     /**
+     * Get the status of the activity
+     *
+     * @return int $status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * Get the status of a variable
      *
      * @param $variable

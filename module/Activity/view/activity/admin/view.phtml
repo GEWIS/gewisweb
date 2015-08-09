@@ -35,6 +35,7 @@
             <div class="col-md-6"><?php echo $activity->get('onlyGEWIS') ? $this->translate("Yes") : $this->translate("No"); ?></div>
         </div>
 
+        <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-6">
                 <a href="<?php echo $this->url('activity/admin_approve', array( 'id' => $activity->get('id')))?>">
@@ -47,6 +48,28 @@
                 </a>
             </div>
         </div>
-        <!-- wrappers -->`
+
+        <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED):?>
+        <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <a href="<?php echo $this->url('activity/admin_reset', array( 'id' => $activity->get('id')))?>">
+                    <?php echo $this->translate('Revoke approval'); ?>
+                </a>
+            </div>
+        </div>
+
+        <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
+            <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <a href="<?php echo $this->url('activity/admin_reset', array( 'id' => $activity->get('id')))?>">
+                        <?php echo $this->translate('Revoke disapproval'); ?>
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>`
     </div>
 </div>

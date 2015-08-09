@@ -22,9 +22,15 @@ class AdminController extends AbstractActionController
     public function queueAction()
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $activities = $activityService->getUnapprovedActivities();
+        $unapprovedActivities = $activityService->getUnapprovedActivities();
+        $approvedActivities = $activityService->getApprovedActivities();
+        $disapprovedActivities = $activityService->getDisapprovedActivities();
 
-        return ['activities' => $activities];
+        return [
+            'unapprovedActivities' => $unapprovedActivities,
+            'approvedActivities' => $approvedActivities,
+            'disapprovedActivities' => $disapprovedActivities
+        ];
     }
 
     /**
@@ -64,6 +70,14 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Reset the approval status of an activity
+     */
+    public function resetAction()
+    {
+        return $this->setApprovalStatus('reset');
+    }
+
+    /**
      * Set the approval status of the activity requested
      *
      * @param $status
@@ -87,6 +101,9 @@ class AdminController extends AbstractActionController
                 break;
             case 'disapprove':
                 $activityService->disapprove($activity);
+                break;
+            case 'reset':
+                $activityService->reset($activity);
                 break;
             default:
                 throw new \InvalidArgumentException('No sutch status ' . $status);

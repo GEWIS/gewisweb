@@ -84,4 +84,19 @@ class Activity
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Get all disapproved activitiesa.
+     *
+     * @return array
+     */
+    public function getDisapprovedActivities()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.status = ' . ActivityModel::STATUS_DISAPPROVED);
+
+        return $qb->getQuery()->getResult();
+    }
 }

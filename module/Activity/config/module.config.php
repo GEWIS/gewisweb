@@ -98,6 +98,16 @@ return array(
                                 'action' => 'disapprove'
                             )
                         )
+                    ),
+                    'admin_reset' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/admin/reset/[:id]',
+                            'defaults' => array(
+                                'controller' => 'admin',
+                                'action' => 'reset'
+                            )
+                        )
                     )
                 ),
             ),

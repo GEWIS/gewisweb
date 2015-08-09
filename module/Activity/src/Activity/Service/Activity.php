@@ -84,6 +84,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $activity;
     }
 
+
+    /**
+     * Get all activities that are disapproved by the board
+     *
+     * @return array Array of activities
+     */
+    public function getDisapprovedActivities()
+    {
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getDisapprovedActivities();
+
+        return $activity;
+    }
+
     /**
      * Create an activity from parameters.
      *
@@ -119,6 +133,19 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function approve(ActivityModel $activity)
     {
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em->persist($activity);
+        $em->flush();
+    }
+
+    /**
+     * Reset the approval status of an activity
+     *
+     * @param ActivityModel $activity
+     */
+    public function reset(ActivityModel $activity)
+    {
+        $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();

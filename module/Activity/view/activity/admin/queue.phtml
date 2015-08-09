@@ -1,5 +1,23 @@
+<h1><?php echo $this->translate('Unapproved Activities');?> </h1>
 <?php
-echo $this->partial('activity/activity/index.phtml',[
-    'activities' => $activities,
+echo $this->partial('activity/activity/list.phtml', [
+    'activities' => $unapprovedActivities,
     'admin' => true
 ]);
+?>
+
+<h1><?php echo $this->translate('Approved Activities')?></h1>
+<?php
+echo $this->partial('activity/activity/list.phtml', [
+    'activities' => $approvedActivities,
+    'admin' => true
+]);
+?>
+
+<h1><?php echo $this->translate('Disapproved Activities');?></h1>
+<?php
+echo $this->partial('activity/activity/list.phtml', [
+    'activities' => $disapprovedActivities,
+    'admin' => true
+]);
+?>
