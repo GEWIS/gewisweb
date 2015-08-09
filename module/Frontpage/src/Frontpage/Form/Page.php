@@ -4,9 +4,10 @@ namespace Frontpage\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
-class Page extends Form
+class Page extends Form implements InputFilterProviderInterface
 {
 
     public function __construct(Translator $translator)
@@ -76,11 +77,15 @@ class Page extends Form
                 'value' => $translator->translate('Save')
             )
         ));
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    /**
+     * Should return an array specification compatible with
+     * {@link Zend\InputFilter\Factory::createInputFilter()}.
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification()
     {
         $filter = new InputFilter();
 
