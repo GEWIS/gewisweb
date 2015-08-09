@@ -58,6 +58,16 @@ class ActivitySignup
     }
 
     /**
+     * Get the signup id.
+     * 
+     * @return integer
+     */
+    public function getId()            
+    {
+        return $this->id;
+    }
+    
+    /**
      * Get the user that is signed up.
      *
      * @return User

@@ -108,7 +108,16 @@ class Signup extends AbstractAclService
         }
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $values = getActivityFieldValueMapper()->getFieldValuesBySignup($signUp);
+        foreach($values as $value){
+            $em->remove($value);
+        }
         $em->remove($signUp);
         $em->flush();
+    }
+    
+    public function getActivityFieldValueMapper(){
+        
+        return $this->sm->get('activity_mapper_activity_field_value');
     }
 }
