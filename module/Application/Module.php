@@ -64,6 +64,7 @@ class Module
             ),
         );
     }
+
     /**
      * Get view helper configuration.
      *
@@ -83,9 +84,9 @@ class Module
                     $helper = new \Application\View\Helper\ScriptUrl();
                     return $helper;
                 },
-                'isAllowed' => function ($sm) {
+                'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Acl();
+                    $helper = new \Application\View\Helper\FileUrl();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 }
