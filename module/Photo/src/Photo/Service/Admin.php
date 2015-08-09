@@ -24,7 +24,7 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
-        if (!$this->isAllowed('photo', 'add')) {
+        if (!$this->isAllowed('add', 'photo')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to add photos.')
             );
@@ -113,7 +113,7 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
-        if (!$this->isAllowed('photo', 'import')) {
+        if (!$this->isAllowed('import', 'photo')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to import photos.')
             );
@@ -146,7 +146,7 @@ class Admin extends AbstractAclService
 
     public function upload($files, $album)
     {
-        if (!$this->isAllowed('photo', 'upload')) {
+        if (!$this->isAllowed('upload', 'photo')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to upload photos.')
             );

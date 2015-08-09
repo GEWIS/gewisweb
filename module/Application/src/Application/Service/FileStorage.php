@@ -48,7 +48,7 @@ class FileStorage extends AbstractService
             $extension = end($parts);
         }
 
-        $destination = $config['storage_dir'] . $storagePath . '.' . $extension;
+        $destination = $config['storage_dir'] . '/' .  $storagePath . '.' . $extension;
         if(!file_exists($destination)) {
             if($isUploaded) {
                 move_uploaded_file($source, $destination);

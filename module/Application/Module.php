@@ -56,6 +56,14 @@ class Module
         );
     }
 
+    public function getServiceConfig()
+    {
+        return array(
+            'invokables' => array(
+                'application_service_storage' => 'Application\Service\FileStorage',
+            ),
+        );
+    }
     /**
      * Get view helper configuration.
      *
@@ -64,9 +72,6 @@ class Module
     public function getViewHelperConfig()
     {
         return array(
-            'invokables' => array(
-                'application_service_storage' => 'Application\Service\FileStorage',
-            ),
             'factories' => array(
                 'acl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
