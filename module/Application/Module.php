@@ -64,6 +64,9 @@ class Module
     public function getViewHelperConfig()
     {
         return array(
+            'invokables' => array(
+                'application_service_storage' => 'Application\Service\FileStorage',
+            ),
             'factories' => array(
                 'acl' => function ($sm) {
                     $locator = $sm->getServiceLocator();

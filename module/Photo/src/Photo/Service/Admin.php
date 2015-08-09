@@ -12,32 +12,6 @@ use Imagick;
 class Admin extends AbstractAclService
 {
     /**
-     * Generates CFS paths
-     *
-     * @param string $path The path of the photo to generate the path for
-     *
-     * @return string the path at which the photo should be saved
-     */
-    public function generateStoragePath($path)
-    {
-        $config = $this->getConfig();
-        $hash = sha1_file($path);
-        /**
-         * the hash is split to obtain a path
-         * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg
-         */
-        $directory = substr($hash, 0, 2);
-        if (!file_exists($config['upload_dir'] . '/' . $directory)) {
-            mkdir($config['upload_dir'] . '/' . $directory);
-        }
-        $parts = explode('.', $path);
-        $fileType = end($parts);
-        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower($fileType);
-
-        return $storagePath;
-    }
-
-    /**
      * Move the uploaded photo to the storage and store it in the database.
      * All upload actions should use this function to prevent "ghost" files
      * or database entries
@@ -57,7 +31,7 @@ class Admin extends AbstractAclService
         }
 
         $config = $this->getConfig();
-        $storagePath = $this->generateStoragePath($path);
+        $storagePath = $newPath = $this->getFileStorageService()->storeFile($path, false);
         //check if photo exists already in the database
         $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
@@ -85,9 +59,7 @@ class Admin extends AbstractAclService
                 ));
 
                 if ($move) {
-                    rename($path, $config['upload_dir'] . '/' . $storagePath);
-                } else {
-                    copy($path, $config['upload_dir'] . '/' . $storagePath);
+                    unlink($path);
                 }
 
                 $mapper->persist($photo);
@@ -122,9 +94,8 @@ class Admin extends AbstractAclService
         //Tempfile is used to generate sha1, not sure this is the best method
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
         $image->writeImage($tempFileName);
-        $newPath = $this->generateStoragePath($tempFileName);
-        $config = $this->getConfig();
-        rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
+        $newPath = $this->getFileStorageService()->storeFile($tempFileName, false);
+        unlink($tempFileName);
 
         return $newPath;
     }
@@ -297,6 +268,16 @@ class Admin extends AbstractAclService
     public function getPhotoService()
     {
         return $this->sm->get('photo_service_photo');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

@@ -123,10 +123,10 @@ class Photo extends AbstractAclService
         }
 
         $photo = $this->getPhoto($photoId);
-        $config = $this->getConfig();
-        $file = $config['upload_dir'] . '/' . $photo->getPath();
+        $config = $this->getStorageConfig();
+        $file = $config['storage_dir'] . '/' . $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
-        //TODO: ACL
+
         $response = new \Zend\Http\Response\Stream();
         $response->setStream(fopen($file, 'r'));
         $response->setStatusCode(200);
@@ -215,14 +215,7 @@ class Photo extends AbstractAclService
      */
     public function deletePhotoFile($path)
     {
-        $config = $this->getConfig();
-        $fullPath = $config['upload_dir'] . '/' . $path;
-
-        if (!file_exists($fullPath)) {
-            return false;
-        } else {
-            return unlink($fullPath);
-        }
+        return $this->getFileStorageService()->removeFile($path);
 
     }
 
@@ -473,6 +466,18 @@ class Photo extends AbstractAclService
     }
 
     /**
+     * Get the storage config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getStorageConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['storage'];
+    }
+
+    /**
      * Get the photo mapper.
      *
      * @return \Photo\Mapper\Photo
@@ -544,6 +549,16 @@ class Photo extends AbstractAclService
     public function getMemberService()
     {
         return $this->sm->get('decision_service_member');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

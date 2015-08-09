@@ -24,9 +24,8 @@ class FileStorage extends AbstractService
         if (!file_exists($config['storage_dir'] . '/' . $directory)) {
             mkdir($config['storage_dir'] . '/' . $directory);
         }
-        $parts = explode('.', $path);
-        $fileType = end($parts);
-        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower($fileType);
+
+        $storagePath = $directory . '/' . substr($hash, 2);
 
         return $storagePath;
     }
@@ -36,14 +35,20 @@ class FileStorage extends AbstractService
      *
      * @param string $source
      * @param bool $isUploaded Indicates whether the file to be stored is an uploaded file.
+     * @param string $extension optional extension in the case that the file has no extension
      *
      * @return string the path at which the file was stored.
      */
-    public function storeFile($source, $isUploaded = true)
+    public function storeFile($source, $isUploaded = true, $extension = null)
     {
         $config = $this->getConfig();
         $storagePath = $this->generateStoragePath($source);
-        $destination = $config['storage_dir'] . $storagePath;
+        if (is_null($extension)) {
+            $parts = explode('.', $source);
+            $extension = end($parts);
+        }
+
+        $destination = $config['storage_dir'] . $storagePath . '.' . $extension;
         if(!file_exists($destination)) {
             if($isUploaded) {
                 move_uploaded_file($source, $destination);
@@ -53,6 +58,18 @@ class FileStorage extends AbstractService
         }
 
         return $storagePath;
+    }
+
+    public function removeFile($path)
+    {
+        $config = $this->getConfig();
+        $fullPath = $config['storage_dir'] . '/' . $path;
+
+        if(file_exists($fullPath)) {
+            return unlink($fullPath);
+        } else {
+            return false;
+        }
     }
 
     /**

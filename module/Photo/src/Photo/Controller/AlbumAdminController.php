@@ -106,13 +106,13 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             $album = $this->getAlbumService()->getAlbum($albumId);
 
-            try {
+           // try {
                 $this->getAdminService()->upload($request->getFiles(), $album);
                 $result['success'] = true;
-            } catch (\Exception $e) {
-                $this->getResponse()->setStatusCode(500);
-                $result['error'] = $e->getMessage();
-            }
+            //} catch (\Exception $e) {
+             //   $this->getResponse()->setStatusCode(500);
+               // $result['error'] = $e->getMessage();
+           // }
         }
 
         return new JsonModel($result);
