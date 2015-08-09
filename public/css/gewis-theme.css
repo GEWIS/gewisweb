@@ -54,14 +54,22 @@ body > div.container {
     padding-top: 15px;
 }
 
-/* forms */
-.form-control {
+/* removing border radius */
+.navbar-toggle,
+.form-control,
+.btn,
+.well {
     border-radius: 0;
 }
 
-/* buttons */
-.btn {
-    border-radius: 0;
+/* Navbar start fix */
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin: 0 -15px;
+    }
+}
+.navbar-collapse {
+    border: none;
 }
 
 /* general jumbotron*/
@@ -106,6 +114,11 @@ body > div.container {
 }
 .jumbotron-header.jumbotron-large a img {
     height: auto;
+}
+@media (max-width: 768px) {
+    .jumbotron-header {
+        height: 50px;
+    }
 }
 @media (max-width: 992px) {
     .jumbotron-header.jumbotron-large {
