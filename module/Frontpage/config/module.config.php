@@ -85,6 +85,15 @@ return array(
                             ),
                         ),
                     ),
+                    'upload' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/upload',
+                            'defaults' => array(
+                                'action' => 'upload',
+                            ),
+                        ),
+                    ),
                 ),
                 'priority' => 100
             ),

@@ -27,6 +27,7 @@ class Page extends AbstractAclService
                 $this->getTranslator()->translate('You are not allowed to view this page.')
             );
         }
+
         return $page;
     }
 
@@ -55,6 +56,7 @@ class Page extends AbstractAclService
         $resource = 'page_' . $page->getId();
         $acl->addResource($resource);
         $acl->allow($requiredRole, $resource, 'view');
+
         return $this->isAllowed('view', $resource);
     }
 
@@ -72,14 +74,14 @@ class Page extends AbstractAclService
         }
         $pages = $this->getPageMapper()->getAllPages();
         $pageArray = array();
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $category = $page->getCategory();
             $subCategory = $page->getSubCategory();
             $name = $page->getName();
-            if(is_null($name)) {
-                if(is_null($subCategory)) {
+            if (is_null($name)) {
+                if (is_null($subCategory)) {
                     // Page url is /$category
-                        $pageArray[$category]['page'] = $page;
+                    $pageArray[$category]['page'] = $page;
                 } else {
                     $pageArray[$category]['children'][$subCategory]['page'] = $page;
                     // Page url is /$category/$subCategory
@@ -150,6 +152,51 @@ class Page extends AbstractAclService
         $page = $this->getPageById($pageId);
         $this->getPageMapper()->remove($page);
         $this->getPageMapper()->flush();
+    }
+
+    /**
+     * Upload an image to be displayed on a page.
+     *
+     * @param array $files
+     *
+     * @throws \Exception
+     * @return array
+     */
+    public function uploadImage($files)
+    {
+        $imageValidator = new \Zend\Validator\File\IsImage(
+            array('magicFile' => false)
+        );
+
+        $extensionValidator = new \Zend\Validator\File\Extension(
+            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+        );
+
+        $translator = $this->getTranslator();
+
+        if ($files['upload']['error'] !== 0) {
+            throw new \Exception(
+                $translator->translate('An unknown error occurred during uploading (' . $files['upload']['error'] . ')')
+            );
+        }
+
+        if ($imageValidator->isValid($files['upload']['tmp_name'])) {
+
+
+            if ($extensionValidator->isValid($files['upload']['name'])) {
+
+                //TODO
+
+            } else {
+                throw new \Exception(
+                    $translator->translate('The uploaded file does not have a valid extension')
+                );
+            }
+        } else {
+            throw new \Exception(
+                $translator->translate('The uploaded file is not a valid image')
+            );
+        }
     }
 
     /**

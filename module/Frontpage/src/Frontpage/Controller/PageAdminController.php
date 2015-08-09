@@ -67,6 +67,22 @@ class PageAdminController extends AbstractActionController
         $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
     }
 
+    public function uploadAction()
+    {
+        $request = $this->getRequest();
+        $result = array();
+        $result['uploaded'] = 0;
+        if ($request->isPost()) {
+            try {
+                $result = $this->getPageService()->uploadImage($request->getFiles());
+            } catch (\Exception $e) {
+                $this->getResponse()->setStatusCode(500);
+                $result['error']['message'] = $e->getMessage();
+            }
+        }
+
+        return new JsonModel($result);
+    }
     /**
      * Get the Page service.
      *
