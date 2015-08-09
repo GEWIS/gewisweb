@@ -157,6 +157,15 @@ class Activity
         $this->onlyGEWIS = true;
         $this->approved = 0;
 
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        foreach ($params['fields'] as $fieldparams){
+            
+            $field = new ActivityField();
+            $field->create($fieldparams, $this);
+            $em->persist($field);
+        }
+        $em->flush();
+        
         return $this;
     }
 

@@ -62,13 +62,47 @@ class ActivityField
      * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
      */
     protected $options;
-    
+
     /**
-     * The index of the field to determine the display order.
+     * Create a new field.
+     *
+     * @param array $params Parameters for the new field
+     * @param Activity\Model\Activity $activity The activity 
+     *        the field is associated with
      * 
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    protected $position;
+     * @throws \Exception If a field is loaded
+     * @throws \Exception If a necessary parameter is not set
+     *
+     * @return \Activity\Model\ActivityField the created field
+     */   
+    public function create(array $params, Activity\Model\Activity $activity){
+        
+        if ($this->id != null) {
+            throw new \Exception('There is already a loaded activity');
+        }
+        
+        foreach (['name', 'type'] as $param) {
+            if (!isset($params[$param])) {
+                throw new \Exception("create: parameter $param not set");
+            }
+            $this->$param = $params[$param];
+        }
+        
+        $this->activity = $activity;
+        
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        foreach ($params['options'] as $optionparam){
+            
+            $option = new ActivityOption();
+            $option->setValue($optionparam);
+            $option->setField($this);
+            
+            $em->persist($option);           
+        }
+        $em->flush();
+        
+        return $this;
+    }
     
     public function get($variable)
     {

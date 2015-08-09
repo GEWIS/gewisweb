@@ -43,6 +43,26 @@ class ActivityOption
      */
     protected $position;
     
+    /**
+     * Set the field the option belongs to.
+     * 
+     * @param Activity\Model\ActivityField $field
+     */
+    public function setField($field){
+        
+        $this->field = $field;
+    }
+    
+    /**
+     * Set the value of the option.
+     * 
+     * @param string $value
+     */
+    public function setValue($value){
+        
+        $this->value = $value;
+    }
+    
     public function get($variable)
     {
         return $this->$variable;
