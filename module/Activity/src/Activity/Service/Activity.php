@@ -123,4 +123,17 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
     }
+
+    /**
+     * Disapprove of an activity
+     *
+     * @param ActivityModel $activity
+     */
+    public function disapprove(ActivityModel $activity)
+    {
+        $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em->persist($activity);
+        $em->flush();
+    }
 }

@@ -52,6 +52,25 @@ class AdminController extends AbstractActionController
      */
     public function approveAction()
     {
+        return $this->setApprovalStatus('approve');
+    }
+
+    /**
+     * Disapprove an activity
+     */
+    public function disapproveAction()
+    {
+        return $this->setApprovalStatus('disapprove');
+    }
+
+    /**
+     * Set the approval status of the activity requested
+     *
+     * @param $status
+     * @return array|\Zend\Http\Response
+     */
+    protected function setApprovalStatus($status)
+    {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
 
@@ -62,16 +81,18 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $activityService->approve($activity);
+        switch ($status) {
+            case 'approve':
+                $activityService->approve($activity);
+                break;
+            case 'disapprove':
+                $activityService->disapprove($activity);
+                break;
+            default:
+                throw new \InvalidArgumentException('No sutch status ' . $status);
+
+        }
 
         return $this->redirect()->toRoute('activity/admin_queue');
-    }
-
-    /**
-     * Disapprove an activity
-     */
-    public function disapproveAction()
-    {
-        // TODO
     }
 }

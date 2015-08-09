@@ -98,7 +98,7 @@ class Activity
     /**
      * What is the approval status      .
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
     protected $status;
 
