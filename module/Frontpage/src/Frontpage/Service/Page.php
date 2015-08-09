@@ -141,6 +141,18 @@ class Page extends AbstractAclService
     }
 
     /**
+     * Removes a page.
+     *
+     * @param integer $pageId The id of the page to remove.
+     */
+    public function deletePage($pageId)
+    {
+        $page = $this->getPageById($pageId);
+        $this->getPageMapper()->remove($page);
+        $this->getPageMapper()->flush();
+    }
+
+    /**
      * Get the Page form.
      *
      * @param integer $pageId

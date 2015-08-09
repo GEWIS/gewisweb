@@ -96,7 +96,6 @@ Set the minimal role required to view this page. All visitors whom have this rol
     $element = $form->get('requiredRole');
     $element->setAttribute('class', 'form-control');
     $element->setAttribute('required', 'required');
-    $element->setAttribute('value', 'guest');
     ?>
     <?= $this->formLabel($element); ?>
     <?= $this->formInput($element); ?>
@@ -106,9 +105,16 @@ Set the minimal role required to view this page. All visitors whom have this rol
     <?php
     $submit = $form->get('submit');
     $submit->setLabel($this->translate('Save'));
-    $submit->setAttribute('class', 'btn btn-default');
+    $submit->setAttribute('class', 'btn btn-primary');
     ?>
     <?= $this->formButton($submit) ?>
+
+    <?php if($canDelete): ?>
+        <a href="<?= $this->url('admin_page/delete', array('page_id' => $pageId)) ?>" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            <?= $this->translate('Delete this page') ?>
+        </a>
+    <?php endif ?>
 
     <?= $this->form()->closeTag(); ?>
 <script>
