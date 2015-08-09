@@ -15,7 +15,7 @@ class PageController extends AbstractActionController
         $name = $this->params()->fromRoute('name');
         $page = $this->getPageService()->getPage($category, $subCategory, $name);
 
-        if(is_null($page)) {
+        if (is_null($page)) {
             return $this->notFoundAction();
         }
 
