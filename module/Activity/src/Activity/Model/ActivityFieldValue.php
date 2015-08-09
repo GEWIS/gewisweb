@@ -42,4 +42,34 @@ class ActivityFieldValue
      * @ORM\Column(type="string")
      */
     protected $value;
+    
+    /**
+     * Set the field.
+     * 
+     * @param \Activity\Model\Activity\Model\ActivityField $field
+     */
+    public function setField(Activity\Model\ActivityField $field)
+    {
+        $this->field = $field;
+    }
+    
+    /**
+     * Set the signup.
+     * 
+     * @param \Activity\Model\Activity\Model\ActivitySignup $signup
+     */
+    public function setSignup(Activity\Model\ActivitySignup $signup)
+    {
+        $this->signup = $signup;
+    }
+    
+    /**
+     * Set the value.
+     * 
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 }

@@ -48,8 +48,8 @@ class ActivityOption
      * 
      * @param Activity\Model\ActivityField $field
      */
-    public function setField($field){
-        
+    public function setField($field)
+    {        
         $this->field = $field;
     }
     
@@ -58,8 +58,8 @@ class ActivityOption
      * 
      * @param string $value
      */
-    public function setValue($value){
-        
+    public function setValue($value)
+    {        
         $this->value = $value;
     }
     

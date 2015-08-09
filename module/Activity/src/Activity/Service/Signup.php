@@ -65,7 +65,7 @@ class Signup extends AbstractAclService
      *
      * @param ActivityModel $activity
      */
-    public function signUp(ActivityModel $activity)
+    public function signUp(ActivityModel $activity, array $fieldResults)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
@@ -79,7 +79,14 @@ class Signup extends AbstractAclService
         $signup = new ActivitySignup();
         $signup->setActivity($activity);
         $signup->setUser($user);
-
+        
+        foreach ($fieldResults as $res){
+            $value = new ActivityFieldValue();
+            $value->setField($res['field']);
+            $value->setValue($res['value']);
+            $value->setSignup($signup);
+            $em->persist($value);
+        }
         $em->persist($signup);
         $em->flush();
     }
