@@ -22,6 +22,7 @@
             ->prependFile($this->basePath() . '/js/jquery.min.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/url-helper.js')
         ; ?>
 
     </head>
@@ -129,5 +130,10 @@ function getIsActiveClass($view, array $condition)
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
+        <script>
+            <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
+            URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
+            <?php endforeach; ?>
+        </script>
     </body>
 </html>

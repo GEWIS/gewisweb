@@ -19,7 +19,7 @@
         <?php if ($item instanceof \Photo\Model\Album): ?>
             <div class="thumb">
                 <a class="thumbnail" href="<?= $this->url('photo/album', array('album_id' => $item->getId())); ?>">
-                    <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $item->getCoverPath() ?>" alt="">
+                    <img class="img-responsive" src="<?= $this->photoUrl($item->getCoverPath()) ?>" alt="">
 
                     <div class="caption">
                         <?= $this->escapeHtml($item->getName()); ?>
@@ -29,7 +29,7 @@
         <?php else: ?>
             <div class="thumb">
                 <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
-                    <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $item->getSmallThumbPath() ?>" alt="">
+                    <img class="img-responsive" src="<?= $this->photoUrl($item->getSmallThumbPath()) ?>" alt="">
                 </a>
             </div>
         <?php endif; ?>

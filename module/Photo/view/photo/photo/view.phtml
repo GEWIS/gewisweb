@@ -1,6 +1,7 @@
 <?php
 $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
     ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->scriptUrl()->requireUrl('member/search');
 ?>
 <?php if ($photo != null): ?>
     <div clas="row">
@@ -14,7 +15,7 @@ $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
     </div>
     <div class="row">
         <div class="col-lg-9">
-            <img class="img-responsive" src="<?= $this->basePath() . $basedir . '/' . $photo->getLargeThumbPath() ?>" alt="">
+            <img class="img-responsive" src="<?= $this->photoUrl($photo->getLargeThumbPath()) ?>" alt="">
         </div>
         <div class="col-lg-3">
             <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>

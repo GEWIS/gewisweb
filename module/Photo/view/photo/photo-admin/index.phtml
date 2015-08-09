@@ -4,7 +4,12 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/photo.js')
     ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/photo-admin.css')
+    ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
+
+$this->scriptUrl()->requireUrls(
+    array('admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'),
+    array('photo_id')
+);
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -18,15 +23,15 @@ $this->headLink()
             <div class="panel-body">
                 <?php if (!is_null($previous)): ?>
                     <a class="thumbnail next-on-delete" href="<?= $previous->getId(); ?>">
-                        <img class="img-responsive" src="<?= $basedir . '/' . $previous->getSmallThumbPath() ?>" alt="">
+                        <img class="img-responsive" src="<?= $this->photoUrl($previous->getSmallThumbPath()) ?>" alt="">
                     </a>
                 <?php endif; ?>
                 <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="<?= $basedir . '/' . $photo->getSmallThumbPath() ?>" alt="">
+                    <img class="img-responsive" src="<?= $this->photoUrl($photo->getSmallThumbPath()) ?>" alt="">
                 </a>
                 <?php if (!is_null($next)): ?>
                     <a class="thumbnail next-on-delete" href="<?= $next->getId(); ?>">
-                        <img class="img-responsive" src="<?= $basedir . '/' . $next->getSmallThumbPath() ?>" alt="">
+                        <img class="img-responsive" src="<?= $this->photoUrl($next->getSmallThumbPath()) ?>" alt="">
                     </a>
                 <?php endif; ?>
             </div>
@@ -47,7 +52,7 @@ $this->headLink()
                 class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete photo') ?></button>
         <hr>
 
-        <img class="img-responsive" src="<?= $basedir . '/' . $photo->getLargeThumbPath() ?>" alt="">
+        <img class="img-responsive" src="<?= $this->photoUrl($photo->getLargeThumbPath()) ?>" alt="">
         <row>
             <div class="col-lg-6">
                 <h4>Metadata</h4>

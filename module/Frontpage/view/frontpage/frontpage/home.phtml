@@ -7,7 +7,13 @@
     <div class="col-md-5">
         <div class="well">
             <h3><strong><?= $this->translate('Birthdays today!') ?></strong></h3>
-
+            <?php if(!is_null($birthdayTag)): ?>
+            <div class="thumb">
+                <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $birthdayTag->getPhoto()->getId())); ?>">
+                    <img class="img-responsive" src="<?= $this->photoUrl($birthdayTag->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                </a>
+            </div>
+            <?php endif; ?>
             <?php if (!empty($birthdays)): ?>
                 <ul>
                     <?php foreach ($birthdays as $birthday): ?>
