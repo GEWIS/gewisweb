@@ -47,14 +47,14 @@ class ActivityField
      * 
      * @ORM\Column(type="integer")
      */
-    protected $minValue;
+    protected $mininumValue;
     
     /**
      * The maximal value constraint for the ``number'' type.
      * 
      * @ORM\Column(type="integer")
      */
-    protected $maxValue;
+    protected $maximumValue;
     
     /**
      * The allowed options for the field of the ``option'' type.
