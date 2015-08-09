@@ -1,3 +1,4 @@
+<?php if($this->acl('photo_acl')->isAllowed('photo', 'view_metadata')): ?>
 <table class="table table-condensed">
     <tbody>
     <tr>
@@ -38,3 +39,4 @@
     </tr>
     </tbody>
 </table>
+<?php endif; ?>
