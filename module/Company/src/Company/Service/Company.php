@@ -83,6 +83,11 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findCompaniesWithSlugName($slugName);
     }
 
+    public function getEditablePacket($packetID)
+    {
+        return $this->getPacketMapper()->findEditablePacket($packetID);
+    }
+
     public function getEditableCompaniesWithSlugName($slugName)
     {
         return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);

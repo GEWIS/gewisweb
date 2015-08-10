@@ -164,6 +164,45 @@ class AdminController extends AbstractActionController
     }
     
     public function editPacketAction(){
+        $companyService = $this->getCompanyService();
+        
+        $companyName = $this->params('slugCompanyName');    
+        $packetID = $this->params('packetID');    
+        $packetForm = $companyService->getPacketForm();
+        //$companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
+        $packets = $companyService->getEditablePacket($packetID);
+        //echo($this->url()->fromRoute('admin_company/default', array('action'=>'save', 'slugCompanyName'=>$companyName)));
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (!isset($packetID)){
+                $companyName = $request->getPost()['packetID'];
+            }
+            $packetForm->setData($request->getPost());
+
+            //if ($companyForm->isValid()) {
+                $packets[0]->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+            //} else {
+            //    die();
+            //    return $this->forward()->dispatch('Company\Controller\AdminController', 
+            //                                      array('action'=> 'editCompany', 
+            //                                            'form' => $companyForm)
+            //                                     );
+            //}
+        }
+        // TODO: display error page when packet is not found
+        $packetForm->bind($packets[0]);
+        $packetForm->setAttribute('action', 
+                                   $this->url()->fromRoute('admin_company/editCompany/editPacket', 
+                                                           array('packetID' => $packetID,
+                                                                 'slugCompanyName' => $companyName))
+                                  );
+        $vm = new ViewModel(array(
+            'packet' => $packets[0],
+            'packetEditForm' => $packetForm,
+        ));
+        
+        return $vm;
 
     }
     
