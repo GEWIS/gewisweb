@@ -87,106 +87,94 @@ class Page extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        $filter = new InputFilter();
+        return array(
+            'category' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 3,
+                            'max' => 25
+                        )
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'string_to_lower')
+                )
+            ),
 
-        $filter->add(array(
-            'name' => 'category',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'string_length',
-                    'options' => array(
-                        'min' => 3,
-                        'max' => 25
-                    )
+            'subCategory' => array(
+                'required' => false,
+                'validators' => array(
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 2,
+                            'max' => 25
+                        )
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'string_to_lower'),
+                    array('name' => 'to_null')
+                )
+            ),
+
+            'name' => array(
+                'required' => false,
+                'validators' => array(
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 2,
+                            'max' => 25
+                        )
+                    ),
+                ),
+                'filters' => array(
+                    array('name' => 'string_to_lower'),
+                    array('name' => 'to_null')
+                )
+            ),
+
+            'dutchTitle' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 3,
+                            'max' => 75
+                        )
+                    ),
                 ),
             ),
-            'filters' => array(
-                array('name' => 'string_to_lower')
-            )
-        ));
 
-        $filter->add(array(
-            'name' => 'subCategory',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'string_length',
-                    'options' => array(
-                        'min' => 2,
-                        'max' => 25
-                    )
+            'englishTitle' => array(
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'string_length',
+                        'options' => array(
+                            'min' => 3,
+                            'max' => 75
+                        )
+                    ),
                 ),
             ),
-            'filters' => array(
-                array('name' => 'string_to_lower'),
-                array('name' => 'to_null')
-            )
-        ));
 
-        $filter->add(array(
-            'name' => 'name',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'string_length',
-                    'options' => array(
-                        'min' => 2,
-                        'max' => 25
-                    )
-                ),
+            'dutchContent' => array(
+                'required' => true,
             ),
-            'filters' => array(
-                array('name' => 'string_to_lower'),
-                array('name' => 'to_null')
-            )
-        ));
 
-        $filter->add(array(
-            'name' => 'dutchTitle',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'string_length',
-                    'options' => array(
-                        'min' => 3,
-                        'max' => 75
-                    )
-                ),
+            'englishContent' => array(
+                'required' => true,
             ),
-        ));
 
-        $filter->add(array(
-            'name' => 'englishTitle',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'string_length',
-                    'options' => array(
-                        'min' => 3,
-                        'max' => 75
-                    )
-                ),
+            'requiredRole' => array(
+                'required' => true,
             ),
-        ));
-
-        $filter->add(array(
-            'name' => 'dutchContent',
-            'required' => true,
-        ));
-
-        $filter->add(array(
-            'name' => 'englishContent',
-            'required' => true,
-        ));
-
-        $filter->add(array(
-            'name' => 'requiredRole',
-            'required' => true,
-        ));
-
-
-
-        $this->setInputFilter($filter);
+        );
     }
 }
