@@ -36,6 +36,13 @@ class Packet
         $this->em->flush();
     }
 
+    public function delete($packetID)
+    {
+        $packet = $this->findEditablePacket($packetID);
+        $this->findEditablePacket($packetID);
+        $this->em->remove($packet);
+        $this->em->flush();
+    }
     /**
      * Find all Packets.
      *
@@ -53,7 +60,11 @@ class Packet
         $qb->select('p')->where('p.id=:packetID');
         $qb->setParameter('packetID', $packetID);
         $qb->setMaxResults(1);
-        return $qb->getQuery()->getResult();
+        $packets = $qb->getQuery()->getResult();
+        if (count($packets) != 1){
+            return null;
+        }
+        return $packets[0];
     }
     public function insertPacketIntoCompany($company){
         $packet = new PacketModel($this->em);

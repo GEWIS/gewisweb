@@ -127,7 +127,19 @@ return array(
                                     'constraints' => array(
                                         'packetID'     => '[a-zA-Z0-9_-]*',
                                     ),
-                                    'may_terminate' => true,
+                                ),
+                                'may_terminate' => true,
+                                'child_routes' => array(
+                                    'deletePacket' => array(
+                                        'type' => 'segment',
+                                        'options' => array(
+                                            'route' => '/delete',
+                                            'defaults' => array(
+                                                'action' => 'deletePacket'
+                                            ),
+                                            'may_terminate' => true,
+                                        ),
+                                    ),
                                 ),
                             ),
                             'addPacket' => array(
