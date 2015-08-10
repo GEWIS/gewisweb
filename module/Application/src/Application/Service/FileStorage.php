@@ -112,6 +112,46 @@ class FileStorage extends AbstractService
     }
 
     /**
+     * Returns a response suitable for offering a file download.
+     * In most modern browsers this function will cause the browser to display
+     * the file and give the user the option to save it.
+     *
+     * @param string $path The CFS path of the file to download
+     * @param string $fileName The file name to give the downloaded file
+     *
+     * @return \Zend\Http\Response\Stream
+     */
+    public function downloadFile($path, $fileName)
+    {
+        $config = $this->getConfig();
+
+        $file = $config['storage_dir'] . '/' . $path;
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $type =  finfo_file($finfo, $file);
+        finfo_close($finfo);
+
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($file, 'r'));
+        $response->setStatusCode(200);
+        $response->setStreamName($fileName);
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaders(array(
+            // Suggests to the browser to display the file instead of saving
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Type' => $type,
+            'Content-Length' => filesize($file),
+            // zf2 parses date as a string for a \DateTime() object:
+            'Expires' => '@0',
+            'Cache-Control' => 'must-revalidate',
+            'Pragma' => 'public'
+        ));
+        $response->setHeaders($headers);
+
+        return $response;
+    }
+
+    /**
      * Get the storage config, as used by this service.
      *
      * @return array containing the config for the module
