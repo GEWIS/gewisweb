@@ -9,12 +9,25 @@
             <h3><strong><?= $this->translate('Agenda') ?></strong></h3>
             <?php foreach($activities as $activity): ?>
                 <div class="agenda-item">
-                    <div class="date-icon">
-                        <div style="text-align:center;"><h4><strong><?= $activity->get('beginTime')->format('d') ?></strong></h4></div>
-                    </div>
-                    &nbsp;<h4><?= $activity->get('name'); //TODO: WHY. ?></h4>
+                    <a href="<?= $this->url('activity/view', array('id' => $activity->get('id'))) ?>">
+                        <div class="date-icon">
+                            <div class="day">
+                                <h4><strong><?= $activity->get('beginTime')->format('d') ?></strong></h4>
+                            </div>
+                            <div class="month">
+                                <?= $activity->get('beginTime')->format('M') ?>
+                            </div>
+                        </div>
+                        &nbsp;<h4><?= $activity->get('name'); ?></h4>
+                    </a>
                 </div>
             <?php endforeach; ?>
+            <?= sprintf(
+                $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
+                '<a href="~bac">',
+                '</a>'
+                )
+            ?>
         </div>
     </div>
 </div>

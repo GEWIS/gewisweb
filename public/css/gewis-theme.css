@@ -130,6 +130,11 @@ body > div.container {
     }
 }
 
+/* General styles */
+a {
+    color: #bc5f5f;
+}
+
 /* Footer */
 footer {
     padding: 20px;
@@ -205,12 +210,12 @@ footer a {
 .agenda {
     border-radius: 0px;
     background-color: #fff;
-    height: 300px;
+
 }
 
 @media (min-width: 992px) {
     .agenda {
-        margin-top: -100px;
+        margin-top: -75px;
     }
 }
 
@@ -218,6 +223,10 @@ footer a {
     display: inline;
 }
 
+.agenda-item a {
+    color: #000;
+    text-decoration: none;
+}
 .agenda-item {
     height: 60px;
     line-height:50px;
@@ -225,11 +234,22 @@ footer a {
 
 .date-icon {
     border-radius: 50%;
-    width:50px;
-    height:50px;
+    width: 50px;
+    height: 50px;
     background-color: #bc5f5f;
     color: #fff;
     float: left;
     display: table-cell;
     vertical-align: middle;
 }
+
+.date-icon .day {
+    text-align: center;
+}
+
+
+.date-icon .month {
+    text-align: center;
+    margin-top: -10px;
+}
+
