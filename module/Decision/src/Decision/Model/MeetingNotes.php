@@ -56,7 +56,7 @@ class MeetingNotes implements ResourceInterface
     }
 
     /**
-     * @param integer $meeting
+     * @param \Decision\Model\Meeting $meeting
      */
     public function setMeeting($meeting)
     {

@@ -5,6 +5,7 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 
 use Decision\Form\Notes;
+use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
 
@@ -115,17 +116,17 @@ class Decision extends AbstractAclService
         }
 
         $data = $form->getData();
+        $parts = explode('/', $data['meeting']);
+        $meeting = $this->getMeeting($parts[0], $parts[1]);
+        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
 
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-notes'];
+        $meetingNotes = $meeting->getNotes();
+        if(is_null($meetingNotes)) {
+            $meetingNotes = new NotesModel();
+            $meetingNotes->setMeeting($meeting);
+        }
+        $meetingNotes->setPath($path);
 
-        $filename = $data['meeting'] . '.pdf';
-        $path = $config['upload_dir'] . '/' . $filename;
-
-
-        // finish upload
-
-        $this->getFileStorageService()->storeUploadedFile($data['upload']);
         return true;
     }
 

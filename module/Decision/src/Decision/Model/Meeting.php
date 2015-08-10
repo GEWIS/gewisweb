@@ -103,6 +103,10 @@ class Meeting
         return $this->number;
     }
 
+    public function getNotes()
+    {
+        return $this->meetingNotes;
+    }
     /**
      * Set the meeting type.
      *
