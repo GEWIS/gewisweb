@@ -208,10 +208,14 @@ class CompanyPacket
     // For zend2 forms
     public function getArrayCopy()
     {
-        return get_object_vars($this);
+        return [ "id" => $this->id, 
+            "startDate" => $this->getStartingDate()->format('d-m-Y'), 
+            "expirationDate" => $this->getExpirationDate()->format('d-m-Y'), 
+            "published" => $this->isPublished() ];
     }
     
     public function exchangeArray($data){
+        $this->id = (isset($data['published'])) ? $data['id'] : $this->id();
         $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
         $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());

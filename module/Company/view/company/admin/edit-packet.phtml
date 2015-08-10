@@ -1,38 +1,31 @@
 <?php 
 //use Company\Form\EditCompany as EditCompanyForm;
 //$companyEditForm = new EditCompanyForm();
-$form = $companyEditForm;
+$form = $packetEditForm;
 //$form=$this->form($companyEditForm);
-if ($company == null){
-    echo "Company not found";
-}
 ?>
 
 <?= $this->form()->openTag($form) ?>
-<?= $this->partial('partial/company/admin/editors/company.phtml', 
-                          array('form' => $form)); ?>
+<dl>
+<?php $element = $form->get('startDate') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('expirationDate');?>
+    <dt><?= $element->getOption('label'); ?></dt>
+    <dd>
+        <?= $this->formElement($element); ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('published') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
 
-<table class="joblist">
-    <?php 
-        if (!empty($joblist)) { 
-            foreach ($joblist as $job) { 
-    ?>
-                <tr>
-                    <td><?= $job->getName(); ?></td> 
-                    <td>
-                        <a href="#id"><?php $this->translate('delete'); ?></a>
-                    </td>
-                </tr>
-    <?php 
-            } 
-        } else { print("Empty"); }
-    ?>
-</table>
-<br/>
-<a href=<?= $this->url("admin_company/default", 
-                       array("action"=>"addPacket", 
-                             "slugCompanyName" => $company->getSlugName()));?>>
-    <?= $this->translate('Add packet'); ?>
-</a>
