@@ -54,7 +54,7 @@ class Decision extends AbstractAclService
     /**
      * Check if there are notes for a meeting and get the URL if so.
      *
-     * @param Decision\Model\Meeting $meeting
+     * @param \Decision\Model\Meeting $meeting
      *
      * @return string|null
      */
@@ -122,17 +122,10 @@ class Decision extends AbstractAclService
         $filename = $data['meeting'] . '.pdf';
         $path = $config['upload_dir'] . '/' . $filename;
 
-        if (file_exists($path)) {
-            $form->setError(Notes::ERROR_FILE_EXISTS);
-            return false;
-        }
 
         // finish upload
 
-        if (!is_dir(dirname($path))) {
-            mkdir(dirname($path), $config['dir_mode'], true);
-        }
-        move_uploaded_file($data['upload']['tmp_name'], $path);
+        $this->getFileStorageService()->storeUploadedFile($data['upload']);
         return true;
     }
 
@@ -277,6 +270,16 @@ class Decision extends AbstractAclService
     public function getDecisionMapper()
     {
         return $this->sm->get('decision_mapper_decision');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\FileStorage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**
