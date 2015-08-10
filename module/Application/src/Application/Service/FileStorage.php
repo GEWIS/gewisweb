@@ -27,7 +27,7 @@ class FileStorage extends AbstractService
          */
         $directory = substr($hash, 0, 2);
         if (!file_exists($config['storage_dir'] . '/' . $directory)) {
-            mkdir($config['storage_dir'] . '/' . $directory);
+            mkdir($config['storage_dir'] . '/' . $directory, $config['dir_mode']);
         }
 
         $storagePath = $directory . '/' . substr($hash, 2);
