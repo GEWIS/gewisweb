@@ -56,8 +56,9 @@ class FileStorage extends AbstractService
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $storagePath = $this->generateStoragePath($file['tmp_name']);
-        $destination = $config['storage_dir'] . '/' .  $storagePath . '.' . $extension;
+        var_dump($extension);
+        $storagePath = $this->generateStoragePath($file['tmp_name']) . '.' . $extension;
+        $destination = $config['storage_dir'] . '/' .  $storagePath;
         if (!file_exists($destination)) {
             move_uploaded_file($file['tmp_name'], $destination);
         }
@@ -77,10 +78,9 @@ class FileStorage extends AbstractService
     public function storeFile($source, $move = true)
     {
         $config = $this->getConfig();
-        $storagePath = $this->generateStoragePath($source);
         $extension = pathinfo($source, PATHINFO_EXTENSION);
-
-        $destination = $config['storage_dir'] . '/' .  $storagePath . '.' . $extension;
+        $storagePath = $this->generateStoragePath($source) . '.' . $extension;
+        $destination = $config['storage_dir'] . '/' .  $storagePath;
         if(!file_exists($destination)) {
             if($move) {
                 rename($source, $destination);
