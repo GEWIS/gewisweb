@@ -120,12 +120,22 @@ return array(
                             'editPacket' => array(
                                 'type' => 'segment',
                                 'options' => array(
-                                    'route' => '/packet/:packet',
+                                    'route' => '/packet/:packetID',
                                     'defaults' => array(
                                         'action' => 'editPacket'
                                     ),
                                     'constraints' => array(
-                                        'packet'     => '[a-zA-Z0-9_-]*',
+                                        'packetID'     => '[a-zA-Z0-9_-]*',
+                                    ),
+                                    'may_terminate' => true,
+                                ),
+                            ),
+                            'addPacket' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/addPacket',
+                                    'defaults' => array(
+                                        'action' => 'addPacket'
                                     ),
                                     'may_terminate' => true,
                                 ),

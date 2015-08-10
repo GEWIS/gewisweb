@@ -16,15 +16,16 @@ if ($company == null){
                          ); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
-
+<h2> <?= $this->translate('Packets') ?> </h2>
 <table class="packetlist">
-    <?php if (!empty($packetlist)) { 
-        foreach($packetlist as $packet) { ?>
+    <?php if (!empty($company->getPackets())) { 
+        foreach($company->getPackets() as $packet) { ?>
             <tr>
                 <td>
-                    <a href="<?= $this->url("admin_company/default", 
-                                            array("action" => "editPacket", 
-                                                  "slugCompanyName" => $company->getSlugName()
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket",
+                                            array( 
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packetID" => $packet->getId(),
                                                  )
                                            ); ?>">
                         <?= $this->translate('packet'); ?>

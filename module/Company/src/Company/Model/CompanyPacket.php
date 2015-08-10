@@ -212,9 +212,9 @@ class CompanyPacket
     }
     
     public function exchangeArray($data){
-        $this->startingDate=(isset($data['startingDate'])) ? $data['startingDate'] : $this->getStartingDate();
-        $this->expirationDate=(isset($data['expirationDate'])) ? $data['expirationDate'] : $this->getExpirationDate();
-        $this->published=(isset($data['published'])) ? $data['published'] : $this->isPublished();
+        $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
+        $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
+        $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
     }
 
 

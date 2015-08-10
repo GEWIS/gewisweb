@@ -56,7 +56,14 @@ class EditPacket extends Form
                 ),
             ),
         ));
-        
+        $this->add(array(
+            'name' => 'submit',
+            'attributes' => array(
+                'type'  => 'submit',
+                'value' => $translate->translate('Submit changes'),
+                'id' => 'submitbutton',
+            ),
+        ));
         $this->initFilters();
     }
     
