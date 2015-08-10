@@ -60,6 +60,10 @@ class Company extends AbstractACLService
         return $this->getPacketMapper()->insertPacketIntoCompany($company);
     }
 
+    public function deletePacket($packetID)
+    {
+        return $this->getPacketMapper()->delete($packetID);
+    }
     public function deleteCompaniesWithSlug($slug)
     {
         return $this->getCompanyMapper()->deleteWithSlug($slug);
