@@ -94,8 +94,7 @@ class Admin extends AbstractAclService
         //Tempfile is used to generate sha1, not sure this is the best method
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
         $image->writeImage($tempFileName);
-        $newPath = $this->getFileStorageService()->storeFile($tempFileName, false);
-        unlink($tempFileName);
+        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
         return $newPath;
     }
