@@ -61,6 +61,8 @@ class MeetingNotes implements ResourceInterface
     public function setMeeting($meeting)
     {
         $this->meeting = $meeting;
+        $this->type = $meeting->getType();
+        $this->number = $meeting->getNumber();
     }
 
     /**

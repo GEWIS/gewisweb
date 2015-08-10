@@ -34,6 +34,18 @@ return array(
                             'defaults' => array(
                                 'action' => 'view'
                             )
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'notes' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/notes',
+                                    'defaults' => array(
+                                        'action' => 'notes',
+                                    ),
+                                ),
+                            ),
                         )
                     )
                 ),

@@ -53,13 +53,13 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Check if there are notes for a meeting and get the URL if so.
+     * Returns a download for meeting notes
      *
      * @param \Decision\Model\Meeting $meeting
      *
-     * @return string|null
+     * @return response|null
      */
-    public function getMeetingNotes(\Decision\Model\Meeting $meeting)
+    public function getMeetingNotesDownload(\Decision\Model\Meeting $meeting)
     {
         if (!$this->isAllowed('view_notes', 'meeting')) {
             $translator = $this->getTranslator();
@@ -67,16 +67,15 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to view meeting notes.')
             );
         }
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-notes'];
 
-        $filename = $meeting->getType() . '/' . $meeting->getNumber() . '.pdf';
-        $path = $config['upload_dir'] . '/' . $filename;
-
-        if (file_exists($path)) {
-            return $config['public_dir'] . '/' . $filename;
+        if(is_null($meeting->getNotes())) {
+            return null;
         }
-        return null;
+
+        $path =  $meeting->getNotes()->getPath();
+        $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
+
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
     }
 
     /**
@@ -126,6 +125,9 @@ class Decision extends AbstractAclService
             $meetingNotes->setMeeting($meeting);
         }
         $meetingNotes->setPath($path);
+
+        $mapper = $this->getDecisionMapper();
+        $mapper->persist($meetingNotes);
 
         return true;
     }
