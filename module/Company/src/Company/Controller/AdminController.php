@@ -106,6 +106,25 @@ class AdminController extends AbstractActionController
         return $vm;
         
     }
+    public function deletePacketAction(){
+        $companyService = $this->getCompanyService();
+        $packetID = $this->params('packetID');    
+        $companyName = $this->params('slugCompanyName');
+        $request = $this->getRequest();
+         if ($request->isPost()) {
+             $del = $request->getPost('del', 'No');
+             if ($del == 'Yes') {
+                 $companyService->deletePacket($packetID);
+             }
+
+             return $this->redirect()->toRoute('admin_company/editCompany', array('slugCompanyName' => $companyName));
+         }
+        return new ViewModel(array(
+            'packet' => $companyService->getEditablePacket($packetID),
+            'slugName' => $companyName,
+            'translator' => $companyService->getTranslator()
+        ));
+    }
     public function deleteCompanyAction(){
         $companyService = $this->getCompanyService();
         $slugName = $this->params('slugCompanyName');    
@@ -170,7 +189,7 @@ class AdminController extends AbstractActionController
         $packetID = $this->params('packetID');    
         $packetForm = $companyService->getPacketForm();
         //$companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
-        $packets = $companyService->getEditablePacket($packetID);
+        $packet = $companyService->getEditablePacket($packetID);
         //echo($this->url()->fromRoute('admin_company/default', array('action'=>'save', 'slugCompanyName'=>$companyName)));
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -180,7 +199,7 @@ class AdminController extends AbstractActionController
             $packetForm->setData($request->getPost());
 
             //if ($companyForm->isValid()) {
-                $packets[0]->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $packet->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
             //} else {
             //    die();
@@ -191,14 +210,14 @@ class AdminController extends AbstractActionController
             //}
         }
         // TODO: display error page when packet is not found
-        $packetForm->bind($packets[0]);
+        $packetForm->bind($packet);
         $packetForm->setAttribute('action', 
                                    $this->url()->fromRoute('admin_company/editCompany/editPacket', 
                                                            array('packetID' => $packetID,
                                                                  'slugCompanyName' => $companyName))
                                   );
         $vm = new ViewModel(array(
-            'packet' => $packets[0],
+            'packet' => $packet,
             'packetEditForm' => $packetForm,
         ));
         
