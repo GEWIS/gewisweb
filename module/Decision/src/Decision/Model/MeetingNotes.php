@@ -48,14 +48,6 @@ class MeetingNotes implements ResourceInterface
     protected $path;
 
     /**
-     * @return integer
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
      * @return string
      */
     public function getPath()
@@ -64,17 +56,17 @@ class MeetingNotes implements ResourceInterface
     }
 
     /**
-     * @param integer $number
+     * @param integer $meeting
      */
-    public function setNumber($number)
+    public function setMeeting($meeting)
     {
-        $this->number = $number;
+        $this->meeting = $meeting;
     }
 
     /**
      * @param string $path
      */
-    public function setPhoto($path)
+    public function setPath($path)
     {
         $this->path = $path;
     }
