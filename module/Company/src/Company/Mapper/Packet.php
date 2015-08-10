@@ -47,6 +47,14 @@ class Packet
     }
     
     
+    public function findEditablePacket($packetID){
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')->where('p.id=:packetID');
+        $qb->setParameter('packetID', $packetID);
+        $qb->setMaxResults(1);
+        return $qb->getQuery()->getResult();
+    }
     public function insertPacketIntoCompany($company){
         $packet = new PacketModel($this->em);
 
@@ -69,6 +77,6 @@ class Packet
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\Pqcket');
+        return $this->em->getRepository('Company\Model\CompanyPacket');
     }
 }
