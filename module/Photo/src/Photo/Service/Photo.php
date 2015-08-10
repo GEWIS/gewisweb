@@ -123,27 +123,10 @@ class Photo extends AbstractAclService
         }
 
         $photo = $this->getPhoto($photoId);
-        $config = $this->getStorageConfig();
-        $file = $config['storage_dir'] . '/' . $photo->getPath();
+        $path =  $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
 
-        $response = new \Zend\Http\Response\Stream();
-        $response->setStream(fopen($file, 'r'));
-        $response->setStatusCode(200);
-        $response->setStreamName($fileName);
-        $headers = new \Zend\Http\Headers();
-        $headers->addHeaders(array(
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-            'Content-Type' => 'application/octet-stream',
-            'Content-Length' => filesize($file),
-            // zf2 parses date as a string for a \DateTime() object:
-            'Expires' => '@0',
-            'Cache-Control' => 'must-revalidate',
-            'Pragma' => 'public'
-        ));
-        $response->setHeaders($headers);
-
-        return $response;
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
     }
 
     /**
