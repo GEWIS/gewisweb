@@ -27,12 +27,15 @@ class Email extends AbstractService
             'member' => $member
         ));
 
+        $translator = $this->getServiceManager()->get('translator');
+
         $message = new Message();
 
         $config = $this->getConfig();
 
         $message->addFrom($config['from']);
         $message->addTo($newUser->getEmail());
+        $message->setSubject($translator->translate('Account activation code for the GEWIS Website'));
         $message->setBody($body);
 
         $this->getTransport()->send($message);
