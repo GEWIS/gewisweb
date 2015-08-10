@@ -18,6 +18,17 @@ if ($company == null){
 <?= $this->form()->closeTag(); ?>
 <h2> <?= $this->translate('Packets') ?> </h2>
 <table class="packetlist">
+        <tr>
+            <th>
+                        <?= $this->translate('Packet'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Active'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Jobs'); ?>
+            </th>
+        </tr>
     <?php if (!empty($company->getPackets())) { 
         foreach($company->getPackets() as $packet) { ?>
             <tr>
@@ -28,11 +39,21 @@ if ($company == null){
                                                   "packetID" => $packet->getId(),
                                                  )
                                            ); ?>">
-                        <?= $this->translate('packet'); ?>
+                        <?= $this->translate('edit'); ?></a>
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket/deletePacket",
+                                            array( 
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packetID" => $packet->getId(),
+                                                 )
+                                           ); ?>"> <?= $this->translate('delete'); ?></a>
                     </a>
                 </td> 
                 <td>
-                    <a href="#id"><?= $this->translate('delete'); ?></a>
+                    <?php echo $packet->isActive() ? 'true' : 'false'?>
+                </td>
+                <td>
+                    <?= count($packet->getJobs()) ?>
+                <td>
                 </td>
             </tr>
     <?php 
