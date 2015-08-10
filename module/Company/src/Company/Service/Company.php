@@ -42,11 +42,24 @@ class Company extends AbstractACLService
         $this->getCompanyMapper()->save();
     }
 
+    public function savePacket()
+    {
+        $this->getPacketMapper()->save();
+    }
+
     public function insertCompany()
     {
         return $this->getCompanyMapper()->insert();
     }
         
+    public function insertPacketForCompanySlugName($companySlugName)
+    {
+        $companies = $this->getEditableCompaniesWithSlugName($companySlugName);
+        var_dump($companySlugName);
+        $company = $companies[0];
+        return $this->getPacketMapper()->insertPacketIntoCompany($company);
+    }
+
     public function deleteCompaniesWithSlug($slug)
     {
         return $this->getCompanyMapper()->deleteWithSlug($slug);
@@ -85,10 +98,6 @@ class Company extends AbstractACLService
         return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
     }
     
-    public function getCompanyMapper()
-    {
-        return $this->sm->get('company_mapper_company');
-    }
 
     public function getJobList()
     {
@@ -105,6 +114,11 @@ class Company extends AbstractACLService
         return $this->sm->get('company_admin_edit_company_form');
     }
 
+    public function getPacketForm()
+    {
+        return $this->sm->get('company_admin_edit_packet_form');
+    }
+    
     public function getJobForm()
     {
         return $this->sm->get('company_admin_edit_job_form');
@@ -120,6 +134,16 @@ class Company extends AbstractACLService
             }
         }
         return $r;
+    }
+
+    public function getCompanyMapper()
+    {
+        return $this->sm->get('company_mapper_company');
+    }
+
+    public function getPacketMapper()
+    {
+        return $this->sm->get('company_mapper_packet');
     }
 
     public function getJobMapper()
