@@ -29,17 +29,6 @@ return array(
     'bcrypt_cost' => 13,
 
     /**
-     * Email configuration.
-     */
-    'email' => array(
-        'transport' => 'File',
-        'options' => array(
-            'path' => 'data/mail/'
-        ),
-        'from' => 'web@gewis.nl'
-    ),
-
-    /**
      * Exam and Summary upload directory configration.
      */
     'education' => array(
