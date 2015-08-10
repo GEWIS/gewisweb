@@ -119,13 +119,23 @@ return [
                             'editPacket' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/packet/:packet',
+                                    'route' => '/packet/:packetID',
                                     'defaults' => [
                                         'action' => 'editPacket'
-                                    ],
+                                    ),
                                     'constraints' => [
-                                        'packet'     => '[a-zA-Z0-9_-]*',
-                                    ],
+                                        'packetID'     => '[a-zA-Z0-9_-]*',
+                                    ),
+                                    'may_terminate' => true,
+                                ),
+                            ),
+                            'addPacket' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/addPacket',
+                                    'defaults' => [
+                                        'action' => 'addPacket'
+                                    ),
                                     'may_terminate' => true,
                                 ),
                             ),

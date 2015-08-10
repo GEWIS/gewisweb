@@ -20,6 +20,47 @@ class AdminController extends AbstractActionController
 
     }
     
+    public function addPacketAction()
+    {
+        $companyService = $this->getCompanyService();
+        $packetForm = $companyService->getPacketForm();
+        $request = $this->getRequest();
+        $companyName = $this->params('slugCompanyName');    
+        if ($request->isPost()) {
+            $companyService = $this->getCompanyService();
+            $packetForm->setData($request->getPost());
+
+            // TODO: isValid does not work yet
+            //if ($companyForm->isValid()) {
+            //    $company = $companyService->insertCompany();
+            //    $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+            //    $companyService->saveCompany();
+            //    return $this->redirect()->toRoute('admin_company/default', 
+             //                                     array('action'=>'edit', 
+             //                                           'slugCompanyName' => $companyName), 
+             //                                     array(), false);   
+            //}
+            //if ($companyForm->isValid()) {
+                $packet=$companyService->insertPacketForCompanySlugName($companyName);
+                $packet->exchangeArray($request->getPost()); 
+                $companyService->savePacket();
+                return $this->redirect()->toRoute('admin_company/editCompany', array('slugCompanyName'=>$companyName),array(),false);   
+            //}
+        }
+        //$company = $companyService->insertCompany();
+        //$companyForm->bind($company);
+        $packetForm->setAttribute('action', 
+                                   $this->url()->fromRoute('admin_company/editCompany/addPacket', 
+                                                           array('slugCompanyName' => $companyName))
+                                  );
+        $vm = new ViewModel(array(
+          //  'company' => $company,
+            'companyEditForm' => $packetForm,
+        ));
+        
+        return $vm;
+        
+    }
     public function addCompanyAction()
     {
         $companyService = $this->getCompanyService();

@@ -1,0 +1,30 @@
+<?php 
+//use Company\Form\EditCompany as EditCompanyForm;
+//$companyEditForm = new EditCompanyForm();
+$form=$companyEditForm;
+//$form=$this->form($companyEditForm);
+?>
+
+<?= $this->form()->openTag($form) ?>
+<dl>
+<?php $element = $form->get('startDate') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('expirationDate');?>
+    <dt><?= $element->getOption('label'); ?></dt>
+    <dd>
+        <?= $this->formElement($element); ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('published') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?= $this->formRow($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>

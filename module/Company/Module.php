@@ -53,8 +53,18 @@ class Module
                         $sm->get('company_doctrine_em')
                     );
                 },
+                'company_mapper_packet' => function ($sm) {
+                    return new \Company\Mapper\Packet(
+                        $sm->get('company_doctrine_em')
+                    );
+                },
                 'company_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
+                },
+                'company_admin_edit_packet_form' => function ($sm) {
+                    return new \Company\Form\EditPacket(
+                        $sm->get('translator')
+                    );
                 },
                 'company_admin_edit_company_form' => function ($sm) {
                     return new \Company\Form\EditCompany(

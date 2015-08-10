@@ -42,6 +42,9 @@ class Job
         return $this->getRepository()->findAll();
     }
     
+    public function save(){
+        $this->em->flush();
+    }
     /**
      * Find all jobs with the given job 'username' from the company with the given slug name.
      * @param companySlugName The slugname of the containing company.
