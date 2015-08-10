@@ -18,14 +18,16 @@ class AdminController extends AbstractActionController {
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->upload($request->getPost(), $request->getFiles())) {
+            if ($service->tempUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel(array(
                     'success' => true
                 ));
             }
         }
 
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'form' => $service->getTempUploadForm()
+        ));
     }
 
     public function uploadAction()

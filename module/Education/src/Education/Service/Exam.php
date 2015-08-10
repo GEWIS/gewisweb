@@ -51,6 +51,26 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Temporary exam upload.
+     *
+     * Uploads exams into a temporary folder.
+     *
+     * @param array $post POST Data
+     * @param array $files FILES Data
+     *
+     * @return boolean
+     */
+    public function tempUpload($post, $files)
+    {
+        $form = $this->getTempUploadForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+        var_dump($files);
+    }
+
+    /**
      * Upload a new exam.
      *
      * @param array $post POST Data
@@ -180,6 +200,24 @@ class Exam extends AbstractAclService
             );
         }
         return $this->sm->get('education_form_upload');
+    }
+
+    /**
+     * Get the Temporary Upload form.
+     *
+     * @return \Education\Form\TempUpload
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     */
+    public function getTempUploadForm()
+    {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
+        return $this->sm->get('education_form_tempupload');
     }
 
     /**
