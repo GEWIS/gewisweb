@@ -3,6 +3,7 @@
 namespace Decision\Mapper;
 
 use Decision\Model\Meeting as MeetingModel;
+use Decision\Model\MeetingDocument;
 use Doctrine\ORM\EntityManager;
 
 class Meeting
@@ -78,6 +79,17 @@ class Meeting
     public function persist(MeetingModel $meeting)
     {
         $this->em->persist($meeting);
+        $this->em->flush();
+    }
+
+    /**
+     * Persist a document model.
+     *
+     * @param MeetingDocument $document Document to persist.
+     */
+    public function persistDocument(MeetingDocument $document)
+    {
+        $this->em->persist($document);
         $this->em->flush();
     }
 

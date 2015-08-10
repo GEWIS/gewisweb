@@ -58,6 +58,15 @@ return array(
     ),
 
     /**
+     * Meeting documents upload directory.
+     */
+    'meeting-documents' => array(
+        'upload_dir' => 'public/data/meeting-documents',
+        'public_dir' => 'data/meeting-documents',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
+    /**
      * Dreamspark configuration.
      */
     'dreamspark' => array(

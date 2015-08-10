@@ -70,6 +70,12 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'decision_form_document' => function ($sm) {
+                    return new \Decision\Form\Document(
+                        $sm->get('translator'),
+                        $sm->get('decision_mapper_meeting')
+                    );
+                },
                 'decision_form_notes' => function ($sm) {
                     return new \Decision\Form\Notes(
                         $sm->get('translator'),

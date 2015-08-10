@@ -43,9 +43,16 @@ class Meeting
     /**
      * Decisions.
      *
-     * @ORM\OneToMany(targetEntity="Decision", mappedBy="meeting", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Decision", mappedBy="meeting")
      */
     protected $decisions;
+
+    /**
+     * Documents.
+     *
+     * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
+     */
+    protected $documents;
 
     /**
      * Get all allowed meeting types.
@@ -162,4 +169,37 @@ class Meeting
             $this->addDecision($decision);
         }
     }
+
+    /**
+     * Get the documents.
+     *
+     * @return array
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * Add a document.
+     *
+     * @param Document $document
+     */
+    public function addDocument(MeetingDocument $document)
+    {
+        $this->documents[] = $document;
+    }
+
+    /**
+     * Add multiple documents.
+     *
+     * @param array $documents
+     */
+    public function addDocuments($documents)
+    {
+        foreach ($documents as $document) {
+            $this->addDocument($document);
+        }
+    }
+
 }
