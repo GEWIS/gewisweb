@@ -35,6 +35,17 @@ class AdminController extends AbstractActionController {
         ));
     }
 
+    /**
+     * Edit several exams in bulk.
+     */
+    public function editAction()
+    {
+        $service = $this->getExamService();
+        return new ViewModel(array(
+            'form' => $service->getBulkForm()
+        ));
+    }
+
     public function uploadAction()
     {
         $service = $this->getExamService();
