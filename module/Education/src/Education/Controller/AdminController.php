@@ -22,6 +22,11 @@ class AdminController extends AbstractActionController {
                 return new ViewModel(array(
                     'success' => true
                 ));
+            } else {
+                $this->getResponse()->setStatusCode(500);
+                return new ViewModel(array(
+                    'success' => false
+                ));
             }
         }
 
