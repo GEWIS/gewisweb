@@ -67,7 +67,20 @@ class Exam extends AbstractAclService
         $data = array_merge_recursive($post->toArray(), $files->toArray());
 
         $form->setData($data);
-        var_dump($files);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $config = $this->getConfig('education_temp');
+
+        $filename = sha1_file($data['file']['tmp_name']) . '.pdf';
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (!file_exists($path)) {
+            move_uploaded_file($data['file']['tmp_name'], $path);
+        }
+        return true;
     }
 
     /**
@@ -178,10 +191,10 @@ class Exam extends AbstractAclService
      *
      * @return array
      */
-    public function getConfig()
+    public function getConfig($key = 'education')
     {
         $config = $this->sm->get('config');
-        return $config['education'];
+        return $config[$key];
     }
 
     /**
