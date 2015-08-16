@@ -21,13 +21,12 @@ $form=$companyEditForm;
         <?= $this->formElementErrors($element); ?>
     </dd>
 
-<!-- Not yet in Form
-<?php// $element = $form->get('address') ?>
+<?php $element = $form->get('language') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
-    </dd>-->
+    </dd>
 
 
 <?php $element = $form->get('website') ?>

@@ -51,7 +51,7 @@ class Job
      * @param jobSlugName The slugName of the requested job.
      * @return An array of jobs that match the request.
      */
-    public function findJobsWithCompanySlugName($companySlugName)
+    public function findJobsWithCompanySlugName($packetID)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
@@ -61,10 +61,10 @@ class Job
         return $qb->getQuery()->getResult();
     }
     
-    public function insertIntoCompany($company){
+    public function insertIntoPacket($packet){
         $job = new JobModel($this->em);
 
-        $job->setCompany($company);
+        $job->setPacket($packet);
         $this->em->persist($job);
 //        $this->em->persist($job->getCompany());
         
@@ -78,7 +78,7 @@ class Job
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join("j.company", "c") ->where("j.slugName=:jobId");
+        $qb->select('j')->join("j.packet", "p")->join("p.company", "c") ->where("j.slugName=:jobId");
         $qb->setParameter('jobId', $companySlugName + '_' + $jobSlugName);
 
         return $qb->getQuery()->getResult();

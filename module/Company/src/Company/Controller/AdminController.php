@@ -147,6 +147,7 @@ class AdminController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');    
+        $packetId = $this->params('packetID');    
         
         $companyForm = $companyService->getJobForm();
         
@@ -160,19 +161,19 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             if ($companyForm->isValid()) {
-                $job = $companyService->insertJobForCompanySlugName($companyName);
+                $job = $companyService->insertJobIntoPacketID($packetId);
                 $job->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
-                return $this->redirect()->toRoute('admin_company/editCompany/editJob', 
+                return $this->redirect()->toRoute('admin_company/editCompany/editPacket/editJob', 
                                                   array('slugCompanyName' => $companyName, 
-                                                        'jobName' => $jobName), 
-                                                  array(), true);   
+                                                        'packetID' => $packetId,
+                                                        'jobName' => $jobName));   
             }
         }
 
         $companyForm->setAttribute('action', 
-                                   $this->url()->fromRoute('admin_company/editCompany/addJob', 
-                                                           array('slugCompanyName' => $companyName))
+                                   $this->url()->fromRoute('admin_company/editCompany/editPacket/addJob', 
+                                                           array('slugCompanyName' => $companyName, "packetID" => $packetId))
                                   );
         $vm = new ViewModel(array(
           //  'company' => $company,
@@ -218,6 +219,7 @@ class AdminController extends AbstractActionController
                                   );
         $vm = new ViewModel(array(
             'packet' => $packet,
+            'companyName' => $companyName,
             'packetEditForm' => $packetForm,
         ));
         
@@ -256,6 +258,7 @@ class AdminController extends AbstractActionController
     public function editJobAction()
     {
         $companyService = $this->getCompanyService();
+        $packetID = $this->params('packetID');    
         
         $companyName = $this->params('slugCompanyName');    
         $slugCompanyName = $this->params('slugCompanyName');    
@@ -270,8 +273,9 @@ class AdminController extends AbstractActionController
             $company = $companyList[0];
             $companyForm->bind($company);
             $companyForm->setAttribute('action', 
-                                       $this->url()->fromRoute('admin_company/editCompany/editJob', 
+                                       $this->url()->fromRoute('admin_company/editCompany/editPacket/editJob', 
                                                                array('jobName' => $jobName, 
+                                                                     'packetID' => $packetID,
                                                                      'slugCompanyName' => $companyName))
                                       );
         }
@@ -292,8 +296,9 @@ class AdminController extends AbstractActionController
             } else {
                 echo "NOT VALID";
             }
-            return $this->redirect()->toRoute('admin_company/editCompany/editJob', 
+            return $this->redirect()->toRoute('admin_company/editCompany/editPacket/editJob', 
                                               array('slugCompanyName' => $slugCompanyName, 
+                                                    'packetID' => $packetID,
                                                     'slugJobName' => $jobName), 
                                               array(), true);   
         }
