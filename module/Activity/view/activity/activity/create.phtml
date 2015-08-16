@@ -61,11 +61,11 @@ echo $this->form()->openTag($form);
 		<?php echo $this->formRow($form->get('description')); ?>
 	</div>
 </div>
-    <?php echo $this->translate('Extra fields');?> 
-    <?php $field = $form->get('options');
+    <?php echo $this->translate('Extra fields');
           echo $this->formCollection($form->get('options'));
     ?>
     <button onclick="return add_field()"><?= $this->translate('Add a field') ?></button>
+    <button onclick="return remove_field()"><?= $this->translate('Remove the last field') ?></button>
 <?php
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
