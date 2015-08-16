@@ -118,6 +118,6 @@ class Signup extends AbstractAclService
     
     public function getActivityFieldValueMapper(){
         
-        return $this->sm->get('activity_mapper_activity_field_value');
+        return $this->getServiceManager()->get('activity_mapper_activity_field_value');
     }
 }
