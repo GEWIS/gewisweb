@@ -87,6 +87,21 @@ class Activity extends Form
             ),
         ]);
 
+        $this->add([
+            'name' => 'options',
+            'type' => 'Zend\Form\Element\Collection',            
+            'options' => array(
+                'label' => 'Additional options',
+                'count' => 0,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'Activity\Form\ActivityFieldFieldset'
+                )
+            )
+        ]);
+
+        
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(

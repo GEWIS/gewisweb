@@ -56,7 +56,7 @@ class ActivityController extends AbstractActionController
 
             if ($form->isValid()) {
                 $activity = $activityService->createActivity($form->getData());
-
+                
                 $this->redirect()->toRoute('activity/view', array(
                     'id' => $activity->get('id'),
                 ));

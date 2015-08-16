@@ -14,23 +14,19 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         parent::__construct('activityfield');
         
         $this->setHydrator(new ClassMethodsHydrator(false))
-             ->setObject(new ActivityField());
+             ->setObject(new \Activity\Model\ActivityField());
         
-        $this->add([
-            'name' => 'Name',
-            'options' => array(
-                'label' => 'Name of the field'
-            ),
+        $this->add(array(
+            'name' => 'name',
             'attributes' => array(
                 'required' => 'required'
-            )
-        ]);
+            ),
+        ));
                 
         $this->add([
             'name' => 'Type',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
-                'label' => 'Type of the field',
                 'value_options' => array(
                     '0' => 'Text',
                     '1' => 'Yes/No',
@@ -58,22 +54,20 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
         
         $this->add([
-            'name' => 'Options',
-            'type' => 'Zend\Form\Element\Collection',
-            'options' => array(
-                'count' => 0,
-                'should_create_template' => true,
-                'allow_add' => true,
-                'target_element' => array(
-                    'type' => 'Activity\Form\ActivityOptionFieldset'
-                )
+            'name' => 'Options',            
+            'attributes' => array(
+                'required' => 'required'
             )
         ]);
     }
     
     
     public function getInputFilterSpecification() {
-        
+        return array(
+            'name' => array(
+                'required' => true
+            )
+        );
     }
 
 }
