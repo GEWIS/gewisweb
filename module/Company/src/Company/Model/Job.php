@@ -287,6 +287,7 @@ class Job
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
         $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+        $this->language=(isset($data['language'])) ? $data['language'] : $this->getLanguage();
 //        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $this->active=(isset($data['active'])) ? $data['active'] : $this->getActive();

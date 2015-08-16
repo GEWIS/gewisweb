@@ -122,35 +122,58 @@ return [
                                     'route' => '/packet/:packetID',
                                     'defaults' => [
                                         'action' => 'editPacket'
-                                    ),
+                                    ],
                                     'constraints' => [
                                         'packetID'     => '[a-zA-Z0-9_-]*',
-                                    ),
-                                ),
+                                    ],
+                                ],
                                 'may_terminate' => true,
-                                'child_routes' => array(
-                                    'deletePacket' => array(
+                                'child_routes' => [
+                                    'addJob' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
+                                            'route' => '/addJob',
+                                            'defaults' => [
+                                                'action' => 'addJob'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'deletePacket' => [
+                                        'type' => 'segment',
+                                        'options' => [
                                             'route' => '/delete',
-                                            'defaults' => array(
+                                            'defaults' => [
                                                 'action' => 'deletePacket'
-                                            ),
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'editJob' => [
+                                        'type' => 'segment',
+                                        'options' => [
+                                            'route' => '/job/:jobName',
+                                            'defaults' => [
+                                                'action' => 'editJob',
+                                            ],
+                                            'constraints' => [
+                                                'jobName'     => '[a-zA-Z0-9_-]*',
+                                            ],
                                             'may_terminate' => true,
-                                        ),
-                                    ),
-                                ),
-                            ),
+                                        ],
+                                    ],
+                                ],
+                            ],
                             'addPacket' => [
                                 'type' => 'segment',
                                 'options' => [
                                     'route' => '/addPacket',
                                     'defaults' => [
                                         'action' => 'addPacket'
-                                    ),
+                                    ],
                                     'may_terminate' => true,
-                                ),
-                            ),
+                                ],
+                            ],
                             'addJob' => [
                                 'type' => 'segment',
                                 'options' => [
