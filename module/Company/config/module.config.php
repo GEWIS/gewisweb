@@ -130,12 +130,35 @@ return array(
                                 ),
                                 'may_terminate' => true,
                                 'child_routes' => array(
+                                    'addJob' => array(
+                                        'type' => 'segment',
+                                        'options' => array(
+                                            'route' => '/addJob',
+                                            'defaults' => array(
+                                                'action' => 'addJob'
+                                            ),
+                                        ),
+                                        'may_terminate' => true,
+                                    ),
                                     'deletePacket' => array(
                                         'type' => 'segment',
                                         'options' => array(
                                             'route' => '/delete',
                                             'defaults' => array(
                                                 'action' => 'deletePacket'
+                                            ),
+                                        ),
+                                        'may_terminate' => true,
+                                    ),
+                                    'editJob' => array(
+                                        'type' => 'segment',
+                                        'options' => array(
+                                            'route' => '/job/:jobName',
+                                            'defaults' => array(
+                                                'action' => 'editJob',
+                                            ),
+                                            'constraints' => array(
+                                                'jobName'     => '[a-zA-Z0-9_-]*',
                                             ),
                                             'may_terminate' => true,
                                         ),
@@ -148,29 +171,6 @@ return array(
                                     'route' => '/addPacket',
                                     'defaults' => array(
                                         'action' => 'addPacket'
-                                    ),
-                                    'may_terminate' => true,
-                                ),
-                            ),
-                            'addJob' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => '/addJob',
-                                    'defaults' => array(
-                                        'action' => 'addJob'
-                                    ),
-                                    'may_terminate' => true,
-                                ),
-                            ),
-                            'editJob' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => '/job/:jobName',
-                                    'defaults' => array(
-                                        'action' => 'editJob',
-                                    ),
-                                    'constraints' => array(
-                                        'jobName'     => '[a-zA-Z0-9_-]*',
                                     ),
                                     'may_terminate' => true,
                                 ),

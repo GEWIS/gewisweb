@@ -27,6 +27,17 @@ class EditJob extends Form
             ),
         ));
         $this->add(array(
+            'type' => 'Zend\Form\Element\Radio',
+            'name' => 'language',
+            'options' => array(
+                'label' => 'Language',
+                'value_options' => array(
+                    'nl' => $translate->translate('Dutch'),
+                    'en' => $translate->translate('English'),
+                ),
+            ),
+        ));
+        $this->add(array(
             'name' => 'name',
             'attributes' => array(
                 'type'  => 'text',
@@ -51,7 +62,7 @@ class EditJob extends Form
                 'type' => 'Checkbox',
             ),
             'options' => array(
-                'label' => $translate->translate('Location'),
+                'label' => $translate->translate('Active'),
             ),
         ));
         $this->add(array(

@@ -69,10 +69,10 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->deleteWithSlug($slug);
     }
 
-    public function insertJobForCompanySlugName($slugCompanyName)
+    public function insertJobIntoPacketID($packetID)
     {
-        $company = $this->getEditableCompaniesWithSlugName($slugCompanyName)[0];
-        $result = $this->getJobMapper()->insertIntoCompany($company);
+        $packet = $this->getEditablePacket($packetID);
+        $result = $this->getJobMapper()->insertIntoPacket($packet);
         return $result;
     }
     
