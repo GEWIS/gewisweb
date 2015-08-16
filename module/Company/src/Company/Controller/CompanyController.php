@@ -20,7 +20,9 @@ class CompanyController extends AbstractActionController
                     'translator' => $companyService->getTranslator()
                 ));
             } else { 
-                $vm = new ViewModel(); 
+                $vm = new ViewModel(array(
+                    'translator' => $companyService->getTranslator()
+                )); 
             }
         }
         else {
