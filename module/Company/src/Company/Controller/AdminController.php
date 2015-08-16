@@ -85,7 +85,7 @@ class AdminController extends AbstractActionController
              //                                     array(), false);   
             //}
             //if ($companyForm->isValid()) {
-                $company=$companyService->insertCompany();
+                $company=$companyService->insertCompany($request->getPost()["languages"]);
                 $company->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
                 //var_dump($company);
@@ -330,11 +330,10 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             //if ($companyForm->isValid()) {
-                $company = $companyService->insertCompany();
+                $company = $companyService->insertCompany($request->getPost()["languages"]);
                 $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
             //} else {
-            //    die();
             //    return $this->forward()->dispatch('Company\Controller\AdminController', 
             //                                      array('action'=> 'editCompany', 
             //                                            'form' => $companyForm)
