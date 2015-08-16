@@ -47,9 +47,9 @@ class Company extends AbstractACLService
         $this->getPacketMapper()->save();
     }
 
-    public function insertCompany()
+    public function insertCompany($languages)
     {
-        return $this->getCompanyMapper()->insert();
+        return $this->getCompanyMapper()->insert($languages);
     }
         
     public function insertPacketForCompanySlugName($companySlugName)

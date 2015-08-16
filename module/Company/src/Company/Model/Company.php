@@ -338,10 +338,12 @@ class Company // implements ArrayHydrator (for zend2 form)
                     return $value->getLanguage();
                 } );
                 if(!$companyLanguages->contains($locale)){
-                    continue;
+                    $translation = new CompanyI18n();
+                    $translation->setLanguage($locale);
                 }
-
-                $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
+                else{
+                    $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
+                }
                 return $translation;
     }
 
@@ -351,13 +353,12 @@ class Company // implements ArrayHydrator (for zend2 form)
         $languages = $data['languages'];
         //$languages.add(¨¨);
         
-        
-        $this->translations=(isset($data['translations'])) ? $data['translations'] : $this->getTranslations();
+        $newTranslations =  $this->translations;
+        //$this->translations=(isset($data['translations'])) ? $data['translations'] : $this->getTranslations();
         
 
         //var_dump($languages);
         foreach ($languages as $language){
-
             if($language !== ''){
                 $translation = $this->getTranslationFromLocale($language);
                 $language = $language . '_';
@@ -366,13 +367,15 @@ class Company // implements ArrayHydrator (for zend2 form)
                 #die();
 
                 // Translated properties
-                $translation->setWebsite((isset($data[$language.'website'])) ? $data[$language.'website'] : $translation->getWebsite());
-                $translation->setSlogan((isset($data[$language.'slogan'])) ? $data[$language.'slogan'] : $translation->getSlogan());
-                $translation->setDescription((isset($data[$language.'description'])) ? $data[$language.'description'] : $translation->getDescription());
-                $translation->setLogo((isset($data[$language.'logo'])) ? $data[$language.'logo'] : $translation->getLogo());
+                $translation->setWebsite((isset($data[$language.'website'])) ? $data[$language.'website'] : "");
+                $translation->setSlogan((isset($data[$language.'slogan'])) ? $data[$language.'slogan'] : "");
+                $translation->setDescription((isset($data[$language.'description'])) ? $data[$language.'description'] : "");
+                $translation->setLogo((isset($data[$language.'logo'])) ? $data[$language.'logo'] : "");
+                $newTranslations->add($translation);
             }
             
         }
+        $this->translations = $newTranslations;
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
         $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
         //$this->languageNeutralId=(isset($data['languageNeutralId'])) ? $data['languageNeutralId'] : $this->languageNeutralId;

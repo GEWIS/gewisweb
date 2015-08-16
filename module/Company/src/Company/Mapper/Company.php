@@ -49,7 +49,7 @@ class Company
         }
         $this->em->flush();
     }
-    public function insert(){
+    public function insert($languages){
         $company = new CompanyModel($this->em);
 
         $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
@@ -68,23 +68,17 @@ class Company
             $company->setLanguageNeutralId($companiesWithSameSlugName[0]->getLanguageNeutralId());
         }
 
-        // TODO: make this more dynamic
-        $en = new CompanyI18n();
-        $en->setLanguage("en");
-        $en->setCompany($company);
-        if($en->getLogo() == null){
-            $en->setLogo("");
+        foreach ($languages as $language){
+            $translation = new CompanyI18n();
+            $translation->setLanguage($language);
+            $translation->setCompany($company);
+            if($translation->getLogo() == null){
+                $translation->setLogo("");
+            }
+            $this->em->persist($translation);
+            $company->addTranslation($translation);
+
         }
-        $this->em->persist($en);
-        $company->addTranslation($en);
-        $nl = new CompanyI18n();
-        $nl->setLanguage("nl");
-        $nl->setCompany($company);
-        if($nl->getLogo() == null){
-            $nl->setLogo("");
-        }
-        $this->em->persist($nl);
-        $company->addTranslation($nl);
 
         $company->setHidden(false);
         $this->em->persist($company);
