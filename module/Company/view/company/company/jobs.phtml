@@ -8,7 +8,7 @@ if(isset($job)){
     $active_job_list[] = $job;
 }
 if(!isset($active_job_list)){
-    echo "Job not found";
+    echo $this->translate("Job not found");
     return;
 }
 foreach ($active_job_list as $job) {
