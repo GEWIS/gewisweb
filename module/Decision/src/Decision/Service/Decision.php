@@ -79,11 +79,11 @@ class Decision extends AbstractAclService
             );
         }
 
-        if(is_null($meetingDocument)) {
+        if (is_null($meetingDocument)) {
             return null;
         }
 
-        $path =  $meetingDocument->getPath();
+        $path = $meetingDocument->getPath();
         $extension = $extension = pathinfo($path, PATHINFO_EXTENSION);
         $fileName = $meetingDocument->getName() . '.' . $extension;
 
@@ -106,11 +106,11 @@ class Decision extends AbstractAclService
             );
         }
 
-        if(is_null($meeting->getNotes())) {
+        if (is_null($meeting->getNotes())) {
             return null;
         }
 
-        $path =  $meeting->getNotes()->getPath();
+        $path = $meeting->getNotes()->getPath();
         $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
 
         return $this->getFileStorageService()->downloadFile($path, $fileName);
@@ -142,7 +142,7 @@ class Decision extends AbstractAclService
         $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
 
         $meetingNotes = $meeting->getNotes();
-        if(is_null($meetingNotes)) {
+        if (is_null($meetingNotes)) {
             $meetingNotes = new NotesModel();
             $meetingNotes->setMeeting($meeting);
         }
@@ -233,6 +233,7 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to upload notes.')
             );
         }
+
         return $this->sm->get('decision_form_notes');
     }
 
@@ -249,6 +250,7 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to upload meeting documents.')
             );
         }
+
         return $this->sm->get('decision_form_document');
     }
 

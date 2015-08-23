@@ -32,6 +32,7 @@ class DecisionController extends AbstractActionController
             if (is_null($response)) {
                 return $this->notFoundAction();
             }
+
             return $response;
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
@@ -49,6 +50,7 @@ class DecisionController extends AbstractActionController
             if (is_null($response)) {
                 return $this->notFoundAction();
             }
+
             return $response;
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
@@ -66,6 +68,7 @@ class DecisionController extends AbstractActionController
 
         try {
             $meeting = $service->getMeeting($type, $number);
+
             return new ViewModel(array(
                 'meeting' => $meeting
             ));

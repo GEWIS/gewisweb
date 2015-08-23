@@ -57,7 +57,7 @@ class FileStorage extends AbstractService
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $storagePath = $this->generateStoragePath($file['tmp_name']) . '.' . $extension;
-        $destination = $config['storage_dir'] . '/' .  $storagePath;
+        $destination = $config['storage_dir'] . '/' . $storagePath;
         if (!file_exists($destination)) {
             move_uploaded_file($file['tmp_name'], $destination);
         }
@@ -79,9 +79,9 @@ class FileStorage extends AbstractService
         $config = $this->getConfig();
         $extension = pathinfo($source, PATHINFO_EXTENSION);
         $storagePath = $this->generateStoragePath($source) . '.' . $extension;
-        $destination = $config['storage_dir'] . '/' .  $storagePath;
-        if(!file_exists($destination)) {
-            if($move) {
+        $destination = $config['storage_dir'] . '/' . $storagePath;
+        if (!file_exists($destination)) {
+            if ($move) {
                 rename($source, $destination);
             } else {
                 copy($source, $destination);
@@ -103,7 +103,7 @@ class FileStorage extends AbstractService
         $config = $this->getConfig();
         $fullPath = $config['storage_dir'] . '/' . $path;
 
-        if(file_exists($fullPath)) {
+        if (file_exists($fullPath)) {
             return unlink($fullPath);
         } else {
             return false;
@@ -126,12 +126,12 @@ class FileStorage extends AbstractService
 
         $file = $config['storage_dir'] . '/' . $path;
 
-        if(!file_exists($file)) {
+        if (!file_exists($file)) {
             return null;
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $type =  finfo_file($finfo, $file);
+        $type = finfo_file($finfo, $file);
         finfo_close($finfo);
 
         $response = new \Zend\Http\Response\Stream();
