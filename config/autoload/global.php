@@ -28,17 +28,6 @@ return array(
      */
     'bcrypt_cost' => 13,
 
-    /**
-     * Email configuration.
-     */
-    'email' => array(
-        'transport' => 'File',
-        'options' => array(
-            'path' => 'data/mail/'
-        ),
-        'from' => 'web@gewis.nl'
-    ),
-
     'storage' => array(
         'storage_dir' => 'public/data',
         'public_dir' => 'data',
@@ -51,15 +40,6 @@ return array(
     'education' => array(
         'upload_dir' => 'public/data/education',
         'public_dir' => 'data/education',
-        'dir_mode' => 0777, // rwx by default
-    ),
-
-    /**
-     * Meeting documents upload directory.
-     */
-    'meeting-documents' => array(
-        'upload_dir' => 'public/data/meeting-documents',
-        'public_dir' => 'data/meeting-documents',
         'dir_mode' => 0777, // rwx by default
     ),
 
