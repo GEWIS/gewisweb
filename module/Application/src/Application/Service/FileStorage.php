@@ -56,7 +56,6 @@ class FileStorage extends AbstractService
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        var_dump($extension);
         $storagePath = $this->generateStoragePath($file['tmp_name']) . '.' . $extension;
         $destination = $config['storage_dir'] . '/' .  $storagePath;
         if (!file_exists($destination)) {
