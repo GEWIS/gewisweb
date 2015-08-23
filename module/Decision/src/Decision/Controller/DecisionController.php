@@ -26,13 +26,33 @@ class DecisionController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
 
-        $meeting = $this->getDecisionService()->getMeeting($type, $number);
-        $response = $this->getDecisionService()->getMeetingNotesDownload($meeting);
-        if (is_null($response)) {
+        try {
+            $meeting = $this->getDecisionService()->getMeeting($type, $number);
+            $response = $this->getDecisionService()->getMeetingNotesDownload($meeting);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
 
-        return $response;
+    }
+
+    public function documentAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        try {
+            $meetingDocument = $this->getDecisionService()->getMeetingDocument($id);
+            $response = $this->getDecisionService()->getMeetingDocumentDownload($meetingDocument);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
     }
 
     /**
@@ -47,8 +67,7 @@ class DecisionController extends AbstractActionController
         try {
             $meeting = $service->getMeeting($type, $number);
             return new ViewModel(array(
-                'meeting' => $meeting,
-                'documentPath' => $service->getMeetingDocumentBasePath($meeting)
+                'meeting' => $meeting
             ));
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();

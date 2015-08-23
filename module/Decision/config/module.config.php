@@ -47,7 +47,19 @@ return array(
                                 ),
                             ),
                         )
-                    )
+                    ),
+                    'document' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/document/:id',
+                            'constraints' => array(
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'action' => 'document',
+                            ),
+                        ),
+                    ),
                 ),
                 'priority' => 100
             ),

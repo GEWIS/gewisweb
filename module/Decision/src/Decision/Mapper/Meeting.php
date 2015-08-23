@@ -71,6 +71,11 @@ class Meeting
         return $qb->getQuery()->getSingleResult();
     }
 
+    public function findDocument($id)
+    {
+        return $this->em->find('Decision\Model\MeetingDocument', $id);
+    }
+
     /**
      * Persist a meeting model.
      *

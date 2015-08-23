@@ -6,32 +6,37 @@
             'nl_NL'
         ) ?></small>
 </h1>
-<?php if (!is_null($meeting->getNotes())): ?>
-    <a href="<?= $this->url('decision/meeting/notes', array(
-        'type' => $meeting->getType(),
-        'number' => $meeting->getNumber()
-    )) ?>">
-        <?= $this->translate('Notes for this meeting') ?></a>
-<?php endif ?>
-</div>
+<div class="row">
+    <div class="col-md-6">
+        <?php if (!is_null($meeting->getNotes())): ?>
+            <a href="<?= $this->url('decision/meeting/notes', array(
+                'type' => $meeting->getType(),
+                'number' => $meeting->getNumber()
+            )) ?>">
+                <?= $this->translate('Notes for this meeting') ?></a>
+        <?php endif ?>
+    </div>
 
-<div class="col-md-6">
-<ul>
-<?php foreach($meeting->getDocuments() as $document): ?>
-    <li><a href="<?= $this->basePath() . '/' . $documentPath . '/' . $document->getPath() ?>"><?= $document->getName() ?></a></li>
-<?php endforeach ?>
-</ul>
-</div>
+    <div class="col-md-6">
+        <ul>
+            <?php foreach ($meeting->getDocuments() as $document): ?>
+                <li><a href="<?= $this->url('decision/document', array(
+                        'id' => $document->getId()
+                    )) ?>">
+                        <?= $document->getName() ?></a></li>
+            <?php endforeach ?>
+        </ul>
+    </div>
 </div>
 
 <div class="row">
-<div class="col-md-12">
-<ul>
-    <?php foreach ($meeting->getDecisions() as $decision): ?>
-        <li><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>
-            .<?= $decision->getNumber() ?>
-            <?= $decision->getContent() ?></li>
-    <?php endforeach ?>
-</ul>
-</div>
+    <div class="col-md-12">
+        <ul>
+            <?php foreach ($meeting->getDecisions() as $decision): ?>
+                <li><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>
+                    .<?= $decision->getNumber() ?>
+                    <?= $decision->getContent() ?></li>
+            <?php endforeach ?>
+        </ul>
+    </div>
 </div>

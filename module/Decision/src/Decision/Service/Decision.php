@@ -53,6 +53,44 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get meeting documents corresponding to a certain id.
+     *
+     * @param $id
+     * @return \Decision\Model\MeetingDocument
+     */
+    public function getMeetingDocument($id)
+    {
+        return $this->getMeetingMapper()->findDocument($id);
+    }
+
+    /**
+     * Returns a download for a meeting document
+     *
+     * @param \Decision\Model\MeetingDocument $meetingDocument
+     *
+     * @return response|null
+     */
+    public function getMeetingDocumentDownload($meetingDocument)
+    {
+        if (!$this->isAllowed('view_documents', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meeting documents.')
+            );
+        }
+
+        if(is_null($meetingDocument)) {
+            return null;
+        }
+
+        $path =  $meetingDocument->getPath();
+        $extension = $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $fileName = $meetingDocument->getName() . '.' . $extension;
+
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
+    }
+
+    /**
      * Returns a download for meeting notes
      *
      * @param \Decision\Model\Meeting $meeting
@@ -76,22 +114,6 @@ class Decision extends AbstractAclService
         $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
 
         return $this->getFileStorageService()->downloadFile($path, $fileName);
-    }
-
-    /**
-     * Get the base path for meeting documents.
-     *
-     * @param Decision\Model\Meeting $meeting
-     *
-     * @return string
-     */
-    public function getMeetingDocumentBasePath(\Decision\Model\Meeting $meeting)
-    {
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-documents'];
-
-        return $config['public_dir'] . '/'
-             . $meeting->getType() . '/' . $meeting->getNumber();
     }
 
     /**
@@ -154,30 +176,15 @@ class Decision extends AbstractAclService
 
         $data = $form->getData();
 
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-documents'];
-
-        $filename = $data['meeting'] . '/' .$data['upload']['name'];
-        $path = $config['upload_dir'] . '/' . $filename;
-
-        if (file_exists($path)) {
-            $form->setError(Notes::ERROR_FILE_EXISTS);
-            return false;
-        }
+        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
         $meeting = $this->getMeeting($meeting[0], $meeting[1]);
 
         $document = new MeetingDocument();
-        $document->setPath($data['upload']['name']);
+        $document->setPath($path);
         $document->setName($data['name']);
         $document->setMeeting($meeting);
-
-        // finish upload and save in the database
-        if (!is_dir(dirname($path))) {
-            mkdir(dirname($path), $config['dir_mode'], true);
-        }
-        move_uploaded_file($data['upload']['tmp_name'], $path);
 
         $this->getMeetingMapper()->persistDocument($document);
 
@@ -258,7 +265,7 @@ class Decision extends AbstractAclService
     /**
      * Get the meeting mapper.
      *
-     * @return Decision\Mapper\Meeting
+     * @return \Decision\Mapper\Meeting
      */
     public function getMeetingMapper()
     {
