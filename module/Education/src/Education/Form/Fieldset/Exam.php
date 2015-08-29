@@ -10,6 +10,8 @@ class Exam extends Fieldset
     implements InputFilterProviderInterface
 {
 
+    protected $config;
+
     public function __construct(Translator $translator)
     {
         parent::__construct('exam');
@@ -34,6 +36,16 @@ class Exam extends Fieldset
                 'label' => $translator->translate('Exam date')
             )
         ));
+    }
+
+    /**
+     * Set the configuration.
+     *
+     * @param array $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config['education_temp'];
     }
 
     public function getInputFilterSpecification()
