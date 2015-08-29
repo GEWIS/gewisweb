@@ -216,6 +216,24 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Get the bulk edit form.
+     *
+     * @return \Education\Form\Bulk
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     */
+    public function getBulkForm()
+    {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
+        return $this->sm->get('education_form_bulk');
+    }
+
+    /**
      * Get the Temporary Upload form.
      *
      * @return \Education\Form\TempUpload

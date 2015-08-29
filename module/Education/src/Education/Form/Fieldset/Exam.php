@@ -3,7 +3,7 @@
 namespace Education\Form\Fieldset;
 
 use Zend\Form\Fieldset;
-use Zend\InputFitler\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
 use zend\I18n\Translator\TranslatorInterface as Translator;
 
 class Exam extends Fieldset
@@ -88,9 +88,11 @@ class Exam extends Fieldset
 
             'date' => array(
                 'required' => true,
-                'validators' => array('name' => 'date')
+                'validators' => array(
+                    array('name' => 'date')
+                )
             )
-        )
+        );
     }
 
 }

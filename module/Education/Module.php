@@ -55,10 +55,22 @@ class Module
                     $form->setHydrator($sm->get('education_hydrator_exam'));
                     return $form;
                 },
+                'education_form_bulk' => function ($sm) {
+                    return new \Education\Form\Bulk(
+                        $sm->get('translator'), $sm->get('education_form_fieldset_exam')
+                    );
+                },
                 'education_form_searchcourse' => function ($sm) {
                     return new \Education\Form\SearchCourse(
                         $sm->get('translator')
                     );
+                },
+                'education_form_fieldset_exam' => function ($sm) {
+                    $fieldset = new \Education\Form\Fieldset\Exam(
+                        $sm->get('translator')
+                    );
+                    $fieldset->setConfig($sm->get('config'));
+                    return $fieldset;
                 },
                 'education_mapper_exam' => function ($sm) {
                     return new \Education\Mapper\Exam(
