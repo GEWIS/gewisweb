@@ -128,13 +128,14 @@ class Activity
      * Create a new activity.
      *
      * @param array $params Parameters for the new activity
-     *
+     * @param EntitiyManager $em The relevant entity manager.
+     * 
      * @throws \Exception If a activity is loaded
      * @throws \Exception If a necessary parameter is not set
      *
      * @return \Activity\Model\Activity the created activity
      */
-    public function create(array $params)
+    public function create(array $params, $em)
     {
         if ($this->id != null) {
             throw new \Exception('There is already a loaded activity');
@@ -156,16 +157,15 @@ class Activity
         // TODO: These values need to be set correctly
         $this->onlyGEWIS = true;
         $this->approved = 0;
-
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        foreach ($params['fields'] as $fieldparams){
-            
-            $field = new ActivityField();
-            $field->create($fieldparams, $this);
-            $em->persist($field);
+        if (isset($params['fields'])) {
+            foreach ($params['fields'] as $fieldparams){
+                
+                $field = new ActivityField();
+                $field->create($fieldparams, $this);
+                $em->persist($field);
+            }
+            $em->flush();
         }
-        $em->flush();
-        
         return $this;
     }
 

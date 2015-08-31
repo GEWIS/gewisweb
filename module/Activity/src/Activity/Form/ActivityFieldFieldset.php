@@ -23,7 +23,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             ),
             'attributes' => array(
                 'required' => 'required'
-            ),
+            )
         ));
                 
         $this->add([
@@ -37,9 +37,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                     '3' => 'Choice'
                 ),
                 'label' => 'Type'
-            ),
-            'attributes' => array(
-                'required' => 'required'
             )
         ]);
         
@@ -47,9 +44,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'name' => 'Min. value',
             'options' => array(
                 'label' => 'Min. value'
-            ),            
-            'attributes' => array(
-                'required' => 'required'
             )
         ]);
         
@@ -57,9 +51,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'name' => 'Max. value',
             'options' => array(
                 'label' => 'Max. value'
-            ),
-            'attributes' => array(
-                'required' => 'required'
             )
         ]);
         
@@ -67,9 +58,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'name' => 'Options',            
             'options' => array(
                 'label' => 'Options'
-            ),
-            'attributes' => array(
-                'required' => 'required'
             )
         ]);
     }

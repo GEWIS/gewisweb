@@ -88,8 +88,8 @@ class Activity extends Form
         ]);
 
         $this->add([
-            'name' => 'options',
-            'type' => 'Zend\Form\Element\Collection',            
+            'name' => 'fields',
+            'type' => 'Zend\Form\Element\Collection',
             'options' => array(
                 'label' => 'Additional options',
                 'count' => 0,

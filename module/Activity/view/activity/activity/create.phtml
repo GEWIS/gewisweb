@@ -62,7 +62,7 @@ echo $this->form()->openTag($form);
 	</div>
 </div>
     <?php echo $this->translate('Extra fields');
-          echo $this->formCollection($form->get('options'));
+          echo $this->formCollection($form->get('fields'));
     ?>
     <button onclick="return add_field()"><?= $this->translate('Add a field') ?></button>
     <button onclick="return remove_field()"><?= $this->translate('Remove the last field') ?></button>
