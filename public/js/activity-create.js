@@ -20,10 +20,8 @@ function add_field() {
  * Removes the last field from the list.
  */
 function remove_field() {
-        var currentCount = $('form > fieldset > fieldset').length-1;
+        var currentCount = $('form > fieldset > fieldset').length - 1;
         if (currentCount >= 0){
-            //var elem = document.getElementById("fieldset"+currentCount);
-            //elem.parentNode.removeChild(elem);            
             $('#fieldset'+currentCount).remove();
         }
         

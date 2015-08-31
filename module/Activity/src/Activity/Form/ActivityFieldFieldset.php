@@ -15,9 +15,12 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         $this->setHydrator(new ClassMethodsHydrator(false))
              ->setObject(new \Activity\Model\ActivityField());
-        
+      
         $this->add(array(
             'name' => 'name',
+            'options' => array(
+                'label' => 'Name'
+            ),
             'attributes' => array(
                 'required' => 'required'
             ),
@@ -32,7 +35,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                     '1' => 'Yes/No',
                     '2' => 'Number',
                     '3' => 'Choice'
-                )
+                ),
+                'label' => 'Type'
             ),
             'attributes' => array(
                 'required' => 'required'
@@ -41,6 +45,9 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         $this->add([
             'name' => 'Min. value',
+            'options' => array(
+                'label' => 'Min. value'
+            ),            
             'attributes' => array(
                 'required' => 'required'
             )
@@ -48,6 +55,9 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         $this->add([
             'name' => 'Max. value',
+            'options' => array(
+                'label' => 'Max. value'
+            ),
             'attributes' => array(
                 'required' => 'required'
             )
@@ -55,6 +65,9 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         $this->add([
             'name' => 'Options',            
+            'options' => array(
+                'label' => 'Options'
+            ),
             'attributes' => array(
                 'required' => 'required'
             )
