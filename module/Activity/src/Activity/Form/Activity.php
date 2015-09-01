@@ -207,7 +207,12 @@ class Activity extends Form
             'name' => 'canSignUp',
             'required' => true
         ]));
-
+        
+        $inputFilter->add($factory->createInput([
+            'name' => 'fields',
+            'required' => false
+        ]));
+        
         $this->inputFilter = $inputFilter;
 
         return $this->inputFilter;

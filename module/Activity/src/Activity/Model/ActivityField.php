@@ -23,7 +23,7 @@ class ActivityField
     /**
      * Activity that the field belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields", cascade={"persist"})
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
@@ -45,14 +45,14 @@ class ActivityField
     /**
      * The minimal value constraint for the ``number'' type
      * 
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $mininumValue;
     
     /**
      * The maximal value constraint for the ``number'' type.
      * 
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $maximumValue;
     
@@ -67,15 +67,16 @@ class ActivityField
      * Create a new field.
      *
      * @param array $params Parameters for the new field
-     * @param Activity\Model\Activity $activity The activity 
+     * @param Activity $activity The activity 
      *        the field is associated with
+     * @param EntityManager $em The relevant entity manager
      * 
      * @throws \Exception If a field is loaded
      * @throws \Exception If a necessary parameter is not set
      *
      * @return \Activity\Model\ActivityField the created field
      */   
-    public function create(array $params, Activity\Model\Activity $activity){
+    public function create(array $params, Activity $activity, $em){
         
         if ($this->id != null) {
             throw new \Exception('There is already a loaded activity');
@@ -90,17 +91,20 @@ class ActivityField
         
         $this->activity = $activity;
         
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        foreach ($params['options'] as $optionparam){
+        if ($params['options'] !== ''){
             
-            $option = new ActivityOption();
-            $option->setValue($optionparam);
-            $option->setField($this);
+            $options = explode(',', $params['options']);
+            foreach ($options as $optionparam){
             
-            $em->persist($option);           
-        }
-        $em->flush();
+                $option = new ActivityOption();
+                $option->setValue($optionparam);
+                $option->setField($this);
+            
+                $em->persist($option);           
+            }
         
+            $em->flush();
+        }
         return $this;
     }
     

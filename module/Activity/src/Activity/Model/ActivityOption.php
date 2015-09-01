@@ -24,7 +24,7 @@ class ActivityOption
     /**
      * Field that the option belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options")
+     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options", cascade={"persist"})
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;
@@ -35,13 +35,6 @@ class ActivityOption
      * @ORM\Column(type="string", nullable=false) 
      */
     protected $value;
-  
-    /**
-     * The index of the field to determine the display order.
-     * 
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    protected $position;
     
     /**
      * Set the field the option belongs to.

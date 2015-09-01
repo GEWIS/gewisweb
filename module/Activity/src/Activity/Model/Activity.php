@@ -161,7 +161,7 @@ class Activity
             foreach ($params['fields'] as $fieldparams){
                 
                 $field = new ActivityField();
-                $field->create($fieldparams, $this);
+                $field->create($fieldparams, $this, $em);
                 $em->persist($field);
             }
             $em->flush();

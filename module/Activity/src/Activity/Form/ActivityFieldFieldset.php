@@ -27,7 +27,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ));
                 
         $this->add([
-            'name' => 'Type',
+            'name' => 'type',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'value_options' => array(
@@ -41,21 +41,21 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
         
         $this->add([
-            'name' => 'Min. value',
+            'name' => 'min. value',
             'options' => array(
                 'label' => 'Min. value'
             )
         ]);
         
         $this->add([
-            'name' => 'Max. value',
+            'name' => 'max. value',
             'options' => array(
                 'label' => 'Max. value'
             )
         ]);
         
         $this->add([
-            'name' => 'Options',            
+            'name' => 'options',            
             'options' => array(
                 'label' => 'Options'
             )
