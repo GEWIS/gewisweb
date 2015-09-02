@@ -2,10 +2,11 @@
 
 namespace Activity\Form;
 
-use Model\ActivityField;
+use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use FieldDependantValidator;
+use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -14,7 +15,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         parent::__construct('activityfield');
         
         $this->setHydrator(new ClassMethodsHydrator(false))
-             ->setObject(new \Activity\Model\ActivityField());
+             ->setObject(new ActivityField());
       
         $this->add(array(
             'name' => 'name',
@@ -43,6 +44,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->add([
             'name' => 'min. value',
             'options' => array(
+                'allowEmpty' => false,
                 'label' => 'Min. value'
             )
         ]);
@@ -50,6 +52,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->add([
             'name' => 'max. value',
             'options' => array(
+                'allowEmpty' => false,
                 'label' => 'Max. value'
             )
         ]);
@@ -57,18 +60,59 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->add([
             'name' => 'options',            
             'options' => array(
+                'allowEmpty' => false,
                 'label' => 'Options'
             )
         ]);
     }
     
-    
+
+    /**
+     * @return array
+     */
     public function getInputFilterSpecification() {
-        return array(
-            'name' => array(
+        
+        return [
+            'name' => [
                 'required' => true
-            )
-        );
+            ],
+            'type' => [
+                'required' => true,
+                'filters' => [
+                    ['name' => 'Int']
+                ],
+                'validators' => [
+                    [
+                        'name' => 'Between',
+                        'options' => [
+                            'min' => 0,
+                            'max' => 3
+                        ]
+                    ]
+                ]
+            ],
+            'min. value' => [
+                'filters' => [
+                    ['name' => 'Int']
+                ],
+                'validators' => [
+                    new FieldDependantValidator('type', '2')
+                ]
+            ],
+            'max. value' => [
+                'filters' => [
+                    ['name' => 'Int']
+                ],
+                'validators' => [
+                    new FieldDependantValidator('type', '2')
+                ]
+            ],
+            'options' => [
+                'validators' => [
+                    new FieldDependantValidator('type', '3')
+                ]
+            ]
+        ];
     }
 
 }

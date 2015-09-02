@@ -47,7 +47,7 @@ class ActivityField
      * 
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $mininumValue;
+    protected $minimumValue;
     
     /**
      * The maximal value constraint for the ``number'' type.
@@ -87,7 +87,13 @@ class ActivityField
                 throw new \Exception("create: parameter $param not set");
             }
             $this->$param = $params[$param];
+        }        
+        //Add min,max for numerical fields
+        if ($params['type'] === '2'){
+            $this->minimumValue = $params['min. value'];
+            $this->maximumValue = $params['max. value'];
         }
+        
         
         $this->activity = $activity;
         

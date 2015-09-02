@@ -86,7 +86,7 @@ class Activity extends Form
                 'unchecked_value' => 0,
             ),
         ]);
-
+        
         $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
@@ -207,17 +207,18 @@ class Activity extends Form
             'name' => 'canSignUp',
             'required' => true
         ]));
-        
+
         $inputFilter->add($factory->createInput([
             'name' => 'fields',
-            'required' => false
+            'required' => false,
+            
         ]));
         
         $this->inputFilter = $inputFilter;
 
         return $this->inputFilter;
     }
-
+    
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception('Not used');
