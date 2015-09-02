@@ -7,6 +7,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\CollectionInputFilter;
 
 class Activity extends Form
 {
@@ -214,8 +215,34 @@ class Activity extends Form
             
         ]));
         
+        $collectionInputFilter = new InputFilter();
+        
+        $collectionInputFilter->add($factory->createInput([
+            'name' => 'name',
+            'required' => true            
+        ]));
+        $collectionInputFilter->add($factory->createInput([
+            'name' => 'type',
+            'required' => true,
+            'filters' => [
+                    ['name' => 'Int']
+                ],
+            'validators' => [
+                [
+                    'name' => 'Between',
+                    'options' => [
+                        'min' => 0,
+                        'max' => 3
+                    ]
+                ]
+            ]
+        ]));
+        $collectionContainerFilter =  new CollectionInputFilter();
+        $collectionContainerFilter->setInputFilter($collectionInputFilter);
+        $inputFilter->add($collectionContainerFilter);
+        
         $this->inputFilter = $inputFilter;
-
+        
         return $this->inputFilter;
     }
     
