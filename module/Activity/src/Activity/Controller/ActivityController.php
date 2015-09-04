@@ -55,6 +55,7 @@ class ActivityController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
             echo var_dump($this->getRequest()->getPost());
             if ($form->isValid()) {
+                echo 'WE DID IT!';
                 echo var_dump($form->getData());
                 $activity = $activityService->createActivity($form->getData());
                 

@@ -5,7 +5,7 @@ namespace Activity\Form;
 use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-use FieldDependantValidator;
+//use Zend\InputFilter\FieldDependantValidator;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
@@ -91,7 +91,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                     ]
                 ]
             ],
-            'min. value' => [
+           /* 'min. value' => [
                 'filters' => [
                     ['name' => 'Int']
                 ],
@@ -111,7 +111,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'validators' => [
                     new FieldDependantValidator('type', '3')
                 ]
-            ]
+            ]*/
         ];
     }
 
