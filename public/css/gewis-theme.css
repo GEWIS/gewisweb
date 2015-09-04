@@ -213,6 +213,7 @@ footer a {
 
 }
 
+/* Pop the agenda slightly over the header image */
 @media (min-width: 992px) {
     .agenda {
         margin-top: -75px;
@@ -245,11 +246,12 @@ footer a {
 
 .date-icon .day {
     text-align: center;
+    padding: 10px;
 }
 
 
 .date-icon .month {
     text-align: center;
-    margin-top: -10px;
+    margin-top: -80px;
 }
 
