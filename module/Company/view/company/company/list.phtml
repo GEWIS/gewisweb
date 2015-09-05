@@ -25,13 +25,16 @@ if(isset($company)){
 }
 
 if (!isset($companyList)){
-    echo "Company not found";
+    echo $this->translate("Company not found");
     return;
 }
-
+$i = 0;
 foreach ($companyList as $company) {
-    echo $this->partial('partial/company/company/list/company.phtml', 
+    if ($company->getTranslationFromLocale($locale) != null){
+        echo $this->partial('partial/company/company/list/company.phtml', 
                         ['islist' => $islist, 'company' => $company, 'locale' => $locale]);
+        $i += 1;
+    }
 }
 
 //echo($this->partial('partial/filter/script'));

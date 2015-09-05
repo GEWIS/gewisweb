@@ -332,14 +332,19 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     
-    public function getTranslationFromLocale($locale) {
+    public function getTranslationFromLocale($locale, $create=false) {
 
                 $companyLanguages =  $this->getTranslations()->map(function ($value){
                     return $value->getLanguage();
                 } );
                 if(!$companyLanguages->contains($locale)){
-                    $translation = new CompanyI18n();
-                    $translation->setLanguage($locale);
+                    if ($create){
+                        $translation = new CompanyI18n();
+                        $translation->setLanguage($locale);
+                    }
+                    else{
+                        $translation = null;
+                    }
                 }
                 else{
                     $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
@@ -353,14 +358,15 @@ class Company // implements ArrayHydrator (for zend2 form)
         $languages = $data['languages'];
         //$languages.add(¨¨);
         
-        $newTranslations =  $this->translations;
+        //$newTranslations =  $this->translations;
+        $newTranslations =  new ArrayCollection();
         //$this->translations=(isset($data['translations'])) ? $data['translations'] : $this->getTranslations();
         
 
         //var_dump($languages);
         foreach ($languages as $language){
             if($language !== ''){
-                $translation = $this->getTranslationFromLocale($language);
+                $translation = $this->getTranslationFromLocale($language, true);
                 $language = $language . '_';
 
                 #var_dump($data);
