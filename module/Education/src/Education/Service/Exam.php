@@ -17,6 +17,13 @@ class Exam extends AbstractAclService
 {
 
     /**
+     * Bulk form.
+     *
+     * @var \Education\Form\Bulk
+     */
+    protected $bulkForm;
+
+    /**
      * Search for a course.
      *
      * @param array $data
@@ -230,7 +237,29 @@ class Exam extends AbstractAclService
                 $translator->translate('You are not allowed to upload exams')
             );
         }
-        return $this->sm->get('education_form_bulk');
+        if (null !== $this->bulkForm) {
+            return $this->bulkForm;
+        }
+
+        // fully load the bulk form
+        $this->bulkForm = $this->sm->get('education_form_bulk');
+
+        $config = $this->getConfig('education_temp');
+
+        $dir = new \DirectoryIterator($config['upload_dir']);
+        $data = array();
+
+        foreach ($dir as $file) {
+            if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
+                $data[] = array(
+                    'file' => $file->getFilename()
+                );
+            }
+        }
+
+        $this->bulkForm->get('exams')->populateValues($data);
+
+        return $this->bulkForm;
     }
 
     /**
