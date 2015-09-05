@@ -24,6 +24,13 @@ class Bulk extends Form implements InputFilterProviderInterface
                 'target_element' => clone $exam
             )
         ));
+
+        $this->add(array(
+            'name' => 'submit',
+            'type' => 'submit'
+        ));
+
+        $this->get('submit')->setLabel($translator->translate('Finalize exam uploads'));
     }
 
     public function getInputFilterSpecification()
