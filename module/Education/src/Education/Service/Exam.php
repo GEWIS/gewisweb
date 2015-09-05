@@ -74,7 +74,7 @@ class Exam extends AbstractAclService
 
         $config = $this->getConfig('education_temp');
 
-        $filename = sha1_file($data['file']['tmp_name']) . '.pdf';
+        $filename = $data['file']['name'];
         $path = $config['upload_dir'] . '/' . $filename;
 
         if (!file_exists($path)) {
