@@ -16,9 +16,12 @@ class Frontpage extends AbstractAclService
     public function getHomePageData()
     {
         $birthdayInfo = $this->getBirthdayInfo();
+        $activities = $this->getUpcomingActivities();
+
         return array(
             'birthdays' => $birthdayInfo['birthdays'],
-            'birthdayTag' => $birthdayInfo['tag']
+            'birthdayTag' => $birthdayInfo['tag'],
+            'activities' => $activities
         );
     }
 
@@ -37,7 +40,7 @@ class Frontpage extends AbstractAclService
         foreach ($birthdayMembers as $member) {
             $age = $today->diff($member->getBirth())->y;
             $members[] = $member;
-                //TODO: check member's privacy settings
+            //TODO: check member's privacy settings
             $birthdays[] = array('member' => $member, 'age' => $age);
 
         }
@@ -54,6 +57,15 @@ class Frontpage extends AbstractAclService
         );
     }
 
+    public function getUpcomingActivities()
+    {
+        $count = $this->getConfig()['activity_count'];
+        $activities = $this->getActivityMapper()->getUpcomingActivities($count);
+
+        return array_reverse($activities);
+
+    }
+
     /**
      * Get the frontpage config, as used by this service.
      *
@@ -62,6 +74,7 @@ class Frontpage extends AbstractAclService
     public function getConfig()
     {
         $config = $this->sm->get('config');
+
         return $config['frontpage'];
     }
 
@@ -73,6 +86,16 @@ class Frontpage extends AbstractAclService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
+     * Get the activity module's activity mapper.
+     *
+     * @return \Activity\Mapper\Activity
+     */
+    public function getActivityMapper()
+    {
+        return $this->sm->get('activity_mapper_activity');
     }
 
     /**
