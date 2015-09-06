@@ -41,6 +41,14 @@ class AdminController extends AbstractActionController {
     public function editAction()
     {
         $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+            return new ViewModel(array(
+                'success' => true
+            ));
+        }
+
         return new ViewModel(array(
             'form' => $service->getBulkForm()
         ));

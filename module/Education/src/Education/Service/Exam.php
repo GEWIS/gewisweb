@@ -58,6 +58,26 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Finish the bulk edit.
+     *
+     * @param array $data POST Data
+     *
+     * @return boolean
+     */
+    public function bulkEdit($data)
+    {
+        $form = $this->getBulkForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        var_dump($form->getData());
+    }
+
+    /**
      * Temporary exam upload.
      *
      * Uploads exams into a temporary folder.

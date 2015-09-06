@@ -50,20 +50,20 @@ class Exam extends Fieldset
 
     public function getInputFilterSpecification()
     {
+        $dir = $this->config['upload_dir'];
         return array(
             'file' => array(
                 'required' => true,
                 'validators' => array(
                     array(
-                        'name' => 'regex',
+                        'name' => 'callback',
                         'options' => array(
-                            'pattern' => '/^[a-fA-F0-9]+\.pdf$/'
-                        )
-                    ),
-                    array(
-                        'name' => 'File\Exists',
-                        'options' => array(
-                            'directory' => $this->config['upload_dir']
+                            'callback' => function ($value) use ($dir) {
+                                $validator = new \Zend\Validator\File\Exists(array(
+                                    'directory' => $dir
+                                ));
+                                return $validator->isValid($value);
+                            }
                         )
                     )
                 )
