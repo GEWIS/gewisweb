@@ -70,6 +70,8 @@ class Module
                         $sm->get('translator')
                     );
                     $fieldset->setConfig($sm->get('config'));
+                    $fieldset->setObject(new \Education\Model\Exam());
+                    $fieldset->setHydrator($sm->get('education_hydrator_exam'));
                     return $fieldset;
                 },
                 'education_mapper_exam' => function ($sm) {

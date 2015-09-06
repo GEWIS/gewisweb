@@ -21,7 +21,7 @@ class Bulk extends Form implements InputFilterProviderInterface
                 'count' => 2,
                 'allow_add' => true,
                 'allow_remove' => true,
-                'target_element' => clone $exam
+                'target_element' => $exam
             )
         ));
 

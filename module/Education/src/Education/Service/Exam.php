@@ -74,7 +74,16 @@ class Exam extends AbstractAclService
             return false;
         }
 
-        var_dump($form->getData());
+        $data = $form->getData();
+        $arrdata = $form->getData(FormInterface::VALUES_AS_ARRAY);
+        var_dump($form->get('exams'));
+        var_dump($arrdata);
+        var_dump($data);
+
+        foreach ($data['exams'] as $exam) {
+            // finalize exam upload
+            var_dump($exam);
+        }
     }
 
     /**

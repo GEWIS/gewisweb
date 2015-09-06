@@ -56,6 +56,12 @@ class Exam extends Fieldset
                 'required' => true,
                 'validators' => array(
                     array(
+                        'name' => 'regex',
+                        'options' => array(
+                            'pattern' => '/^[a-zA-Z0-9_ ,.-]+\.pdf$/'
+                        )
+                    ),
+                    array(
                         'name' => 'callback',
                         'options' => array(
                             'callback' => function ($value) use ($dir) {
