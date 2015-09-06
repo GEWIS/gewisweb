@@ -5,7 +5,8 @@ namespace Activity\Form;
 use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Zend\InputFilter\FieldDependantValidator;
+use Zend\Validator\NotEmpty;
+//use Activity\Form\FieldDependant;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
@@ -43,6 +44,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         $this->add([
             'name' => 'min. value',
+            'required' => false,
+            'allowEmpty' => false,                            
             'options' => array(
                 'allowEmpty' => false,
                 'label' => 'Min. value'
@@ -52,7 +55,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->add([
             'name' => 'max. value',
             'options' => array(
-                'allowEmpty' => false,
                 'label' => 'Max. value'
             )
         ]);
@@ -60,7 +62,6 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->add([
             'name' => 'options',            
             'options' => array(
-                'allowEmpty' => false,
                 'label' => 'Options'
             )
         ]);
@@ -87,24 +88,41 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         ]
                     ],
                     ['name' => 'IsInt'],
+                    [
+                        'name' => 'Callback',
+                        'options' => [
+                            'messages' => [
+                            \Zend\Validator\Callback::INVALID_VALUE => 
+                                'Some of the required fields for this type are empty'
+                            ],
+                            'callback' => function($value, $context=null) {
+                                return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
+                                       $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
+                                       $this->fieldDependantRequired($value, $context, 'options', '3');
+                            }
+                        ]
+                    ]
                 ]
-            ],
-            'min. value' => [
-                'validators' => [
-                    new FieldDependantValidator('type', '2')
-                ]
-            ],
-            'max. value' => [
-                'validators' => [
-                    new FieldDependantValidator('type', '2')
-                ]
-            ],
-            'options' => [
-                'validators' => [
-                    new FieldDependantValidator('type', '3')
-                ]
-            ]//*/
+            ]
         ];
     }
 
+    /**
+     * Tests if the child field is not empty if the current field has the test
+     * value. If so, returns true else false.
+     * 
+     * @param string $value The value to use for validation
+     * @param array $context The field context
+     * @param string $child The name of the element to test for emptiness
+     * @param string $testvalue 
+     * @return boolean 
+     */
+    public function fieldDependantRequired($value, $context, $child, $testvalue){
+        
+        if ($value === $testvalue){
+            return (new NotEmpty())->isValid($context[$child]);
+        }
+            
+        return true;
+    }
 }
