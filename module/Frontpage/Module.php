@@ -39,11 +39,32 @@ class Module
     {
         return array(
             'invokables' => array(
-                'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage'
+                'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
+                'frontpage_service_page' => 'Frontpage\Service\Page'
             ),
             'factories' => array(
+                'frontpage_form_page' => function ($sm) {
+                    $form = new \Frontpage\Form\Page(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('frontpage_hydrator_page'));
+                    return $form;
+                },
+                'frontpage_hydrator_page' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('frontpage_doctrine_em'),
+                        'Frontpage\Model\Page'
+                    );
+                },
+                'frontpage_mapper_page' => function ($sm) {
+                    return new Mapper\Page(
+                        $sm->get('frontpage_doctrine_em')
+                    );
+                },
                 'frontpage_acl' => function ($sm) {
                     $acl = $sm->get('acl');
+
+                    $acl->addResource('page');
 
                     return $acl;
                 },

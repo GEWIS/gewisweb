@@ -74,6 +74,12 @@ class Module
                 'scriptUrl' => function ($sm) {
                     $helper = new \Application\View\Helper\ScriptUrl();
                     return $helper;
+                },
+                'isAllowed' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\Acl();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
                 }
             )
         );

@@ -65,8 +65,27 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = ' . ActivityModel::STATUS_TO_APPROVE);
+            ->where('a.status = ' . ActivityModel::STATUS_TO_APPROVE)
+            ->orderBy('a.beginTime', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
 
+    /**
+     * Get upcoming activities sorted by date
+     *
+     * @param integer $count Optional number of activities to retrieve.
+     *
+     * @return array
+     */
+    public function getUpcomingActivities($count = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->orderBy('a.beginTime', 'DESC');
+        if(!is_null($count)) {
+            $qb->setMaxResults($count);
+        }
         return $qb->getQuery()->getResult();
     }
 

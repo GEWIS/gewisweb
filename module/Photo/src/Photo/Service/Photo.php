@@ -2,7 +2,7 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
@@ -10,7 +10,7 @@ use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 /**
  * Photo service.
  */
-class Photo extends AbstractService
+class Photo extends AbstractAclService
 {
     /**
      * Retrieves a photo by an id.
@@ -20,6 +20,12 @@ class Photo extends AbstractService
      */
     public function getPhoto($id)
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+
         return $this->getPhotoMapper()->getPhotoById($id);
     }
 
@@ -32,6 +38,12 @@ class Photo extends AbstractService
      */
     public function getNextPhoto($photo)
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+
         return $this->getPhotoMapper()->getNextPhoto($photo);
     }
 
@@ -44,6 +56,12 @@ class Photo extends AbstractService
      */
     public function getPreviousPhoto($photo)
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+
         return $this->getPhotoMapper()->getPreviousPhoto($photo);
     }
 
@@ -58,6 +76,12 @@ class Photo extends AbstractService
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+
         return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $maxResults);
     }
 
@@ -92,6 +116,12 @@ class Photo extends AbstractService
      */
     public function getPhotoDownload($photoId)
     {
+        if (!$this->isAllowed('download')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to download photos')
+            );
+        }
+
         $photo = $this->getPhoto($photoId);
         $config = $this->getConfig();
         $file = $config['upload_dir'] . '/' . $photo->getPath();
@@ -126,6 +156,12 @@ class Photo extends AbstractService
      */
     public function getPhotoData($photoId)
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+
         $photo = $this->getPhoto($photoId);
 
         // photo does not exist
@@ -154,6 +190,12 @@ class Photo extends AbstractService
      */
     public function deletePhoto($photoId)
     {
+        if (!$this->isAllowed('delete')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to delete photos.')
+            );
+        }
+
         $photo = $this->getPhoto($photoId);
         if (is_null($photo)) {
             return false;
@@ -206,6 +248,12 @@ class Photo extends AbstractService
      */
     public function movePhoto($photoId, $albumId)
     {
+        if (!$this->isAllowed('move')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to move photos')
+            );
+        }
+
         $photo = $this->getPhoto($photoId);
         $album = $this->getAlbumService()->getAlbum($albumId);
         if (is_null($photo) || is_null($album)) {
@@ -310,6 +358,12 @@ class Photo extends AbstractService
      */
     public function findTag($photoId, $lidnr)
     {
+        if (!$this->isAllowed('view', 'tag')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view tags.')
+            );
+        }
+
         return $this->getTagMapper()->findTag($photoId, $lidnr);
     }
 
@@ -323,6 +377,12 @@ class Photo extends AbstractService
      */
     public function addTag($photoId, $lidnr)
     {
+        if (!$this->isAllowed('add', 'tag')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to add tags.')
+            );
+        }
+
         if (is_null($this->findTag($photoId, $lidnr))) {
             $photo = $this->getPhoto($photoId);
             $member = $this->getMemberService()->findMemberByLidnr($lidnr);
@@ -349,6 +409,12 @@ class Photo extends AbstractService
      */
     public function removeTag($photoId, $lidnr)
     {
+        if (!$this->isAllowed('remove', 'tag')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to remove tags.')
+            );
+        }
+
         $tag = $this->findTag($photoId, $lidnr);
         if (!is_null($tag)) {
             $this->getTagMapper()->remove($tag);
@@ -369,8 +435,15 @@ class Photo extends AbstractService
      */
     public function getTagsForMember($member)
     {
+        if (!$this->isAllowed('view', 'tag')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view tags.')
+            );
+        }
+
         return $this->getTagMapper()->getTagsByLidnr($member->getLidnr());
     }
+
     /**
      * Gets the base directory from which the photo paths should be requested
      *
@@ -467,6 +540,26 @@ class Photo extends AbstractService
     public function getMemberService()
     {
         return $this->sm->get('decision_service_member');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'photo';
+    }
+
+    /**
+     * Get the Acl.
+     *
+     * @return \Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->sm->get('photo_acl');
     }
 
 }

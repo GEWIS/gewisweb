@@ -30,6 +30,27 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Document upload action.
+     */
+    public function documentAction()
+    {
+        $service = $this->getDecisionService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            if ($service->uploadDocument($request->getPost(), $request->getFiles())) {
+                return new ViewModel(array(
+                    'success' => true
+                ));
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $service->getDocumentForm()
+        ));
+    }
+
+    /**
      * Get the decision service.
      */
     public function getDecisionService()

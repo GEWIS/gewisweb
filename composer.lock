@@ -4,8 +4,38 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "575c08ff13289d28c95147c12051fbf9",
+    "hash": "2eaabd0e666fbaa75f0d9da60868a57f",
     "packages": [
+        {
+            "name": "GEWIS/gewisweb-migrate",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GEWIS/gewisweb-migrate",
+                "reference": "97bcd8e0a071b05bcd262a20407f4cd857a59e44"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Migration": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Module for migration scripts to the new website",
+            "homepage": "https://github.com/GEWIS/gewisweb-migrate",
+            "keywords": [
+                "gewis"
+            ],
+            "time": "2015-08-10 18:02:10"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.6",
@@ -1054,7 +1084,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zendframework/zend-developer-tools": 20
+        "zendframework/zend-developer-tools": 20,
+        "gewis/gewisweb-migrate": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

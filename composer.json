@@ -7,11 +7,18 @@
         "gewis"
     ],
     "homepage": "http://gewis.nl/",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/GEWIS/gewisweb-migrate"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.4.*",
         "doctrine/doctrine-orm-module": "0.*",
         "zendframework/zend-developer-tools": "dev-master",
+        "GEWIS/gewisweb-migrate": "dev-master",
         "ext-gd": "^0.0.0",
         "ext-exif": "^0.0.0",
         "ext-imagick": "^3.1"

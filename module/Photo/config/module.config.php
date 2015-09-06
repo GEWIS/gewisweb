@@ -106,6 +106,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             ),
             'admin_photo' => array(
                 'type' => 'Literal',
@@ -306,6 +307,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             )
         ),
     ),
