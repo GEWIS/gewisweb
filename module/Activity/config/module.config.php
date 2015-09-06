@@ -59,50 +59,65 @@ return array(
                             )
                         )
                     ),
-                    'admin_queue' => array(
+                ),
+                'priority' => 100
+            ),
+            'admin_activity' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin/activity',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Activity\Controller',
+                        'controller' => 'admin',
+                        'action' => 'queue'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'queue' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route' => '/admin/queue',
+                            'route' => '/queue',
                             'defaults' => array(
                                 'controller' => 'admin',
                                 'action' => 'queue'
                             )
                         )
                     ),
-                    'admin_view' => array(
+                    'view' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/admin/view/[:id]',
+                            'route' => '/view/[:id]',
                             'defaults' => array(
                                 'controller' => 'admin',
                                 'action' => 'view'
                             )
                         )
                     ),
-                    'admin_approve' => array(
+                    'approve' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/admin/approve/[:id]',
+                            'route' => '/approve/[:id]',
                             'defaults' => array(
                                 'controller' => 'admin',
                                 'action' => 'approve'
                             )
                         )
                     ),
-                    'admin_disapprove' => array(
+                    'disapprove' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/admin/disapprove/[:id]',
+                            'route' => '/disapprove/[:id]',
                             'defaults' => array(
                                 'controller' => 'admin',
                                 'action' => 'disapprove'
                             )
                         )
                     ),
-                    'admin_reset' => array(
+                    'reset' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/admin/reset/[:id]',
+                            'route' => '/reset/[:id]',
                             'defaults' => array(
                                 'controller' => 'admin',
                                 'action' => 'reset'
@@ -110,7 +125,6 @@ return array(
                         )
                     )
                 ),
-                'priority' => 100
             ),
         ),
     ),

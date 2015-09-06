@@ -110,6 +110,6 @@ class AdminController extends AbstractActionController
 
         }
 
-        return $this->redirect()->toRoute('activity/admin_queue');
+        return $this->redirect()->toRoute('admin_activity/queue');
     }
 }
