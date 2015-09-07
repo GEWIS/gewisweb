@@ -82,10 +82,14 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->orderBy('a.beginTime', 'DESC');
+            ->where('a.endTime > :now')
+            ->orderBy('a.beginTime', 'ASC');
         if(!is_null($count)) {
             $qb->setMaxResults($count);
         }
+
+        $qb->setParameter('now', new \DateTime());
+
         return $qb->getQuery()->getResult();
     }
 
