@@ -43,11 +43,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
         
         $this->add([
-            'name' => 'min. value',
-            'required' => false,
-            'allowEmpty' => false,                            
+            'name' => 'min. value',                          
             'options' => array(
-                'allowEmpty' => false,
                 'label' => 'Min. value'
             )
         ]);
@@ -103,7 +100,17 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         ]
                     ]
                 ]
-            ]
+            ],
+            'min. value' => [
+                'validators' => [
+                    ['name' => 'IsInt']
+                ]
+            ],
+            'max. value' => [
+                'validators' => [
+                    ['name' => 'IsInt']
+                ]
+            ]                    
         ];
     }
 

@@ -55,7 +55,6 @@ class ActivityController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());            
             echo var_dump($this->getRequest()->getPost());
             if ($form->isValid()) {
-                echo 'WE DID IT!';
                 echo var_dump($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
                 $activity = $activityService->createActivity($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
                 
