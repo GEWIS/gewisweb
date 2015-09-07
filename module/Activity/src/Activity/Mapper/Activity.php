@@ -56,21 +56,6 @@ class Activity
     }
 
     /**
-     * Get all the unapproved activities
-     *
-     * @return array
-     */
-    public function getUnapprovedActivities()
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = ' . ActivityModel::STATUS_TO_APPROVE)
-            ->orderBy('a.beginTime', 'DESC');
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Get upcoming activities sorted by date
      *
      * @param integer $count Optional number of activities to retrieve.
@@ -83,7 +68,7 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
-            ->where('a.status =' . ActivityModel::STATUS_APPROVED)
+            ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
 
         if(!is_null($count)) {
@@ -91,6 +76,7 @@ class Activity
         }
 
         $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
         return $qb->getQuery()->getResult();
     }
@@ -102,12 +88,7 @@ class Activity
      */
     public function getApprovedActivities()
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = ' . ActivityModel::STATUS_APPROVED);
-
-        return $qb->getQuery()->getResult();
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_APPROVED);
     }
 
     /**
@@ -117,10 +98,34 @@ class Activity
      */
     public function getDisapprovedActivities()
     {
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_DISAPPROVED);
+    }
+
+    /**
+     * Get all the unapproved activities
+     *
+     * @return array
+     */
+    public function getUnapprovedActivities()
+    {
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_TO_APPROVE);
+    }
+
+    /**
+     * Get all the activities with a specific status
+     *
+     * @param integer $status
+     * @return array
+     */
+    protected function getActivitiesByStatus($status)
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = ' . ActivityModel::STATUS_DISAPPROVED);
+            ->where('a.status = :status')
+            ->orderBy('a.beginTime', 'DESC');
+
+        $qb->setParameter('status', $status);
 
         return $qb->getQuery()->getResult();
     }
