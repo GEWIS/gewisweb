@@ -10,7 +10,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Represents a vote on a poll option.
  *
  * @ORM\Entity
- * @ORM\Table(name="PollVote")
+ * @ORM\Table(name="PollVote",uniqueConstraints={@ORM\UniqueConstraint(name="vote_idx", columns={"poll", "respondent"})})
  */
 class PollVote implements ResourceInterface
 {
