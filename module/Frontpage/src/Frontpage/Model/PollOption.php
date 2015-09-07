@@ -44,9 +44,9 @@ class PollOption implements ResourceInterface
     protected $englishText;
 
     /**
-     * @ORM\OneToMany(targetEntity="PollResponse", mappedBy="pollOption", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="PollVote", mappedBy="pollOption", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
-    protected $responses;
+    protected $votes;
 
     /**
      * @return integer
@@ -77,9 +77,9 @@ class PollOption implements ResourceInterface
      *
      * @return integer
      */
-    public function getResponseCount()
+    public function getVotesCount()
     {
-        return $this->responses->count();
+        return $this->votes->count();
     }
 
     /**

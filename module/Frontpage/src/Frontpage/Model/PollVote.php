@@ -10,9 +10,9 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  * Represents a vote on a poll option.
  *
  * @ORM\Entity
- * @ORM\Table(name="PollResponse")
+ * @ORM\Table(name="PollVote")
  */
-class PollResponse implements ResourceInterface
+class PollVote implements ResourceInterface
 {
 
 
@@ -29,7 +29,7 @@ class PollResponse implements ResourceInterface
      * The option which was chosen.
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Frontpage\Model\PollOption", inversedBy="responses")
+     * @ORM\ManyToOne(targetEntity="Frontpage\Model\PollOption", inversedBy="votes")
      * @ORM\JoinColumn(name="option_id",referencedColumnName="id")
      */
     protected $pollOption;

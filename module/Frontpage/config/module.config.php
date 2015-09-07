@@ -86,7 +86,7 @@ return [
                         ],
                     ],
                     'upload' => [
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => [
                             'route' => '/upload',
                             'defaults' => [
@@ -97,6 +97,54 @@ return [
                 ],
                 'priority' => 100
             ],
+            'poll' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/poll',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'Poll',
+                        'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'history' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/history',
+                            'defaults' => array(
+                                'action' => 'history',
+                            ),
+                        ),
+                    ),
+                    'view' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:poll_id]/view',
+                            'constraints' => array(
+                                'poll_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'view',
+                            ),
+                        ),
+                    ),
+                    'vote' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:poll_id]/vote',
+                            'constraints' => array(
+                                'poll_id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'view',
+                            ),
+                        ),
+                    ),
+                ),
+                'priority' => 100
+            ),
         ],
     ],
     'view_manager' => [
