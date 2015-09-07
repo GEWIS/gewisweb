@@ -83,7 +83,9 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
+            ->where('a.status =' . ActivityModel::STATUS_APPROVED)
             ->orderBy('a.beginTime', 'ASC');
+
         if(!is_null($count)) {
             $qb->setMaxResults($count);
         }
