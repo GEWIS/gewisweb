@@ -136,7 +136,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 1,
-                            'max' => 10,
+                            'max' => 100,
                         ],
                     ],
                 ],
