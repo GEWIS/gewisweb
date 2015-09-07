@@ -10,8 +10,50 @@ use Application\Service\AbstractAclService;
 class Poll extends AbstractAclService
 {
 
+    public function getNewestPoll()
+    {
+        return $this->getPollMapper()->getNewestPoll();
+    }
 
+    /**
+     * Returns details about a poll.
+     *
+     * @param \Frontpage\Model\Poll $poll
+     * @return array
+     */
+    public function getPollDetails($poll)
+    {
+        $totalVotes = 0;
+        foreach ($poll->getOptions() as $option) {
+            $totalVotes += $option->getVotesCount();
+        }
 
+        $percentages = array();
+        foreach ($poll->getOptions() as $option) {
+            if ($totalVotes > 0) {
+                $percentages[$option->getId()] = round($option->getVotesCount() / $totalVotes * 100);
+            } else {
+                $percentages[$option->getId()] = 0;
+            }
+        }
+
+        return array(
+            'totalVotes' => $totalVotes,
+            'percentages' => $percentages
+        );
+    }
+
+    /**
+     * Determines wether the current user can vote on the given poll.
+     *
+     * @param \Frontpage\Model\Poll $poll
+     *
+     * @return boolean
+     */
+    public function canVote($poll)
+    {
+
+    }
 
     /**
      * Get the poll mapper.

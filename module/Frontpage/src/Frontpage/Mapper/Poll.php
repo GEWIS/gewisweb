@@ -40,6 +40,25 @@ class Poll
     }
 
     /**
+     * Returns the latest poll if one is available
+     *
+     * @return \Frontpage\Model\Poll|null
+     */
+    public function getNewestPoll() {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('p')
+            ->from('Frontpage\Model\Poll', 'p')
+            ->andWhere('p.expiryDate > CURRENT_DATE()')
+            ->setMaxResults(1)
+            ->orderBy('p.expiryDate', 'DESC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
      * Removes a poll.
      *
      * @param \Frontpage\Model\Poll $poll

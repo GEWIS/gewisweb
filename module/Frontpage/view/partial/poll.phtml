@@ -1,0 +1,29 @@
+<h4><?= ($this->lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion() ?></h4>
+<?php foreach ($this->poll->getOptions() as $this->option): ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="radio" name="pollOption">
+                <label>
+                    <input type="radio"/>
+                    <strong><?= ($this->lang === 'en') ? $this->option->getEnglishText() : $this->option->getDutchText() ?></strong>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="progress">
+                <div class="progress-bar poll-bar" role="progressbar"
+                     aria-valuenow="<?= $this->percentages[$this->option->getId()] ?>"
+                     aria-valuemin="0" aria-valuemax="100"
+                     style="min-width: 2em; width: <?= $this->percentages[$this->option->getId()] ?>%;">
+                    <?= $this->percentages[$this->option->getId()] ?>%
+                </div>
+            </div>
+        </div>
+<div class="col-md-1">
+    <span class="pull-right"><?= sprintf($this->translate('%d votes'), $this->option->getVotesCount()) ?></span>
+</div>
+    </div>
+<?php endforeach; ?>
+<p>
+    <a href="#" class="btn btn-large btn-success">Vote</a>
+</p>
