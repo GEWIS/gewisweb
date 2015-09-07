@@ -5,6 +5,7 @@ return [
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
+            'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
         ],
     ],
     'router' => [

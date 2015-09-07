@@ -40,8 +40,10 @@ class Module
         return [
             'invokables' => [
                 'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
-                'frontpage_service_page' => 'Frontpage\Service\Page'
-            ],
+                'frontpage_service_page' => 'Frontpage\Service\Page',
+                'frontpage_service_page' => 'Frontpage\Service\Page',
+                'frontpage_service_poll' => 'Frontpage\Service\Poll'
+             ],
             'factories' => [
                 'frontpage_form_page' => function ($sm) {
                     $form = new \Frontpage\Form\Page(
@@ -58,6 +60,11 @@ class Module
                 },
                 'frontpage_mapper_page' => function ($sm) {
                     return new Mapper\Page(
+                        $sm->get('frontpage_doctrine_em')
+                    );
+                },
+                'frontpage_mapper_poll' => function ($sm) {
+                    return new Mapper\Poll(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
