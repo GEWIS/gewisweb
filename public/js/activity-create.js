@@ -11,6 +11,8 @@ function add_field() {
          template = template.replace(/__index__/g, currentCount);
          //Add an id to the field.
          template = template.replace(/<fieldset/g, '<fieldset id="'+'fieldset'+ currentCount + '"');
+         //Add a some dynamic stuff to the combobox
+         template = template.replace(/[type]"/g, '[type]"'+ ' onchange="disable_field(' + currentCount + ')"');
          $('form > fieldset').append(template);
          
          return false;
