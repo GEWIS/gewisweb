@@ -3,6 +3,7 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/photo-admin.js')
     ->prependFile($this->basePath() . '/js/photo.js');
 $this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/tree.css')
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
 $this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page'))

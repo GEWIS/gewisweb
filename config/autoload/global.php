@@ -29,17 +29,6 @@ return array(
     'bcrypt_cost' => 13,
 
     /**
-     * Email configuration.
-     */
-    'email' => array(
-        'transport' => 'File',
-        'options' => array(
-            'path' => 'data/mail/'
-        ),
-        'from' => 'web@gewis.nl'
-    ),
-
-    /**
      * Exam and Summary upload directory configration.
      */
     'education' => array(
@@ -54,6 +43,15 @@ return array(
     'meeting-notes' => array(
         'upload_dir' => 'public/data/meeting-notes',
         'public_dir' => 'data/meeting-notes',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
+    /**
+     * Meeting documents upload directory.
+     */
+    'meeting-documents' => array(
+        'upload_dir' => 'public/data/meeting-documents',
+        'public_dir' => 'data/meeting-documents',
         'dir_mode' => 0777, // rwx by default
     ),
 
@@ -97,6 +95,10 @@ return array(
             'rows' => 2,
             'background' => '#000000'
         )
+    ),
+
+    'frontpage' => array(
+        'activity_count' => 3 // Number of activities to display
     ),
     
     /**

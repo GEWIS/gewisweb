@@ -105,6 +105,26 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_acl' => function ($sm) {
+                    $acl = $sm->get('acl');
+
+                    // add resources for this module
+                    $acl->addResource('photo');
+                    $acl->addResource('album');
+                    $acl->addResource('tag');
+
+                    // Guests are allowed to view photos and albums
+                    $acl->allow('guest', 'photo', 'view');
+                    $acl->allow('guest', 'album', 'view');
+
+                    // Users are allowed to view, remove and add tags
+                    $acl->allow('user', 'tag', array('view', 'add', 'remove'));
+
+                    // Users are allowed to download photos
+                    $acl->allow('user', 'photo', array('download', 'view_metadata'));
+
+                    return $acl;
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 // reused code from the eduction module

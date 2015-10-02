@@ -72,6 +72,7 @@ return array(
                         ),
                     ),
                 ),
+                'priority' => 100
             ),
         ),
     ),

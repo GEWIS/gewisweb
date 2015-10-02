@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 
 use Decision\Form\Notes;
 
+use Decision\Model\MeetingDocument;
+
 /**
  * Decision service.
  */
@@ -77,6 +79,22 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the base path for meeting documents.
+     *
+     * @param Decision\Model\Meeting $meeting
+     *
+     * @return string
+     */
+    public function getMeetingDocumentBasePath(\Decision\Model\Meeting $meeting)
+    {
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-documents'];
+
+        return $config['public_dir'] . '/'
+             . $meeting->getType() . '/' . $meeting->getNumber();
+    }
+
+    /**
      * Upload meeting notes.
      *
      * @param array|Traversable $post
@@ -119,6 +137,58 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Upload a meeting document.
+     *
+     * @param array|Traversable $post
+     * @param array|Traversable $files
+     *
+     * @return boolean If uploading was a success
+     */
+    public function uploadDocument($post, $files)
+    {
+        $form = $this->getDocumentForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $config = $this->getServiceManager()->get('config');
+        $config = $config['meeting-documents'];
+
+        $filename = $data['meeting'] . '/' .$data['upload']['name'];
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (file_exists($path)) {
+            $form->setError(Notes::ERROR_FILE_EXISTS);
+            return false;
+        }
+
+        $meeting = explode('/', $data['meeting']);
+        $meeting = $this->getMeeting($meeting[0], $meeting[1]);
+
+        $document = new MeetingDocument();
+        $document->setPath($data['upload']['name']);
+        $document->setName($data['name']);
+        $document->setMeeting($meeting);
+
+        // finish upload and save in the database
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), $config['dir_mode'], true);
+        }
+        move_uploaded_file($data['upload']['tmp_name'], $path);
+
+        $this->getMeetingMapper()->persistDocument($document);
+
+        return true;
+    }
+
+    /**
      * Search for decisions.
      *
      * @param array|Traversable $data Search data
@@ -152,7 +222,7 @@ class Decision extends AbstractAclService
      *
      * @return Decision\Form\Notes
      */
-    public function getNotesform()
+    public function getNotesForm()
     {
         if (!$this->isAllowed('upload_notes', 'meeting')) {
             $translator = $this->getTranslator();
@@ -161,6 +231,22 @@ class Decision extends AbstractAclService
             );
         }
         return $this->sm->get('decision_form_notes');
+    }
+
+    /**
+     * Get the Document form.
+     *
+     * @return Decision\Form\Document
+     */
+    public function getDocumentForm()
+    {
+        if (!$this->isAllowed('upload_document', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload meeting documents.')
+            );
+        }
+        return $this->sm->get('decision_form_document');
     }
 
     /**

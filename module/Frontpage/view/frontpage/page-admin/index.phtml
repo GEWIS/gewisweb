@@ -1,0 +1,55 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/js/tree.js');
+$this->headLink()->prependStylesheet($this->basePath() . '/css/tree.css')
+?>
+<h3><?= $this->translate('Pages') ?></h3>
+
+<a href="<?= $this->url('admin_page/create') ?>" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;
+    <?= $this->translate('Create a new page') ?>
+</a>
+<?= $this->translate('Or select a page to edit below.') ?>
+<hr>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="tree">
+                    <?php
+                    function showTree($pages, $context)
+                    {
+                        foreach ($pages as $category => $data): ?>
+                            <li>
+                                <?php if (isset($data['page'])): ?>
+                                    <a
+                                        href="<?= $context->url('admin_page/edit',
+                                            array('page_id' => $data['page']->getId())) ?>">
+                                        <?= $category ?> (<?= $data['page']->getEnglishTitle() ?>)
+                                    </a>
+                                <?php else: ?>
+                                    <?= $category ?>
+                                <?php endif ?>
+
+                                <?php if (!empty($data['children'])): ?>
+                                    <ul>
+                                        <?php showTree($data['children'], $context); ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </li>
+                        <?php
+                        endforeach;
+                    }
+
+                    showTree($pages, $this);
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.tree').treed();
+        Photo.Admin.init();
+    });
+</script>

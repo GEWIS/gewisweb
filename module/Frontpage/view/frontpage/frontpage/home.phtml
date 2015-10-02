@@ -1,7 +1,35 @@
-<div class="jumbotron">
-    <h2><?= $this->translate('Study association GEWIS') ?></h2>
-    <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
-    <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
+<div class="row">
+    <div class="col-md-8">
+        <h2><?= $this->translate('Study association GEWIS') ?></h2>
+        <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
+        <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <div class="well agenda">
+            <h3><strong><?= $this->translate('Agenda') ?></strong></h3>
+            <?php foreach($activities as $activity): ?>
+                <div class="agenda-item">
+                    <a href="<?= $this->url('activity/view', array('id' => $activity->get('id'))) ?>">
+                        <div class="date-icon">
+                            <div class="day">
+                                <h4><strong><?= $activity->get('beginTime')->format('d') ?></strong></h4>
+                            </div>
+                            <div class="month">
+                                <?= $activity->get('beginTime')->format('M') ?>
+                            </div>
+                        </div>
+                        &nbsp;<h4><?= $activity->get('name'); ?></h4>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+            <?= sprintf(
+                $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
+                '<a href="~bac">',
+                '</a>'
+                )
+            ?>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-6">

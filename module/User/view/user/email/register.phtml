@@ -1,18 +1,15 @@
-<?php
-$name = $this->member->getFirstName() . ' ' . $this->member->getLastName();
-?>
-<?= sprintf($this->translate('Dear %s,'), $name) . "\n" ?>
+<?= sprintf($this->translate('Dear %s,'), $member->getFullName()) . "\n" ?>
 
 <?= $this->translate('You have been registered on the website of Study association GEWIS, with the following information:') . "\n" ?>
 
-- <?= $this->translate('Membership number:') ?> <?= $this->user->getLidnr() . "\n" ?>
-- <?= $this->translate('Email address:') ?> <?= $this->user->getEmail() . "\n" ?>
+- <?= $this->translate('Membership number:') ?> <?= $user->getLidnr() . "\n" ?>
+- <?= $this->translate('Email address:') ?> <?= $user->getEmail() . "\n" ?>
 
 <?= $this->translate('You can activate your account on the following link:') . "\n" ?>
 
-<?= $this->serverUrl($this->url('user/activate', array('code' => $this->user->getCode()))) . "\n" ?>
+<?= $this->serverUrl($this->url('user/activate', array('code' => $user->getCode()))) . "\n" ?>
 
-<?= $this->translate('Your activation code is:') ?> <?= $this->user->getCode() . "\n" ?>
+<?= $this->translate('Your activation code is:') ?> <?= $user->getCode() . "\n" ?>
 
 <?= $this->translate('Best Regards,') . "\n" ?>
 

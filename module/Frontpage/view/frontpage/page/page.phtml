@@ -1,0 +1,9 @@
+<?php if($lang === 'en'): ?>
+    <h3><?= $this->escapeHtml($page->getEnglishTitle()) ?></h3>
+    <?php $this->headTitle($page->getEnglishTitle()) ?>
+<?php else: ?>
+    <h3><?= $this->escapeHtml($page->getDutchTitle()) ?></h3>
+    <?php $this->headTitle($page->getDutchTitle()) ?>
+<?php endif; ?>
+
+<?= $lang === 'en' ? $page->getEnglishContent() : $page->getDutchContent() ?>

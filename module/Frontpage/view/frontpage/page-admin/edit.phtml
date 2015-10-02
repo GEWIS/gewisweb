@@ -1,0 +1,133 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js');
+$this->scriptUrl()->requireUrl('admin_page/upload');
+?>
+    <?php
+    $form = $this->form;
+    $form->prepare();
+
+    $form->setAttribute('method', 'post');
+    $form->setAttribute('role', 'form');
+    ?>
+    <?= $this->form()->openTag($form); ?>
+<h3><?= $this->translate('URL options') ?></h3>
+<?= $this->translate('Make this page available at the following URL. Providing a category is required.') ?>
+</br>
+    <div class="form-group form-inline">
+        <?php
+        $category = $form->get('category');
+        $subCategory = $form->get('subCategory');
+        $name = $form->get('name');
+
+        $category->setAttribute('class', 'form-control');
+        $subCategory->setAttribute('class', 'form-control');
+        $name->setAttribute('class', 'form-control');
+
+        $category->setAttribute('placeholder', 'category');
+        $subCategory->setAttribute('placeholder', 'sub-category');
+        $name->setAttribute('placeholder', 'name');
+
+        $category->setAttribute('required', 'required');
+        ?>
+        <strong>
+        <?= $this->serverUrl($this->basePath()) ?>/
+        <?= $this->formInput($category); ?>/
+        <?= $this->formInput($subCategory); ?>/
+        <?= $this->formInput($name); ?>
+        </strong>
+    </div>
+
+<?= $this->formElementErrors($category); ?>
+<?= $this->formElementErrors($subCategory); ?>
+<?= $this->formElementErrors($name); ?>
+<hr>
+
+<h3><?= $this->translate('English content') ?></h3>
+<div class="form-group">
+    <?php
+    $element = $form->get('englishTitle');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('englishContent');
+    $element->setAttribute('id', 'englishContent');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextarea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<hr>
+<h3><?= $this->translate('Dutch content') ?></h3>
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchTitle');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchContent');
+    $element->setAttribute('id', 'dutchContent');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextarea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<hr>
+<h3><?= $this->translate('Permissions') ?></h3>
+Set the minimal role required to view this page. All visitors whom have this role may view the page.
+<div class="form-group">
+    <?php
+    $element = $form->get('requiredRole');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+<hr>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Save'));
+    $submit->setAttribute('class', 'btn btn-primary');
+    ?>
+    <?= $this->formButton($submit) ?>
+
+    <?php if($canDelete): ?>
+        <a href="<?= $this->url('admin_page/delete', array('page_id' => $pageId)) ?>" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            <?= $this->translate('Delete this page') ?>
+        </a>
+    <?php endif ?>
+
+    <?= $this->form()->closeTag(); ?>
+<script>
+    CKEDITOR.replace('englishContent', {
+        // Spelling checker language
+        'scayt_sLang': 'en_US',
+        'height': 500
+    });
+
+    CKEDITOR.replace('dutchContent', {
+        // Spelling checker language
+        'scayt_sLang': 'nl_NL',
+        'height': 500
+    });
+</script>

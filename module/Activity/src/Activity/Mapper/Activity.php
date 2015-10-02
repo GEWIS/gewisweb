@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use \Activity\Model\Activity as ActivityModel;
 
 class Activity
 {
@@ -55,16 +56,76 @@ class Activity
     }
 
     /**
-     * get all activities including options.
+     * Get upcoming activities sorted by date
+     *
+     * @param integer $count Optional number of activities to retrieve.
      *
      * @return array
      */
-    public function getAllApproved()
+    public function getUpcomingActivities($count = null)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where('a.approved = 1');
+            ->where('a.endTime > :now')
+            ->andWhere('a.status = :status')
+            ->orderBy('a.beginTime', 'ASC');
+
+        if(!is_null($count)) {
+            $qb->setMaxResults($count);
+        }
+
+        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * get all activities including options.
+     *
+     * @return array
+     */
+    public function getApprovedActivities()
+    {
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_APPROVED);
+    }
+
+    /**
+     * Get all disapproved activitiesa.
+     *
+     * @return array
+     */
+    public function getDisapprovedActivities()
+    {
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_DISAPPROVED);
+    }
+
+    /**
+     * Get all the unapproved activities
+     *
+     * @return array
+     */
+    public function getUnapprovedActivities()
+    {
+        return $this->getActivitiesByStatus(ActivityModel::STATUS_TO_APPROVE);
+    }
+
+    /**
+     * Get all the activities with a specific status
+     *
+     * @param integer $status
+     * @return array
+     */
+    protected function getActivitiesByStatus($status)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.status = :status')
+            ->orderBy('a.beginTime', 'DESC');
+
+        $qb->setParameter('status', $status);
 
         return $qb->getQuery()->getResult();
     }
