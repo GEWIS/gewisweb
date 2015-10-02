@@ -15,7 +15,7 @@
         <div class="col-md-2"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s');?></div>
         <div class="col-md-2"><?php echo $activity->get('endTime')->format('Y-m-d H:i:s');?></div>
         <div class="col-md-1"><?php echo $activity->get('location');?></div>
-        <div class="col-md-1"><?php echo $activity->get('costs');?></div>
+        <div class="col-md-1"><?php echo $this->translate($activity->getCostString());?></div>
         <div class="col-md-1"><a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', array( 'id' => $activity->get('id')))?>">
                 <?php echo $this->translate('View');?></a>
         </div>

@@ -62,6 +62,16 @@ class Activity extends Form
         ]);
 
         $this->add([
+            'name' => 'costs_unknown',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ),
+        ]);
+
+        $this->add([
             'name' => 'approved',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
@@ -125,7 +135,6 @@ class Activity extends Form
             'name' => 'endTime',
             'required' => true,
         ]));
-
         $inputFilter->add($factory->createInput([
             'name' => 'name',
             'required' => true,
@@ -186,6 +195,11 @@ class Activity extends Form
                     ],
                 ],
             ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'costs_unknown',
+            'required' => true
         ]));
 
         $inputFilter->add($factory->createInput([

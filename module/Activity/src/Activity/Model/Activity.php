@@ -59,7 +59,7 @@ class Activity
     /**
      * How much does it cost. 0 = free!
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $costs;
 
@@ -154,6 +154,15 @@ class Activity
     }
 
     /**
+     * Get a string format of the costs. Either a number or unknown
+     * @return string
+     */
+    public function getCostString()
+    {
+        return is_null($this->costs) ? 'Unknown' : $this->costs;
+    }
+
+    /**
      * Create a new activity.
      *
      * @param array $params Parameters for the new activity
@@ -173,6 +182,11 @@ class Activity
                 throw new \Exception("create: parameter $param not set");
             }
             $this->$param = $params[$param];
+        }
+
+        // If the costs are not yet known, set them to null
+        if (isset($params['costs_unknown']) && $params['costs_unknown'] == 1) {
+            $this->costs = null;
         }
 
         /** @var $user User*/
