@@ -43,6 +43,7 @@ echo $this->form()->openTag($form);
 			</div>
 			<div class = "col-md-8">
 				<?php echo $this->formRow($form->get('costs')); ?>
+                <?php echo $this->formRow($form->get('costs_unknown'));?> <?php echo $this->translate('Unknown');?>
 			</div>
 		</div>
         <div class="row">

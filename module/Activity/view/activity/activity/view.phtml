@@ -24,7 +24,7 @@
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Costs'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('costs');?></div>
+    <div class="col-md-6"><?php echo $this->translate($activity->getCostString()); ?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Subscribe'); ?></div>
