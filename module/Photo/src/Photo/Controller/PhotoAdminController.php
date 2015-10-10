@@ -60,6 +60,13 @@ class PhotoAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    public function weeklyPhotoAction()
+    {
+        $this->getPhotoService()->generatePhotoOfTheWeek(
+            (new \DateTime())->sub(new \DateInterval('P2Y')),
+            new \DateTime()
+        );
+    }
     /**
      * Get the photo service.
      *
