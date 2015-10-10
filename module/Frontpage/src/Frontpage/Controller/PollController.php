@@ -11,14 +11,18 @@ class PollController extends AbstractActionController
     public function indexAction()
     {
         $poll = $this->getPollService()->getNewestPoll();
-        $details = $this->getPollService()->getPollDetails($poll);
+        if(!is_null($poll)) {
+            $details = $this->getPollService()->getPollDetails($poll);
 
-        $session = new SessionContainer('lang');
+            $session = new SessionContainer('lang');
 
-        return new ViewModel(array_merge($details, array(
-            'poll' => $poll,
-            'lang' => $session->lang
-        )));
+            return new ViewModel(array_merge($details, array(
+                'poll' => $poll,
+                'lang' => $session->lang
+            )));
+        } else {
+            return new ViewModel();
+        }
     }
 
     public function voteAction()

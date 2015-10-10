@@ -119,6 +119,15 @@ return [
                             ),
                         ),
                     ),
+                    'request' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/request',
+                            'defaults' => array(
+                                'action' => 'request',
+                            ),
+                        ),
+                    ),
                     'view' => array(
                         'type' => 'Segment',
                         'options' => array(
