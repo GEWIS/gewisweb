@@ -16,10 +16,12 @@ class UserController extends AbstractActionController
         $userService = $this->getUserService();
 
         if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
             // try to login
-            $login = $userService->login($this->getRequest()->getPost());
+            $login = $userService->login($data);
 
             if (null !== $login) {
+                $this->redirect()->toUrl($data['redirect']);
                 return new ViewModel(array(
                     'login' => true
                 ));
@@ -27,8 +29,15 @@ class UserController extends AbstractActionController
         }
 
         // show form
+        $form = $userService->getLoginForm();
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
+        } else {
+            $form->get('redirect')->setValue($this->url()->fromRoute('home'));
+        }
+
         return new ViewModel(array(
-            'form' => $userService->getLoginForm()
+            'form' => $form
         ));
     }
 
