@@ -31,7 +31,7 @@ class WeeklyPhoto
     /**
      * Check whether the given photo has been a photo of the week.
      * 
-     * @param Photo\Model\Photo $photo
+     * @param \Photo\Model\Photo $photo
      * @return boolean
      */
     public function hasBeenPhotoOfTheWeek($photo)

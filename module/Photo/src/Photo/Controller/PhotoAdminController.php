@@ -62,10 +62,13 @@ class PhotoAdminController extends AbstractActionController
 
     public function weeklyPhotoAction()
     {
-        $this->getPhotoService()->generatePhotoOfTheWeek(
-            (new \DateTime())->sub(new \DateInterval('P2Y')),
-            new \DateTime()
-        );
+        $weeklyPhoto = $this->getPhotoService()->generatePhotoOfTheWeek();
+
+        if(is_null($weeklyPhoto)) {
+            echo "No photo of the week chosen, where any photos viewed?\n";
+        } else {
+            echo "Photo of the week set to photo: " . $weeklyPhoto->getPhoto()->getId();
+        }
     }
     /**
      * Get the photo service.
