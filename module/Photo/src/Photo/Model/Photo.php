@@ -286,6 +286,14 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * @return \Photo\Model\WeeklyPhoto|null
+     */
+    public function getWeeklyPhoto()
+    {
+        return $this->weeklyPhoto;
+    }
+
+    /**
      * Set the dateTime.
      *
      * @param \DateTime $dateTime
