@@ -37,9 +37,12 @@ class Poll extends AbstractAclService
             }
         }
 
+        $canVote = $this->canVote($poll);
+
         return array(
             'totalVotes' => $totalVotes,
-            'percentages' => $percentages
+            'percentages' => $percentages,
+            'canVote' => $canVote
         );
     }
 
@@ -52,7 +55,33 @@ class Poll extends AbstractAclService
      */
     public function canVote($poll)
     {
+        if (!$this->isAllowed('vote')) {
+            return false;
+        }
 
+        // Check if poll expires after today
+        if ($poll->getExpiryDate() <= (new \DateTime())) {
+            return false;
+        }
+
+        return is_null($this->getVote($poll));
+    }
+
+    /**
+     * Retrieves the current user's vote for a given poll.
+     * Returns null if the user hasn't voted on the poll.
+     * @param \Frontpage\Model\Poll $poll
+     *
+     * @return \Frontpage\Model\PollVote | null
+     */
+    public function getVote($poll)
+    {
+        $user = $this->getUser();
+        if($user instanceof \User\Model\User) {
+            return $this->getPollMapper()->findVote($poll->getId(), $user->getLidnr());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -63,6 +92,16 @@ class Poll extends AbstractAclService
     public function getPollMapper()
     {
         return $this->sm->get('frontpage_mapper_poll');
+    }
+
+    /**
+     * Retrieves the currently logged in user.
+     *
+     * @return \User\Model\User|string
+     */
+    public function getUser()
+    {
+        return $this->sm->get('user_role');
     }
 
     /**

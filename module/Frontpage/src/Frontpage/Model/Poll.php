@@ -60,9 +60,9 @@ class Poll implements ResourceInterface
     /**
      * @return string
      */
-    public function getDate()
+    public function getExpiryDate()
     {
-        return $this->date;
+        return $this->expiryDate;
     }
 
     /**

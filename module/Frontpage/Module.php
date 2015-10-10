@@ -72,6 +72,7 @@ class Module
                     $acl = $sm->get('acl');
 
                     $acl->addResource('page');
+                    $acl->addResource('poll');
 
                     return $acl;
                 },

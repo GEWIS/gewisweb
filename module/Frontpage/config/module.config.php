@@ -139,7 +139,7 @@ return [
                                 'poll_id' => '[0-9]+',
                             ),
                             'defaults' => array(
-                                'action' => 'view',
+                                'action' => 'vote',
                             ),
                         ),
                     ),

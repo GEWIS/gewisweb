@@ -40,6 +40,22 @@ class Poll
     }
 
     /**
+     * Find the vote of a certain user on a poll.
+     *
+     * @param integer $pollId
+     * @param integer $lidnr
+     *
+     * @return \Frontpage\Model\PollVote|null
+     */
+    public function findVote($pollId, $lidnr)
+    {
+        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy(array(
+            'poll' => $pollId,
+            'respondent' => $lidnr
+        ));
+    }
+
+    /**
      * Returns the latest poll if one is available
      *
      * @return \Frontpage\Model\Poll|null
