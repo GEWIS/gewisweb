@@ -132,6 +132,12 @@ class Photo implements ResourceInterface
     protected $tags;
 
     /**
+     * The corresponding WeeklyPhoto entity if this photo has been a weekly photo
+     * @ORM\OneToOne(targetEntity="WeeklyPhoto", mappedBy="photo", cascade={"persist", "remove"})
+     */
+    protected $weeklyPhoto;
+
+    /**
      * Get the ID.
      *
      * @return int

@@ -33,7 +33,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * The photo of the week.
      *
-     * @ORM\OneToOne(targetEntity="Photo\Model\Photo")
+     * @ORM\OneToOne(targetEntity="Photo\Model\Photo", inversedBy="weeklyPhoto")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
