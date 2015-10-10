@@ -39,6 +39,11 @@ class UserController extends AbstractActionController
     {
         $this->getUserService()->logout();
 
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->redirect()->toRoute('home');
+        }
         return new ViewModel();
     }
 
