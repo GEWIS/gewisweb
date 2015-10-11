@@ -74,7 +74,7 @@ class Job
         return $job;
     }
     
-    public function findJobWithSlugName($jobSlugName, $companySlugName)
+    public function findJobWithSlugName($companySlugName, $jobSlugName)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
