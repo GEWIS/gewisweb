@@ -16,9 +16,7 @@ class EditPacket extends Form
         $this->setAttribute('method', 'post');
         $this->add(array(
             'name' => 'id',
-            'attributes' => array(
-                'type'  => 'hidden',
-            ),
+            'type'  => 'hidden',
         ));
         $this->add(array(
             'name' => 'startDate',
