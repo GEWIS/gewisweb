@@ -227,34 +227,6 @@ class AdminController extends AbstractActionController
 
     }
     
-    public function saveJobAction()
-    {
-        $jobName = $this->params('slugJobName');    
-        $slugCompanyName = $this->params('slugCompanyName');    
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            if (!isset($jobName)){
-                $jobName = $request->getPost()['slugName'];
-            }
-            $companyService = $this->getCompanyService();
-            $companyForm = $companyService->getJobForm();
-            $companyForm->setData($request->getPost());
-
-            // TODO: isValid does not work yet
-            //if ($companyForm->isValid()) {
-                $job = $companyService->insertJobForCompanySlugName($slugCompanyName);
-                $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
-                $companyService->saveCompany();
-            //}
-        }
-
-        return $this->redirect()->toRoute('admin_company/default', 
-                                          array('action'=>'edit', 
-                                                'slugCompanyName' => $slugCompanyName, 
-                                                'slugJobName' => $jobName), 
-                                          array(), true);   
-    }
-    
     public function editJobAction()
     {
         $companyService = $this->getCompanyService();

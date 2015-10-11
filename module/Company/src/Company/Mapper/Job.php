@@ -79,7 +79,6 @@ class Job
 
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join("j.packet", "p")->join("p.company", "c") ->where("j.slugName=:jobId");;
-        echo $companySlugName;
         #->andWhere("c.slugName=:companySlugName")
         $qb->setParameter('jobId', $jobSlugName);
         #$qb->setParameter('companySlugName', $companySlugName);
