@@ -26,7 +26,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
      * 
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist"})
      */
     protected $translations;
     
@@ -341,6 +341,7 @@ class Company // implements ArrayHydrator (for zend2 form)
                     if ($create){
                         $translation = new CompanyI18n();
                         $translation->setLanguage($locale);
+                        $translation->setCompany($this);
                     }
                     else{
                         $translation = null;
@@ -381,6 +382,11 @@ class Company // implements ArrayHydrator (for zend2 form)
             }
             
         }
+        foreach ($this->getTranslations() as $translation){
+            if (!$newTranslations->contains($translation)){
+                $translation->remove();
+            }
+        }
         $this->translations = $newTranslations;
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
         $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
@@ -390,6 +396,5 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
         //TODO: do something about packets
         //$this->packets=(isset($data[$language.'packets'])) ? $data[$language.'packets'] : $this->getPackets();
-        //echo var_dump($this)."<br>";
     }
 }
