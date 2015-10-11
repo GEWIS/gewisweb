@@ -322,7 +322,12 @@ class Photo extends AbstractAclService
         $res = $occurences * (1 + 1 / $age);
         return $tagged ? 1.5 * $res : $res;
     }
-     
+
+    public function getCurrentPhotoOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getCurrentPhotoOfTheWeek();
+    }
+
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
@@ -572,5 +577,4 @@ class Photo extends AbstractAclService
     {
         return $this->sm->get('photo_acl');
     }
-
 }
