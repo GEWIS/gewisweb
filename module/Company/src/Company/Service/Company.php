@@ -97,9 +97,9 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);
     }
     
-    public function getEditableJobsWithSlugName($slugName, $jobSlugName)
+    public function getEditableJobsWithSlugName($companySlugName, $jobSlugName)
     {
-        return $this->getJobMapper()->findJobWithSlugName($slugName, $jobSlugName);
+        return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
     }
     
     public function getJobsWithSlugName($companySlugName, $jobSlugName)

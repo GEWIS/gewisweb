@@ -264,7 +264,7 @@ class AdminController extends AbstractActionController
         $slugCompanyName = $this->params('slugCompanyName');    
         $jobName = $this->params('jobName');    
         $companyForm = $companyService->getJobForm();
-        $companyList = $companyService->getEditableJobsWithSlugName($jobName, $companyName);
+        $companyList = $companyService->getEditableJobsWithSlugName($companyName, $jobName);
         //echo($this->url()->fromRoute('admin_company/default', array('action'=>'save', 'slugCompanyName'=>$companyName)));
         if (empty($companyList)){
             $company = null;

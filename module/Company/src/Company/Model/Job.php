@@ -146,9 +146,13 @@ class Job
      *
      * @return boolean
      */
-    public function getActive()
+    protected function getActive()
     {
         return $this->active;
+    }
+
+    public function isActive(){
+        return $this->getActive() and $this->getPacket()->isActive();
     }
 
     /**
