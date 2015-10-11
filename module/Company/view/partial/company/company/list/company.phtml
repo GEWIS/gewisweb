@@ -23,7 +23,7 @@ echo ($company->getName()); // Text of the title
 echo ("</a></h2>") ?>
 
     <div class="company-slogan"><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></div>
-    <div class="company-logo"><img src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
+    <div class="company-logo"><img src="<?= print("hoi"); #$escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
     <div class="company-address"><?= $company->getAddress(); ?></div>
     <div class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></div>
     <div class="company-website"><a href="<?= $company->getTranslationFromLocale($locale)->getWebsite(); ?>">Visit website</a></div>

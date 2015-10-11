@@ -55,8 +55,8 @@ class Job
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join("j.packet", "p")->join("p.company", "c")->where("c.slugName=:companyId")->andWhere("j.active=1")->andWhere("c.hidden=0")->andWhere("p.expires > CURRENT_DATE()");
-        $qb->setParameter('companyId', $companySlugName);
+        $qb->select('j')->join("j.packet", "p")->join("p.company", "c")->where("p.id=:companyId")->andWhere("j.active=1")->andWhere("c.hidden=0")->andWhere("p.expires > CURRENT_DATE()");
+        $qb->setParameter('companyId', $packetID);
 
         return $qb->getQuery()->getResult();
     }
@@ -74,13 +74,15 @@ class Job
         return $job;
     }
     
-    public function findJobWithSlugName($companySlugName, $jobSlugName)
+    public function findJobWithSlugName($jobSlugName, $companySlugName)
     {
 
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join("j.packet", "p")->join("p.company", "c") ->where("j.slugName=:jobId")->andWhere("c.slugName=:companySlugName");;
+        $qb->select('j')->join("j.packet", "p")->join("p.company", "c") ->where("j.slugName=:jobId");;
+        echo $companySlugName;
+        #->andWhere("c.slugName=:companySlugName")
         $qb->setParameter('jobId', $jobSlugName);
-        $qb->setParameter('companySlugName', $companySlugName);
+        #$qb->setParameter('companySlugName', $companySlugName);
 
         return $qb->getQuery()->getResult();
     }
