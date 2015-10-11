@@ -19,6 +19,12 @@ $form=$companyEditForm;
         <?= $this->formElement($element); ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
+<?php $element = $form->get('language') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
 <?php $element = $form->get('website') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
@@ -34,7 +40,7 @@ $form=$companyEditForm;
 <?php $element = $form->get('active') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
-        <?= $this->formElement($element) ?>
+        <?= $this->formCheckbox($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
 <?php $element = $form->get('phone') ?>

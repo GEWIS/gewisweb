@@ -51,7 +51,7 @@ $form = $packetEditForm;
                                             array( 
                                                   "slugCompanyName" => $companyName,
                                                   "packetID" => $packet->getId(),
-                                                  "jobName" => $job->getSlug(),
+                                                  "jobName" => $job->getSlugName(),
                                                  )
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
@@ -64,7 +64,7 @@ $form = $packetEditForm;
                     </a>
                 </td> 
                 <td>
-                    <?php echo $packet->isActive() ? 'true' : 'false'?>
+                    <?php echo $job->isActive() ? 'true' : 'false'?>
                 </td>
             </tr>
     <?php 

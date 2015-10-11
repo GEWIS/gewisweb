@@ -287,11 +287,13 @@ class Job
     public function getArrayCopy()
     {
         $array = get_object_vars($this);
+
+
         if ($this->getActive()){
-            $array['active'] = 'active';
+            $array['active'] = '1';
         }
         else{
-            $array['active'] = 'inactive';
+            $array['active'] = '0';
         }
         return $array;
     }
@@ -302,7 +304,7 @@ class Job
 //        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $lActive = $data['active'];
-        if ($lActive === 'active'){
+        if ($lActive == 1){
             $this->active=true;
         }
         else{
