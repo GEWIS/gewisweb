@@ -57,12 +57,12 @@ class EditJob extends Form
         ));
         $this->add(array(
             'name' => 'active',
-            'attributes' => array(
- //               'type'  => 'boolean',
-                'type' => 'Checkbox',
-            ),
+            'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translate->translate('Active'),
+                'checked_value' => 'active',
+                'unchecked_value'=>'inactive',
+                'use_hidden_element' => true,
             ),
         ));
         $this->add(array(
@@ -170,7 +170,8 @@ class EditJob extends Form
             )
         ));
 
-        $filter->add(array(
+        // Cannot upload logo yet
+        /*$filter->add(array(
             'name' => 'logo',
             'required' => false,
             'validators' => array(
@@ -187,7 +188,7 @@ class EditJob extends Form
                     )
                 )
             )
-        ));
+        ));*/
         
         /**
          * TODO: Add more filters
