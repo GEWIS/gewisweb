@@ -2,18 +2,6 @@
 return array(
     'router' => array(
         'routes' => array(
-            'jobList' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/jobs',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Company\Controller',
-                        'controller'    => 'Company',
-                        'action'        => 'jobList', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
-                        'actionArgument'=> '',
-                    ),
-                ),
-            ),
             'company' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -27,6 +15,19 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'jobList' => array(
+                        'priority' => 3,
+                        'type'    => 'literal',
+                        'options' => array(
+                            'route'    => '/jobs',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Company\Controller',
+                                'controller'    => 'Company',
+                                'action'        => 'jobList', 
+                                'actionArgument'=> '',
+                            ),
+                        ),
+                    ),
                     'list' => array(
                         'priority' => 3,
                         'type' => 'literal',
