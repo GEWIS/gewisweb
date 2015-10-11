@@ -74,7 +74,7 @@ foreach ($jobList as $job) {
     }
 
     function filter_all(term) {
-        $(".job-list-item").each(function() {
+        $(".company-list-item").each(function() {
             if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
                 $(this).css({display: "none"});
             } else {

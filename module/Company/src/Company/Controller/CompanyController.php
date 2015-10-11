@@ -34,6 +34,15 @@ class CompanyController extends AbstractActionController
         return $vm;
 
     }
+    public function jobListAction(){
+        $companyService = $this->getCompanyService();
+        $vm = new ViewModel(array(
+            'jobList' => $companyService->getJobList(),
+            'translator' => $companyService->getTranslator()
+        ));
+        return $vm;
+
+    }
 
     public function jobsAction()
     {

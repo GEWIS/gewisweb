@@ -2,6 +2,18 @@
 return [
     'router' => [
         'routes' => [
+            'jobList' => [
+                'type'    => 'Literal',
+                'options' => [
+                    'route'    => '/jobs',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Company\Controller',
+                        'controller'    => 'Company',
+                        'action'        => 'jobList', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
+                        'actionArgument'=> '',
+                    ],
+                ],
+            ],
             'company' => [
                 'type'    => 'Literal',
                 'options' => [
