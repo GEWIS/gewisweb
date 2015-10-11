@@ -246,7 +246,7 @@ class Job
      * 
      * @return string language of the job
      */
-    public function getLanugage() {
+    public function getLanguage() {
         return $this->language;   
     }
     
@@ -282,7 +282,14 @@ class Job
     // For zend2 forms
     public function getArrayCopy()
     {
-        return get_object_vars($this);
+        $array = get_object_vars($this);
+        if ($this->getActive()){
+            $array['active'] = 'active';
+        }
+        else{
+            $array['active'] = 'inactive';
+        }
+        return $array;
     }
     public function exchangeArray($data){
         $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
@@ -290,9 +297,12 @@ class Job
         $this->language=(isset($data['language'])) ? $data['language'] : $this->getLanguage();
 //        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
         $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
-        $this->active=(isset($data['active'])) ? $data['active'] : $this->getActive();
-        if($this->active==null){
-            $this->setActive(false);
+        $lActive = $data['active'];
+        if ($lActive === 'active'){
+            $this->active=true;
+        }
+        else{
+            $this->active=false;
         }
         $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
         $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
