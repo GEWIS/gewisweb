@@ -31,10 +31,11 @@ echo ("</a></h2>") ?>
     <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
         <ul class="company-jobs-list">
         <?php if ($company->getPackets()[0] != null) foreach($company->getPackets()[0]->getJobs() as $job) { ?>
+<?php if ($job->isActive()){?>
         <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
             array('slugCompanyName' => $company->getSlugName(),
             'slugJobName' => $job->getSlugName()),array(),true) ?>"><?= $job->getName(); ?></a></li>
-        <?php } ?>
+        <?php }} ?>
         </ul>
     </div>
     <div class="company-description"><?= $company->getTranslationFromLocale($locale)->getDescription(); ?></div>
