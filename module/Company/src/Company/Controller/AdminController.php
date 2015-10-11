@@ -289,13 +289,9 @@ class AdminController extends AbstractActionController
             $companyForm->setData($request->getPost());
 
             //if ($companyForm->isValid()) {
-                 echo "VALID";
             $job = $companyList[0];
             $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
             $companyService->saveCompany();
-            //} else {
-            //    echo "NOT VALID";
-            //    die();
             //}
             return $this->redirect()->toRoute('admin_company/editCompany/editPacket/editJob', 
                                               array('slugCompanyName' => $slugCompanyName, 
