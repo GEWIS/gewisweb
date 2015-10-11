@@ -40,12 +40,12 @@ class AdminController extends AbstractActionController
              //                                           'slugCompanyName' => $companyName), 
              //                                     array(), false);   
             //}
-            //if ($companyForm->isValid()) {
+            if ($packetForm->isValid()) {
                 $packet=$companyService->insertPacketForCompanySlugName($companyName);
                 $packet->exchangeArray($request->getPost()); 
                 $companyService->savePacket();
                 return $this->redirect()->toRoute('admin_company/editCompany', array('slugCompanyName'=>$companyName),array(),false);   
-            //}
+            }
         }
         //$company = $companyService->insertCompany();
         //$companyForm->bind($company);
@@ -84,13 +84,13 @@ class AdminController extends AbstractActionController
              //                                           'slugCompanyName' => $companyName), 
              //                                     array(), false);   
             //}
-            //if ($companyForm->isValid()) {
+            if ($companyForm->isValid()) {
                 $company=$companyService->insertCompany($request->getPost()["languages"]);
                 $company->exchangeArray($request->getPost()); 
                 $companyService->saveCompany();
                 //var_dump($company);
                 return $this->redirect()->toRoute('admin_company/default', array('action'=>'edit', 'slugCompanyName'=>$companyName),array(),false);   
-            //}
+            }
         }
         //$company = $companyService->insertCompany();
         //$companyForm->bind($company);
@@ -199,16 +199,15 @@ class AdminController extends AbstractActionController
             }
             $packetForm->setData($request->getPost());
 
-            //if ($companyForm->isValid()) {
+            if ($packetForm->isValid()) {
                 $packet->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
                 $companyService->saveCompany();
-            //} else {
-            //    die();
-            //    return $this->forward()->dispatch('Company\Controller\AdminController', 
-            //                                      array('action'=> 'editCompany', 
-            //                                            'form' => $companyForm)
-            //                                     );
-            //}
+            } else {
+                //return $this->forward()->dispatch('Company\Controller\AdminController', 
+                //                                  array('action'=> 'editCompany', 
+                //                                        'form' => $packetForm)
+                //                                 );
+            }
         }
         // TODO: display error page when packet is not found
         $packetForm->bind($packet);
@@ -260,11 +259,11 @@ class AdminController extends AbstractActionController
             $companyForm = $companyService->getJobForm();
             $companyForm->setData($request->getPost());
 
-            //if ($companyForm->isValid()) {
-            $job = $companyList[0];
-            $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
-            $companyService->saveCompany();
-            //}
+            if ($companyForm->isValid()) {
+                $job = $companyList[0];
+                $job->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+                $companyService->saveCompany();
+            }
             return $this->redirect()->toRoute('admin_company/editCompany/editPacket/editJob', 
                                               array('slugCompanyName' => $slugCompanyName, 
                                                     'packetID' => $packetID,
@@ -297,24 +296,22 @@ class AdminController extends AbstractActionController
             $companyForm = $companyService->getCompanyForm();
             $companyForm->setData($request->getPost());
 
-
-            //if ($companyForm->isValid()) {
-                //$company = $companyService->insertCompany($request->getPost()["languages"]);
-            if(count($companyList) > 0){
-                $company = $companyList[0];
-            }
-            else{
-                echo "Company not found";
-            }
-                $company->exchangeArray($request->getPost()); // Temporary fix, bind does not work yet?
+            if ($companyForm->isValid()) {
+                if(count($companyList) > 0){
+                    $company = $companyList[0];
+                }
+                else{
+                    echo "Company not found";
+                }
+                $company->exchangeArray($request->getPost());
                 $companyService->saveCompany();
 
-            //} else {
-            //    return $this->forward()->dispatch('Company\Controller\AdminController', 
-            //                                      array('action'=> 'editCompany', 
-            //                                            'form' => $companyForm)
-            //                                     );
-            //}
+            } else {
+                return $this->forward()->dispatch('Company\Controller\AdminController', 
+                                                  array('action'=> 'editCompany', 
+                                                        'form' => $companyForm)
+                                                 );
+            }
         }
         if (empty($companyList)){
             $company = null;
