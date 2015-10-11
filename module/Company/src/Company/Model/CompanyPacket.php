@@ -233,8 +233,8 @@ class CompanyPacket
     public function getArrayCopy()
     {
         return [ "id" => $this->id, 
-            "startDate" => $this->getStartingDate()->format('d-m-Y'), 
-            "expirationDate" => $this->getExpirationDate()->format('d-m-Y'), 
+            "startDate" => $this->getStartingDate()->format('Y-m-d'), 
+            "expirationDate" => $this->getExpirationDate()->format('Y-m-d'), 
             "published" => $this->isPublished() ];
     }
     

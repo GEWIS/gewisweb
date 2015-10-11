@@ -7,6 +7,8 @@ $form = $packetEditForm;
 
 <?= $this->form()->openTag($form) ?>
 <dl>
+<?php $element = $form->get('id') ?>
+    <?= $this->formElement($element) ?>
 <?php $element = $form->get('startDate') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
