@@ -90,8 +90,10 @@ class Module
                     // are allowed to view exams
                     $acl->allow('guest', 'company', 'list');
                     $acl->allow('guest', 'company', 'view');
+                    $acl->allow('admin', 'company', 'insert');
                     $acl->allow('admin', 'company', 'edit');
-                    $acl->allow('guest', 'company', 'listall'); // Can use admin interface
+                    $acl->allow('admin', 'company', 'delete');
+                    $acl->allow('admin', 'company', 'listall'); // Can use admin interface
 
                     return $acl;
                 },
