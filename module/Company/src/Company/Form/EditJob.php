@@ -60,9 +60,9 @@ class EditJob extends Form
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translate->translate('Active'),
-                'checked_value' => 'active',
-                'unchecked_value'=>'inactive',
                 'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ),
         ));
         $this->add(array(
