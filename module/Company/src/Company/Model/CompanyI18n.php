@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyI18n //implements ArrayHydrator (for zend2 form)
 {
-
     /**
      * Id of the company details.
      *
@@ -21,16 +20,17 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="integer")
      */
     protected $id;
-    
+
     /**
      * Company entity that these details are for.
      * 
      * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="translations", cascade={"persist"})
      */
     protected $company;
-        
+
     /**
      * The company's slogan.
+     *
      * @ORM\Column(type="string")
      */
     protected $slogan;
@@ -49,7 +49,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="text")
      */
     protected $description;
-    
+
     /**
      * The company's website.
      *
@@ -58,19 +58,19 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     protected $website;
 
     /**
-     * The language that this company record is written in
+     * The language that this company record is written in.
      *
      * @ORM\Column(type="string")
      */
     protected $language;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->description = "";
-        $this->website = "";
+        $this->description = '';
+        $this->website = '';
     }
 
     /**
@@ -82,25 +82,27 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     {
         return $this->id;
     }
-    
+
     /**
      * Get the company entity that these details are for.
      * 
      * @return Company company that these details are for
      */
-    public function getCompany() {
+    public function getCompany()
+    {
         return $this->company;
     }
-    
+
     /**
      * Set the company entity that these details are for.
      * 
      * @param Company $company company that these details are for
      */
-    public function setCompany(Company $company) {
+    public function setCompany(Company $company)
+    {
         $this->company = $company;
     }
-    
+
     /**
      * Get the company's slogan.
      *
@@ -160,7 +162,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     {
         $this->description = $description;
     }
-    
+
     /**
      * Get the company's website.
      *
@@ -200,24 +202,25 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     {
         $this->language = $language;
     }
-    
+
     // For zend2 forms
     public function getArrayCopy()
     {
         return get_object_vars($this);
     }
-    
-    public function exchangeArray($data) {
-        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
-        $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
-        $this->slogan=(isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
-        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->logo=(isset($data['logo'])) ? $data['logo'] : $this->getLogo();
-        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
-        $this->jobs=(isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
-        $this->packet=(isset($data['packet'])) ? $data['packet'] : $this->getPacket();
+
+    public function exchangeArray($data)
+    {
+        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+        $this->address = (isset($data['address'])) ? $data['address'] : $this->getAddress();
+        $this->website = (isset($data['website'])) ? $data['website'] : $this->getWebsite();
+        $this->slogan = (isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
+        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->logo = (isset($data['logo'])) ? $data['logo'] : $this->getLogo();
+        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
+        $this->jobs = (isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
+        $this->packet = (isset($data['packet'])) ? $data['packet'] : $this->getPacket();
     }
 }

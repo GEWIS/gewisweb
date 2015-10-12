@@ -1,10 +1,9 @@
 <?php
-namespace Company;
 
+namespace Company;
 
 class Module
 {
-
     /**
      * Get the autoloader configuration.
      *
@@ -15,9 +14,9 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
+                    __NAMESPACE__ => __DIR__.'/src/'.__NAMESPACE__,
+                ),
+            ),
         );
     }
 
@@ -28,7 +27,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -40,7 +39,7 @@ class Module
     {
         return array(
             'invokables' => array(
-                'company_service_company' => 'Company\Service\Company'
+                'company_service_company' => 'Company\Service\Company',
             ),
             'factories' => array(
                 'company_mapper_company' => function ($sm) {
@@ -71,7 +70,7 @@ class Module
                         $sm->get('translator')
                     );
                 },
-                'company_language'=>function($sm){
+                'company_language' => function ($sm) {
                     return $sm->get('translator');
                 },
                 'company_admin_edit_job_form' => function ($sm) {

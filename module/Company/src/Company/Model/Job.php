@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Job
 {
-
     /**
      * The job id.
      *
@@ -68,7 +67,7 @@ class Job
      * @ORM\Column(type="text")
      */
     protected $description;
-    
+
     /**
      * The job's language.
      *
@@ -84,7 +83,7 @@ class Job
     protected $packet;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -110,7 +109,7 @@ class Job
     {
         return $this->name;
     }
-    
+
     /**
      * Set the job's name.
      *
@@ -120,7 +119,7 @@ class Job
     {
         $this->name = $name;
     }
-    
+
     /**
      * Get the job's slug name.
      * 
@@ -130,7 +129,7 @@ class Job
     {
         return $this->slugName;
     }
-    
+
     /**
      * Set the job's slug name.
      *
@@ -144,21 +143,22 @@ class Job
     /**
      * Get the job's status.
      *
-     * @return boolean
+     * @return bool
      */
     protected function getActive()
     {
         return $this->active;
     }
 
-    public function isActive(){
+    public function isActive()
+    {
         return $this->getActive() and $this->getPacket()->isActive();
     }
 
     /**
      * Set the job's status.
      *
-     * @param boolean $active
+     * @param bool $active
      */
     public function setActive($active)
     {
@@ -244,25 +244,27 @@ class Job
     {
         $this->description = $description;
     }
-    
+
     /**
      * Get the job's language.
      * 
      * @return string language of the job
      */
-    public function getLanguage() {
-        return $this->language;   
+    public function getLanguage()
+    {
+        return $this->language;
     }
-    
+
     /**
      * Set the job's language.
      * 
      * @param string $language language of the job
      */
-    public function setLanguage($language) {
+    public function setLanguage($language)
+    {
         $this->language = $language;
     }
-    
+
     /**
      * Get the job's packet.
      *
@@ -282,36 +284,34 @@ class Job
     {
         $this->packet = $packet;
     }
-    
+
     // For zend2 forms
     public function getArrayCopy()
     {
         $array = get_object_vars($this);
 
-
-        if ($this->getActive()){
+        if ($this->getActive()) {
             $array['active'] = '1';
-        }
-        else{
+        } else {
             $array['active'] = '0';
         }
+
         return $array;
     }
-    public function exchangeArray($data){
-        $this->name=(isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName=(isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->language=(isset($data['language'])) ? $data['language'] : $this->getLanguage();
-//        $this->address=(isset($data['address'])) ? $data['address'] : $this->getAddress();
-        $this->website=(isset($data['website'])) ? $data['website'] : $this->getWebsite();
+    public function exchangeArray($data)
+    {
+        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+        $this->language = (isset($data['language'])) ? $data['language'] : $this->getLanguage();
+        $this->website = (isset($data['website'])) ? $data['website'] : $this->getWebsite();
         $lActive = $data['active'];
-        if ($lActive == 1){
-            $this->active=true;
+        if ($lActive == 1) {
+            $this->active = true;
+        } else {
+            $this->active = false;
         }
-        else{
-            $this->active=false;
-        }
-        $this->email=(isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->phone=(isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->description=(isset($data['description'])) ? $data['description'] : $this->getDescription();
+        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
     }
 }
