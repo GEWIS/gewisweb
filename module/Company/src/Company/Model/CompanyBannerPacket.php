@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+
 //use Doctrine\Common\Collections\ArrayCollection;
 //use Zend\Permissions\Acl\Role\RoleInterface;
 //use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -14,7 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, ResourceInterface
 {
-
     /**
      * The banner's image's URL.
      *
@@ -70,7 +70,7 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -102,6 +102,4 @@ class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, Reso
     {
         // todo
     }
-
-
 }

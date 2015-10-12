@@ -7,84 +7,78 @@ use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
-
     public function listAction()
     {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('slugCompanyName');    
+        $companyName = $this->params('slugCompanyName');
         if ($companyName != null) {
             $companies = $companyService->getCompaniesWithSlugName($companyName);
-            if (count($companies) != 0){
+            if (count($companies) != 0) {
                 $vm = new ViewModel(array(
                     'company' => $companies[0],
-                    'translator' => $companyService->getTranslator()
+                    'translator' => $companyService->getTranslator(),
                 ));
-            } else { 
+            } else {
                 $vm = new ViewModel(array(
-                    'translator' => $companyService->getTranslator()
-                )); 
+                    'translator' => $companyService->getTranslator(),
+                ));
             }
-        }
-        else {
+        } else {
             $vm = new ViewModel(array(
                 'companyList' => $companyService->getCompanyList(),
-                'translator' => $companyService->getTranslator()
+                'translator' => $companyService->getTranslator(),
             ));
         }
-        return $vm;
 
+        return $vm;
     }
-    public function jobListAction(){
+    public function jobListAction()
+    {
         $companyService = $this->getCompanyService();
         $vm = new ViewModel(array(
             'jobList' => $companyService->getJobList(),
-            'translator' => $companyService->getTranslator()
+            'translator' => $companyService->getTranslator(),
         ));
-        return $vm;
 
+        return $vm;
     }
 
     public function jobsAction()
     {
         $companyService = $this->getCompanyService();
-        $jobName = $this->params('slugJobName');    
-        $companyName = $this->params('slugCompanyName');    
+        $jobName = $this->params('slugJobName');
+        $companyName = $this->params('slugCompanyName');
         if ($jobName != null) {
             $jobs = $companyService->getJobsWithSlugName($companyName, $jobName);
-            if (count($jobs) != 0){
+            if (count($jobs) != 0) {
                 $vm = new ViewModel(array(
-                    'job' => $jobs[0]
+                    'job' => $jobs[0],
                 ));
-            }
-            else {
+            } else {
                 $vm = new ViewModel();
             }
-        }
-
-        else {
+        } else {
             $vm = new ViewModel(array(
-                'activeJobList' => $companyService->getActiveJobList()
+                'activeJobList' => $companyService->getActiveJobList(),
             ));
         }
-        return $vm;
 
+        return $vm;
     }
-    
+
     public function adminAction()
     {
         $companyService = $this->getCompanyService();
-        
-            $vm = new ViewModel(array(
-                'companyList' => $companyService->getCompanyList()
-            ));
-        
-        return $vm;
 
+        $vm = new ViewModel(array(
+                'companyList' => $companyService->getCompanyList(),
+            ));
+
+        return $vm;
     }
 
     protected function getCompanyService()
     {
-        return $this->getServiceLocator()->get("company_service_company");
+        return $this->getServiceLocator()->get('company_service_company');
     }
-
 }

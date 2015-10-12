@@ -1,7 +1,7 @@
 <?php
+
 namespace Company\Form;
 
-use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
@@ -12,46 +12,46 @@ class EditCompany extends Form
     {
         // we want to ignore the name passed
         parent::__construct();
-        
+
         $this->setAttribute('method', 'post');
         $this->add(array(
             'name' => 'id',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
         $this->add(array(
             'name' => 'translations',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
         $this->add(array(
             'name' => 'languageNeutralId',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
         $this->add(array(
             'name' => 'slugName',
             'attributes' => array(
-                'type'  => 'text',
-                'required' => 'required'
+                'type' => 'text',
+                'required' => 'required',
             ),
             'options' => array(
                 'label' => $translate->translate('Permalink'),
-                'required' => 'required'
+                'required' => 'required',
             ),
         ));
         $this->add(array(
             'name' => 'name',
             'attributes' => array(
-                'type'  => 'text',
-                'required' => 'required'
+                'type' => 'text',
+                'required' => 'required',
             ),
             'options' => array(
                 'label' => $translate->translate('Name'),
-                'required' => 'required'
+                'required' => 'required',
             ),
         ));
         $this->add(array(
@@ -63,18 +63,18 @@ class EditCompany extends Form
                     'en' => $translate->translate('English'),
                     'nl' => $translate->translate('Dutch'),
                 ),
-            )
+            ),
         ));
         $this->add(array(
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'required' => 'required',
-                'type' => 'textarea'
+                'type' => 'textarea',
             ),
             'options' => array(
                 'label' => $translate->translate('Location'),
-                'required' => 'required'
+                'required' => 'required',
             ),
         ));
         // English version
@@ -82,11 +82,9 @@ class EditCompany extends Form
             'name' => 'en_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
-                //'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Website'),
-                //'required' => 'required'
             ),
         ));
         // Dutch version
@@ -94,17 +92,15 @@ class EditCompany extends Form
             'name' => 'nl_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => array(
-                //'required' => 'required'
             ),
             'options' => array(
                 'label' => $translate->translate('Website'),
-                //'required' => 'required'
             ),
         ));
         $this->add(array(
             'name' => 'en_slogan',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
             ),
             'options' => array(
                 'label' => $translate->translate('Slogan'),
@@ -113,7 +109,7 @@ class EditCompany extends Form
         $this->add(array(
             'name' => 'nl_slogan',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
             ),
             'options' => array(
                 'label' => $translate->translate('Slogan'),
@@ -123,17 +119,17 @@ class EditCompany extends Form
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => array(
-                'required' => 'required'
+                'required' => 'required',
             ),
             'options' => array(
                 'label' => $translate->translate('Email'),
-                'required' => 'required'
+                'required' => 'required',
             ),
         ));
         $this->add(array(
             'name' => 'phone',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
             ),
             'options' => array(
                 'label' => $translate->translate('Phone'),
@@ -142,7 +138,7 @@ class EditCompany extends Form
         $this->add(array(
             'name' => 'nl_logo',
             'attributes' => array(
-                'type'  => 'file',
+                'type' => 'file',
             ),
             'options' => array(
                 'label' => $translate->translate('Logo'),
@@ -151,7 +147,7 @@ class EditCompany extends Form
         $this->add(array(
             'name' => 'en_logo',
             'attributes' => array(
-                'type'  => 'file',
+                'type' => 'file',
             ),
             'options' => array(
                 'label' => $translate->translate('Logo'),
@@ -162,10 +158,9 @@ class EditCompany extends Form
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
-                //'required' => 'required'
             ),
             'attributes' => array(
-                'type' => 'textarea'  
+                'type' => 'textarea',
             ),
         ));
         $this->add(array(
@@ -173,30 +168,27 @@ class EditCompany extends Form
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $translate->translate('Description'),
-                //'required' => 'required'
             ),
             'attributes' => array(
-                'type' => 'textarea'  
+                'type' => 'textarea',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
             ),
         ));
-        
-        $this->initFilters();
 
+        $this->initFilters();
     }
-    
+
     protected function initFilters()
     {
         $filter = new InputFilter();
-
 
         $filter->add(array(
             'name' => 'name',
@@ -206,16 +198,16 @@ class EditCompany extends Form
                     'name' => 'string_length',
                     'options' => array(
                         'min' => 2,
-                        'max' => 127
-                    )
-                )
+                        'max' => 127,
+                    ),
+                ),
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
+                array('name' => 'StringTrim'),
             ),
         ));
-        
+
         /*$filter->add(array(
             'name' => 'en.website',
             'required' => true,
@@ -263,7 +255,7 @@ class EditCompany extends Form
                 )
             )
         ));*/
-        
+
         $filter->add(array(
             'name' => 'email',
             'required' => true,
@@ -272,14 +264,14 @@ class EditCompany extends Form
                     'name' => 'EmailAddress',
                     'options' => array(
                         'messages' => array(
-                            'emailAddressInvalidFormat' => 'Email address format is not valid'
-                        )
-                    )
+                            'emailAddressInvalidFormat' => 'Email address format is not valid',
+                        ),
+                    ),
                 ),
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
+                array('name' => 'StringTrim'),
             ),
         ));
 
@@ -290,16 +282,16 @@ class EditCompany extends Form
                 array(
                     'name' => 'File\Extension',
                     'options' => array(
-                        'extension' => 'png'
-                    )
+                        'extension' => 'png',
+                    ),
                 ),
                 array(
                     'name' => 'File\MimeType',
                     'options' => array(
-                        'mimeType' => 'image/png'
-                    )
-                )
-            )
+                        'mimeType' => 'image/png',
+                    ),
+                ),
+            ),
         ));
         $filter->add(array(
             'name' => 'nl_logo',
@@ -308,18 +300,18 @@ class EditCompany extends Form
                 array(
                     'name' => 'File\Extension',
                     'options' => array(
-                        'extension' => 'png'
-                    )
+                        'extension' => 'png',
+                    ),
                 ),
                 array(
                     'name' => 'File\MimeType',
                     'options' => array(
-                        'mimeType' => 'image/png'
-                    )
-                )
-            )
+                        'mimeType' => 'image/png',
+                    ),
+                ),
+            ),
         ));
-        
+
         $this->setInputFilter($filter);
     }
 }

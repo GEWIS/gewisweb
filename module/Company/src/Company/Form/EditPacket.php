@@ -1,7 +1,7 @@
 <?php
+
 namespace Company\Form;
 
-use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
@@ -12,33 +12,33 @@ class EditPacket extends Form
     {
         // we want to ignore the name passed
         parent::__construct();
-        
+
         $this->setAttribute('method', 'post');
         $this->add(array(
             'name' => 'id',
-            'type'  => 'hidden',
+            'type' => 'hidden',
         ));
         $this->add(array(
             'name' => 'startDate',
-            'type' => 'Zend\Form\Element\Date', 
-            'attributes' => array( 
-                'required' => 'required', 
-                'step' => '1', 
-            ), 
-            'options' => array( 
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => array(
+                'required' => 'required',
+                'step' => '1',
+            ),
+            'options' => array(
                 'label' => $translate->translate('Start date'),
-            ), 
+            ),
         ));
         $this->add(array(
             'name' => 'expirationDate',
-            'type' => 'Zend\Form\Element\Date', 
-            'attributes' => array( 
-                'required' => 'required', 
-                'step' => '1', 
-            ), 
-            'options' => array( 
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => array(
+                'required' => 'required',
+                'step' => '1',
+            ),
+            'options' => array(
                 'label' => $translate->translate('Expiration date'),
-            ), 
+            ),
         ));
         $this->add(array(
             'name' => 'published',
@@ -50,25 +50,24 @@ class EditPacket extends Form
                 'label' => $translate->translate('Published'),
                 'required' => 'required',
                 'value_options' => array(
-                    '0' => 'Enabled', 
+                    '0' => 'Enabled',
                 ),
             ),
         ));
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
             ),
         ));
         $this->initFilters();
     }
-    
+
     protected function initFilters()
     {
         $filter = new InputFilter();
-
 
         $filter->add(array(
             'name' => 'startDate',
@@ -78,10 +77,10 @@ class EditPacket extends Form
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
+                array('name' => 'StringTrim'),
             ),
         ));
-        
+
         $filter->add(array(
             'name' => 'expirationDate',
             'required' => true,
@@ -90,10 +89,10 @@ class EditPacket extends Form
             ),
             'filters' => array(
                 array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
+                array('name' => 'StringTrim'),
             ),
         ));
-        
+
         $this->setInputFilter($filter);
     }
 }
