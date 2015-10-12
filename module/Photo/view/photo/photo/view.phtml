@@ -15,7 +15,16 @@ $this->scriptUrl()->requireUrl('member/search');
     </div>
     <div class="row">
         <div class="col-lg-9">
-            <img class="img-responsive" src="<?= $this->photoUrl($photo->getLargeThumbPath()) ?>" alt="">
+            <img class="img-responsive" src="<?= $this->photoUrl($photo->getLargeThumbPath()) ?>" alt=""/>
+            <?php if(!is_null($photo->getWeeklyPhoto())): ?>
+                <!-- TOOD: Make this more responsive -->
+                <div class="ribbon-container">
+                    <div class="corner-ribbon shadow">
+                        <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                        <?= $photo->getWeeklyPhoto()->getWeek()->format('d-m-Y') ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-lg-3">
             <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>

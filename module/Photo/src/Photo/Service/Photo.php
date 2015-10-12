@@ -276,10 +276,14 @@ class Photo extends AbstractAclService
      * 
      * @return \Photo\Model\Photo|null
      */
-    public function generatePhotoOfTheWeek($begindate, $enddate)
+    public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
+        if(is_null($begindate) || is_null($enddate)) {
+            $begindate = (new \DateTime())->sub(new \DateInterval('P1W'));
+            $enddate = new \DateTime();
+        }
         $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
-        if (is_null($bestPhoto)){
+        if (is_null($bestPhoto)) {
             return null;
         }
         $weeklyPhoto = new WeeklyPhotoModel();
@@ -288,7 +292,7 @@ class Photo extends AbstractAclService
         $mapper = $this->getWeeklyPhotoMapper();
         $mapper->persist($weeklyPhoto);
         $mapper->flush();
-        return $bestPhoto;
+        return $weeklyPhoto;
     }
     
     /**
@@ -305,13 +309,13 @@ class Photo extends AbstractAclService
             return null;
         }
         $bestRating = -1;
+        $bestPhoto = null;
         foreach ($results as $res){
             $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
-            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
-                && $this->photoPreference($photo, $res[2])
-                    > $bestRating){
+            $rating = $this->ratePhoto($photo, $res[2]);
+            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo) && $rating > $bestRating) {
                 $bestPhoto = $photo;
-                $bestRating = $this->ratePhoto($photo, $res[2]);
+                $bestRating = $rating;
             }
         }
         return $bestPhoto;

@@ -28,7 +28,7 @@
             </div>
         <?php else: ?>
             <div class="thumb">
-                <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
+                <a class="thumbnail <?= is_null($item->getWeeklyPhoto()) ? '' : 'potw-thumb' ?>" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
                     <img class="img-responsive" src="<?= $this->photoUrl($item->getSmallThumbPath()) ?>" alt="">
                 </a>
             </div>

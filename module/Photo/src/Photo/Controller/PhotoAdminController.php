@@ -60,6 +60,16 @@ class PhotoAdminController extends AbstractActionController
         return new JsonModel($result);
     }
 
+    public function weeklyPhotoAction()
+    {
+        $weeklyPhoto = $this->getPhotoService()->generatePhotoOfTheWeek();
+
+        if(is_null($weeklyPhoto)) {
+            echo "No photo of the week chosen, where any photos viewed?\n";
+        } else {
+            echo "Photo of the week set to photo: " . $weeklyPhoto->getPhoto()->getId();
+        }
+    }
     /**
      * Get the photo service.
      *
