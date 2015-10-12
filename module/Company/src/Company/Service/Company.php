@@ -1,11 +1,10 @@
 <?php
 
 namespace Company\Service;
+
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
 
-use Company\Model\Company as CompanyModel;
-use Company\Mapper\Company as CompanyMapper;
 /**
  * Company service.
  */
@@ -14,8 +13,7 @@ class Company extends AbstractACLService
     public function getCompanyList()
     {
         $translator = $this->getTranslator();
-        if ($this->isAllowed('list')){
-
+        if ($this->isAllowed('list')) {
             return $this->getCompanyMapper()->findAll($translator->getLocale());
         } else {
             throw new \User\Permissions\NotAllowedException(
@@ -24,10 +22,9 @@ class Company extends AbstractACLService
         }
     }
     // Company list for admin interface
-    public function getHiddenCompanyList() 
+    public function getHiddenCompanyList()
     {
-        if ($this->isAllowed('listall')){
-
+        if ($this->isAllowed('listall')) {
             return $this->getCompanyMapper()->findAll();
         } else {
             $translator = $this->getTranslator();
@@ -36,7 +33,7 @@ class Company extends AbstractACLService
             );
         }
     }
-    
+
     public function saveCompany()
     {
         $this->getCompanyMapper()->save();
@@ -49,27 +46,25 @@ class Company extends AbstractACLService
 
     public function insertCompany($languages)
     {
-        if ($this->isAllowed('insert')){
+        if ($this->isAllowed('insert')) {
             return $this->getCompanyMapper()->insert($languages);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to insert a company')
             );
         }
-
     }
-        
+
     public function insertPacketForCompanySlugName($companySlugName)
     {
-        if ($this->isAllowed('insert')){
+        if ($this->isAllowed('insert')) {
             $companies = $this->getEditableCompaniesWithSlugName($companySlugName);
             var_dump($companySlugName);
             $company = $companies[0];
+
             return $this->getPacketMapper()->insertPacketIntoCompany($company);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to insert a packet')
@@ -78,12 +73,12 @@ class Company extends AbstractACLService
     }
     public function insertJobIntoPacketID($packetID)
     {
-        if ($this->isAllowed('insert')){
+        if ($this->isAllowed('insert')) {
             $packet = $this->getEditablePacket($packetID);
             $result = $this->getJobMapper()->insertIntoPacket($packet);
+
             return $result;
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to insert a job')
@@ -93,10 +88,9 @@ class Company extends AbstractACLService
 
     public function deletePacket($packetID)
     {
-        if ($this->isAllowed('delete')){
+        if ($this->isAllowed('delete')) {
             return $this->getPacketMapper()->delete($packetID);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to delete packets')
@@ -105,10 +99,9 @@ class Company extends AbstractACLService
     }
     public function deleteCompaniesWithSlug($slug)
     {
-        if ($this->isAllowed('delete')){
+        if ($this->isAllowed('delete')) {
             return $this->getCompanyMapper()->deleteWithSlug($slug);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to delete companies')
@@ -116,13 +109,13 @@ class Company extends AbstractACLService
         }
     }
 
-    
     public function getJobsWithCompanySlugName($companySlugName)
     {
         $return = $this->getJobMapper()->findJobsWithCompanySlugName($companySlugName);
+
         return $return;
     }
-    
+
     public function getCompaniesWithSlugName($slugName)
     {
         return $this->getCompanyMapper()->findCompaniesWithSlugName($slugName);
@@ -130,11 +123,11 @@ class Company extends AbstractACLService
 
     public function getEditablePacket($packetID)
     {
-        if ($this->isAllowed('edit')){
-            $packet =  $this->getPacketMapper()->findEditablePacket($packetID);
+        if ($this->isAllowed('edit')) {
+            $packet = $this->getPacketMapper()->findEditablePacket($packetID);
+
             return $packet;
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to edit packets')
@@ -144,41 +137,38 @@ class Company extends AbstractACLService
 
     public function getEditableCompaniesWithSlugName($slugName)
     {
-        if ($this->isAllowed('edit')){
+        if ($this->isAllowed('edit')) {
             return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to edit companies')
             );
         }
     }
-    
+
     public function getEditableJobsWithSlugName($companySlugName, $jobSlugName)
     {
-        if ($this->isAllowed('edit')){
+        if ($this->isAllowed('edit')) {
             return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
-        }
-        else{
+        } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
     }
-    
+
     public function getJobsWithSlugName($companySlugName, $jobSlugName)
     {
         return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
     }
-    
 
     public function getJobList()
     {
         return $this->getJobMapper()->findAll();
     }
-    
+
     /**
      * Get the Company Edit form.
      *
@@ -193,21 +183,22 @@ class Company extends AbstractACLService
     {
         return $this->sm->get('company_admin_edit_packet_form');
     }
-    
+
     public function getJobForm()
     {
         return $this->sm->get('company_admin_edit_job_form');
     }
-    
+
     public function getActiveJobList()
     {
         $jl = $this->getJobList();
         $r = [];
-        foreach($jl as $j) {
+        foreach ($jl as $j) {
             if ($j->getActive()) {
                 array_push($r, $j);
             }
         }
+
         return $r;
     }
 

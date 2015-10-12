@@ -19,7 +19,6 @@ echo "</h1>";
     <label><?=$this->translate("Column");?> <select id='sort-column'><option value='job-name'>[<?=$this->translate("Select column")?>]</option><option value='job-name'><?=$this->translate("Job Name")?></option></option></select></label> 
     <label><?=$this->translate("Order");?><select id='sort-order'><option value='1'><?=$this->translate("Ascending");?></option><option value='-1'><?=$this->translate("Descending");?></option></select></label></fieldset>
 <?php
-//echo($this->partial('partial/filter/body'));
 
 
 foreach ($jobList as $job) {

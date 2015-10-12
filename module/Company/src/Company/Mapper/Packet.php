@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Packet
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -21,9 +20,8 @@ class Packet
      */
     protected $em;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      */
@@ -32,7 +30,8 @@ class Packet
         $this->em = $em;
     }
 
-    public function save(){
+    public function save()
+    {
         $this->em->flush();
     }
 
@@ -52,35 +51,31 @@ class Packet
     {
         return $this->getRepository()->findAll();
     }
-    
-    
-    public function findEditablePacket($packetID){
+
+    public function findEditablePacket($packetID)
+    {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')->where('p.id=:packetID');
         $qb->setParameter('packetID', $packetID);
         $qb->setMaxResults(1);
         $packets = $qb->getQuery()->getResult();
-        if (count($packets) != 1){
-            return null;
+        if (count($packets) != 1) {
+            return;
         }
+
         return $packets[0];
     }
-    public function insertPacketIntoCompany($company){
+    public function insertPacketIntoCompany($company)
+    {
         $packet = new PacketModel($this->em);
 
         $packet->setCompany($company);
         $this->em->persist($packet);
-//        $this->em->persist($job->getCompany());
-        
-//        $this->em->merge($company);
-//        $this->em->merge($job);
 
         return $packet;
     }
 
-    
-    
     /**
      * Get the repository for this mapper.
      *

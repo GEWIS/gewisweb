@@ -8,8 +8,6 @@ echo("<h2 class='company-name'><a href='");
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
 if ($islist==true) {
 
-    //echo ("company/");  
-    //echo($company->getSlugName()); 
     echo ($this->url('company/companyItem', // Route url
         ['slugCompanyName' => $company->getSlugName()] // Url parameters
         ,array[] // routeOptions

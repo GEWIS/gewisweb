@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  */
 class CompanyPacket
 {
-
     /**
      * The packet's id.
      *
@@ -42,14 +41,14 @@ class CompanyPacket
      * @ORM\Column(type="boolean")
      */
     protected $published;
-    
+
     /**
      * The packet's company.
      *
      * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packets")
      */
     protected $company;
-    
+
     /**
      * The packet's jobs.
      *
@@ -57,9 +56,8 @@ class CompanyPacket
      */
     protected $jobs;
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -119,7 +117,7 @@ class CompanyPacket
     /**
      * Get the packet's publish state.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPublished()
     {
@@ -129,13 +127,13 @@ class CompanyPacket
     /**
      * Set the packet's publish state.
      *
-     * @param boolean $published
+     * @param bool $published
      */
     public function setPublished($published)
     {
         $this->published = $published;
     }
-    
+
     /**
      * Get the packet's company.
      *
@@ -155,31 +153,34 @@ class CompanyPacket
     {
         $this->company = $company;
     }
-    
+
     /**
      * Get the jobs in the packet.
      * 
      * @return array jobs in the packet
      */
-    public function getJobs() {
+    public function getJobs()
+    {
         return $this->jobs;
     }
-    
+
     /**
      * Adds a job to the packet.
      * 
      * @param Job $job job to be added
      */
-    public function addJob(Job $job) {
+    public function addJob(Job $job)
+    {
         $this->jobs->add($job);
     }
-    
+
     /**
      * Removes a job from the packet.
      * 
      * @param Job $job job to be removed
      */
-    public function removeJob(Job $job) {
+    public function removeJob(Job $job)
+    {
         $this->jobs->removeElement($job);
     }
 
@@ -189,23 +190,23 @@ class CompanyPacket
         $currentMonth = date('m');
         $currentDay = date('d');
 
-        if ($currentYear > $this->getExpirationDate()->format('Y')){
+        if ($currentYear > $this->getExpirationDate()->format('Y')) {
             return true;
         }
-        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')){
+        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
             return true;
         }
-        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth == $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')){
+        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth == $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
             return true;
         }
 
-        if ($currentYear < $this->getStartingDate()->format('Y')){
+        if ($currentYear < $this->getStartingDate()->format('Y')) {
             return true;
         }
-        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')){
+        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
             return true;
         }
-        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth == $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')){
+        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth == $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
             return true;
         }
 
@@ -214,36 +215,34 @@ class CompanyPacket
 
     public function isActive()
     {
-        if ($this->isExpired())
-        {
+        if ($this->isExpired()) {
             // unpublish activity
             $this->setPublished(false);
+
             return false;
         }
 
-        if (!$this->isPublished())
-        {
-            return false;   
+        if (!$this->isPublished()) {
+            return false;
         }
 
         return true;
     }
-    
+
     // For zend2 forms
     public function getArrayCopy()
     {
-        return [ "id" => $this->id, 
-            "startDate" => $this->getStartingDate()->format('Y-m-d'), 
-            "expirationDate" => $this->getExpirationDate()->format('Y-m-d'), 
-            "published" => $this->isPublished() ];
+        return ['id' => $this->id,
+            'startDate' => $this->getStartingDate()->format('Y-m-d'),
+            'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
+            'published' => $this->isPublished(), ];
     }
-    
-    public function exchangeArray($data){
+
+    public function exchangeArray($data)
+    {
         $this->id = (isset($data['published'])) ? $data['id'] : $this->id();
         $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
         $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
     }
-
-
 }

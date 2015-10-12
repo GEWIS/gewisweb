@@ -1,30 +1,31 @@
 <?php
+
 return [
     'router' => [
         'routes' => [
             'company' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
                     'route'    => '/company',
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
-                        'controller'    => 'Company',
-                        'action'        => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
-                        'actionArgument'=> '',
+                        'controller' => 'Company',
+                        'action' => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
+                        'actionArgument' => '',
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'jobList' => [
                         'priority' => 3,
-                        'type'    => 'literal',
+                        'type' => 'literal',
                         'options' => [
-                            'route'    => '/jobs',
+                            'route' => '/jobs',
                             'defaults' => [
                                 '__NAMESPACE__' => 'Company\Controller',
-                                'controller'    => 'Company',
-                                'action'        => 'jobList', 
-                                'actionArgument'=> '',
+                                'controller' => 'Company',
+                                'action' => 'jobList',
+                                'actionArgument' => '',
                             ],
                         ],
                     ],
@@ -43,19 +44,19 @@ return [
                     ],
                     'companyItem' => [
                         'priority' => 2,
-                        'type'    => 'segment',
+                        'type' => 'segment',
                         'options' => [
-                            // url will be company/<asciiCompanyName>/jobs/<asciiJobName>/<action>
-                            // asciijobname and asciicompanyname will be in database, and can be set from the admin panel
+                            // url will be company/<slugCompanyName>/jobs/<slugJobName>/<action>
+                            // slugjobname and slugcompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
                             // company/apple/jobs should be list of jobs of apple
                             // company/apple/jobs/ceo should be the page of ceo job
                             // company should give frontpage of company part
                             // company/list should give a list of companies
                             // company/index should give the frontpage
-                            'route'    => '/:slugCompanyName',
+                            'route' => '/:slugCompanyName',
                             'constraints' => [
-                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
                             ],
                         ),
                         'may_terminate' => true,
@@ -66,7 +67,7 @@ return [
                                     'route' => '/jobs',
                                     'defaults' => [
                                         'controller' => 'Company\Controller\Company',
-                                        'action' => 'jobs'
+                                        'action' => 'jobs',
                                     ],
                                 ],
                                 'may_terminate' => true,
@@ -76,7 +77,7 @@ return [
                                         'options' => [
                                             'route' => '[/:slugJobName]',
                                             'constraints' => [
-                                                'asciiJobName'     => '[a-zA-Z0-9_-]*',
+                                                'slugJobName' => '[a-zA-Z0-9_-]*',
                                             ],
                                         ],
                                     ],
@@ -85,7 +86,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_company' => [
                 'type' => 'Literal',
@@ -93,9 +94,9 @@ return [
                     'route' => '/admin/company',
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
-                        'controller'    => 'Admin',
-                        'action'        => 'index'
-                    ]
+                        'controller' => 'Admin',
+                        'action' => 'index',
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -105,39 +106,40 @@ return [
                         'options' => [
                             'route' => '/delete/[:slugCompanyName]',
                             'defaults' => [
-                                'action' => 'deleteCompany'
-                            ],
+                                'action' => 'deleteCompany',
+                            ),
                             'constraints' => [
-                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
                             ],
-                             
-                        ),
+
+                        ],
                         'may_terminate' => true,
-                    ),
+                    ],
                     'editCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/edit/[:slugCompanyName]',
                             'defaults' => [
-                                'action' => 'editCompany'
+                                'action' => 'editCompany',
                             ],
                             'constraints' => [
-                                'slugCompanyName'     => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
                             ],
+
                         ],
                         'may_terminate' => true,
-                        
+
                         'child_routes' => [
                             'editPacket' => [
                                 'type' => 'segment',
                                 'options' => [
                                     'route' => '/packet/:packetID',
                                     'defaults' => [
-                                        'action' => 'editPacket'
+                                        'action' => 'editPacket',
                                     ],
                                     'constraints' => [
-                                        'packetID'     => '[a-zA-Z0-9_-]*',
+                                        'packetID' => '[a-zA-Z0-9_-]*',
                                     ],
                                 ],
                                 'may_terminate' => true,
@@ -147,9 +149,9 @@ return [
                                         'options' => [
                                             'route' => '/addJob',
                                             'defaults' => [
-                                                'action' => 'addJob'
-                                            ],
-                                        ],
+                                                'action' => 'addJob',
+                                            ),
+                                        ),
                                         'may_terminate' => true,
                                     ],
                                     'deletePacket' => [
@@ -157,9 +159,9 @@ return [
                                         'options' => [
                                             'route' => '/delete',
                                             'defaults' => [
-                                                'action' => 'deletePacket'
-                                            ],
-                                        ],
+                                                'action' => 'deletePacket',
+                                            ),
+                                        ),
                                         'may_terminate' => true,
                                     ],
                                     'editJob' => [
@@ -168,10 +170,10 @@ return [
                                             'route' => '/job/:jobName',
                                             'defaults' => [
                                                 'action' => 'editJob',
-                                            ],
+                                            ),
                                             'constraints' => [
-                                                'jobName'     => '[a-zA-Z0-9_-]*',
-                                            ],
+                                                'jobName' => '[a-zA-Z0-9_-]*',
+                                            ),
                                             'may_terminate' => true,
                                         ],
                                     ],
@@ -182,7 +184,7 @@ return [
                                 'options' => [
                                     'route' => '/addPacket',
                                     'defaults' => [
-                                        'action' => 'addPacket'
+                                        'action' => 'addPacket',
                                     ],
                                     'may_terminate' => true,
                                 ],
@@ -214,11 +216,11 @@ return [
                     ],
                     'default' => [
                         'priority' => 2,
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '[/:action[/:slugCompanyName[/:slugJobName]]]',
+                            'route' => '[/:action[/:slugCompanyName[/:slugJobName]]]',
                             'constraints' => [
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                         ],
                     ],
@@ -229,26 +231,26 @@ return [
     'controllers' => [
         'invokables' => [
             'Company\Controller\Company' => 'Company\Controller\CompanyController',
-            'Company\Controller\Admin' => 'Company\Controller\AdminController'
-        ]
+            'Company\Controller\Admin' => 'Company\Controller\AdminController',
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'company' => __DIR__ . '/../view/'
-        ]
+            'company' => __DIR__.'/../view/',
+        ],
     ],
     'doctrine' => [
         'driver' => [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Company/Model/']
+                'paths' => [__DIR__.'/../src/Company/Model/'),
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Company\Model' => 'company_entities'
-                ]
-            ]
-        ]
-    ]
+                    'Company\Model' => 'company_entities',
+                ],
+            ],
+        ],
+    ],
 ];

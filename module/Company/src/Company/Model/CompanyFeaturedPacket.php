@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+
 //use Doctrine\Common\Collections\ArrayCollection;
 //use Zend\Permissions\Acl\Role\RoleInterface;
 //use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -14,9 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyFeaturedPacket extends CompanyPacket //implements RoleInterface, ResourceInterface
 {
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -48,6 +48,4 @@ class CompanyFeaturedPacket extends CompanyPacket //implements RoleInterface, Re
     {
         // todo
     }
-
-
 }
