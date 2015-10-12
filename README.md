@@ -18,7 +18,7 @@ Installation
   directory.
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
-- Set a cronjob for generatring the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
+- Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
 
 Dreamspark configuration (only works on the GEWIS-server)
 ---------------------------------------------------------
