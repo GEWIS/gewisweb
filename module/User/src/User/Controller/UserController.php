@@ -22,6 +22,7 @@ class UserController extends AbstractActionController
 
             if (null !== $login) {
                 $this->redirect()->toUrl($data['redirect']);
+
                 return new ViewModel(array(
                     'login' => true
                 ));
@@ -30,7 +31,7 @@ class UserController extends AbstractActionController
 
         // show form
         $form = $userService->getLoginForm();
-        if(isset($_SERVER['HTTP_REFERER'])) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
             $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
         } else {
             $form->get('redirect')->setValue($this->url()->fromRoute('home'));
@@ -48,11 +49,12 @@ class UserController extends AbstractActionController
     {
         $this->getUserService()->logout();
 
-        if(isset($_SERVER['HTTP_REFERER'])) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
             $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
         } else {
             $this->redirect()->toRoute('home');
         }
+
         return new ViewModel();
     }
 
