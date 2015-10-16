@@ -296,8 +296,17 @@ class Photo extends AbstractAclService
         }
         return $bestPhoto;
     }
-    
-    
+
+    /**
+     * Retrieves all WeeklyPhotos
+     *
+     * @return array
+     */
+    public function getPhotosOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
+    }
+
     /**
      * Determine the preference rating of the photo.
      * 

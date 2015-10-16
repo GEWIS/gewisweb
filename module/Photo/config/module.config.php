@@ -105,6 +105,16 @@ return array(
                             ),
                         ),
                     ),
+                    'weekly' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/weekly',
+                            'defaults' => array(
+                                'controller' => 'Photo',
+                                'action' => 'weekly',
+                            ),
+                        ),
+                    ),
                 ),
                 'priority' => 100
             ),
