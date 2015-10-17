@@ -1,3 +1,14 @@
+<h1><?= $this->translate('Picture of the week') ?></h1>
+<h4><?= $this->translate('Current picture of the week') ?></h4>
+<hr>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <img class="img-responsive" src="<?= $this->photoUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>" alt=""/>
+    </div>
+</div>
+
+<h4><?= $this->translate('Old pictures of the week') ?></h4>
+<hr>
 <div class="row photos">
     <?php foreach ($weeklyPhotos as $weeklyPhoto): ?>
             <div class="thumb">
