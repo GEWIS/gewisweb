@@ -172,29 +172,19 @@ class Page extends AbstractAclService
             array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
         );
 
-        $translator = $this->getTranslator();
-
-        if ($files['upload']['error'] !== 0) {
-            throw new \Exception(
-                $translator->translate('An unknown error occurred during uploading (' . $files['upload']['error'] . ')')
-            );
-        }
-
         if ($imageValidator->isValid($files['upload']['tmp_name'])) {
-
-
-            if ($extensionValidator->isValid($files['upload']['name'])) {
-
-                //TODO
-
+            if ($extensionValidator->isValid($files['upload'])) {
+                $config = $this->getStorageConfig();
+                $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+                return $config['public_dir'] . '/' . $fileName;
             } else {
                 throw new \Exception(
-                    $translator->translate('The uploaded file does not have a valid extension')
+                    $this->getTranslator()->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
             throw new \Exception(
-                $translator->translate('The uploaded file is not a valid image')
+                $this->getTranslator()->translate('The uploaded file is not a valid image')
             );
         }
     }
@@ -234,14 +224,14 @@ class Page extends AbstractAclService
     }
 
     /**
-     * Get the frontpage config, as used by this service.
+     * Get the storage config, as used by this service.
      *
      * @return array
      */
-    public function getConfig()
+    public function getStorageConfig()
     {
         $config = $this->sm->get('config');
-        return $config['frontpage'];
+        return $config['storage'];
     }
 
     /**
@@ -252,6 +242,16 @@ class Page extends AbstractAclService
     public function getPageMapper()
     {
         return $this->sm->get('frontpage_mapper_page');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

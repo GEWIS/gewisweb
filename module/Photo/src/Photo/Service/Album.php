@@ -251,7 +251,7 @@ class Album extends AbstractAclService
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->getAlbumCoverService()->createCover($album);
         if (!is_null($album->getCoverPath())) {
-            unlink($config['upload_dir'] . '/' . $album->getCoverPath());
+            $this->getFileStorageService()->removeFile($album->getCoverPath());
         }
         $album->setCoverPath($coverPath);
         $this->getAlbumMapper()->flush();
@@ -360,6 +360,16 @@ class Album extends AbstractAclService
     public function getAlbumCoverService()
     {
         return $this->sm->get("photo_service_album_cover");
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

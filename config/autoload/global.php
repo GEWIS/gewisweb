@@ -28,30 +28,18 @@ return array(
      */
     'bcrypt_cost' => 13,
 
+    'storage' => array(
+        'storage_dir' => 'public/data',
+        'public_dir' => 'data',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
     /**
      * Exam and Summary upload directory configration.
      */
     'education' => array(
         'upload_dir' => 'public/data/education',
         'public_dir' => 'data/education',
-        'dir_mode' => 0777, // rwx by default
-    ),
-
-    /**
-     * Meeting notes upload directory configration.
-     */
-    'meeting-notes' => array(
-        'upload_dir' => 'public/data/meeting-notes',
-        'public_dir' => 'data/meeting-notes',
-        'dir_mode' => 0777, // rwx by default
-    ),
-
-    /**
-     * Meeting documents upload directory.
-     */
-    'meeting-documents' => array(
-        'upload_dir' => 'public/data/meeting-documents',
-        'public_dir' => 'data/meeting-documents',
         'dir_mode' => 0777, // rwx by default
     ),
 

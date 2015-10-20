@@ -47,13 +47,13 @@ class Decision
     }
 
     /**
-     * Persist a decision model.
+     * Persist an entity.
      *
-     * @param DecisionmberModel $decision Decision to persist.
+     * @param $entity to persist.
      */
-    public function persist(DecisionModel $decision)
+    public function persist($entity)
     {
-        $this->em->persist($decision);
+        $this->em->persist($entity);
         $this->em->flush();
     }
 

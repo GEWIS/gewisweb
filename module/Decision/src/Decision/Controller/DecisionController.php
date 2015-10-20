@@ -19,6 +19,45 @@ class DecisionController extends AbstractActionController
     }
 
     /**
+     * Download meeting notes
+     */
+    public function notesAction()
+    {
+        $type = $this->params()->fromRoute('type');
+        $number = $this->params()->fromRoute('number');
+
+        try {
+            $meeting = $this->getDecisionService()->getMeeting($type, $number);
+            $response = $this->getDecisionService()->getMeetingNotesDownload($meeting);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
+
+    }
+
+    public function documentAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        try {
+            $meetingDocument = $this->getDecisionService()->getMeetingDocument($id);
+            $response = $this->getDecisionService()->getMeetingDocumentDownload($meetingDocument);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
+    }
+
+    /**
      * View a meeting.
      */
     public function viewAction()
@@ -29,10 +68,9 @@ class DecisionController extends AbstractActionController
 
         try {
             $meeting = $service->getMeeting($type, $number);
+
             return new ViewModel(array(
-                'meeting' => $meeting,
-                'notes'   => $service->getMeetingNotes($meeting),
-                'documentPath' => $service->getMeetingDocumentBasePath($meeting)
+                'meeting' => $meeting
             ));
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
