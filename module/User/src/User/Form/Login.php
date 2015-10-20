@@ -41,6 +41,11 @@ class Login extends Form
             )
         ));
 
+        $this->add(array(
+            'name' => 'redirect',
+            'type' => 'hidden'
+        ));
+
         $this->initFilters();
     }
 

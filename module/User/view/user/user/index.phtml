@@ -25,7 +25,7 @@ $form->setAttribute('method', 'post');
         <?= $this->formInput($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-
+<?= $this->formInput($form->get('redirect')) ?>
 </dl>
 
 <?= $this->formRow($form->get('submit')); ?>
