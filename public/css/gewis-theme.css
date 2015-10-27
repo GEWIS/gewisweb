@@ -1,13 +1,13 @@
 body {
     color: #414141;
     font-family: "Raleway",sans-serif;
-    padding-top: 90px;
     padding-bottom: 0;
 }
 
 /* navigation */
 .navbar {
     border: none;
+    margin-bottom: 0px;
 }
 .navbar-default {
     background: transparent;
@@ -86,9 +86,6 @@ body > div.container {
     background-size: cover;
     background-position: center;
     border-radius: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: -90px;
     margin-bottom: 0;
 }
 .jumbotron-header:after {
