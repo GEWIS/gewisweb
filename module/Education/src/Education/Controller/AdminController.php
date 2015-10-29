@@ -49,8 +49,12 @@ class AdminController extends AbstractActionController {
             ));
         }
 
+        $config = $this->getServiceLocator()->get('config');
+        $config = $config['education_temp'];
+
         return new ViewModel(array(
-            'form' => $service->getBulkForm()
+            'form'   => $service->getBulkForm(),
+            'config' => $config
         ));
     }
 
