@@ -143,21 +143,25 @@ function getIsActiveClass($view, array $condition)
             <?php echo $this->content; ?>
             <hr>
             <footer class="row">
-                <div class="col-md-2 col-sm-4">
+                <div class="col-md-3 col-sm-3">
                     <img src="<?= $this->basePath() ?>/img/logo-white.png" />
                 </div>
-                <div class="col-md-4 col-sm-8">
+                <div class="col-md-4 col-sm-4">
                     <h3>Studievereniging GEWIS</h3>
                     <address>
                         MF 3.155<br>
-                        De Groene Loper 5<br>
-                        5612AZ Eindhoven<br>
+                        Postbus 513<br>
+                        5600 MB Eindhoven<br>
                         <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
                         <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
-                    </address>
+                    </address>  
+                    <a href="#"><?= $this->translate('Full details') ?></a>
                 </div>
-                <div class="col-md-6 col-sm-12">
-                    <p>&copy; 2013 - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
+                <div class="col-md-5 col-sm-5 footer-infima">
+                    <h3>Infima</h3>
+                    <blockquote>
+                        Elles: "Bor, ik ga je nog een keer voor het eten uitnodigen en dan wil ik dat je alle GEWIS-stickers van de vorige keer weer van het plafond verwijdert."
+                    </blockquote>
                 </div>
             </footer>
         </div> <!-- /container -->

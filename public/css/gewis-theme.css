@@ -199,9 +199,28 @@ footer {
     color: #fff;
     background-color: #bc5f5f;
 }
+
 footer a {
     color: #fff;
 }
+
+footer .footer-infima blockquote {
+    font-style: italic;
+    font-size: 1em;
+    padding: 0;
+    border: none;
+}
+
+@media (min-width: 768px) {
+    footer .footer-infima {
+        text-align: right;
+    }
+    
+    footer .footer-infima blockquote {
+        text-align: right;
+    }
+}
+
 
 /* Photos page */
 .photos {
