@@ -1,17 +1,19 @@
 <?php if($this->acl('photo_acl')->isAllowed('photo', 'view_metadata')): ?>
+
+<div style="font-size: 22px;">
+<?= is_null($this->photo->getArtist()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getArtist()) ?>
+</div>
+<?= $this->photo->getDateTime()->format('Y-m-d H:i:s'); ?>
+
 <table class="table table-condensed">
     <tbody>
     <tr>
-        <td><?= $this->translate('Artist') ?></td>
-        <td><?= is_null($this->photo->getArtist()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getArtist()) ?></td>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Camera') ?></td>
-        <td><?= is_null($this->photo->getCamera()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getCamera()) ?></td>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Date/time') ?></td>
-        <td><?= $this->photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
+        <td colspan="2"><?= $this->translate('Camera') ?></td>
+        <td>
+            <span class="icon icon-camera" style="font-size: 18px">
+                <?= is_null($this->photo->getCamera()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getCamera()) ?>
+            </span>
+        </td>
     </tr>
     <tr>
         <td><?= $this->translate('Flash') ?></td>

@@ -1,6 +1,6 @@
 <?php if($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
 <div>
-    <h4><?= $this->translate('People in this photo') ?></h4>
+    <h3><?= $this->translate('In this photo') ?></h3>
     <ul id="tagList">
         <?php foreach ($this->photo->getTags() as $tag): ?>
             <li>

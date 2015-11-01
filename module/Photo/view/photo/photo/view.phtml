@@ -5,56 +5,66 @@ $this->scriptUrl()->requireUrl('member/search');
 ?>
 <?php if ($photo != null): ?>
     <div clas="row">
+        <h1>Foto's</h1>
+        
         <nav>
             <ul class="pager">
+                <li>
+                    <a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())) ?>">    
+                        <?= $photo->getAlbum()->getStartDateTime()->format('Y') ?>/<?= $photo->getAlbum()->getEndDateTime()->format('Y') ?>
+                    </a>        
+                </li>
+                    
+                <li>
+                    <a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())) ?>">
+                        <?= $photo->getAlbum()->getName() ?>
+                    </a>
+                </li>
+            
+<!--
                 <li class="previous"><a
                         href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
                             aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
+-->
             </ul>
         </nav>
     </div>
     <div class="row">
-        <div class="col-lg-9">
-            <img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/>
-            <?php if(!is_null($photo->getWeeklyPhoto())): ?>
-                <!-- TOOD: Make this more responsive -->
-                <div class="ribbon-container">
-                    <div class="corner-ribbon shadow">
-                        <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
-                        <?= $photo->getWeeklyPhoto()->getWeek()->format('d-m-Y') ?>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
-        <div class="col-lg-3">
-            <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
-            <?php if($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
-            <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
-                array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
-            <?php endif; ?>
+        <div class="col-lg-2">
+            <?php if (!is_null($previous)): ?>
             <nav>
-                <ul class="pager">
-                    <?php if (!is_null($previous)): ?>
-                        <li><a id="previous"
-                               href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
-                                <?= $this->translate('Previous') ?>
-                            </a>
-                        </li>
-                    <?php
-                    endif;
-                    if (!is_null($next)):
-                        ?>
-                        <li><a id="next"
-                               href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
-                                <?= $this->translate('Next') ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+                <a id="previous" href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
+                    <?= $this->translate('Previous') ?>
+                </a>
             </nav>
-            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
+            <?php endif ?>
+        </div>
+        <div class="col-lg-8">
+            <img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/>
+        </div>
+        <div class="col-lg-2">
+            <?php if (!is_null($next)): ?>
+            <nav>
+                <a id="next" href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
+                    <?= $this->translate('Next') ?>
+                </a>
+            </nav>
+            <?php endif; ?>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
+        </div>
+        <div class="col-lg-4">
+            <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
+            <?php if($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
+            
+            <a href="<?= $this->url('photo/photo_download', array('photo_id' => $photo->getId())); ?>" class="text-uppercase"><?= $this->translate('Download'); ?></a>
+            <?php endif; ?>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function () {
             Photo.initTagging();

@@ -4,6 +4,45 @@ body {
     padding-bottom: 0;
 }
 
+
+/* headers */
+h1 {
+
+    text-transform: uppercase;
+    margin-top: 40px;
+    margin-bottom: 3px;
+}
+
+.pager {
+    text-align: left;
+    color: #bc5f5f;
+    font-size: 24px;
+    padding: 32px 0;
+}
+
+.pager li {
+    padding: 0 20px;
+}
+
+.pager li:first-child {
+    padding-left: 0;
+}
+
+.pager li:last-child {
+    padding-right: 0;
+}
+
+.icon {
+    padding-left: 20px;
+}
+
+.icon-camera {
+    background-image: url("/img/icon-camera.svg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+}
+
 /* navigation */
 .navbar {
     border: none;
