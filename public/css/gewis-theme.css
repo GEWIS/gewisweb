@@ -82,9 +82,23 @@ h1 {
     border: none;
     padding: 0;
 }
+
 .navbar-nav .dropdown-menu li a {
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.navbar-nav > li > .dropdown-menu > form {
+    padding: 10px;
+}
+
+.navbar-default .navbar-nav form a {
+    text-transform: none;
+}
+
+.navbar-default .navbar-nav .dropdown > a {
+    background-color: transparent;
+    color: inherit;
 }
 
 /* main container */
@@ -169,6 +183,11 @@ body > div.container {
 /* General styles */
 a {
     color: #bc5f5f;
+}
+
+.btn-primary {
+    background-color: #bc5f5f;
+    border-color: #9b4b4b; /* darken 20% */
 }
 
 /* Footer */
@@ -386,4 +405,20 @@ footer a {
 
 .scroller-left {
     float:left;
+}
+
+/* Login menu */
+.login-menu .dropdown-menu {
+    border-top: 3px #BC5F5F solid !important;
+}
+
+.login-menu hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .login-menu .dropdown-menu {
+        width: 250px;
+    }
 }
