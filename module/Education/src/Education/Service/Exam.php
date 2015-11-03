@@ -75,15 +75,30 @@ class Exam extends AbstractAclService
         }
 
         $data = $form->getData();
-        $arrdata = $form->getData(FormInterface::VALUES_AS_ARRAY);
-        var_dump($form->get('exams'));
-        var_dump($arrdata);
-        var_dump($data);
 
-        foreach ($data['exams'] as $exam) {
-            // finalize exam upload
-            var_dump($exam);
-        }
+        /**
+         * Persist the exams and save the uploaded files.
+         *
+         * We do this in a transactional block, so if there is something
+         * wrong, we only have to throw an exception and Doctrine will roll
+         * back the transaction. This comes in handy if we are somehow unable
+         * to process the upload. This does allow us to get the ID of the
+         * exam, which we need in the upload process.
+         */
+
+        $this->getExamMapper()->transactional(function ($mapper) use ($data) {
+            foreach ($data['exams'] as $examData) {
+                // finalize exam upload
+                $exam = new ExamModel();
+                $exam->setDate(new \DateTime($examData['date']));
+                $exam->setCourse($this->getCourse($examData['course']));
+
+                $mapper->persist($exam);
+                $this->finishPreviousUpload($exam, $examData['file']);
+            }
+        });
+
+        return true;
     }
 
     /**
@@ -159,6 +174,26 @@ class Exam extends AbstractAclService
         });
 
         return true;
+    }
+
+    /**
+     * Move previously uploaded file to the right place.
+     *
+     * @param ExamModel $exam
+     * @param string $file
+     */
+    protected function finishPreviousUpload(ExamModel $exam, $file)
+    {
+        $config = $this->getConfig();
+        $configTemp = $this->getConfig('education_temp');
+
+        $filename = $config['upload_dir'] . '/' . $this->examToFilename($exam);
+
+        // make sure the directory exists, and move the file
+        if (!is_dir(dirname($filename))) {
+            mkdir(dirname($filename), $config['dir_mode'], true);
+        }
+        rename($configTemp['upload_dir'] . '/' . $file, $filename);
     }
 
     /**

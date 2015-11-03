@@ -1,3 +1,6 @@
+<?php if (isset($success) && $success): ?>
+Wijzigingen doorgevoerd.
+<?php else: ?>
 <?php
 $form->prepare();
 
@@ -60,3 +63,4 @@ $element->setAttribute('placeholder', $element->getLabel());
 </div>
 
 <?= $this->form()->closeTag() ?>
+<?php endif ?>
