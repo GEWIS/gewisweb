@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR GEWIS
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GEWISweb package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-29 21:36+0200\n"
+"POT-Creation-Date: 2015-11-03 15:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,64 +17,298 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: module/Application/view/application/index/index.phtml:2
-#, php-format
-msgid "Welcome to %sGEWIS%s"
+#: module/Decision/view/decision/organ/show.phtml:33
+msgid "Current members"
 msgstr ""
 
-#: module/Application/view/application/index/index.phtml:3
-#, php-format
-msgid ""
-"Welcome to the website of Study association %sGEWIS%s. This is just a "
-"bootstrap thingy for now, until the design is implemented."
+#: module/Decision/view/decision/organ/show.phtml:40
+msgid "Old members"
 msgstr ""
 
-#: module/Application/view/application/index/index.phtml:4
-msgid "Fork the GEWIS website on GitHub"
+#: module/Decision/view/decision/organ/index.phtml:7
+msgid "Abbreviation"
 msgstr ""
 
-#: module/Application/view/error/403.phtml:1
-msgid "403 Forbidden"
+#: module/Decision/view/decision/organ/index.phtml:8
+#: module/Decision/view/decision/admin/document.phtml:32
+#: module/Decision/view/decision/member/birthdays.phtml:5
+#: module/Activity/view/activity/admin/view.phtml:10
+#: module/Activity/view/activity/activity/view.phtml:10
+#: module/Activity/view/activity/activity/create.phtml:10
+#: module/Activity/view/activity/activity/list.phtml:4
+msgid "Name"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:1
-msgid "An error occurred"
+#: module/Decision/view/decision/organ/index.phtml:9
+#: module/Decision/view/decision/decision/index.phtml:4
+msgid "Type"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:8
-#: module/Application/view/error/404.phtml:53
-msgid "Additional information"
+#: module/Decision/view/decision/organ/index.phtml:21
+msgid "Committee"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:11
-#: module/Application/view/error/index.phtml:35
-#: module/Application/view/error/404.phtml:56
-#: module/Application/view/error/404.phtml:80
-msgid "File"
+#: module/Decision/view/decision/organ/index.phtml:24
+msgid "AV Committee"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:15
-#: module/Application/view/error/index.phtml:39
-#: module/Application/view/error/404.phtml:60
-#: module/Application/view/error/404.phtml:84
-msgid "Message"
+#: module/Decision/view/decision/organ/index.phtml:27
+msgid "Fraternity"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:19
-#: module/Application/view/error/index.phtml:43
-#: module/Application/view/error/404.phtml:64
-#: module/Application/view/error/404.phtml:88
-msgid "Stack trace"
+#: module/Decision/view/decision/decision/view.phtml:16
+msgid "Notes for this meeting"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:29
-#: module/Application/view/error/404.phtml:74
-msgid "Previous exceptions"
+#: module/Decision/view/decision/decision/index.phtml:5
+msgid "Meeting number"
 msgstr ""
 
-#: module/Application/view/error/index.phtml:58
-#: module/Application/view/error/404.phtml:103
-msgid "No Exception available"
+#: module/Decision/view/decision/decision/index.phtml:6
+#: module/Decision/view/decision/member/birthdays.phtml:4
+msgid "Date"
+msgstr ""
+
+#: module/Decision/view/decision/decision/index.phtml:7
+msgid "# Decisions"
+msgstr ""
+
+#: module/Decision/view/decision/decision/search.phtml:15
+#: module/Education/view/education/education/index.phtml:16
+#: module/Decision/src/Decision/Form/SearchDecision.php:21
+#: module/Education/src/Education/Form/SearchCourse.php:20
+msgid "Search query"
+msgstr ""
+
+#: module/Decision/view/decision/decision/search.phtml:24
+#: module/Education/view/education/education/index.phtml:25
+#: module/Decision/src/Decision/Form/SearchDecision.php:29
+#: module/Decision/src/Decision/Form/SearchDecision.php:30
+#: module/Education/src/Education/Form/SearchCourse.php:28
+msgid "Search"
+msgstr ""
+
+#: module/Decision/view/decision/admin/document.phtml:2
+msgid "Meeting document uploaded"
+msgstr ""
+
+#: module/Decision/view/decision/admin/notes.phtml:2
+msgid "Meeting notes uploaded"
+msgstr ""
+
+#: module/Decision/view/decision/admin/notes.phtml:19
+#: module/Decision/src/Decision/Form/Document.php:32
+#: module/Decision/src/Decision/Form/Notes.php:38
+msgid "Meeting"
+msgstr ""
+
+#: module/Decision/view/decision/admin/notes.phtml:42
+#: module/Education/view/education/admin/upload.phtml:47
+msgid "Upload"
+msgstr ""
+
+#: module/Decision/view/decision/member/birthdays.phtml:6
+msgid "Age"
+msgstr ""
+
+#: module/Decision/view/decision/member/birthdays.phtml:26
+msgid "years"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:10
+#: module/Decision/view/decision/member/index.phtml:30
+msgid "Gender"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:14
+#: module/Decision/view/decision/member/index.phtml:34
+msgid "Male"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:17
+#: module/Decision/view/decision/member/index.phtml:37
+msgid "Female"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:20
+#: module/Decision/view/decision/member/index.phtml:40
+msgid "Other"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:26
+#: module/Decision/view/decision/member/index.phtml:46
+msgid "Email"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:30
+#: module/Decision/view/decision/member/index.phtml:50
+msgid "Birth date"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:34
+#: module/Decision/view/decision/member/index.phtml:54
+msgid "Generation"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:39
+#: module/Decision/view/decision/member/index.phtml:88
+msgid "Membership of committees and fraternities"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:50
+#: module/Decision/view/decision/member/index.phtml:99
+msgid "Adresses"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:55
+#: module/Decision/view/decision/member/index.phtml:104
+msgid "Home address (parents)"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:58
+#: module/Decision/view/decision/member/index.phtml:107
+msgid "Student address"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:61
+#: module/Decision/view/decision/member/index.phtml:110
+msgid "Mail address"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:67
+#: module/Decision/view/decision/member/index.phtml:116
+msgid "Country"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:71
+#: module/Decision/view/decision/member/index.phtml:120
+msgid "Street and number"
+msgstr ""
+
+#: module/Decision/view/decision/member/view.phtml:75
+#: module/Decision/view/decision/member/index.phtml:124
+msgid "City and postal code"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:10
+#: module/User/view/user/user/register.phtml:19
+#: module/User/src/User/Form/Register.php:27
+msgid "Membership number"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:14
+msgid "Initials"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:18
+msgid "First name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:22
+msgid "Middle name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:26
+msgid "Last name"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:58
+msgid "Membership type"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:62
+msgid "Ordinary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:65
+msgid "Prolonged"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:68
+msgid "External"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:71
+msgid "Extraordinary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:74
+msgid "Honorary"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:80
+msgid "Last membership change"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:84
+msgid "End date of membership"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:128
+msgid "Phone number"
+msgstr ""
+
+#: module/Decision/view/partial/photos.phtml:1
+#: module/Application/view/layout/layout.phtml:67
+#: module/Application/view/layout/layout.phtml:76
+msgid "Photos"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:6
+msgid "GEWIS Website"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:58
+msgid "Home"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:59
+#: module/Application/view/layout/layout.phtml:62
+#: module/Application/view/layout/layout.phtml:65
+msgid "Association"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:66
+#: module/Application/view/layout/layout.phtml:75
+msgid "Activities"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:69
+#: module/Application/view/layout/layout.phtml:81
+msgid "Members"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:73
+msgid "Companies"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:74
+msgid "Education"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:79
+#: module/User/src/User/Form/Login.php:40
+msgid "Login"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:85
+msgid "Signed in as"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:89
+msgid "My information"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:93
+msgid "Logout"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:128
+msgid "by WebCommissie GEWIS."
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:128
+msgid "All rights reserved."
 msgstr ""
 
 #: module/Application/view/error/404.phtml:1
@@ -111,105 +345,490 @@ msgstr ""
 msgid "resolves to %s"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:6
-msgid "GEWIS Website"
+#: module/Application/view/error/404.phtml:53
+#: module/Application/view/error/index.phtml:8
+msgid "Additional information"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:37
-msgid "GEWIS"
+#: module/Application/view/error/404.phtml:56
+#: module/Application/view/error/404.phtml:80
+#: module/Application/view/error/index.phtml:11
+#: module/Application/view/error/index.phtml:35
+msgid "File"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:41
-msgid "Home"
+#: module/Application/view/error/404.phtml:60
+#: module/Application/view/error/404.phtml:84
+#: module/Application/view/error/index.phtml:15
+#: module/Application/view/error/index.phtml:39
+msgid "Message"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:42
-msgid "Education"
+#: module/Application/view/error/404.phtml:64
+#: module/Application/view/error/404.phtml:88
+#: module/Application/view/error/index.phtml:19
+#: module/Application/view/error/index.phtml:43
+msgid "Stack trace"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:43
-msgid "Activity"
+#: module/Application/view/error/404.phtml:74
+#: module/Application/view/error/index.phtml:29
+msgid "Previous exceptions"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:44
-msgid "Photos"
+#: module/Application/view/error/404.phtml:103
+#: module/Application/view/error/index.phtml:58
+msgid "No Exception available"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:48
-#: module/User/src/User/Form/Login.php:40
-msgid "Login"
+#: module/Application/view/error/index.phtml:1
+msgid "An error occurred"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:52
-msgid "Logout"
+#: module/Application/view/error/403.phtml:1
+msgid "403 Forbidden"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:68
-#, php-format
-msgid "Signed in as %s"
+#: module/Activity/view/activity/admin/queue.phtml:1
+msgid "Unapproved Activities"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:78
-msgid "by WebCommissie GEWIS."
+#: module/Activity/view/activity/admin/queue.phtml:9
+msgid "Approved Activities"
 msgstr ""
 
-#: module/Application/view/layout/layout.phtml:78
-msgid "All rights reserved."
+#: module/Activity/view/activity/admin/queue.phtml:17
+msgid "Disapproved Activities"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:4
+#: module/Activity/view/activity/admin/view.phtml:6
+#: module/Activity/view/activity/activity/view.phtml:6
+#: module/Activity/view/activity/activity/list.phtml:3
+msgid "Id"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:14
+#: module/Activity/view/activity/activity/view.phtml:14
+#: module/Activity/view/activity/activity/create.phtml:18
+#: module/Activity/view/activity/activity/list.phtml:5
+msgid "Start time"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:18
+#: module/Activity/view/activity/activity/view.phtml:18
+#: module/Activity/view/activity/activity/create.phtml:26
+#: module/Activity/view/activity/activity/list.phtml:6
+msgid "End time"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:22
+#: module/Activity/view/activity/activity/view.phtml:22
+#: module/Activity/view/activity/activity/create.phtml:34
+#: module/Activity/view/activity/activity/list.phtml:7
+msgid "Location"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:26
+#: module/Activity/view/activity/activity/view.phtml:26
+#: module/Activity/view/activity/activity/create.phtml:42
+#: module/Activity/view/activity/activity/list.phtml:8
+msgid "Costs"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:30
+#: module/Activity/view/activity/activity/view.phtml:30
+#: module/Activity/view/activity/activity/view.phtml:46
+msgid "Subscribe"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:31
+#: module/Activity/view/activity/admin/view.phtml:35
+#: module/Activity/view/activity/activity/view.phtml:31
+#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Photo/view/partial/metadata.phtml:18
+msgid "Yes"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:31
+#: module/Activity/view/activity/admin/view.phtml:35
+#: module/Activity/view/activity/activity/view.phtml:31
+#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Photo/view/partial/metadata.phtml:18
+msgid "No"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:34
+#: module/Activity/view/activity/activity/view.phtml:34
+msgid "Only GEWIS"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:42
+msgid "Approve"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:47
+msgid "Disapprove"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:58
+msgid "Revoke approval"
+msgstr ""
+
+#: module/Activity/view/activity/admin/view.phtml:69
+msgid "Revoke disapproval"
+msgstr ""
+
+#: module/Activity/view/activity/activity/signoff.phtml:7
+msgid "Successfully unsubscribed"
+msgstr ""
+
+#: module/Activity/view/activity/activity/signup.phtml:5
+msgid "Successfully subscribed"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:40
+msgid "You have already signed up for this activity!"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:42
+msgid "Unsubscribe"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:49
+msgid "Login to subscribe"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:56
+msgid "Already subscribed"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:69
+msgid "Back"
+msgstr ""
+
+#: module/Activity/view/activity/activity/index.phtml:4
+msgid "Create Activity"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:46
+#: module/Photo/view/partial/metadata.phtml:6
+#: module/Photo/view/partial/metadata.phtml:10
+#: module/Photo/view/partial/metadata.phtml:22
+#: module/Photo/view/partial/metadata.phtml:26
+#: module/Photo/view/partial/metadata.phtml:30
+#: module/Photo/view/partial/metadata.phtml:34
+#: module/Photo/view/partial/metadata.phtml:38
+msgid "Unknown"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:51
+msgid "Can Sign up?"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:59
+msgid "Description"
+msgstr ""
+
+#: module/Activity/view/activity/activity/list.phtml:20
+msgid "View"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:16
+#: module/Photo/view/photo/album-admin/index.phtml:29
+msgid "Photo admin"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:50
+msgid "Move photo"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:52
+#: module/Photo/view/photo/photo-admin/index.phtml:118
+msgid "Delete photo"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:73
+msgid "Move the photo to another album"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:78
+#: module/Photo/view/photo/album-admin/index.phtml:249
+msgid "Select a new parent album"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:82
+msgid "The photo has been moved"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:87
+#: module/Photo/view/photo/album-admin/index.phtml:167
+#: module/Photo/view/photo/album-admin/index.phtml:258
+msgid "Move"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:100
+#: module/Photo/view/photo/album-admin/index.phtml:180
+#: module/Photo/view/photo/album-admin/index.phtml:212
+msgid "Delete confirmation"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:104
+msgid ""
+"Are you sure you want to delete this photo? <b>This action can not be "
+"reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:107
+msgid "Please wait while your photo is being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:113
+msgid "The photo has been deleted"
+msgstr ""
+
+#: module/Photo/view/photo/photo-admin/index.phtml:119
+#: module/Photo/view/photo/album-admin/index.phtml:199
+#: module/Photo/view/photo/album-admin/index.phtml:231
+msgid "Cancel"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:12
+msgid "Return to album"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:33
+msgid "Full resolution"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:40
+#: module/Photo/view/partial/paginator.phtml:9
+msgid "Previous"
+msgstr ""
+
+#: module/Photo/view/photo/photo/view.phtml:49
+#: module/Photo/view/partial/paginator.phtml:23
+msgid "Next"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:10
+msgid "Upload photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:21
+msgid "Import photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:24
+msgid "The photos have been imported succesfully"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/add.phtml:34
+msgid ""
+"Make sure that the folder permissions on your import folder are set such "
+"that the webserver user can read the files inside of it. Please note that "
+"importing a large amount of photos may take a while."
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:75
+msgid "Other albums"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:88
+msgid "Create new album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:92
+msgid "Edit album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:95
+msgid "Add photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:97
+msgid "Move album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:100
+msgid "Move %i photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:103
+msgid "Regenerate album cover"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:107
+#: module/Photo/view/photo/album-admin/index.phtml:198
+msgid "Delete album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:110
+msgid "Delete %i photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:128
+msgid "Generate a new cover photo"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:138
+msgid "Regenerate"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:140
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:108
+#: module/Photo/src/Photo/Form/EditAlbum.php:44
+#: module/Frontpage/src/Frontpage/Form/Page.php:77
+msgid "Save"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:153
+msgid "Move the album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:158
+msgid "Select a new parent for the album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:162
+msgid "The album has been moved"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:184
+msgid ""
+"Are you sure you want to delete this album including all photos inside of "
+"it? <b>This action can not be reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:187
+msgid "Please wait while the album is being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:193
+msgid "The album has been deleted"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:216
+msgid ""
+"Are you sure you want to delete the selected items? <b>This action can not "
+"be reverted.</b>"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:219
+msgid "Please wait while the photos are being deleted."
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:225
+msgid "The photos have been been deleted"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:230
+msgid "Delete photos"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:244
+msgid "Move the photos to another album"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/index.phtml:253
+msgid "The photos have been moved"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:12
+#: module/Photo/src/Photo/Form/EditAlbum.php:20
+#: module/Photo/src/Photo/Form/CreateAlbum.php:20
+msgid "Album title"
+msgstr ""
+
+#: module/Photo/view/photo/album-admin/create.phtml:21
+msgid "Create album"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:5
+msgid "Artist"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:9
+msgid "Camera"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:13
+msgid "Date/time"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:17
+msgid "Flash"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:21
+msgid "Focal length"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:25
+msgid "Exposure time"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:29
+msgid "Shutter speed"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:33
+msgid "Aperture"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:37
+msgid "ISO"
+msgstr ""
+
+#: module/Photo/view/partial/tags.phtml:3
+msgid "People in this photo"
+msgstr ""
+
+#: module/Photo/view/partial/tags.phtml:23
+msgid "Tag someone"
+msgstr ""
+
+#: module/User/view/user/email/register.phtml:1
 #, php-format
 msgid "Dear %s,"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:6
+#: module/User/view/user/email/register.phtml:3
 msgid ""
 "You have been registered on the website of Study association GEWIS, with the "
 "following information:"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:8
+#: module/User/view/user/email/register.phtml:5
 msgid "Membership number:"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:9
+#: module/User/view/user/email/register.phtml:6
 msgid "Email address:"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:11
+#: module/User/view/user/email/register.phtml:8
 msgid "You can activate your account on the following link:"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:15
+#: module/User/view/user/email/register.phtml:12
 msgid "Your activation code is:"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:17
+#: module/User/view/user/email/register.phtml:14
 msgid "Best Regards,"
 msgstr ""
 
-#: module/User/view/user/email/register.phtml:19
+#: module/User/view/user/email/register.phtml:16
 msgid "WebCommissie GEWIS"
 msgstr ""
 
-#: module/User/view/user/user/index.phtml:2
-msgid "You are logged in."
-msgstr ""
-
-#: module/User/view/user/user/index.phtml:38
-#, php-format
-msgid "If you don't have an account yet, go to the %sRegistration page%s"
+#: module/User/view/user/user/logout.phtml:1
+msgid "You are logged out."
 msgstr ""
 
 #: module/User/view/user/user/register.phtml:2
 #, php-format
 msgid "You have been registered. An email has been sent to %s for activation."
-msgstr ""
-
-#: module/User/view/user/user/register.phtml:19
-#: module/Decision/view/decision/member/index.phtml:10
-#: module/User/src/User/Form/Register.php:27
-msgid "Membership number"
 msgstr ""
 
 #: module/User/view/user/user/register.phtml:29
@@ -220,6 +839,15 @@ msgstr ""
 #: module/User/view/user/user/register.phtml:38
 #: module/User/src/User/Form/Register.php:43
 msgid "Register"
+msgstr ""
+
+#: module/User/view/user/user/index.phtml:2
+msgid "You are logged in."
+msgstr ""
+
+#: module/User/view/user/user/index.phtml:38
+#, php-format
+msgid "If you don't have an account yet, go to the %sRegistration page%s"
 msgstr ""
 
 #: module/User/view/user/user/activate.phtml:2
@@ -245,132 +873,93 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: module/User/view/user/user/logout.phtml:2
-msgid "You are logged out."
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:13
+msgid "URL options"
 msgstr ""
 
-#: module/User/view/user/user/logout.phtml:15
-msgid "Are you sure you want to logout?"
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:14
+msgid ""
+"Make this page available at the following URL. Providing a category is "
+"required."
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:5
-msgid "Create Activity"
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:45
+#: module/Frontpage/src/Frontpage/Form/Page.php:60
+msgid "English content"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:11
-#: module/Activity/view/activity/activity/view.phtml:6
-msgid "Id"
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:69
+#: module/Frontpage/src/Frontpage/Form/Page.php:52
+msgid "Dutch content"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:12
-#: module/Activity/view/activity/activity/view.phtml:10
-#: module/Activity/view/activity/activity/create.phtml:10
-#: module/Decision/view/decision/organ/index.phtml:8
-#: module/Decision/view/decision/decision/index.phtml:8
-msgid "Name"
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:93
+msgid "Permissions"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:13
-#: module/Activity/view/activity/activity/view.phtml:14
-#: module/Activity/view/activity/activity/create.phtml:18
-msgid "Start time"
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:116
+msgid "Delete this page"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:14
-#: module/Activity/view/activity/activity/view.phtml:18
-#: module/Activity/view/activity/activity/create.phtml:26
-msgid "End time"
+#: module/Frontpage/view/frontpage/page-admin/index.phtml:5
+msgid "Pages"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:15
-#: module/Activity/view/activity/activity/view.phtml:22
-#: module/Activity/view/activity/activity/create.phtml:34
-msgid "Location"
+#: module/Frontpage/view/frontpage/page-admin/index.phtml:9
+msgid "Create a new page"
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:16
-#: module/Activity/view/activity/activity/view.phtml:26
-#: module/Activity/view/activity/activity/create.phtml:42
-msgid "Costs"
+#: module/Frontpage/view/frontpage/page-admin/index.phtml:11
+msgid "Or select a page to edit below."
 msgstr ""
 
-#: module/Activity/view/activity/activity/index.phtml:28
-msgid "View"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:3
+msgid "Study association GEWIS"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:30
-#: module/Activity/view/activity/activity/view.phtml:46
-msgid "Subscribe"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:4
+#, php-format
+msgid ""
+"Welcome to the website of Study association %sGEWIS%s. This is just a "
+"bootstrap thingy for now, until the design is implemented."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:31
-#: module/Activity/view/activity/activity/view.phtml:35
-#: module/Photo/view/photo/photo/view.phtml:35
-#: module/Photo/view/photo/photo-admin/index.phtml:69
-#: module/User/src/User/Form/Logout.php:20
-msgid "Yes"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:5
+msgid "Fork the GEWIS website on GitHub"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:31
-#: module/Activity/view/activity/activity/view.phtml:35
-#: module/Photo/view/photo/photo/view.phtml:35
-#: module/Photo/view/photo/photo-admin/index.phtml:69
-#: module/User/src/User/Form/Logout.php:28
-msgid "No"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:9
+msgid "Agenda"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:34
-msgid "Only GEWIS"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:26
+#, php-format
+msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:40
-msgid "You have already signed up for this activity!"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:37
+msgid "Birthdays today!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:42
-msgid "Unsubscribe"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:48
+#, php-format
+msgid "%s wil be %s years old today!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:49
-msgid "Login to subscribe"
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:53
+msgid "Nobody seems to have a birthday today, be the first one!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:56
-msgid "Already subscribed"
+#: module/Education/view/education/admin/index.phtml:1
+msgid "Education admin"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:69
-msgid "Back"
+#: module/Education/view/education/admin/upload.phtml:2
+msgid "Exam successfully uploaded!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/create.phtml:50
-msgid "Can Sign up?"
-msgstr ""
-
-#: module/Activity/view/activity/activity/create.phtml:58
-msgid "Description"
-msgstr ""
-
-#: module/Activity/view/activity/activity/signup.phtml:5
-msgid "Successfully subscribed"
-msgstr ""
-
-#: module/Activity/view/activity/activity/signoff.phtml:7
-msgid "Successfully unsubscribed"
-msgstr ""
-
-#: module/Education/view/education/education/index.phtml:16
-#: module/Education/src/Education/Form/SearchCourse.php:20
-msgid "Search query"
-msgstr ""
-
-#: module/Education/view/education/education/index.phtml:25
-#: module/Education/src/Education/Form/SearchCourse.php:28
-msgid "Search"
-msgstr ""
-
-#: module/Education/view/education/education/index.phtml:36
 #: module/Education/view/education/admin/upload.phtml:19
+#: module/Education/view/education/education/index.phtml:36
 #: module/Education/src/Education/Form/Upload.php:20
 msgid "Course code"
 msgstr ""
@@ -393,439 +982,224 @@ msgstr ""
 msgid "Exam of %s"
 msgstr ""
 
-#: module/Education/view/education/admin/index.phtml:1
-msgid "Education admin"
+#: module/Decision/src/Decision/Service/Member.php:29
+msgid "You are not allowed to view membership info."
 msgstr ""
 
-#: module/Education/view/education/admin/upload.phtml:2
-msgid "Exam successfully uploaded!"
+#: module/Decision/src/Decision/Service/Member.php:34
+msgid "You are not allowed to view members."
 msgstr ""
 
-#: module/Education/view/education/admin/upload.phtml:47
-msgid "Upload"
+#: module/Decision/src/Decision/Service/Member.php:89
+msgid "You are not allowed login into dreamspark."
 msgstr ""
 
-#: module/Decision/view/decision/organ/index.phtml:7
-#: module/Decision/view/decision/decision/index.phtml:7
-msgid "Abbreviation"
+#: module/Decision/src/Decision/Service/Member.php:125
+msgid "Login to dreamspark failed. If this persists, contact the WebCommittee."
 msgstr ""
 
-#: module/Decision/view/decision/organ/index.phtml:9
-#: module/Decision/view/decision/decision/index.phtml:9
-msgid "Type"
+#: module/Decision/src/Decision/Service/Member.php:146
+msgid "You are not allowed to view the list of today's birthdays."
 msgstr ""
 
-#: module/Decision/view/decision/organ/index.phtml:21
-#: module/Decision/view/decision/decision/index.phtml:20
-msgid "Committee"
+#: module/Decision/src/Decision/Service/Member.php:153
+msgid "You are not allowed to view the list of birthdays."
 msgstr ""
 
-#: module/Decision/view/decision/organ/index.phtml:24
-msgid "AV Committee"
+#: module/Decision/src/Decision/Service/Member.php:183
+msgid "Name must be at least "
 msgstr ""
 
-#: module/Decision/view/decision/organ/index.phtml:27
-#: module/Decision/view/decision/decision/index.phtml:23
-msgid "Fraternity"
+#: module/Decision/src/Decision/Service/Member.php:189
+msgid "Not allowed to search for members."
 msgstr ""
 
-#: module/Decision/view/decision/organ/show.phtml:33
-msgid "Current members"
+#: module/Decision/src/Decision/Service/Decision.php:28
+msgid "You are not allowed to list meetings."
 msgstr ""
 
-#: module/Decision/view/decision/organ/show.phtml:40
-msgid "Old members"
+#: module/Decision/src/Decision/Service/Decision.php:48
+msgid "You are not allowed to view meetings."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:14
-msgid "Initials"
+#: module/Decision/src/Decision/Service/Decision.php:78
+msgid "You are not allowed to view meeting documents."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:18
-msgid "First name"
+#: module/Decision/src/Decision/Service/Decision.php:105
+msgid "You are not allowed to view meeting notes."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:22
-msgid "Middle name"
+#: module/Decision/src/Decision/Service/Decision.php:206
+msgid "You are not allowed to search decisions."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:26
-msgid "Last name"
+#: module/Decision/src/Decision/Service/Decision.php:233
+msgid "You are not allowed to upload notes."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:30
-msgid "Sex"
+#: module/Decision/src/Decision/Service/Decision.php:250
+msgid "You are not allowed to upload meeting documents."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:34
-msgid "Male"
+#: module/Decision/src/Decision/Service/Organ.php:25
+msgid "Not allowed to view the list of organs."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:37
-msgid "Female"
+#: module/Decision/src/Decision/Service/Organ.php:43
+msgid "Not allowed to view organ information"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:40
-msgid "Other"
+#: module/Decision/src/Decision/Form/Document.php:33
+#: module/Decision/src/Decision/Form/Notes.php:39
+msgid "Choose a meeting"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:46
-msgid "Email"
+#: module/Decision/src/Decision/Form/Document.php:42
+msgid "Document name"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:50
-msgid "Birth date"
+#: module/Decision/src/Decision/Form/Document.php:48
+msgid "Document to upload"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:54
-msgid "Generation"
+#: module/Decision/src/Decision/Form/Document.php:54
+msgid "Upload document"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:58
-msgid "Membership type"
+#: module/Decision/src/Decision/Form/Notes.php:48
+#: module/Decision/src/Decision/Form/Notes.php:51
+msgid "Notes to upload"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:62
-msgid "Ordinary"
+#: module/Decision/src/Decision/Form/Notes.php:57
+#: module/Education/src/Education/Form/Upload.php:45
+msgid "Submit"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:65
-msgid "Prolonged"
+#: module/Decision/src/Decision/Form/Notes.php:73
+msgid "There already are notes for this meeting"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:68
-msgid "External"
+#: module/Application/src/Application/Service/FileStorage.php:52
+msgid "An unknown error occurred during uploading (%i)"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:71
-msgid "Extraordinary"
+#: module/Photo/src/Photo/Service/Photo.php:25
+#: module/Photo/src/Photo/Service/Photo.php:43
+#: module/Photo/src/Photo/Service/Photo.php:61
+#: module/Photo/src/Photo/Service/Photo.php:81
+#: module/Photo/src/Photo/Service/Photo.php:144
+msgid "Not allowed to view photos"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:74
-msgid "Honorary"
+#: module/Photo/src/Photo/Service/Photo.php:121
+msgid "Not allowed to download photos"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:80
-msgid "Last membership change"
+#: module/Photo/src/Photo/Service/Photo.php:178
+msgid "Not allowed to delete photos."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:84
-msgid "End date of membership"
+#: module/Photo/src/Photo/Service/Photo.php:229
+msgid "Not allowed to move photos"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:88
-msgid "Membership of committees and fraternities"
+#: module/Photo/src/Photo/Service/Photo.php:343
+#: module/Photo/src/Photo/Service/Photo.php:420
+msgid "Not allowed to view tags."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:96
-msgid "Adresses"
+#: module/Photo/src/Photo/Service/Photo.php:362
+msgid "Not allowed to add tags."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:101
-msgid "Home address (parents)"
+#: module/Photo/src/Photo/Service/Photo.php:394
+msgid "Not allowed to remove tags."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:104
-msgid "Student address"
+#: module/Photo/src/Photo/Service/Album.php:31
+#: module/Photo/src/Photo/Service/Album.php:50
+#: module/Photo/src/Photo/Service/Album.php:75
+msgid "Not allowed to view albums"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:107
-msgid "Mail address"
+#: module/Photo/src/Photo/Service/Album.php:102
+msgid "Not allowed to view albums without dates"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:113
-msgid "Country"
+#: module/Photo/src/Photo/Service/Album.php:144
+msgid "Not allowed to create albums"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:117
-msgid "Street and number"
+#: module/Photo/src/Photo/Service/Album.php:176
+msgid "Not allowed to edit albums"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:121
-msgid "City and postal code"
+#: module/Photo/src/Photo/Service/Album.php:203
+msgid "Not allowed to move albums"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:125
-msgid "Phone number"
+#: module/Photo/src/Photo/Service/Album.php:227
+msgid "Not allowed to delete albums."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:10
-msgid "Return to album"
+#: module/Photo/src/Photo/Service/Album.php:246
+msgid "Not allowed to generate album covers."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:22
-#: module/Photo/view/photo/photo-admin/index.phtml:56
-msgid "Artist"
+#: module/Photo/src/Photo/Service/Album.php:300
+msgid "Not allowed to edit albums."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:23
-#: module/Photo/view/photo/photo/view.phtml:27
-#: module/Photo/view/photo/photo/view.phtml:39
-#: module/Photo/view/photo/photo/view.phtml:43
-#: module/Photo/view/photo/photo/view.phtml:47
-#: module/Photo/view/photo/photo/view.phtml:51
-#: module/Photo/view/photo/photo/view.phtml:55
-msgid "Unknown"
+#: module/Photo/src/Photo/Service/Album.php:319
+msgid "Not allowed to create albums."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:26
-#: module/Photo/view/photo/photo-admin/index.phtml:60
-msgid "Camera"
+#: module/Photo/src/Photo/Service/Admin.php:29
+msgid "Not allowed to add photos."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:30
-#: module/Photo/view/photo/photo-admin/index.phtml:64
-msgid "Date/time"
+#: module/Photo/src/Photo/Service/Admin.php:117
+msgid "Not allowed to import photos."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:34
-#: module/Photo/view/photo/photo-admin/index.phtml:68
-msgid "Flash"
+#: module/Photo/src/Photo/Service/Admin.php:141
+msgid "The specified path is not valid"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:38
-#: module/Photo/view/photo/photo-admin/index.phtml:72
-msgid "Focal length"
+#: module/Photo/src/Photo/Service/Admin.php:150
+msgid "Not allowed to upload photos."
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:42
-#: module/Photo/view/photo/photo-admin/index.phtml:76
-msgid "Exposure time"
+#: module/Photo/src/Photo/Service/Admin.php:164
+msgid "An unknown error occurred during uploading ("
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:46
-#: module/Photo/view/photo/photo-admin/index.phtml:80
-msgid "Shutter speed"
+#: module/Photo/src/Photo/Service/Admin.php:180
+#: module/Frontpage/src/Frontpage/Service/Page.php:182
+msgid "The uploaded file does not have a valid extension"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:50
-#: module/Photo/view/photo/photo-admin/index.phtml:84
-msgid "Aperture"
+#: module/Photo/src/Photo/Service/Admin.php:185
+#: module/Frontpage/src/Frontpage/Service/Page.php:187
+msgid "The uploaded file is not a valid image"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:54
-#: module/Photo/view/photo/photo-admin/index.phtml:88
-msgid "ISO"
+#: module/Photo/src/Photo/Form/EditAlbum.php:28
+msgid "Start date"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:59
-msgid "Full resolution"
+#: module/Photo/src/Photo/Form/EditAlbum.php:36
+msgid "End date"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:65
-#: module/Photo/view/partial/paginator.phtml:9
-msgid "Previous"
+#: module/Photo/src/Photo/Form/CreateAlbum.php:28
+msgid "Create"
 msgstr ""
 
-#: module/Photo/view/photo/photo/view.phtml:74
-#: module/Photo/view/partial/paginator.phtml:23
-msgid "Next"
-msgstr ""
-
-#: module/Photo/view/photo/photo/view.phtml:81
-msgid "People in this photo"
-msgstr ""
-
-#: module/Photo/view/photo/photo/view.phtml:96
-msgid "Tag someone"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:10
-#: module/Photo/view/photo/photo-admin/index.phtml:10
-msgid "Photo admin"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:55
-msgid "Other albums"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:68
-msgid "Create new album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:72
-msgid "Edit album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:75
-msgid "Add photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:77
-msgid "Move album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:80
-msgid "Move %i photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:83
-msgid "Regenerate album cover"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:87
-#: module/Photo/view/photo/album-admin/index.phtml:178
-msgid "Delete album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:90
-msgid "Delete %i photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:108
-msgid "Generate a new cover photo"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:118
-msgid "Regenerate"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:120
-#: module/Photo/src/Photo/Form/EditAlbum.php:44
-msgid "Save"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:133
-msgid "Move the album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:138
-msgid "Select a new parent for the album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:142
-msgid "The album has been moved"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:147
-#: module/Photo/view/photo/album-admin/index.phtml:238
-#: module/Photo/view/photo/photo-admin/index.phtml:129
-msgid "Move"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:160
-#: module/Photo/view/photo/album-admin/index.phtml:192
-#: module/Photo/view/photo/photo-admin/index.phtml:142
-msgid "Delete confirmation"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:164
-msgid ""
-"Are you sure you want to delete this album including all photos inside of "
-"it? <b>This action can not be reverted.</b>"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:167
-msgid "Please wait while the album is being deleted."
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:173
-msgid "The album has been deleted"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:179
-#: module/Photo/view/photo/album-admin/index.phtml:211
-#: module/Photo/view/photo/photo-admin/index.phtml:161
-msgid "Cancel"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:196
-msgid ""
-"Are you sure you want to delete the selected items? <b>This action can not "
-"be reverted.</b>"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:199
-msgid "Please wait while the photos are being deleted."
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:205
-msgid "The photos have been been deleted"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:210
-msgid "Delete photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:224
-msgid "Move the photos to another album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:229
-#: module/Photo/view/photo/photo-admin/index.phtml:120
-msgid "Select a new parent album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/index.phtml:233
-msgid "The photos have been moved"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/create.phtml:2
-msgid "The album has been created"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/create.phtml:5
-msgid "Return to the album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/create.phtml:18
-#: module/Photo/src/Photo/Form/CreateAlbum.php:20
-#: module/Photo/src/Photo/Form/EditAlbum.php:20
-msgid "Album title"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/create.phtml:27
-msgid "Create album"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/add.phtml:10
-msgid "Upload photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/add.phtml:21
-msgid "Import photos"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/add.phtml:24
-msgid "The photos have been imported succesfully"
-msgstr ""
-
-#: module/Photo/view/photo/album-admin/add.phtml:34
-msgid ""
-"Make sure that the folder permissions on your import folder are set such "
-"that the webserver user can read the files inside of it. Please note that "
-"importing a large amount of photos may take a while."
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:44
-msgid "Move photo"
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:46
-#: module/Photo/view/photo/photo-admin/index.phtml:160
-msgid "Delete photo"
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:115
-msgid "Move the photo to another album"
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:124
-msgid "The photo has been moved"
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:146
-msgid ""
-"Are you sure you want to delete this photo? <b>This action can not be "
-"reverted.</b>"
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:149
-msgid "Please wait while your photo is being deleted."
-msgstr ""
-
-#: module/Photo/view/photo/photo-admin/index.phtml:155
-msgid "The photo has been deleted"
+#: module/User/src/User/Service/Email.php:38
+msgid "Account activation code for the GEWIS Website"
 msgstr ""
 
 #: module/User/src/User/Form/Register.php:61
@@ -840,25 +1214,57 @@ msgstr ""
 msgid "This member already has an account."
 msgstr ""
 
-#: module/User/src/User/Form/Activate.php:21
+#: module/User/src/User/Form/Login.php:24
+msgid "Membership number or email address"
+msgstr ""
+
 #: module/User/src/User/Form/Login.php:32
+#: module/User/src/User/Form/Activate.php:21
 msgid "Your password"
+msgstr ""
+
+#: module/User/src/User/Form/Login.php:62
+msgid "This user could not be found."
+msgstr ""
+
+#: module/User/src/User/Form/Login.php:69
+msgid "Wrong password provided."
 msgstr ""
 
 #: module/User/src/User/Form/Activate.php:29
 msgid "Verify your password"
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:24
-msgid "Membership number or email address"
+#: module/Frontpage/src/Frontpage/Service/Page.php:27
+msgid "You are not allowed to view this page."
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:57
-msgid "This user could not be found."
+#: module/Frontpage/src/Frontpage/Service/Page.php:72
+msgid "You are not allowed to view the list of pages."
 msgstr ""
 
-#: module/User/src/User/Form/Login.php:64
-msgid "Wrong password provided."
+#: module/Frontpage/src/Frontpage/Service/Page.php:130
+msgid "You are not allowed to edit pages."
+msgstr ""
+
+#: module/Frontpage/src/Frontpage/Service/Page.php:203
+msgid "You are not allowed to create new pages."
+msgstr ""
+
+#: module/Frontpage/src/Frontpage/Form/Page.php:36
+msgid "Dutch title"
+msgstr ""
+
+#: module/Frontpage/src/Frontpage/Form/Page.php:44
+msgid "English title"
+msgstr ""
+
+#: module/Frontpage/src/Frontpage/Form/Page.php:68
+msgid "Required role"
+msgstr ""
+
+#: module/Education/src/Education/Service/Exam.php:179
+msgid "You are not allowed to upload exams"
 msgstr ""
 
 #: module/Education/src/Education/Form/Upload.php:28
@@ -868,60 +1274,4 @@ msgstr ""
 #: module/Education/src/Education/Form/Upload.php:36
 #: module/Education/src/Education/Form/Upload.php:39
 msgid "Exam to upload"
-msgstr ""
-
-#: module/Education/src/Education/Form/Upload.php:45
-msgid "Submit"
-msgstr ""
-
-#: module/Education/src/Education/Service/Exam.php:179
-msgid "You are not allowed to upload exams"
-msgstr ""
-
-#: module/Decision/src/Decision/Service/Member.php:25
-msgid "You are not allowed to view membership info."
-msgstr ""
-
-#: module/Decision/src/Decision/Service/Member.php:70
-msgid "Name must be at least "
-msgstr ""
-
-#: module/Decision/src/Decision/Service/Member.php:76
-msgid "Not allowed to search for members."
-msgstr ""
-
-#: module/Decision/src/Decision/Service/Organ.php:25
-msgid "Not allowed to view the list of organs."
-msgstr ""
-
-#: module/Decision/src/Decision/Service/Organ.php:43
-msgid "Not allowed to view organ information"
-msgstr ""
-
-#: module/Photo/src/Photo/Form/CreateAlbum.php:28
-msgid "Create"
-msgstr ""
-
-#: module/Photo/src/Photo/Form/EditAlbum.php:28
-msgid "Start date"
-msgstr ""
-
-#: module/Photo/src/Photo/Form/EditAlbum.php:36
-msgid "End date"
-msgstr ""
-
-#: module/Photo/src/Photo/Service/Photo.php:198
-msgid "The specified path is not valid"
-msgstr ""
-
-#: module/Photo/src/Photo/Service/Photo.php:215
-msgid "An unknown error occurred during uploading ("
-msgstr ""
-
-#: module/Photo/src/Photo/Service/Photo.php:231
-msgid "The uploaded file does not have a valid extension"
-msgstr ""
-
-#: module/Photo/src/Photo/Service/Photo.php:236
-msgid "The uploaded file is not a valid image"
 msgstr ""
