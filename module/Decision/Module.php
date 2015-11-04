@@ -104,7 +104,7 @@ class Module
 
                     $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
 
-                    $acl->allow('user', 'meeting', array('view', 'view_notes'));
+                    $acl->allow('user', 'meeting', array('view', 'view_notes', 'view_documents'));
 
                     $acl->allow('user', 'dreamspark', array('login', 'students'));
 

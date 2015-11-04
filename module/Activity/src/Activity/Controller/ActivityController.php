@@ -52,8 +52,14 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $form = new ActivityForm();
         if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());            
-            echo var_dump($this->getRequest()->getPost());
+            $data = $this->getRequest()->getPost();
+
+            if ($data['costs'] === '' && $data['costs_unknown'] != 1) {
+                $data['costs'] = '-1';    // Hack. Because empty string is seen as 0
+            }
+
+            $form->setData($this->getRequest()->getPost());
+
             if ($form->isValid()) {
                 echo var_dump($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
                 $activity = $activityService->createActivity($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
@@ -85,7 +91,6 @@ class ActivityController extends AbstractActionController
         // Assure you can sign up for this activity
         if (!$activity->canSignup()) {
             $params['error'] = 'Op dit moment kun je je niet inschrijven voor deze activiteit';
-
             return $params;
         }
 

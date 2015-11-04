@@ -5,6 +5,7 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 
 use Decision\Form\Notes;
+use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
 
@@ -52,13 +53,51 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Check if there are notes for a meeting and get the URL if so.
+     * Get meeting documents corresponding to a certain id.
      *
-     * @param Decision\Model\Meeting $meeting
-     *
-     * @return string|null
+     * @param $id
+     * @return \Decision\Model\MeetingDocument
      */
-    public function getMeetingNotes(\Decision\Model\Meeting $meeting)
+    public function getMeetingDocument($id)
+    {
+        return $this->getMeetingMapper()->findDocument($id);
+    }
+
+    /**
+     * Returns a download for a meeting document
+     *
+     * @param \Decision\Model\MeetingDocument $meetingDocument
+     *
+     * @return response|null
+     */
+    public function getMeetingDocumentDownload($meetingDocument)
+    {
+        if (!$this->isAllowed('view_documents', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view meeting documents.')
+            );
+        }
+
+        if (is_null($meetingDocument)) {
+            return null;
+        }
+
+        $path = $meetingDocument->getPath();
+        $extension = $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $fileName = $meetingDocument->getName() . '.' . $extension;
+
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
+    }
+
+    /**
+     * Returns a download for meeting notes
+     *
+     * @param \Decision\Model\Meeting $meeting
+     *
+     * @return response|null
+     */
+    public function getMeetingNotesDownload(\Decision\Model\Meeting $meeting)
     {
         if (!$this->isAllowed('view_notes', 'meeting')) {
             $translator = $this->getTranslator();
@@ -66,32 +105,15 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to view meeting notes.')
             );
         }
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-notes'];
 
-        $filename = $meeting->getType() . '/' . $meeting->getNumber() . '.pdf';
-        $path = $config['upload_dir'] . '/' . $filename;
-
-        if (file_exists($path)) {
-            return $config['public_dir'] . '/' . $filename;
+        if (is_null($meeting->getNotes())) {
+            return null;
         }
-        return null;
-    }
 
-    /**
-     * Get the base path for meeting documents.
-     *
-     * @param Decision\Model\Meeting $meeting
-     *
-     * @return string
-     */
-    public function getMeetingDocumentBasePath(\Decision\Model\Meeting $meeting)
-    {
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-documents'];
+        $path = $meeting->getNotes()->getPath();
+        $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
 
-        return $config['public_dir'] . '/'
-             . $meeting->getType() . '/' . $meeting->getNumber();
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
     }
 
     /**
@@ -115,24 +137,20 @@ class Decision extends AbstractAclService
         }
 
         $data = $form->getData();
+        $parts = explode('/', $data['meeting']);
+        $meeting = $this->getMeeting($parts[0], $parts[1]);
+        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
 
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-notes'];
-
-        $filename = $data['meeting'] . '.pdf';
-        $path = $config['upload_dir'] . '/' . $filename;
-
-        if (file_exists($path)) {
-            $form->setError(Notes::ERROR_FILE_EXISTS);
-            return false;
+        $meetingNotes = $meeting->getNotes();
+        if (is_null($meetingNotes)) {
+            $meetingNotes = new NotesModel();
+            $meetingNotes->setMeeting($meeting);
         }
+        $meetingNotes->setPath($path);
 
-        // finish upload
+        $mapper = $this->getDecisionMapper();
+        $mapper->persist($meetingNotes);
 
-        if (!is_dir(dirname($path))) {
-            mkdir(dirname($path), $config['dir_mode'], true);
-        }
-        move_uploaded_file($data['upload']['tmp_name'], $path);
         return true;
     }
 
@@ -158,30 +176,15 @@ class Decision extends AbstractAclService
 
         $data = $form->getData();
 
-        $config = $this->getServiceManager()->get('config');
-        $config = $config['meeting-documents'];
-
-        $filename = $data['meeting'] . '/' .$data['upload']['name'];
-        $path = $config['upload_dir'] . '/' . $filename;
-
-        if (file_exists($path)) {
-            $form->setError(Notes::ERROR_FILE_EXISTS);
-            return false;
-        }
+        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
         $meeting = $this->getMeeting($meeting[0], $meeting[1]);
 
         $document = new MeetingDocument();
-        $document->setPath($data['upload']['name']);
+        $document->setPath($path);
         $document->setName($data['name']);
         $document->setMeeting($meeting);
-
-        // finish upload and save in the database
-        if (!is_dir(dirname($path))) {
-            mkdir(dirname($path), $config['dir_mode'], true);
-        }
-        move_uploaded_file($data['upload']['tmp_name'], $path);
 
         $this->getMeetingMapper()->persistDocument($document);
 
@@ -230,6 +233,7 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to upload notes.')
             );
         }
+
         return $this->sm->get('decision_form_notes');
     }
 
@@ -246,6 +250,7 @@ class Decision extends AbstractAclService
                 $translator->translate('You are not allowed to upload meeting documents.')
             );
         }
+
         return $this->sm->get('decision_form_document');
     }
 
@@ -262,7 +267,7 @@ class Decision extends AbstractAclService
     /**
      * Get the meeting mapper.
      *
-     * @return Decision\Mapper\Meeting
+     * @return \Decision\Mapper\Meeting
      */
     public function getMeetingMapper()
     {
@@ -277,6 +282,16 @@ class Decision extends AbstractAclService
     public function getDecisionMapper()
     {
         return $this->sm->get('decision_mapper_decision');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\FileStorage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

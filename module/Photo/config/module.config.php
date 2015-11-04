@@ -346,5 +346,20 @@ return array(
                 )
             )
         )
+    ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'weeklyphoto' => array(
+                    'options' => array(
+                        'route' => 'photo weeklyphoto',
+                        'defaults' => array(
+                            'controller' => 'Photo\Controller\PhotoAdmin',
+                            'action' => 'weeklyPhoto'
+                        )
+                    )
+                ),
+            )
+        )
     )
 );

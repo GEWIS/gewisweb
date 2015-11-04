@@ -34,8 +34,32 @@ return array(
                             'defaults' => array(
                                 'action' => 'view'
                             )
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'notes' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/notes',
+                                    'defaults' => array(
+                                        'action' => 'notes',
+                                    ),
+                                ),
+                            ),
                         )
-                    )
+                    ),
+                    'document' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/document/:id',
+                            'constraints' => array(
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'action' => 'document',
+                            ),
+                        ),
+                    ),
                 ),
                 'priority' => 100
             ),
