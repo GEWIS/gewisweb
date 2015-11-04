@@ -12,8 +12,10 @@ class EducationController extends AbstractActionController {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $courses = $service->searchCourse($request->getPost());
+        $query = $request->getQuery();
+
+        if (isset($query['query'])) {
+            $courses = $service->searchCourse($query);
 
             if (null !== $courses) {
                 return new ViewModel(array(
