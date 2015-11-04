@@ -158,8 +158,10 @@ class Exam extends AbstractAclService
         $exam = $form->getData();
         $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
+        $storageService = $this->getFileStorageService();
+
         /**
-         * Persist the exam and save the uploaded file.
+         * Save the uploaded file and persist the exam.
          *
          * We do this in a transactional block, so if there is something
          * wrong, we only have to throw an exception and Doctrine will roll
@@ -167,10 +169,10 @@ class Exam extends AbstractAclService
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data) {
-            $mapper->persist($exam);
+        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data, $storageService) {
+            $exam->setFilename($storageService->storeUploadedFile($data['upload']));
 
-            $this->finishUpload($exam, $data['upload']);
+            $mapper->persist($exam);
         });
 
         return true;
@@ -197,25 +199,6 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Move the uploaded file to the right place.
-     *
-     * @param ExamModel $exam
-     * @param array $upload Upload data
-     */
-    protected function finishUpload(ExamModel $exam, array $upload)
-    {
-        $config = $this->getConfig();
-
-        $filename = $config['upload_dir'] . '/' . $this->examToFilename($exam);
-
-        // make sure the directory exists, and move the file
-        if (!is_dir(dirname($filename))) {
-            mkdir(dirname($filename), $config['dir_mode'], true);
-        }
-        move_uploaded_file($upload['tmp_name'], $filename);
-    }
-
-    /**
      * Get a filename from an exam (or summary).
      *
      * We do this, since we have so many courses, that most filesystems get
@@ -224,11 +207,11 @@ class Exam extends AbstractAclService
      *
      * Exams will have a filename of the following format:
      *
-     * <code>-<id>-exam-<year>-<month>-<day>.pdf
+     * <code>-exam-<year>-<month>-<day>.pdf
      *
      * Summaries have the following format:
      *
-     * <code>-<id>-<author>-summary-<year>-<month>-<day>.php
+     * <code>-<author>-summary-<year>-<month>-<day>.pdf
      *
      * @param ExamModel $exam
      *
@@ -242,7 +225,6 @@ class Exam extends AbstractAclService
         $filename = array();
 
         $filename[] = $code;
-        $filename[] = $exam->getId();
 
         if ($exam instanceof SummaryModel) {
             $filename[] = $exam->getAuthor();
@@ -342,6 +324,16 @@ class Exam extends AbstractAclService
             );
         }
         return $this->sm->get('education_form_tempupload');
+    }
+
+    /**
+     * Get the storage service.
+     *
+     * @return \Application\Service\FileStorage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**
