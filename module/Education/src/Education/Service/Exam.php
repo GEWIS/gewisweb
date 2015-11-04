@@ -91,6 +91,9 @@ class Exam extends AbstractAclService
 
         $data = $form->getData();
 
+        $storageService = $this->getFileStorageService();
+        $config = $this->getConfig('education_temp');
+
         /**
          * Persist the exams and save the uploaded files.
          *
@@ -101,15 +104,18 @@ class Exam extends AbstractAclService
          * exam, which we need in the upload process.
          */
 
-        $this->getExamMapper()->transactional(function ($mapper) use ($data) {
+        $this->getExamMapper()->transactional(function ($mapper) use ($data, $config, $storageService) {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
                 $exam->setDate(new \DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
 
+                $localFile = $config['upload_dir'] . '/' . $examData['file'];
+
+                $exam->setFilename($storageService->storeFile($localFile));
+
                 $mapper->persist($exam);
-                $this->finishPreviousUpload($exam, $examData['file']);
             }
         });
 
@@ -191,26 +197,6 @@ class Exam extends AbstractAclService
         });
 
         return true;
-    }
-
-    /**
-     * Move previously uploaded file to the right place.
-     *
-     * @param ExamModel $exam
-     * @param string $file
-     */
-    protected function finishPreviousUpload(ExamModel $exam, $file)
-    {
-        $config = $this->getConfig();
-        $configTemp = $this->getConfig('education_temp');
-
-        $filename = $config['upload_dir'] . '/' . $this->examToFilename($exam);
-
-        // make sure the directory exists, and move the file
-        if (!is_dir(dirname($filename))) {
-            mkdir(dirname($filename), $config['dir_mode'], true);
-        }
-        rename($configTemp['upload_dir'] . '/' . $file, $filename);
     }
 
     /**
