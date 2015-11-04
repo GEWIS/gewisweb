@@ -24,6 +24,21 @@ return array(
                             'defaults' => array(
                                 'action' => 'course'
                             )
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'download' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/download/:id',
+                                    'constraints' => array(
+                                        'id' => '[0-9]*',
+                                    ),
+                                    'defaults' => array(
+                                        'action' => 'download'
+                                    )
+                                )
+                            )
                         )
                     ),
                     'default' => array(

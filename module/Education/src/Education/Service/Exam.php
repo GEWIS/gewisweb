@@ -58,6 +58,21 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Get an exam
+     *
+     * @param int $id
+     *
+     * @return ExamModel
+     */
+    public function getExamDownload($id)
+    {
+        $exam = $this->getExamMapper()->find($id);
+
+        return $this->getFileStorageService()
+            ->downloadFile($exam->getFilename(), $this->examToFilename($exam));
+    }
+
+    /**
      * Finish the bulk edit.
      *
      * @param array $data POST Data

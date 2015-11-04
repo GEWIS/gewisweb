@@ -51,6 +51,16 @@ class EducationController extends AbstractActionController {
     }
 
     /**
+     * Download an exam.
+     */
+    public function downloadAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        return $this->getExamService()->getExamDownload($id);
+    }
+
+    /**
      * Get the exam service.
      */
     public function getExamService()
