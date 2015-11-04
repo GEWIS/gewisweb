@@ -171,18 +171,4 @@ class Module
             )
         );
     }
-
-    /**
-     * Get view helper configuration.
-     *
-     * @return array
-     */
-    public function getViewHelperConfig()
-    {
-        return array(
-            'invokables' => array(
-                'hasPermission' => 'User\View\Helper\HasPermission'
-            )
-        );
-    }
 }
