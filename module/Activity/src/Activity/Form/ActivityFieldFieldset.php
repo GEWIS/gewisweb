@@ -102,11 +102,13 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 ]
             ],
             'min. value' => [
+                'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
             ],
             'max. value' => [
+                'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']
                 ]

@@ -207,6 +207,7 @@ class Activity
         // TODO: These values need to be set correctly
         $this->onlyGEWIS = true;
         $this->approved = 0;
+        $this->status = static::STATUS_TO_APPROVE;        
         if (isset($params['fields'])) {
             foreach ($params['fields'] as $fieldparams){
                 
@@ -216,7 +217,6 @@ class Activity
             }
             $em->flush();
         }
-        $this->status = static::STATUS_TO_APPROVE;
         return $this;
     }
 

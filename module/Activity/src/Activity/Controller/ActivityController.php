@@ -61,12 +61,12 @@ class ActivityController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
-                echo var_dump($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+                //echo var_dump($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));//debug
                 $activity = $activityService->createActivity($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
                 
-                /*$this->redirect()->toRoute('activity/view', array(
+                $this->redirect()->toRoute('activity/view', array(
                     'id' => $activity->get('id'),
-                ));//*/
+                ));
             }
             else {
                 echo 'Form is invalid!';
