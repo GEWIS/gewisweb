@@ -10,3 +10,4 @@ nbproject
 .settings
 vendor/
 gewisweb-vagrant/
+node_modules/

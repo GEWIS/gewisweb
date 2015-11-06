@@ -21,6 +21,7 @@
         "GEWIS/gewisweb-migrate": "dev-master",
         "ext-gd": "^0.0.0",
         "ext-exif": "^0.0.0",
-        "ext-imagick": "^3.1"
+        "ext-imagick": "^3.1",
+        "twbs/bootstrap-sass": "^3.3"
     }
 }
