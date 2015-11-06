@@ -3,7 +3,9 @@
 <hr>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-        <img class="img-responsive" src="<?= $this->photoUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>" alt=""/>
+        <a href="<?= $this->url('photo/photo', array('photo_id' => $weeklyPhotos[0]->getPhoto()->getId())); ?>">
+            <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>" alt=""/>
+        </a>
     </div>
 </div>
 
@@ -13,12 +15,11 @@
     <?php foreach ($weeklyPhotos as $weeklyPhoto): ?>
             <div class="thumb">
                 <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $weeklyPhoto->getPhoto()->getId())); ?>">
-                    <img class="img-responsive" src="<?= $this->photoUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                    <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
                     <div class="caption">
                         <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>
                     </div>
                 </a>
             </div>
-
     <?php endforeach; ?>
 </div>
