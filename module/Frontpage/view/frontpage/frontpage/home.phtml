@@ -60,7 +60,7 @@
             <?php if(!is_null($weeklyPhoto)): ?>
                 <div class="thumb">
                     <a class="thumbnail" href="<?= $this->url('photo/photo', array('photo_id' => $weeklyPhoto->getPhoto()->getId())); ?>">
-                        <img class="img-responsive" src="<?= $this->photoUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                        <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
                     </a>
                 </div>
             <?php endif; ?>
