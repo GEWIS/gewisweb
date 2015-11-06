@@ -31,10 +31,12 @@ class UserController extends AbstractActionController
 
         // show form
         $form = $userService->getLoginForm();
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
-        } else {
-            $form->get('redirect')->setValue($this->url()->fromRoute('home'));
+        if(is_null($form->get('redirect')->getValue())) {
+            if (isset($_SERVER['HTTP_REFERER'])) {
+                $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
+            } else {
+                $form->get('redirect')->setValue($this->url()->fromRoute('home'));
+            }
         }
 
         return new ViewModel(array(
