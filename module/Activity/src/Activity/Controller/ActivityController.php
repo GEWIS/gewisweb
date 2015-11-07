@@ -107,7 +107,7 @@ class ActivityController extends AbstractActionController
         if ($signupService->isSignedUp($activity, $user)) {
             $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
         } else {
-            $signupService->signUp($activity, $user);
+            $signupService->signUp($activity, []);
             $params['success'] = true;
         }
         $params = $this->viewAction();

@@ -4,7 +4,7 @@ namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
 
-class ActivityFieldValue
+class ActivityField
 {
     /**
      * Doctrine entity manager.
@@ -24,14 +24,14 @@ class ActivityFieldValue
     }
     
     /**
-     * Finds all field values associated with the $signup
+     * Finds all field specifications associated with the $activity
      * 
-     * @param \Activity\Mapper\Activity\Model\ActivitySignup $signup
-     * @return array of Activity\Model\ActivityFieldValue
+     * @param \Activity\Model\Activity $activity
+     * @return array of \Activity\Model\ActivityField
      */
-    public function getFieldValuesBySignup(\Activity\Model\ActivitySignup $signup)
+    public function getFieldsByActivity(\Activity\Model\ActivitySignup $activity)
     {        
-        return $this->getRepository()->findBy(array('signup' => $signup->getId()));
+        return $this->getRepository()->findBy(array('activity' => $activity->getId()));
     }
     
     
@@ -42,6 +42,6 @@ class ActivityFieldValue
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Activity\Model\ActivityFieldValue');
+        return $this->em->getRepository('Activity\Model\ActivityField');
     }
 }

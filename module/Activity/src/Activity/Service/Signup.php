@@ -61,9 +61,10 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Sign up  an activity.
+     * Sign up  an activity with the specified field values.
      *
      * @param ActivityModel $activity
+     * @param array $fieldResults
      */
     public function signUp(ActivityModel $activity, array $fieldResults)
     {
@@ -108,7 +109,7 @@ class Signup extends AbstractAclService
         }
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $values = getActivityFieldValueMapper()->getFieldValuesBySignup($signUp);
+        $values = $this->getActivityFieldValueMapper()->getFieldValuesBySignup($signUp);
         foreach($values as $value){
             $em->remove($value);
         }
