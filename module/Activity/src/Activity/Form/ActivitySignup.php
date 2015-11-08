@@ -14,7 +14,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
     protected $inputFilter;
-    public function __construct(array $fields)
+    public function __construct($fields)
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');

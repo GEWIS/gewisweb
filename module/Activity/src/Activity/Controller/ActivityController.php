@@ -36,8 +36,7 @@ class ActivityController extends AbstractActionController
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         
-        $fieldsdata = $this->getServiceLocator()->get('activity_mapper_activity_field');
-        $fields = $fieldsdata->getFieldsByActivity($activity);
+        $fields = $activity->get('fields');
         $form = new SignupForm($fields);
         return [
             'activity' => $activity,
