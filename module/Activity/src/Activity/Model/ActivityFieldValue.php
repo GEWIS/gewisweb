@@ -83,17 +83,4 @@ class ActivityFieldValue
     {
         $this->value = $value;
     }
-    
-    public function printValue(){
-        switch ($this->field->get('type')) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
-    }
 }
