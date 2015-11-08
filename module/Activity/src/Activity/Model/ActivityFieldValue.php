@@ -44,11 +44,22 @@ class ActivityFieldValue
     protected $value;
     
     /**
+     * Get the status of a variable
+     *
+     * @param $variable
+     * @return mixed
+     */
+    public function get($variable)
+    {
+        return $this->$variable;
+    }
+    
+    /**
      * Set the field.
      * 
      * @param \Activity\Model\Activity\Model\ActivityField $field
      */
-    public function setField(Activity\Model\ActivityField $field)
+    public function setField(\Activity\Model\ActivityField $field)
     {
         $this->field = $field;
     }
@@ -58,7 +69,7 @@ class ActivityFieldValue
      * 
      * @param \Activity\Model\Activity\Model\ActivitySignup $signup
      */
-    public function setSignup(Activity\Model\ActivitySignup $signup)
+    public function setSignup(\Activity\Model\ActivitySignup $signup)
     {
         $this->signup = $signup;
     }
@@ -71,5 +82,18 @@ class ActivityFieldValue
     public function setValue($value)
     {
         $this->value = $value;
+    }
+    
+    public function printValue(){
+        switch ($this->field->get('type')) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 }

@@ -63,8 +63,8 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_activity_field' => function ($sm) {
-                    return new \Activity\Mapper\ActivityField(
+                'activity_mapper_activity_field_value' => function ($sm) {
+                    return new \Activity\Mapper\ActivityFieldValue(
                         $sm->get('activity_doctrine_em')
                     );
                 },
@@ -72,12 +72,7 @@ class Module
                     return new \Activity\Mapper\ActivityOption(
                         $sm->get('activity_doctrine_em')
                     );
-                },                        
-                'activity_mapper_activity_field_value' => function ($sm) {
-                    return new \Activity\Mapper\ActivityFieldValue(
-                        $sm->get('activity_doctrine_em')
-                    );
-                },
+                },        
                 'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')

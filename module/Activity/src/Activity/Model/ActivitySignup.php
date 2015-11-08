@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
 
 /**
- * Activity model.
+ * ActivitySignup model.
  *
  * @ORM\Entity
  */
 class ActivitySignup
 {
     /**
-     * ID for the activity.
+     * ID for the signup.
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -22,7 +22,7 @@ class ActivitySignup
     protected $id;
 
     /**
-     * Album in which the photo is.
+     * The activity the signup is for.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="signUps")
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
