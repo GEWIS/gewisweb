@@ -109,7 +109,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
             'options' => array(
-                'label' => 'Additional options',
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,

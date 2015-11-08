@@ -6,6 +6,7 @@ use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Form\Activity as ActivityForm;
+use Activity\Form\ActivitySignup as SignupForm;
 
 class ActivityController extends AbstractActionController
 {
@@ -34,13 +35,18 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-
+        
+        $fieldsdata = $this->getServiceLocator()->get('activity_mapper_activity_field');
+        $fields = $fieldsdata->getFieldsByActivity($activity);
+        $form = new SignupForm($fields);
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUp($activity),
+            'form' => $form,
+            'fields' => $fields
         ];
     }
 

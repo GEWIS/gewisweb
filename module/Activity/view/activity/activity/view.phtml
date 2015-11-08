@@ -64,6 +64,20 @@
     <?php endforeach;?>
 <?php endif;?>
 
+
+<?php $form->setAttribute('action', '');
+$form->prepare();
+echo $this->form()->openTag($form); ?>
+        <table>
+            <?php foreach($fields as $field):?>
+            <tr>
+                <td><?php echo $this->translate($field->get('name'));?>:</td>
+                <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
+            </tr>
+            <?php endforeach;?>
+        </table>
+<?php echo $this->formSubmit($form->get('submit'));
+      echo $this->form()->closeTag();?>
 <div class="row">
 	<div class="col-md-12">
 		<button style="width: 100%" class="btn btn-primary" onclick="window.location.href='../../activity'"><?php echo $this->translate('Back'); ?></button>

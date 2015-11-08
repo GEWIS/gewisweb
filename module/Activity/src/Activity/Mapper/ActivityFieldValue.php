@@ -26,8 +26,8 @@ class ActivityFieldValue
     /**
      * Finds all field values associated with the $signup
      * 
-     * @param \Activity\Mapper\Activity\Model\ActivitySignup $signup
-     * @return array of Activity\Model\ActivityFieldValue
+     * @param \Activity\Model\ActivitySignup $signup
+     * @return array of \Activity\Model\ActivityFieldValue
      */
     public function getFieldValuesBySignup(\Activity\Model\ActivitySignup $signup)
     {        

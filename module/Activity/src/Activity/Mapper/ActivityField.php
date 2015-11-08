@@ -27,11 +27,11 @@ class ActivityField
      * Finds all field specifications associated with the $activity
      * 
      * @param \Activity\Model\Activity $activity
-     * @return array of \Activity\Model\ActivityField
+     * @return array of \Activity\Model\ActivityField\
      */
-    public function getFieldsByActivity(\Activity\Model\ActivitySignup $activity)
+    public function getFieldsByActivity(\Activity\Model\Activity $activity)
     {        
-        return $this->getRepository()->findBy(array('activity' => $activity->getId()));
+        return $this->getRepository()->findBy(array('activity' => $activity->get('id')));
     }
     
     
