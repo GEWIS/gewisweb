@@ -40,6 +40,22 @@ class WeeklyPhoto
     }
 
     /**
+     * Retrieves all WeeklyPhotos
+     *
+     * @return array
+     */
+    public function getPhotosOfTheWeek()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('w')
+            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->orderBy('w.week', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist weeklyPhoto
      *
      * @param \Photo\Model\WeeklyPhoto $weeklyPhoto

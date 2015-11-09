@@ -54,6 +54,18 @@ class PhotoController extends AbstractActionController
     }
 
     /**
+     * Display the page containing previous pictures of the week.
+     */
+    public function weeklyAction()
+    {
+        $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
+
+        return new ViewModel(array(
+            'weeklyPhotos' => $weeklyPhotos
+        ));
+    }
+
+    /**
      * Gets the album service.
      *
      * @return \Photo\Service\Album
