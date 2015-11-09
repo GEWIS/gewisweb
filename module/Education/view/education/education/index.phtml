@@ -3,7 +3,7 @@ $form = $this->form;
 $form->prepare();
 
 $form->setAttribute('action', $this->url('education'));
-$form->setAttribute('method', 'post');
+$form->setAttribute('method', 'get');
 
 $form->setAttribute('role', 'form');
 
@@ -20,12 +20,7 @@ $element->setAttribute('placeholder', $this->translate('Search query'));
     <?= $this->formElementErrors($element) ?>
 </div>
 
-<?php
-$submit = $form->get('submit');
-$submit->setLabel($this->translate('Search'));
-$submit->setAttribute('class', 'btn btn-default');
-?>
-<?= $this->formButton($submit) ?>
+<button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
 
 <?= $this->form()->closeTag(); ?>
 

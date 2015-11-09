@@ -21,14 +21,6 @@ class SearchCourse extends Form
             )
         ));
 
-        $this->add(array(
-            'name' => 'submit',
-            'type' => 'submit',
-            'attributes' => array(
-                'value' => $translate->translate('Search')
-            )
-        ));
-
         $this->initFilters();
     }
 
