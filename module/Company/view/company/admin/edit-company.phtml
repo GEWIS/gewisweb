@@ -1,0 +1,67 @@
+<?php 
+$form = $companyEditForm;
+if ($company == null){
+    echo "Company not found";
+    return;
+}
+?>
+<h1> <?= $this->translate('Edit Company'); ?> </h1>
+
+<?= $this->form()->openTag($form) ?>
+<?php echo $this->partial('partial/company/admin/editors/company.phtml', 
+                          array('form' => $form)
+                         ); ?>
+<?= $this->formRow($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>
+<h2> <?= $this->translate('Packets') ?> </h2>
+<table class="packetlist">
+        <tr>
+            <th>
+                        <?= $this->translate('Packet'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Active'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Jobs'); ?>
+            </th>
+        </tr>
+    <?php if (!empty($company->getPackets())) { 
+        foreach($company->getPackets() as $packet) { ?>
+            <tr>
+                <td>
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket",
+                                            array( 
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packetID" => $packet->getId(),
+                                                 )
+                                           ); ?>">
+                        <?= $this->translate('edit'); ?></a>
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket/deletePacket",
+                                            array( 
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packetID" => $packet->getId(),
+                                                 )
+                                           ); ?>"> <?= $this->translate('delete'); ?></a>
+                    </a>
+                </td> 
+                <td>
+                    <?php echo $packet->isActive() ? 'true' : 'false'?>
+                </td>
+                <td>
+                    <?= count($packet->getJobs()) ?>
+                <td>
+                </td>
+            </tr>
+    <?php 
+        } 
+    } else { print("Empty"); }
+    ?>
+</table>
+<br/>
+<a href="<?= $this->url("admin_company/default", 
+                        array("action"=>"addPacket",
+                              "slugCompanyName" => $company->getSlugName())
+                       ); ?>">
+    <?= $this->translate('Add packet'); ?>
+</a>

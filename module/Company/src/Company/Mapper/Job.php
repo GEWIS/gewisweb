@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Job
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -21,9 +20,8 @@ class Job
      */
     protected $em;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      */
@@ -41,21 +39,49 @@ class Job
     {
         return $this->getRepository()->findAll();
     }
+
+    public function save()
+    {
+        $this->em->flush();
+    }
     /**
-     * Find all jobs with the given job 'username' from the company with the given ascii name.
-     * @param companyAsciiName The asciiname of the containing company.
-     * @param jobAsciiName The asciiName of the requested job.
+     * Find all jobs with the given job 'username' from the company with the given slug name.
+     *
+     * @param companySlugName The slugname of the containing company.
+     * @param jobSlugName The slugName of the requested job.
+     *
      * @return An array of jobs that match the request.
      */
-    public function findJobWithAsciiName($companyAsciiName,$jobAsciiName)
+    public function findJobsWithCompanySlugName($packetID)
     {
-
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->where("j.asciiName=:jobId");
-        $qb->setParameter('jobId', $companyAsciiName+'_'+$jobAsciiName);
+        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('p.id=:companyId')->andWhere('j.active=1')->andWhere('c.hidden=0')->andWhere('p.expires > CURRENT_DATE()');
+        $qb->setParameter('companyId', $packetID);
 
         return $qb->getQuery()->getResult();
     }
+
+    public function insertIntoPacket($packet)
+    {
+        $job = new JobModel($this->em);
+
+        $job->setPacket($packet);
+        $this->em->persist($job);
+
+        return $job;
+    }
+
+    public function findJobWithSlugName($companySlugName, $jobSlugName)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
+        ->andWhere('c.slugName=:companySlugName');
+        $qb->setParameter('jobId', $jobSlugName);
+        #$qb->setParameter('companySlugName', $companySlugName);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Get the repository for this mapper.
      *

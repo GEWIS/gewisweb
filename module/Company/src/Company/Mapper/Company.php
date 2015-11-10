@@ -3,7 +3,9 @@
 namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
+use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 
 /**
  * Mappers for companies.
@@ -13,7 +15,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Company
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -21,9 +22,8 @@ class Company
      */
     protected $em;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      */
@@ -31,7 +31,47 @@ class Company
     {
         $this->em = $em;
     }
+    public function save()
+    {
+        $this->em->flush();
+    }
 
+    public function deleteWithSlug($slug)
+    {
+        foreach ($this->findEditableCompaniesWithSlugName($slug, true) as $company) {
+            foreach ($company->getTranslations() as $translation) {
+                $this->em->remove($translation);
+            }
+            // TODO: delete jobs
+            $this->em->remove($company);
+        }
+        $this->em->flush();
+    }
+    public function insert($languages)
+    {
+        $company = new CompanyModel($this->em);
+
+        $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
+
+        // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
+
+
+        foreach ($languages as $language) {
+            $translation = new CompanyI18n();
+            $translation->setLanguage($language);
+            $translation->setCompany($company);
+            if ($translation->getLogo() == null) {
+                $translation->setLogo('');
+            }
+            $this->em->persist($translation);
+            $company->addTranslation($translation);
+        }
+
+        $company->setHidden(false);
+        $this->em->persist($company);
+
+        return $company;
+    }
     /**
      * Find all companies.
      *
@@ -43,21 +83,36 @@ class Company
     }
 
     /**
-     * Find the company with the given asciiName
+     * Find the company with the given slugName.
      *
-     * @param asciiName The 'username' of the company to get.
-     * @return An array of companies with the given asciiName.
+     * @param slugName The 'username' of the company to get.
+     * @param asObject if yes, returns the company as an object in an array, else returns the company as an array of an array
+     *
+     * @return An array of companies with the given slugName.
      */
-    public function findCompaniesWithAsciiName($asciiName)
+    public function findEditableCompaniesWithSlugName($slugName, $asObject)
     {
-
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.asciiName=:asciiCompanyName');
-        $qb->setParameter('asciiCompanyName', $asciiName);
-        return $qb->getQuery()->getResult();
+        $qb->select('c')->where('c.slugName=:slugCompanyName');
+        $qb->setParameter('slugCompanyName', $slugName);
+        $qb->setMaxResults(1);
+        if ($asObject) {
+            return $qb->getQuery()->getResult();
+        } else {
+            return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+        }
     }
 
+    public function findCompaniesWithSlugName($slugName)
+    {
+        $result = $this->findEditableCompaniesWithSlugName($slugName, true);
+        foreach ($result as $company) {
+            $this->em->detach($company);
+        }
+
+        return $result;
+    }
 
     /**
      * Get the repository for this mapper.

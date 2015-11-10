@@ -1,0 +1,76 @@
+<?php 
+$form = $packetEditForm;
+?>
+
+<?= $this->form()->openTag($form) ?>
+<dl>
+<?php $element = $form->get('id') ?>
+    <?= $this->formElement($element) ?>
+<?php $element = $form->get('startDate') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('expirationDate');?>
+    <dt><?= $element->getOption('label'); ?></dt>
+    <dd>
+        <?= $this->formElement($element); ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('published') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?= $this->formRow($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>
+
+
+<h2> <?= $this->translate('Jobs') ?> </h2>
+<table class="packetlist">
+        <tr>
+            <th>
+                        <?= $this->translate('Job'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Active'); ?>
+            </th>
+        </tr>
+
+    <?php if (!empty($packet->getJobs())) { 
+        foreach($packet->getJobs() as $job) { ?>
+            <tr>
+                <td>
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket/editJob",
+                                            array( 
+                                                  "slugCompanyName" => $companyName,
+                                                  "packetID" => $packet->getId(),
+                                                  "jobName" => $job->getSlugName(),
+                                                 )
+                                           ); ?>">
+                        <?= $this->translate('edit'); ?></a>
+                    <a href="<?= $this->url("admin_company/editCompany/editPacket/deletePacket",
+                                            array( 
+                                                  "slugCompanyName" => $companyName,
+                                                  "packetID" => $packet->getId(),
+                                                 )
+                                           ); ?>"> <?= $this->translate('delete'); ?></a>
+                    </a>
+                </td> 
+                <td>
+                    <?php echo $job->isActive() ? 'true' : 'false'?>
+                </td>
+            </tr>
+    <?php 
+        } 
+    } else { print("Empty"); }
+    ?>
+</table>
+<br/>
+<a href="<?= $this->url("admin_company/editCompany/editPacket/addJob", 
+    array( "slugCompanyName" => $companyName, 'packetID' => $packet->getId())); ?>">
+    <?= $this->translate('Add job'); ?>
+</a>

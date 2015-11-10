@@ -3,18 +3,15 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * CompanyPacket model.
  *
  * @ORM\Entity
  */
-class CompanyPacket //implements RoleInterface, ResourceInterface
+class CompanyPacket
 {
-
     /**
      * The packet's id.
      *
@@ -45,13 +42,26 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
      */
     protected $published;
 
+    /**
+     * The packet's company.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packets")
+     */
+    protected $company;
 
     /**
-     * Constructor
+     * The packet's jobs.
+     *
+     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="packet")
+     */
+    protected $jobs;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
-        // todo
+        $this->jobs = new ArrayCollection();
     }
 
     /**
@@ -107,9 +117,9 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     /**
      * Get the packet's publish state.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getPublished()
+    public function isPublished()
     {
         return $this->published;
     }
@@ -117,61 +127,122 @@ class CompanyPacket //implements RoleInterface, ResourceInterface
     /**
      * Set the packet's publish state.
      *
-     * @param boolean $published
+     * @param bool $published
      */
     public function setPublished($published)
     {
         $this->published = $published;
     }
 
-    public function publish()
+    /**
+     * Get the packet's company.
+     *
+     * @return Company
+     */
+    public function getCompany()
     {
-        $this->setPublished(true);
-        $this->save();
+        return $this->company;
     }
 
-    public function unpublish()
+    /**
+     * Set the packet's company.
+     *
+     * @param Company company
+     */
+    public function setCompany(Company $company)
     {
-        $this->setPublished(false);
-        $this->save();
+        $this->company = $company;
     }
 
-    public function create()
+    /**
+     * Get the jobs in the packet.
+     * 
+     * @return array jobs in the packet
+     */
+    public function getJobs()
     {
-        // todo
+        return $this->jobs;
     }
 
-    public function save()
+    /**
+     * Adds a job to the packet.
+     * 
+     * @param Job $job job to be added
+     */
+    public function addJob(Job $job)
     {
-        // todo
+        $this->jobs->add($job);
     }
 
-    public function delete()
+    /**
+     * Removes a job from the packet.
+     * 
+     * @param Job $job job to be removed
+     */
+    public function removeJob(Job $job)
     {
-        // todo
+        $this->jobs->removeElement($job);
     }
 
     public function isExpired()
     {
-        return time() > $this->getExpirationDate();
+        $currentYear = date('Y');
+        $currentMonth = date('m');
+        $currentDay = date('d');
+
+        if ($currentYear > $this->getExpirationDate()->format('Y')) {
+            return true;
+        }
+        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
+            return true;
+        }
+        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth == $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
+            return true;
+        }
+
+        if ($currentYear < $this->getStartingDate()->format('Y')) {
+            return true;
+        }
+        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
+            return true;
+        }
+        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth == $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function isActive()
     {
-        if ($this->isExpired())
-        {
+        if ($this->isExpired()) {
             // unpublish activity
-            $this->unpublish();
+            $this->setPublished(false);
+
             return false;
         }
 
-        if ($this->getPublished())
-        {
-            return false;   
+        if (!$this->isPublished()) {
+            return false;
         }
 
         return true;
     }
 
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        return ['id' => $this->id,
+            'startDate' => $this->getStartingDate()->format('Y-m-d'),
+            'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
+            'published' => $this->isPublished(), ];
+    }
 
+    public function exchangeArray($data)
+    {
+        $this->id = (isset($data['published'])) ? $data['id'] : $this->id();
+        $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
+        $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
+        $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
+    }
 }

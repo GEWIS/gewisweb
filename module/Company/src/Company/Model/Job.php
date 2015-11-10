@@ -3,18 +3,14 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Job model.
  *
  * @ORM\Entity
  */
-class Job //implements RoleInterface, ResourceInterface
+class Job
 {
-
     /**
      * The job id.
      *
@@ -32,11 +28,11 @@ class Job //implements RoleInterface, ResourceInterface
     protected $name;
 
     /**
-     * The job's ascii name.
+     * The job's slug name.
      *
      * @ORM\Column(type="string")
      */
-    protected $ascii_name;
+    protected $slugName;
     /**
      * The job's status.
      *
@@ -73,20 +69,25 @@ class Job //implements RoleInterface, ResourceInterface
     protected $description;
 
     /**
-     * The job's company.
+     * The job's language.
      *
-     * @ORM\ManyToOne(targetEntity="Company", inversedBy="jobs")
+     * @ORM\Column(type="string")
      */
-    protected $company;
-
-
+    protected $language;
 
     /**
-     * Constructor
+     * The job's packet.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPacket", inversedBy="jobs")
+     */
+    protected $packet;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
-        // todo
+        // noting to do
     }
 
     /**
@@ -109,19 +110,6 @@ class Job //implements RoleInterface, ResourceInterface
         return $this->name;
     }
 
-    public function getAsciiName()
-    {
-        return $this->asciiName;
-    }
-    /**
-     * Set the job's name.
-     *
-     * @param string $name
-     */
-    public function setAsciiName($name)
-    {
-        $this->asciiName = $name;
-    }
     /**
      * Set the job's name.
      *
@@ -133,19 +121,44 @@ class Job //implements RoleInterface, ResourceInterface
     }
 
     /**
+     * Get the job's slug name.
+     * 
+     * @return string the Jobs slug name
+     */
+    public function getSlugName()
+    {
+        return $this->slugName;
+    }
+
+    /**
+     * Set the job's slug name.
+     *
+     * @param string $name
+     */
+    public function setSlugName($name)
+    {
+        $this->slugName = $name;
+    }
+
+    /**
      * Get the job's status.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getActive()
+    protected function getActive()
     {
         return $this->active;
+    }
+
+    public function isActive()
+    {
+        return $this->getActive() and $this->getPacket()->isActive();
     }
 
     /**
      * Set the job's status.
      *
-     * @param boolean $active
+     * @param bool $active
      */
     public function setActive($active)
     {
@@ -233,24 +246,72 @@ class Job //implements RoleInterface, ResourceInterface
     }
 
     /**
-     * Get the job's company.
-     *
-     * @return Company
+     * Get the job's language.
+     * 
+     * @return string language of the job
      */
-    public function getCompany()
+    public function getLanguage()
     {
-        return $this->company;
+        return $this->language;
     }
 
     /**
-     * Set the job's company.
-     *
-     * @param Company company
+     * Set the job's language.
+     * 
+     * @param string $language language of the job
      */
-    public function setCompany($company)
+    public function setLanguage($language)
     {
-        $this->company = $company;
+        $this->language = $language;
     }
 
+    /**
+     * Get the job's packet.
+     *
+     * @return CompanyPacket
+     */
+    public function getPacket()
+    {
+        return $this->packet;
+    }
 
+    /**
+     * Set the job's packet.
+     * 
+     * @param CompanyPacket $packet the job's packet
+     */
+    public function setPacket(CompanyPacket $packet)
+    {
+        $this->packet = $packet;
+    }
+
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        $array = get_object_vars($this);
+
+        if ($this->getActive()) {
+            $array['active'] = '1';
+        } else {
+            $array['active'] = '0';
+        }
+
+        return $array;
+    }
+    public function exchangeArray($data)
+    {
+        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
+        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
+        $this->language = (isset($data['language'])) ? $data['language'] : $this->getLanguage();
+        $this->website = (isset($data['website'])) ? $data['website'] : $this->getWebsite();
+        $lActive = $data['active'];
+        if ($lActive == 1) {
+            $this->active = true;
+        } else {
+            $this->active = false;
+        }
+        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
+        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
+        $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
+    }
 }

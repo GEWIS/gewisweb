@@ -1,0 +1,21 @@
+<div class="company-edit-editor">
+<?php
+    if (!isset($company)){
+        echo "Company not found";
+    } else { 
+        if (isset($slugJobName)){
+            echo $this->partial('company/admin/editJob.phtml', 
+                                 array('slugJobName' => $slugJobName)
+                               );
+        } else { 
+            echo $this->partial('company/admin/editCompany.phtml', 
+                                array('companyEditForm' => $companyEditForm, 
+                                      'company' => $company,
+                                      'joblist' => $joblist)
+                                );
+        } 
+    } 
+
+?>
+    
+</div>

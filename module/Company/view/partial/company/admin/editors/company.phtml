@@ -1,0 +1,99 @@
+<dl><!-- common elements -->
+<?php $element = $this->form->get('name') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?php $element = $this->form->get('slugName') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('address') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('phone') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('email') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>    
+</dl>
+<?php $element = $this->form->get('languages') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formMultiCheckbox($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>    
+</dl>
+<dl><!-- english elements -->
+<?php $element = $this->form->get('en_website') ?>
+<h2> <?= $this->translate('English')?> </h2>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('en_description') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('en_logo') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?php $element = $this->form->get('en_slogan') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+</dl>
+
+<dl><!-- dutch elements -->
+<?php $element = $this->form->get('nl_website') ?>
+<h2> <?= $this->translate('Dutch')?> </h2>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('nl_description') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $this->form->get('nl_logo') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+<?php $element = $this->form->get('nl_slogan') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+
+</dl>
