@@ -294,7 +294,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel(array(
-            'companyEditForm' => $jobForm,
+            'jobEditForm' => $jobForm,
         ));
 
         return $vm;

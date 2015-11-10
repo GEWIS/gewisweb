@@ -37,8 +37,8 @@ class Company extends AbstractACLService
     public function savePacketWithData($packet,$data)
     {
         $packetForm = $this->getPacketForm();
-        $packetForm->setData($request->getPost());
-        if ($companyForm->isValid()){
+        $packetForm->setData($data);
+        if ($packetForm->isValid()){
             $packet->exchangeArray($data); 
             $this->savePacket();
         }
@@ -47,7 +47,7 @@ class Company extends AbstractACLService
     public function saveCompanyWithData($company,$data)
     {
         $companyForm = $this->getCompanyForm();
-        $companyForm->setData($request->getPost());
+        $companyForm->setData($data);
         if ($companyForm->isValid()){
             $company->exchangeArray($data); 
             $this->saveCompany();
@@ -57,7 +57,7 @@ class Company extends AbstractACLService
     public function saveJobWithData($job,$data)
     {
         $jobForm = $this->getJobForm();
-        $jobForm->setData($request->getPost());
+        $jobForm->setData($data);
         if ($jobForm->isValid()){
             $job->exchangeArray($data); 
             $this->saveJob();
@@ -109,7 +109,7 @@ class Company extends AbstractACLService
         $packetForm->setData($data);
         if ($packetForm->isValid()) {
             $packet = $this->insertPacketForCompanySlugName($companySlugName);
-            $packet->exchangeArray($request->getPost());
+            $packet->exchangeArray($data);
             $this->savePacket();
             return true;
         }

@@ -2,8 +2,15 @@
 
 namespace Company\Model;
 
-
 use Doctrine\ORM\Mapping as ORM;
+
+function updateIfSet($object, $default)
+{
+    if (isset($object)) {
+        return $object;
+    }
+    return $default;
+}
 
 /**
  * Job model.
