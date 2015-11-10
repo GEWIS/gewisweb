@@ -77,7 +77,7 @@ class Job
         $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
         ->andWhere('c.slugName=:companySlugName');
         $qb->setParameter('jobId', $jobSlugName);
-        #$qb->setParameter('companySlugName', $companySlugName);
+        $qb->setParameter('companySlugName', $companySlugName);
 
         return $qb->getQuery()->getResult();
     }
