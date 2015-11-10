@@ -232,6 +232,26 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     *
+     * Return true if the company should not be visible to the user, and false if it should be visible to the user
+     *
+     */
+
+    public function isHidden()
+    {
+        $visible = false;
+
+        // When any packet is not expired, the company should be shown to the user
+        foreach($this->getPackets() as $packet) {
+            if(!$packet->isExpired()){
+                $visible = true;
+            }
+        }
+
+        // Except when it is explicitly marked as hidden.
+        return $visible && !$this->getHidden();
+    }
+    /**
      * Get the company's hidden status.
      *
      * @return bool

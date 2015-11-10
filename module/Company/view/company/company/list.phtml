@@ -29,7 +29,9 @@ if (!isset($companyList)){
 }
 $i = 0;
 foreach ($companyList as $company) {
-    if ($company->getTranslationFromLocale($locale) != null){
+    $visible = $company->isHidden();
+    $translated = $company->getTranslationFromLocale($locale) != null;
+    if ($visible && $translated){
         echo $this->partial('partial/company/company/list/company.phtml', 
                         array('islist' => $islist, 'company' => $company, 'locale' => $locale));
         $i += 1;
