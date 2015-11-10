@@ -1,6 +1,6 @@
 <?php 
 $form = $companyEditForm;
-if ($company == null){
+if (is_null($company)){
     echo "Company not found";
     return;
 }

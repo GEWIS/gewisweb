@@ -93,7 +93,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
-            if ($del == 'Yes') {
+            if ($del === 'Yes') {
                 $companyService->deletePacket($packetID);
             }
 
@@ -117,7 +117,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
-            if ($del == 'Yes') {
+            if ($del === 'Yes') {
                 $companyService->deleteCompaniesWithSlug($slugName);
             }
 

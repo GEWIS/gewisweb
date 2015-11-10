@@ -309,7 +309,7 @@ class Job
         $this->phone = updateIfSet($data['phone'],'');
         $this->description = updateIfSet($data['description'],'');
         $lActive = $data['active'];
-        if ($lActive == 1) {
+        if ($lActive === 1) {
             $this->active = true;
         } else {
             $this->active = false;
