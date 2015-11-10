@@ -352,13 +352,6 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $translation;
     }
 
-    private static function updateIfSet($object, $default)
-    {
-        if (isset($object)) {
-            return $object;
-        }
-        return $default;
-    }
     public function getTranslationFromArray($data, $language)
     {
 

@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -298,13 +299,6 @@ class Job
 
         return $array;
     }
-    private static function updateIfSet($object, $default)
-    {
-        if (isset($object)) {
-            return $object;
-        }
-        return $default;
-    }
     public function exchangeArray($data)
     {
         $this->name = updateIfSet($data['name'],'');
@@ -314,7 +308,6 @@ class Job
         $this->email = updateIfSet($data['email'],'');
         $this->phone = updateIfSet($data['phone'],'');
         $this->description = updateIfSet($data['description'],'');
-        $this->description = updateIfSet($data,'');
         $lActive = $data['active'];
         if ($lActive == 1) {
             $this->active = true;
