@@ -313,7 +313,10 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->languageNeutralId = $language;
     }
-    // For zend2 forms
+    /**
+     * Returns an array copy with varName=>var for all variables except the translation. It will also add keys in the form $lang_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     */
     public function getArrayCopy()
     {
         $arraycopy = get_object_vars($this);
@@ -329,26 +332,56 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $arraycopy;
     }
 
-    public function getTranslationFromLocale($locale, $create = false)
+    
+    /**
+     * If this object contains an translation for a given locale, it is returned, else null is returned
+     *
+     */
+    public function getTranslationFromLocale($locale)
     {
+        $translation = null;
+
         $companyLanguages = $this->getTranslations()->map(function ($value) {
                     return $value->getLanguage();
                 });
+
         if (!$companyLanguages->contains($locale)) {
-            if ($create) {
-                $translation = new CompanyI18n();
-                $translation->setLanguage($locale);
-                $translation->setCompany($this);
-            } else {
-                $translation = null;
-            }
-        } else {
             $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
-        }
+        } 
 
         return $translation;
     }
 
+    private static function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+        return $default;
+    }
+    public function getTranslationFromArray($data, $language)
+    {
+
+        if ($language !== '') {
+            $translation = $this->getTranslationFromLocale($language);
+            if ($translation === null){
+
+                $translation = new CompanyI18n($language, $this);
+            }
+            $language = $language.'_';
+
+            // Translated properties
+            $translation->setWebsite(updateIfSet($this->$language.'website', ''));
+            $translation->setWebsite(updateIfSet($this->$language.'slogan', ''));
+            $translation->setWebsite(updateIfSet($this->$language.'description', ''));
+            $translation->setWebsite(updateIfSet($this->$language.'logo', ''));
+            return $translation;
+        }
+    }
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
     public function exchangeArray($data)
     {
         $languages = $data['languages'];
@@ -356,28 +389,21 @@ class Company // implements ArrayHydrator (for zend2 form)
         $newTranslations = new ArrayCollection();
 
         foreach ($languages as $language) {
-            if ($language !== '') {
-                $translation = $this->getTranslationFromLocale($language, true);
-                $language = $language.'_';
-
-                // Translated properties
-                $translation->setWebsite((isset($data[$language.'website'])) ? $data[$language.'website'] : '');
-                $translation->setSlogan((isset($data[$language.'slogan'])) ? $data[$language.'slogan'] : '');
-                $translation->setDescription((isset($data[$language.'description'])) ? $data[$language.'description'] : '');
-                $translation->setLogo((isset($data[$language.'logo'])) ? $data[$language.'logo'] : '');
-                $newTranslations->add($translation);
-            }
+            $newTranslationObject = $this->getTranslationFromArray($data,$language);
+            $newTranslations->add($newTranslationObject);
         }
+
+        // Delete old translations
         foreach ($this->getTranslations() as $translation) {
             if (!$newTranslations->contains($translation)) {
                 $translation->remove();
             }
         }
+        $translation->setName    (updateIfSet($this->$language.'name',     ''));
+        $translation->setSlugName(updateIfSet($this->$language.'slugName', ''));
+        $translation->setAddress (updateIfSet($this->$language.'address',  ''));
+        $translation->setEmail   (updateIfSet($this->$language.'email',    ''));
+        $translation->setPhone   (updateIfSet($this->$language.'phone',    ''));
         $this->translations = $newTranslations;
-        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->address = (isset($data['address'])) ? $data['address'] : $this->getAddress();
-        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
     }
 }

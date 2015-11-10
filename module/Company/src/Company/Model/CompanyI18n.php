@@ -67,10 +67,12 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct($locale, $company)
     {
         $this->description = '';
         $this->website = '';
+        $this->setLanguage($locale);
+        $this->setCompany($company);
     }
 
     /**

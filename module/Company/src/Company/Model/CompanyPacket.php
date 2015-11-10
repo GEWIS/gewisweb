@@ -229,6 +229,13 @@ class CompanyPacket
         return true;
     }
 
+    private static function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+        return $default;
+    }
     // For zend2 forms
     public function getArrayCopy()
     {
@@ -240,7 +247,7 @@ class CompanyPacket
 
     public function exchangeArray($data)
     {
-        $this->id = (isset($data['published'])) ? $data['id'] : $this->id();
+        $this->id = (isset($data['id'])) ? $data['id'] : $this->id();
         $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
         $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());

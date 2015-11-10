@@ -298,20 +298,28 @@ class Job
 
         return $array;
     }
+    private static function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+        return $default;
+    }
     public function exchangeArray($data)
     {
-        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->language = (isset($data['language'])) ? $data['language'] : $this->getLanguage();
-        $this->website = (isset($data['website'])) ? $data['website'] : $this->getWebsite();
+        $this->name = updateIfSet($data['name'],'');
+        $this->slugName = updateIfSet($data['slugName'],'');
+        $this->language = updateIfSet($data['language'],'');
+        $this->website = updateIfSet($data['website'],'');
+        $this->email = updateIfSet($data['email'],'');
+        $this->phone = updateIfSet($data['phone'],'');
+        $this->description = updateIfSet($data['description'],'');
+        $this->description = updateIfSet($data,'');
         $lActive = $data['active'];
         if ($lActive == 1) {
             $this->active = true;
         } else {
             $this->active = false;
         }
-        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
     }
 }
