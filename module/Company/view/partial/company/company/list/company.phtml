@@ -6,7 +6,7 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 echo("<h2 class='company-name'><a href='"); 
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
-if ($islist==true) {
+if ($islist===true) {
 
     echo ($this->url('company/companyItem', // Route url
         array('slugCompanyName' => $company->getSlugName()) // Url parameters
@@ -31,7 +31,7 @@ echo ("</a></h2>") ?>
 <?php  // TODO: jobs sorted by packet, which is not useful for visitor, possibily change sorting here to be useful
     foreach ($company->getPackets() as $packet){ 
         foreach($packet->getJobs() as $job) { ?>
-    <?php if ($job->isActive() && $job->getLanguage() == $locale){?>
+    <?php if ($job->isActive() && $job->getLanguage() === $locale){?>
             <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
             array('slugCompanyName' => $company->getSlugName(),
             'slugJobName' => $job->getSlugName()),array(),true) ?>"><?= $job->getName(); ?></a></li>

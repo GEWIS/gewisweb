@@ -104,7 +104,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslations()
     {
-        if ($this->translations !== null) {
+        if (!is_null($this->translations)) {
             return $this->translations;
         }
 
@@ -285,7 +285,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getNumberOfJobs()
     {
         $jobcount = 0;
-        if ($this->getPackets() == null) {
+        if (is_null($this->getPackets())) {
             return $jobcount;
         }
         foreach ($this->getPackets() as $packet) {
@@ -377,7 +377,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         if ($language !== '') {
             $translation = $this->getTranslationFromLocale($language);
-            if ($translation === null){
+            if (is_null($translation)){
 
                 $translation = new CompanyI18n($language, $this);
             }

@@ -193,20 +193,20 @@ class CompanyPacket
         if ($currentYear > $this->getExpirationDate()->format('Y')) {
             return true;
         }
-        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
+        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear === $this->getExpirationDate()->format('Y')) {
             return true;
         }
-        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth == $this->getExpirationDate()->format('m') and $currentYear == $this->getExpirationDate()->format('Y')) {
+        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth === $this->getExpirationDate()->format('m') and $currentYear === $this->getExpirationDate()->format('Y')) {
             return true;
         }
 
         if ($currentYear < $this->getStartingDate()->format('Y')) {
             return true;
         }
-        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
+        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear === $this->getStartingDate()->format('Y')) {
             return true;
         }
-        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth == $this->getStartingDate()->format('m') and $currentYear == $this->getStartingDate()->format('Y')) {
+        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth === $this->getStartingDate()->format('m') and $currentYear === $this->getStartingDate()->format('Y')) {
             return true;
         }
 

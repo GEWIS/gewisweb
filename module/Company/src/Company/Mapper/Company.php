@@ -60,7 +60,7 @@ class Company
             $translation = new CompanyI18n();
             $translation->setLanguage($language);
             $translation->setCompany($company);
-            if ($translation->getLogo() == null) {
+            if (is_null($translation->getLogo())) {
                 $translation->setLogo('');
             }
             $this->em->persist($translation);
