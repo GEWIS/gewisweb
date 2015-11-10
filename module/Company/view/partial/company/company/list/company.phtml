@@ -28,12 +28,14 @@ echo ("</a></h2>") ?>
     <div class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></div>
     <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
         <ul class="company-jobs-list">
-        <?php if ($company->getPackets()[0] != null) foreach($company->getPackets()[0]->getJobs() as $job) { ?>
-<?php if ($job->isActive() && $job->getLanguage() == $locale){?>
-        <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
+<?php  // TODO: jobs sorted by packet, which is not useful for visitor, possibily change sorting here to be useful
+    foreach ($company->getPackets() as $packet){ 
+        foreach($packet->getJobs() as $job) { ?>
+    <?php if ($job->isActive() && $job->getLanguage() == $locale){?>
+            <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
             ['slugCompanyName' => $company->getSlugName(),
-            'slugJobName' => $job->getSlugName()),[),true) ?>"><?= $job->getName(); ?></a></li>
-        <?php }} ?>
+            'slugJobName' => $job->getSlugName()],[],true) ?>"><?= $job->getName(); ?></a></li>
+        <?php }}} ?>
         </ul>
     </div>
     <div class="company-description"><?= $company->getTranslationFromLocale($locale)->getDescription(); ?></div>
