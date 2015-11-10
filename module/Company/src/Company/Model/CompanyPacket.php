@@ -229,13 +229,6 @@ class CompanyPacket
         return true;
     }
 
-    private static function updateIfSet($object, $default)
-    {
-        if (isset($object)) {
-            return $object;
-        }
-        return $default;
-    }
     // For zend2 forms
     public function getArrayCopy()
     {
