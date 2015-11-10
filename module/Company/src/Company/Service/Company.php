@@ -44,6 +44,12 @@ class Company extends AbstractACLService
         $this->getPacketMapper()->save();
     }
 
+    public function insertCompanyWithData($data)
+    {
+        $company = $this->insertCompany($data['languages']);
+        $company->exchangeArray($data);
+        $this->saveCompany();
+    }
     public function insertCompany($languages)
     {
         if ($this->isAllowed('insert')) {
@@ -54,6 +60,13 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a company')
             );
         }
+    }
+
+    public function insertPacketForCompanySlugNameWithData($companySlugName,$data)
+    {
+        $packet = $this->insertPacketForCompanySlugName($companyName);
+        $packet->exchangeArray($request->getPost());
+        $this->savePacket();
     }
 
     public function insertPacketForCompanySlugName($companySlugName)
@@ -70,6 +83,12 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a packet')
             );
         }
+    }
+    public function insertJobIntoPacketIDWithData($packetID,$data)
+    {
+        $job = $this->insertJobIntoPacketID($packetId);
+        $job->exchangeArray($data);
+        $this->saveCompany();
     }
     public function insertJobIntoPacketID($packetID)
     {
