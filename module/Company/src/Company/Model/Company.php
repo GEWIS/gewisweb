@@ -345,7 +345,7 @@ class Company // implements ArrayHydrator (for zend2 form)
                     return $value->getLanguage();
                 });
 
-        if (!$companyLanguages->contains($locale)) {
+        if ($companyLanguages->contains($locale)) {
             $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
         } 
 
