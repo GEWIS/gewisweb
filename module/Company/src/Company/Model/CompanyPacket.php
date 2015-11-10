@@ -5,6 +5,7 @@ namespace Company\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
+
 /**
  * CompanyPacket model.
  *
