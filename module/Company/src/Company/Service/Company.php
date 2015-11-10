@@ -34,6 +34,41 @@ class Company extends AbstractACLService
         }
     }
 
+    public function savePacketWithData($packet,$data)
+    {
+        $packetForm = $this->getPacketForm();
+        $packetForm->setData($request->getPost());
+        if ($companyForm->isValid()){
+            $packet->exchangeArray($data); 
+            $this->savePacket();
+        }
+    }
+
+    public function saveCompanyWithData($company,$data)
+    {
+        $companyForm = $this->getCompanyForm();
+        $companyForm->setData($request->getPost());
+        if ($companyForm->isValid()){
+            $company->exchangeArray($data); 
+            $this->saveCompany();
+        }
+    }
+
+    public function saveJobWithData($job,$data)
+    {
+        $jobForm = $this->getJobForm();
+        $jobForm->setData($request->getPost());
+        if ($jobForm->isValid()){
+            $job->exchangeArray($data); 
+            $this->saveJob();
+        }
+    }
+
+    public function saveJob()
+    {
+        $this->getJobMapper()->save();
+    }
+
     public function saveCompany()
     {
         $this->getCompanyMapper()->save();
@@ -46,9 +81,15 @@ class Company extends AbstractACLService
 
     public function insertCompanyWithData($data)
     {
-        $company = $this->insertCompany($data['languages']);
-        $company->exchangeArray($data);
-        $this->saveCompany();
+        $companyForm = $this->getCompanyForm();
+        $companyForm->setData($data);
+        if ($companyForm->isValid()) {
+            $company = $this->insertCompany($data['languages']);
+            $company->exchangeArray($data);
+            $this->saveCompany();
+            return true;
+        }
+        return false;
     }
     public function insertCompany($languages)
     {
@@ -64,9 +105,15 @@ class Company extends AbstractACLService
 
     public function insertPacketForCompanySlugNameWithData($companySlugName,$data)
     {
-        $packet = $this->insertPacketForCompanySlugName($companyName);
-        $packet->exchangeArray($request->getPost());
-        $this->savePacket();
+        $packetForm = $this->getPacketForm();
+        $packetForm->setData($data);
+        if ($packetForm->isValid()) {
+            $packet = $this->insertPacketForCompanySlugName($companySlugName);
+            $packet->exchangeArray($request->getPost());
+            $this->savePacket();
+            return true;
+        }
+        return false;
     }
 
     public function insertPacketForCompanySlugName($companySlugName)
@@ -86,9 +133,15 @@ class Company extends AbstractACLService
     }
     public function insertJobIntoPacketIDWithData($packetID,$data)
     {
-        $job = $this->insertJobIntoPacketID($packetId);
-        $job->exchangeArray($data);
-        $this->saveCompany();
+        $jobForm = $this->getJobForm();
+        $jobForm->setData($data);
+        if ($jobForm->isValid()) {
+            $job = $this->insertJobIntoPacketID($packetId);
+            $job->exchangeArray($data);
+            $this->saveCompany();
+            return true;
+        }
+        return false;
     }
     public function insertJobIntoPacketID($packetID)
     {

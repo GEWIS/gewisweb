@@ -18,48 +18,18 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
-    public function addPacketAction()
-    {
-        $companyService = $this->getCompanyService();
-        $packetForm = $companyService->getPacketForm();
-        $request = $this->getRequest();
-        $companyName = $this->params('slugCompanyName');
-        if ($request->isPost()) {
-            $packetForm->setData($request->getPost());
-
-            if ($packetForm->isValid()) {
-                $companyService->insertPacketForCompanySlugNameWithData($companyName,$request->getPost());
-
-                return $this->redirect()->toRoute('admin_company/editCompany', array('slugCompanyName' => $companyName), array(), false);
-            }
-        }
-        $packetForm->setAttribute(
-            'action',
-            $this->url()->fromRoute('admin_company/editCompany/addPacket',
-            array('slugCompanyName' => $companyName))
-        );
-        $vm = new ViewModel(array(
-          //  'company' => $company,
-            'companyEditForm' => $packetForm,
-        ));
-
-        return $vm;
-    }
-
     public function addCompanyAction()
     {
+        // Get usefull stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
+
+        // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if (!isset($companyName)) {
-                $companyName = $request->getPost()['slugName'];
-            }
-            $companyForm->setData($request->getPost());
-
-            if ($companyForm->isValid()) {
-                $companyService->insertCompanyWithData($request->getPost());
-
+            // Check if data is valid, and insert when it is
+            if ($companyService->insertCompanyWithData($request->getPost())) {
+                // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default', 
                     array(
@@ -71,6 +41,10 @@ class AdminController extends AbstractActionController
                 );
             }
         }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -78,6 +52,8 @@ class AdminController extends AbstractActionController
                 array('action' => 'addCompany')
             )
         );
+
+        // Initialize the view
         $vm = new ViewModel(array(
             'companyEditForm' => $companyForm,
         ));
@@ -85,70 +61,66 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
-    public function deletePacketAction()
+    public function addPacketAction()
     {
+        // Get usefull stuff
         $companyService = $this->getCompanyService();
-        $packetID = $this->params('packetID');
+        $packetForm = $companyService->getPacketForm();
+
+        // Get parameter
         $companyName = $this->params('slugCompanyName');
+
+        // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $del = $request->getPost('del', 'No');
-            if ($del === 'Yes') {
-                $companyService->deletePacket($packetID);
+
+            // Check if data is valid, and insert when it is
+            if ($companyService->insertPacketForCompanySlugNameWithData($companyName,$request->getPost())){
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/editCompany', 
+                    array('slugCompanyName' => $companyName), 
+                    array(), 
+                    false
+                );
             }
 
-            return $this->redirect()->toRoute(
-                'admin_company/editCompany', 
-                array('slugCompanyName' => $companyName)
-            );
         }
 
-        return new ViewModel(array(
-            'packet' => $companyService->getEditablePacket($packetID),
-            'slugName' => $companyName,
-            'translator' => $companyService->getTranslator(),
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $packetForm->setAttribute(
+            'action',
+            $this->url()->fromRoute('admin_company/editCompany/addPacket',
+            array('slugCompanyName' => $companyName))
+        );
+
+        // Initialize the view
+        $vm = new ViewModel(array(
+            'companyEditForm' => $packetForm,
         ));
-    }
 
-    public function deleteCompanyAction()
-    {
-        $companyService = $this->getCompanyService();
-        $slugName = $this->params('slugCompanyName');
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $del = $request->getPost('del', 'No');
-            if ($del === 'Yes') {
-                $companyService->deleteCompaniesWithSlug($slugName);
-            }
-
-            return $this->redirect()->toRoute('admin_company');
-        }
-
-        return new ViewModel(array(
-            'companies' => $companyService->getEditableCompaniesWithSlugName($slugName),
-            'translator' => $companyService->getTranslator(),
-        ));
+        return $vm;
     }
 
     public function addJobAction()
     {
-        // Get useful stuf
+        // Get usefull stuf
         $companyService = $this->getCompanyService();
+        $companyForm = $companyService->getJobForm();
+
+        // Get parameters
         $companyName = $this->params('slugCompanyName');
         $packetId = $this->params('packetID');
-        $companyForm = $companyService->getJobForm();
+
+        // Handle incoming form results
         $request = $this->getRequest();
-
-        // If we get data back
         if ($request->isPost()) {
-            if (!isset($jobName)) {
-                $jobName = $request->getPost()['slugName'];
-            }
-            $companyForm->setData($request->getPost());
 
-            if ($companyForm->isValid()) {
-                $companyService->insertJobIntoPacketIDWithData($packetId, $request->getPost());
-
+            // Check if data is valid, and insert when it is
+            if ($companyService->insertJobIntoPacketIDWithData($packetId, $request->getPost())) {
+                // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPacket/editJob',
                     array(
@@ -161,6 +133,8 @@ class AdminController extends AbstractActionController
         }
 
         // The form was not valid, or we did not get data back
+
+        // Initialize the form
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -172,7 +146,57 @@ class AdminController extends AbstractActionController
             )
         );
 
+        // Initialize the view
         $vm = new ViewModel(array(
+            'companyEditForm' => $companyForm,
+        ));
+
+        return $vm;
+    }
+
+    public function editCompanyAction()
+    {
+        // Get usefull stuff
+        $companyService = $this->getCompanyService();
+        $companyForm = $companyService->getCompanyForm();
+
+        // Get parameter
+        $companyName = $this->params('slugCompanyName');
+
+        // Get the specified company
+        $companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
+
+        // If the company is not found, throw 404
+        if (empty($companyList)) {
+            $company = null;
+            $this->getResponse()->setStatusCode(404);
+            return; 
+        }
+
+        $company = $companyList[0];
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $companyService->saveCompanyWithData($company, $request->getPost());
+        }
+
+        // Initialize form
+        $companyForm->bind($company);
+        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
+        $companyForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                array(
+                    'action' => 'editCompany',
+                    'slugCompanyName' => $companyName, 
+                )
+            )
+        );
+        $jobs = $companyService->getJobsWithCompanySlugName($companyName);
+        $vm = new ViewModel(array(
+            'company' => $company,
             'companyEditForm' => $companyForm,
         ));
 
@@ -181,24 +205,26 @@ class AdminController extends AbstractActionController
 
     public function editPacketAction()
     {
+        // Get usefull stuff
         $companyService = $this->getCompanyService();
+        $packetForm = $companyService->getPacketForm();
 
+        // Get the parameters
         $companyName = $this->params('slugCompanyName');
         $packetID = $this->params('packetID');
-        $packetForm = $companyService->getPacketForm();
+
+        // Get the specified packet (Assuming it is found)
         $packet = $companyService->getEditablePacket($packetID);
+
+        // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if (!isset($packetID)) {
-                $companyName = $request->getPost()['packetID'];
-            }
-            $packetForm->setData($request->getPost());
-
-            if ($packetForm->isValid()) {
-                $packet->exchangeArray($request->getPost()); 
-                $companyService->saveCompany();
+            $companyService->savePacketWithData($packet,$request->getPost());
+            // TODO: possibly redirect to company
         }
         // TODO: display error page when packet is not found
+
+        // Initialize form
         $packetForm->bind($packet);
         $packetForm->setAttribute(
             'action',
@@ -210,6 +236,8 @@ class AdminController extends AbstractActionController
                 )
             )
         );
+
+        // Initialize the view
         $vm = new ViewModel(array(
             'packet' => $packet,
             'companyName' => $companyName,
@@ -221,119 +249,126 @@ class AdminController extends AbstractActionController
 
     public function editJobAction()
     {
+        // Get usefull stuff
         $companyService = $this->getCompanyService();
+        $jobForm = $companyService->getJobForm();
+        
+        // Get the parameters
         $packetID = $this->params('packetID');
-
         $companyName = $this->params('slugCompanyName');
-        $slugCompanyName = $this->params('slugCompanyName');
         $jobName = $this->params('jobName');
-        $companyForm = $companyService->getJobForm();
+
+
+        // Find the specified jobs
         $jobList = $companyService->getEditableJobsWithSlugName($companyName, $jobName);
+
+        // Check the job is found. If not, throw 404
         if (empty($jobList)) {
             $company = null;
             $this->getResponse()->setStatusCode(404);
             return; 
-        } else {
-            $job = $jobList[0];
-            $packetForm->bind($job);
-            $companyForm->setAttribute(
-                'action',
-                $this->url()->fromRoute(
-                    'admin_company/editCompany/editPacket/editJob',
-                    array(
-                        'jobName' => $jobName,
-                        'packetID' => $packetID,
-                        'slugCompanyName' => $companyName, 
-                    )
-                )
-            );
         }
+
+        $job = $jobList[0];
+
+        // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if (!isset($jobName)) {
-                $jobName = $request->getPost()['slugName'];
-            }
-            $companyForm->setData($request->getPost());
+            $companyService->saveJobWithData($job, $request->getPost());
+            // TODO: possibly redirect to packet
+        }
 
-            if ($companyForm->isValid()) {
-                $job = $jobList[0];
-                $job->exchangeArray($request->getPost());
-                $companyService->saveCompany();
-            }
-
-            return $this->redirect()->toRoute(
+        // Initialize the form
+        $jobForm->bind($job);
+        $jobForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
                 'admin_company/editCompany/editPacket/editJob',
                 array(
-                    'slugCompanyName' => $slugCompanyName,
+                    'slugCompanyName' => $companyName, 
+                    'jobName' => $jobName,
                     'packetID' => $packetID,
-                    'slugJobName' => $jobName, ),
-                array(), 
-                true
-            );
-        }
-        $return = $companyService->getJobsWithCompanySlugName($companyName);
+                )
+            )
+        );
+
+        // Initialize the view
         $vm = new ViewModel(array(
-            'joblist' => $return,
-            'companyEditForm' => $companyForm,
+            'companyEditForm' => $jobForm,
         ));
 
         return $vm;
     }
 
-    public function editCompanyAction()
+
+    private function checkConfirmation($request)
     {
+        $del = $request->getPost('del', 'No');
+        if ($del === 'Yes') {
+            return true;
+        }
+        return false;
+
+    }
+
+    public function deleteCompanyAction()
+    {
+        // Get usefull stuff
         $companyService = $this->getCompanyService();
 
-        $companyName = $this->params('slugCompanyName');
-        $companyForm = $companyService->getCompanyForm();
-        $companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
+        // Get parameters
+        $slugName = $this->params('slugCompanyName');
+
+        // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if (!isset($companyName)) {
-                $companyName = $request->getPost()['slugName'];
-            }
-            $companyForm->setData($request->getPost());
 
-            if ($companyForm->isValid()) {
-                if (count($companyList) > 0) {
-                    $company = $companyList[0];
-                }
-                $company->exchangeArray($request->getPost());
-                $companyService->saveCompany();
-            } else {
-                return $this->forward()->dispatch(
-                    'Company\Controller\AdminController',
-                    array(
-                        'action' => 'editCompany',
-                        'form' => $companyForm, 
-                    )
-                );
+            // Check for confirmation
+            if ($this->checkConfirmation($request)) {
+                $companyService->deleteCompaniesWithSlug($slugName);
             }
+
+            return $this->redirect()->toRoute('admin_company');
         }
-        if (empty($companyList)) {
-            $company = null;
-            $this->getResponse()->setStatusCode(404);
-            return; 
-        } else {
-            $company = $companyList[0];
-            $companyForm->bind($company);
-            $companyForm->setAttribute(
-                'action',
-                $this->url()->fromRoute(
-                    'admin_company/default',
-                    array(
-                        'action' => 'editCompany',
-                        'slugCompanyName' => $companyName, 
-                    )
-                )
-            );
-            $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
-        }
-        $return = $companyService->getJobsWithCompanySlugName($companyName);
+
+        // No data returned, so instead, ask for confirmation
+
+        // Initialize the view
         $vm = new ViewModel(array(
-            'company' => $company,
-            'joblist' => $return,
-            'companyEditForm' => $companyForm,
+            'companies' => $companyService->getEditableCompaniesWithSlugName($slugName),
+            'translator' => $companyService->getTranslator(),
+        ));
+        return $vm;
+    }
+
+    public function deletePacketAction()
+    {
+        // Get usefull stuff
+        $companyService = $this->getCompanyService();
+
+        // Get parameters
+        $packetID = $this->params('packetID');
+        $companyName = $this->params('slugCompanyName');
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($this->checkConfirmation($request)) {
+                $companyService->deletePacket($packetID);
+            }
+            return $this->redirect()->toRoute(
+                'admin_company/editCompany', 
+                array('slugCompanyName' => $companyName)
+            );
+        }
+
+        // No data returned, so instead, ask for confirmation
+
+        // Initialize the view
+        $vm =  new ViewModel(array(
+            'packet' => $companyService->getEditablePacket($packetID),
+            'slugName' => $companyName,
+            'translator' => $companyService->getTranslator(),
         ));
 
         return $vm;
