@@ -287,6 +287,10 @@ class Job
     }
 
     // For zend2 forms
+    /**
+     * Returns an array containing all instance variables of this object
+     *
+     */
     public function getArrayCopy()
     {
         $array = get_object_vars($this);
@@ -300,6 +304,13 @@ class Job
         return $array;
     }
     
+    /**
+     * Returns the first argument if it is nonnul, else, returns the second 
+     * argument
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
     private function updateIfSet($object, $default)
     {
         if (isset($object)) {
@@ -307,6 +318,12 @@ class Job
         }
         return $default;
     }
+    /**
+     * Sets all instance variables of this object to the values of the entries 
+     * in $data
+     *
+     * @param mixed $data
+     */
     public function exchangeArray($data)
     {
         $this->name = $this->updateIfSet($data['name'],'');

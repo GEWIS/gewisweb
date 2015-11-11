@@ -31,11 +31,20 @@ class Company
     {
         $this->em = $em;
     }
+    /**
+     * Saves all unsaved entities, that are marked persistent
+     *
+     */
     public function save()
     {
         $this->em->flush();
     }
 
+    /**
+     * Delete the company identified with $slug
+     *
+     * @param mixed $slug
+     */
     public function deleteWithSlug($slug)
     {
         foreach ($this->findEditableCompaniesWithSlugName($slug, true) as $company) {
@@ -47,6 +56,12 @@ class Company
         }
         $this->em->flush();
     }
+    /**
+     * Inserts a company into the datebase, and initializes the given 
+     * translations as empty translations for them
+     *
+     * @param mixed $languages
+     */
     public function insert($languages)
     {
         $company = new CompanyModel($this->em);
@@ -102,6 +117,11 @@ class Company
         }
     }
 
+    /**
+     * Returns all companies in the database identified with $slugName
+     *
+     * @param mixed $slugName
+     */
     public function findCompaniesWithSlugName($slugName)
     {
         $result = $this->findEditableCompaniesWithSlugName($slugName, true);
