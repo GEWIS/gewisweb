@@ -282,6 +282,11 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $this->packets;
     }
 
+    /**
+     * Returns the number of jobs that is contained in all packets of this 
+     * company.
+     *
+     */
     public function getNumberOfJobs()
     {
         $jobcount = 0;
@@ -334,11 +339,15 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->languageNeutralId = $language;
     }
     /**
-     * Returns an array copy with varName=>var for all variables except the translation. It will also add keys in the form $lang_varName=>$this->getTranslationFromLocale($lang)=>var
+     * Returns an array copy with varName=> var for all variables except the 
+     * translation. 
+     *
+     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
      *
      */
     public function getArrayCopy()
     {
+     
         $arraycopy = get_object_vars($this);
         $arraycopy['languages'] = array();
         foreach ($this->getTranslations() as $translation) {
@@ -372,6 +381,13 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $translation;
     }
 
+    /**
+     * Updates the variable if the first argument is set, Otherwise, it will 
+     * use the second argument.
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
     private function updateIfSet($object, $default)
     {
         if (isset($object)) {
@@ -379,6 +395,12 @@ class Company // implements ArrayHydrator (for zend2 form)
         }
         return $default;
     }
+    /**
+     * Returns the translation identified by $language
+     *
+     * @param mixed $data
+     * @param mixed $language
+     */
     public function getTranslationFromArray($data, $language)
     {
 

@@ -31,7 +31,7 @@ class Job
     }
 
     /**
-     * Find all companies.
+     * Find all jobs.
      *
      * @return array
      */
@@ -40,6 +40,10 @@ class Job
         return $this->getRepository()->findAll();
     }
 
+    /**
+     * Saves all modified entities that are marked persistant
+     *
+     */
     public function save()
     {
         $this->em->flush();
@@ -62,6 +66,11 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Inserts a job into a given packet
+     *
+     * @param mixed $packet
+     */
     public function insertIntoPacket($packet)
     {
         $job = new JobModel($this->em);
@@ -72,6 +81,13 @@ class Job
         return $job;
     }
 
+    /**
+     * Find all jobs identified by $jobSlugName that are owned by a company 
+     * identified with $companySlugName
+     *
+     * @param mixed $companySlugName
+     * @param mixed $jobSlugName
+     */
     public function findJobWithSlugName($companySlugName, $jobSlugName)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');

@@ -7,6 +7,11 @@ use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
+    /**
+     *
+     * Action to display a list of all nonhidden companies
+     *
+     */
     public function listAction()
     {
         $companyService = $this->getCompanyService();
@@ -32,6 +37,11 @@ class CompanyController extends AbstractActionController
 
         return $vm;
     }
+    /**
+     *
+     * Action that displays a list of all jobs (facaturebank)
+     *
+     */
     public function jobListAction()
     {
         $companyService = $this->getCompanyService();
@@ -43,6 +53,11 @@ class CompanyController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action to list jobs of a certain company
+     *
+     */
     public function jobsAction()
     {
         $companyService = $this->getCompanyService();

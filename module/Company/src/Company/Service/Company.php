@@ -10,6 +10,10 @@ use Application\Service\AbstractAclService;
  */
 class Company extends AbstractACLService
 {
+    /**
+     * Returns an list of all companies (including hidden companies
+     *
+     */
     public function getCompanyList()
     {
         $translator = $this->getTranslator();

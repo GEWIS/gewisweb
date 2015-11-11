@@ -206,11 +206,20 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     }
 
     // For zend2 forms
+    /**
+     * Returns an array that contains all instance variables of this objects.
+     *
+     */
     public function getArrayCopy()
     {
         return get_object_vars($this);
     }
 
+    /**
+     * Sets all variables of this object to the values in the array $data
+     *
+     * @param mixed $data
+     */
     public function exchangeArray($data)
     {
         $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();

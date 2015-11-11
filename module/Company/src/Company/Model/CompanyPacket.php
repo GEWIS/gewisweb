@@ -149,6 +149,7 @@ class CompanyPacket
      * Set the packet's company.
      *
      * @param Company company
+     *
      */
     public function setCompany(Company $company)
     {
