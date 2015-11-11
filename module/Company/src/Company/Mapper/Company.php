@@ -57,9 +57,7 @@ class Company
 
 
         foreach ($languages as $language) {
-            $translation = new CompanyI18n();
-            $translation->setLanguage($language);
-            $translation->setCompany($company);
+            $translation = new CompanyI18n($language, $company);
             if (is_null($translation->getLogo())) {
                 $translation->setLogo('');
             }

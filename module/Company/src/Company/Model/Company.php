@@ -372,6 +372,13 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $translation;
     }
 
+    private function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+        return $default;
+    }
     public function getTranslationFromArray($data, $language)
     {
 
@@ -384,10 +391,10 @@ class Company // implements ArrayHydrator (for zend2 form)
             $language = $language.'_';
 
             // Translated properties
-            $translation->setWebsite(updateIfSet($this->$language.'website', ''));
-            $translation->setWebsite(updateIfSet($this->$language.'slogan', ''));
-            $translation->setWebsite(updateIfSet($this->$language.'description', ''));
-            $translation->setWebsite(updateIfSet($this->$language.'logo', ''));
+            $translation->setWebsite($this->updateIfSet($data[($language).'website'], ''));
+            $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
+            $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
+            $translation->setLogo($this->updateIfSet($data[$language.'logo'], ''));
             return $translation;
         }
     }
@@ -412,11 +419,11 @@ class Company // implements ArrayHydrator (for zend2 form)
                 $translation->remove();
             }
         }
-        $translation->setName    (updateIfSet($this->$language.'name',     ''));
-        $translation->setSlugName(updateIfSet($this->$language.'slugName', ''));
-        $translation->setAddress (updateIfSet($this->$language.'address',  ''));
-        $translation->setEmail   (updateIfSet($this->$language.'email',    ''));
-        $translation->setPhone   (updateIfSet($this->$language.'phone',    ''));
+        $this->setName($this->updateIfSet($this->$language.'name',     ''));
+        $this->setSlugName($this->updateIfSet($this->$language.'slugName', ''));
+        $this->setAddress($this->updateIfSet($this->$language.'address',  ''));
+        $this->setEmail($this->updateIfSet($this->$language.'email',    ''));
+        $this->setPhone($this->updateIfSet($this->$language.'phone',    ''));
         $this->translations = $newTranslations;
     }
 }
