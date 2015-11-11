@@ -7,10 +7,18 @@ use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
+    /**
+     *
+     * Action that displays the main page
+     *
+     */
+
     public function indexAction()
     {
+        // Get useful stuff
         $companyService = $this->getCompanyService();
 
+        // Initialize the view
         $vm = new ViewModel(array(
             'companyList' => $companyService->getHiddenCompanyList(),
         ));
@@ -18,9 +26,15 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that allows adding a company
+     *
+     */
+
     public function addCompanyAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
 
@@ -61,9 +75,15 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that allows adding a packet
+     *
+     */
+
     public function addPacketAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $packetForm = $companyService->getPacketForm();
 
@@ -104,9 +124,14 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that allows adding a job
+     *
+     */
     public function addJobAction()
     {
-        // Get usefull stuf
+        // Get useful stuf
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobForm();
 
@@ -154,9 +179,14 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that displays a form for editing a company
+     *
+     */
     public function editCompanyAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
 
@@ -203,9 +233,14 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that displays a form for editing a packet
+     *
+     */
     public function editPacketAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $packetForm = $companyService->getPacketForm();
 
@@ -247,9 +282,14 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that displays a form for editing a job
+     *
+     */
     public function editJobAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobForm();
         
@@ -300,6 +340,11 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Extracted part of delete actions that checks if confirmation is given
+     *
+     */
 
     private function checkConfirmation($request)
     {
@@ -311,9 +356,14 @@ class AdminController extends AbstractActionController
 
     }
 
+    /**
+     *
+     * Action that first asks for confirmation, and when given, deletes the company
+     *
+     */
     public function deleteCompanyAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
 
         // Get parameters
@@ -341,9 +391,14 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     *
+     * Action that first asks for confirmation, and when given, deletes the Packet
+     *
+     */
     public function deletePacketAction()
     {
-        // Get usefull stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
 
         // Get parameters
