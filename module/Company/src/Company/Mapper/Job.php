@@ -55,7 +55,8 @@ class Job
     public function findJobsWithCompanySlugName($packetID)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('p.id=:companyId')->andWhere('j.active=1')->andWhere('c.hidden=0')->andWhere('p.expires > CURRENT_DATE()');
+        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('p.id=:companyId')
+            ->andWhere('j.active=1')->andWhere('c.hidden=0')->andWhere('p.expires > CURRENT_DATE()');
         $qb->setParameter('companyId', $packetID);
 
         return $qb->getQuery()->getResult();
