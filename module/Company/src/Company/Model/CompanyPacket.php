@@ -187,27 +187,7 @@ class CompanyPacket
 
     public function isExpired()
     {
-        $currentYear = date('Y');
-        $currentMonth = date('m');
-        $currentDay = date('d');
-
-        if ($currentYear > $this->getExpirationDate()->format('Y')) {
-            return true;
-        }
-        if ($currentMonth > $this->getExpirationDate()->format('m') and $currentYear === $this->getExpirationDate()->format('Y')) {
-            return true;
-        }
-        if ($currentDay > $this->getExpirationDate()->format('d')  and $currentMonth === $this->getExpirationDate()->format('m') and $currentYear === $this->getExpirationDate()->format('Y')) {
-            return true;
-        }
-
-        if ($currentYear < $this->getStartingDate()->format('Y')) {
-            return true;
-        }
-        if ($currentMonth < $this->getStartingDate()->format('m') and $currentYear === $this->getStartingDate()->format('Y')) {
-            return true;
-        }
-        if ($currentDay < $this->getStartingDate()->format('d')  and $currentMonth === $this->getStartingDate()->format('m') and $currentYear === $this->getStartingDate()->format('Y')) {
+        if(new \DateTime() > $this->getExpirationDate()){
             return true;
         }
 
