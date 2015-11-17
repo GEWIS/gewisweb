@@ -131,15 +131,15 @@ return [
                         'may_terminate' => true,
 
                         'child_routes' => [
-                            'editPacket' => [
+                            'editPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/packet/:packetID',
+                                    'route' => '/package/:packageID',
                                     'defaults' => [
-                                        'action' => 'editPacket',
+                                        'action' => 'editPackage',
                                     ],
                                     'constraints' => [
-                                        'packetID' => '[a-zA-Z0-9_-]*',
+                                        'packageID' => '[a-zA-Z0-9_-]*',
                                     ],
                                 ],
                                 'may_terminate' => true,
@@ -150,16 +150,16 @@ return [
                                             'route' => '/addJob',
                                             'defaults' => [
                                                 'action' => 'addJob',
-                                            ),
-                                        ),
+                                            ],
+                                        ],
                                         'may_terminate' => true,
                                     ],
-                                    'deletePacket' => [
+                                    'deletePackage' => [
                                         'type' => 'segment',
                                         'options' => [
                                             'route' => '/delete',
                                             'defaults' => [
-                                                'action' => 'deletePacket',
+                                                'action' => 'deletePackage',
                                             ),
                                         ),
                                         'may_terminate' => true,
@@ -175,16 +175,16 @@ return [
                                                 'jobName' => '[a-zA-Z0-9_-]*',
                                             ),
                                             'may_terminate' => true,
-                                        ],
-                                    ],
-                                ],
-                            ],
-                            'addPacket' => [
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'addPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/addPacket',
+                                    'route' => '/addPackage',
                                     'defaults' => [
-                                        'action' => 'addPacket',
+                                        'action' => 'addPackage',
                                     ],
                                     'may_terminate' => true,
                                 ],

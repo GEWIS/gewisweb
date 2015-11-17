@@ -43,18 +43,18 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is saves the packet
+     * Checks if the data is valid, and if it is saves the package
      *
-     * @param mixed $packet
+     * @param mixed $package
      * @param mixed $data
      */
-    public function savePacketWithData($packet,$data)
+    public function savePackageWithData($package,$data)
     {
-        $packetForm = $this->getPacketForm();
-        $packetForm->setData($data);
-        if ($packetForm->isValid()){
-            $packet->exchangeArray($data); 
-            $this->savePacket();
+        $packageForm = $this->getPackageForm();
+        $packageForm->setData($data);
+        if ($packageForm->isValid()){
+            $package->exchangeArray($data); 
+            $this->savePackage();
         }
     }
 
@@ -109,12 +109,12 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Saves all modified packets
+     * Saves all modified packages
      *
      */
-    public function savePacket()
+    public function savePackage()
     {
-        $this->getPacketMapper()->save();
+        $this->getPackageMapper()->save();
     }
 
     /**
@@ -153,57 +153,57 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, inserts the packet, and assigns it to the given company
+     * Checks if the data is valid, and if it is, inserts the package, and assigns it to the given company
      *
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPacketForCompanySlugNameWithData($companySlugName,$data)
+    public function insertPackageForCompanySlugNameWithData($companySlugName,$data)
     {
-        $packetForm = $this->getPacketForm();
-        $packetForm->setData($data);
-        if ($packetForm->isValid()) {
-            $packet = $this->insertPacketForCompanySlugName($companySlugName);
-            $packet->exchangeArray($data);
-            $this->savePacket();
+        $packageForm = $this->getPackageForm();
+        $packageForm->setData($data);
+        if ($packageForm->isValid()) {
+            $package = $this->insertPackageForCompanySlugName($companySlugName);
+            $package->exchangeArray($data);
+            $this->savePackage();
             return true;
         }
         return false;
     }
 
     /**
-     * Inserts a packet and assigns it to the given company
+     * Inserts a package and assigns it to the given company
      *
      * @param mixed $companySlugName
      */
-    public function insertPacketForCompanySlugName($companySlugName)
+    public function insertPackageForCompanySlugName($companySlugName)
     {
         if ($this->isAllowed('insert')) {
             $companies = $this->getEditableCompaniesWithSlugName($companySlugName);
             var_dump($companySlugName);
             $company = $companies[0];
 
-            return $this->getPacketMapper()->insertPacketIntoCompany($company);
+            return $this->getPackageMapper()->insertPackageIntoCompany($company);
         } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to insert a packet')
+                $translator->translate('You are not allowed to insert a package')
             );
         }
     }
     /**
      * Checks if the data is valid, and if it is, assigns a job, and bind it to 
-     * the given packet
+     * the given package
      *
-     * @param mixed $packetID
+     * @param mixed $packageID
      * @param mixed $data
      */
-    public function insertJobIntoPacketIDWithData($packetID,$data)
+    public function insertJobIntoPackageIDWithData($packageID,$data)
     {
         $jobForm = $this->getJobForm();
         $jobForm->setData($data);
         if ($jobForm->isValid()) {
-            $job = $this->insertJobIntoPacketID($packetId);
+            $job = $this->insertJobIntoPackageID($packageId);
             $job->exchangeArray($data);
             $this->saveCompany();
             return true;
@@ -211,15 +211,15 @@ class Company extends AbstractACLService
         return false;
     }
     /**
-     * Inserts a job, and binds it to the given packet
+     * Inserts a job, and binds it to the given package
      *
-     * @param mixed $packetID
+     * @param mixed $packageID
      */
-    public function insertJobIntoPacketID($packetID)
+    public function insertJobIntoPackageID($packageID)
     {
         if ($this->isAllowed('insert')) {
-            $packet = $this->getEditablePacket($packetID);
-            $result = $this->getJobMapper()->insertIntoPacket($packet);
+            $package = $this->getEditablePackage($packageID);
+            $result = $this->getJobMapper()->insertIntoPackage($package);
 
             return $result;
         } else {
@@ -231,18 +231,18 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Deletes the given packet
+     * Deletes the given package
      *
-     * @param mixed $packetID
+     * @param mixed $packageID
      */
-    public function deletePacket($packetID)
+    public function deletePackage($packageID)
     {
         if ($this->isAllowed('delete')) {
-            return $this->getPacketMapper()->delete($packetID);
+            return $this->getPackageMapper()->delete($packageID);
         } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to delete packets')
+                $translator->translate('You are not allowed to delete packages')
             );
         }
     }
@@ -287,20 +287,20 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns a persistent packet
+     * Returns a persistent package
      *
-     * @param mixed $packetID
+     * @param mixed $packageID
      */
-    public function getEditablePacket($packetID)
+    public function getEditablePackage($packageID)
     {
         if ($this->isAllowed('edit')) {
-            $packet = $this->getPacketMapper()->findEditablePacket($packetID);
+            $package = $this->getPackageMapper()->findEditablePackage($packageID);
 
-            return $packet;
+            return $package;
         } else {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to edit packets')
+                $translator->translate('You are not allowed to edit packages')
             );
         }
     }
@@ -373,12 +373,12 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns a the form for entering packets
+     * Returns a the form for entering packages
      *
      */
-    public function getPacketForm()
+    public function getPackageForm()
     {
-        return $this->sm->get('company_admin_edit_packet_form');
+        return $this->sm->get('company_admin_edit_package_form');
     }
 
     /**
@@ -417,12 +417,12 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns the packetMapper
+     * Returns the packageMapper
      *
      */
-    public function getPacketMapper()
+    public function getPackageMapper()
     {
-        return $this->sm->get('company_mapper_packet');
+        return $this->sm->get('company_mapper_package');
     }
 
     /**

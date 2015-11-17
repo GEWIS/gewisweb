@@ -9,11 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 //use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * CompanyBannerPacket model.
+ * CompanyBannerPackage model.
  *
  * @ORM\Entity
  */
-class CompanyBannerPacket extends CompanyPacket //implements RoleInterface, ResourceInterface
+class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
 {
     /**
      * The banner's image's URL.

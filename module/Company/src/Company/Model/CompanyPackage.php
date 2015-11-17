@@ -7,14 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 
 /**
- * CompanyPacket model.
+ * CompanyPackage model.
  *
  * @ORM\Entity
  */
-class CompanyPacket
+class CompanyPackage
 {
     /**
-     * The packet's id.
+     * The package's id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,37 +23,37 @@ class CompanyPacket
     protected $id;
 
     /**
-     * The packet's starting date.
+     * The package's starting date.
      *
      * @ORM\Column(type="date")
      */
     protected $starts;
 
     /**
-     * The packet's expiration date.
+     * The package's expiration date.
      *
      * @ORM\Column(type="date")
      */
     protected $expires;
 
     /**
-     * The packet's pusblish state.
+     * The package's pusblish state.
      *
      * @ORM\Column(type="boolean")
      */
     protected $published;
 
     /**
-     * The packet's company.
+     * The package's company.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packets")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packages")
      */
     protected $company;
 
     /**
-     * The packet's jobs.
+     * The package's jobs.
      *
-     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="packet")
+     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package")
      */
     protected $jobs;
 
@@ -66,7 +66,7 @@ class CompanyPacket
     }
 
     /**
-     * Get the packet's id.
+     * Get the package's id.
      *
      * @return int
      */
@@ -76,7 +76,7 @@ class CompanyPacket
     }
 
     /**
-     * Get the packet's starting date.
+     * Get the package's starting date.
      *
      * @return date
      */
@@ -86,7 +86,7 @@ class CompanyPacket
     }
 
     /**
-     * Set the packet's starting date.
+     * Set the package's starting date.
      *
      * @param date $starts
      */
@@ -96,7 +96,7 @@ class CompanyPacket
     }
 
     /**
-     * Get the packet's expiration date.
+     * Get the package's expiration date.
      *
      * @return date
      */
@@ -106,7 +106,7 @@ class CompanyPacket
     }
 
     /**
-     * Set the packet's expiration date.
+     * Set the package's expiration date.
      *
      * @param date $expires
      */
@@ -116,7 +116,7 @@ class CompanyPacket
     }
 
     /**
-     * Get the packet's publish state.
+     * Get the package's publish state.
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ class CompanyPacket
     }
 
     /**
-     * Set the packet's publish state.
+     * Set the package's publish state.
      *
      * @param bool $published
      */
@@ -136,7 +136,7 @@ class CompanyPacket
     }
 
     /**
-     * Get the packet's company.
+     * Get the package's company.
      *
      * @return Company
      */
@@ -146,7 +146,7 @@ class CompanyPacket
     }
 
     /**
-     * Set the packet's company.
+     * Set the package's company.
      *
      * @param Company company
      *
@@ -157,9 +157,9 @@ class CompanyPacket
     }
 
     /**
-     * Get the jobs in the packet.
+     * Get the jobs in the package.
      * 
-     * @return array jobs in the packet
+     * @return array jobs in the package
      */
     public function getJobs()
     {
@@ -167,7 +167,7 @@ class CompanyPacket
     }
 
     /**
-     * Adds a job to the packet.
+     * Adds a job to the package.
      * 
      * @param Job $job job to be added
      */
@@ -177,7 +177,7 @@ class CompanyPacket
     }
 
     /**
-     * Removes a job from the packet.
+     * Removes a job from the package.
      * 
      * @param Job $job job to be removed
      */

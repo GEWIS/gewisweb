@@ -72,18 +72,18 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $hidden;
 
     /**
-     * The company's packets.
+     * The company's packages.
      * 
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPacket", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company")
      */
-    protected $packets;
+    protected $packages;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->packets = new ArrayCollection();
+        $this->packages = new ArrayCollection();
         $this->translations = new ArrayCollection();
     }
 
@@ -241,9 +241,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $visible = false;
 
-        // When any packet is not expired, the company should be shown to the user
-        foreach($this->getPackets() as $packet) {
-            if(!$packet->isExpired()){
+        // When any packages is not expired, the company should be shown to the user
+        foreach($this->getPackages() as $package) {
+            if(!$package->isExpired()){
                 $visible = true;
             }
         }
@@ -259,7 +259,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getHidden()
     {
         return $this->hidden;
-        // TODO check whether packet is not expired
+        // TODO check whether package is not expired
     }
 
     /**
@@ -273,51 +273,51 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Get the company's packets.
+     * Get the company's packages.
      *
-     * @return CompanyPacket
+     * @return CompanyPackages
      */
-    public function getPackets()
+    public function getPackages()
     {
-        return $this->packets;
+        return $this->packages;
     }
 
     /**
-     * Returns the number of jobs that is contained in all packets of this 
+     * Returns the number of jobs that is contained in all packages of this 
      * company.
      *
      */
     public function getNumberOfJobs()
     {
         $jobcount = 0;
-        if (is_null($this->getPackets())) {
+        if (is_null($this->getPackages())) {
             return $jobcount;
         }
-        foreach ($this->getPackets() as $packet) {
-            $jobcount +=  $packet->getJobs()->count();
+        foreach ($this->getPackages() as $package) {
+            $jobcount +=  $package->getJobs()->count();
         }
 
         return $jobcount;
     }
 
     /**
-     * Add a packet to the company.
+     * Add a package to the company.
      *
-     * @param CompanyPacket $packet
+     * @param CompanyPackages $package
      */
-    public function addPacket(CompanyPacket $packet)
+    public function addPackage(CompanyPackage $package)
     {
-        $this->packets->add($packet);
+        $this->packages->add($package);
     }
 
     /**
-     * Remove a packet from the company.
+     * Remove a package from the company.
      * 
-     * @param CompanyPacket $packet packet to remove
+     * @param CompanyPackage $package package to remove
      */
-    public function removePacket(CompanyPacket $packet)
+    public function removePackage(CompanyPackage $package)
     {
-        $this->packets->removeElement($packet);
+        $this->packages->removeElement($package);
     }
 
     /**

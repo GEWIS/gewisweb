@@ -232,6 +232,6 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
         $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
         $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
         $this->jobs = (isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
-        $this->packet = (isset($data['packet'])) ? $data['packet'] : $this->getPacket();
+        $this->package = (isset($data['package'])) ? $data['package'] : $this->getPackage();
     }
 }

@@ -26,7 +26,7 @@ foreach ($jobList as $job) {
 ?>
     <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()); ?>">
     <h2 class="job-name"><a href="<?= $job->getWebsite(); ?>"><?= $job->getName(); ?></a></h2>
-    <div class="job-company-name"><a href="/company/<?= $job->getPacket()->getCompany()->getSlugName();?>"><?= $job->getPacket()->getCompany()->getName(); ?></a></div>
+    <div class="job-company-name"><a href="/company/<?= $job->getPackage()->getCompany()->getSlugName();?>"><?= $job->getPackage()->getCompany()->getName(); ?></a></div>
     <div class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()); ?>"><?= $job->getPhone(); ?></a></div>
     <div class="job-website"><a href="<?= rawurlencode($job->getWebsite()); ?>">Visit website</a></div>
     <div class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()); ?>"><?= $job->getEmail(); ?></a></div>
