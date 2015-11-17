@@ -293,9 +293,15 @@ class Job
      */
     public function getArrayCopy()
     {
-        $array = get_object_vars($this);
 
+        $array['name'] = $this->getName();
+        $array['slugName'] = $this->getSlugName();
         $array['active'] = ($this->getActive()) ? '1' : '0';
+        $array['language'] = $this->getLanguage();
+        $array['website'] = $this->getWebsite();
+        $array['email'] = $this->getEmail();
+        $array['phone'] = $this->getPhone();
+        $array['description'] = $this->getDescription();
 
         return $array;
     }
@@ -322,13 +328,13 @@ class Job
      */
     public function exchangeArray($data)
     {
-        $this->name = $this->updateIfSet($data['name'],'');
-        $this->slugName = $this->updateIfSet($data['slugName'],'');
-        $this->language = $this->updateIfSet($data['language'],'');
-        $this->website = $this->updateIfSet($data['website'],'');
-        $this->email = $this->updateIfSet($data['email'],'');
-        $this->phone = $this->updateIfSet($data['phone'],'');
-        $this->description = $this->updateIfSet($data['description'],'');
-        $this->active = $data['active'] === 1;
+        $this->setName($this->updateIfSet($data['name'],''));
+        $this->setSlugName($this->updateIfSet($data['slugName'],''));
+        $this->setLanguage($this->updateIfSet($data['language'],''));
+        $this->setSetWebsite($this->updateIfSet($data['website'],''));
+        $this->setEmail($this->updateIfSet($data['email'],''));
+        $this->setPhone($this->updateIfSet($data['phone'],''));
+        $this->setDescription($this->updateIfSet($data['description'],''));
+        $this->setActive($data['active'] === 1);
     }
 }

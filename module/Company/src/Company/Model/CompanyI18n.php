@@ -205,33 +205,4 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
         $this->language = $language;
     }
 
-    // For zend2 forms
-    /**
-     * Returns an array that contains all instance variables of this objects.
-     *
-     */
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
-
-    /**
-     * Sets all variables of this object to the values in the array $data
-     *
-     * @param mixed $data
-     */
-    public function exchangeArray($data)
-    {
-        $this->name = (isset($data['name'])) ? $data['name'] : $this->getName();
-        $this->slugName = (isset($data['slugName'])) ? $data['slugName'] : $this->getSlugName();
-        $this->address = (isset($data['address'])) ? $data['address'] : $this->getAddress();
-        $this->website = (isset($data['website'])) ? $data['website'] : $this->getWebsite();
-        $this->slogan = (isset($data['slogan'])) ? $data['slogan'] : $this->getSlogan();
-        $this->email = (isset($data['email'])) ? $data['email'] : $this->getEmail();
-        $this->logo = (isset($data['logo'])) ? $data['logo'] : $this->getLogo();
-        $this->phone = (isset($data['phone'])) ? $data['phone'] : $this->getPhone();
-        $this->description = (isset($data['description'])) ? $data['description'] : $this->getDescription();
-        $this->jobs = (isset($data['jobs'])) ? $data['jobs'] : $this->getJobs();
-        $this->package = (isset($data['package'])) ? $data['package'] : $this->getPackage();
-    }
 }
