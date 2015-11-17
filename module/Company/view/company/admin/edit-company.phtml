@@ -13,11 +13,11 @@ if (is_null($company)){
                          ); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
-<h2> <?= $this->translate('Packets') ?> </h2>
-<table class="packetlist">
+<h2> <?= $this->translate('Packages') ?> </h2>
+<table class="packagelist">
         <tr>
             <th>
-                        <?= $this->translate('Packet'); ?>
+                        <?= $this->translate('Package'); ?>
             </th>
             <th>
                         <?= $this->translate('Active'); ?>
@@ -26,30 +26,30 @@ if (is_null($company)){
                         <?= $this->translate('Jobs'); ?>
             </th>
         </tr>
-    <?php if (!empty($company->getPackets())) { 
-        foreach($company->getPackets() as $packet) { ?>
+    <?php if (!empty($company->getPackages())) { 
+        foreach($company->getPackages() as $package) { ?>
             <tr>
                 <td>
-                    <a href="<?= $this->url("admin_company/editCompany/editPacket",
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage",
                                             array( 
                                                   "slugCompanyName" => $company->getSlugName(),
-                                                  "packetID" => $packet->getId(),
+                                                  "packageID" => $package->getId(),
                                                  )
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
-                    <a href="<?= $this->url("admin_company/editCompany/editPacket/deletePacket",
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage/deletePackage",
                                             array( 
                                                   "slugCompanyName" => $company->getSlugName(),
-                                                  "packetID" => $packet->getId(),
+                                                  "packageID" => $package->getId(),
                                                  )
                                            ); ?>"> <?= $this->translate('delete'); ?></a>
                     </a>
                 </td> 
                 <td>
-                    <?php echo $packet->isActive() ? 'true' : 'false'?>
+                    <?php echo $package->isActive() ? 'true' : 'false'?>
                 </td>
                 <td>
-                    <?= count($packet->getJobs()) ?>
+                    <?= count($package->getJobs()) ?>
                 <td>
                 </td>
             </tr>
@@ -60,8 +60,8 @@ if (is_null($company)){
 </table>
 <br/>
 <a href="<?= $this->url("admin_company/default", 
-                        array("action"=>"addPacket",
+                        array("action"=>"addPackage",
                               "slugCompanyName" => $company->getSlugName())
                        ); ?>">
-    <?= $this->translate('Add packet'); ?>
+    <?= $this->translate('Add package'); ?>
 </a>

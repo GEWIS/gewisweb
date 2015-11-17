@@ -77,11 +77,11 @@ class Job
     protected $language;
 
     /**
-     * The job's packet.
+     * The job's package.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPacket", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPackage", inversedBy="jobs")
      */
-    protected $packet;
+    protected $package;
 
     /**
      * Constructor.
@@ -153,7 +153,7 @@ class Job
 
     public function isActive()
     {
-        return $this->getActive() and $this->getPacket()->isActive();
+        return $this->getActive() and $this->getPackage()->isActive();
     }
 
     /**
@@ -267,23 +267,23 @@ class Job
     }
 
     /**
-     * Get the job's packet.
+     * Get the job's package.
      *
-     * @return CompanyPacket
+     * @return CompanyPackage
      */
-    public function getPacket()
+    public function getPackage()
     {
-        return $this->packet;
+        return $this->package;
     }
 
     /**
-     * Set the job's packet.
+     * Set the job's package.
      * 
-     * @param CompanyPacket $packet the job's packet
+     * @param CompanyPackage $package the job's package
      */
-    public function setPacket(CompanyPacket $packet)
+    public function setPackage(CompanyPackage $package)
     {
-        $this->packet = $packet;
+        $this->package = $package;
     }
 
     // For zend2 forms

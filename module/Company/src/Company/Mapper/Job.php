@@ -56,26 +56,26 @@ class Job
      *
      * @return An array of jobs that match the request.
      */
-    public function findJobsWithCompanySlugName($packetID)
+    public function findJobsWithCompanySlugName($packageID)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('p.id=:companyId')
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('p.id=:companyId')
             ->andWhere('j.active=1')->andWhere('c.hidden=0')->andWhere('p.expires > CURRENT_DATE()');
-        $qb->setParameter('companyId', $packetID);
+        $qb->setParameter('companyId', $packageID);
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * Inserts a job into a given packet
+     * Inserts a job into a given package
      *
-     * @param mixed $packet
+     * @param mixed $package
      */
-    public function insertIntoPacket($packet)
+    public function insertIntoPackage($package)
     {
         $job = new JobModel($this->em);
 
-        $job->setPacket($packet);
+        $job->setPackage($package);
         $this->em->persist($job);
 
         return $job;
@@ -91,7 +91,7 @@ class Job
     public function findJobWithSlugName($companySlugName, $jobSlugName)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.packet', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
         ->andWhere('c.slugName=:companySlugName');
         $qb->setParameter('jobId', $jobSlugName);
         $qb->setParameter('companySlugName', $companySlugName);

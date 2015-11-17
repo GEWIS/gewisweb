@@ -52,16 +52,16 @@ class Module
                         $sm->get('company_doctrine_em')
                     );
                 },
-                'company_mapper_packet' => function ($sm) {
-                    return new \Company\Mapper\Packet(
+                'company_mapper_package' => function ($sm) {
+                    return new \Company\Mapper\Package(
                         $sm->get('company_doctrine_em')
                     );
                 },
                 'company_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'company_admin_edit_packet_form' => function ($sm) {
-                    return new \Company\Form\EditPacket(
+                'company_admin_edit_package_form' => function ($sm) {
+                    return new \Company\Form\EditPackage(
                         $sm->get('translator')
                     );
                 },

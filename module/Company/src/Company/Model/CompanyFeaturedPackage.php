@@ -9,11 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 //use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * CompanyFeaturedPacket model.
+ * CompanyFeaturedPackage model.
  *
  * @ORM\Entity
  */
-class CompanyFeaturedPacket extends CompanyPacket //implements RoleInterface, ResourceInterface
+class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
 {
     /**
      * Constructor.

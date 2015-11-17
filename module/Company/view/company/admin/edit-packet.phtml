@@ -1,5 +1,5 @@
 <?php 
-$form = $packetEditForm;
+$form = $packageEditForm;
 ?>
 
 <?= $this->form()->openTag($form) ?>
@@ -30,7 +30,7 @@ $form = $packetEditForm;
 
 
 <h2> <?= $this->translate('Jobs') ?> </h2>
-<table class="packetlist">
+<table class="packagelist">
         <tr>
             <th>
                         <?= $this->translate('Job'); ?>
@@ -40,22 +40,22 @@ $form = $packetEditForm;
             </th>
         </tr>
 
-    <?php if (!empty($packet->getJobs())) { 
-        foreach($packet->getJobs() as $job) { ?>
+    <?php if (!empty($package->getJobs())) { 
+        foreach($package->getJobs() as $job) { ?>
             <tr>
                 <td>
-                    <a href="<?= $this->url("admin_company/editCompany/editPacket/editJob",
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
                                             array( 
                                                   "slugCompanyName" => $companyName,
-                                                  "packetID" => $packet->getId(),
+                                                  "packageID" => $package->getId(),
                                                   "jobName" => $job->getSlugName(),
                                                  )
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
-                    <a href="<?= $this->url("admin_company/editCompany/editPacket/deletePacket",
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage/deletePackage",
                                             array( 
                                                   "slugCompanyName" => $companyName,
-                                                  "packetID" => $packet->getId(),
+                                                  "packageID" => $package->getId(),
                                                  )
                                            ); ?>"> <?= $this->translate('delete'); ?></a>
                     </a>
@@ -70,7 +70,7 @@ $form = $packetEditForm;
     ?>
 </table>
 <br/>
-<a href="<?= $this->url("admin_company/editCompany/editPacket/addJob", 
-    array( "slugCompanyName" => $companyName, 'packetID' => $packet->getId())); ?>">
+<a href="<?= $this->url("admin_company/editCompany/editPackage/addJob", 
+    array( "slugCompanyName" => $companyName, 'packageID' => $package->getId())); ?>">
     <?= $this->translate('Add job'); ?>
 </a>

@@ -131,15 +131,15 @@ return array(
                         'may_terminate' => true,
 
                         'child_routes' => array(
-                            'editPacket' => array(
+                            'editPackage' => array(
                                 'type' => 'segment',
                                 'options' => array(
-                                    'route' => '/packet/:packetID',
+                                    'route' => '/package/:packageID',
                                     'defaults' => array(
-                                        'action' => 'editPacket',
+                                        'action' => 'editPackage',
                                     ),
                                     'constraints' => array(
-                                        'packetID' => '[a-zA-Z0-9_-]*',
+                                        'packageID' => '[a-zA-Z0-9_-]*',
                                     ),
                                 ),
                                 'may_terminate' => true,
@@ -154,12 +154,12 @@ return array(
                                         ),
                                         'may_terminate' => true,
                                     ),
-                                    'deletePacket' => array(
+                                    'deletePackage' => array(
                                         'type' => 'segment',
                                         'options' => array(
                                             'route' => '/delete',
                                             'defaults' => array(
-                                                'action' => 'deletePacket',
+                                                'action' => 'deletePackage',
                                             ),
                                         ),
                                         'may_terminate' => true,
@@ -179,12 +179,12 @@ return array(
                                     ),
                                 ),
                             ),
-                            'addPacket' => array(
+                            'addPackage' => array(
                                 'type' => 'segment',
                                 'options' => array(
-                                    'route' => '/addPacket',
+                                    'route' => '/addPackage',
                                     'defaults' => array(
-                                        'action' => 'addPacket',
+                                        'action' => 'addPackage',
                                     ),
                                     'may_terminate' => true,
                                 ),

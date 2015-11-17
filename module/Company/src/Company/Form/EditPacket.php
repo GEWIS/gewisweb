@@ -6,7 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
 
-class EditPacket extends Form
+class EditPackage extends Form
 {
     public function __construct(Translator $translate)
     {

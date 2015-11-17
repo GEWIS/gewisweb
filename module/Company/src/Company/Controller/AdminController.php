@@ -77,15 +77,15 @@ class AdminController extends AbstractActionController
 
     /**
      *
-     * Action that allows adding a packet
+     * Action that allows adding a package
      *
      */
 
-    public function addPacketAction()
+    public function addPackageAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $packetForm = $companyService->getPacketForm();
+        $packageForm = $companyService->getPackageForm();
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');
@@ -95,7 +95,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertPacketForCompanySlugNameWithData($companyName,$request->getPost())){
+            if ($companyService->insertPackageForCompanySlugNameWithData($companyName,$request->getPost())){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
@@ -110,15 +110,15 @@ class AdminController extends AbstractActionController
         // The form was not valid, or we did not get data back
 
         // Initialize the form
-        $packetForm->setAttribute(
+        $packageForm->setAttribute(
             'action',
-            $this->url()->fromRoute('admin_company/editCompany/addPacket',
+            $this->url()->fromRoute('admin_company/editCompany/addPackage',
             array('slugCompanyName' => $companyName))
         );
 
         // Initialize the view
         $vm = new ViewModel(array(
-            'companyEditForm' => $packetForm,
+            'companyEditForm' => $packageForm,
         ));
 
         return $vm;
@@ -137,20 +137,20 @@ class AdminController extends AbstractActionController
 
         // Get parameters
         $companyName = $this->params('slugCompanyName');
-        $packetId = $this->params('packetID');
+        $packageId = $this->params('packageID');
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertJobIntoPacketIDWithData($packetId, $request->getPost())) {
+            if ($companyService->insertJobIntoPackageIDWithData($packageId, $request->getPost())) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/editCompany/editPacket/editJob',
+                    'admin_company/editCompany/editPackage/editJob',
                     array(
                         'slugCompanyName' => $companyName,
-                        'packetID' => $packetId,
+                        'packageID' => $packageId,
                         'jobName' => $job->getName(), 
                     )
                 );
@@ -163,10 +163,10 @@ class AdminController extends AbstractActionController
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/editPacket/addJob',
+                'admin_company/editCompany/editPackage/addJob',
                 array(
                     'slugCompanyName' => $companyName, 
-                    'packetID' => $packetId
+                    'packageID' => $packageId
                 )
             )
         );
@@ -235,38 +235,38 @@ class AdminController extends AbstractActionController
 
     /**
      *
-     * Action that displays a form for editing a packet
+     * Action that displays a form for editing a package
      *
      */
-    public function editPacketAction()
+    public function editPackageAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $packetForm = $companyService->getPacketForm();
+        $packageForm = $companyService->getPackageForm();
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
-        $packetID = $this->params('packetID');
+        $packageID = $this->params('packageID');
 
-        // Get the specified packet (Assuming it is found)
-        $packet = $companyService->getEditablePacket($packetID);
+        // Get the specified package (Assuming it is found)
+        $package = $companyService->getEditablePackage($packageID);
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->savePacketWithData($packet,$request->getPost());
+            $companyService->savePackageWithData($package,$request->getPost());
             // TODO: possibly redirect to company
         }
-        // TODO: display error page when packet is not found
+        // TODO: display error page when package is not found
 
         // Initialize form
-        $packetForm->bind($packet);
-        $packetForm->setAttribute(
+        $packageForm->bind($package);
+        $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/editPacket',
+                'admin_company/editCompany/editPackage',
                 array(
-                    'packetID' => $packetID, 
+                    'packageID' => $packageID, 
                     'slugCompanyName' => $companyName, 
                 )
             )
@@ -274,9 +274,9 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel(array(
-            'packet' => $packet,
+            'package' => $package,
             'companyName' => $companyName,
-            'packetEditForm' => $packetForm,
+            'packageEditForm' => $packageForm,
         ));
 
         return $vm;
@@ -294,7 +294,7 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobForm();
         
         // Get the parameters
-        $packetID = $this->params('packetID');
+        $packageID = $this->params('packageID');
         $companyName = $this->params('slugCompanyName');
         $jobName = $this->params('jobName');
 
@@ -315,7 +315,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $companyService->saveJobWithData($job, $request->getPost());
-            // TODO: possibly redirect to packet
+            // TODO: possibly redirect to package
         }
 
         // Initialize the form
@@ -323,11 +323,11 @@ class AdminController extends AbstractActionController
         $jobForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/editPacket/editJob',
+                'admin_company/editCompany/editPackage/editJob',
                 array(
                     'slugCompanyName' => $companyName, 
                     'jobName' => $jobName,
-                    'packetID' => $packetID,
+                    'packageID' => $packageID,
                 )
             )
         );
@@ -393,23 +393,23 @@ class AdminController extends AbstractActionController
 
     /**
      *
-     * Action that first asks for confirmation, and when given, deletes the Packet
+     * Action that first asks for confirmation, and when given, deletes the Package
      *
      */
-    public function deletePacketAction()
+    public function deletePackageAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
         // Get parameters
-        $packetID = $this->params('packetID');
+        $packageID = $this->params('packageID');
         $companyName = $this->params('slugCompanyName');
 
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($this->checkConfirmation($request)) {
-                $companyService->deletePacket($packetID);
+                $companyService->deletePackage($packageID);
             }
             return $this->redirect()->toRoute(
                 'admin_company/editCompany', 
@@ -421,7 +421,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm =  new ViewModel(array(
-            'packet' => $companyService->getEditablePacket($packetID),
+            'package' => $companyService->getEditablePackage($packageID),
             'slugName' => $companyName,
             'translator' => $companyService->getTranslator(),
         ));

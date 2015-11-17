@@ -2,16 +2,16 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyPacket as PacketModel;
+use Company\Model\CompanyPackage as PackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Mappers for packet.
+ * Mappers for package.
  *
- * NOTE: Packets will be modified externally by a script. Modifycations will be
+ * NOTE: Packages will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Packet
+class Package
 {
     /**
      * Doctrine entity manager.
@@ -35,15 +35,15 @@ class Packet
         $this->em->flush();
     }
 
-    public function delete($packetID)
+    public function delete($packageID)
     {
-        $packet = $this->findEditablePacket($packetID);
-        $this->findEditablePacket($packetID);
-        $this->em->remove($packet);
+        $package = $this->findEditablePackage($packageID);
+        $this->findEditablePackage($packageID);
+        $this->em->remove($package);
         $this->em->flush();
     }
     /**
-     * Find all Packets.
+     * Find all Packages.
      *
      * @return array
      */
@@ -52,28 +52,28 @@ class Packet
         return $this->getRepository()->findAll();
     }
 
-    public function findEditablePacket($packetID)
+    public function findEditablePackage($packageID)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.id=:packetID');
-        $qb->setParameter('packetID', $packetID);
+        $qb->select('p')->where('p.id=:packageID');
+        $qb->setParameter('packageID', $packageID);
         $qb->setMaxResults(1);
-        $packets = $qb->getQuery()->getResult();
-        if (count($packets) != 1) {
+        $packages = $qb->getQuery()->getResult();
+        if (count($packages) != 1) {
             return;
         }
 
-        return $packets[0];
+        return $packages[0];
     }
-    public function insertPacketIntoCompany($company)
+    public function insertPackageIntoCompany($company)
     {
-        $packet = new PacketModel($this->em);
+        $package = new PackageModel($this->em);
 
-        $packet->setCompany($company);
-        $this->em->persist($packet);
+        $package->setCompany($company);
+        $this->em->persist($package);
 
-        return $packet;
+        return $package;
     }
 
     /**
@@ -83,6 +83,6 @@ class Packet
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\CompanyPacket');
+        return $this->em->getRepository('Company\Model\CompanyPackage');
     }
 }

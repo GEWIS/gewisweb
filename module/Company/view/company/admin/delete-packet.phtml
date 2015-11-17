@@ -1,11 +1,11 @@
 <?php $locale = $this->translator->getLocale(); ?>
 <h1> <?=$this->translate("Delete");?> </h1>
-<?=$this->translate("Do you really want to delete this packet? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this packet to just hide it.");?>
-<?php echo $packet->getId();
+<?=$this->translate("Do you really want to delete this package? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this package to just hide it.");?>
+<?php echo $package->getId();
     ?>
 
 
- <form action="<?= $this->url('admin_company/editCompany/editPacket/deletePacket', array('slugCompanyName' => $slugName, 'packetID' => $packet->getId()))?>" method="post">
+ <form action="<?= $this->url('admin_company/editCompany/editPackage/deletePackage', array('slugCompanyName' => $slugName, 'packageID' => $package->getId()))?>" method="post">
  <div>
      <input type="submit" name="del" value="Yes" />
      <input type="submit" name="del" value="No" />
