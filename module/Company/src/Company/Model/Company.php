@@ -338,28 +338,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->languageNeutralId = $language;
     }
-    /**
-     * Returns an array copy with varName=> var for all variables except the 
-     * translation. 
-     *
-     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
-     *
-     */
-    public function getArrayCopy()
-    {
-     
-        $arraycopy = get_object_vars($this);
-        $arraycopy['languages'] = array();
-        foreach ($this->getTranslations() as $translation) {
-            $arraycopy[$translation->getLanguage().'_'.'slogan'] = $translation->getSlogan();
-            $arraycopy[$translation->getLanguage().'_'.'website'] = $translation->getWebsite();
-            $arraycopy[$translation->getLanguage().'_'.'description'] = $translation->getDescription();
-            $arraycopy[$translation->getLanguage().'_'.'logo'] = $translation->getLogo();
-            $arraycopy['languages'][] = $translation->getLanguage();
-        }
-
-        return $arraycopy;
-    }
 
     
     /**
@@ -441,11 +419,39 @@ class Company // implements ArrayHydrator (for zend2 form)
                 $translation->remove();
             }
         }
-        $this->setName($this->updateIfSet($this->$language.'name',     ''));
-        $this->setSlugName($this->updateIfSet($this->$language.'slugName', ''));
-        $this->setAddress($this->updateIfSet($this->$language.'address',  ''));
-        $this->setEmail($this->updateIfSet($this->$language.'email',    ''));
-        $this->setPhone($this->updateIfSet($this->$language.'phone',    ''));
-        $this->translations = $newTranslations;
+        $this->setName($this->updateIfSet($this->getLanguage().'name',     ''));
+        $this->setSlugName($this->updateIfSet($this->getLanguage().'slugName', ''));
+        $this->setAddress($this->updateIfSet($this->getLanguage().'address',  ''));
+        $this->setEmail($this->updateIfSet($this->getLanguage().'email',    ''));
+        $this->setPhone($this->updateIfSet($this->getLanguage().'phone',    ''));
+        $this->setTranslations($newTranslations);
     }
 }
+    /**
+     * Returns an array copy with varName=> var for all variables except the 
+     * translation. 
+     *
+     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     */
+    public function getArrayCopy()
+    {
+
+        $arraycopy = array();
+        $arraycopy['name'] = $this->getName();
+        $arraycopy['slugName'] = $this->getSlugName();
+        $arraycopy['email'] = $this->getEmail();
+        $arraycopy['phone'] = $this->getPhone();
+
+        // Languages
+        $arraycopy['languages'] = array();
+        foreach ($this->getTranslations() as $translation) {
+            $arraycopy[$translation->getLanguage().'_'.'slogan'] = $translation->getSlogan();
+            $arraycopy[$translation->getLanguage().'_'.'website'] = $translation->getWebsite();
+            $arraycopy[$translation->getLanguage().'_'.'description'] = $translation->getDescription();
+            $arraycopy[$translation->getLanguage().'_'.'logo'] = $translation->getLogo();
+            $arraycopy['languages'][] = $translation->getLanguage();
+        }
+
+        return $arraycopy;
+    }
