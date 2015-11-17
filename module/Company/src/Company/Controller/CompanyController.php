@@ -19,23 +19,20 @@ class CompanyController extends AbstractActionController
         if ($companyName != null) {
             $companies = $companyService->getCompaniesWithSlugName($companyName);
             if (count($companies) != 0) {
-                $vm = new ViewModel([
+                return new ViewModel([
                     'company' => $companies[0],
                     'translator' => $companyService->getTranslator(),
                 ]);
-            } else {
-                $vm = new ViewModel([
-                    'translator' => $companyService->getTranslator(),
-                ]);
             }
-        } else {
-            $vm = new ViewModel([
-                'companyList' => $companyService->getCompanyList(),
+            return new ViewModel(array(
                 'translator' => $companyService->getTranslator(),
             ]);
         }
+        return new ViewModel(array(
+            'companyList' => $companyService->getCompanyList(),
+            'translator' => $companyService->getTranslator(),
+        ));
 
-        return $vm;
     }
     /**
      *
@@ -66,19 +63,15 @@ class CompanyController extends AbstractActionController
         if ($jobName != null) {
             $jobs = $companyService->getJobsWithSlugName($companyName, $jobName);
             if (count($jobs) != 0) {
-                $vm = new ViewModel([
+                return new ViewModel([
                     'job' => $jobs[0],
                 ]);
-            } else {
-                $vm = new ViewModel();
-            }
-        } else {
-            $vm = new ViewModel([
-                'activeJobList' => $companyService->getActiveJobList(),
-            ]);
-        }
-
-        return $vm;
+            } 
+            return new ViewModel();
+        } 
+        $vm = new ViewModel([
+            'activeJobList' => $companyService->getActiveJobList(),
+        ]);
     }
 
     public function adminAction()
@@ -86,8 +79,8 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
 
         $vm = new ViewModel([
-                'companyList' => $companyService->getCompanyList(),
-            ]);
+            'companyList' => $companyService->getCompanyList(),
+        ]);
 
         return $vm;
     }
