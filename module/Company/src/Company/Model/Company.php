@@ -363,7 +363,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     
     /**
-     * If this object contains an translation for a given locale, it is returned, else null is returned
+     * If this object contains an translation for a given locale, it is returned, otherwise null is returned
      *
      */
     public function getTranslationFromLocale($locale)

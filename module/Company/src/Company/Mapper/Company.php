@@ -99,7 +99,7 @@ class Company
      * Find the company with the given slugName.
      *
      * @param slugName The 'username' of the company to get.
-     * @param asObject if yes, returns the company as an object in an array, else returns the company as an array of an array
+     * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
      * @return An array of companies with the given slugName.
      */
@@ -112,9 +112,8 @@ class Company
         $qb->setMaxResults(1);
         if ($asObject) {
             return $qb->getQuery()->getResult();
-        } else {
-            return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
         }
+        return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
     }
 
     /**

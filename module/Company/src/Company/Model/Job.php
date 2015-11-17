@@ -295,17 +295,13 @@ class Job
     {
         $array = get_object_vars($this);
 
-        if ($this->getActive()) {
-            $array['active'] = '1';
-        } else {
-            $array['active'] = '0';
-        }
+        $array['active'] = ($this->getActive()) ? '1' : '0';
 
         return $array;
     }
     
     /**
-     * Returns the first argument if it is nonnul, else, returns the second 
+     * Returns the first argument if it is nonnul, otherwise, returns the second 
      * argument
      *
      * @param mixed $object
@@ -333,11 +329,6 @@ class Job
         $this->email = $this->updateIfSet($data['email'],'');
         $this->phone = $this->updateIfSet($data['phone'],'');
         $this->description = $this->updateIfSet($data['description'],'');
-        $lActive = $data['active'];
-        if ($lActive === 1) {
-            $this->active = true;
-        } else {
-            $this->active = false;
-        }
+        $this->active = $data['active'] === 1;
     }
 }
