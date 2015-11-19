@@ -32,6 +32,28 @@ class Page extends AbstractAclService
     }
 
     /**
+     * Returns the parent pages of a page if those exist.
+     *
+     * @param \Frontpage\Model\Page $page
+     * @return array
+     */
+    public function getPageParents($page)
+    {
+        $pageMapper = $this->getPageMapper();
+        $parents = array();
+        if(!is_null($page)) {
+            if(!is_null($page->getSubCategory())) {
+                $parents[] = $pageMapper->findPage($page->getCategory());
+                if(!is_null($page->getName())) {
+                    $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
+                }
+            }
+        }
+
+        return $parents;
+    }
+
+    /**
      * Returns a single page by its id
      *
      * @param integer $pageId
