@@ -48,23 +48,6 @@ class Job
     {
         $this->em->flush();
     }
-    /**
-     * Find all jobs with the given job 'username' from the company with the given slug name.
-     *
-     * @param companySlugName The slugname of the containing company.
-     * @param jobSlugName The slugName of the requested job.
-     *
-     * @return An array of jobs that match the request.
-     */
-    public function findJobsWithCompanySlugName($packageID)
-    {
-        $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('p.id=:companyId')
-            ->andWhere('j.active=1')->andWhere('c.hidden=0')->andWhere('p.expires > CURRENT_DATE()');
-        $qb->setParameter('companyId', $packageID);
-
-        return $qb->getQuery()->getResult();
-    }
 
     /**
      * Inserts a job into a given package
@@ -88,7 +71,7 @@ class Job
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function findJobWithSlugName($companySlugName, $jobSlugName)
+    public function findJobBySlugName($companySlugName, $jobSlugName)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')

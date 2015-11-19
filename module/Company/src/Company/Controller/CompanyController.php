@@ -17,7 +17,7 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         if ($companyName != null) {
-            $companies = $companyService->getCompaniesWithSlugName($companyName);
+            $companies = $companyService->getCompaniesBySlugName($companyName);
             if (count($companies) != 0) {
                 return new ViewModel([
                     'company' => $companies[0],
@@ -34,6 +34,7 @@ class CompanyController extends AbstractActionController
         ));
 
     }
+
     /**
      *
      * Action that displays a list of all jobs (facaturebank)
@@ -61,7 +62,7 @@ class CompanyController extends AbstractActionController
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
         if ($jobName != null) {
-            $jobs = $companyService->getJobsWithSlugName($companyName, $jobName);
+            $jobs = $companyService->getJobsBySlugName($companyName, $jobName);
             if (count($jobs) != 0) {
                 return new ViewModel([
                     'job' => $jobs[0],
@@ -74,17 +75,11 @@ class CompanyController extends AbstractActionController
         ]);
     }
 
-    public function adminAction()
-    {
-        $companyService = $this->getCompanyService();
-
-        $vm = new ViewModel([
-            'companyList' => $companyService->getCompanyList(),
-        ]);
-
-        return $vm;
-    }
-
+    /**
+     * Method that returns the service object for the company module.
+     *
+     *
+     */
     protected function getCompanyService()
     {
         return $this->getServiceLocator()->get('company_service_company');

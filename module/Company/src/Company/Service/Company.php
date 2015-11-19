@@ -46,7 +46,7 @@ class Company extends AbstractACLService
      * @param mixed $package
      * @param mixed $data
      */
-    public function savePackageWithData($package,$data)
+    public function savePackageByData($package,$data)
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
@@ -62,7 +62,7 @@ class Company extends AbstractACLService
      * @param mixed $company
      * @param mixed $data
      */
-    public function saveCompanyWithData($company,$data)
+    public function saveCompanyByData($company,$data)
     {
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
@@ -78,7 +78,7 @@ class Company extends AbstractACLService
      * @param mixed $job
      * @param mixed $data
      */
-    public function saveJobWithData($job,$data)
+    public function saveJobByData($job,$data)
     {
         $jobForm = $this->getJobForm();
         $jobForm->setData($data);
@@ -121,7 +121,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $data
      */
-    public function insertCompanyWithData($data)
+    public function insertCompanyByData($data)
     {
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
@@ -133,6 +133,7 @@ class Company extends AbstractACLService
         }
         return false;
     }
+
     /**
      * Inserts the company and initializes translations for the given languages
      *
@@ -155,7 +156,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameWithData($companySlugName,$data)
+    public function insertPackageForCompanySlugNameByData($companySlugName,$data)
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
@@ -181,11 +182,12 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a package')
             );
         }
-        $companies = $this->getEditableCompaniesWithSlugName($companySlugName);
+        $companies = $this->getEditableCompaniesBySlugName($companySlugName);
         var_dump($companySlugName);
         $company = $companies[0];
         return $this->getPackageMapper()->insertPackageIntoCompany($company);
     }
+
     /**
      * Checks if the data is valid, and if it is, assigns a job, and bind it to 
      * the given package
@@ -193,7 +195,7 @@ class Company extends AbstractACLService
      * @param mixed $packageID
      * @param mixed $data
      */
-    public function insertJobIntoPackageIDWithData($packageID,$data)
+    public function insertJobIntoPackageIDByData($packageID,$data)
     {
         $jobForm = $this->getJobForm();
         $jobForm->setData($data);
@@ -205,6 +207,7 @@ class Company extends AbstractACLService
         }
         return false;
     }
+
     /**
      * Inserts a job, and binds it to the given package
      *
@@ -239,12 +242,13 @@ class Company extends AbstractACLService
         } 
         return $this->getPackageMapper()->delete($packageID);
     }
+
     /**
      * Deletes the company identified with $slug
      *
      * @param mixed $slug
      */
-    public function deleteCompaniesWithSlug($slug)
+    public function deleteCompaniesBySlug($slug)
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
@@ -252,20 +256,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        return $this->getCompanyMapper()->deleteWithSlug($slug);
-    }
-
-    /**
-     * Returns all jobs that are owned by a company identified with 
-     * $companySlugname
-     *
-     * @param mixed $companySlugName
-     */
-    public function getJobsWithCompanySlugName($companySlugName)
-    {
-        $return = $this->getJobMapper()->findJobsWithCompanySlugName($companySlugName);
-
-        return $return;
+        return $this->getCompanyMapper()->deleteBySlug($slug);
     }
 
     /**
@@ -273,9 +264,9 @@ class Company extends AbstractACLService
      *
      * @param mixed $slugName
      */
-    public function getCompaniesWithSlugName($slugName)
+    public function getCompaniesBySlugName($slugName)
     {
-        return $this->getCompanyMapper()->findCompaniesWithSlugName($slugName);
+        return $this->getCompanyMapper()->findCompaniesBySlugName($slugName);
     }
 
     /**
@@ -301,7 +292,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $slugName
      */
-    public function getEditableCompaniesWithSlugName($slugName)
+    public function getEditableCompaniesBySlugName($slugName)
     {
         if ($this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -309,7 +300,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit companies')
             );
         }
-        return $this->getCompanyMapper()->findEditableCompaniesWithSlugName($slugName, true);
+        return $this->getCompanyMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
     /**
@@ -319,7 +310,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getEditableJobsWithSlugName($companySlugName, $jobSlugName)
+    public function getEditableJobsBySlugName($companySlugName, $jobSlugName)
     {
         if ($this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -327,7 +318,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
+        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
     }
 
     /**
@@ -337,9 +328,9 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getJobsWithSlugName($companySlugName, $jobSlugName)
+    public function getJobsBySlugName($companySlugName, $jobSlugName)
     {
-        return $this->getJobMapper()->findJobWithSlugName($companySlugName, $jobSlugName);
+        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
     }
 
     /**
@@ -422,6 +413,7 @@ class Company extends AbstractACLService
     {
         return $this->sm->get('company_mapper_job');
     }
+
     /**
      * Get the Acl.
      *

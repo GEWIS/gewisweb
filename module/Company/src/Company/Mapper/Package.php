@@ -30,11 +30,19 @@ class Package
         $this->em = $em;
     }
 
+    /**
+     * Saves all packages
+     *
+     */
     public function save()
     {
         $this->em->flush();
     }
 
+    /**
+     * Deletes the given package
+     *
+     */
     public function delete($packageID)
     {
         $package = $this->findEditablePackage($packageID);
@@ -42,6 +50,7 @@ class Package
         $this->em->remove($package);
         $this->em->flush();
     }
+
     /**
      * Find all Packages.
      *
@@ -52,6 +61,11 @@ class Package
         return $this->getRepository()->findAll();
     }
 
+    /**
+     * Find all packages, and returns an editable version of them.
+     *
+     * @return array
+     */
     public function findEditablePackage($packageID)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
@@ -66,6 +80,11 @@ class Package
 
         return $packages[0];
     }
+
+    /**
+     * Inserts a new package into the given company
+     *
+     */
     public function insertPackageIntoCompany($company)
     {
         $package = new PackageModel($this->em);
