@@ -3,7 +3,7 @@ GEWIS Website
 
 Website for Study association GEWIS.
 
-[![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)  [![Code Climate](https://codeclimate.com/repos/563b56b76956804665005277/badges/f788c1e05db7e7b9c6a3/gpa.svg)](https://codeclimate.com/repos/563b56b76956804665005277/feed)
+[![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)  [![Code Climate](https://codeclimate.com/github/GEWIS/gewisweb/badges/gpa.svg)](https://codeclimate.com/github/GEWIS/gewisweb)
 
 Installation
 ============
