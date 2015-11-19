@@ -44,6 +44,15 @@ return array(
     ),
 
     /**
+     * Exam and Summary temporary upload directory configration.
+     */
+    'education_temp' => array(
+        'upload_dir' => 'public/data/education_temp',
+        'public_dir' => 'data/education_temp',
+        'dir_mode' => 0777, // rwx by default
+    ),
+
+    /**
      * Dreamspark configuration.
      */
     'dreamspark' => array(
