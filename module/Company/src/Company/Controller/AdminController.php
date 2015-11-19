@@ -27,11 +27,10 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that allows adding a company
      *
+     *
      */
-
     public function addCompanyAction()
     {
         // Get useful stuff
@@ -42,7 +41,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            if ($companyService->insertCompanyWithData($request->getPost())) {
+            if ($companyService->insertCompanyByData($request->getPost())) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default', 
@@ -76,11 +75,10 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that allows adding a package
      *
+     *
      */
-
     public function addPackageAction()
     {
         // Get useful stuff
@@ -95,7 +93,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertPackageForCompanySlugNameWithData($companyName,$request->getPost())){
+            if ($companyService->insertPackageForCompanySlugNameByData($companyName,$request->getPost())){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
@@ -125,8 +123,8 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that allows adding a job
+     *
      *
      */
     public function addJobAction()
@@ -144,7 +142,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertJobIntoPackageIDWithData($packageId, $request->getPost())) {
+            if ($companyService->insertJobIntoPackageIDByData($packageId, $request->getPost())) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage/editJob',
@@ -180,8 +178,8 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that displays a form for editing a company
+     *
      *
      */
     public function editCompanyAction()
@@ -194,7 +192,7 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
 
         // Get the specified company
-        $companyList = $companyService->getEditableCompaniesWithSlugName($companyName);
+        $companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
         // If the company is not found, throw 404
         if (empty($companyList)) {
@@ -208,7 +206,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->saveCompanyWithData($company, $request->getPost());
+            $companyService->saveCompanyByData($company, $request->getPost());
         }
 
         // Initialize form
@@ -224,7 +222,6 @@ class AdminController extends AbstractActionController
                 )
             )
         );
-        $jobs = $companyService->getJobsWithCompanySlugName($companyName);
         $vm = new ViewModel(array(
             'company' => $company,
             'companyEditForm' => $companyForm,
@@ -234,13 +231,13 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that displays a form for editing a package
+     *
      *
      */
     public function editPackageAction()
     {
-        // Get useful stuff
+By    // Get useful stuff
         $companyService = $this->getCompanyService();
         $packageForm = $companyService->getPackageForm();
 
@@ -254,7 +251,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->savePackageWithData($package,$request->getPost());
+            $companyService->savePackageByData($package,$request->getPost());
             // TODO: possibly redirect to company
         }
         // TODO: display error page when package is not found
@@ -283,8 +280,8 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that displays a form for editing a job
+     *
      *
      */
     public function editJobAction()
@@ -300,7 +297,7 @@ class AdminController extends AbstractActionController
 
 
         // Find the specified jobs
-        $jobList = $companyService->getEditableJobsWithSlugName($companyName, $jobName);
+        $jobList = $companyService->getEditableJobsBySlugName($companyName, $jobName);
 
         // Check the job is found. If not, throw 404
         if (empty($jobList)) {
@@ -314,7 +311,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->saveJobWithData($job, $request->getPost());
+            $companyService->saveJobByData($job, $request->getPost());
             // TODO: possibly redirect to package
         }
 
@@ -341,8 +338,8 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Extracted part of delete actions that checks if confirmation is given
+     *
      *
      */
 
@@ -357,8 +354,8 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
      * Action that first asks for confirmation, and when given, deletes the company
+     *
      *
      */
     public function deleteCompanyAction()
@@ -375,7 +372,7 @@ class AdminController extends AbstractActionController
 
             // Check for confirmation
             if ($this->checkConfirmation($request)) {
-                $companyService->deleteCompaniesWithSlug($slugName);
+                $companyService->deleteCompaniesBySlug($slugName);
             }
 
             return $this->redirect()->toRoute('admin_company');
@@ -385,15 +382,15 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel(array(
-            'companies' => $companyService->getEditableCompaniesWithSlugName($slugName),
+            'companies' => $companyService->getEditableCompaniesBySlugName($slugName),
             'translator' => $companyService->getTranslator(),
         ));
         return $vm;
     }
 
     /**
-     *
      * Action that first asks for confirmation, and when given, deletes the Package
+     *
      *
      */
     public function deletePackageAction()
@@ -429,6 +426,11 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     * Method that returns the service object for the company module.
+     *
+     *
+     */
     protected function getCompanyService()
     {
         return $this->getServiceLocator()->get('company_service_company');

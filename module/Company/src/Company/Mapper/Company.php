@@ -31,6 +31,7 @@ class Company
     {
         $this->em = $em;
     }
+
     /**
      * Saves all unsaved entities, that are marked persistent
      *
@@ -45,9 +46,9 @@ class Company
      *
      * @param mixed $slug
      */
-    public function deleteWithSlug($slug)
+    public function deleteBySlug($slug)
     {
-        foreach ($this->findEditableCompaniesWithSlugName($slug, true) as $company) {
+        foreach ($this->findEditableCompaniesBySlugName($slug, true) as $company) {
             foreach ($company->getTranslations() as $translation) {
                 $this->em->remove($translation);
             }
@@ -56,6 +57,7 @@ class Company
         }
         $this->em->flush();
     }
+
     /**
      * Inserts a company into the datebase, and initializes the given 
      * translations as empty translations for them
@@ -66,7 +68,7 @@ class Company
     {
         $company = new CompanyModel($this->em);
 
-        $companiesWithSameSlugName = $this->findEditableCompaniesWithSlugName($company->getSlugName(), false);
+        $companiesBySameSlugName = $this->findEditableCompaniesBySlugName($company->getSlugName(), false);
 
         // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
 
@@ -85,6 +87,7 @@ class Company
 
         return $company;
     }
+
     /**
      * Find all companies.
      *
@@ -103,7 +106,7 @@ class Company
      *
      * @return An array of companies with the given slugName.
      */
-    public function findEditableCompaniesWithSlugName($slugName, $asObject)
+    public function findEditableCompaniesBySlugName($slugName, $asObject)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
@@ -121,9 +124,9 @@ class Company
      *
      * @param mixed $slugName
      */
-    public function findCompaniesWithSlugName($slugName)
+    public function findCompaniesBySlugName($slugName)
     {
-        $result = $this->findEditableCompaniesWithSlugName($slugName, true);
+        $result = $this->findEditableCompaniesBySlugName($slugName, true);
         foreach ($result as $company) {
             $this->em->detach($company);
         }
