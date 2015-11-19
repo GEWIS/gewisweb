@@ -398,6 +398,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $translation;
         }
     }
+
     /**
      * Updates this object with values in the form of getArrayCopy()
      *
@@ -426,7 +427,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setPhone($this->updateIfSet($this->getLanguage().'phone',    ''));
         $this->setTranslations($newTranslations);
     }
-}
+
     /**
      * Returns an array copy with varName=> var for all variables except the 
      * translation. 
@@ -455,3 +456,4 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         return $arraycopy;
     }
+}
