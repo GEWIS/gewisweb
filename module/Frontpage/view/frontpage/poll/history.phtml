@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<?= $this->paginationControl(
+    $paginator,
+    // the scrolling style
+    'elastic',
+    'paginator/default',
+    array(
+        'path' => $this->url('poll/history')
+    )
+)
+?>
+<?php if (!empty($paginator)): ?>
+<ul>
+    <?php foreach ($paginator as $poll): ?>
+        <?= $this->partial('partial/poll.phtml', array(
+            'poll' => $poll,
+            'lang' => $lang,
+            'canVote' => false,
+            'userVote' => null
+        )) ?>
+    <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+</body>
+</html>

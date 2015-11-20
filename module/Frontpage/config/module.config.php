@@ -111,9 +111,12 @@ return [
                 'may_terminate' => true,
                 'child_routes' => array(
                     'history' => array(
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route' => '/history',
+                            'route' => '/history[/:page]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                            ),
                             'defaults' => array(
                                 'action' => 'history',
                             ),

@@ -1,3 +1,18 @@
+<?php
+$totalVotes = 0;
+foreach ($poll->getOptions() as $option) {
+    $totalVotes += $option->getVotesCount();
+}
+
+$percentages = array();
+foreach ($poll->getOptions() as $option) {
+    if ($totalVotes > 0) {
+        $percentages[$option->getId()] = round($option->getVotesCount() / $totalVotes * 100);
+    } else {
+        $percentages[$option->getId()] = 0;
+    }
+}
+?>
 <h4><?= ($this->lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion() ?></h4>
 <form action="<?= $this->url('poll/vote', array('poll_id' => $poll->getId())) ?>" method="post">
 <?php foreach ($this->poll->getOptions() as $option): ?>
@@ -21,10 +36,10 @@
         <div class="col-md-6">
             <div class="progress">
                 <div class="progress-bar poll-bar" role="progressbar"
-                     aria-valuenow="<?= $this->percentages[$option->getId()] ?>"
+                     aria-valuenow="<?= $percentages[$option->getId()] ?>"
                      aria-valuemin="0" aria-valuemax="100"
-                     style="min-width: 2em; width: <?= $this->percentages[$option->getId()] ?>%;">
-                    <?= $this->percentages[$option->getId()] ?>%
+                     style="min-width: 2em; width: <?= $percentages[$option->getId()] ?>%;">
+                    <?= $percentages[$option->getId()] ?>%
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ namespace Frontpage\Service;
 use Application\Service\AbstractAclService;
 use Frontpage\Model\PollVote as PollVoteModel;
 use Frontpage\Model\Poll as PollModel;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 /**
  * Poll service.
@@ -27,6 +29,12 @@ class Poll extends AbstractAclService
         return $this->getPollMapper()->findPollOptionById($optionId);
     }
 
+    public function getPaginatorAdapter()
+    {
+        $repository = $this->getPollMapper()->getRepository();
+        return new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('poll')));
+    }
+
     /**
      * Returns details about a poll.
      *
@@ -35,26 +43,10 @@ class Poll extends AbstractAclService
      */
     public function getPollDetails($poll)
     {
-        $totalVotes = 0;
-        foreach ($poll->getOptions() as $option) {
-            $totalVotes += $option->getVotesCount();
-        }
-
-        $percentages = array();
-        foreach ($poll->getOptions() as $option) {
-            if ($totalVotes > 0) {
-                $percentages[$option->getId()] = round($option->getVotesCount() / $totalVotes * 100);
-            } else {
-                $percentages[$option->getId()] = 0;
-            }
-        }
-
         $canVote = $this->canVote($poll);
         $userVote = $this->getVote($poll);
 
         return array(
-            'totalVotes' => $totalVotes,
-            'percentages' => $percentages,
             'canVote' => $canVote,
             'userVote' => $userVote
         );

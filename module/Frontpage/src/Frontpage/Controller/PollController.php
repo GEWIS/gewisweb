@@ -4,6 +4,7 @@ namespace Frontpage\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
+use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 
 class PollController extends AbstractActionController
@@ -34,6 +35,22 @@ class PollController extends AbstractActionController
             $pollService->submitVote($pollService->getPollOption($optionId));
             $this->redirect()->toRoute('poll');
         }
+    }
+
+    public function historyAction()
+    {
+        $adapter = $this->getPollService()->getPaginatorAdapter();
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(10);
+
+        $page = $this->params()->fromRoute('page');
+        if($page) $paginator->setCurrentPageNumber($page);
+        $session = new SessionContainer('lang');
+
+        return new ViewModel(array(
+            'paginator' => $paginator,
+            'lang' => $session->lang
+        ));
     }
 
     /**
