@@ -74,6 +74,8 @@ class Module
                     $acl->addResource('page');
                     $acl->addResource('poll');
 
+                    $acl->allow('user', 'poll', 'vote');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory

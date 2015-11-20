@@ -3,6 +3,8 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Frontpage\Model\PollVote as PollVoteModel;
+use Frontpage\Model\Poll as PollModel;
 
 /**
  * Poll service.
@@ -13,6 +15,16 @@ class Poll extends AbstractAclService
     public function getNewestPoll()
     {
         return $this->getPollMapper()->getNewestPoll();
+    }
+
+    public function getPoll($pollId)
+    {
+        return $this->getPollMapper()->findPollById($pollId);
+    }
+
+    public function getPollOption($optionId)
+    {
+        return $this->getPollMapper()->findPollOptionById($optionId);
     }
 
     /**
@@ -38,11 +50,13 @@ class Poll extends AbstractAclService
         }
 
         $canVote = $this->canVote($poll);
+        $userVote = $this->getVote($poll);
 
         return array(
             'totalVotes' => $totalVotes,
             'percentages' => $percentages,
-            'canVote' => $canVote
+            'canVote' => $canVote,
+            'userVote' => $userVote
         );
     }
 
@@ -84,6 +98,28 @@ class Poll extends AbstractAclService
         }
     }
 
+    public function submitVote($pollOption)
+    {
+        $poll = $pollOption->getPoll();
+        if(is_null($poll) || is_null($pollOption)) {
+            return false;
+        }
+
+        if(!$this->canVote($poll)) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to vote on this poll.')
+            );
+        }
+
+        $pollVote = new PollVoteModel();
+        $pollVote->setRespondent($this->getUser());
+        $pollVote->setPoll($poll);
+        $pollOption->addVote($pollVote);
+        $pollMapper = $this->getPollMapper();
+        $pollMapper->persist($pollOption);
+        $pollMapper->flush();
+    }
+
     /**
      * Get the poll mapper.
      *
@@ -101,7 +137,8 @@ class Poll extends AbstractAclService
      */
     public function getUser()
     {
-        return $this->sm->get('user_role');
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        return $em->merge($this->sm->get('user_role'));
     }
 
     /**

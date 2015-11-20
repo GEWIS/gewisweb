@@ -40,6 +40,17 @@ class Poll
     }
 
     /**
+     * Returns a poll based on its id.
+     *
+     * @param integer $optionId
+     * @return \Frontpage\Model\PollOption|null
+     */
+    public function findPollOptionById($optionId)
+    {
+        return $this->em->find('Frontpage\Model\PollOption', $optionId);
+    }
+
+    /**
      * Find the vote of a certain user on a poll.
      *
      * @param integer $pollId
@@ -85,13 +96,13 @@ class Poll
     }
 
     /**
-     * Persist a poll.
+     * Persist.
      *
-     * @param \Frontpage\Model\Poll $poll
+     * @param $entity an entity to persist
      */
-    public function persist($poll)
+    public function persist($entity)
     {
-        $this->em->persist($poll);
+        $this->em->persist($entity);
     }
 
     /**

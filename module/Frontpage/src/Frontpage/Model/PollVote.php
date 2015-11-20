@@ -14,9 +14,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class PollVote implements ResourceInterface
 {
-
-
-
     /**
      * The poll which was voted on
      *
@@ -38,10 +35,42 @@ class PollVote implements ResourceInterface
      * The user whom submitted this vote.
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
      */
     protected $respondent;
+
+    /**
+     * @return mixed
+     */
+    public function getPollOption()
+    {
+        return $this->pollOption;
+    }
+
+    /**
+     * @param mixed $poll
+     */
+    public function setPoll($poll)
+    {
+        $this->poll = $poll;
+    }
+
+    /**
+     * @param mixed $pollOption
+     */
+    public function setPollOption($pollOption)
+    {
+        $this->pollOption = $pollOption;
+    }
+
+    /**
+     * @param mixed $respondent
+     */
+    public function setRespondent($respondent)
+    {
+        $this->respondent = $respondent;
+    }
 
     /**
      * Get the resource ID.

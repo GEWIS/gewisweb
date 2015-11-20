@@ -29,9 +29,9 @@ class PollController extends AbstractActionController
     {
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $pollId = $this->params()->fromRoute('poll_id');
+            $pollService = $this->getPollService();
             $optionId = $request->getPost()['option'];
-            $this->getPollService()->submitVote($pollId, $optionId);
+            $pollService->submitVote($pollService->getPollOption($optionId));
             $this->redirect()->toRoute('poll');
         }
     }

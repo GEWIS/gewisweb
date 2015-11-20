@@ -57,6 +57,14 @@ class PollOption implements ResourceInterface
     }
 
     /**
+     * @return \Frontpage\Model\Poll
+     */
+    public function getPoll()
+    {
+        return $this->poll;
+    }
+
+    /**
      * @return string
      */
     public function getDutchText()
@@ -70,6 +78,17 @@ class PollOption implements ResourceInterface
     public function getEnglishText()
     {
         return $this->englishText;
+    }
+
+    /**
+     * Adds a new vote for this poll option
+     *
+     * @param \Frontpage\Model\PollVote $pollVote
+     */
+    public function addVote($pollVote)
+    {
+        $pollVote->setPollOption($this);
+        $this->votes[] = $pollVote;
     }
 
     /**

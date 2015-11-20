@@ -4,7 +4,8 @@
         'lang' => $lang,
         'percentages' => $percentages,
         'totalVotes' => $totalVotes,
-        'canVote' => $canVote
+        'canVote' => $canVote,
+        'userVote' => $userVote
     )) ?>
 
 
@@ -12,6 +13,7 @@
 
 <?php else: ?>
     <?= $this->translate('There currently is no poll.'); ?>
-    <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
-    <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
 <?php endif; ?>
+<a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
+<a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+

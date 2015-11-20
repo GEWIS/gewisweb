@@ -9,9 +9,10 @@
 
                     <input type="radio" value="<?= $option->getId() ?>" name="option"/>
                     <?php endif; ?>
-                    <strong>
+                    <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
+                    <?= $voted ? '<strong>' : '' ?>
                         <?= ($this->lang === 'en') ? $option->getEnglishText() : $option->getDutchText() ?>
-                    </strong>
+                    <?= $voted ? '</strong>' : '' ?>
                     <?php if ($canVote): ?>
                 </label>
             </div>
@@ -33,6 +34,8 @@
     </div>
 <?php endforeach; ?>
 <p>
-    <button type="submit" class="btn btn-large btn-success">Vote</button>
+    <?php if($canVote): ?>
+        <button type="submit" class="btn btn-large btn-success">Vote</button>
+    <?php endif; ?>
 </p>
 </form>
