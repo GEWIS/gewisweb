@@ -17,11 +17,13 @@ class Frontpage extends AbstractAclService
     {
         $birthdayInfo = $this->getBirthdayInfo();
         $activities = $this->getUpcomingActivities();
+        $weeklyPhoto = $this->getPhotoService()->getCurrentPhotoOfTheWeek();
 
         return array(
             'birthdays' => $birthdayInfo['birthdays'],
             'birthdayTag' => $birthdayInfo['tag'],
-            'activities' => $activities
+            'activities' => $activities,
+            'weeklyPhoto' => $weeklyPhoto
         );
     }
 

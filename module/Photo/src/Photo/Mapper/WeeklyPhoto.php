@@ -39,6 +39,20 @@ class WeeklyPhoto
         return !is_null($this->getRepository()->findOneBy(array('photo' => $photo)));
     }
 
+    public function getCurrentPhotoOfTheWeek()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('w')
+            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->setMaxResults(1)
+            ->orderBy('w.week', 'DESC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
     /**
      * Retrieves all WeeklyPhotos
      *
