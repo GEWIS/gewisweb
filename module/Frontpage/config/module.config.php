@@ -1,124 +1,124 @@
 <?php
-return array(
-    'controllers' => array(
-        'invokables' => array(
+return [
+    'controllers' => [
+        'invokables' => [
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'home' => array(
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'home' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller' => 'Frontpage',
                         'action' => 'home',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'page' => array(
+                'child_routes' => [
+                    'page' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[:category[/:sub_category][/:name]][/]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 '__NAMESPACE__' => 'Frontpage\Controller',
                                 'controller' => 'Page',
                                 'action' => 'page',
-                            ),
-                        ),
+                            ],
+                        ],
                         'priority' => -1
-                    ),
-                ),
-            ),
-            'admin_page' => array(
+                    ],
+                ],
+            ],
+            'admin_page' => [
                 'type' => 'Segment',
-                'options' => array(
+                'options' => [
                     'route' => '/admin/page',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller' => 'PageAdmin',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'create' => array(
+                'child_routes' => [
+                    'create' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/create',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'create',
-                            ),
-                        ),
-                    ),
-                    'edit' => array(
+                            ],
+                        ],
+                    ],
+                    'edit' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:page_id]/edit',
-                            'constraints' => array(
+                            'constraints' => [
                                 'page_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'edit',
-                            ),
-                        ),
-                    ),
-                    'delete' => array(
+                            ],
+                        ],
+                    ],
+                    'delete' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:page_id]/delete',
-                            'constraints' => array(
+                            'constraints' => [
                                 'page_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'delete',
-                            ),
-                        ),
-                    ),
-                    'upload' => array(
+                            ],
+                        ],
+                    ],
+                    'upload' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/upload',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'upload',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+            ],
+        ],
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'Frontpage' => __DIR__ . '/../view',
-        ),
-        'template_map' => array(
+        ],
+        'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
-        ),
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'frontpage_entities' => array(
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            'frontpage_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Frontpage/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Frontpage/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Frontpage\Model' => 'frontpage_entities'
-                )
-            )
-        )
-    ),
-);
+                ]
+            ]
+        ]
+    ],
+];

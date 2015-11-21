@@ -14,28 +14,28 @@ class Bulk extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'exams',
             'type' => 'Collection',
-            'options' => array(
+            'options' => [
                 'count' => 2,
                 'allow_add' => true,
                 'allow_remove' => true,
                 'target_element' => $exam
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit'
-        ));
+        ]);
 
         $this->get('submit')->setLabel($translator->translate('Finalize exam uploads'));
     }
 
     public function getInputFilterSpecification()
     {
-        return array();
+        return [];
     }
 
 }

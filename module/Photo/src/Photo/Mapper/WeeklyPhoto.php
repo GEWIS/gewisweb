@@ -36,7 +36,7 @@ class WeeklyPhoto
      */
     public function hasBeenPhotoOfTheWeek($photo)
     {
-        return !is_null($this->getRepository()->findOneBy(array('photo' => $photo)));
+        return !is_null($this->getRepository()->findOneBy(['photo' => $photo]));
     }
 
     public function getCurrentPhotoOfTheWeek()

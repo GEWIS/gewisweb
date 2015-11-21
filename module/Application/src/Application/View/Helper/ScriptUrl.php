@@ -36,9 +36,9 @@ class ScriptUrl extends AbstractHelper
      *
      * @return \Application\View\Helper\ScriptUrl
      */
-    public function requireUrl($name, $params = array())
+    public function requireUrl($name, $params = [])
     {
-        $scriptParams = array();
+        $scriptParams = [];
 
         foreach($params as $param) {
             $scriptParams[$param] = '{' . $param . '}';

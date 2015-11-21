@@ -14,9 +14,9 @@ class PageAdminController extends AbstractActionController
     {
         $pages = $this->getPageService()->getPages();
 
-        return new ViewModel(array(
+        return new ViewModel([
             'pages' => $pages
-        ));
+        ]);
     }
 
     public function createAction()
@@ -31,11 +31,11 @@ class PageAdminController extends AbstractActionController
 
         $form = $pageService->getPageForm();
 
-        $view = new ViewModel(array(
+        $view = new ViewModel([
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a page.
             'canDelete' => false
-        ));
+        ]);
 
         $view->setTemplate('page-admin/edit');
 
@@ -55,11 +55,11 @@ class PageAdminController extends AbstractActionController
 
         $form = $pageService->getPageForm($pageId);
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
             'canDelete' => true,
             'pageId' => $pageId
-        ));
+        ]);
     }
 
     public function deleteAction()
@@ -72,7 +72,7 @@ class PageAdminController extends AbstractActionController
     public function uploadAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         $result['uploaded'] = 0;
         if ($request->isPost()) {
             try {

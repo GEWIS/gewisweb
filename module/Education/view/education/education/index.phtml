@@ -35,10 +35,10 @@ $element->setAttribute('placeholder', $this->translate('Search query'));
     <tbody>
 <?php foreach ($courses as $course): ?>
     <tr>
-        <td><a href="<?= $this->url('education/course', array('code' => $course->getCode())) ?>" style="display: block; height: 100%; width:100%;">
+        <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
 <?= $course->getCode() ?>
         </a></td>
-        <td><a href="<?= $this->url('education/course', array('code' => $course->getCode())) ?>" style="display: block; height: 100%; width:100%;">
+        <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
 <?= $course->getName() ?>
         </a></td>
     </tr>

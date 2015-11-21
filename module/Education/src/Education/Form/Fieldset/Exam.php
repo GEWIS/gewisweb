@@ -16,26 +16,26 @@ class Exam extends Fieldset
     {
         parent::__construct('exam');
 
-        $this->add(array(
+        $this->add([
             'name' => 'file',
             'type' => 'hidden'
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'course',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Course code')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'date',
             'type' => 'date',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Exam date')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -51,54 +51,54 @@ class Exam extends Fieldset
     public function getInputFilterSpecification()
     {
         $dir = $this->config['upload_dir'];
-        return array(
-            'file' => array(
+        return [
+            'file' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'regex',
-                        'options' => array(
+                        'options' => [
                             'pattern' => '/^[a-zA-Z0-9_ ,.-]+\.pdf$/'
-                        )
-                    ),
-                    array(
+                        ]
+                    ],
+                    [
                         'name' => 'callback',
-                        'options' => array(
+                        'options' => [
                             'callback' => function ($value) use ($dir) {
-                                $validator = new \Zend\Validator\File\Exists(array(
+                                $validator = new \Zend\Validator\File\Exists([
                                     'directory' => $dir
-                                ));
+                                ]);
                                 return $validator->isValid($value);
                             }
-                        )
-                    )
-                )
-            ),
+                        ]
+                    ]
+                ]
+            ],
 
-            'course' => array(
+            'course' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 5,
                             'max' => 6
-                        )
-                    ),
-                    array('name' => 'alnum')
-                ),
-                'filters' => array(
-                    array('name' => 'string_to_upper')
-                )
-            ),
+                        ]
+                    ],
+                    ['name' => 'alnum']
+                ],
+                'filters' => [
+                    ['name' => 'string_to_upper']
+                ]
+            ],
 
-            'date' => array(
+            'date' => [
                 'required' => true,
-                'validators' => array(
-                    array('name' => 'date')
-                )
-            )
-        );
+                'validators' => [
+                    ['name' => 'date']
+                ]
+            ]
+        ];
     }
 
 }

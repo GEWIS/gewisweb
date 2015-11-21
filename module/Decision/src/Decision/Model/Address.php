@@ -91,11 +91,11 @@ class Address
      */
     public static function getTypes()
     {
-        return array(
+        return [
             self::TYPE_HOME,
             self::TYPE_STUDENT,
             self::TYPE_MAIL,
-        );
+        ];
     }
 
     /**

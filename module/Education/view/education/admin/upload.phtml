@@ -5,7 +5,7 @@
 $form = $this->form;
 $form->prepare();
 
-$form->setAttribute('action', $this->url('admin_education/default', array('action' => 'upload')));
+$form->setAttribute('action', $this->url('admin_education/default', ['action' => 'upload']));
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('role', 'form');

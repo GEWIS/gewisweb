@@ -165,12 +165,12 @@ class Study
      */
     public function createStudy(\SimpleXMLElement $doelgroep)
     {
-        $data = array(
+        $data = [
             'id' => (int) $doelgroep->Id->__toString(),
             'name' => $doelgroep->Omschrijving->__toString(),
             'phase' => $doelgroep->Opleidingstype->__toString(),
             'groupId' => (int) $doelgroep->GroepscategorieId->__toString()
-        );
+        ];
         return $this->hydrator->hydrate($data, new StudyModel());
     }
 
@@ -186,18 +186,18 @@ class Study
         $data = $this->client->GeefDoelgroepen('2013', 'NL');
 
         // convert doelgroepen to array
-        $doelgroepen = array();
+        $doelgroepen = [];
         foreach ($data->Doelgroep as $doelgroep) {
             $doelgroepen[] = $doelgroep;
         }
 
-        $doelgroepen = array_filter($doelgroepen, array($this, 'filterDoelgroep'));
+        $doelgroepen = array_filter($doelgroepen, [$this, 'filterDoelgroep']);
 
         // since all this filtering, re-index the array
         $doelgroepen = array_values($doelgroepen);
 
         // convert doelgroepen to studies
-        return array_map(array($this, 'createStudy'), $doelgroepen);
+        return array_map([$this, 'createStudy'], $doelgroepen);
     }
 
     /**

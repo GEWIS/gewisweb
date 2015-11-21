@@ -37,7 +37,7 @@ class Company extends AbstractService
     public function getActiveJobList()
     {
         $jl = $this->getJobList();
-        $r = array();
+        $r = [];
         foreach($jl as $j) {
             if ($j->getActive()) {
                 array_push($r, $j);

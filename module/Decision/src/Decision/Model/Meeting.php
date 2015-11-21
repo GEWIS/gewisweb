@@ -67,12 +67,12 @@ class Meeting
      */
     public static function getTypes()
     {
-        return array(
+        return [
             self::TYPE_BV,
             self::TYPE_AV,
             self::TYPE_VV,
             self::TYPE_VIRT
-        );
+        ];
     }
 
     /**

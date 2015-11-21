@@ -38,12 +38,12 @@
         <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/approve', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/approve', ['id' => $activity->get('id')])?>">
                     <?php echo $this->translate('Approve'); ?>
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/disapprove', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/disapprove', ['id' => $activity->get('id')])?>">
                     <?php echo $this->translate('Disapprove'); ?>
                 </a>
             </div>
@@ -54,7 +54,7 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/reset', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->get('id')])?>">
                     <?php echo $this->translate('Revoke approval'); ?>
                 </a>
             </div>
@@ -65,7 +65,7 @@
                 <div class="col-md-6">
                 </div>
                 <div class="col-md-6">
-                    <a href="<?php echo $this->url('admin_activity/reset', array( 'id' => $activity->get('id')))?>">
+                    <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->get('id')])?>">
                         <?php echo $this->translate('Revoke disapproval'); ?>
                     </a>
                 </div>

@@ -22,10 +22,10 @@ class Email extends AbstractService
      */
     public function sendRegisterEmail(NewUserModel $newUser, MemberModel $member)
     {
-        $body = $this->render('user/email/register', array(
+        $body = $this->render('user/email/register', [
             'user' => $newUser,
             'member' => $member
-        ));
+        ]);
 
         $translator = $this->getServiceManager()->get('translator');
 

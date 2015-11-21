@@ -13,37 +13,37 @@ class EditAlbum extends Form
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Album title')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'startDateTime',
             'type' => 'Zend\Form\Element\DateTime',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Start date')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'endDateTime',
             'type' => 'Zend\Form\Element\DateTime',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('End date')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Save')
-            )
-        ));
+            ]
+        ]);
 
         $this->initFilters();
     }
@@ -52,19 +52,19 @@ class EditAlbum extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'name',
             'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty'),
-                array(
+            'validators' => [
+                ['name' => 'not_empty'],
+                [
                     'name' => 'alnum',
-                    'options' => array(
+                    'options' => [
                         'allowWhiteSpace' => true
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
         $this->setInputFilter($filter);
     }

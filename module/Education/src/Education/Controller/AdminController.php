@@ -19,20 +19,20 @@ class AdminController extends AbstractActionController {
         if ($request->isPost()) {
             // try uploading
             if ($service->tempUpload($request->getPost(), $request->getFiles())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
             } else {
                 $this->getResponse()->setStatusCode(500);
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => false
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getTempUploadForm()
-        ));
+        ]);
     }
 
     /**
@@ -44,18 +44,18 @@ class AdminController extends AbstractActionController {
         $request = $this->getRequest();
 
         if ($request->isPost() && $service->bulkEdit($request->getPost())) {
-            return new ViewModel(array(
+            return new ViewModel([
                 'success' => true
-            ));
+            ]);
         }
 
         $config = $this->getServiceLocator()->get('config');
         $config = $config['education_temp'];
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form'   => $service->getBulkForm(),
             'config' => $config
-        ));
+        ]);
     }
 
     public function uploadAction()
@@ -66,15 +66,15 @@ class AdminController extends AbstractActionController {
         if ($request->isPost()) {
             // try uploading
             if ($service->upload($request->getPost(), $request->getFiles())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getUploadForm()
-        ));
+        ]);
     }
 
     /**

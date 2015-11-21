@@ -8,7 +8,7 @@ $this->scriptUrl()->requireUrl('member/search');
         <nav>
             <ul class="pager">
                 <li class="previous"><a
-                        href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
+                        href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>"><span
                             aria-hidden="true">&larr;</span><?= $this->translate('Return to album') ?></a></li>
             </ul>
         </nav>
@@ -27,16 +27,16 @@ $this->scriptUrl()->requireUrl('member/search');
             <?php endif; ?>
         </div>
         <div class="col-lg-3">
-            <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
+            <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
             <?php if($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
             <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
-                array('photo_id' => $photo->getId())); ?>"><?= $this->translate('Full resolution'); ?></a>
+                ['photo_id' => $photo->getId()]); ?>"><?= $this->translate('Full resolution'); ?></a>
             <?php endif; ?>
             <nav>
                 <ul class="pager">
                     <?php if (!is_null($previous)): ?>
                         <li><a id="previous"
-                               href="<?= $this->url('photo/photo', array('photo_id' => $previous->getId())); ?>">
+                               href="<?= $this->url('photo/photo', ['photo_id' => $previous->getId()]); ?>">
                                 <?= $this->translate('Previous') ?>
                             </a>
                         </li>
@@ -45,14 +45,14 @@ $this->scriptUrl()->requireUrl('member/search');
                     if (!is_null($next)):
                         ?>
                         <li><a id="next"
-                               href="<?= $this->url('photo/photo', array('photo_id' => $next->getId())); ?>">
+                               href="<?= $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>">
                                 <?= $this->translate('Next') ?>
                             </a>
                         </li>
                     <?php endif; ?>
                 </ul>
             </nav>
-            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
+            <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
         </div>
     </div>
     <script>

@@ -23,7 +23,7 @@ $this->headLink()->prependStylesheet($this->basePath() . '/css/tree.css')
                                 <?php if (isset($data['page'])): ?>
                                     <a
                                         href="<?= $context->url('admin_page/edit',
-                                            array('page_id' => $data['page']->getId())) ?>">
+                                            ['page_id' => $data['page']->getId()]) ?>">
                                         <?= $category ?> (<?= $data['page']->getEnglishTitle() ?>)
                                     </a>
                                 <?php else: ?>

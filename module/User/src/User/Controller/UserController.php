@@ -23,9 +23,9 @@ class UserController extends AbstractActionController
             if (null !== $login) {
                 $this->redirect()->toUrl($data['redirect']);
 
-                return new ViewModel(array(
+                return new ViewModel([
                     'login' => true
-                ));
+                ]);
             }
         }
 
@@ -39,9 +39,9 @@ class UserController extends AbstractActionController
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form
-        ));
+        ]);
     }
 
     /**
@@ -68,17 +68,17 @@ class UserController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $newUser = $userService->register($this->getRequest()->getPost());
             if (null !== $newUser) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'registered' => true,
                     'user' => $newUser
-                ));
+                ]);
             }
         }
 
         // show form
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $userService->getRegisterForm()
-        ));
+        ]);
     }
 
     /**
@@ -103,15 +103,15 @@ class UserController extends AbstractActionController
         }
 
         if ($this->getRequest()->isPost() && $userService->activate($this->getRequest()->getPost(), $newUser)) {
-            return new ViewModel(array(
+            return new ViewModel([
                 'activated' => true
-            ));
+            ]);
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $userService->getActivateForm(),
             'user' => $newUser
-        ));
+        ]);
     }
 
     /**

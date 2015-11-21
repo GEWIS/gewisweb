@@ -45,13 +45,13 @@ class Member extends AbstractAclService
             return null;
         }
 
-        $memberships = array();
+        $memberships = [];
         foreach ($member->getOrganInstallations() as $install) {
             if (null !== $install->getDischargeDate()) {
                 continue;
             }
             if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
-                $memberships[$install->getOrgan()->getAbbr()] = array();
+                $memberships[$install->getOrgan()->getAbbr()] = [];
             }
             if ($install->getFunction() != 'Lid') {
                 $memberships[$install->getOrgan()->getAbbr()][] = $install->getFunction();
@@ -62,12 +62,12 @@ class Member extends AbstractAclService
         // Base directory for retrieving photos
         $basedir = $this->getPhotoService()->getBaseDirectory();
 
-        return array(
+        return [
             'member' => $member,
             'memberships' => $memberships,
             'tags' => $tags,
             'basedir' => $basedir
-        );
+        ];
     }
 
     /**
@@ -97,7 +97,7 @@ class Member extends AbstractAclService
         $config = $config['dreamspark'];
 
         // determine groups for dreamspark
-        $groups = array();
+        $groups = [];
         if ($this->isAllowed('students', 'dreamspark')) {
             $groups[] = 'students';
         }
@@ -114,9 +114,9 @@ class Member extends AbstractAclService
         $url = str_replace('%EMAIL%', $user->getEmail(), $url);
         $url = str_replace('%GROUPS%', implode(',', $groups), $url);
 
-        $client = new HttpClient($url, array(
+        $client = new HttpClient($url, [
             'sslcapath' => $sslcapath
-        ));
+        ]);
         $response = $client->send();
 
         if ($response->getStatusCode() != 200) {

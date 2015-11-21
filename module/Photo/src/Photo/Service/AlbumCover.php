@@ -90,7 +90,7 @@ class AlbumCover extends AbstractService
             $photos = array_merge($photos, $photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
         }
         //convert the photo objects to Imagick objects
-        $images = array();
+        $images = [];
         foreach ($photos as $photo) {
             $imagePath = $storageConfig['storage_dir'] . '/' . $photo->getSmallThumbPath();
             $images[] = new \Imagick($imagePath);

@@ -10,7 +10,7 @@ class TagController extends AbstractActionController
     public function addAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $lidnr = $this->params()->fromRoute('lidnr');
@@ -29,7 +29,7 @@ class TagController extends AbstractActionController
     public function removeAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $lidnr = $this->params()->fromRoute('lidnr');

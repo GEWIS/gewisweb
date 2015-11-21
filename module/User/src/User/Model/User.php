@@ -133,7 +133,7 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getRoleNames()
     {
-        $roles = array();
+        $roles = [];
 
         foreach ($this->getRoles() as $role) {
             $roles[] = $role->getRole();

@@ -19,12 +19,12 @@ class Frontpage extends AbstractAclService
         $activities = $this->getUpcomingActivities();
         $weeklyPhoto = $this->getPhotoService()->getCurrentPhotoOfTheWeek();
 
-        return array(
+        return [
             'birthdays' => $birthdayInfo['birthdays'],
             'birthdayTag' => $birthdayInfo['tag'],
             'activities' => $activities,
             'weeklyPhoto' => $weeklyPhoto
-        );
+        ];
     }
 
     /**
@@ -37,13 +37,13 @@ class Frontpage extends AbstractAclService
     {
         $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
         $today = new \DateTime();
-        $birthdays = array();
-        $members = array();
+        $birthdays = [];
+        $members = [];
         foreach ($birthdayMembers as $member) {
             $age = $today->diff($member->getBirth())->y;
             $members[] = $member;
             //TODO: check member's privacy settings
-            $birthdays[] = array('member' => $member, 'age' => $age);
+            $birthdays[] = ['member' => $member, 'age' => $age];
 
         }
 
@@ -53,10 +53,10 @@ class Frontpage extends AbstractAclService
             $tag = null;
         }
 
-        return array(
+        return [
             'birthdays' => $birthdays,
             'tag' => $tag
-        );
+        ];
     }
 
     public function getUpcomingActivities()

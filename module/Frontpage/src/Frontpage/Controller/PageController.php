@@ -22,11 +22,11 @@ class PageController extends AbstractActionController
 
         $session = new SessionContainer('lang');
 
-        return new ViewModel(array(
+        return new ViewModel([
             'page' => $page,
             'parents' => $parents,
             'lang' => $session->lang
-        ));
+        ]);
     }
 
     /**

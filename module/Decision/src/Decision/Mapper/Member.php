@@ -36,7 +36,7 @@ class Member
      */
     public function findByLidnr($number)
     {
-        return $this->getRepository()->findOneBy(array('lidnr' => $number));
+        return $this->getRepository()->findOneBy(['lidnr' => $number]);
     }
 
     /**
@@ -76,7 +76,7 @@ class Member
         $builder = new ResultSetMappingBuilder($this->em);
         $builder->addRootEntityFromClassMetadata('Decision\Model\Member', 'm');
 
-        $select = $builder->generateSelectClause(array('m' => 't1'));
+        $select = $builder->generateSelectClause(['m' => 't1']);
 
         $sql = "SELECT $select FROM Member AS t1"
             . " WHERE DATEDIFF(DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),"

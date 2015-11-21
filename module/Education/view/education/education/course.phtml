@@ -21,20 +21,20 @@
 <ul>
 <?php foreach ($course->getChildren() as $child): ?>
     <?php foreach ($child->getExams() as $exam): ?>
-        <li><a href="<?= $this->url('education/course/download', array(
+        <li><a href="<?= $this->url('education/course/download', [
             'code' => $exam->getCourse()->getCode(),
             'id' => $exam->getId()
-        )) ?>">
+            ]) ?>">
         <strong>(<?= $child->getCode() ?>)</strong>
         <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
         </a></li>
     <?php endforeach; ?>
 <?php endforeach; ?>
 <?php foreach ($course->getExams() as $exam): ?>
-    <li><a href="<?= $this->url('education/course/download', array(
+    <li><a href="<?= $this->url('education/course/download', [
         'code' => $exam->getCourse()->getCode(),
         'id' => $exam->getId()
-    )) ?>">
+        ]) ?>">
     <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
     </a></li>
 <?php endforeach; ?>

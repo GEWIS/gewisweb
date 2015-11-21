@@ -12,13 +12,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -38,13 +38,13 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 'decision_mapper_member' => function ($sm) {
                     return new \Decision\Mapper\Member(
                         $sm->get('decision_doctrine_em')
@@ -100,13 +100,13 @@ class Module
                     $acl->allow('guest', 'member', 'birthdays_today');
 
                     // users are allowed to view and search members
-                    $acl->allow('user', 'member', array('view', 'view_self', 'search', 'birthdays'));
+                    $acl->allow('user', 'member', ['view', 'view_self', 'search', 'birthdays']);
 
-                    $acl->allow('user', 'decision', array('search', 'view_meeting', 'list_meetings'));
+                    $acl->allow('user', 'decision', ['search', 'view_meeting', 'list_meetings']);
 
-                    $acl->allow('user', 'meeting', array('view', 'view_notes', 'view_documents'));
+                    $acl->allow('user', 'meeting', ['view', 'view_notes', 'view_documents']);
 
-                    $acl->allow('user', 'dreamspark', array('login', 'students'));
+                    $acl->allow('user', 'dreamspark', ['login', 'students']);
 
                     return $acl;
                 },
@@ -115,7 +115,7 @@ class Module
                 'decision_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            )
-        );
+            ]
+        ];
     }
 }

@@ -76,7 +76,7 @@ class Album extends AbstractAclService
             );
         }
         if (!is_int($year)) {
-            return array();
+            return [];
         }
 
         $start = \DateTime::createFromFormat(
@@ -119,7 +119,7 @@ class Album extends AbstractAclService
         $oldest = $this->getAlbumMapper()->getOldestAlbum();
         $newest = $this->getAlbumMapper()->getNewestAlbum();
         if (is_null($oldest) || is_null($newest) || is_null($oldest->getStartDateTime()) || is_null($newest->getEndDateTime())) {
-            return array(null);
+            return [null];
         }
 
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
