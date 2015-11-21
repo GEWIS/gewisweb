@@ -37,7 +37,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
         // setup ACL
         $acl = $this->sm->get('decision_acl');
         $acl->addRole('guest');
-        $acl->addRole('user', array('guest'));
+        $acl->addRole('user', ['guest']);
         $acl->addResource('organ');
         $acl->allow('user', 'organ', 'view');
         $acl->allow('user', 'organ', 'list');
@@ -56,7 +56,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
         $mock = $this->sm->get('decision_mapper_organ');
         $mock->expects($this->any())
             ->method('findAll')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $this->sm->setService('user_role', 'user');
 

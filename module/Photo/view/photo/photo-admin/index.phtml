@@ -7,8 +7,8 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
 $this->scriptUrl()->requireUrls(
-    array('admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'),
-    array('photo_id')
+    ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
+    ['photo_id']
 );
 ?>
 <div class="row">
@@ -41,7 +41,7 @@ $this->scriptUrl()->requireUrls(
     <div class="col-lg-9">
         <ol class="breadcrumb">
             <?php foreach ($path as $album): ?>
-                <li><a href="<?= $this->url('admin_photo', array(), array("fragment" => $album->getId())); ?>">
+                <li><a href="<?= $this->url('admin_photo', [], ["fragment" => $album->getId()]); ?>">
                         <?= $this->escapeHtml($album->getName()) ?></a></li>
             <?php endforeach; ?>
             <li class="active">Photo #<?= $photo->getId() ?></li>
@@ -56,10 +56,10 @@ $this->scriptUrl()->requireUrls(
         <row>
             <div class="col-lg-6">
                 <h4>Metadata</h4>
-                <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
+                <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
             </div>
 
-            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
+            <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
         </row>
     </div>
 </div>

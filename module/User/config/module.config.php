@@ -1,74 +1,74 @@
 <?php
-return array(
-    'router' => array(
-        'routes' => array(
-            'user' => array(
+return [
+    'router' => [
+        'routes' => [
+            'user' => [
                 'type'    => 'Literal',
-                'options' => array(
+                'options' => [
                     'route'    => '/user',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'User\Controller',
                         'controller'    => 'User',
                         'action'        => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
+                'child_routes' => [
+                    'default' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '[/:action]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    ),
-                    'login' => array(
+                            ],
+                        ],
+                    ],
+                    'login' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/login',
-                        )
-                    ),
-                    'activate' => array(
+                        ]
+                    ],
+                    'activate' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/activate/:code',
-                            'constraints' => array(
+                            'constraints' => [
                                 'code' => '[a-zA-Z0-9]*'
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'code'   => '',
                                 'action' => 'activate'
-                            )
-                        )
-                    )
-                ),
+                            ]
+                        ]
+                    ]
+                ],
                 'priority' => 100
-            ),
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
             'User\Controller\User' => 'User\Controller\UserController'
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'user' => __DIR__ . '/../view/'
-        )
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'user_entities' => array(
+        ]
+    ],
+    'doctrine' => [
+        'driver' => [
+            'user_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/User/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/User/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'User\Model' => 'user_entities'
-                )
-            )
-        )
-    )
-);
+                ]
+            ]
+        ]
+    ]
+];

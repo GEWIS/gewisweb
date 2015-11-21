@@ -16,17 +16,17 @@ class AlbumAdminController extends AbstractActionController
     {
         $albumService = $this->getAlbumService();
         $years = $albumService->getAlbumYears();
-        $albumsByYear = array();
+        $albumsByYear = [];
         foreach ($years as $year) {
             $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
         }
 
         $albumsWithoutDate = $albumService->getAlbumsWithoutDate();
 
-        return new ViewModel(array(
+        return new ViewModel([
             'albumsByYear' => $albumsByYear,
             'albumsWithoutDate' => $albumsWithoutDate
-        ));
+        ]);
     }
 
     /**
@@ -45,9 +45,9 @@ class AlbumAdminController extends AbstractActionController
         }
         $form = $albumService->getCreateAlbumForm();
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
-        ));
+        ]);
     }
 
     /**
@@ -77,16 +77,16 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             if ($albumService->updateAlbum($albumId, $request->getPost())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
             }
         }
         $form = $albumService->getEditAlbumForm($albumId);
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
-        ));
+        ]);
     }
 
     public function addAction()
@@ -100,7 +100,7 @@ class AlbumAdminController extends AbstractActionController
     public function uploadAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         $result['success'] = false;
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
@@ -124,7 +124,7 @@ class AlbumAdminController extends AbstractActionController
     public function importAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         $result['success'] = false;
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
@@ -147,7 +147,7 @@ class AlbumAdminController extends AbstractActionController
     public function moveAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
             $parentId = $request->getPost()['parent_id'];
@@ -168,7 +168,7 @@ class AlbumAdminController extends AbstractActionController
             $this->getAlbumService()->deleteAlbum($albumId);
         }
 
-        return new JsonModel(array());
+        return new JsonModel([]);
     }
 
     /**
@@ -181,7 +181,7 @@ class AlbumAdminController extends AbstractActionController
             $this->getAlbumService()->generateAlbumCover($albumId);
         }
 
-        return new JsonModel(array());
+        return new JsonModel([]);
     }
 
 
@@ -192,43 +192,43 @@ class AlbumAdminController extends AbstractActionController
      */
     public function getURLs()
     {
-        return array(
+        return [
             'album_edit' => $this->url()->fromRoute(
-                'admin_photo/album_edit', array('album_id' => '{0}')
+                'admin_photo/album_edit', ['album_id' => '{0}']
             ),
             'album_create' => $this->url()->fromRoute(
-                'admin_photo/album_delete', array('album_id' => '{0}')
+                'admin_photo/album_delete', ['album_id' => '{0}']
             ),
             'album_add' => $this->url()->fromRoute(
-                'admin_photo/album_add', array('album_id' => '{0}')
+                'admin_photo/album_add', ['album_id' => '{0}']
             ),
             'album_move' => $this->url()->fromRoute(
-                'admin_photo/album_move', array('album_id' => '{0}')
+                'admin_photo/album_move', ['album_id' => '{0}']
             ),
             'album_delete' => $this->url()->fromRoute(
-                'admin_photo/album_delete', array('album_id' => '{0}')
+                'admin_photo/album_delete', ['album_id' => '{0}']
             ),
             'album_cover' => $this->url()->fromRoute(
-                'admin_photo/album_cover', array('album_id' => '{0}')
+                'admin_photo/album_cover', ['album_id' => '{0}']
             ),
             'album_page' => $this->url()->fromRoute(
-                'admin_photo/album_page', array('album_id' => '{0}', 'page' => '{1}')
+                'admin_photo/album_page', ['album_id' => '{0}', 'page' => '{1}']
             ),
             'album_index' => $this->url()->fromRoute(
-                'admin_photo/album_index', array('album_id' => '{0}')
+                'admin_photo/album_index', ['album_id' => '{0}']
             ),
             'photo_index' => $this->url()->fromRoute(
-                'admin_photo/photo_index', array('photo_id' => '{0}')
+                'admin_photo/photo_index', ['photo_id' => '{0}']
             ),
             'photo_delete' => $this->url()->fromRoute(
-                'admin_photo/photo_delete', array('photo_id' => '{0}')
+                'admin_photo/photo_delete', ['photo_id' => '{0}']
             ),
             'photo_move' => $this->url()->fromRoute(
-                'admin_photo/photo_move', array('photo_id' => '{0}')
+                'admin_photo/photo_move', ['photo_id' => '{0}']
             ),
 
 
-        );
+        ];
     }
 
     /**

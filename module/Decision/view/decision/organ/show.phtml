@@ -3,16 +3,16 @@
 
 <?php
 // prepare memberships
-$oldMembers = array();
-$currentMembers = array();
+$oldMembers = [];
+$currentMembers = [];
 foreach ($organ->getMembers() as $install) {
     if (null === $install->getDischargeDate()) {
         // current member
         if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
-            $currentMembers[$install->getMember()->getLidnr()] = array(
+            $currentMembers[$install->getMember()->getLidnr()] = [
                 'member' => $install->getMember(),
-                'functions' => array()
-            );
+                'functions' => []
+            ];
         }
         if ($install->getFunction() != 'Lid') {
             $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();

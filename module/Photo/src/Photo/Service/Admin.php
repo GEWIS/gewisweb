@@ -119,7 +119,7 @@ class Admin extends AbstractAclService
         }
 
         $albumService = $this->getAlbumService();
-        $image = new \Zend\Validator\File\IsImage(array('magicFile' => false));
+        $image = new \Zend\Validator\File\IsImage(['magicFile' => false]);
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
@@ -152,10 +152,10 @@ class Admin extends AbstractAclService
         }
 
         $imageValidator = new \Zend\Validator\File\IsImage(
-            array('magicFile' => false)
+            ['magicFile' => false]
         );
         $extensionValidator = new \Zend\Validator\File\Extension(
-            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
         $translator = $this->getTranslator();
 

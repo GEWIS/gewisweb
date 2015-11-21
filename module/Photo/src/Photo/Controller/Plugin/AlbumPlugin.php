@@ -27,8 +27,8 @@ class AlbumPlugin extends AbstractPlugin
             return null;
         }
         $paginator = $page['paginator'];
-        $photos = array();
-        $albums = array();
+        $photos = [];
+        $albums = [];
 
         foreach ($paginator as $item) {
             if ($item->getResourceId() === 'album') {
@@ -38,13 +38,13 @@ class AlbumPlugin extends AbstractPlugin
             }
         }
 
-        return array(
+        return [
             'album' => $page['album']->toArray(),
             'basedir' => $page['basedir'],
             'pages' => $paginator->getPages(),
             'photos' => $photos,
             'albums' => $albums
-        );
+        ];
     }
 
     /**
@@ -76,11 +76,11 @@ class AlbumPlugin extends AbstractPlugin
         $photoService = $this->getPhotoService();
         $basedir = $photoService->getBaseDirectory();
 
-        return array(
+        return [
             'album' => $album,
             'basedir' => $basedir,
             'paginator' => $paginator,
-        );
+        ];
     }
 
     /**

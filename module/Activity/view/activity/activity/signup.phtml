@@ -5,11 +5,11 @@
     <div class="alert alert-success" role="alert"><?php echo $this->translate('Successfully subscribed');?></div>
 <?php endif;?>
 
-<?php echo $this->partial('activity/activity/view.phtml', array(
+<?php echo $this->partial('activity/activity/view.phtml', [
         'activity' => $activity,
         'isLoggedIn' => $isLoggedIn,
         'isSignedUp' => $isSignedUp,
         'canSignUp' => $canSignUp,
 		'signedUp' => $signedUp
-		
-));?>
+
+]);?>

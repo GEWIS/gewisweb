@@ -184,11 +184,11 @@ class Member
      */
     protected static function getGenders()
     {
-        return array(
+        return [
             self::GENDER_MALE,
             self::GENDER_FEMALE,
             self::GENDER_OTHER
-        );
+        ];
     }
 
     /**
@@ -198,13 +198,13 @@ class Member
      */
     protected static function getTypes()
     {
-        return array(
+        return [
             self::TYPE_ORDINARY,
             self::TYPE_PROLONGED,
             self::TYPE_EXTERNAL,
             self::TYPE_EXTRAORDINARY,
             self::TYPE_HONORARY
-        );
+        ];
     }
 
 
@@ -536,7 +536,7 @@ class Member
      */
     public function toArray()
     {
-        return array(
+        return [
             'lidnr' => $this->getLidnr(),
             'email' => $this->getEmail(),
             'fullName' => $this->getFullName(),
@@ -546,7 +546,7 @@ class Member
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
             'expiration' => $this->getExpiration()->format('l j F Y')
-        );
+        ];
     }
 
     /**

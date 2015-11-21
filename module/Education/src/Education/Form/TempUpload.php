@@ -14,36 +14,36 @@ class TempUpload extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'file',
             'type' => 'file',
-            'option' => array(
+            'option' => [
                 'label' => $translator->translate('Exam to upload')
-            )
-        ));
+            ]
+        ]);
         $this->get('file')->setLabel($translator->translate('Exam to upload'));
     }
 
     public function getInputFilterSpecification()
     {
-        return array(
-            'file' => array(
+        return [
+            'file' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'File\Extension',
-                        'options' => array(
+                        'options' => [
                             'extension' => 'pdf'
-                        )
-                    ),
-                    array(
+                        ]
+                    ],
+                    [
                         'name' => 'File\MimeType',
-                        'options' => array(
+                        'options' => [
                             'mimeType' => 'application/pdf'
-                        )
-                    )
-                )
-            )
-        );
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

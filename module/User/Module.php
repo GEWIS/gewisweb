@@ -38,13 +38,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -64,16 +64,16 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'aliases' => array(
+        return [
+            'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'user_auth_service'
-            ),
-            'invokables' => array(
+            ],
+            'invokables' => [
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
                 'user_service_email' => 'User\Service\Email',
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
                     $config = $sm->get('config');
@@ -150,7 +150,7 @@ class Module
                         $roles = $user->getRoleNames();
                         // if the user has no roles, add the 'user' role by default
                         if (empty($roles)) {
-                            $roles = array('user');
+                            $roles = ['user'];
                         }
                         $acl->addRole($user, $roles);
                     }
@@ -165,10 +165,10 @@ class Module
                 'user_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            ),
-            'shared' => array(
+            ],
+            'shared' => [
                 'user_role' => false
-            )
-        );
+            ]
+        ];
     }
 }

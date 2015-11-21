@@ -14,22 +14,22 @@ class SearchDecision extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'query',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Search query')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translate->translate('Search'),
                 'label' => $translate->translate('Search')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -37,13 +37,13 @@ class SearchDecision extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'query' => array(
+        return [
+            'query' => [
                 'required' => true,
-                'validators' => array(
-                    array('name' => 'not_empty')
-                )
-            )
-        );
+                'validators' => [
+                    ['name' => 'not_empty']
+                ]
+            ]
+        ];
     }
 }

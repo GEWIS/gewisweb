@@ -15,16 +15,16 @@ class CompanyController extends AbstractActionController
         if ($companyName != null) {
             $companies = $companyService->getCompaniesWithAsciiName($companyName);
             if (count($companies)!=0){
-                $vm = new ViewModel(array(
+                $vm = new ViewModel([
                     'company' => $companies[0]
-                ));
+                ]);
             }
             else {$vm = new ViewModel();}
         }
         else {
-            $vm = new ViewModel(array(
+            $vm = new ViewModel([
                 'company_list' => $companyService->getCompanyList()
-            ));
+            ]);
         }
         return $vm;
 
@@ -38,9 +38,9 @@ class CompanyController extends AbstractActionController
         if ($jobName != null) {
             $jobs = $companyService->getJobsWithAsciiName($companyName,$jobName);
             if (count($jobs)!=0){
-                $vm = new ViewModel(array(
+                $vm = new ViewModel([
                     'job' => $jobs[0]
-                ));
+                ]);
             }
             else {
                 $vm = new ViewModel();
@@ -48,9 +48,9 @@ class CompanyController extends AbstractActionController
         }
 
         else {
-            $vm = new ViewModel(array(
+            $vm = new ViewModel([
                 'activeJobList' => $companyService->getActiveJobList()
-            ));
+            ]);
         }
         return $vm;
 

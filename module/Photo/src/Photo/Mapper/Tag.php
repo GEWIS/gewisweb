@@ -42,17 +42,17 @@ class Tag
 
     public function findTag($photoId, $lidnr)
     {
-        return $this->getRepository()->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'photo' => $photoId,
             'member' => $lidnr
-        ));
+        ]);
     }
 
     public function getTagsByLidnr($lidnr)
     {
-        return $this->getRepository()->findBy(array(
+        return $this->getRepository()->findBy([
             'member' => $lidnr
-        ));
+        ]);
     }
 
     /**

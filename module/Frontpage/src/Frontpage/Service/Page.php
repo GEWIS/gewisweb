@@ -40,7 +40,7 @@ class Page extends AbstractAclService
     public function getPageParents($page)
     {
         $pageMapper = $this->getPageMapper();
-        $parents = array();
+        $parents = [];
         if(!is_null($page)) {
             if(!is_null($page->getSubCategory())) {
                 $parents[] = $pageMapper->findPage($page->getCategory());
@@ -95,7 +95,7 @@ class Page extends AbstractAclService
             );
         }
         $pages = $this->getPageMapper()->getAllPages();
-        $pageArray = array();
+        $pageArray = [];
         foreach ($pages as $page) {
             $category = $page->getCategory();
             $subCategory = $page->getSubCategory();
@@ -187,11 +187,11 @@ class Page extends AbstractAclService
     public function uploadImage($files)
     {
         $imageValidator = new \Zend\Validator\File\IsImage(
-            array('magicFile' => false)
+            ['magicFile' => false]
         );
 
         $extensionValidator = new \Zend\Validator\File\Extension(
-            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
 
         if ($imageValidator->isValid($files['upload']['tmp_name'])) {

@@ -11,13 +11,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -37,12 +37,12 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'education_service_exam' => 'Education\Service\Exam',
                 'education_service_oase' => 'Education\Service\Oase'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 'education_form_tempupload' => function ($sm) {
                     return new \Education\Form\TempUpload(
                         $sm->get('translator')
@@ -157,8 +157,8 @@ class Module
                 'education_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -168,8 +168,8 @@ class Module
      */
     public function getViewHelperConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'examUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $config = $locator->get('config');
@@ -178,7 +178,7 @@ class Module
                     $helper->setExamService($locator->get('education_service_exam'));
                     return $helper;
                 }
-            )
-        );
+            ]
+        ];
     }
 }

@@ -13,9 +13,9 @@ class DecisionController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel(array(
+        return new ViewModel([
             'meetings' => $this->getDecisionService()->getMeetings()
-        ));
+        ]);
     }
 
     /**
@@ -69,9 +69,9 @@ class DecisionController extends AbstractActionController
         try {
             $meeting = $service->getMeeting($type, $number);
 
-            return new ViewModel(array(
+            return new ViewModel([
                 'meeting' => $meeting
-            ));
+            ]);
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
@@ -89,16 +89,16 @@ class DecisionController extends AbstractActionController
             $result = $service->search($request->getPost());
 
             if (null !== $result) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'result' => $result,
                     'form' => $service->getSearchDecisionForm()
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getSearchDecisionForm()
-        ));
+        ]);
     }
 
     /**

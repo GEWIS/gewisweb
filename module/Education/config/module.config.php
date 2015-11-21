@@ -1,143 +1,143 @@
 <?php
-return array(
-    'router' => array(
-        'routes' => array(
-            'education' => array(
+return [
+    'router' => [
+        'routes' => [
+            'education' => [
                 'type'    => 'Literal',
-                'options' => array(
+                'options' => [
                     'route'    => '/education',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Education\Controller',
                         'controller'    => 'Education',
                         'action'        => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'course' => array(
+                'child_routes' => [
+                    'course' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/course[/:code]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'code' => '[a-zA-Z0-9]{5,6}'
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'course'
-                            )
-                        ),
+                            ]
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'download' => array(
+                        'child_routes' => [
+                            'download' => [
                                 'type' => 'Segment',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/download/:id',
-                                    'constraints' => array(
+                                    'constraints' => [
                                         'id' => '[0-9]*',
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'download'
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    'default' => array(
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'default' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '[/:action]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    )
-                ),
+                            ],
+                        ],
+                    ]
+                ],
                 'priority' => 100
-            ),
-            'admin_education' => array(
+            ],
+            'admin_education' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/admin/education',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Education\Controller',
                         'controller'    => 'Admin',
                         'action'        => 'index'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
+                'child_routes' => [
+                    'default' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '[/:action]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            )
-        )
-    ),
-    'controllers' => array(
-        'invokables' => array(
+            ]
+        ]
+    ],
+    'controllers' => [
+        'invokables' => [
             'Education\Controller\Education' => 'Education\Controller\EducationController',
             'Education\Controller\Admin' => 'Education\Controller\AdminController',
             'Education\Controller\Oase' => 'Education\Controller\OaseController'
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'education' => __DIR__ . '/../view/'
-        )
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'education_entities' => array(
+        ]
+    ],
+    'doctrine' => [
+        'driver' => [
+            'education_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Education/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Education/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Education\Model' => 'education_entities'
-                )
-            )
-        )
-    ),
+                ]
+            ]
+        ]
+    ],
     // console routes
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-                'oase' => array(
-                    'options' => array(
+    'console' => [
+        'router' => [
+            'routes' => [
+                'oase' => [
+                    'options' => [
                         'route' => 'oase update',
-                        'defaults' => array(
+                        'defaults' => [
                             'controller' => 'Education\Controller\Oase',
                             'action' => 'index'
-                        )
-                    )
-                ),
-                'oase-show-studies' => array(
-                    'options' => array(
+                        ]
+                    ]
+                ],
+                'oase-show-studies' => [
+                    'options' => [
                         'route' => 'oase show studies',
-                        'defaults' => array(
+                        'defaults' => [
                             'controller' => 'Education\Controller\Oase',
                             'action' => 'studies'
-                        )
-                    )
-                ),
-                'oase-show-course' => array(
-                    'options' => array(
+                        ]
+                    ]
+                ],
+                'oase-show-course' => [
+                    'options' => [
                         'route' => 'oase show course <code>',
-                        'defaults' => array(
+                        'defaults' => [
                             'controller' => 'Education\Controller\Oase',
                             'action' => 'course'
-                        )
-                    )
-                )
+                        ]
+                    ]
+                ]
 
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];

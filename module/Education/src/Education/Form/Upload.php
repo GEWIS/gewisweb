@@ -13,38 +13,38 @@ class Upload extends Form
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'course',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Course code')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'date',
             'type' => 'date',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Exam date')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'upload',
             'type' => 'file',
-            'option' => array(
+            'option' => [
                 'label' => $translator->translate('Exam to upload')
-            )
-        ));
+            ]
+        ]);
         $this->get('upload')->setLabel($translator->translate('Exam to upload'));
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translator->translate('Submit')
-            )
-        ));
+            ]
+        ]);
 
         $this->initFilters();
     }
@@ -54,50 +54,50 @@ class Upload extends Form
         $filter = new InputFilter();
 
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'course',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 5,
                         'max' => 6
-                    )
-                ),
-                array('name' => 'alnum')
-            ),
-            'filters' => array(
-                array('name' => 'string_to_upper')
-            )
-        ));
+                    ]
+                ],
+                ['name' => 'alnum']
+            ],
+            'filters' => [
+                ['name' => 'string_to_upper']
+            ]
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'date',
             'required' => true,
-            'validators' => array(
-                array('name' => 'date')
-            )
-        ));
+            'validators' => [
+                ['name' => 'date']
+            ]
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'upload',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'File\Extension',
-                    'options' => array(
+                    'options' => [
                         'extension' => 'pdf'
-                    )
-                ),
-                array(
+                    ]
+                ],
+                [
                     'name' => 'File\MimeType',
-                    'options' => array(
+                    'options' => [
                         'mimeType' => 'application/pdf'
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
         $this->setInputFilter($filter);
     }

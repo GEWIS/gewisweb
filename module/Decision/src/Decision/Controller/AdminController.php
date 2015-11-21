@@ -18,15 +18,15 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             if ($service->uploadNotes($request->getPost(), $request->getFiles())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getNotesForm()
-        ));
+        ]);
     }
 
     /**
@@ -39,15 +39,15 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             if ($service->uploadDocument($request->getPost(), $request->getFiles())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getDocumentForm()
-        ));
+        ]);
     }
 
     /**

@@ -223,7 +223,7 @@ class Exam extends AbstractAclService
         $code = $exam->getCourse()->getCode();
         $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';
 
-        $filename = array();
+        $filename = [];
 
         $filename[] = $code;
 
@@ -294,13 +294,13 @@ class Exam extends AbstractAclService
         $config = $this->getConfig('education_temp');
 
         $dir = new \DirectoryIterator($config['upload_dir']);
-        $data = array();
+        $data = [];
 
         foreach ($dir as $file) {
             if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
-                $data[] = array(
+                $data[] = [
                     'file' => $file->getFilename()
-                );
+                ];
             }
         }
 

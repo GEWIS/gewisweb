@@ -155,11 +155,11 @@ class Photo extends AbstractAclService
         $next = $this->getNextPhoto($photo);
         $previous = $this->getPreviousPhoto($photo);
 
-        return array(
+        return [
             'photo' => $photo,
             'next' => $next,
             'previous' => $previous
-        );
+        ];
     }
 
 

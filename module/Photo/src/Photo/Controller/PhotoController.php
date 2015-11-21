@@ -21,11 +21,11 @@ class PhotoController extends AbstractActionController
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
 
-        return new ViewModel(array(
+        return new ViewModel([
             'activeYear' => $year,
             'years' => $years,
             'albums' => $albums
-        ));
+        ]);
     }
 
     /**
@@ -60,9 +60,9 @@ class PhotoController extends AbstractActionController
     {
         $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
 
-        return new ViewModel(array(
+        return new ViewModel([
             'weeklyPhotos' => $weeklyPhotos
-        ));
+        ]);
     }
 
     /**

@@ -1,200 +1,200 @@
 <?php
-return array(
-    'router' => array(
-        'routes' => array(
-            'decision' => array(
+return [
+    'router' => [
+        'routes' => [
+            'decision' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/decision',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller' => 'Decision',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
+                'child_routes' => [
+                    'default' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:action]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    ),
-                    'meeting' => array(
+                            ],
+                        ],
+                    ],
+                    'meeting' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/:type/:number',
-                            'constraints' => array(
+                            'constraints' => [
                                 'type' => 'BV|AV|VV|Virt',
                                 'number' => '[0-9]+'
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'view'
-                            )
-                        ),
+                            ]
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'notes' => array(
+                        'child_routes' => [
+                            'notes' => [
                                 'type' => 'Segment',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/notes',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'action' => 'notes',
-                                    ),
-                                ),
-                            ),
-                        )
-                    ),
-                    'document' => array(
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ],
+                    'document' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/document/:id',
-                            'constraints' => array(
+                            'constraints' => [
                                 'id' => '[0-9]+'
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'document',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-            'admin_decision' => array(
+            ],
+            'admin_decision' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/admin/decision',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller' => 'Admin',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
+                'child_routes' => [
+                    'default' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:action]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-            'organ' => array(
+            ],
+            'organ' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route'    => '/organ',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller'    => 'Organ',
                         'action'        => 'index'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'show' => array(
+                'child_routes' => [
+                    'show' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/show/:organ',
-                            'constraints' => array(
+                            'constraints' => [
                                 'organ' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'show'
-                            )
-                        ),
-                    ),
-                ),
+                            ]
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-            'member' => array(
+            ],
+            'member' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/member',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller' => 'Member',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'search' => array(
+                'child_routes' => [
+                    'search' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/search',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'search',
-                            ),
-                        ),
-                    ),
-                    'birthdays' => array(
+                            ],
+                        ],
+                    ],
+                    'birthdays' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/birthdays',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'birthdays'
-                            )
-                        )
-                    ),
-                    'dreamspark' => array(
+                            ]
+                        ]
+                    ],
+                    'dreamspark' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/dreamspark',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'dreamspark'
-                            )
-                        )
-                    ),
-                    'view' => array(
+                            ]
+                        ]
+                    ],
+                    'view' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/:lidnr',
-                            'constraints' => array(
+                            'constraints' => [
                                 'lidnr' => '[0-9]+'
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'view'
-                            )
-                        )
-                    )
-                ),
+                            ]
+                        ]
+                    ]
+                ],
                 'priority' => 100
-            ),
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
             'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
             'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
             'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController'
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'decision' => __DIR__ . '/../view/'
-        )
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'decision_entities' => array(
+        ]
+    ],
+    'doctrine' => [
+        'driver' => [
+            'decision_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Decision/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Decision/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Decision\Model' => 'decision_entities'
-                )
-            )
-        )
-    )
-);
+                ]
+            ]
+        ]
+    ]
+];
