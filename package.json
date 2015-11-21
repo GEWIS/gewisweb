@@ -1,0 +1,27 @@
+{
+  "name": "gewisweb",
+  "version": "0.0.0-dev",
+  "description": "GEWIS Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kokx/gewisweb.git"
+  },
+  "keywords": [
+    "GEWIS"
+  ],
+  "author": "GEWIS WebCommissie",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/kokx/gewisweb/issues"
+  },
+  "homepage": "https://github.com/kokx/gewisweb#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
