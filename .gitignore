@@ -11,3 +11,4 @@ nbproject
 vendor/
 gewisweb-vagrant/
 node_modules/
+.sass-cache/
