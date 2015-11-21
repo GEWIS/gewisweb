@@ -11,6 +11,53 @@ class AdminController extends AbstractActionController {
     {
     }
 
+    public function bulkAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // try uploading
+            if ($service->tempUpload($request->getPost(), $request->getFiles())) {
+                return new ViewModel(array(
+                    'success' => true
+                ));
+            } else {
+                $this->getResponse()->setStatusCode(500);
+                return new ViewModel(array(
+                    'success' => false
+                ));
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $service->getTempUploadForm()
+        ));
+    }
+
+    /**
+     * Edit several exams in bulk.
+     */
+    public function editAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+            return new ViewModel(array(
+                'success' => true
+            ));
+        }
+
+        $config = $this->getServiceLocator()->get('config');
+        $config = $config['education_temp'];
+
+        return new ViewModel(array(
+            'form'   => $service->getBulkForm(),
+            'config' => $config
+        ));
+    }
+
     public function uploadAction()
     {
         $service = $this->getExamService();

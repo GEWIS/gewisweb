@@ -17,6 +17,13 @@ class Exam extends AbstractAclService
 {
 
     /**
+     * Bulk form.
+     *
+     * @var \Education\Form\Bulk
+     */
+    protected $bulkForm;
+
+    /**
      * Search for a course.
      *
      * @param array $data
@@ -51,6 +58,104 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Get an exam
+     *
+     * @param int $id
+     *
+     * @return ExamModel
+     */
+    public function getExamDownload($id)
+    {
+        $exam = $this->getExamMapper()->find($id);
+
+        return $this->getFileStorageService()
+            ->downloadFile($exam->getFilename(), $this->examToFilename($exam));
+    }
+
+    /**
+     * Finish the bulk edit.
+     *
+     * @param array $data POST Data
+     *
+     * @return boolean
+     */
+    public function bulkEdit($data)
+    {
+        $form = $this->getBulkForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $storageService = $this->getFileStorageService();
+        $config = $this->getConfig('education_temp');
+
+        /**
+         * Persist the exams and save the uploaded files.
+         *
+         * We do this in a transactional block, so if there is something
+         * wrong, we only have to throw an exception and Doctrine will roll
+         * back the transaction. This comes in handy if we are somehow unable
+         * to process the upload. This does allow us to get the ID of the
+         * exam, which we need in the upload process.
+         */
+
+        $this->getExamMapper()->transactional(function ($mapper) use ($data, $config, $storageService) {
+            foreach ($data['exams'] as $examData) {
+                // finalize exam upload
+                $exam = new ExamModel();
+                $exam->setDate(new \DateTime($examData['date']));
+                $exam->setCourse($this->getCourse($examData['course']));
+
+                $localFile = $config['upload_dir'] . '/' . $examData['file'];
+
+                $exam->setFilename($storageService->storeFile($localFile));
+
+                $mapper->persist($exam);
+            }
+        });
+
+        return true;
+    }
+
+    /**
+     * Temporary exam upload.
+     *
+     * Uploads exams into a temporary folder.
+     *
+     * @param array $post POST Data
+     * @param array $files FILES Data
+     *
+     * @return boolean
+     */
+    public function tempUpload($post, $files)
+    {
+        $form = $this->getTempUploadForm();
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $config = $this->getConfig('education_temp');
+
+        $filename = $data['file']['name'];
+        $path = $config['upload_dir'] . '/' . $filename;
+
+        if (!file_exists($path)) {
+            move_uploaded_file($data['file']['tmp_name'], $path);
+        }
+        return true;
+    }
+
+    /**
      * Upload a new exam.
      *
      * @param array $post POST Data
@@ -74,8 +179,10 @@ class Exam extends AbstractAclService
         $exam = $form->getData();
         $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
+        $storageService = $this->getFileStorageService();
+
         /**
-         * Persist the exam and save the uploaded file.
+         * Save the uploaded file and persist the exam.
          *
          * We do this in a transactional block, so if there is something
          * wrong, we only have to throw an exception and Doctrine will roll
@@ -83,32 +190,13 @@ class Exam extends AbstractAclService
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data) {
-            $mapper->persist($exam);
+        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data, $storageService) {
+            $exam->setFilename($storageService->storeUploadedFile($data['upload']));
 
-            $this->finishUpload($exam, $data['upload']);
+            $mapper->persist($exam);
         });
 
         return true;
-    }
-
-    /**
-     * Move the uploaded file to the right place.
-     *
-     * @param ExamModel $exam
-     * @param array $upload Upload data
-     */
-    protected function finishUpload(ExamModel $exam, array $upload)
-    {
-        $config = $this->getConfig();
-
-        $filename = $config['upload_dir'] . '/' . $this->examToFilename($exam);
-
-        // make sure the directory exists, and move the file
-        if (!is_dir(dirname($filename))) {
-            mkdir(dirname($filename), $config['dir_mode'], true);
-        }
-        move_uploaded_file($upload['tmp_name'], $filename);
     }
 
     /**
@@ -120,11 +208,11 @@ class Exam extends AbstractAclService
      *
      * Exams will have a filename of the following format:
      *
-     * <code>-<id>-exam-<year>-<month>-<day>.pdf
+     * <code>-exam-<year>-<month>-<day>.pdf
      *
      * Summaries have the following format:
      *
-     * <code>-<id>-<author>-summary-<year>-<month>-<day>.php
+     * <code>-<author>-summary-<year>-<month>-<day>.pdf
      *
      * @param ExamModel $exam
      *
@@ -138,7 +226,6 @@ class Exam extends AbstractAclService
         $filename = array();
 
         $filename[] = $code;
-        $filename[] = $exam->getId();
 
         if ($exam instanceof SummaryModel) {
             $filename[] = $exam->getAuthor();
@@ -158,10 +245,10 @@ class Exam extends AbstractAclService
      *
      * @return array
      */
-    public function getConfig()
+    public function getConfig($key = 'education')
     {
         $config = $this->sm->get('config');
-        return $config['education'];
+        return $config[$key];
     }
 
     /**
@@ -180,6 +267,74 @@ class Exam extends AbstractAclService
             );
         }
         return $this->sm->get('education_form_upload');
+    }
+
+    /**
+     * Get the bulk edit form.
+     *
+     * @return \Education\Form\Bulk
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     */
+    public function getBulkForm()
+    {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
+        if (null !== $this->bulkForm) {
+            return $this->bulkForm;
+        }
+
+        // fully load the bulk form
+        $this->bulkForm = $this->sm->get('education_form_bulk');
+
+        $config = $this->getConfig('education_temp');
+
+        $dir = new \DirectoryIterator($config['upload_dir']);
+        $data = array();
+
+        foreach ($dir as $file) {
+            if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
+                $data[] = array(
+                    'file' => $file->getFilename()
+                );
+            }
+        }
+
+        $this->bulkForm->get('exams')->populateValues($data);
+
+        return $this->bulkForm;
+    }
+
+    /**
+     * Get the Temporary Upload form.
+     *
+     * @return \Education\Form\TempUpload
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     */
+    public function getTempUploadForm()
+    {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to upload exams')
+            );
+        }
+        return $this->sm->get('education_form_tempupload');
+    }
+
+    /**
+     * Get the storage service.
+     *
+     * @return \Application\Service\FileStorage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

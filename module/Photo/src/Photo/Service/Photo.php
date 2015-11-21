@@ -296,8 +296,17 @@ class Photo extends AbstractAclService
         }
         return $bestPhoto;
     }
-    
-    
+
+    /**
+     * Retrieves all WeeklyPhotos
+     *
+     * @return array
+     */
+    public function getPhotosOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
+    }
+
     /**
      * Determine the preference rating of the photo.
      * 
@@ -313,7 +322,12 @@ class Photo extends AbstractAclService
         $res = $occurences * (1 + 1 / $age);
         return $tagged ? 1.5 * $res : $res;
     }
-     
+
+    public function getCurrentPhotoOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getCurrentPhotoOfTheWeek();
+    }
+
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
@@ -563,5 +577,4 @@ class Photo extends AbstractAclService
     {
         return $this->sm->get('photo_acl');
     }
-
 }
