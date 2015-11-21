@@ -92,13 +92,37 @@ class PollOption implements ResourceInterface
     }
 
     /**
+     * @param mixed $poll
+     */
+    public function setPoll($poll)
+    {
+        $this->poll = $poll;
+    }
+
+    /**
+     * @param mixed $dutchText
+     */
+    public function setDutchText($dutchText)
+    {
+        $this->dutchText = $dutchText;
+    }
+
+    /**
+     * @param mixed $englishText
+     */
+    public function setEnglishText($englishText)
+    {
+        $this->englishText = $englishText;
+    }
+
+    /**
      * Get the number of votes for this poll option.
      *
      * @return integer
      */
     public function getVotesCount()
     {
-        return $this->votes->count();
+        return is_null($this->votes) ? null : $this->votes->count();
     }
 
     /**

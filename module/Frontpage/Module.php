@@ -52,10 +52,23 @@ class Module
                     $form->setHydrator($sm->get('frontpage_hydrator_page'));
                     return $form;
                 },
+                'frontpage_form_poll' => function ($sm) {
+                    $form = new \Frontpage\Form\Poll(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('frontpage_hydrator_poll'));
+                    return $form;
+                },
                 'frontpage_hydrator_page' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('frontpage_doctrine_em'),
                         'Frontpage\Model\Page'
+                    );
+                },
+                'frontpage_hydrator_poll' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('frontpage_doctrine_em'),
+                        'Frontpage\Model\Poll'
                     );
                 },
                 'frontpage_mapper_page' => function ($sm) {
@@ -75,6 +88,7 @@ class Module
                     $acl->addResource('poll');
 
                     $acl->allow('user', 'poll', 'vote');
+                    $acl->allow('user', 'poll', 'request');
 
                     return $acl;
                 },

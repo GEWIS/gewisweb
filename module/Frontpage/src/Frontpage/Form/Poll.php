@@ -30,6 +30,19 @@ class Poll extends Form implements InputFilterProviderInterface
             )
         ));
 
+        $this->add([
+            'name' => 'options',
+            'type' => 'Zend\Form\Element\Collection',
+            'options' => array(
+                'count' => 2,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'Frontpage\Form\PollOption'
+                )
+            )
+        ]);
+
         $this->add(array(
             'name' => 'submit',
             'type' => 'submit',

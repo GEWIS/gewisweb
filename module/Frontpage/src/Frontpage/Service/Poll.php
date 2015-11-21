@@ -112,6 +112,36 @@ class Poll extends AbstractAclService
         $pollMapper->flush();
     }
 
+    public function requestPoll($data)
+    {
+        $form = $this->getPollForm();
+        $poll = new PollModel();
+        $form->bind($poll);
+
+        $form->setData($data);
+        if(!$form->isValid()) {
+            return false;
+        }
+        var_dump($poll->getOptions()[0]->getDutchText());
+        $poll->setExpiryDate(new \DateTime());
+        $pollMapper = $this->getPollMapper();
+        $pollMapper->persist($poll);
+        $pollMapper->flush();
+        return true;
+    }
+
+    public function getPollForm()
+    {
+        if (!$this->isAllowed('request')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to request polls')
+            );
+        }
+
+        return $this->sm->get('frontpage_form_poll');
+    }
+
     /**
      * Get the poll mapper.
      *

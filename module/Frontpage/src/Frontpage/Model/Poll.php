@@ -13,6 +13,13 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Poll implements ResourceInterface
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Poll ID.
@@ -89,7 +96,55 @@ class Poll implements ResourceInterface
         return $this->options;
     }
 
+    /**
+     * @param mixed $expiryDate
+     */
+    public function setExpiryDate($expiryDate)
+    {
+        $this->expiryDate = $expiryDate;
+    }
 
+    /**
+     * @param mixed $englishQuestion
+     */
+    public function setEnglishQuestion($englishQuestion)
+    {
+        $this->englishQuestion = $englishQuestion;
+    }
+
+    /**
+     * @param mixed $dutchQuestion
+     */
+    public function setDutchQuestion($dutchQuestion)
+    {
+        $this->dutchQuestion = $dutchQuestion;
+    }
+
+    /**
+     * Adds options to the poll
+     *
+     * @param ArrayCollection $options
+     */
+    public function addOptions($options)
+    {
+        foreach ($options as $option) {
+            $option->setPoll($this);
+            $this->options->add($option);
+        }
+    }
+
+    /**
+     * Removes options from the poll
+     *
+     * @param ArrayCollection $options
+     */
+    public function removeOptions($options)
+    {
+        foreach ($options as $option) {
+            $option->setPoll(null);
+            $this->options->removeElement($option);
+        }
+    }
 
 
     /**

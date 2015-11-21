@@ -53,6 +53,26 @@ class PollController extends AbstractActionController
         ));
     }
 
+    public function requestAction()
+    {
+        $pollService = $this->getPollService();
+        $form = $pollService->getPollForm();
+
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($pollService->requestPoll($request->getPost())) {
+                return new ViewModel(array(
+                    'success' => true,
+                ));
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $form,
+        ));
+    }
+
     /**
      * Get the poll service.
      *
