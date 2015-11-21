@@ -6,21 +6,21 @@ $this->scriptUrl()->requireUrl('member/search');
 <?php if ($photo != null): ?>
     <div clas="row">
         <h1>Foto's</h1>
-        
+
         <nav>
             <ul class="pager">
                 <li>
-                    <a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())) ?>">    
+                    <a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())) ?>">
                         <?= $photo->getAlbum()->getStartDateTime()->format('Y') ?>/<?= $photo->getAlbum()->getEndDateTime()->format('Y') ?>
-                    </a>        
+                    </a>
                 </li>
-                    
+
                 <li>
                     <a href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())) ?>">
                         <?= $photo->getAlbum()->getName() ?>
                     </a>
                 </li>
-            
+
 <!--
                 <li class="previous"><a
                         href="<?= $this->url('photo/album', array('album_id' => $photo->getAlbum()->getId())); ?>"><span
@@ -41,6 +41,15 @@ $this->scriptUrl()->requireUrl('member/search');
         </div>
         <div class="col-lg-8">
             <img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/>
+                <?php if(!is_null($photo->getWeeklyPhoto())): ?>
+                <!-- TOOD: Make this more responsive -->
+                <div class="ribbon-container">
+                    <div class="corner-ribbon shadow">
+                        <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                        <?= $photo->getWeeklyPhoto()->getWeek()->format('d-m-Y') ?>
+                    </div>
+                </div>
+                <?php endif ?>
         </div>
         <div class="col-lg-2">
             <?php if (!is_null($next)): ?>
@@ -59,7 +68,7 @@ $this->scriptUrl()->requireUrl('member/search');
         <div class="col-lg-4">
             <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
             <?php if($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
-            
+
             <a href="<?= $this->url('photo/photo_download', array('photo_id' => $photo->getId())); ?>" class="text-uppercase"><?= $this->translate('Download'); ?></a>
             <?php endif; ?>
         </div>
