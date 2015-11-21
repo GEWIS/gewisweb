@@ -20,17 +20,31 @@ Installation
   database.
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
 
-Dreamspark configuration (only works on the GEWIS-server)
----------------------------------------------------------
+Configuration for scss editing
+------------------------------
 
-- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and
-  configure the Dreamspark credentials.
+If you need to edit stylesheets, you need to be able to compile scss files
+locally. For that, follow the next steps:
+
+- Install nodejs and npm (npm should be bundled with node).
+- Install grunt-cli globally, `npm install -g grunt-cli`
+- Install local dependencies (in the directory of the GEWIS Website), `npm install`
+
+To compile scss files, simply run `grunt css`. While working on the
+stylesheets, it may be nice to let grunt watch the stylesheet and
+automatically recomple. For this, you can run `grunt watch`.
 
 Optional debugging configuration
 --------------------------------
 
 - Copy `config/autoload/zdt.local.php.dist` to
   `config/autoload/zdt.local.php`.
+
+Dreamspark configuration (only works on the GEWIS-server)
+---------------------------------------------------------
+
+- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and
+  configure the Dreamspark credentials.
 
 Translation
 ===========
