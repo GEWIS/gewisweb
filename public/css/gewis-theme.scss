@@ -1,10 +1,17 @@
 @import "bootstrap";
 
+/* basic settings */
 body {
     color: #414141;
     font-family: "Raleway",sans-serif;
     padding-top: 90px;
     padding-bottom: 0;
+
+    /* main container */
+    > div.container {
+        background-color: #f0f0f0;
+        padding-top: 15px;
+    }
 }
 
 /* navigation */
@@ -13,47 +20,47 @@ body {
 }
 .navbar-default {
     background: transparent;
+
+    .navbar-nav {
+        background-color: #fff;
+
+        a {
+            text-transform: uppercase;
+        }
+
+        .dropdown > a,
+        > .open > a,
+        > .active > a,
+        > li > a:focus,
+        > .open > a:focus,
+        > .active > a:focus,
+        > li > a:hover,
+        > .open > a:hover,
+        > .active > a:hover {
+            background-color: #BC5F5F;
+            color: #fff;
+        }
+    }
 }
-.navbar-default .navbar-nav {
-    background-color: #fff;
-}
-@media (min-width: 768px) {
+@media (min-width: $screen-sm-min) {
     .navbar-default .navbar-nav a {
         padding-top: 30px;
         padding-bottom: 30px;
     }
 }
-.navbar-default .navbar-nav a {
-    text-transform: uppercase;
-}
-.navbar-default .navbar-nav .dropdown > a,
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > li > a:focus,
-.navbar-default .navbar-nav > .open > a:focus,
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .active > a:hover {
-    background-color: #BC5F5F;
-    color: #fff;
-}
 
 /* Dropdown navigation */
-.navbar-nav > li > .dropdown-menu {
-    border-radius: 0;
-    border: none;
-    padding: 0;
-}
-.navbar-nav .dropdown-menu li a {
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
+.navbar-nav {
+    > li > .dropdown-menu {
+        border-radius: 0;
+        border: none;
+        padding: 0;
+    }
 
-/* main container */
-body > div.container {
-    background-color: #f0f0f0;
-    padding-top: 15px;
+    .dropdown-menu li a {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
 }
 
 /* removing border radius */
@@ -65,7 +72,7 @@ body > div.container {
 }
 
 /* Navbar start fix */
-@media (max-width: 768px) {
+@media (max-width: $screen-xs-max) {
     .navbar-nav {
         margin: 0 -15px;
     }
@@ -117,12 +124,12 @@ body > div.container {
 .jumbotron-header.jumbotron-large a img {
     height: auto;
 }
-@media (max-width: 768px) {
+@media (max-width: $screen-xs-max) {
     .jumbotron-header {
         height: 50px;
     }
 }
-@media (max-width: 992px) {
+@media (max-width: $screen-sm-max) {
     .jumbotron-header.jumbotron-large {
         padding-top: 80px;
         padding-bottom: 80px;
@@ -145,9 +152,9 @@ footer {
     margin-bottom: -10px;
     color: #fff;
     background-color: #bc5f5f;
-}
-footer a {
-    color: #fff;
+    a {
+        color: #fff;
+    }
 }
 
 /* Photos page */
@@ -173,7 +180,7 @@ footer a {
         column-gap: 0px;
     }
 }
-@media (min-width: 768px) {
+@media (min-width: $screen-sm-min) {
     .photos {
         -webkit-column-count: 3;
         -webkit-column-gap: 0px;
@@ -183,7 +190,7 @@ footer a {
         column-gap: 0px;
     }
 }
-@media (min-width: 992px) {
+@media (min-width: $screen-md-min) {
     .photos {
         -webkit-column-count: 4;
         -webkit-column-gap: 0px;
@@ -193,7 +200,7 @@ footer a {
         column-gap: 0px;
     }
 }
-@media (min-width: 1200px) {
+@media (min-width: $screen-lg-min) {
     .photos {
         -webkit-column-count: 5;
         -webkit-column-gap: 0px;
@@ -216,7 +223,7 @@ footer a {
 }
 
 /* Pop the agenda slightly over the header image */
-@media (min-width: 992px) {
+@media (min-width: $screen-md-min) {
     .agenda {
         margin-top: -75px;
     }
@@ -244,18 +251,18 @@ footer a {
     float: left;
     display: table-cell;
     vertical-align: middle;
+
+    .day {
+        text-align: center;
+        padding: 10px;
+    }
+    .month {
+        text-align: center;
+        margin-top: -80px;
+    }
 }
 
-.date-icon .day {
-    text-align: center;
-    padding: 10px;
-}
 
-
-.date-icon .month {
-    text-align: center;
-    margin-top: -80px;
-}
 
 /* Weekly photo ribbon */
 
@@ -268,7 +275,7 @@ footer a {
     height:200px;
     overflow: hidden;
 }
-.corner-ribbon{
+.corner-ribbon {
     width: 200px;
     position: absolute;
     top: 25px;
@@ -308,7 +315,7 @@ footer a {
     margin-top:0px;
 }
 
-.year-list li{
+.year-list li {
     display:table-cell;
     position:relative;
     text-align:center;
@@ -316,6 +323,13 @@ footer a {
     cursor:-webkit-grab;
     color:#efefef;
     vertical-align:middle;
+
+    a {
+        background-color: #fff;
+        border-radius: 0;
+
+        box-sizing: border-box;
+    }
 }
 .year-list > a,
 .year-list > li.active > a,
@@ -329,12 +343,6 @@ footer a {
 .scroller:hover {
     background-color: #BC5F5F;
 }
-.year-list li a{
-    background-color: #fff;
-    border-radius: 0;
-
-    box-sizing: border-box;
-}
 .scroller {
     text-align:center;
     cursor:pointer;
@@ -346,7 +354,7 @@ footer a {
     background-color:#fff;
 }
 
-.scroller-right{
+.scroller-right {
     float:right;
 }
 
