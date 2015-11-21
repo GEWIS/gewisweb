@@ -1,3 +1,8 @@
+/* Bootstrap variable overrides (removes border radius) */
+$border-radius-small: 0px;
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+
 @import "bootstrap";
 
 /* basic settings */
@@ -52,7 +57,6 @@ body {
 /* Dropdown navigation */
 .navbar-nav {
     > li > .dropdown-menu {
-        border-radius: 0;
         border: none;
         padding: 0;
     }
@@ -61,14 +65,6 @@ body {
         padding-top: 15px;
         padding-bottom: 15px;
     }
-}
-
-/* removing border radius */
-.navbar-toggle,
-.form-control,
-.btn,
-.well {
-    border-radius: 0;
 }
 
 /* Navbar start fix */
@@ -85,7 +81,6 @@ body {
 .container .jumbotron,
 .container-fluid .jumbotron {
     background-color: #DDD;
-    border-radius: 0;
 }
 
 /* Jumbotron header */
@@ -94,7 +89,6 @@ body {
     background: url(../img/Panorama.jpg);
     background-size: cover;
     background-position: center;
-    border-radius: 0;
     padding-top: 20px;
     padding-bottom: 20px;
     margin-top: -90px;
@@ -217,7 +211,6 @@ footer {
 }
 
 .agenda {
-    border-radius: 0px;
     background-color: #fff;
 
 }
@@ -243,7 +236,6 @@ footer {
 }
 
 .date-icon {
-    border-radius: 50%;
     width: 50px;
     height: 50px;
     background-color: #bc5f5f;
@@ -326,7 +318,6 @@ footer {
 
     a {
         background-color: #fff;
-        border-radius: 0;
 
         box-sizing: border-box;
     }
