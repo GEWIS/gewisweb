@@ -3,6 +3,7 @@ namespace User;
 
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
+use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 use Zend\Mvc\MvcEvent;
 use Zend\Http\Request as HttpRequest;
 
@@ -197,6 +198,9 @@ class Module
 
                     // admins are allowed to do everything
                     $acl->allow('admin');
+
+                    // configure the user ACL
+                    $acl->addResource(new Resource('apiuser'));
 
                     return $acl;
                 },

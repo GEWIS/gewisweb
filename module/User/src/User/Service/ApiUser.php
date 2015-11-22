@@ -2,7 +2,7 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
@@ -11,7 +11,7 @@ use User\Mapper\ApiUser as ApiUserMapper;
 /**
  * API User service.
  */
-class ApiUser extends AbstractService
+class ApiUser extends AbstractAclService
 {
 
     /**
@@ -27,6 +27,12 @@ class ApiUser extends AbstractService
      */
     public function getTokens()
     {
+        if (!$this->isAllowed('list')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view API tokens')
+            );
+        }
         return $this->getApiUserMapper()->findAll();
     }
 
@@ -50,6 +56,26 @@ class ApiUser extends AbstractService
     public function hasIdentity()
     {
         return null !== $this->identity;
+    }
+
+    /**
+     * Get the user ACL.
+     *
+     * @return \Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->getServiceManager()->get('acl');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    public function getDefaultResourceId()
+    {
+        return 'apiuser';
     }
 
     /**
