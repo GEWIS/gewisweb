@@ -3,6 +3,8 @@
 namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 /**
  * Mappers for Polls.
@@ -83,6 +85,18 @@ class Poll
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Returns a paginator adapter for paging through all polls.
+     *
+     * @return DoctrineAdapter
+     */
+    public function getPaginatorAdapter()
+    {
+        $qb = $this->getRepository()->createQueryBuilder('poll');
+        $qb->orderBy('poll.expiryDate', 'DESC');
+        return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
     /**

@@ -58,7 +58,6 @@ class PollController extends AbstractActionController
         $pollService = $this->getPollService();
         $form = $pollService->getPollForm();
 
-
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($pollService->requestPoll($request->getPost())) {

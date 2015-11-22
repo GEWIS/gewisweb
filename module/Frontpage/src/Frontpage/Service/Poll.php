@@ -5,8 +5,6 @@ namespace Frontpage\Service;
 use Application\Service\AbstractAclService;
 use Frontpage\Model\PollVote as PollVoteModel;
 use Frontpage\Model\Poll as PollModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 /**
  * Poll service.
@@ -31,8 +29,7 @@ class Poll extends AbstractAclService
 
     public function getPaginatorAdapter()
     {
-        $repository = $this->getPollMapper()->getRepository();
-        return new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('poll')));
+        return $this->getPollMapper()->getPaginatorAdapter();
     }
 
     /**
@@ -53,7 +50,7 @@ class Poll extends AbstractAclService
     }
 
     /**
-     * Determines wether the current user can vote on the given poll.
+     * Determines whether the current user can vote on the given poll.
      *
      * @param \Frontpage\Model\Poll $poll
      *
@@ -122,7 +119,7 @@ class Poll extends AbstractAclService
         if(!$form->isValid()) {
             return false;
         }
-        var_dump($poll->getOptions()[0]->getDutchText());
+
         $poll->setExpiryDate(new \DateTime());
         $pollMapper = $this->getPollMapper();
         $pollMapper->persist($poll);
