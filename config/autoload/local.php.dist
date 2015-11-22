@@ -11,23 +11,23 @@
  * credentials from accidentally being committed into version control.
  */
 
-return array(
+return [
     /**
      * Dreamspark credentials.
      */
-    'dreamspark' => array(
+    'dreamspark' => [
         'account' => '',
         'key' => ''
-    ),
+    ],
 
     /**
      * Email configuration.
      */
-    'email' => array(
+    'email' => [
         'transport' => 'File',
-        'options' => array(
+        'options' => [
             'path' => 'data/mail/'
-        ),
+        ],
         'from' => 'web@gewis.nl'
-    ),
-);
+    ]
+];

@@ -97,7 +97,20 @@ return [
     'frontpage' => [
         'activity_count' => 3 // Number of activities to display
     ],
-    
+
+    /**
+     * Doctrine global configuration, like functions
+     */
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'numeric_functions' => [
+                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
+                ]
+            ]
+        ]
+    ],
+
     /**
      * OASE SOAP API configuration.
      *
