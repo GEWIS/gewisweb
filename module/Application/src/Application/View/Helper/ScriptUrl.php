@@ -18,7 +18,7 @@ class ScriptUrl extends AbstractHelper
      *
      * @var array
      */
-    protected $urls;
+    protected $urls = [];
 
     /**
      * @return \Application\View\Helper\ScriptUrl
