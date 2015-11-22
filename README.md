@@ -27,6 +27,7 @@ If you need to edit stylesheets, you need to be able to compile scss files
 locally. For that, follow the next steps:
 
 - Install nodejs and npm (npm should be bundled with node).
+- Install Ruby and the Sass gem `gem install sass`
 - Install grunt-cli globally, `npm install -g grunt-cli`
 - Install local dependencies (in the directory of the GEWIS Website), `npm install`
 
