@@ -36,6 +36,13 @@ class Activity
     protected $name;
 
     /**
+     * English name for the activity
+     *
+     * @Orm\Column(type="string")
+     */
+    protected $name_en;
+
+    /**
      * The date and time the activity starts.
      *
      * @ORM\Column(type="datetime")
@@ -57,11 +64,25 @@ class Activity
     protected $location;
 
     /**
-     * How much does it cost. 0 = free!
+     * English string to denote what location the activity is held on
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string")
+     */
+    protected $location_en;
+
+    /**
+     * How much does it cost.
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $costs;
+
+    /**
+     * English string to denote how much the activity cost
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $costs_en;
 
     /**
      * Are people able to sign up for this activity?
@@ -110,7 +131,14 @@ class Activity
     protected $description;
 
     /**
-     * all the photo's in this album.
+     * Activity description.
+     *
+     * @Orm\Column(type="text")
+     */
+    protected $description_en;
+
+    /**
+     * all the people who signed up for this activity
      *
      * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
      */
@@ -118,6 +146,7 @@ class Activity
 
     // TODO -> where can i find member organ?
     protected $organ;
+
 
     /**
      * Set the approval status of the activity
