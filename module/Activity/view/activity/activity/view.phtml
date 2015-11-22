@@ -4,45 +4,45 @@
 <?php $i=0; ?>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Id'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('id');?></div>
+    <div class="col-md-6"><?php echo $activity->getId();?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Name'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('name');?></div>
+    <div class="col-md-6"><?php echo $activity->getName();?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Start time'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></div>
+    <div class="col-md-6"><?php echo $activity->getBeginTime()->format('Y-m-d H:i:s')?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('End time'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('endTime')->format('Y-m-d H:i:s')?></div>
+    <div class="col-md-6"><?php echo $activity->getEndTime()->format('Y-m-d H:i:s')?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Location'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('location')?></div>
+    <div class="col-md-6"><?php echo $activity->getLocation(); ?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Costs'); ?></div>
-    <div class="col-md-6"><?php echo $this->translate($activity->getCostString()); ?></div>
+    <div class="col-md-6"><?php echo $this->translate($activity->getCosts()); ?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Subscribe'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('canSignUp') ? $this->translate("Yes") : $this->translate("No"); ?></div>
+    <div class="col-md-6"><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></div>
 </div>
 <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
     <div class="col-md-6"><?php echo $this->translate('Only GEWIS'); ?></div>
-    <div class="col-md-6"><?php echo $activity->get('onlyGEWIS') ? $this->translate("Yes") : $this->translate("No"); ?></div>
+    <div class="col-md-6"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
 </div>
 <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
     <div class="col-md-12">
 <?php if ($isSignedUp) :?>
         <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
-		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->get('id')]);?>">
+		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->getId()]);?>">
 		    <?php echo $this->translate('Unsubscribe');?>
 		</a>
 <?php elseif($canSignUp && $isLoggedIn):?>
-        <a href="<?php echo $this->url('activity/signup', ['id' => $activity->get('id')]);?>">
+        <a href="<?php echo $this->url('activity/signup', ['id' => $activity->getId()]);?>">
             <?php echo $this->translate('Subscribe');?>
         </a>
 <?php elseif ($canSignUp):?>
@@ -51,7 +51,7 @@
 	</div>
 </div>
 
-<?php if ($activity->get('canSignUp')): ?>
+<?php if ($activity->getCanSignUp()): ?>
     <h2>
         <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
     </h2>

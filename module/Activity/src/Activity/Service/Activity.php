@@ -4,6 +4,7 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use User\Permissions\NotAllowedException;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
@@ -110,12 +111,30 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the creator
         $user = $this->getServiceManager()->get('user_role');
         if ($user === 'guest') {
-            throw new \InvalidArgumentException('Guests can not create activities');
+            throw new NotAllowedException('Guests can not create activities');
         }
-        $params['creator'] = $user;
-
         $activity = new ActivityModel();
-        $activity->create($params);
+        $activity->setBeginTime(new \DateTime($params['beginTime']));
+        $activity->setEndTime(new \DateTime($params['endTime']));
+        $activity->setName($params['name']);
+        $activity->setNameEn($params['name_en']);
+        $activity->setLocation($params['location']);
+        $activity->setLocationEn($params['location_en']);
+
+        if (!$params['costs_unknown']) {
+            $activity->setCosts($params['costs']);
+            $activity->setCostsEn($params['costs_en']);
+        }
+
+        $activity->setDescription($params['description']);
+        $activity->setDescriptionEn($params['description_en']);
+        $activity->setCanSignUp($params['canSignUp']);
+
+        // Not user provided input
+        $activity->setCreator($user);
+        $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
+        $activity->setOnlyGEWIS(true); // Not yet implemented
+
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);

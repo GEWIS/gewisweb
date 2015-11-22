@@ -343,7 +343,7 @@ class Activity
      */
     public function setCreator(User $creator)
     {
-        $this->creator = $creator;
+        $this->creator = $creator->getLidnr();
     }
 
     /**

@@ -26,6 +26,14 @@ class Activity extends Form
         ]);
 
         $this->add([
+            'name' => 'name_en',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+
+        $this->add([
             'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
@@ -54,7 +62,22 @@ class Activity extends Form
         ]);
 
         $this->add([
+            'name' => 'location_en',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'costs',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+        $this->add([
+            'name' => 'costs_en',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -82,6 +105,14 @@ class Activity extends Form
         ]);
         $this->add([
             'name' => 'description',
+            'attributes' => [
+                'type' => 'textarea',
+                'style' => 'width:100%; height:10em; resize:none',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'description_en',
             'attributes' => [
                 'type' => 'textarea',
                 'style' => 'width:100%; height:10em; resize:none',
@@ -151,7 +182,37 @@ class Activity extends Form
         ]));
 
         $inputFilter->add($factory->createInput([
+            'name' => 'name_en',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
             'name' => 'location',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'location_en',
             'required' => true,
             'validators' => [
                 [
@@ -168,15 +229,28 @@ class Activity extends Form
         $inputFilter->add($factory->createInput([
             'name' => 'costs',
             'required' => true,
-            'filters' => [
-                ['name' => 'Int'],
-            ],
             'validators' => [
                 [
-                    'name' => 'Between',
+                    'name' => 'StringLength',
                     'options' => [
-                        'min' => 0,
-                        'max' => 10000,
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'costs_en',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
                     ],
                 ],
             ],
@@ -184,6 +258,21 @@ class Activity extends Form
 
         $inputFilter->add($factory->createInput([
             'name' => 'description',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100000,
+                    ],
+                ],
+            ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name' => 'description_en',
             'required' => true,
             'validators' => [
                 [

@@ -37,7 +37,7 @@ class ActivityController extends AbstractActionController
 
         return [
             'activity' => $activity,
-            'canSignUp' => $activity->canSignUp(),
+            'canSignUp' => $activity->getCanSignUp(),
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUp($activity),
@@ -64,7 +64,7 @@ class ActivityController extends AbstractActionController
                 $activity = $activityService->createActivity($form->getData());
 
                 $this->redirect()->toRoute('activity/view', [
-                    'id' => $activity->get('id'),
+                    'id' => $activity->getId(),
                 ]);
             }
         }
@@ -84,7 +84,7 @@ class ActivityController extends AbstractActionController
         $activity = $activityService->getActivity($id);
 
         // Assure you can sign up for this activity
-        if (!$activity->canSignup()) {
+        if (!$activity->getCanSignup()) {
             $params['error'] = 'Op dit moment kun je je niet inschrijven voor deze activiteit';
             return $params;
         }
