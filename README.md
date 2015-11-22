@@ -14,8 +14,8 @@ Installation
 - Copy `config/autoload/doctrine.local.php.dist` to
   `config/autoload/doctrine.local.php` and configure the database settings in
   it.
-- Give the webserver's user read and write permissions to the `data/`
-  directory.
+- Give the webserver's user read and write permissions to the `data/` and
+  `public/data/` directories.
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
