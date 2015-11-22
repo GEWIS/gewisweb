@@ -15,17 +15,32 @@ class ApiUser extends AbstractService
 {
 
     /**
-     * Verify an API token.
+     * Identity storage.
+     *
+     * @var ApiUserMapper
+     */
+    protected $identity;
+
+    /**
+     * Verify and save an API token.
      *
      * @param string $token
-     *
-     * @return boolean
      */
     public function verifyToken($token)
     {
         $mapper = $this->getApiUserMapper();
 
-        return null !== $mapper->findByToken($token);
+        $this->identity = $mapper->findByToken($token);
+    }
+
+    /**
+     * Check if this service has an identity.
+     *
+     * @return boolean
+     */
+    public function hasIdentity()
+    {
+        return null !== $this->identity;
     }
 
     /**

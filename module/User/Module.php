@@ -4,7 +4,10 @@ namespace User;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Mvc\MvcEvent;
+use Zend\Http\Request as HttpRequest;
+
 use User\Permissions\NotAllowedException;
+use User\Model\User;
 
 class Module
 {
@@ -17,6 +20,19 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         $em = $e->getApplication()->getEventManager();
+
+        // check if the user has a valid API token
+        $request = $e->getRequest();
+
+        if (($request instanceof HttpRequest) && $request->getHeaders()->has('X-Auth-Token')) {
+            // check if this is a valid token
+            $token = $request->getHeader('X-Auth-Token')
+                ->getFieldValue();
+
+            $sm = $e->getApplication()->getServiceManager();
+            $service = $sm->get('user_service_apiuser');
+            $service->verifyToken($token);
+        }
 
         // this event listener will turn the request into '403 Forbidden' when
         // there is a NotAllowedException
@@ -144,6 +160,10 @@ class Module
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
                     }
+                    $apiService = $sm->get('user_service_apiuser');
+                    if ($apiService->hasIdentity()) {
+                        return 'apiuser';
+                    }
                     return 'guest';
                 },
                 'acl' => function ($sm) {
@@ -166,7 +186,7 @@ class Module
                     $user = $sm->get('user_role');
 
                     // add user to registry
-                    if ('guest' != $user) {
+                    if ($user instanceof User) {
                         $roles = $user->getRoleNames();
                         // if the user has no roles, add the 'user' role by default
                         if (empty($roles)) {
