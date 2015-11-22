@@ -68,11 +68,14 @@ class Module
             'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'user_auth_service'
             ],
+
             'invokables' => [
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
+                'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
             ],
+
             'factories' => [
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
@@ -80,6 +83,7 @@ class Module
                     $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
                 },
+
                 'user_form_activate' => function ($sm) {
                     return new \User\Form\Activate(
                         $sm->get('translator')
@@ -95,6 +99,7 @@ class Module
                         $sm->get('translator')
                     );
                 },
+
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
@@ -105,6 +110,12 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_apiuser' => function($sm) {
+                    return new \User\Mapper\ApiUser(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
+
                 'user_mail_transport' => function ($sm) {
                     $config = $sm->get('config');
                     $config = $config['email'];
@@ -127,6 +138,7 @@ class Module
                         $sm->get('user_auth_adapter')
                     );
                 },
+
                 'user_role' => function ($sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
