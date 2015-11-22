@@ -12,7 +12,7 @@ $pgconn = new PDO('pgsql:host=localhost;dbname=gewis_report;user=;password=');
 $myconn = new PDO('mysql:host=localhost;dbname=gewisweb_dev', '', '');
 
 /* which tables to sync */
-$tables = array(
+$tables = [
     'Address',
     'Boardmember',
     'Decision',
@@ -23,7 +23,7 @@ $tables = array(
     'Organ',
     'OrganMember',
     'SubDecision'
-);
+];
 
 foreach ($tables as $table) {
     $query = "SELECT * FROM $table";
