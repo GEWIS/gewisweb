@@ -1,0 +1,19 @@
+<h1><?= $this->translate('API Tokens') ?></h1>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th><?= $this->translate('Name') ?></th>
+            <th><?= $this->translate('Token') ?></th>
+        <tr>
+    </thead>
+    <tbody>
+        <?php foreach ($tokens as $token): ?>
+        <tr>
+            <td><?= $token->getId() ?></td>
+            <td><?= $token->getName() ?></td>
+            <td><?= $token->getToken() ?></td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>

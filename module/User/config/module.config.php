@@ -45,11 +45,37 @@ return [
                 ],
                 'priority' => 100
             ],
+            'user_admin' => [
+                'type'    => 'Literal',
+                'options' => [
+                    'route' => '/admin/user',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'User\Controller',
+                    ]
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'api' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route'    => '/api[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                'controller' => 'ApiAdmin',
+                                'action'     => 'index'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ],
     ],
     'controllers' => [
         'invokables' => [
-            'User\Controller\User' => 'User\Controller\UserController'
+            'User\Controller\User' => 'User\Controller\UserController',
+            'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController'
         ]
     ],
     'view_manager' => [

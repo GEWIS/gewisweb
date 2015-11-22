@@ -21,6 +21,15 @@ class ApiUser extends AbstractService
      */
     protected $identity;
 
+
+    /**
+     * Obtain all tokens.
+     */
+    public function getTokens()
+    {
+        return $this->getApiUserMapper()->findAll();
+    }
+
     /**
      * Verify and save an API token.
      *

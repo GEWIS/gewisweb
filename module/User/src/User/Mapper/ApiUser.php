@@ -39,6 +39,16 @@ class ApiUser
     }
 
     /**
+     * Find all tokens.
+     *
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
      * Persist an API user model.
      *
      * @param ApiUserModel $apiUser ApiUser to persist.
