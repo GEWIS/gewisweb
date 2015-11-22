@@ -1,8 +1,8 @@
 <?php
-if(isset($success)):
-?>
+if (isset($success)):
+    ?>
     <?= $this->translate('Your poll request has been received and will be reviewed shortly.') ?>
-<?php
+    <?php
 else:
     $this->headScript()
         ->prependFile($this->basePath() . '/js/frontpage-poll.js');
@@ -13,9 +13,9 @@ else:
     echo $this->formRow($form->get('dutchQuestion'));
     echo $this->formRow($form->get('englishQuestion'));
     echo $this->formCollection($form->get('options'));
-?>
-<button class="btn btn-primary" onclick="return addOption()"><?= $this->translate('Add option') ?></button>
-<?php
+    ?>
+    <button class="btn btn-primary" onclick="return addOption()"><?= $this->translate('Add option') ?></button>
+    <?php
     echo $this->formElement($form->get('submit'));
 
     echo $this->form()->closeTag();

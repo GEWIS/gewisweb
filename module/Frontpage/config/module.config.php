@@ -98,66 +98,66 @@ return [
                 ],
                 'priority' => 100
             ],
-            'poll' => array(
+            'poll' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/poll',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller' => 'Poll',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'history' => array(
+                'child_routes' => [
+                    'history' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/history[/:page]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'page' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'history',
-                            ),
-                        ),
-                    ),
-                    'request' => array(
+                            ],
+                        ],
+                    ],
+                    'request' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/request',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'request',
-                            ),
-                        ),
-                    ),
-                    'view' => array(
+                            ],
+                        ],
+                    ],
+                    'view' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:poll_id]/view',
-                            'constraints' => array(
+                            'constraints' => [
                                 'poll_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'view',
-                            ),
-                        ),
-                    ),
-                    'vote' => array(
+                            ],
+                        ],
+                    ],
+                    'vote' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:poll_id]/vote',
-                            'constraints' => array(
+                            'constraints' => [
                                 'poll_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'vote',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
+            ],
         ],
     ],
     'view_manager' => [

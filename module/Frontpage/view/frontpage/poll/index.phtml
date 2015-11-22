@@ -1,12 +1,10 @@
 <?php if (isset($poll)): ?>
-    <?= $this->partial('partial/poll.phtml', array(
+    <?= $this->partial('partial/poll.phtml', [
         'poll' => $poll,
         'lang' => $lang,
         'canVote' => $canVote,
         'userVote' => $userVote
-    )) ?>
-
-
+    ]) ?>
 
 
 <?php else: ?>

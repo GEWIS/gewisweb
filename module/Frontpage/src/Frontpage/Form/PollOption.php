@@ -18,21 +18,21 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new PollOptionModel());
 
-        $this->add(array(
+        $this->add([
             'name' => 'dutchText',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => 'Dutch option'
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'englishText',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => 'English option'
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -40,32 +40,31 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'dutchText' => array(
+        return [
+            'dutchText' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
-
-            'englishText' => array(
+                        ]
+                    ],
+                ],
+            ],
+            'englishText' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
-        );
+                        ]
+                    ],
+                ],
+            ],
+        ];
     }
 }

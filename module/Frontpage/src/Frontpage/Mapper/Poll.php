@@ -62,10 +62,10 @@ class Poll
      */
     public function findVote($pollId, $lidnr)
     {
-        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy(array(
+        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy([
             'poll' => $pollId,
             'respondent' => $lidnr
-        ));
+        ]);
     }
 
     /**
@@ -73,7 +73,8 @@ class Poll
      *
      * @return \Frontpage\Model\Poll|null
      */
-    public function getNewestPoll() {
+    public function getNewestPoll()
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('p')
@@ -96,6 +97,7 @@ class Poll
     {
         $qb = $this->getRepository()->createQueryBuilder('poll');
         $qb->orderBy('poll.expiryDate', 'DESC');
+
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 

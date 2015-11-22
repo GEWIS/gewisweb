@@ -14,42 +14,42 @@ class Poll extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'dutchQuestion',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Dutch question')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'englishQuestion',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('English question')
-            )
-        ));
+            ]
+        ]);
 
         $this->add([
             'name' => 'options',
             'type' => 'Zend\Form\Element\Collection',
-            'options' => array(
+            'options' => [
                 'count' => 2,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => array(
+                'target_element' => [
                     'type' => 'Frontpage\Form\PollOption'
-                )
-            )
+                ]
+            ]
         ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translator->translate('Submit')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -60,32 +60,31 @@ class Poll extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'dutchQuestion' => array(
+        return [
+            'dutchQuestion' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
-
-            'englishQuestion' => array(
+                        ]
+                    ],
+                ],
+            ],
+            'englishQuestion' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
-        );
+                        ]
+                    ],
+                ],
+            ],
+        ];
     }
 }

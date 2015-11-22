@@ -43,10 +43,10 @@ class Poll extends AbstractAclService
         $canVote = $this->canVote($poll);
         $userVote = $this->getVote($poll);
 
-        return array(
+        return [
             'canVote' => $canVote,
             'userVote' => $userVote
-        );
+        ];
     }
 
     /**
@@ -80,7 +80,7 @@ class Poll extends AbstractAclService
     public function getVote($poll)
     {
         $user = $this->getUser();
-        if($user instanceof \User\Model\User) {
+        if ($user instanceof \User\Model\User) {
             return $this->getPollMapper()->findVote($poll->getId(), $user->getLidnr());
         } else {
             return null;
@@ -90,11 +90,11 @@ class Poll extends AbstractAclService
     public function submitVote($pollOption)
     {
         $poll = $pollOption->getPoll();
-        if(is_null($poll) || is_null($pollOption)) {
+        if (is_null($poll) || is_null($pollOption)) {
             return false;
         }
 
-        if(!$this->canVote($poll)) {
+        if (!$this->canVote($poll)) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to vote on this poll.')
             );
@@ -116,7 +116,7 @@ class Poll extends AbstractAclService
         $form->bind($poll);
 
         $form->setData($data);
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             return false;
         }
 
@@ -124,6 +124,7 @@ class Poll extends AbstractAclService
         $pollMapper = $this->getPollMapper();
         $pollMapper->persist($poll);
         $pollMapper->flush();
+
         return true;
     }
 
@@ -158,6 +159,7 @@ class Poll extends AbstractAclService
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $user = $this->sm->get('user_role');
+
         return ($user instanceof \User\Model\User) ? $em->merge($user) : $user;
     }
 

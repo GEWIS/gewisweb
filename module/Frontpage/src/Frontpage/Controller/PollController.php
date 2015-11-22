@@ -12,15 +12,15 @@ class PollController extends AbstractActionController
     public function indexAction()
     {
         $poll = $this->getPollService()->getNewestPoll();
-        if(!is_null($poll)) {
+        if (!is_null($poll)) {
             $details = $this->getPollService()->getPollDetails($poll);
 
             $session = new SessionContainer('lang');
 
-            return new ViewModel(array_merge($details, array(
+            return new ViewModel(array_merge($details, [
                 'poll' => $poll,
                 'lang' => $session->lang
-            )));
+            ]));
         } else {
             return new ViewModel();
         }
@@ -44,13 +44,15 @@ class PollController extends AbstractActionController
         $paginator->setDefaultItemCountPerPage(10);
 
         $page = $this->params()->fromRoute('page');
-        if($page) $paginator->setCurrentPageNumber($page);
+        if ($page) {
+            $paginator->setCurrentPageNumber($page);
+        }
         $session = new SessionContainer('lang');
 
-        return new ViewModel(array(
+        return new ViewModel([
             'paginator' => $paginator,
             'lang' => $session->lang
-        ));
+        ]);
     }
 
     public function requestAction()
@@ -61,15 +63,15 @@ class PollController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($pollService->requestPoll($request->getPost())) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'success' => true,
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
-        ));
+        ]);
     }
 
     /**

@@ -43,13 +43,14 @@ class Module
                 'frontpage_service_page' => 'Frontpage\Service\Page',
                 'frontpage_service_page' => 'Frontpage\Service\Page',
                 'frontpage_service_poll' => 'Frontpage\Service\Poll'
-             ],
+            ],
             'factories' => [
                 'frontpage_form_page' => function ($sm) {
                     $form = new \Frontpage\Form\Page(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator_page'));
+
                     return $form;
                 },
                 'frontpage_form_poll' => function ($sm) {
@@ -57,6 +58,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator_poll'));
+
                     return $form;
                 },
                 'frontpage_hydrator_page' => function ($sm) {
