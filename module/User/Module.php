@@ -138,10 +138,18 @@ class Module
                     // initialize the ACL
                     $acl = new Acl();
 
-                    // define basic roles
-                    $acl->addRole(new Role('guest')); // simple guest
-                    $acl->addRole(new Role('user'), 'guest'); // simple user
-                    $acl->addRole(new Role('admin')); // administrator
+                    /**
+                     * Define all basic roles.
+                     *
+                     * - guest: everyone gets at least this access level
+                     * - user: GEWIS-member
+                     * - apiuser: Automated tool given access by an admin
+                     * - admin: Defined administrators
+                     */
+                    $acl->addRole(new Role('guest'));
+                    $acl->addRole(new Role('user'), 'guest');
+                    $acl->addrole(new Role('apiuser'), 'guest');
+                    $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
 
