@@ -25,6 +25,11 @@ class ApiAdminController extends AbstractActionController
      */
     public function addAction()
     {
+        $service = $this->getApiUserService();
+
+        return new ViewModel([
+            'form' => $service->getApiTokenForm()
+        ]);
     }
 
     /**

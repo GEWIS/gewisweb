@@ -116,6 +116,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_apitoken' => function ($sm) {
+                    return new \User\Form\ApiToken(
+                        $sm->get('translator')
+                    );
+                },
 
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(

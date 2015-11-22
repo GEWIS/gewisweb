@@ -59,6 +59,32 @@ class ApiUser extends AbstractAclService
     }
 
     /**
+     * Get the API token form
+     *
+     * @return \User\Form\ApiToken
+     */
+    public function getApiTokenForm()
+    {
+        if (!$this->isAllowed('add')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to add API tokens')
+            );
+        }
+        return $this->getServiceManager()->get('user_form_apitoken');
+    }
+
+    /**
+     * Get the API User mapper.
+     *
+     * @return ApiUserMapper
+     */
+    public function getApiUserMapper()
+    {
+        return $this->getServiceManager()->get('user_mapper_apiuser');
+    }
+
+    /**
      * Get the user ACL.
      *
      * @return \Zend\Permissions\Acl\Acl
@@ -78,13 +104,4 @@ class ApiUser extends AbstractAclService
         return 'apiuser';
     }
 
-    /**
-     * Get the API User mapper.
-     *
-     * @return ApiUserMapper
-     */
-    public function getApiUserMapper()
-    {
-        return $this->getServiceManager()->get('user_mapper_apiuser');
-    }
 }
