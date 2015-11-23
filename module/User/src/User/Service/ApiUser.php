@@ -37,6 +37,31 @@ class ApiUser extends AbstractAclService
     }
 
     /**
+     * Add an API token.
+     *
+     * @param array $data
+     */
+    public function addToken($data)
+    {
+        $form = $this->getApiTokenForm();
+
+        $form->setData($data);
+
+        $form->bind(new ApiUserModel());
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $apiUser = $form->getData();
+        $apiUser->setToken($this->generateToken());
+
+        $this->getApiUserMapper()->persist($apiUser);
+
+        return $apiUser;
+    }
+
+    /**
      * Verify and save an API token.
      *
      * @param string $token
@@ -46,6 +71,16 @@ class ApiUser extends AbstractAclService
         $mapper = $this->getApiUserMapper();
 
         $this->identity = $mapper->findByToken($token);
+    }
+
+    /**
+     * Generate a token.
+     *
+     * @return string
+     */
+    public function generateToken()
+    {
+        return base64_encode(openssl_random_pseudo_bytes(32));
     }
 
     /**

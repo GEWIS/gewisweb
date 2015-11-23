@@ -17,3 +17,7 @@
         <?php endforeach ?>
     </tbody>
 </table>
+
+<a href="<?= $this->url('user_admin/api', ['action' => 'add']) ?>" class="btn btn-success">
+    <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add new Token') ?>
+</a>

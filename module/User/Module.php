@@ -101,6 +101,11 @@ class Module
                     return $bcrypt;
                 },
 
+                'user_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
                 'user_form_activate' => function ($sm) {
                     return new \User\Form\Activate(
                         $sm->get('translator')
@@ -117,9 +122,11 @@ class Module
                     );
                 },
                 'user_form_apitoken' => function ($sm) {
-                    return new \User\Form\ApiToken(
+                    $form = new \User\Form\ApiToken(
                         $sm->get('translator')
                     );
+                    $form->setHydrator($sm->get('user_hydrator'));
+                    return $form;
                 },
 
                 'user_mapper_user' => function ($sm) {

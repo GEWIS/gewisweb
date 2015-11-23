@@ -1,3 +1,5 @@
+<h2><?= $this->translate('Add a token') ?></h2>
+<?php if (isset($form)): ?>
 <?php
 $form->prepare();
 $form->setAttribute('action', $this->url('user_admin/api', ['action' => 'add']));
@@ -30,3 +32,17 @@ $element->setAttribute('placeholder', $element->getLabel());
 </div>
 
 <?= $this->form()->closeTag() ?>
+<?php else: ?>
+<h3><?= $this->translate('Token was succesfully generated') ?></h3>
+
+<table class="table table-bordered">
+    <tr>
+        <th><?= $this->translate('Name') ?></th>
+        <td><?= $apiUser->getName() ?></td>
+    </tr>
+    <tr>
+        <th><?= $this->translate('Token') ?></th>
+        <td><?= $apiUser->getToken() ?></td>
+    </tr>
+</table>
+<?php endif ?>
