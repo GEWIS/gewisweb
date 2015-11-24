@@ -50,6 +50,14 @@ class ApiAdminController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
         $service = $this->getApiUserService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // remove the token and redirect
+            $service->removeToken($id);
+
+            return $this->redirect()->toRoute('user_admin/api');
+        }
 
         return new ViewModel([
             'token' => $service->getToken($id)

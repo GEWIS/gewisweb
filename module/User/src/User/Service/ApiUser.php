@@ -39,6 +39,22 @@ class ApiUser extends AbstractAclService
     }
 
     /**
+     * Remove a token by it's ID
+     *
+     * @param int $id
+     */
+    public function removeToken($id)
+    {
+        if (!$this->isAllowed('remove')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to remove API tokens')
+            );
+        }
+        $this->getApiUserMapper()->remove($id);
+    }
+
+    /**
      * Obtain a token by it's ID
      *
      * @param int $id

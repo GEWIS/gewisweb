@@ -61,6 +61,18 @@ class ApiUser
     }
 
     /**
+     * Remove a token by it's ID.
+     *
+     * @param int $id
+     */
+    public function remove($id)
+    {
+        $apiUser = $this->find($id);
+        $this->em->remove($apiUser);
+        $this->em->flush();
+    }
+
+    /**
      * Persist an API user model.
      *
      * @param ApiUserModel $apiUser ApiUser to persist.
