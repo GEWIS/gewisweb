@@ -24,6 +24,8 @@ class ApiUser extends AbstractAclService
 
     /**
      * Obtain all tokens.
+     *
+     * @return array Of tokens
      */
     public function getTokens()
     {
@@ -34,6 +36,24 @@ class ApiUser extends AbstractAclService
             );
         }
         return $this->getApiUserMapper()->findAll();
+    }
+
+    /**
+     * Obtain a token by it's ID
+     *
+     * @param int $id
+     *
+     * @return User\Model\ApiUser Token
+     */
+    public function getToken($id)
+    {
+        if (!$this->isAllowed('view')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view API tokens')
+            );
+        }
+        return $this->getApiUserMapper()->find($id);
     }
 
     /**

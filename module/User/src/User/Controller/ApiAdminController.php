@@ -48,6 +48,12 @@ class ApiAdminController extends AbstractActionController
      */
     public function removeAction()
     {
+        $id = $this->params()->fromRoute('id');
+        $service = $this->getApiUserService();
+
+        return new ViewModel([
+            'token' => $service->getToken($id)
+        ]);
     }
 
     /**

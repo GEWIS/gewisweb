@@ -1,0 +1,13 @@
+<form method="POST" action="<?= $this->url('user_admin/api/remove', [
+    'id' => $token->getId()
+]) ?>">
+
+<p>
+    Are you sure you want to remove the token with name <?= $token->getName() ?>?<br />
+</p>
+<p>
+    <button class="btn btn-primary">Yes</button>
+    <a href="<?= $this->url('user_admin/api') ?>" class="btn btn-default">No</a>
+</p>
+
+</form>

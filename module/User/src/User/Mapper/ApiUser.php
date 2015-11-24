@@ -49,6 +49,18 @@ class ApiUser
     }
 
     /**
+     * Find a token by it's ID.
+     *
+     * @param int $id
+     *
+     * @return ApiUserModel
+     */
+    public function find($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    /**
      * Persist an API user model.
      *
      * @param ApiUserModel $apiUser ApiUser to persist.
