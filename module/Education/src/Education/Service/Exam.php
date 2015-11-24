@@ -156,7 +156,7 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Upload a new exam.
+     * Upload a new summary.
      *
      * @param array $post POST Data
      * @param array $files FILES Data
@@ -166,7 +166,7 @@ class Exam extends AbstractAclService
     public function upload($post, $files)
     {
         $form = $this->getUploadForm();
-        $form->bind(new ExamModel());
+        $form->bind(new SummaryModel());
 
         $data = array_merge_recursive($post->toArray(), $files->toArray());
 
@@ -176,13 +176,13 @@ class Exam extends AbstractAclService
             return false;
         }
 
-        $exam = $form->getData();
+        $summary = $form->getData();
         $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
         $storageService = $this->getFileStorageService();
 
         /**
-         * Save the uploaded file and persist the exam.
+         * Save the uploaded file and persist the summary.
          *
          * We do this in a transactional block, so if there is something
          * wrong, we only have to throw an exception and Doctrine will roll
@@ -190,10 +190,10 @@ class Exam extends AbstractAclService
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data, $storageService) {
-            $exam->setFilename($storageService->storeUploadedFile($data['upload']));
+        $this->getExamMapper()->transactional(function ($mapper) use ($summary, $data, $storageService) {
+            $summary->setFilename($storageService->storeUploadedFile($data['upload']));
 
-            $mapper->persist($exam);
+            $mapper->persist($summary);
         });
 
         return true;
