@@ -2,7 +2,7 @@
 <?php if (isset($form)): ?>
 <?php
 $form->prepare();
-$form->setAttribute('action', $this->url('user_admin/api', ['action' => 'add']));
+$form->setAttribute('action', $this->url('user_admin/api/default', ['action' => 'add']));
 $form->setAttribute('class', 'form-horizontal');
 ?>
 <?= $this->form()->openTag($form) ?>

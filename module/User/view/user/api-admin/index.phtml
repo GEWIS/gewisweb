@@ -5,6 +5,7 @@
             <th>#</th>
             <th><?= $this->translate('Name') ?></th>
             <th><?= $this->translate('Token') ?></th>
+            <th>Remove</th>
         <tr>
     </thead>
     <tbody>
@@ -13,11 +14,14 @@
             <td><?= $token->getId() ?></td>
             <td><?= $token->getName() ?></td>
             <td><?= $token->getToken() ?></td>
+            <td><a class="btn btn-xs btn-danger" href="<?= $this->url('user_admin/api/remove', [
+    'id' => $token->getId()
+]) ?>"><span class="glyphicon glyphicon-remove"></span> <?= $this->translate('Remove') ?></a></td>
         </tr>
         <?php endforeach ?>
     </tbody>
 </table>
 
-<a href="<?= $this->url('user_admin/api', ['action' => 'add']) ?>" class="btn btn-success">
+<a href="<?= $this->url('user_admin/api/default', ['action' => 'add']) ?>" class="btn btn-success">
     <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add new Token') ?>
 </a>

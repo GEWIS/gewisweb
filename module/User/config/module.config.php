@@ -56,15 +56,36 @@ return [
                 'may_terminate' => false,
                 'child_routes' => [
                     'api' => [
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => [
-                            'route'    => '/api[/:action]',
-                            'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ],
+                            'route' => '/api',
                             'defaults' => [
                                 'controller' => 'ApiAdmin',
                                 'action'     => 'index'
+                            ]
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'remove' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route'    => '/remove/:id',
+                                    'constraints' => [
+                                        'id' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'remove'
+                                    ]
+                                ]
+                            ],
+                            'default' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route'    => '/:action',
+                                    'constraints' => [
+                                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    ]
+                                ]
                             ]
                         ]
                     ]
