@@ -58,7 +58,7 @@ class AdminController extends AbstractActionController {
         ]);
     }
 
-    public function uploadAction()
+    public function summaryAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();

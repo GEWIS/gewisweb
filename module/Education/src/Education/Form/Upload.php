@@ -6,6 +6,9 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
+/**
+ * Upload a summary
+ */
 class Upload extends Form
 {
 
@@ -25,7 +28,15 @@ class Upload extends Form
             'name' => 'date',
             'type' => 'date',
             'options' => [
-                'label' => $translator->translate('Exam date')
+                'label' => $translator->translate('Summary date')
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'author',
+            'type' => 'number',
+            'options' => [
+                'label' => $translator->translate('Author')
             ]
         ]);
 
@@ -33,10 +44,10 @@ class Upload extends Form
             'name' => 'upload',
             'type' => 'file',
             'option' => [
-                'label' => $translator->translate('Exam to upload')
+                'label' => $translator->translate('Summary to upload')
             ]
         ]);
-        $this->get('upload')->setLabel($translator->translate('Exam to upload'));
+        $this->get('upload')->setLabel($translator->translate('Summary to upload'));
 
         $this->add([
             'name' => 'submit',
