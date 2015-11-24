@@ -152,10 +152,11 @@ class Course
      * Get courses
      *
      * @param array $studies
+     * @param string $year
      *
      * @return array
      */
-    public function getCourses($studies)
+    public function getCourses($studies, $year)
     {
         $this->createStudiesMap($studies);
 
@@ -165,8 +166,8 @@ class Course
         $courses = [];
 
         foreach ($groups as $group) {
-            $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep([$group], 'NL');
-            $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep([$group], 'EN');
+            $activiteiten1 = $this->client->ZoekActiviteitenOpDoelgroep([$group], 'NL', $year);
+            $activiteiten2 = $this->client->ZoekActiviteitenOpDoelgroep([$group], 'EN', $year);
 
             // turn into nice arrays
             $courses1 = $this->toArray($activiteiten1->ZoekActiviteitenOpDoelgroepResult->Vakken->Activiteit);
@@ -204,11 +205,12 @@ class Course
      * Get a single course.
      *
      * @param string $code
+     * @param string $year
      *
      * @return SimpleXMLElement
      */
-    public function getCourse($code)
+    public function getCourse($code, $year)
     {
-        return $this->client->GeefVakGegevens($code, '2013', 'NL');
+        return $this->client->GeefVakGegevens($code, $year, 'NL');
     }
 }

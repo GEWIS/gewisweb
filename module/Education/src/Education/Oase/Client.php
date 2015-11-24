@@ -49,10 +49,11 @@ class Client
      *
      * @param array $studies
      * @param string $lang
+     * @param string $year
      *
      * @return array
      */
-    public function ZoekActiviteitenOpDoelgroep($groups, $lang)
+    public function ZoekActiviteitenOpDoelgroep($groups, $lang, $year)
     {
         $vraag = new Vraag(__FUNCTION__);
 
@@ -66,7 +67,7 @@ class Client
         $vraag->addProperty(new Property("Jaargang", "string", "Alle"));
         $vraag->addProperty(new Property("MaxAantalVakken", "int", "5000"));
         $vraag->addProperty(new Property("PersVakSelectie", "boolean", "false"));
-        $vraag->addProperty(new Property("StudiejaarId", "short", '2013'));
+        $vraag->addProperty(new Property("StudiejaarId", "short", $year));
         $vraag->addProperty(new Property("Taal", "string", 'NL'));
         $vraag->addProperty(new Property("TentamenMogelijk", "boolean", "false"));
         $vraag->addProperty(new Property("TijdslotId", "", "-1"));
