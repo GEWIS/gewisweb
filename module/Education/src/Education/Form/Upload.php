@@ -4,12 +4,13 @@ namespace Education\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 /**
  * Upload a summary
  */
-class Upload extends Form
+class Upload extends Form implements InputFilterProviderInterface
 {
 
     public function __construct(Translator $translator)
@@ -34,7 +35,7 @@ class Upload extends Form
 
         $this->add([
             'name' => 'author',
-            'type' => 'number',
+            'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Author')
             ]
@@ -56,60 +57,68 @@ class Upload extends Form
                 'value' => $translator->translate('Submit')
             ]
         ]);
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    public function getInputFilterSpecification()
     {
-        $filter = new InputFilter();
-
-
-        $filter->add([
-            'name' => 'course',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'min' => 5,
-                        'max' => 6
-                    ]
+        return [
+            'course' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 5,
+                            'max' => 6
+                        ]
+                    ],
+                    ['name' => 'alnum']
                 ],
-                ['name' => 'alnum']
+                'filters' => [
+                    ['name' => 'string_to_upper']
+                ]
             ],
-            'filters' => [
-                ['name' => 'string_to_upper']
-            ]
-        ]);
 
-        $filter->add([
-            'name' => 'date',
-            'required' => true,
-            'validators' => [
-                ['name' => 'date']
-            ]
-        ]);
+            'date' => [
+                'required' => true
+            ],
 
-        $filter->add([
-            'name' => 'upload',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'File\Extension',
-                    'options' => [
-                        'extension' => 'pdf'
+            'upload' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'File\Extension',
+                        'options' => [
+                            'extension' => 'pdf'
+                        ]
+                    ],
+                    [
+                        'name' => 'File\MimeType',
+                        'options' => [
+                            'mimeType' => 'application/pdf'
+                        ]
                     ]
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'application/pdf'
+                ]
+            ],
+
+            'author' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 3,
+                            'max' => 64
+                        ]
+                    ],
+                    [
+                        'name' => 'regex',
+                        'options' => [
+                            'pattern' => '/[a-zA-Z ]+/'
+                        ]
                     ]
                 ]
             ]
-        ]);
-
-        $this->setInputFilter($filter);
+        ];
     }
 }
