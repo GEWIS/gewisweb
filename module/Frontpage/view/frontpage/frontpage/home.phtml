@@ -66,4 +66,22 @@
             <?php endif; ?>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="well">
+            <h3><strong><?= $this->translate('Poll') ?></strong></h3>
+            <?php if (isset($poll['poll'])): ?>
+                <?= $this->partial('partial/poll.phtml', [
+                    'poll' => $poll['poll'],
+                    'lang' => $lang,
+                    'canVote' => $poll['canVote'],
+                    'userVote' => $poll['userVote'],
+                    'showResults' => false
+                ]) ?>
+            <?php else: ?>
+                <?= $this->translate('There currently is no poll.'); ?>
+            <?php endif; ?>
+            <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
+        </div>
+    </div>
+
 </div>

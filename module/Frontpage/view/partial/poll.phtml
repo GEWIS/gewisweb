@@ -33,6 +33,7 @@ foreach ($poll->getOptions() as $option) {
                 </div>
             <?php endif; ?>
             </div>
+            <?php if($showResults || !$canVote): ?>
             <div class="col-md-6">
                 <div class="progress">
                     <div class="progress-bar poll-bar" role="progressbar"
@@ -44,8 +45,13 @@ foreach ($poll->getOptions() as $option) {
                 </div>
             </div>
             <div class="col-md-1">
-                <span class="pull-right"><?= sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></span>
+                <span class="pull-right"><?= sprintf(
+                        $this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'),
+                        $option->getVotesCount()
+                    ) ?>
+                </span>
             </div>
+            <?php endif; ?>
         </div>
     <?php endforeach; ?>
     <p>
