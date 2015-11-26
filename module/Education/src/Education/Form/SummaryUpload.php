@@ -10,7 +10,7 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 /**
  * Upload a summary
  */
-class Upload extends Form implements InputFilterProviderInterface
+class SummaryUpload extends Form implements InputFilterProviderInterface
 {
 
     public function __construct(Translator $translator)

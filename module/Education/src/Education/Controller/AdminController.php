@@ -65,7 +65,7 @@ class AdminController extends AbstractActionController {
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->upload($request->getPost(), $request->getFiles())) {
+            if ($service->uploadSummary($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -73,7 +73,7 @@ class AdminController extends AbstractActionController {
         }
 
         return new ViewModel([
-            'form' => $service->getUploadForm()
+            'form' => $service->getSummaryUploadForm()
         ]);
     }
 

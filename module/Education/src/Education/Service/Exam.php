@@ -163,9 +163,9 @@ class Exam extends AbstractAclService
      *
      * @return boolean
      */
-    public function upload($post, $files)
+    public function uploadSummary($post, $files)
     {
-        $form = $this->getUploadForm();
+        $form = $this->getSummaryUploadForm();
         $form->bind(new SummaryModel());
 
         $data = array_merge_recursive($post->toArray(), $files->toArray());
@@ -254,19 +254,19 @@ class Exam extends AbstractAclService
     /**
      * Get the Upload form.
      *
-     * @return \Education\Form\Upload
+     * @return \Education\Form\SummaryUpload
      *
      * @throws \User\Permissions\NotAllowedException When not allowed to upload
      */
-    public function getUploadForm()
+    public function getSummaryUploadForm()
     {
-        if (!$this->isAllowed('upload')) {
+        if (!$this->isAllowed('upload_summary')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload exams')
+                $translator->translate('You are not allowed to upload summaries')
             );
         }
-        return $this->sm->get('education_form_upload');
+        return $this->sm->get('education_form_summaryupload');
     }
 
     /**
