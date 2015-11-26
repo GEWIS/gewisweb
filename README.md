@@ -19,6 +19,7 @@ Installation
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
+- Copy `config/autoload/local.php.dist` to `config/autoload/local.php`
 
 Configuration for scss editing
 ------------------------------
@@ -35,17 +36,35 @@ To compile scss files, simply run `grunt css`. While working on the
 stylesheets, it may be nice to let grunt watch the stylesheet and
 automatically recomple. For this, you can run `grunt watch`.
 
+Configuration for emails
+------------------------
+
+Edit `config/autoload/local.php` and configure the email, using a ZF2 email
+transport. By default, it uses the `File` transport to put email into the
+`data/mail/` folder. On the GEWIS server, the following configuration should
+actually send emails to people:
+
+```php
+'email' => [
+    'transport' => 'Smtp',
+    'options' => [
+        'name' => 'gewis.nl',
+        'host' => 'smtp.tue.nl',
+        'port' => 25
+    ],
+    'from' => 'web@gewis.nl'
+]
+```
+
 Optional debugging configuration
 --------------------------------
 
-- Copy `config/autoload/zdt.local.php.dist` to
-  `config/autoload/zdt.local.php`.
+Copy `config/autoload/zdt.local.php.dist` to `config/autoload/zdt.local.php`.
 
 Dreamspark configuration (only works on the GEWIS-server)
 ---------------------------------------------------------
 
-- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and
-  configure the Dreamspark credentials.
+Edit `config/autoload/local.php` and configure the Dreamspark credentials.
 
 Translation
 ===========
