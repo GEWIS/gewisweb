@@ -48,11 +48,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
-                'education_form_upload' => function ($sm) {
-                    $form = new \Education\Form\Upload(
+                'education_form_summaryupload' => function ($sm) {
+                    $form = new \Education\Form\SummaryUpload(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('education_hydrator_exam'));
+                    $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
                 },
                 'education_form_bulk' => function ($sm) {
@@ -99,6 +99,11 @@ class Module
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Course'
+                    );
+                },
+                'education_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em')
                     );
                 },
                 'education_hydrator_exam' => function ($sm) {

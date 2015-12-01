@@ -156,17 +156,17 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Upload a new exam.
+     * Upload a new summary.
      *
      * @param array $post POST Data
      * @param array $files FILES Data
      *
      * @return boolean
      */
-    public function upload($post, $files)
+    public function uploadSummary($post, $files)
     {
-        $form = $this->getUploadForm();
-        $form->bind(new ExamModel());
+        $form = $this->getSummaryUploadForm();
+        $form->bind(new SummaryModel());
 
         $data = array_merge_recursive($post->toArray(), $files->toArray());
 
@@ -176,13 +176,13 @@ class Exam extends AbstractAclService
             return false;
         }
 
-        $exam = $form->getData();
+        $summary = $form->getData();
         $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
         $storageService = $this->getFileStorageService();
 
         /**
-         * Save the uploaded file and persist the exam.
+         * Save the uploaded file and persist the summary.
          *
          * We do this in a transactional block, so if there is something
          * wrong, we only have to throw an exception and Doctrine will roll
@@ -190,10 +190,10 @@ class Exam extends AbstractAclService
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $this->getExamMapper()->transactional(function ($mapper) use ($exam, $data, $storageService) {
-            $exam->setFilename($storageService->storeUploadedFile($data['upload']));
+        $this->getExamMapper()->transactional(function ($mapper) use ($summary, $data, $storageService) {
+            $summary->setFilename($storageService->storeUploadedFile($data['upload']));
 
-            $mapper->persist($exam);
+            $mapper->persist($summary);
         });
 
         return true;
@@ -254,19 +254,19 @@ class Exam extends AbstractAclService
     /**
      * Get the Upload form.
      *
-     * @return \Education\Form\Upload
+     * @return \Education\Form\SummaryUpload
      *
      * @throws \User\Permissions\NotAllowedException When not allowed to upload
      */
-    public function getUploadForm()
+    public function getSummaryUploadForm()
     {
-        if (!$this->isAllowed('upload')) {
+        if (!$this->isAllowed('upload_summary')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload exams')
+                $translator->translate('You are not allowed to upload summaries')
             );
         }
-        return $this->sm->get('education_form_upload');
+        return $this->sm->get('education_form_summaryupload');
     }
 
     /**
