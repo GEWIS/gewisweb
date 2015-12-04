@@ -41,7 +41,7 @@ class PollVote implements ResourceInterface
     protected $respondent;
 
     /**
-     * @return mixed
+     * @return \Frontpage\Model\PollOption
      */
     public function getPollOption()
     {
@@ -49,7 +49,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param mixed $poll
+     * @param \Frontpage\Model\Poll $poll
      */
     public function setPoll($poll)
     {
@@ -57,7 +57,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param mixed $pollOption
+     * @param \Frontpage\Model\PollOption $pollOption
      */
     public function setPollOption($pollOption)
     {
@@ -65,7 +65,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param mixed $respondent
+     * @param \User\Model\User $respondent
      */
     public function setRespondent($respondent)
     {

@@ -9,6 +9,9 @@ use Zend\View\Model\ViewModel;
 
 class PollController extends AbstractActionController
 {
+    /**
+     * Displays the currently active poll
+     */
     public function indexAction()
     {
         $pollService = $this->getPollService();
@@ -27,6 +30,9 @@ class PollController extends AbstractActionController
         }
     }
 
+    /**
+     * Submits a poll vote
+     */
     public function voteAction()
     {
         $request = $this->getRequest();
@@ -38,6 +44,9 @@ class PollController extends AbstractActionController
         }
     }
 
+    /**
+     * View all previous polls
+     */
     public function historyAction()
     {
         $adapter = $this->getPollService()->getPaginatorAdapter();
@@ -56,6 +65,9 @@ class PollController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Request a poll
+     */
     public function requestAction()
     {
         $pollService = $this->getPollService();

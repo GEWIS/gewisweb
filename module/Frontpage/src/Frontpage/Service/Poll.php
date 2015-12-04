@@ -11,27 +11,50 @@ use Frontpage\Model\Poll as PollModel;
  */
 class Poll extends AbstractAclService
 {
-
+    /**
+     * Returns the newest approved poll or null if there is none.
+     * @return PollModel|null
+     */
     public function getNewestPoll()
     {
         return $this->getPollMapper()->getNewestPoll();
     }
 
+    /**
+     * Retrieves a poll by its id
+     * @param int $pollId the id of the poll to retrieve
+     * @return PollModel|null
+     */
     public function getPoll($pollId)
     {
         return $this->getPollMapper()->findPollById($pollId);
     }
 
+    /**
+     * Retrieves a poll option by its id
+     * @param int $optionId The id of the poll option to retrieve
+     * @return \Frontpage\Model\PollOption|null
+     */
     public function getPollOption($optionId)
     {
         return $this->getPollMapper()->findPollOptionById($optionId);
     }
 
+    /**
+     * Returns a paginator adapter for paging through polls.
+     *
+     * @return \DoctrineORMModule\Paginator\Adapter\DoctrinePaginator
+     */
     public function getPaginatorAdapter()
     {
         return $this->getPollMapper()->getPaginatorAdapter();
     }
 
+    /**
+     * Returns all polls which are awaiting approval.
+     *
+     * @return array
+     */
     public function getUnapprovedPolls()
     {
         return $this->getPollMapper()->getUnapprovedPolls();
@@ -96,6 +119,12 @@ class Poll extends AbstractAclService
         }
     }
 
+    /**
+     * Stores a vote for the current user.
+     *
+     * @param \Frontpage\Model\PollOption $pollOption The option to vote on
+     * @return bool indicating whether the vote was submitted
+     */
     public function submitVote($pollOption)
     {
         $poll = $pollOption->getPoll();
@@ -118,6 +147,11 @@ class Poll extends AbstractAclService
         $pollMapper->flush();
     }
 
+    /**
+     * Saves a new poll request.
+     * @param array $data
+     * @return bool indicating whether the request succeeded
+     */
     public function requestPoll($data)
     {
         $form = $this->getPollForm();
@@ -137,6 +171,11 @@ class Poll extends AbstractAclService
         return true;
     }
 
+    /**
+     * Returns the poll request/creation form.
+     *
+     * @return \Frontpage\Form\Poll
+     */
     public function getPollForm()
     {
         if (!$this->isAllowed('request')) {
@@ -152,7 +191,7 @@ class Poll extends AbstractAclService
     /**
      * Deletes the given poll.
      *
-     * @param \Frontpage\Model\Poll $poll
+     * @param \Frontpage\Model\Poll $poll The poll to delete
      */
     public function deletePoll($poll)
     {
@@ -168,12 +207,19 @@ class Poll extends AbstractAclService
         $pollMapper->flush();
     }
 
+    /**
+     * Approves the given poll.
+     *
+     * @param \Frontpage\Model\Poll $poll The poll to approve
+     * @param array $data The data from the poll approval form
+     * @return bool indicating whether the approval succeeded
+     */
     public function approvePoll($poll, $data)
     {
         $approvalForm = $this->getPollApprovalForm();
         $approvalForm->bind($poll);
         $approvalForm->setData($data);
-        if(!$approvalForm->isValid()) {
+        if (!$approvalForm->isValid()) {
             return false;
         }
 
@@ -181,6 +227,11 @@ class Poll extends AbstractAclService
         $this->getPollMapper()->flush();
     }
 
+    /**
+     * Returns the poll approval form.
+     *
+     * @return \Frontpage\Form\PollApproval
+     */
     public function getPollApprovalForm()
     {
         if (!$this->isAllowed('approve')) {

@@ -81,7 +81,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return date
      */
     public function getExpiryDate()
     {
@@ -193,7 +193,6 @@ class Poll implements ResourceInterface
             $this->options->removeElement($option);
         }
     }
-
 
     /**
      * Get the resource ID.

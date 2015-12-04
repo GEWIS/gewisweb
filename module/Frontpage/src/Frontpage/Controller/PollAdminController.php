@@ -9,6 +9,9 @@ use Zend\View\Model\ViewModel;
 
 class PollAdminController extends AbstractActionController
 {
+    /**
+     * List all approved and unapproved polls
+     */
     public function listAction()
     {
         $pollService = $this->getPollService();
@@ -36,6 +39,9 @@ class PollAdminController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Approve a poll
+     */
     public function approveAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -43,10 +49,14 @@ class PollAdminController extends AbstractActionController
             $pollService = $this->getPollService();
             $poll = $pollService->getPoll($pollId);
             $pollService->approvePoll($poll, $this->getRequest()->getPost());
+
             return $this->redirect()->toRoute('admin_poll');
         }
     }
 
+    /**
+     * Delete a poll
+     */
     public function deleteAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -54,6 +64,7 @@ class PollAdminController extends AbstractActionController
             $pollService = $this->getPollService();
             $poll = $pollService->getPoll($pollId);
             $pollService->deletePoll($poll);
+
             return $this->redirect()->toRoute('admin_poll');
         }
     }
