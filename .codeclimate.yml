@@ -5,8 +5,14 @@ engines:
     enabled: false
   phpcodesniffer:
     enabled: true
+    config:
+      file_extensions: "php,dist"
+      standard: "PSR1,PSR2"
   phpmd:
     enabled: true
+    checks:
+      Naming/ShortVariable:
+        minimum: 2
 ratings:
   paths:
   - "**.js"
