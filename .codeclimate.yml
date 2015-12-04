@@ -12,6 +12,7 @@ engines:
     enabled: true
     checks:
       Naming/ShortVariable:
+        enabled: true
         minimum: 2
 ratings:
   paths:
