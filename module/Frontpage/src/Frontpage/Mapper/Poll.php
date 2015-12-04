@@ -152,5 +152,4 @@ class Poll
     {
         return $this->em->getRepository('Frontpage\Model\Poll');
     }
-
 }

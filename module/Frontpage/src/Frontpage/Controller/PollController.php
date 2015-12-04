@@ -25,9 +25,9 @@ class PollController extends AbstractActionController
                 'poll' => $poll,
                 'lang' => $session->lang
             ]));
-        } else {
-            return new ViewModel();
         }
+
+        return new ViewModel();
     }
 
     /**
