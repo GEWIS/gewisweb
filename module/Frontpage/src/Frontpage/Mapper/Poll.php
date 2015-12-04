@@ -68,6 +68,18 @@ class Poll
         ]);
     }
 
+    public function getUnapprovedPolls()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('p')
+            ->from('Frontpage\Model\Poll', 'p')
+            ->where('p.approver IS NULL')
+            ->orderBy('p.expiryDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Returns the latest poll if one is available
      *
@@ -79,6 +91,7 @@ class Poll
 
         $qb->select('p')
             ->from('Frontpage\Model\Poll', 'p')
+            ->where('p.approver IS NOT NULL')
             ->andWhere('p.expiryDate > CURRENT_DATE()')
             ->setMaxResults(1)
             ->orderBy('p.expiryDate', 'DESC');
@@ -96,6 +109,7 @@ class Poll
     public function getPaginatorAdapter()
     {
         $qb = $this->getRepository()->createQueryBuilder('poll');
+        $qb->where('poll.approver IS NOT NULL');
         $qb->orderBy('poll.expiryDate', 'DESC');
 
         return new DoctrineAdapter(new ORMPaginator($qb));

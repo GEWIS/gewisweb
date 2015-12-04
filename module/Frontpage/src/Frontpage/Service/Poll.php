@@ -32,6 +32,11 @@ class Poll extends AbstractAclService
         return $this->getPollMapper()->getPaginatorAdapter();
     }
 
+    public function getUnapprovedPolls()
+    {
+        return $this->getPollMapper()->getUnapprovedPolls();
+    }
+
     /**
      * Returns details about a poll.
      *

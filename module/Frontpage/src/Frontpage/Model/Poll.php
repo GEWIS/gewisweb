@@ -57,6 +57,22 @@ class Poll implements ResourceInterface
     protected $options;
 
     /**
+     * Who approved this poll. If null then nobody approved it.
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     */
+    protected $creator;
+
+    /**
+     * Who approved this poll. If null then nobody approved it.
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
+     */
+    protected $approver;
+
+    /**
      * @return int
      */
     public function getId()
@@ -97,7 +113,23 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param mixed $expiryDate
+     * @return \User\Model\User
+     */
+    public function getApprover()
+    {
+        return $this->approver;
+    }
+
+    /**
+     * @return \User\Model\User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param date $expiryDate
      */
     public function setExpiryDate($expiryDate)
     {
@@ -105,7 +137,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param mixed $englishQuestion
+     * @param string $englishQuestion
      */
     public function setEnglishQuestion($englishQuestion)
     {
@@ -113,7 +145,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param mixed $dutchQuestion
+     * @param string $dutchQuestion
      */
     public function setDutchQuestion($dutchQuestion)
     {
@@ -131,6 +163,22 @@ class Poll implements ResourceInterface
             $option->setPoll($this);
             $this->options->add($option);
         }
+    }
+
+    /**
+     * @param \User\Model\User $approver
+     */
+    public function setApprover($approver)
+    {
+        $this->approver = $approver;
+    }
+
+    /**
+     * @param \User\Model\User $creator
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
     }
 
     /**

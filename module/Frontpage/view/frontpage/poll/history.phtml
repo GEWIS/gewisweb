@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
 <?= $this->paginationControl(
     $paginator,
     // the scrolling style
@@ -16,7 +9,6 @@
 )
 ?>
 <?php if (!empty($paginator)): ?>
-    <ul>
         <?php foreach ($paginator as $poll): ?>
             <?= $this->partial('partial/poll.phtml', [
                 'poll' => $poll,
@@ -26,7 +18,4 @@
                 'showResults' => true
             ]) ?>
         <?php endforeach; ?>
-    </ul>
 <?php endif; ?>
-</body>
-</html>
