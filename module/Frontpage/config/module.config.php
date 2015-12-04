@@ -183,6 +183,30 @@ return [
                             ],
                         ],
                     ],
+                    'delete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/delete',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                    'approve' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/approve',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'approve',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],

@@ -61,6 +61,14 @@ class Module
 
                     return $form;
                 },
+                'frontpage_form_poll_approval' => function ($sm) {
+                    $form = new \Frontpage\Form\PollApproval(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('frontpage_hydrator_poll'));
+
+                    return $form;
+                },
                 'frontpage_hydrator_page' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('frontpage_doctrine_em'),

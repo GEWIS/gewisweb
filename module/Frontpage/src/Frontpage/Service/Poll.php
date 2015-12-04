@@ -146,6 +146,50 @@ class Poll extends AbstractAclService
     }
 
     /**
+     * Deletes the given poll.
+     *
+     * @param \Frontpage\Model\Poll $poll
+     */
+    public function deletePoll($poll)
+    {
+        if (!$this->isAllowed('delete')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to delete polls')
+            );
+        }
+
+        $pollMapper = $this->getPollMapper();
+        $pollMapper->remove($poll);
+        $pollMapper->flush();
+    }
+
+    public function approvePoll($poll, $data)
+    {
+        $approvalForm = $this->getPollApprovalForm();
+        $approvalForm->bind($poll);
+        $approvalForm->setData($data);
+        if(!$approvalForm->isValid()) {
+            return false;
+        }
+
+        $poll->setApprover($this->getUser());
+        $this->getPollMapper()->flush();
+    }
+
+    public function getPollApprovalForm()
+    {
+        if (!$this->isAllowed('approve')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to approve polls')
+            );
+        }
+
+        return $this->sm->get('frontpage_form_poll_approval');
+    }
+
+    /**
      * Get the poll mapper.
      *
      * @return \Frontpage\Mapper\Poll

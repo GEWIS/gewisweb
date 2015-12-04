@@ -11,7 +11,9 @@ class PollAdminController extends AbstractActionController
 {
     public function listAction()
     {
-        $adapter = $this->getPollService()->getPaginatorAdapter();
+        $pollService = $this->getPollService();
+
+        $adapter = $pollService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(15);
 
@@ -21,14 +23,39 @@ class PollAdminController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        $unapprovedPolls = $this->getPollService()->getUnapprovedPolls();
+        $unapprovedPolls = $pollService->getUnapprovedPolls();
         $session = new SessionContainer('lang');
+
+        $approvalForm = $pollService->getPollApprovalForm();
 
         return new ViewModel([
             'unapprovedPolls' => $unapprovedPolls,
             'paginator' => $paginator,
-            'lang' => $session->lang
+            'lang' => $session->lang,
+            'approvalForm' => $approvalForm
         ]);
+    }
+
+    public function approveAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $pollId = $this->params()->fromRoute('poll_id');
+            $pollService = $this->getPollService();
+            $poll = $pollService->getPoll($pollId);
+            $pollService->approvePoll($poll, $this->getRequest()->getPost());
+            return $this->redirect()->toRoute('admin_poll');
+        }
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $pollId = $this->params()->fromRoute('poll_id');
+            $pollService = $this->getPollService();
+            $poll = $pollService->getPoll($pollId);
+            $pollService->deletePoll($poll);
+            return $this->redirect()->toRoute('admin_poll');
+        }
     }
 
     /**
