@@ -11,9 +11,10 @@ class PollController extends AbstractActionController
 {
     public function indexAction()
     {
-        $poll = $this->getPollService()->getNewestPoll();
+        $pollService = $this->getPollService();
+        $poll = $pollService->getNewestPoll();
         if (!is_null($poll)) {
-            $details = $this->getPollService()->getPollDetails($poll);
+            $details = $pollService->getPollDetails($poll);
 
             $session = new SessionContainer('lang');
 

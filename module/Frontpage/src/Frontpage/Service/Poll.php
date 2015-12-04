@@ -45,6 +45,10 @@ class Poll extends AbstractAclService
      */
     public function getPollDetails($poll)
     {
+        if (is_null($poll)) {
+            return null;
+        }
+
         $canVote = $this->canVote($poll);
         $userVote = $this->getVote($poll);
 

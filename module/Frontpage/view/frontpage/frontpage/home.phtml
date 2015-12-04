@@ -77,10 +77,13 @@
                     'userVote' => $poll['userVote'],
                     'showResults' => false
                 ]) ?>
+                <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
             <?php else: ?>
                 <?= $this->translate('There currently is no poll.'); ?>
+                <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
+                <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
             <?php endif; ?>
-            <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
+
         </div>
     </div>
 

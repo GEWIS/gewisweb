@@ -140,7 +140,7 @@ return [
                                 'poll_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'view',
+                                'action' => 'index',
                             ],
                         ],
                     ],
