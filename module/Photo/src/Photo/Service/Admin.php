@@ -145,11 +145,7 @@ class Admin extends AbstractAclService
 
     public function upload($files, $album)
     {
-        if (!$this->isAllowed('upload', 'photo')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to upload photos.')
-            );
-        }
+        $this->checkUploadAllowed();
 
         $imageValidator = new \Zend\Validator\File\IsImage(
             ['magicFile' => false]
@@ -183,6 +179,18 @@ class Admin extends AbstractAclService
         } else {
             throw new \Exception(
                 $translator->translate('The uploaded file is not a valid image')
+            );
+        }
+    }
+
+    /**
+     * Checks if the current user is allowed to upload photos.
+     */
+    public function checkUploadAllowed()
+    {
+        if (!$this->isAllowed('upload', 'photo')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to upload photos.')
             );
         }
     }
