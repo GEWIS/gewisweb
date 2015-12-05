@@ -13,7 +13,9 @@ engines:
     checks:
       Naming/ShortVariable:
         enabled: true
-        minimum: 2
+        exceptions: "$id,$sm,$em,$qb,$e"
+      CleanCode/StaticAccess:
+        enabled: false
 ratings:
   paths:
   - "**.js"
