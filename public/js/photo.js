@@ -18,7 +18,7 @@ Photo = {
             $('#next')[0].click();
         }
     },
-    initTagging: function() {
+    initTagging: function () {
         $('#tagList').find(".remove-tag").each(function () {
             $(this).on('click', Photo.removeTag);
         });
@@ -29,7 +29,7 @@ Photo = {
             lookup: function (query, done) {
                 if (query.length >= 2) {
                     $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                        var result = { suggestions: [] };
+                        var result = {suggestions: []};
 
                         $.each(data.members, function (i, member) {
                             result.suggestions.push({
@@ -43,10 +43,21 @@ Photo = {
             },
             onSelect: function (suggestion) {
                 $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
-                    { lidnr : suggestion.data }
-                , function(data) {
-                        if(data.success) {
-                            $('#tagList').append('<li><a href="#">' + suggestion.value +'</a></li>');
+                    {lidnr: suggestion.data}
+                    , function (data) {
+                        if (data.success) {
+                            var removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                'photo_id': data.tag.photo_id,
+                                'lidnr': data.tag.member_id
+                            });
+
+                            var id = 'removeTag' + data.tag.id;
+                            $('#tagList').append('<li><a href="#">' + suggestion.value + '</a>' +
+                                '<a href="' + removeURL + '" id="' + id + '">' +
+                                '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
+                                '</span></a></li>'
+                            );
+                            $('#' + id).on('click', Photo.removeTag);
                         }
                         $('#tagSearch').val('');
                     });
@@ -55,14 +66,14 @@ Photo = {
 
     },
 
-    removeTag: function(e) {
+    removeTag: function (e) {
         e.preventDefault()
         parent = $(this).parent();
-        $.post($(this).attr('href'), function(data) {
-                if(data.success) {
-                    parent.remove();
-                }
-            });
+        $.post($(this).attr('href'), function (data) {
+            if (data.success) {
+                parent.remove();
+            }
+        });
     }
 }
 
