@@ -114,9 +114,9 @@ class Poll extends AbstractAclService
         $user = $this->getUser();
         if ($user instanceof \User\Model\User) {
             return $this->getPollMapper()->findVote($poll->getId(), $user->getLidnr());
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
