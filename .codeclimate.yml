@@ -12,8 +12,7 @@ engines:
     enabled: true
     checks:
       Naming/ShortVariable:
-        enabled: true
-        exceptions: "$id,$sm,$em,$qb,$e"
+        enabled: false
       CleanCode/StaticAccess:
         enabled: false
 ratings:
