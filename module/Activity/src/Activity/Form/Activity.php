@@ -181,9 +181,4 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ];
     }
-    
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception('Not used');
-    }
 }

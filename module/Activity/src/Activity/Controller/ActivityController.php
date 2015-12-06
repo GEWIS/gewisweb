@@ -74,7 +74,6 @@ class ActivityController extends AbstractActionController
             }
             else {
                 echo 'Form is invalid!';
-                echo var_dump($form->getInputFilter()->getMessages());
             }
         }
 
