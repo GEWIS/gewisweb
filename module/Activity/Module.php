@@ -12,13 +12,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -38,11 +38,11 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
@@ -91,7 +91,7 @@ class Module
 
                     return $acl;
                 },
-            )
-        );
+            ]
+        ];
     }
 }

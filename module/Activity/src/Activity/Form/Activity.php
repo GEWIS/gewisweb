@@ -72,21 +72,21 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add([
             'name' => 'costs_unknown',
             'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
+            'options' => [
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
-            ),
+            ],
         ]);
 
         /*$this->add([
             'name' => 'approved',
             'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
+            'options' => [
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
-            ),
+            ],
         ]);*/
         $this->add([
             'name' => 'description',
@@ -99,10 +99,10 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add([
             'name' => 'canSignUp',
             'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
+            'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
-            ),
+            ],
         ]);
         
         $this->add([
@@ -118,14 +118,13 @@ class Activity extends Form implements InputFilterProviderInterface
             )
         ]);
 
-        
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'submit',
                 'value' => 'Create',
-            ),
-        ));
+            ],
+        ]);
     }
 
 

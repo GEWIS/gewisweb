@@ -71,11 +71,11 @@ class Foundation extends SubDecision
      */
     public function getOrganTypes()
     {
-        return array(
+        return [
             self::ORGAN_TYPE_COMMITTEE,
             self::ORGAN_TYPE_AV_COMMITTEE,
             self::ORGAN_TYPE_FRATERNITY
-        );
+        ];
     }
 
     /**
@@ -173,7 +173,7 @@ class Foundation extends SubDecision
     public function toArray()
     {
         $decision = $this->getDecision();
-        return array(
+        return [
             'meeting_type' => $decision->getMeeting()->getType(),
             'meeting_number' => $decision->getMeeting()->getNumber(),
             'decision_point' => $decision->getPoint(),
@@ -182,6 +182,6 @@ class Foundation extends SubDecision
             'abbr' => $this->getAbbr(),
             'name' => $this->getName(),
             'organtype' => $this->getOrganType()
-        );
+        ];
     }
 }

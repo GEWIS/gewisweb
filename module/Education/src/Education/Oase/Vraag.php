@@ -7,7 +7,7 @@ class Vraag {
     public function __construct($ServiceNaam)
     {
         $this->ServiceNaam = $ServiceNaam;
-        $this->Property = array();
+        $this->Property = [];
     }
 
     public function addProperty(Property $property)

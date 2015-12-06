@@ -32,6 +32,28 @@ class Page extends AbstractAclService
     }
 
     /**
+     * Returns the parent pages of a page if those exist.
+     *
+     * @param \Frontpage\Model\Page $page
+     * @return array
+     */
+    public function getPageParents($page)
+    {
+        $pageMapper = $this->getPageMapper();
+        $parents = [];
+        if(!is_null($page)) {
+            if(!is_null($page->getSubCategory())) {
+                $parents[] = $pageMapper->findPage($page->getCategory());
+                if(!is_null($page->getName())) {
+                    $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
+                }
+            }
+        }
+
+        return $parents;
+    }
+
+    /**
      * Returns a single page by its id
      *
      * @param integer $pageId
@@ -73,7 +95,7 @@ class Page extends AbstractAclService
             );
         }
         $pages = $this->getPageMapper()->getAllPages();
-        $pageArray = array();
+        $pageArray = [];
         foreach ($pages as $page) {
             $category = $page->getCategory();
             $subCategory = $page->getSubCategory();
@@ -165,11 +187,11 @@ class Page extends AbstractAclService
     public function uploadImage($files)
     {
         $imageValidator = new \Zend\Validator\File\IsImage(
-            array('magicFile' => false)
+            ['magicFile' => false]
         );
 
         $extensionValidator = new \Zend\Validator\File\Extension(
-            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
 
         if ($imageValidator->isValid($files['upload']['tmp_name'])) {

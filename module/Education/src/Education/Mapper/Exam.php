@@ -45,6 +45,16 @@ class Exam
     }
 
     /**
+     * Find an exam
+     *
+     * @param int $id
+     */
+    public function find($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    /**
      * Persist an exam
      *
      * @param ExamModel $exam
@@ -62,7 +72,7 @@ class Exam
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Education\Mapper\Exam');
+        return $this->em->getRepository('Education\Model\Exam');
     }
 }
 

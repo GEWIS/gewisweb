@@ -8,7 +8,7 @@ if ($islist==true) {
 
     //echo ("company/");  
     //echo($company->getAsciiName()); 
-    echo ($this->url('company/companyItem',array('asciiCompanyName' => $company->getAsciiName()),array(),true));
+    echo ($this->url('company/companyItem', ['asciiCompanyName' => $company->getAsciiName()], [],true));
 }
 else {
     echo($company->getWebsite());
@@ -27,8 +27,10 @@ echo ("</a></h2>") ?>
         <ul class="company-jobs-list">
         <?php foreach($company->getJobs() as $job) { ?>
         <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
-            array('asciiCompanyName' => $company->getAsciiName(),
-            'asciiJobName' => explode("_",$job->getAsciiName())[1]),array(),true) ?>
+            [
+                    'asciiCompanyName' => $company->getAsciiName(),
+            'asciiJobName' => explode("_",$job->getAsciiName())[1]
+            ], [],true) ?>
                             "><?= $job->getName(); ?></a></li>
         <?php } ?>
         </ul>

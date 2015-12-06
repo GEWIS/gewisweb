@@ -3,8 +3,12 @@ namespace User;
 
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
+use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 use Zend\Mvc\MvcEvent;
+use Zend\Http\Request as HttpRequest;
+
 use User\Permissions\NotAllowedException;
+use User\Model\User;
 
 class Module
 {
@@ -17,6 +21,19 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         $em = $e->getApplication()->getEventManager();
+
+        // check if the user has a valid API token
+        $request = $e->getRequest();
+
+        if (($request instanceof HttpRequest) && $request->getHeaders()->has('X-Auth-Token')) {
+            // check if this is a valid token
+            $token = $request->getHeader('X-Auth-Token')
+                ->getFieldValue();
+
+            $sm = $e->getApplication()->getServiceManager();
+            $service = $sm->get('user_service_apiuser');
+            $service->verifyToken($token);
+        }
 
         // this event listener will turn the request into '403 Forbidden' when
         // there is a NotAllowedException
@@ -38,13 +55,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -64,21 +81,30 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'aliases' => array(
+        return [
+            'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'user_auth_service'
-            ),
-            'invokables' => array(
+            ],
+
+            'invokables' => [
                 'user_auth_storage' => 'Zend\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
+                'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
-            ),
-            'factories' => array(
+            ],
+
+            'factories' => [
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
                     $config = $sm->get('config');
                     $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
+                },
+
+                'user_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('user_doctrine_em')
+                    );
                 },
                 'user_form_activate' => function ($sm) {
                     return new \User\Form\Activate(
@@ -95,6 +121,14 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_apitoken' => function ($sm) {
+                    $form = new \User\Form\ApiToken(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('user_hydrator'));
+                    return $form;
+                },
+
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
@@ -105,6 +139,12 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_apiuser' => function($sm) {
+                    return new \User\Mapper\ApiUser(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
+
                 'user_mail_transport' => function ($sm) {
                     $config = $sm->get('config');
                     $config = $config['email'];
@@ -127,10 +167,15 @@ class Module
                         $sm->get('user_auth_adapter')
                     );
                 },
+
                 'user_role' => function ($sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
+                    }
+                    $apiService = $sm->get('user_service_apiuser');
+                    if ($apiService->hasIdentity()) {
+                        return 'apiuser';
                     }
                     return 'guest';
                 },
@@ -138,25 +183,36 @@ class Module
                     // initialize the ACL
                     $acl = new Acl();
 
-                    // define basic roles
-                    $acl->addRole(new Role('guest')); // simple guest
-                    $acl->addRole(new Role('user'), 'guest'); // simple user
-                    $acl->addRole(new Role('admin')); // administrator
+                    /**
+                     * Define all basic roles.
+                     *
+                     * - guest: everyone gets at least this access level
+                     * - user: GEWIS-member
+                     * - apiuser: Automated tool given access by an admin
+                     * - admin: Defined administrators
+                     */
+                    $acl->addRole(new Role('guest'));
+                    $acl->addRole(new Role('user'), 'guest');
+                    $acl->addrole(new Role('apiuser'), 'guest');
+                    $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
 
                     // add user to registry
-                    if ('guest' != $user) {
+                    if ($user instanceof User) {
                         $roles = $user->getRoleNames();
                         // if the user has no roles, add the 'user' role by default
                         if (empty($roles)) {
-                            $roles = array('user');
+                            $roles = ['user'];
                         }
                         $acl->addRole($user, $roles);
                     }
 
                     // admins are allowed to do everything
                     $acl->allow('admin');
+
+                    // configure the user ACL
+                    $acl->addResource(new Resource('apiuser'));
 
                     return $acl;
                 },
@@ -165,24 +221,10 @@ class Module
                 'user_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            ),
-            'shared' => array(
+            ],
+            'shared' => [
                 'user_role' => false
-            )
-        );
-    }
-
-    /**
-     * Get view helper configuration.
-     *
-     * @return array
-     */
-    public function getViewHelperConfig()
-    {
-        return array(
-            'invokables' => array(
-                'hasPermission' => 'User\View\Helper\HasPermission'
-            )
-        );
+            ]
+        ];
     }
 }

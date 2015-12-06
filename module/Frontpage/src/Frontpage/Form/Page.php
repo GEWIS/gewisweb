@@ -14,69 +14,69 @@ class Page extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'category',
             'type' => 'text',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'subCategory',
             'type' => 'text',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'name',
             'type' => 'text',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'dutchTitle',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Dutch title')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'englishTitle',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('English title')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'dutchContent',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Dutch content')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'englishContent',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('English content')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'requiredRole',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Required role'),
                 'value' => 'guest'
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translator->translate('Save')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -87,94 +87,94 @@ class Page extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'category' => array(
+        return [
+            'category' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 25
-                        )
-                    ),
-                ),
-                'filters' => array(
-                    array('name' => 'string_to_lower')
-                )
-            ),
+                        ]
+                    ],
+                ],
+                'filters' => [
+                    ['name' => 'string_to_lower']
+                ]
+            ],
 
-            'subCategory' => array(
+            'subCategory' => [
                 'required' => false,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 2,
                             'max' => 25
-                        )
-                    ),
-                ),
-                'filters' => array(
-                    array('name' => 'string_to_lower'),
-                    array('name' => 'to_null')
-                )
-            ),
+                        ]
+                    ],
+                ],
+                'filters' => [
+                    ['name' => 'string_to_lower'],
+                    ['name' => 'to_null']
+                ]
+            ],
 
-            'name' => array(
+            'name' => [
                 'required' => false,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 2,
                             'max' => 25
-                        )
-                    ),
-                ),
-                'filters' => array(
-                    array('name' => 'string_to_lower'),
-                    array('name' => 'to_null')
-                )
-            ),
+                        ]
+                    ],
+                ],
+                'filters' => [
+                    ['name' => 'string_to_lower'],
+                    ['name' => 'to_null']
+                ]
+            ],
 
-            'dutchTitle' => array(
+            'dutchTitle' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
+                        ]
+                    ],
+                ],
+            ],
 
-            'englishTitle' => array(
+            'englishTitle' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 3,
                             'max' => 75
-                        )
-                    ),
-                ),
-            ),
+                        ]
+                    ],
+                ],
+            ],
 
-            'dutchContent' => array(
+            'dutchContent' => [
                 'required' => true,
-            ),
+            ],
 
-            'englishContent' => array(
+            'englishContent' => [
                 'required' => true,
-            ),
+            ],
 
-            'requiredRole' => array(
+            'requiredRole' => [
                 'required' => true,
-            ),
-        );
+            ],
+        ];
     }
 }

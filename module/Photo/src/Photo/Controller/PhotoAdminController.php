@@ -19,14 +19,14 @@ class PhotoAdminController extends AbstractActionController
         if (is_null($data)) {
             return $this->notFoundAction();
         }
-        $path = array(); //The path to use in the breadcrumb navigation bar
+        $path = []; //The path to use in the breadcrumb navigation bar
         $parent = $data['photo']->getAlbum();
         while (!is_null($parent)) {
             $path[] = $parent;
             $parent = $parent->getParent();
         }
 
-        return new ViewModel(array_merge($data, array('path' => $path)));
+        return new ViewModel(array_merge($data, ['path' => $path]));
     }
 
     /**
@@ -35,7 +35,7 @@ class PhotoAdminController extends AbstractActionController
     public function moveAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $albumId = $request->getPost()['album_id'];
@@ -51,7 +51,7 @@ class PhotoAdminController extends AbstractActionController
     public function deleteAction()
     {
         $request = $this->getRequest();
-        $result = array();
+        $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $result['success'] = $this->getPhotoService()->deletePhoto($photoId);

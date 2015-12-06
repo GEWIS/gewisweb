@@ -11,13 +11,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -37,23 +37,42 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'education_service_exam' => 'Education\Service\Exam',
                 'education_service_oase' => 'Education\Service\Oase'
-            ),
-            'factories' => array(
-                'education_form_upload' => function ($sm) {
-                    $form = new \Education\Form\Upload(
+            ],
+            'factories' => [
+                'education_form_tempupload' => function ($sm) {
+                    return new \Education\Form\TempUpload(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('education_hydrator_exam'));
+                },
+                'education_form_summaryupload' => function ($sm) {
+                    $form = new \Education\Form\SummaryUpload(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
+                },
+                'education_form_bulk' => function ($sm) {
+                    return new \Education\Form\Bulk(
+                        $sm->get('translator'), $sm->get('education_form_fieldset_exam')
+                    );
                 },
                 'education_form_searchcourse' => function ($sm) {
                     return new \Education\Form\SearchCourse(
                         $sm->get('translator')
                     );
+                },
+                'education_form_fieldset_exam' => function ($sm) {
+                    $fieldset = new \Education\Form\Fieldset\Exam(
+                        $sm->get('translator')
+                    );
+                    $fieldset->setConfig($sm->get('config'));
+                    $fieldset->setObject(new \Education\Model\Exam());
+                    $fieldset->setHydrator($sm->get('education_hydrator_exam'));
+                    return $fieldset;
                 },
                 'education_mapper_exam' => function ($sm) {
                     return new \Education\Mapper\Exam(
@@ -80,6 +99,11 @@ class Module
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Course'
+                    );
+                },
+                'education_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em')
                     );
                 },
                 'education_hydrator_exam' => function ($sm) {
@@ -138,8 +162,8 @@ class Module
                 'education_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -149,8 +173,8 @@ class Module
      */
     public function getViewHelperConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'examUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $config = $locator->get('config');
@@ -159,7 +183,7 @@ class Module
                     $helper->setExamService($locator->get('education_service_exam'));
                     return $helper;
                 }
-            )
-        );
+            ]
+        ];
     }
 }

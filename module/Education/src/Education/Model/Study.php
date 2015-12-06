@@ -140,10 +140,10 @@ class Study
      */
     public function setPhase($phase)
     {
-        if (!in_array($phase, array(
+        if (!in_array($phase, [
             self::PHASE_BACHELOR,
             self::PHASE_MASTER
-        ))) {
+        ])) {
             throw new \InvalidArgumentException("Invalid phase given.");
         }
         $this->phase = $phase;

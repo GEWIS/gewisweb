@@ -36,7 +36,7 @@ class User
      */
     public function findByEmail($email)
     {
-        return $this->getRepository()->findOneBy(array('email' => $email));
+        return $this->getRepository()->findOneBy(['email' => $email]);
     }
 
     /**
@@ -48,7 +48,7 @@ class User
      */
     public function findByLidnr($email)
     {
-        return $this->getRepository()->findOneBy(array('lidnr' => $email));
+        return $this->getRepository()->findOneBy(['lidnr' => $email]);
     }
 
     /**

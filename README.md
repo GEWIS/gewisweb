@@ -3,7 +3,7 @@ GEWIS Website
 
 Website for Study association GEWIS.
 
-[![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)
+[![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)  [![Code Climate](https://codeclimate.com/github/GEWIS/gewisweb/badges/gpa.svg)](https://codeclimate.com/github/GEWIS/gewisweb)
 
 Installation
 ============
@@ -14,23 +14,57 @@ Installation
 - Copy `config/autoload/doctrine.local.php.dist` to
   `config/autoload/doctrine.local.php` and configure the database settings in
   it.
-- Give the webserver's user read and write permissions to the `data/`
-  directory.
+- Give the webserver's user read and write permissions to the `data/` and
+  `public/data/` directories.
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
+- Copy `config/autoload/local.php.dist` to `config/autoload/local.php`
 
-Dreamspark configuration (only works on the GEWIS-server)
----------------------------------------------------------
+Configuration for scss editing
+------------------------------
 
-- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and
-  configure the Dreamspark credentials.
+If you need to edit stylesheets, you need to be able to compile scss files
+locally. For that, follow the next steps:
+
+- Install nodejs and npm (npm should be bundled with node).
+- Install Ruby and the Sass gem `gem install sass`
+- Install grunt-cli globally, `npm install -g grunt-cli`
+- Install local dependencies (in the directory of the GEWIS Website), `npm install`
+
+To compile scss files, simply run `grunt css`. While working on the
+stylesheets, it may be nice to let grunt watch the stylesheet and
+automatically recomple. For this, you can run `grunt watch`.
+
+Configuration for emails
+------------------------
+
+Edit `config/autoload/local.php` and configure the email, using a ZF2 email
+transport. By default, it uses the `File` transport to put email into the
+`data/mail/` folder. On the GEWIS server, the following configuration should
+actually send emails to people:
+
+```php
+'email' => [
+    'transport' => 'Smtp',
+    'options' => [
+        'name' => 'gewis.nl',
+        'host' => 'smtp.tue.nl',
+        'port' => 25
+    ],
+    'from' => 'web@gewis.nl'
+]
+```
 
 Optional debugging configuration
 --------------------------------
 
-- Copy `config/autoload/zdt.local.php.dist` to
-  `config/autoload/zdt.local.php`.
+Copy `config/autoload/zdt.local.php.dist` to `config/autoload/zdt.local.php`.
+
+Dreamspark configuration (only works on the GEWIS-server)
+---------------------------------------------------------
+
+Edit `config/autoload/local.php` and configure the Dreamspark credentials.
 
 Translation
 ===========

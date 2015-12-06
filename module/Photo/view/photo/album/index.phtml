@@ -9,16 +9,16 @@
     // the scrolling style
     'elastic',
     'partial/paginator.phtml',
-    array(
-        'path' => $this->url('photo/album', array('album_id' => $album->getId()))
-    )
+    [
+        'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+    ]
 )
 ?>
 <div class="row photos">
     <?php foreach ($paginator as $item): ?>
         <?php if ($item instanceof \Photo\Model\Album): ?>
             <div class="thumb">
-                <a class="thumbnail" href="<?= $this->url('photo/album', array('album_id' => $item->getId())); ?>">
+                <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
                     <img class="img-responsive" src="<?= $this->fileUrl($item->getCoverPath()) ?>" alt="">
 
                     <div class="caption">
@@ -28,7 +28,7 @@
             </div>
         <?php else: ?>
             <div class="thumb">
-                <a class="thumbnail <?= is_null($item->getWeeklyPhoto()) ? '' : 'potw-thumb' ?>" href="<?= $this->url('photo/photo', array('photo_id' => $item->getId())); ?>">
+                <a class="thumbnail <?= is_null($item->getWeeklyPhoto()) ? '' : 'potw-thumb' ?>" href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
                     <img class="img-responsive" src="<?= $this->fileUrl($item->getSmallThumbPath()) ?>" alt="">
                 </a>
             </div>

@@ -9,7 +9,7 @@
 	</div>
 <?php endif;?>
 
-<?php echo $this->partial('activity/activity/view.phtml', array(
+<?php echo $this->partial('activity/activity/view.phtml', [
         'activity' => $activity,
         'isLoggedIn' => $isLoggedIn,
         'isSignedUp' => $isSignedUp,
@@ -19,4 +19,4 @@
         'form' => $form,
         'fields' => $fields
 		
-));?>
+]);?>

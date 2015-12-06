@@ -1,37 +1,37 @@
 <?php
-return array(
-    'router' => array(
-        'routes' => array(
-            'company' => array(
+return [
+    'router' => [
+        'routes' => [
+            'company' => [
                 'type'    => 'Literal',
-                'options' => array(
+                'options' => [
                     'route'    => '/company',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller'    => 'Company',
                         'action'        => 'list', // index is reserved for frontpage, but since it is not yet implemented, a company list will be presented.
                         'actionArgument'=> '',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'list' => array(
+                'child_routes' => [
+                    'list' => [
                         'priority' => 3,
                         'type' => 'literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/list',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'Company\Controller\Company',
                                 'action' => 'list',
                                 'asciiCompanyName' => '',
-                            ),
-                        ),
+                            ],
+                        ],
                         'may_terminate' => true,
-                    ),
-                    'companyItem' => array(
+                    ],
+                    'companyItem' => [
                         'priority' => 2,
                         'type'    => 'segment',
-                        'options' => array(
+                        'options' => [
                             // url will be company/<asciiCompanyName>/jobs/<asciiJobName>/<action>
                             // asciijobname and asciicompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
@@ -41,63 +41,63 @@ return array(
                             // company/list should give a list of companies
                             // company/index should give the frontpage
                             'route'    => '/:asciiCompanyName',
-                            'constraints' => array(
+                            'constraints' => [
                                 'asciiCompanyName'     => '[a-zA-Z0-9_-]*',
-                            ),
-                        ),
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'joblist' => array(
+                        'child_routes' => [
+                            'joblist' => [
                                 'type' => 'literal',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/jobs',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'controller' => 'Company\Controller\Company',
                                         'action' => 'jobs'
-                                    ),
-                                ),
+                                    ],
+                                ],
                                 'may_terminate' => true,
-                                'child_routes' => array(
-                                    'job_item' => array(
+                                'child_routes' => [
+                                    'job_item' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
                                             'route' => '[/:asciiJobName]',
-                                            'constraints' => array(
+                                            'constraints' => [
                                                 'asciiJobName'     => '[a-zA-Z0-9_-]*',
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
             'Company\Controller\Company' => 'Company\Controller\CompanyController'
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'company' => __DIR__ . '/../view/'
-        )
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'company_entities' => array(
+        ]
+    ],
+    'doctrine' => [
+        'driver' => [
+            'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Company/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Company/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Company\Model' => 'company_entities'
-                )
-            )
-        )
-    )
-);
+                ]
+            ]
+        ]
+    ]
+];

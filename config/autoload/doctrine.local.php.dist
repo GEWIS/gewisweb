@@ -1,8 +1,8 @@
 <?php
-return array(
-    'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
+return [
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
                 'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
                     'host'     => 'localhost',
@@ -10,15 +10,8 @@ return array(
                     'user'     => 'username',
                     'password' => 'password',
                     'dbname'   => 'database',
-                )
-            )
-        )
-        'configuration' => array(
-            'orm_default' => array(
-                'numeric_functions' => array(
-                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
-                )                
-            )
-        )
-    )
-);
+                ]
+            ]
+        ]
+    ]
+];

@@ -23,7 +23,7 @@ class Notes extends Form implements InputFilterProviderInterface
         parent::__construct();
         $this->translator = $translator;
 
-        $options = array();
+        $options = [];
         foreach ($mapper->findAll() as $meeting) {
             $meeting = $meeting[0];
             $name = $meeting->getType() . '/' . $meeting->getNumber();
@@ -31,32 +31,32 @@ class Notes extends Form implements InputFilterProviderInterface
                             . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
-        $this->add(array(
+        $this->add([
             'name' => 'meeting',
             'type' => 'select',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Meeting'),
                 'empty_option' => $translator->translate('Choose a meeting'),
                 'value_options' => $options
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'upload',
             'type' => 'file',
-            'option' => array(
+            'option' => [
                 'label' => $translator->translate('Notes to upload')
-            )
-        ));
+            ]
+        ]);
         $this->get('upload')->setLabel($translator->translate('Notes to upload'));
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translator->translate('Submit')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -68,11 +68,11 @@ class Notes extends Form implements InputFilterProviderInterface
     {
         switch ($error) {
         case self::ERROR_FILE_EXISTS:
-            $this->setMessages(array(
-                'meeting' => array(
+            $this->setMessages([
+                'meeting' => [
                     $this->translator->translate('There already are notes for this meeting')
-                )
-            ));
+                ]
+            ]);
             break;
         }
     }
@@ -82,24 +82,24 @@ class Notes extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'upload' => array(
+        return [
+            'upload' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'File\Extension',
-                        'options' => array(
+                        'options' => [
                             'extension' => 'pdf'
-                        )
-                    ),
-                    array(
+                        ]
+                    ],
+                    [
                         'name' => 'File\MimeType',
-                        'options' => array(
+                        'options' => [
                             'mimeType' => 'application/pdf'
-                        )
-                    )
-                )
-            )
-        );
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

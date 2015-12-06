@@ -1,5 +1,5 @@
 <script>
-var urlTemplate = '<?= $this->url('member/view', array('lidnr' => '__LIDNR__')) ?>';
+var urlTemplate = '<?= $this->url('member/view', ['lidnr' => '__LIDNR__']) ?>';
 $(document).ready(function () {
     var maxResults = 32;
     var footer = $("#members-result tfoot");

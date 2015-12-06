@@ -11,23 +11,70 @@ class AdminController extends AbstractActionController {
     {
     }
 
-    public function uploadAction()
+    public function bulkAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->upload($request->getPost(), $request->getFiles())) {
-                return new ViewModel(array(
+            if ($service->tempUpload($request->getPost(), $request->getFiles())) {
+                return new ViewModel([
                     'success' => true
-                ));
+                ]);
+            } else {
+                $this->getResponse()->setStatusCode(500);
+                return new ViewModel([
+                    'success' => false
+                ]);
             }
         }
 
-        return new ViewModel(array(
-            'form' => $service->getUploadForm()
-        ));
+        return new ViewModel([
+            'form' => $service->getTempUploadForm()
+        ]);
+    }
+
+    /**
+     * Edit several exams in bulk.
+     */
+    public function editAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
+        $config = $this->getServiceLocator()->get('config');
+        $config = $config['education_temp'];
+
+        return new ViewModel([
+            'form'   => $service->getBulkForm(),
+            'config' => $config
+        ]);
+    }
+
+    public function summaryAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // try uploading
+            if ($service->uploadSummary($request->getPost(), $request->getFiles())) {
+                return new ViewModel([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return new ViewModel([
+            'form' => $service->getSummaryUploadForm()
+        ]);
     }
 
     /**

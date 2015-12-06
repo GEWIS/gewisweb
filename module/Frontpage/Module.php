@@ -11,13 +11,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -37,12 +37,12 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
                 'frontpage_service_page' => 'Frontpage\Service\Page'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 'frontpage_form_page' => function ($sm) {
                     $form = new \Frontpage\Form\Page(
                         $sm->get('translator')
@@ -74,7 +74,7 @@ class Module
                 'frontpage_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            )
-        );
+            ]
+        ];
     }
 }

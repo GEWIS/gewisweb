@@ -38,11 +38,11 @@
     <div class="col-md-12">
 <?php if ($isSignedUp) :?>
         <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
-		<a href="<?php echo $this->url('activity/signoff', array( 'id' => $activity->get('id')));?>">
+		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->get('id')]);?>">
 		    <?php echo $this->translate('Unsubscribe');?>
 		</a>
 <?php elseif($canSignUp && $isLoggedIn):?>
-        <a href="<?php echo $this->url('activity/signup', array( 'id' => $activity->get('id')));?>">
+        <a href="<?php echo $this->url('activity/signup', ['id' => $activity->get('id')]);?>">
             <?php echo $this->translate('Subscribe');?>
         </a>
 <?php elseif ($canSignUp):?>

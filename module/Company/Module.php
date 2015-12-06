@@ -12,13 +12,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -38,11 +38,11 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'company_service_company' => 'Company\Service\Company'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
 
                 'company_mapper_company' => function ($sm) {
                     return new \Company\Mapper\Company(
@@ -57,7 +57,7 @@ class Module
                         'company_doctrine_em' => function ($sm) {
                             return $sm->get('doctrine.entitymanager.orm_default');
                         }
-        )
-        );
+            ]
+        ];
     }
 }

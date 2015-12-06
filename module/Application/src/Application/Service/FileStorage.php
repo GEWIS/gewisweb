@@ -139,7 +139,7 @@ class FileStorage extends AbstractService
         $response->setStatusCode(200);
         $response->setStreamName($fileName);
         $headers = new \Zend\Http\Headers();
-        $headers->addHeaders(array(
+        $headers->addHeaders([
             // Suggests to the browser to display the file instead of saving
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',
             'Content-Type' => $type,
@@ -148,7 +148,7 @@ class FileStorage extends AbstractService
             'Expires' => '@0',
             'Cache-Control' => 'must-revalidate',
             'Pragma' => 'public'
-        ));
+        ]);
         $response->setHeaders($headers);
 
         return $response;

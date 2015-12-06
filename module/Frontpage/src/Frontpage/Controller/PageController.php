@@ -14,6 +14,7 @@ class PageController extends AbstractActionController
         $subCategory = $this->params()->fromRoute('sub_category');
         $name = $this->params()->fromRoute('name');
         $page = $this->getPageService()->getPage($category, $subCategory, $name);
+        $parents = $this->getPageService()->getPageParents($page);
 
         if (is_null($page)) {
             return $this->notFoundAction();
@@ -21,10 +22,11 @@ class PageController extends AbstractActionController
 
         $session = new SessionContainer('lang');
 
-        return new ViewModel(array(
+        return new ViewModel([
             'page' => $page,
+            'parents' => $parents,
             'lang' => $session->lang
-        ));
+        ]);
     }
 
     /**

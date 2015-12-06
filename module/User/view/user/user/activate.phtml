@@ -5,7 +5,7 @@
 $form = $this->form;
 $form->prepare();
 
-$form->setAttribute('action', $this->url('user/activate', array('code' => $this->user->getCode())));
+$form->setAttribute('action', $this->url('user/activate', ['code' => $this->user->getCode()]));
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('role', 'form');

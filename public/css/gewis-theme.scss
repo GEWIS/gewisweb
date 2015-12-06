@@ -1,0 +1,354 @@
+/* Bootstrap variable overrides (removes border radius) */
+$border-radius-small: 0px;
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+
+@import "bootstrap";
+
+/* basic settings */
+body {
+    color: #414141;
+    font-family: "Raleway",sans-serif;
+    padding-top: 90px;
+    padding-bottom: 0;
+
+    /* main container */
+    > div.container {
+        background-color: #f0f0f0;
+        padding-top: 15px;
+    }
+}
+
+/* navigation */
+.navbar {
+    border: none;
+}
+.navbar-default {
+    background: transparent;
+
+    .navbar-nav {
+        background-color: #fff;
+
+        a {
+            text-transform: uppercase;
+        }
+
+        .dropdown > a,
+        > .open > a,
+        > .active > a,
+        > li > a:focus,
+        > .open > a:focus,
+        > .active > a:focus,
+        > li > a:hover,
+        > .open > a:hover,
+        > .active > a:hover {
+            background-color: #BC5F5F;
+            color: #fff;
+        }
+    }
+}
+@media (min-width: $screen-sm-min) {
+    .navbar-default .navbar-nav a {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}
+
+/* Dropdown navigation */
+.navbar-nav {
+    > li > .dropdown-menu {
+        border: none;
+        padding: 0;
+    }
+
+    .dropdown-menu li a {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+/* Navbar start fix */
+@media (max-width: $screen-xs-max) {
+    .navbar-nav {
+        margin: 0 -15px;
+    }
+}
+.navbar-collapse {
+    border: none;
+}
+
+/* general jumbotron*/
+.container .jumbotron,
+.container-fluid .jumbotron {
+    background-color: #DDD;
+}
+
+/* Jumbotron header */
+.jumbotron-header {
+    position: relative;
+    background: url(../img/Panorama.jpg);
+    background-size: cover;
+    background-position: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: -90px;
+    margin-bottom: 0;
+}
+.jumbotron-header:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 512;
+}
+.jumbotron-header a img {
+    position: relative;
+    z-index: 2048;
+    height: 130px;
+    width: auto;
+}
+/* Large version of jumbotron, for the frontpage */
+.jumbotron-header.jumbotron-large {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.jumbotron-header.jumbotron-large a img {
+    height: auto;
+}
+@media (max-width: $screen-xs-max) {
+    .jumbotron-header {
+        height: 50px;
+    }
+}
+@media (max-width: $screen-sm-max) {
+    .jumbotron-header.jumbotron-large {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    .jumbotron-header.jumbotron-large a img {
+        height: 165px;
+    }
+}
+
+/* General styles */
+a {
+    color: #bc5f5f;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: -10px;
+    color: #fff;
+    background-color: #bc5f5f;
+    a {
+        color: #fff;
+    }
+}
+
+/* Photos page */
+.photos {
+    line-height: 0;
+}
+/* to make the photos page responsive */
+.photos {
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 1;
+    -moz-column-gap: 0px;
+    column-count: 1;
+    column-gap: 0px;
+}
+@media (min-width: 400px) {
+    .photos {
+        -webkit-column-count: 2;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 2;
+        -moz-column-gap: 0px;
+        column-count: 2;
+        column-gap: 0px;
+    }
+}
+@media (min-width: $screen-sm-min) {
+    .photos {
+        -webkit-column-count: 3;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 3;
+        -moz-column-gap: 0px;
+        column-count: 3;
+        column-gap: 0px;
+    }
+}
+@media (min-width: $screen-md-min) {
+    .photos {
+        -webkit-column-count: 4;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 4;
+        -moz-column-gap: 0px;
+        column-count: 4;
+        column-gap: 0px;
+    }
+}
+@media (min-width: $screen-lg-min) {
+    .photos {
+        -webkit-column-count: 5;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 5;
+        -moz-column-gap: 0px;
+        column-count: 5;
+        column-gap: 0px;
+    }
+}
+
+.photos div {
+    width: 100%;
+    height: auto;
+}
+
+.agenda {
+    background-color: #fff;
+
+}
+
+/* Pop the agenda slightly over the header image */
+@media (min-width: $screen-md-min) {
+    .agenda {
+        margin-top: -75px;
+    }
+}
+
+.agenda h4 {
+    display: inline;
+}
+
+.agenda-item a {
+    color: #000;
+    text-decoration: none;
+}
+.agenda-item {
+    height: 60px;
+    line-height:50px;
+}
+
+.date-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #bc5f5f;
+    color: #fff;
+    float: left;
+    display: table-cell;
+    vertical-align: middle;
+
+    .day {
+        text-align: center;
+        padding: 10px;
+    }
+    .month {
+        text-align: center;
+        margin-top: -80px;
+    }
+}
+
+
+
+/* Weekly photo ribbon */
+
+
+.ribbon-container {
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    width: 200px;
+    height:200px;
+    overflow: hidden;
+}
+.corner-ribbon {
+    width: 200px;
+    position: absolute;
+    top: 25px;
+    left: -50px;
+    text-align: center;
+    line-height: 50px;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    background-color: rgb(212, 0, 38);
+}
+
+.corner-ribbon.shadow {
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+}
+
+.potw-thumb {
+    background-color: rgb(212, 0, 38);
+}
+
+.wrapper {
+    position:relative;
+    margin:0 auto;
+    overflow:hidden;
+    padding:5px;
+    height:50px;
+}
+
+.year-list {
+    background-color: #fff;
+    position:absolute;
+    left:0px;
+    top:0px;
+    min-width:3000px;
+    margin-left:12px;
+    margin-top:0px;
+}
+
+.year-list li {
+    display:table-cell;
+    position:relative;
+    text-align:center;
+    cursor:grab;
+    cursor:-webkit-grab;
+    color:#efefef;
+    vertical-align:middle;
+
+    a {
+        background-color: #fff;
+
+        box-sizing: border-box;
+    }
+}
+.year-list > a,
+.year-list > li.active > a,
+.year-list > li > a:hover,
+.year-list > li.active > a:hover,
+.year-list > .active > a:hover {
+    background-color: #BC5F5F;
+    color: #fff;
+}
+
+.scroller:hover {
+    background-color: #BC5F5F;
+}
+.scroller {
+    text-align:center;
+    cursor:pointer;
+    display:none;
+    padding:7px;
+    padding-top:11px;
+    white-space:no-wrap;
+    vertical-align:middle;
+    background-color:#fff;
+}
+
+.scroller-right {
+    float:right;
+}
+
+.scroller-left {
+    float:left;
+}

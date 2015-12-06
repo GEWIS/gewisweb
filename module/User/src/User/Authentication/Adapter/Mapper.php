@@ -65,7 +65,7 @@ class Mapper implements AdapterInterface
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
-                array()
+                []
             );
         }
 
@@ -73,7 +73,7 @@ class Mapper implements AdapterInterface
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
-                array()
+                []
             );
         }
 

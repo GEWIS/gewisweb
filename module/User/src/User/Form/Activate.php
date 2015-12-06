@@ -14,29 +14,29 @@ class Activate extends Form
     {
         parent::__construct();
 
-        $this->add(array(
+        $this->add([
             'name' => 'password',
             'type' => 'password',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Your password')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'password_verify',
             'type' => 'password',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Verify your password')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translate->translate('Activate')
-            )
-        ));
+            ]
+        ]);
 
         $this->initFilters();
     }
@@ -45,40 +45,40 @@ class Activate extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'password',
             'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty'),
-                array(
+            'validators' => [
+                ['name' => 'not_empty'],
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 8
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'password_verify',
             'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty'),
-                array(
+            'validators' => [
+                ['name' => 'not_empty'],
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 8
-                    )
-                ),
-                array(
+                    ]
+                ],
+                [
                     'name' => 'identical',
-                    'options' => array(
+                    'options' => [
                         'token' => 'password'
-                    )
-                )
+                    ]
+                ]
 
-            )
-        ));
+            ]
+        ]);
 
         $this->setInputFilter($filter);
     }
