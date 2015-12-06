@@ -90,10 +90,10 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
         /** @var  $activity Activity */
         $activity = $activityService->getActivity($id);
         
+        $params = $this->viewAction();        
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = 'Gebruik het formulier om in te schrijven';
@@ -129,8 +129,6 @@ class ActivityController extends AbstractActionController
             $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
             $params['success'] = true;
         }
-        $params = $this->viewAction();
-
         return $params;
     }
 
