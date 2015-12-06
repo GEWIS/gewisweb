@@ -6,7 +6,6 @@ use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\Validator\NotEmpty;
-//use Activity\Form\FieldDependant;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface

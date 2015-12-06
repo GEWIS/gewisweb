@@ -4,10 +4,7 @@ namespace Activity\Form;
 
 use Zend\Form\Form;
 //input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
-use Zend\InputFilter\CollectionInputFilter;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -65,7 +62,6 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         switch($field->get('type')){
             case 0: //'Text'
                 $result['type'] = 'Text';
-                //$result['options'] = [];
                 break;
             case 1: //'Yes/No'
                 $result['type'] = 'Zend\Form\Element\Radio';
@@ -99,4 +95,3 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         return $result;        
     }
 }
-

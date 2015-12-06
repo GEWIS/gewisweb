@@ -4,10 +4,7 @@ namespace Activity\Form;
 
 use Zend\Form\Form;
 //input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
-use Zend\InputFilter\CollectionInputFilter;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 
