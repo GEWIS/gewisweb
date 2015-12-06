@@ -35,22 +35,6 @@
     <div class="col-md-6"><?php echo $activity->get('onlyGEWIS') ? $this->translate("Yes") : $this->translate("No"); ?></div>
 </div>
 <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
-    <div class="col-md-12">
-<?php if ($isSignedUp) :?>
-        <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
-		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->get('id')]);?>">
-		    <?php echo $this->translate('Unsubscribe');?>
-		</a>
-<?php elseif($canSignUp && $isLoggedIn):?>
-        <a href="<?php echo $this->url('activity/signup', ['id' => $activity->get('id')]);?>">
-            <?php echo $this->translate('Subscribe');?>
-        </a>
-<?php elseif ($canSignUp):?>
-       <?php echo $this->translate('Login to subscribe');?>
-<?php endif; ?>
-	</div>
-</div>
-
 <?php if ($activity->get('canSignUp')): ?>
     <h2>
         <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
@@ -75,9 +59,15 @@
         <?php endforeach;?>
         </tbody>
     </table>
-<?php endif;?>
-
-
+<?php endif;?>    
+    <div class="col-md-12">
+        
+<?php if ($isSignedUp) :?>
+        <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
+		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->get('id')]);?>">
+		    <?php echo $this->translate('Unsubscribe');?>
+		</a>
+<?php elseif($canSignUp && $isLoggedIn):?>
 <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->get('id'))));
 $form->prepare();
 echo $this->form()->openTag($form); ?>
@@ -91,6 +81,13 @@ echo $this->form()->openTag($form); ?>
         </table>
 <?php echo $this->formSubmit($form->get('submit'));
       echo $this->form()->closeTag();?>
+<?php elseif ($canSignUp):?>
+       <?php echo $this->translate('Login to subscribe');?>
+<?php endif; ?>
+	</div>
+</div>
+
+
 <div class="row">
 	<div class="col-md-12">
 		<button style="width: 100%" class="btn btn-primary" onclick="window.location.href='../../activity'"><?php echo $this->translate('Back'); ?></button>
