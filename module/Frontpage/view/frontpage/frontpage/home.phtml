@@ -72,7 +72,6 @@
             <?php if (isset($poll['poll'])): ?>
                 <?= $this->partial('partial/poll.phtml', [
                     'poll' => $poll['poll'],
-                    'lang' => $lang,
                     'canVote' => $poll['canVote'],
                     'userVote' => $poll['userVote'],
                     'showResults' => false

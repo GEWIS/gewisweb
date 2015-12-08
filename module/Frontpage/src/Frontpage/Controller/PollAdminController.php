@@ -27,14 +27,12 @@ class PollAdminController extends AbstractActionController
         }
 
         $unapprovedPolls = $pollService->getUnapprovedPolls();
-        $session = new SessionContainer('lang');
 
         $approvalForm = $pollService->getPollApprovalForm();
 
         return new ViewModel([
             'unapprovedPolls' => $unapprovedPolls,
             'paginator' => $paginator,
-            'lang' => $session->lang,
             'approvalForm' => $approvalForm
         ]);
     }

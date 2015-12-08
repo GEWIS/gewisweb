@@ -11,8 +11,6 @@ class FrontpageController extends AbstractActionController
     public function homeAction()
     {
         $homePageData = $this->getFrontpageService()->getHomepageData();
-        $session = new SessionContainer('lang');
-        $homePageData['lang'] = $session->lang;
         return new ViewModel($homePageData);
     }
 

@@ -19,11 +19,8 @@ class PollController extends AbstractActionController
         if (!is_null($poll)) {
             $details = $pollService->getPollDetails($poll);
 
-            $session = new SessionContainer('lang');
-
             return new ViewModel(array_merge($details, [
                 'poll' => $poll,
-                'lang' => $session->lang
             ]));
         }
 
@@ -57,11 +54,9 @@ class PollController extends AbstractActionController
         if ($page) {
             $paginator->setCurrentPageNumber($page);
         }
-        $session = new SessionContainer('lang');
 
         return new ViewModel([
-            'paginator' => $paginator,
-            'lang' => $session->lang
+            'paginator' => $paginator
         ]);
     }
 
