@@ -66,6 +66,23 @@ Dreamspark configuration (only works on the GEWIS-server)
 
 Edit `config/autoload/local.php` and configure the Dreamspark credentials.
 
+OASE
+====
+
+For the exam archive, the website can communicate with OASE to obtain course
+information. To update the course information, use the following command:
+
+```bash
+./web oase update
+```
+
+It is recommended to run this command as a cronjob. Since OASE doesn't update
+much, once a month should be enough.
+
+Also, the console routes `oase show course <code>` and `oase show studies` are
+available for debugging purposes. These will directly contact OASE to obtain
+the information.
+
 Translation
 ===========
 
