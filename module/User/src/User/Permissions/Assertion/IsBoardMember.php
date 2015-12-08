@@ -9,6 +9,8 @@ use Zend\Permissions\Acl\Assertion\AssertionInterface;
 
 use User\Model\User;
 
+use Decision\Model\BoardMember;
+
 class IsBoardMember implements AssertionInterface
 {
 
@@ -33,7 +35,27 @@ class IsBoardMember implements AssertionInterface
         }
         $member = $role->getMember();
 
-        // TODO: obtain this members board installations, and check if the user is a current board member
+        foreach ($member->getBoardInstallations() as $boardInstall) {
+            if ($this->isCurrentBoard($boardInstall)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if this is a current board member.
+     *
+     * @param BoardMember $boardMember
+     *
+     * @return bool
+     */
+    protected function isCurrentBoard(BoardMember $boardMember)
+    {
+        $now = new \DateTime();
+        return $boardMember->getInstallDate() <= $now &&
+            (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate >= $now);
     }
 
 }
