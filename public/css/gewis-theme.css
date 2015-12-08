@@ -5810,6 +5810,18 @@ button.close {
   .hidden-print {
     display: none !important; } }
 /*
+Button groups
+
+Markup:
+<div class="btn-group">
+    <a class="btn btn-default">Left</a>
+    <a class="btn btn-default">Middle</a>
+    <a class="btn btn-default">Right</a>
+</div>
+
+Styleguide: button-groups
+*/
+/*
 Buttons
 
 Styleguide: buttons
@@ -6084,6 +6096,41 @@ Weight: 2
 
 Styleguide: buttons.sizes
 */
+/*
+Navbar
+Markup:
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand">
+            <img src="https://gewis.nl/sws/themes/new/gewis-rond.png"/>
+        </a>
+    </div>
+</div>
+Styleguide: navbar
+*/
+/*
+Sections
+
+Markup:
+<div class="section {{modifier_class}}">
+  <div class="container-fluid">
+      <h2>Section block</h2>
+      <a class="btn btn-primary {{modifier_class}}">Button</a>
+      <a class="btn btn-default {{modifier_class}}">Button</a>
+  </div>
+</div>
+
+:default - Default section
+.inverse - Dark section
+
+Styleguide: section
+*/
+.section {
+  padding: 15px 0; }
+  .section.inverse {
+    background: #333333;
+    color: #fff; }
+
 /*
 Typography
 
