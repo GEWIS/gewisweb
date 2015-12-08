@@ -1,0 +1,70 @@
+/*
+Buttons
+
+Styleguide: buttons
+*/
+
+/*
+Button styles
+
+Markup:
+<a class="btn {{modifier_class}}">Button</a>
+
+.btn-default - Default
+.btn-darker - Darker
+.btn-primary - Primary
+.btn-success - Success
+.btn-warning - Warning
+.btn-danger - Danger
+
+Weight: 1
+
+Styleguide: buttons.styles
+*/
+.btn-default {
+    @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
+
+    &.inverse {
+        @include button-variant-inverse($btn-default-inverse-color, $btn-default-inverse-bg, $btn-default-inverse-border);
+    }
+}
+
+.btn-darker {
+    @include button-variant($btn-darker-color, $btn-darker-bg, $btn-darker-border);
+}
+
+.btn-primary {
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+
+    &.inverse {
+        @include button-variant-inverse($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+    }
+}
+
+.btn-success {
+    @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+}
+
+.btn-warning {
+    @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
+}
+
+.btn-danger {
+    @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+}
+
+/*
+Button sizes
+
+Markup:
+<a class="btn btn-primary {{modifier_class}}">Button</a>
+
+.btn-xs - Extra small
+.btn-sm - Small
+:default - Default
+.btn-lg - Large
+
+Weight: 2
+
+Styleguide: buttons.sizes
+*/

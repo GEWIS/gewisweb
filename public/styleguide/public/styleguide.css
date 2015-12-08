@@ -6140,7 +6140,76 @@ Styleguide: typography.font-features
   -o-font-feature-settings: "lnum" 1;
   font-feature-settings: "lnum" 1; }
 
-.poll-bar {
-  background-color: #bc5f5f; }
+.styleguide-swatch {
+  display: block;
+  width: 50px;
+  height: 50px;
+  box-shadow: inset 0 0 0 50px;
+  border: 1px solid; }
+  .styleguide-swatch.primary {
+    color: #D40026; }
+  .styleguide-swatch.success {
+    color: #6BBE1E; }
+  .styleguide-swatch.warning {
+    color: #E88C12; }
+  .styleguide-swatch.danger {
+    color: #D40026;
+    box-shadow: none; }
 
-/*# sourceMappingURL=gewis-theme.css.map */
+.nav.styleguide-nav > li > a,
+.nav.styleguide-nav > li > ul > li > a {
+  text-decoration: none;
+  color: #333333;
+  border-left: 1px solid transparent;
+  background: none;
+  transition: color 150ms, border 150ms; }
+.nav.styleguide-nav > li.active > a,
+.nav.styleguide-nav > li > a:hover,
+.nav.styleguide-nav > li > ul > li > a:hover {
+  color: #D40026;
+  border-left-color: #D40026; }
+.nav.styleguide-nav > li > a {
+  padding: 3px 0 3px 10px; }
+.nav.styleguide-nav > li > ul {
+  list-style: none;
+  padding-left: 0; }
+.nav.styleguide-nav > li > ul > li > a {
+  display: block;
+  padding: 2px 0 2px 20px;
+  font-size: 0.85em; }
+
+.styleguide-section {
+  margin-bottom: 20px; }
+  .styleguide-section > h1:first-child,
+  .styleguide-section > h2:first-child {
+    margin-top: 0; }
+
+h1 .permalink, h2 .permalink, h3 .permalink {
+  position: absolute;
+  margin-left: -2em;
+  padding-right: 15px;
+  width: 2em;
+  text-align: right;
+  color: inherit !important;
+  font-size: 0.5em;
+  line-height: 2.3em;
+  opacity: 0;
+  transition: opacity 150ms; }
+h1:hover .permalink, h2:hover .permalink, h3:hover .permalink {
+  opacity: 1; }
+
+.styleguide-list-group .list-group-item {
+  padding: 10px 15px 15px; }
+.styleguide-list-group .styleguide-item-example {
+  margin-top: 5px; }
+.styleguide-list-group .list-group-item-heading + .styleguide-item-example {
+  margin-top: 10px; }
+
+.styleguide-markup {
+  margin: 0;
+  border-width: 0;
+  border-top: 1px; }
+  .styleguide-markup ol {
+    margin-bottom: 0; }
+
+/*# sourceMappingURL=styleguide.css.map */

@@ -1,0 +1,68 @@
+@function darken-lighten($color, $amount) {
+    @if $amount >= 0% {
+        @return darken($color, $amount);
+    } @else {
+        @return lighten($color, -$amount);
+    }
+}
+
+@mixin button-background($color, $amount, $accent) {
+    @if $color == transparent {
+        background-color: fade-out(darken-lighten($accent, $amount), 1 - $amount / 100%);
+    } @else {
+        background-color: darken-lighten($color, $amount);
+    }
+}
+
+@mixin button-variant($color, $background, $border, $multiplier: 1) {
+    font-family: $font-family-alt;
+    font-weight: 600;
+    color: $color;
+
+    background-color: $background;
+    border-color: $border;
+
+    transition: background $transition-duration, box-shadow $transition-duration, border $transition-duration;
+
+    &:active {
+        box-shadow: none;
+    }
+
+    &:focus, &.focus, &:hover {
+        @include button-background($background, 5% * $multiplier, $border);
+        color: $color;
+        border-color: darken-lighten($border, 5% * $multiplier);
+    }
+
+    &:active, &.active, .open > &.dropdown-toggle {
+        @include button-background($background, 8% * $multiplier, $border);
+        color: $color;
+        border-color: darken-lighten($border, 8% * $multiplier);
+
+    &:hover, &:focus, &.focus {
+        @include button-background($background, 10% * $multiplier, $border);
+        color: $color;
+        border-color: darken-lighten($border, 10% * $multiplier);
+    }
+    }
+
+    &:active, &.active, .open > &.dropdown-toggle {
+        background-image: none;
+    }
+
+    &.disabled, &[disabled], fieldset[disabled] & {
+        &:hover, &:focus, &.focus {
+            background-color: $background;
+            border-color: $border;
+        }
+    }
+
+    .badge {
+        color: $background;
+        background-color: $color;
+    }
+}
+
+@mixin button-variant-inverse($color, $background, $border) {
+    @include button-variant($color, $background, $border, -1);
+}

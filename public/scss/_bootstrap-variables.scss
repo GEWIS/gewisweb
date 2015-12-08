@@ -1,0 +1,76 @@
+/*
+Colors
+
+Markup:
+<span class="styleguide-swatch {{modifier_class}}"></span>
+
+.primary - Primary
+.success - Success
+.warning - Warning
+.danger - Danger
+
+Styleguide: colors
+*/
+$gray-base: #000;
+$gray-darker: lighten($gray-base, 13.5%);
+$gray-dark: lighten($gray-base, 20%);
+$gray: lighten($gray-base, 33.5%);
+$gray-light: lighten($gray-base, 46.7%);
+$gray-lighter: lighten($gray-base, 93.5%);
+
+$brand-primary: #D40026;
+$brand-success: #6BBE1E;
+$brand-warning: #E88C12;
+$brand-danger: #D40026;
+
+// Scaffolding
+$body-bg: #fff;
+$body-inverse-bg: $gray-dark;
+$text-color: $gray-dark;
+$text-inverse-color: #fff;
+
+// Links
+$link-color: $brand-primary;
+$link-color-hover: darken($link-color, 15%);
+
+// Fonts
+$font-family-base: "Lato", "Arial", sans-serif;
+$font-family-alt: "Raleway", sans-serif;
+
+$headings-font-family: $font-family-alt;
+
+// Components
+$border-radius-base: 2px;
+$border-radius-large: $border-radius-base;
+$border-radius-small: $border-radius-base;
+
+// Buttons
+$btn-font-weight: bold;
+
+$btn-default-color: $text-color;
+$btn-default-bg: #fff;
+$btn-default-border: lighten($gray, 50%);
+
+$btn-default-inverse-color: #fff;
+$btn-default-inverse-bg: lighten($body-inverse-bg, 5%);
+$btn-default-inverse-border: lighten($btn-default-inverse-bg, 5%);
+
+$btn-darker-color: $text-color;
+$btn-darker-bg: lighten($gray, 60%);
+$btn-darker-border: $btn-darker-bg;
+
+$btn-primary-color: #fff;
+$btn-primary-bg: $brand-primary;
+$btn-primary-border: $btn-primary-bg;
+
+$btn-success-color: #fff;
+$btn-success-bg: $brand-success;
+$btn-success-border: $btn-success-bg;
+
+$btn-warning-color: #fff;
+$btn-warning-bg: $brand-warning;
+$btn-warning-border: $btn-warning-bg;
+
+$btn-danger-color: $brand-danger;
+$btn-danger-bg: transparent;
+$btn-danger-border: $brand-danger;
