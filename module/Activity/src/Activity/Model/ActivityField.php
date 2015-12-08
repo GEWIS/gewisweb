@@ -64,7 +64,7 @@ class ActivityField
     protected $options;
 
     /**
-     * Create a new field.
+     * Create a new field. TODO: Move to service (move Model\Activity first)
      *
      * @param array $params Parameters for the new field
      * @param Activity $activity The activity 
@@ -82,12 +82,11 @@ class ActivityField
             throw new \Exception('There is already a loaded activity');
         }
         
-        foreach (['name', 'type'] as $param) {
-            if (!isset($params[$param])) {
-                throw new \Exception("create: parameter $param not set");
-            }
-            $this->$param = $params[$param];
-        }        
+        //Checking whether the following values exist is not needed yet,
+        //since a form(or any other decent solution) 
+        //can be used to validate everything after when method is moved to the service
+        $this->name = $params['name'];
+        $this->type = $params['type'];
         //Add min,max for numerical fields
         if ($params['type'] === '2'){
             $this->minimumValue = $params['min. value'];
