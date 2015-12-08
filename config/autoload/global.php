@@ -28,6 +28,12 @@ return [
      */
     'bcrypt_cost' => 13,
 
+    /**
+     * IP address start for the TU/e. All IP addresses starting with this will
+     * be allowed more base rights, like viewing exams
+     */
+    'tue_range' => '131.155.',
+
     'storage' => [
         'storage_dir' => 'public/data',
         'public_dir' => 'data',
