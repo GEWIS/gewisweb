@@ -221,6 +221,9 @@ class Module
                     // admins are allowed to do everything
                     $acl->allow('admin');
 
+                    // board members also are admins
+                    $acl->allow('user', null, null, new \User\Permissions\Assertion\IsBoardMember());
+
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
 

@@ -530,6 +530,16 @@ class Member
     }
 
     /**
+     * Get the board installations.
+     *
+     * @return ArrayCollection
+     */
+    public function getBoardInstallations()
+    {
+        return $this->boardInstallations;
+    }
+
+    /**
      * Convert to array.
      *
      * @return array
