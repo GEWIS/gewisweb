@@ -11,6 +11,9 @@ use User\Model\User;
 
 use Decision\Model\BoardMember;
 
+/**
+ * Assertion to check if the user is a board member.
+ */
 class IsBoardMember implements AssertionInterface
 {
 
