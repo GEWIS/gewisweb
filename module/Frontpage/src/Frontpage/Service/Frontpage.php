@@ -18,12 +18,17 @@ class Frontpage extends AbstractAclService
         $birthdayInfo = $this->getBirthdayInfo();
         $activities = $this->getUpcomingActivities();
         $weeklyPhoto = $this->getPhotoService()->getCurrentPhotoOfTheWeek();
+        $pollService = $this->getPollService();
+        $poll = $pollService->getNewestPoll();
+        $pollDetails = $pollService->getPollDetails($poll);
+        $pollDetails['poll'] = $poll;
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
             'birthdayTag' => $birthdayInfo['tag'],
             'activities' => $activities,
-            'weeklyPhoto' => $weeklyPhoto
+            'weeklyPhoto' => $weeklyPhoto,
+            'poll' => $pollDetails
         ];
     }
 
@@ -118,6 +123,16 @@ class Frontpage extends AbstractAclService
     public function getMemberService()
     {
         return $this->sm->get('Decision_service_member');
+    }
+
+    /**
+     * Get the poll service.
+     *
+     * @return \Frontpage\Service\Poll
+     */
+    public function getPollService()
+    {
+        return $this->sm->get('frontpage_service_poll');
     }
 
     /**
