@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         shell: {
             kss: {
                 command: function () {
-                    return 'node_modules/.bin/kss-node ' + [
+                    return 'kss-node ' + [
                             '--source public/scss',
                             '--destination public/styleguide',
                             '--template styleguide/template',

@@ -1,0 +1,25 @@
+/*
+Sections
+
+Markup:
+<div class="section {{modifier_class}}">
+  <div class="container-fluid">
+      <h2>Section block</h2>
+      <a class="btn btn-primary {{modifier_class}}">Button</a>
+      <a class="btn btn-default {{modifier_class}}">Button</a>
+  </div>
+</div>
+
+:default - Default section
+.inverse - Dark section
+
+Styleguide: section
+*/
+.section {
+  padding: 15px 0;
+
+  &.inverse {
+    background: $body-inverse-bg;
+    color: $text-inverse-color;
+  }
+}
