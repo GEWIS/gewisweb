@@ -202,7 +202,7 @@ class Module
                      */
                     $acl->addRole(new Role('guest'));
                     $acl->addRole(new Role('tueguest'), 'guest');
-                    $acl->addRole(new Role('user'), 'guest');
+                    $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
                     $acl->addRole(new Role('admin'));
 
