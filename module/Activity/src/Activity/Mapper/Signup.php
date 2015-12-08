@@ -61,7 +61,7 @@ class Signup
 
         return isset($result[0]) ? $result[0] : null;
     }
-
+    
     /**
      * Get all the users that are signed up for an activity.
      *

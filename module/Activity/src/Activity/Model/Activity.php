@@ -110,12 +110,19 @@ class Activity
     protected $description;
 
     /**
-     * all the photo's in this album.
+     * all the signups for this activity.
      *
      * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
      */
     protected $signUps;
 
+    /**
+     * All additional fields belonging to the activity.
+     * 
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
+     */
+    protected $fields;
+    
     // TODO -> where can i find member organ?
     protected $organ;
 
@@ -166,13 +173,14 @@ class Activity
      * Create a new activity.
      *
      * @param array $params Parameters for the new activity
-     *
+     * @param EntitiyManager $em The relevant entity manager.
+     * 
      * @throws \Exception If a activity is loaded
      * @throws \Exception If a necessary parameter is not set
      *
      * @return \Activity\Model\Activity the created activity
      */
-    public function create(array $params)
+    public function create(array $params, $em)
     {
         if ($this->id != null) {
             throw new \Exception('There is already a loaded activity');
@@ -198,8 +206,17 @@ class Activity
 
         // TODO: These values need to be set correctly
         $this->onlyGEWIS = true;
-        $this->status = static::STATUS_TO_APPROVE;
-
+        $this->approved = 0;
+        $this->status = static::STATUS_TO_APPROVE;        
+        if (isset($params['fields'])) {
+            foreach ($params['fields'] as $fieldparams){
+                
+                $field = new ActivityField();
+                $field->create($fieldparams, $this, $em);
+                $em->persist($field);
+            }
+            $em->flush();
+        }
         return $this;
     }
 

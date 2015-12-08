@@ -4,11 +4,11 @@ namespace Activity\Form;
 
 use Zend\Form\Form;
 //input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class Activity extends Form
+class Activity extends Form implements InputFilterProviderInterface
 {
     protected $inputFilter;
     protected $organs;
@@ -16,6 +16,8 @@ class Activity extends Form
     {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
+        $this->setHydrator(new ClassMethodsHydrator(false))
+            ->setObject(new \Activity\Model\Activity());
 
         $this->add([
             'name' => 'name',
@@ -26,22 +28,24 @@ class Activity extends Form
         ]);
 
         $this->add([
-            'type' => 'Zend\Form\Element\DateTime',
+           // 'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
-                'min' => '2010-01-01T00:00:00Z',
-                'step' => '1', // minutes; default step interval is 1 min
-                'style' => 'width:100%',
+                'type' => 'text',
+           //     'min' => '2010-01-01T00:00:00Z',
+           //     'step' => '1', // minutes; default step interval is 1 min
+           //     'style' => 'width:100%',
             ],
         ]);
 
         $this->add([
-            'type' => 'Zend\Form\Element\DateTime',
+          //  'type' => 'Zend\Form\Element\DateTime',
             'name' => 'endTime',
             'attributes' => [
-                'min' => '2010-01-01T00:00:00Z',
-                'step' => '1', // minutes; default step interval is 1 min
-                'style' => 'width:100%',
+                'type' => 'text',
+            //    'min' => '2010-01-01T00:00:00Z',
+              //  'step' => '1', // minutes; default step interval is 1 min
+               // 'style' => 'width:100%',
             ],
         ]);
 
@@ -61,6 +65,7 @@ class Activity extends Form
             ],
         ]);
 
+
         $this->add([
             'name' => 'costs_unknown',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -71,7 +76,7 @@ class Activity extends Form
             ],
         ]);
 
-        $this->add([
+        /*$this->add([
             'name' => 'approved',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -79,7 +84,7 @@ class Activity extends Form
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+        ]);*/
         $this->add([
             'name' => 'description',
             'attributes' => [
@@ -96,6 +101,19 @@ class Activity extends Form
                 'unchecked_value' => 0,
             ],
         ]);
+        
+        $this->add([
+            'name' => 'fields',
+            'type' => 'Zend\Form\Element\Collection',
+            'options' => array(
+                'count' => 0,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'Activity\Form\ActivityFieldFieldset'
+                )
+            )
+        ]);
 
         $this->add([
             'name' => 'submit',
@@ -106,114 +124,61 @@ class Activity extends Form
         ]);
     }
 
-    /*************** INPUT FILTER*****************/
-    /** The code below this deals with the input filter
-     * of the create and edit activity form data.
-     */
 
-    /**
-     * Get the input filter.
-     *
-     * @return InputFilterInterface
-     */
-    public function getInputFilter()
+    public function getInputFilterSpecification()
     {
-        // Check if the input filter is set. If so, serve
-        if ($this->inputFilter) {
-            return $this->inputFilter;
-        }
-
-        $inputFilter = new InputFilter();
-        $factory = new InputFactory();
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'beginTime',
-            'required' => true,
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'endTime',
-            'required' => true,
-        ]));
-        $inputFilter->add($factory->createInput([
-            'name' => 'name',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+        return [
+            'beginTime' => [
+                'required' => true,
+            ],
+            'endTime' => [
+                'required' => true,
+            ],
+            'name' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'location',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+            'location' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs',
-            'required' => true,
-            'filters' => [
-                ['name' => 'Int'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'Between',
-                    'options' => [
-                        'min' => 0,
-                        'max' => 10000,
+            'description' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100000,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'description',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100000,
-                    ],
-                ],
+            'canSignUp' => [
+                'required' => true
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs_unknown',
-            'required' => true
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'canSignUp',
-            'required' => true
-        ]));
-
-        $this->inputFilter = $inputFilter;
-
-        return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception('Not used');
+            'costs_unknown' => [
+                'required' => true
+            ],
+        ];
     }
 }

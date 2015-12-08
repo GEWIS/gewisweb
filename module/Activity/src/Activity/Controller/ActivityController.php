@@ -6,6 +6,7 @@ use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Form\Activity as ActivityForm;
+use Activity\Form\ActivitySignup as SignupForm;
 
 class ActivityController extends AbstractActionController
 {
@@ -34,13 +35,17 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-
+        $fields = $activity->get('fields');
+        $form = new SignupForm($fields);
         return [
             'activity' => $activity,
             'canSignUp' => $activity->canSignUp(),
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
-            'signedUp' => $signupService->getSignedUp($activity),
+            'signedUp' => $signupService->getSignedUpUsers($activity),
+            'signupData' => $signupService->getSignedUpData($activity),
+            'form' => $form,
+            'fields' => $fields
         ];
     }
 
@@ -61,11 +66,14 @@ class ActivityController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
-                $activity = $activityService->createActivity($form->getData());
+                $activity = $activityService->createActivity($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
 
                 $this->redirect()->toRoute('activity/view', [
                     'id' => $activity->get('id'),
                 ]);
+            }
+            else {
+                echo 'Form is invalid!';
             }
         }
 
@@ -79,10 +87,16 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
         /** @var  $activity Activity */
         $activity = $activityService->getActivity($id);
-
+        
+        $params = $this->viewAction();        
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()){
+            $params['error'] = 'Gebruik het formulier om in te schrijven';
+            return $params;
+        }
+        
         // Assure you can sign up for this activity
         if (!$activity->canSignup()) {
             $params['error'] = 'Op dit moment kun je je niet inschrijven voor deze activiteit';
@@ -93,7 +107,14 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         if ($identity === 'guest') {
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
-
+            return $params;
+        }
+        $form = new SignupForm($activity->get('fields'));
+        $form->setData($this->getRequest()->getPost());
+        
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $params['error'] = 'Verkeerd formulier';
             return $params;
         }
         $user = $identity->getMember();
@@ -102,11 +123,9 @@ class ActivityController extends AbstractActionController
         if ($signupService->isSignedUp($activity, $user)) {
             $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
         } else {
-            $signupService->signUp($activity, $user);
+            $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
             $params['success'] = true;
         }
-        $params = $this->viewAction();
-
         return $params;
     }
 

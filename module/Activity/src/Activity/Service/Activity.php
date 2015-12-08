@@ -114,10 +114,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $params['creator'] = $user;
 
-        $activity = new ActivityModel();
-        $activity->create($params);
-
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $activity = new ActivityModel();
+        $activity->create($params, $em);
+
         $em->persist($activity);
         $em->flush();
 
