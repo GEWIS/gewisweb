@@ -177,13 +177,13 @@ class Study
     /**
      * Get ID's of all W&I's studies.
      *
-     * @todo figure out good way to define year in 'GeefDoelgroepen'
+     * @param string $year
      *
      * @return array
      */
-    public function getStudies()
+    public function getStudies($year)
     {
-        $data = $this->client->GeefDoelgroepen('2013', 'NL');
+        $data = $this->client->GeefDoelgroepen($year, 'NL');
 
         // convert doelgroepen to array
         $doelgroepen = [];
@@ -203,10 +203,12 @@ class Study
     /**
      * Get all studies of the TU/e
      *
+     * @param string $year
+     *
      * @return array
      */
-    public function getAllStudies()
+    public function getAllStudies($year)
     {
-        return $this->client->GeefDoelgroepen('2013', 'NL');
+        return $this->client->GeefDoelgroepen($year, 'NL');
     }
 }
