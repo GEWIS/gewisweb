@@ -15,5 +15,4 @@ interface OrganResourceInterface extends ResourceInterface
      * @return Organ
      */
     public function getResourceOrgan();
-
 }

@@ -60,5 +60,4 @@ class IsBoardMember implements AssertionInterface
         return $boardMember->getInstallDate() <= $now &&
             (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate >= $now);
     }
-
 }
