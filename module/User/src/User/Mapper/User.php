@@ -62,10 +62,13 @@ class User
     {
         // create query for user
         $qb = $this->em->createQueryBuilder();
-        $qb->select('u, r, m')
+        $qb->select('u, r, m, b, oi')
             ->from('User\Model\User', 'u')
             ->leftJoin('u.roles', 'r')
-            ->join('u.member', 'm');
+            ->join('u.member', 'm')
+            ->leftJoin('m.boardInstallations', 'b')
+            ->leftJoin('m.organInstallations', 'oi')
+            ->leftJoin('oi.organ', 'o');
 
 
         // depending on login, add correct where clause

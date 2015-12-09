@@ -4,11 +4,11 @@ namespace Activity\Form;
 
 use Zend\Form\Form;
 //input filter
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class Activity extends Form
+class Activity extends Form implements InputFilterProviderInterface
 {
     /**
      * @var InputFilter
@@ -20,6 +20,8 @@ class Activity extends Form
     {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
+        $this->setHydrator(new ClassMethodsHydrator(false))
+            ->setObject(new \Activity\Model\Activity());
 
         $this->add([
             'name' => 'language_dutch',
@@ -53,19 +55,21 @@ class Activity extends Form
             'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
-                'min' => '2010-01-01T00:00:00Z',
-                'step' => '1', // minutes; default step interval is 1 min
-                'style' => 'width:100%',
+                'type' => 'text',
+           //     'min' => '2010-01-01T00:00:00Z',
+           //     'step' => '1', // minutes; default step interval is 1 min
+           //     'style' => 'width:100%',
             ],
         ]);
 
         $this->add([
-            'type' => 'Zend\Form\Element\DateTime',
+          //  'type' => 'Zend\Form\Element\DateTime',
             'name' => 'endTime',
             'attributes' => [
-                'min' => '2010-01-01T00:00:00Z',
-                'step' => '1', // minutes; default step interval is 1 min
-                'style' => 'width:100%',
+                'type' => 'text',
+            //    'min' => '2010-01-01T00:00:00Z',
+              //  'step' => '1', // minutes; default step interval is 1 min
+               // 'style' => 'width:100%',
             ],
         ]);
 
@@ -100,6 +104,7 @@ class Activity extends Form
             ],
         ]);
 
+
         $this->add([
             'name' => 'costs_unknown',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -110,7 +115,7 @@ class Activity extends Form
             ],
         ]);
 
-        $this->add([
+        /*$this->add([
             'name' => 'approved',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -118,7 +123,7 @@ class Activity extends Form
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+        ]);*/
         $this->add([
             'name' => 'description',
             'attributes' => [
@@ -143,6 +148,19 @@ class Activity extends Form
                 'unchecked_value' => 0,
             ],
         ]);
+        
+        $this->add([
+            'name' => 'fields',
+            'type' => 'Zend\Form\Element\Collection',
+            'options' => array(
+                'count' => 0,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'Activity\Form\ActivityFieldFieldset'
+                )
+            )
+        ]);
 
         $this->add([
             'name' => 'submit',
@@ -153,10 +171,6 @@ class Activity extends Form
         ]);
     }
 
-    /*************** INPUT FILTER*****************/
-    /** The code below this deals with the input filter
-     * of the create and edit activity form data.
-     */
 
     /***
      * Add  the input filter for the English language
@@ -322,7 +336,6 @@ class Activity extends Form
             ]));
 
         }
-        print_r($this->data);
         $this->inputFilter = $inputFilter;
         return $this->inputFilter;
     }

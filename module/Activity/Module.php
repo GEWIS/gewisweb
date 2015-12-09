@@ -54,7 +54,7 @@ class Module
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-				'activity_service_signoff' => function ($sm) {
+		'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;
@@ -64,6 +64,16 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
+                'activity_mapper_activity_field_value' => function ($sm) {
+                    return new \Activity\Mapper\ActivityFieldValue(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_activity_option' => function ($sm) {
+                    return new \Activity\Mapper\ActivityOption(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },        
                 'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')

@@ -38,11 +38,32 @@ class Signup extends AbstractAclService
      *
      * @return array
      */
-    public function getSignedUp(ActivityModel $activity)
+    public function getSignedUpUsers(ActivityModel $activity)
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
 
         return $signUpMapper->getSignedUp($activity->getId());
+    }
+    /**
+     * Gets an array of 
+     * 
+     * @param ActivityModel $activity
+     * @return array
+     */
+    public function getSignedUpData(ActivityModel $activity)
+    {
+        $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
+        $result = [];
+        foreach($activity->get('signUps') as $signup){
+            $entry = [];
+            $entry['member'] = $signup->getUser()->getMember()->getFullName();
+            $entry['values'] = [];
+            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
+                $entry['values'][$fieldValue->get('field')->get('id')] = $fieldValue->get('value');
+            }
+            $result[] = $entry;            
+        }
+        return $result;
     }
 
     /**
@@ -61,11 +82,12 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Sign up  an activity.
+     * Sign up  an activity with the specified field values.
      *
      * @param ActivityModel $activity
+     * @param array $fieldResults
      */
-    public function signUp(ActivityModel $activity)
+    public function signUp(ActivityModel $activity, array $fieldResults)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
@@ -79,7 +101,30 @@ class Signup extends AbstractAclService
         $signup = new ActivitySignup();
         $signup->setActivity($activity);
         $signup->setUser($user);
-
+        $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');
+        foreach ($activity->get('fields') as $field){            
+            $fieldValue = new \Activity\Model\ActivityFieldValue();
+            $fieldValue->setField($field);
+            $value = $fieldResults[$field->get('id')];
+            
+            //Change the value into the actual format
+            switch ($field->get('type')) {
+                case 0://'Text'
+                    break;
+                case 1://'Yes/No'
+                    $value =  ($value) ? 'Yes' : 'No';
+                    break;
+                case 2://'Number'
+                    break;
+                case 3://'Choice' 
+                    var_dump($value);
+                    $value = $optionMapper->getOptionById((int)$value)->get('value');
+                    break;
+            }
+            $fieldValue->setValue($value);
+            $fieldValue->setSignup($signup);
+            $em->persist($fieldValue);
+        }
         $em->persist($signup);
         $em->flush();
     }
@@ -101,7 +146,16 @@ class Signup extends AbstractAclService
         }
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $values = $this->getActivityFieldValueMapper()->getFieldValuesBySignup($signUp);
+        foreach($values as $value){
+            $em->remove($value);
+        }
         $em->remove($signUp);
         $em->flush();
+    }
+    
+    public function getActivityFieldValueMapper(){
+        
+        return $this->getServiceManager()->get('activity_mapper_activity_field_value');
     }
 }

@@ -14,7 +14,3 @@ RewriteRule ^.*$ - [NC,L]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
-
-# to work with the ridiculus stupidity called the GEWIS server that sets this
-# wrong because SWS is a ridiculus stupid web 'framework'
-php_value session.auto_start Off

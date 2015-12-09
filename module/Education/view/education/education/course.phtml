@@ -26,7 +26,11 @@
             'id' => $exam->getId()
             ]) ?>">
         <strong>(<?= $child->getCode() ?>)</strong>
+        <?php if ($exam instanceof \Education\Model\Summary): ?>
+        <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+        <?php else: ?>
         <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+        <?php endif ?>
         </a></li>
     <?php endforeach; ?>
 <?php endforeach; ?>
@@ -35,7 +39,11 @@
         'code' => $exam->getCourse()->getCode(),
         'id' => $exam->getId()
         ]) ?>">
+    <?php if ($exam instanceof \Education\Model\Summary): ?>
+    <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+    <?php else: ?>
     <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+    <?php endif ?>
     </a></li>
 <?php endforeach; ?>
 </ul>

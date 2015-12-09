@@ -152,6 +152,15 @@ class Activity
         return $this->id;
     }
 
+    /**
+     * All additional fields belonging to the activity.
+     * 
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
+     */
+    protected $fields;
+    
+    // TODO -> where can i find member organ?
+    protected $organ;
 
     /**
      * @return string
@@ -226,11 +235,14 @@ class Activity
     }
 
     /**
+<<<<<<< HEAD
      * @param string $location
      */
     public function setLocation($location)
     {
-        $this->location = $location;
+        {
+            $this->location = $location;
+        }
     }
 
     /**

@@ -1,0 +1,63 @@
+<?php
+$totalVotes = 0;
+foreach ($poll->getOptions() as $option) {
+    $totalVotes += $option->getVotesCount();
+}
+
+$percentages = [];
+foreach ($poll->getOptions() as $option) {
+    if ($totalVotes > 0) {
+        $percentages[$option->getId()] = round($option->getVotesCount() / $totalVotes * 100);
+    } else {
+        $percentages[$option->getId()] = 0;
+    }
+}
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
+<h4><?= ($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion() ?></h4>
+<form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
+    <?php foreach ($this->poll->getOptions() as $option): ?>
+        <div class="row">
+            <div class="col-md-5">
+                <?php if ($canVote): ?>
+                <div class="radio">
+                    <label>
+
+                        <input type="radio" value="<?= $option->getId() ?>" name="option"/>
+                        <?php endif; ?>
+                        <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
+                        <?= $voted ? '<strong>' : '' ?>
+                        <?= ($lang === 'en') ? $option->getEnglishText() : $option->getDutchText() ?>
+                        <?= $voted ? '</strong>' : '' ?>
+                        <?php if ($canVote): ?>
+                    </label>
+                </div>
+            <?php endif; ?>
+            </div>
+            <?php if($showResults || !$canVote): ?>
+            <div class="col-md-6">
+                <div class="progress">
+                    <div class="progress-bar poll-bar" role="progressbar"
+                         aria-valuenow="<?= $percentages[$option->getId()] ?>"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="min-width: 2em; width: <?= $percentages[$option->getId()] ?>%;">
+                        <?= $percentages[$option->getId()] ?>%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <span class="pull-right"><?= sprintf(
+                        $this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'),
+                        $option->getVotesCount()
+                    ) ?>
+                </span>
+            </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    <p>
+        <?php if ($canVote): ?>
+            <button type="submit" class="btn btn-large btn-success">Vote</button>
+        <?php endif; ?>
+    </p>
+</form>

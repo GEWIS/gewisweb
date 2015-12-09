@@ -48,11 +48,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
-                'education_form_upload' => function ($sm) {
-                    $form = new \Education\Form\Upload(
+                'education_form_summaryupload' => function ($sm) {
+                    $form = new \Education\Form\SummaryUpload(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('education_hydrator_exam'));
+                    $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
                 },
                 'education_form_bulk' => function ($sm) {
@@ -101,6 +101,11 @@ class Module
                         'Education\Model\Course'
                     );
                 },
+                'education_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('education_doctrine_em')
+                    );
+                },
                 'education_hydrator_exam' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('education_doctrine_em'),
@@ -146,9 +151,9 @@ class Module
                     $acl->addResource('exam');
 
                     // users (logged in GEWIS members) are allowed to view exams
-                    // TODO: besides users, also people on the TU/e network
-                    // are allowed to view exams
-                    $acl->allow('user', 'exam', 'view');
+                    // besides users, also people on the TU/e network are
+                    // allowed to view exams (users inherit from tueguest)
+                    $acl->allow('tueguest', 'exam', 'view');
 
                     return $acl;
                 },

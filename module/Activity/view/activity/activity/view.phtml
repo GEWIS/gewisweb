@@ -38,22 +38,65 @@
     <div class="col-md-8"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
 </div>
 <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
+<?php if ($activity->get('canSignUp')): ?>
+    <h2>
+        <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
+    </h2>
+    <table>
+        <thead>
+            <tr>
+                <th><?php echo$this->translate('Name');?> </th>
+                <?php foreach($fields as $field):?>
+                <th><?php echo $field->get('name');?></th>
+                <?php endforeach;?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($signupData as $signup):?>
+            <tr>
+                <td><?php echo $signup['member'];?></td>
+                <?php foreach($signup['values'] as $value):?>
+                <td><?php echo $value;?></td>
+                <?php endforeach;?>
+            </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+<?php endif;?>    
     <div class="col-md-12">
+        
 <?php if ($isSignedUp) :?>
         <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
 		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->getId()]);?>">
 		    <?php echo $this->translate('Unsubscribe');?>
 		</a>
 <?php elseif($canSignUp && $isLoggedIn):?>
+<<<<<<< HEAD
         <a href="<?php echo $this->url('activity/signup', ['id' => $activity->getId()]);?>">
             <?php echo $this->translate('Subscribe');?>
         </a>
+=======
+<?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->get('id'))));
+$form->prepare();
+echo $this->form()->openTag($form); ?>
+        <table>
+            <?php foreach($fields as $field):?>
+            <tr>
+                <td><?php echo $field->get('name');?>:</td>
+                <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
+            </tr>
+            <?php endforeach;?>
+        </table>
+<?php echo $this->formSubmit($form->get('submit'));
+      echo $this->form()->closeTag();?>
+>>>>>>> c0f9bb68975cf370f3672fdec02a831f85f67fad
 <?php elseif ($canSignUp):?>
        <?php echo $this->translate('Login to subscribe');?>
 <?php endif; ?>
 	</div>
 </div>
 
+<<<<<<< HEAD
 <?php if ($activity->getCanSignUp()): ?>
     <h2>
         <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
@@ -66,6 +109,8 @@
     </div>
     <?php endforeach;?>
 <?php endif;?>
+=======
+>>>>>>> c0f9bb68975cf370f3672fdec02a831f85f67fad
 
 <div class="row">
 	<div class="col-md-12">

@@ -1,4 +1,6 @@
 <?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/activity-create.js');
 $form->setAttribute('action', '');
 $form->prepare();
 echo $this->form()->openTag($form);
@@ -104,6 +106,11 @@ echo $this->form()->openTag($form);
 	</div>
 
 </div>
+    <?php echo $this->translate('Extra fields');
+          echo $this->formCollection($form->get('fields'));
+    ?>
+    <button onclick="return add_field()"><?= $this->translate('Add a field') ?></button>
+    <button onclick="return remove_field()"><?= $this->translate('Remove the last field') ?></button>
 <?php
 
 echo $this->form()->closeTag();

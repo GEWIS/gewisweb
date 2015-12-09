@@ -91,7 +91,7 @@ class AlbumAdminController extends AbstractActionController
 
     public function addAction()
     {
-
+        $this->getAdminService()->checkUploadAllowed();
     }
 
     /**

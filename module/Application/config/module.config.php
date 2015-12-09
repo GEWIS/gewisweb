@@ -68,6 +68,7 @@ return [
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/403'               => __DIR__ . '/../view/error/403.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'paginator/default'       => __DIR__ . '/../view/partial/paginator.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',

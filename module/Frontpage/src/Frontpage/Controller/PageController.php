@@ -20,12 +20,9 @@ class PageController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $session = new SessionContainer('lang');
-
         return new ViewModel([
             'page' => $page,
-            'parents' => $parents,
-            'lang' => $session->lang
+            'parents' => $parents
         ]);
     }
 

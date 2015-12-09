@@ -5,6 +5,8 @@ return [
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
+            'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
+            'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
         ],
     ],
     'router' => [
@@ -86,11 +88,122 @@ return [
                         ],
                     ],
                     'upload' => [
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => [
                             'route' => '/upload',
                             'defaults' => [
                                 'action' => 'upload',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
+            'poll' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/poll',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'Poll',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'history' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/history[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'history',
+                            ],
+                        ],
+                    ],
+                    'request' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/request',
+                            'defaults' => [
+                                'action' => 'request',
+                            ],
+                        ],
+                    ],
+                    'view' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/view',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'vote' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/vote',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'vote',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
+            'admin_poll' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/admin/poll',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'PollAdmin',
+                        'action' => 'list',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/list[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'list',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/delete',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                    'approve' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/approve',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'approve',
                             ],
                         ],
                     ],

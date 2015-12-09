@@ -147,6 +147,16 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $activity->setOnlyGEWIS(true); // Not yet implemented
 
+        if (isset($params['fields'])) {
+            foreach ($params['fields'] as $fieldparams){
+
+                $field = new ActivityField();
+                $field->create($fieldparams, $this, $em);
+                $em->persist($field);
+            }
+            $em->flush();
+        }
+
         $em->persist($activity);
         $em->flush();
 

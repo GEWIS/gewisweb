@@ -21,13 +21,18 @@ class Oase extends AbstractService
      */
     public function update()
     {
-        $studies = $this->getOaseStudyService()->getStudies();
+        // determine the year to obtain the study in
+        $date = new \DateTime();
+        $date = $date->sub(new \DateInterval('P8M'));
+        $year = $date->format('Y');
+
+        $studies = $this->getOaseStudyService()->getStudies($year);
 
         $this->getStudyMapper()->persistMultiple($studies);
 
         echo "Updated all studies\n";
 
-        $courses = $this->getOaseCourseService()->getCourses($studies);
+        $courses = $this->getOaseCourseService()->getCourses($studies, $year);
 
         $this->getCourseMapper()->persistMultiple($courses);
 
