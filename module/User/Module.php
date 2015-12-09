@@ -168,6 +168,10 @@ class Module
                     );
                 },
 
+                'user_remoteaddress' => function ($sm) {
+                    $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
+                    return $remote->getIpAddress();
+                },
                 'user_role' => function ($sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
@@ -176,6 +180,10 @@ class Module
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
                         return 'apiuser';
+                    }
+                    $range = $sm->get('config')['tue_range'];
+                    if (strpos($sm->get('user_remoteaddress'), $range) === 0) {
+                        return 'tueguest';
                     }
                     return 'guest';
                 },
@@ -187,12 +195,14 @@ class Module
                      * Define all basic roles.
                      *
                      * - guest: everyone gets at least this access level
+                     * - tueguest: guest from the TU/e
                      * - user: GEWIS-member
                      * - apiuser: Automated tool given access by an admin
                      * - admin: Defined administrators
                      */
                     $acl->addRole(new Role('guest'));
-                    $acl->addRole(new Role('user'), 'guest');
+                    $acl->addRole(new Role('tueguest'), 'guest');
+                    $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
                     $acl->addRole(new Role('admin'));
 
@@ -210,6 +220,9 @@ class Module
 
                     // admins are allowed to do everything
                     $acl->allow('admin');
+
+                    // board members also are admins
+                    $acl->allow('user', null, null, new \User\Permissions\Assertion\IsBoardMember());
 
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
