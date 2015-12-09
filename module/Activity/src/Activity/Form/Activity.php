@@ -175,23 +175,21 @@ class Activity extends Form implements InputFilterProviderInterface
     /***
      * Add  the input filter for the English language
      *
-     * @param InputFilter $startInputFilter Input filter that needs to be appended
-     * @return InputFilter
+     * @return array
      */
-    public function addInputFilterEnglish(InputFilter $startInputFilter)
+    public function inputFilterEnglish()
     {
-        return $this->addInputFilterGeneric($startInputFilter, '_en');
+        return $this->inputFilterGeneric('_en');
     }
 
     /***
      * Add  the input filter for the Dutch language
      *
-     * @param InputFilter $startInputFilter Input filter that needs to be appended
-     * @return InputFilter
+     * @return array
      */
-    public function addInputFilterDutch(InputFilter $startInputFilter)
+    public function inputFilterDutch()
     {
-        return $this->addInputFilterGeneric($startInputFilter, '');
+        return $this->inputFilterGeneric('');
     }
 
 
@@ -199,77 +197,53 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Build a generic input filter
      *
-     * @input InputFilter $inputFilter Starting inputFilter to add more stuff to
      * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
      * language
-     * @return InputFilterInterface
+     * @return array
      */
-    protected function addInputFilterGeneric($inputFilter, $languagePostFix)
+    protected function inputFilterGeneric($languagePostFix)
     {
-        $factory = new InputFactory();
-        $inputFilter->add($factory->createInput([
-            'name' => 'name'. $languagePostFix,
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+        return [
+            'name' . $languagePostFix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'location' . $languagePostFix,
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+            'location'. $languagePostFix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs' . $languagePostFix,
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+            'description'. $languagePostFix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100000,
+                        ],
                     ],
                 ],
             ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'description' . $languagePostFix,
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100000,
-                    ],
-                ],
-            ],
-        ]));
-
-
-        return $inputFilter;
+        ];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -282,42 +256,32 @@ class Activity extends Form implements InputFilterProviderInterface
      * is set
      * @return InputFilter0
      */
-    public function getInputFilter()
+    public function getInputFilterSpecification()
     {
-        if (!is_null($this->inputFilter)) {
-            return $this->inputFilter;
-        }
+        $filter = [
+            'beginTime' => [
+                'required' => true,
+            ],
+            'endTime' => [
+                'required' => true,
+            ],
+            'canSignUp' => [
+                'required' => true
+            ],
+            'costs_unknown' => [
+                'required' => true
+            ],
+        ];
 
-        $inputFilter = new InputFilter();
-        $factory = new InputFactory();
 
-        $inputFilter->add($factory->createInput([
-            'name' => 'costs_unknown',
-            'required' => true
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'canSignUp',
-            'required' => true
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'beginTime',
-            'required' => true
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name' => 'endTime',
-            'required' => true,
-        ]));
 
         if ($this->data['language_english']) {
-            $this->addInputFilterEnglish($inputFilter);
+            $filter += $this->inputFilterEnglish();
         }
 
 
         if ($this->data['language_dutch']) {
-            $this->addInputFilterDutch($inputFilter);
+            $filter += $this->inputFilterDutch();
         }
 
         // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
@@ -325,18 +289,16 @@ class Activity extends Form implements InputFilterProviderInterface
 
         if (!$this->data['language_dutch'] && !$this->data['language_english']) {
             unset($this->data['language_dutch'], $this->data['language_english']);
-            $inputFilter->add($factory->createInput([
-                'name' => 'language_dutch',
-                'required' => true,
-            ]));
 
-            $inputFilter->add($factory->createInput([
-                'name' => 'language_english',
-                'required' => true,
-            ]));
-
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
+                ],
+                'language_english' => [
+                    'required' => true,
+                ],
+            ];
         }
-        $this->inputFilter = $inputFilter;
-        return $this->inputFilter;
+        return $filter;
     }
 }
