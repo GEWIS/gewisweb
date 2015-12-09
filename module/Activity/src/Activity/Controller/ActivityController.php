@@ -58,10 +58,15 @@ class ActivityController extends AbstractActionController
                 $data['costs'] = '-1';    // Hack. Because empty string is seen as 0
             }
 
-            $form->setData($this->getRequest()->getPost());
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
 
             if ($form->isValid()) {
-                $activity = $activityService->createActivity($form->getData());
+                $activity = $activityService->createActivity(
+                    $form->getData(),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
 
                 $this->redirect()->toRoute('activity/view', [
                     'id' => $activity->getId(),

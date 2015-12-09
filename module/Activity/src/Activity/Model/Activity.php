@@ -32,14 +32,14 @@ class Activity
     /**
      * Name for the activity.
      *
-     * @Orm\Column(type="string")
+     * @Orm\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
      * English name for the activity
      *
-     * @Orm\Column(type="string")
+     * @Orm\Column(type="string", nullable=true)
      */
     protected $name_en;
 
@@ -60,14 +60,14 @@ class Activity
     /**
      * The location the activity is held at.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $location;
 
     /**
      * English string to denote what location the activity is held on
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $location_en;
 
@@ -127,14 +127,14 @@ class Activity
     /**
      * Activity description.
      *
-     * @Orm\Column(type="text")
+     * @Orm\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
      * Activity description.
      *
-     * @Orm\Column(type="text")
+     * @Orm\Column(type="text", nullable=true)
      */
     protected $description_en;
 

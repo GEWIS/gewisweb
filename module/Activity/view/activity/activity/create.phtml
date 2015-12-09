@@ -16,6 +16,17 @@ echo $this->form()->openTag($form);
                 <h2><?php echo $this->translate('English')?></h2>
             </div>
         </div>
+        <div class="row">
+            <div class = "col-md-4">
+                <?php echo $this->translate('Language');?>:
+            </div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('language_dutch')); ?>
+            </div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('language_english')); ?>
+            </div>
+        </div>
 		<div class="row">
 			<div class = "col-md-4">
 				<?php echo $this->translate('Name');?>:
