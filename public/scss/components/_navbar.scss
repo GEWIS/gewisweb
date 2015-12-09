@@ -5,7 +5,14 @@ Markup:
 <div class="navbar navbar-default">
     <div class="navbar-header">
         <a class="navbar-brand">
-            <img src="https://gewis.nl/sws/themes/new/gewis-rond.png"/>
+            <img src="/img/logo-header.png"/>
+        </a>
+    </div>
+</div>
+<div class="navbar navbar-gewis">
+    <div class="navbar-header">
+        <a class="navbar-brand">
+            <img src="/img/logo-header.png" style="-webkit-filter: grayscale(1) brightness(100);"/>
         </a>
     </div>
 </div>
@@ -13,5 +20,72 @@ Markup:
 Styleguide: navbar
 */
 .navbar {
+    font-family: $font-family-alt;
+    font-weight: 600;
+    font-size: 15px;
+}
 
+.navbar-brand {
+    padding: 10px 15px;
+    height: auto;
+}
+
+.navbar-default {
+    background-color: #fff;
+
+    .navbar-nav > li > a:hover,
+    .navbar-nav > li > a:focus {
+        background-color: darken(#fff, 4%);
+    }
+
+    .navbar-nav > .active > a,
+    .navbar-nav > .open > a {
+        background-color: darken(#fff, 8%);
+
+        &:hover,
+        &:focus {
+            background-color: darken(#fff, 12%);
+        }
+    }
+}
+
+.navbar-gewis {
+    color: #fff;
+    background-color: $brand-primary;
+
+    .navbar-nav > li > a {
+        color: #fff;
+    }
+
+    .navbar-nav > li > a:hover,
+    .navbar-nav > li > a:focus {
+        background-color: darken($brand-primary, 3%);
+    }
+
+    .navbar-nav > .active > a,
+    .navbar-nav > .open > a {
+        background-color: darken($brand-primary, 6%);
+
+        &:hover,
+        &:focus {
+            background-color: darken($brand-primary, 9%);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li {
+        margin: 22px 5px;
+    }
+}
+
+.navbar-nav > li > a {
+    @include transition(background $transition-duration ease);
+
+    padding: 8px 12px;
+    border-radius: 2px;
+}
+
+.navbar + .jumbotron {
+    margin-top: -20px;
 }
