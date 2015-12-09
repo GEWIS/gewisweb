@@ -110,11 +110,15 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         assert($dutch || $english, "Activities should have either be in dutch or english");
 
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
         // Find the creator
         $user = $this->getServiceManager()->get('user_role');
         if ($user === 'guest') {
             throw new NotAllowedException('Guests can not create activities');
         }
+
+        $user = $em->merge($user);
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
@@ -143,8 +147,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $activity->setOnlyGEWIS(true); // Not yet implemented
 
-
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
 

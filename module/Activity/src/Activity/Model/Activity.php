@@ -111,9 +111,8 @@ class Activity
     /**
      * Who created this activity.
      *
-     * @ORM\Column(nullable=false)
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
      */
     protected $creator;
 
@@ -343,7 +342,7 @@ class Activity
      */
     public function setCreator(User $creator)
     {
-        $this->creator = $creator->getLidnr();
+        $this->creator = $creator;
     }
 
     /**
