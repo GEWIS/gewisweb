@@ -71,11 +71,13 @@
 		    <?php echo $this->translate('Unsubscribe');?>
 		</a>
 <?php elseif($canSignUp && $isLoggedIn):?>
-<<<<<<< HEAD
         <a href="<?php echo $this->url('activity/signup', ['id' => $activity->getId()]);?>">
             <?php echo $this->translate('Subscribe');?>
         </a>
-=======
+<?php elseif ($canSignUp):?>
+    <?php echo $this->translate('Login to subscribe');?>
+<?php endif; ?>
+
 <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->get('id'))));
 $form->prepare();
 echo $this->form()->openTag($form); ?>
@@ -89,14 +91,9 @@ echo $this->form()->openTag($form); ?>
         </table>
 <?php echo $this->formSubmit($form->get('submit'));
       echo $this->form()->closeTag();?>
->>>>>>> c0f9bb68975cf370f3672fdec02a831f85f67fad
-<?php elseif ($canSignUp):?>
-       <?php echo $this->translate('Login to subscribe');?>
-<?php endif; ?>
 	</div>
 </div>
 
-<<<<<<< HEAD
 <?php if ($activity->getCanSignUp()): ?>
     <h2>
         <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
@@ -109,8 +106,6 @@ echo $this->form()->openTag($form); ?>
     </div>
     <?php endforeach;?>
 <?php endif;?>
-=======
->>>>>>> c0f9bb68975cf370f3672fdec02a831f85f67fad
 
 <div class="row">
 	<div class="col-md-12">

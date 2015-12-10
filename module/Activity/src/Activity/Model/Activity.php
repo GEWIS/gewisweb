@@ -235,7 +235,6 @@ class Activity
     }
 
     /**
-<<<<<<< HEAD
      * @param string $location
      */
     public function setLocation($location)
