@@ -26,8 +26,15 @@ Styleguide: navbar
 }
 
 .navbar-brand {
+    @include transition(opacity $transition-duration ease);
+
     padding: 10px 15px;
     height: auto;
+
+    &:hover,
+    &:focus {
+        opacity: 0.9;
+    }
 }
 
 .navbar-default {

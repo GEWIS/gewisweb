@@ -6132,19 +6132,25 @@ Styleguide: navbar
 .navbar-brand {
   padding: 10px 15px;
   height: auto; }
+  .navbar-brand:hover, .navbar-brand:focus {
+    opacity: 0.9; }
 
 .navbar-default {
+  color: #555555;
   background-color: #fff; }
   .navbar-default .navbar-nav > li > a:hover,
   .navbar-default .navbar-nav > li > a:focus {
-    background-color: whitesmoke; }
+    color: #4e4e4e;
+    background-color: #f7f7f7; }
   .navbar-default .navbar-nav > .active > a,
   .navbar-default .navbar-nav > .open > a {
-    background-color: #ebebeb; }
+    color: #4e4e4e;
+    background-color: #f0f0f0; }
     .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
     .navbar-default .navbar-nav > .open > a:hover,
     .navbar-default .navbar-nav > .open > a:focus {
-      background-color: #e0e0e0; }
+      color: #4e4e4e;
+      background-color: #ebebeb; }
 
 .navbar-gewis {
   color: #fff;
@@ -6163,14 +6169,12 @@ Styleguide: navbar
       background-color: #a6001e; }
 
 @media (min-width: 768px) {
-  .navbar-nav > li {
-    margin: 22px 5px; } }
+  .navbar-nav > li > a {
+    padding: 30px 18px; } }
 .navbar-nav > li > a {
-  -webkit-transition: background 150ms ease;
-  -o-transition: background 150ms ease;
-  transition: background 150ms ease;
-  padding: 8px 12px;
-  border-radius: 2px; }
+  -webkit-transition: background 150ms ease, color 150ms ease;
+  -o-transition: background 150ms ease, color 150ms ease;
+  transition: background 150ms ease, color 150ms ease; }
 
 .navbar + .jumbotron {
   margin-top: -20px; }
