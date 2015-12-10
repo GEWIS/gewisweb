@@ -31,20 +31,24 @@ Styleguide: navbar
 }
 
 .navbar-default {
+    color: $gray;
     background-color: #fff;
 
     .navbar-nav > li > a:hover,
     .navbar-nav > li > a:focus {
-        background-color: darken(#fff, 4%);
+        color: darken($gray, 3%);
+        background-color: darken(#fff, 3%);
     }
 
     .navbar-nav > .active > a,
     .navbar-nav > .open > a {
-        background-color: darken(#fff, 8%);
+        color: darken($gray, 3%);
+        background-color: darken(#fff, 6%);
 
         &:hover,
         &:focus {
-            background-color: darken(#fff, 12%);
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 8%);
         }
     }
 }
@@ -74,16 +78,16 @@ Styleguide: navbar
 }
 
 @media (min-width: 768px) {
-    .navbar-nav > li {
-        margin: 22px 5px;
+    .navbar-nav > li > a {
+        padding: 30px 18px;
     }
 }
 
 .navbar-nav > li > a {
-    @include transition(background $transition-duration ease);
-
-    padding: 8px 12px;
-    border-radius: 2px;
+    @include transition(
+        background $transition-duration ease,
+        color $transition-duration ease
+    );
 }
 
 .navbar + .jumbotron {
