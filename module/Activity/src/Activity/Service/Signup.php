@@ -42,7 +42,7 @@ class Signup extends AbstractAclService
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
 
-        return $signUpMapper->getSignedUp($activity->get('id'));
+        return $signUpMapper->getSignedUp($activity->getId());
     }
     /**
      * Gets an array of 
@@ -54,7 +54,7 @@ class Signup extends AbstractAclService
     {
         $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
         $result = [];
-        foreach($activity->get('signUps') as $signup){
+        foreach($activity->getSignUps() as $signup){
             $entry = [];
             $entry['member'] = $signup->getUser()->getMember()->getFullName();
             $entry['values'] = [];
@@ -78,7 +78,7 @@ class Signup extends AbstractAclService
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
 
-        return $signUpMapper->isSignedUp($activity->get('id'), $user->getLidnr());
+        return $signUpMapper->isSignedUp($activity->getId(), $user->getLidnr());
     }
 
     /**
@@ -138,7 +138,7 @@ class Signup extends AbstractAclService
     public function signOff(ActivityModel $activity, Member $user)
     {
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        $signUp = $signUpMapper->getSignUp($activity->get('id'), $user->getLidnr());
+        $signUp = $signUpMapper->getSignUp($activity->getId(), $user->getLidnr());
 
         // If the user was not signed up, no need to signoff anyway
         if (is_null($signUp)) {

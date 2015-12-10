@@ -40,7 +40,8 @@ class Module
     {
         return [
             'invokables' => [
-                'activity_service_activity' => 'Activity\Service\Activity'
+                'activity_service_activity' => 'Activity\Service\Activity',
+                'activity_form_activity' => 'Activity\Form\Activity'
             ],
             'factories' => [
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory

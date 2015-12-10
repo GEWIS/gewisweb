@@ -10,8 +10,12 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
+    /**
+     * @var InputFilter
+     */
     protected $inputFilter;
     protected $organs;
+
     public function __construct()
     {
         parent::__construct('activity');
@@ -20,7 +24,27 @@ class Activity extends Form implements InputFilterProviderInterface
             ->setObject(new \Activity\Model\Activity());
 
         $this->add([
+            'name' => 'language_dutch',
+            'type' => 'checkbox',
+            'uncheckedValue' => null,
+        ]);
+
+        $this->Add([
+            'name' => 'language_english',
+            'type' => 'checkbox',
+            'uncheckedValue' => null,
+        ]);
+
+        $this->add([
             'name' => 'name',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'name_en',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -58,7 +82,22 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'location_en',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'costs',
+            'attributes' => [
+                'type' => 'text',
+                'style' => 'width:100%',
+            ],
+        ]);
+        $this->add([
+            'name' => 'costs_en',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -87,6 +126,14 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);*/
         $this->add([
             'name' => 'description',
+            'attributes' => [
+                'type' => 'textarea',
+                'style' => 'width:100%; height:10em; resize:none',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'description_en',
             'attributes' => [
                 'type' => 'textarea',
                 'style' => 'width:100%; height:10em; resize:none',
@@ -125,16 +172,39 @@ class Activity extends Form implements InputFilterProviderInterface
     }
 
 
-    public function getInputFilterSpecification()
+    /***
+     * Add  the input filter for the English language
+     *
+     * @return array
+     */
+    public function inputFilterEnglish()
+    {
+        return $this->inputFilterGeneric('_en');
+    }
+
+    /***
+     * Add  the input filter for the Dutch language
+     *
+     * @return array
+     */
+    public function inputFilterDutch()
+    {
+        return $this->inputFilterGeneric('');
+    }
+
+
+
+    /**
+     * Build a generic input filter
+     *
+     * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
+     * language
+     * @return array
+     */
+    protected function inputFilterGeneric($languagePostFix)
     {
         return [
-            'beginTime' => [
-                'required' => true,
-            ],
-            'endTime' => [
-                'required' => true,
-            ],
-            'name' => [
+            'name' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -147,7 +217,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location' => [
+            'location'. $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -160,7 +230,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description' => [
+            'description'. $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -173,6 +243,28 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
+        ];
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception('Not used');
+    }
+
+    /**
+     * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
+     * is set
+     * @return InputFilter0
+     */
+    public function getInputFilterSpecification()
+    {
+        $filter = [
+            'beginTime' => [
+                'required' => true,
+            ],
+            'endTime' => [
+                'required' => true,
+            ],
             'canSignUp' => [
                 'required' => true
             ],
@@ -180,5 +272,33 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true
             ],
         ];
+
+
+
+        if ($this->data['language_english']) {
+            $filter += $this->inputFilterEnglish();
+        }
+
+
+        if ($this->data['language_dutch']) {
+            $filter += $this->inputFilterDutch();
+        }
+
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
+        // they need to be set
+
+        if (!$this->data['language_dutch'] && !$this->data['language_english']) {
+            unset($this->data['language_dutch'], $this->data['language_english']);
+
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
+                ],
+                'language_english' => [
+                    'required' => true,
+                ],
+            ];
+        }
+        return $filter;
     }
 }

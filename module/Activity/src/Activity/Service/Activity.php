@@ -4,6 +4,7 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use User\Permissions\NotAllowedException;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
@@ -105,18 +106,56 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @return ActivityModel Activity that was created.
      */
-    public function createActivity(array $params)
+    public function createActivity(array $params, $dutch, $english)
     {
+        assert($dutch || $english, "Activities should have either be in dutch or english");
+
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
         // Find the creator
         $user = $this->getServiceManager()->get('user_role');
         if ($user === 'guest') {
-            throw new \InvalidArgumentException('Guests can not create activities');
+            throw new NotAllowedException('Guests can not create activities');
         }
-        $params['creator'] = $user;
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $user = $em->merge($user);
         $activity = new ActivityModel();
-        $activity->create($params, $em);
+        $activity->setBeginTime(new \DateTime($params['beginTime']));
+        $activity->setEndTime(new \DateTime($params['endTime']));
+
+        if ($dutch ) {
+            $activity->setName($params['name']);
+            $activity->setLocation($params['location']);
+            if (!$params['costs_unknown']) {
+                $activity->setCostsEn($params['costs']);
+            }
+            $activity->setDescription($params['description']);
+        } else if ($english) {
+            $activity->setNameEn($params['name_en']);
+            $activity->setLocationEn($params['location_en']);
+            if (!$params['costs_unknown']) {
+                $activity->setCostsEn($params['costs_en']);
+            }
+            $activity->setDescriptionEn($params['description_en']);
+        }
+
+
+        $activity->setCanSignUp($params['canSignUp']);
+
+        // Not user provided input
+        $activity->setCreator($user);
+        $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
+        $activity->setOnlyGEWIS(true); // Not yet implemented
+
+        if (isset($params['fields'])) {
+            foreach ($params['fields'] as $fieldparams){
+
+                $field = new ActivityField();
+                $field->create($fieldparams, $this, $em);
+                $em->persist($field);
+            }
+            $em->flush();
+        }
 
         $em->persist($activity);
         $em->flush();

@@ -35,11 +35,11 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $fields = $activity->get('fields');
+        $fields = $activity->getFields();
         $form = new SignupForm($fields);
         return [
             'activity' => $activity,
-            'canSignUp' => $activity->canSignUp(),
+            'canSignUp' => $activity->getCanSignUp(),
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($activity),
@@ -63,17 +63,19 @@ class ActivityController extends AbstractActionController
                 $data['costs'] = '-1';    // Hack. Because empty string is seen as 0
             }
 
-            $form->setData($this->getRequest()->getPost());
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
 
             if ($form->isValid()) {
-                $activity = $activityService->createActivity($form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+                $activity = $activityService->createActivity(
+                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
 
                 $this->redirect()->toRoute('activity/view', [
-                    'id' => $activity->get('id'),
+                    'id' => $activity->getId(),
                 ]);
-            }
-            else {
-                echo 'Form is invalid!';
             }
         }
 
@@ -98,7 +100,7 @@ class ActivityController extends AbstractActionController
         }
         
         // Assure you can sign up for this activity
-        if (!$activity->canSignup()) {
+        if (!$activity->getCanSignup()) {
             $params['error'] = 'Op dit moment kun je je niet inschrijven voor deze activiteit';
             return $params;
         }
@@ -109,7 +111,7 @@ class ActivityController extends AbstractActionController
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
             return $params;
         }
-        $form = new SignupForm($activity->get('fields'));
+        $form = new SignupForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
         
         //Assure the form is valid
