@@ -52,7 +52,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'type' => 'Zend\Form\Element\DateTime',
+           // 'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
                 'type' => 'text',

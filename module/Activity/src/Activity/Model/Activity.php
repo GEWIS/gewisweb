@@ -419,4 +419,12 @@ class Activity
     {
         $this->signUps = $signUps;
     }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
 }

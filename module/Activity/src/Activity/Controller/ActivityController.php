@@ -35,7 +35,7 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $fields = $activity->get('fields');
+        $fields = $activity->getFields();
         $form = new SignupForm($fields);
         return [
             'activity' => $activity,
@@ -114,7 +114,7 @@ class ActivityController extends AbstractActionController
             $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
             return $params;
         }
-        $form = new SignupForm($activity->get('fields'));
+        $form = new SignupForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
         
         //Assure the form is valid

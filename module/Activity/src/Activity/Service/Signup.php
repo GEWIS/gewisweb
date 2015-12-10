@@ -54,7 +54,7 @@ class Signup extends AbstractAclService
     {
         $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
         $result = [];
-        foreach($activity->get('signUps') as $signup){
+        foreach($activity->getSignUps() as $signup){
             $entry = [];
             $entry['member'] = $signup->getUser()->getMember()->getFullName();
             $entry['values'] = [];

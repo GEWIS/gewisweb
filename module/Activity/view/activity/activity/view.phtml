@@ -38,7 +38,7 @@
     <div class="col-md-8"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
 </div>
 <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
-<?php if ($activity->get('canSignUp')): ?>
+<?php if ($activity->getCanSignUp()): ?>
     <h2>
         <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
     </h2>
@@ -78,7 +78,7 @@
     <?php echo $this->translate('Login to subscribe');?>
 <?php endif; ?>
 
-<?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->get('id'))));
+<?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
 $form->prepare();
 echo $this->form()->openTag($form); ?>
         <table>
