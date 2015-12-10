@@ -33,29 +33,32 @@ Styleguide: navbar
 
     &:hover,
     &:focus {
-        opacity: 0.9;
+        opacity: 0.8;
     }
 }
 
 .navbar-default {
-    color: $gray;
     background-color: #fff;
+
+    .navbar-nav > li > a {
+        color: $gray;
+    }
 
     .navbar-nav > li > a:hover,
     .navbar-nav > li > a:focus {
         color: darken($gray, 3%);
-        background-color: darken(#fff, 3%);
+        background-color: darken(#fff, 4%);
     }
 
     .navbar-nav > .active > a,
     .navbar-nav > .open > a {
         color: darken($gray, 3%);
-        background-color: darken(#fff, 6%);
+        background-color: darken(#fff, 7%);
 
         &:hover,
         &:focus {
             color: darken($gray, 3%);
-            background-color: darken(#fff, 8%);
+            background-color: darken(#fff, 9%);
         }
     }
 }
@@ -95,6 +98,50 @@ Styleguide: navbar
         background $transition-duration ease,
         color $transition-duration ease
     );
+}
+
+.navbar-nav > li > .dropdown-menu {
+    @include transition(
+        opacity $transition-duration ease,
+        visibility $transition-duration ease,
+        transform $transition-duration ease
+    );
+
+    display: block;
+
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+
+    @include scale(1, 0.9);
+    @include transform-origin(0 0);
+    visibility: hidden;
+    opacity: 0;
+
+    > li > a {
+        @include transition(
+            background $transition-duration ease,
+            color $transition-duration ease
+        );
+
+        padding: 6px 18px;
+
+        color: $gray;
+        font-family: $font-family-base;
+
+        background-color: #fff;
+    }
+
+    > li > a:hover,
+    > li > a:focus {
+        color: darken($gray, 3%);
+        background-color: darken(#fff, 4%);
+    }
+}
+
+.navbar-nav > .open > .dropdown-menu {
+    @include scale(1, 1);
+    visibility: visible;
+    opacity: 1;
 }
 
 .navbar + .jumbotron {
