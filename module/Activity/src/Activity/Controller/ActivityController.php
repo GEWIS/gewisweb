@@ -77,9 +77,6 @@ class ActivityController extends AbstractActionController
                     'id' => $activity->getId(),
                 ]);
             }
-            else {
-                echo 'Form is invalid!';
-            }
         }
 
         return ['form' => $form];
