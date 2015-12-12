@@ -3,7 +3,8 @@
 namespace User\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController,
-    Zend\View\Model\ViewModel;
+    Zend\View\Model\ViewModel,
+    Zend\View\Model\JsonModel;
 
 class UserController extends AbstractActionController
 {
@@ -44,6 +45,26 @@ class UserController extends AbstractActionController
         ]);
     }
 
+    public function pinLoginAction()
+    {
+        $userService = $this->getUserService();
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            // try to login
+            $login = $userService->pinLogin($data);
+
+            if (null !== $login) {
+
+                return new JsonModel([
+                    'login' => true
+                ]);
+            }
+        }
+        return new JsonModel([
+            'login' => false
+        ]);
+    }
     /**
      * User logout action.
      */

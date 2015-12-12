@@ -161,10 +161,23 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
+                'user_pin_auth_adapter' => function ($sm) {
+                    $adapter = new \User\Authentication\Adapter\PinMapper(
+                        $sm->get('application_service_legacy')
+                    );
+                    $adapter->setMapper($sm->get('user_mapper_user'));
+                    return $adapter;
+                },
                 'user_auth_service' => function ($sm) {
                     return new \Zend\Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
+                    );
+                },
+                'user_pin_auth_service' => function ($sm) {
+                    return new \Zend\Authentication\AuthenticationService(
+                        $sm->get('user_auth_storage'),
+                        $sm->get('user_pin_auth_adapter')
                     );
                 },
 
