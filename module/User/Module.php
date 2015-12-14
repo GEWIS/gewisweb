@@ -180,7 +180,6 @@ class Module
                         $sm->get('user_pin_auth_adapter')
                     );
                 },
-
                 'user_remoteaddress' => function ($sm) {
                     $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
                     return $remote->getIpAddress();
@@ -217,6 +216,7 @@ class Module
                     $acl->addRole(new Role('tueguest'), 'guest');
                     $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
+                    $acl->addrole(new Role('sosuser'), 'apiuser');
                     $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');

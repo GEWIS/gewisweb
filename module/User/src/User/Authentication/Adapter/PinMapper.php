@@ -5,7 +5,8 @@ namespace User\Authentication\Adapter;
 use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     User\Mapper\User as UserMapper,
-    User\Model\User as UserModel;
+    User\Model\User as UserModel,
+    User\Model\UserRole as UserRoleModel;
 
 class PinMapper implements AdapterInterface
 {
@@ -58,7 +59,7 @@ class PinMapper implements AdapterInterface
     {
         $mapper = $this->getMapper();
 
-        $user = $mapper->findByLidnr($this->login);
+        $user = $mapper->findByLogin($this->lidnr);
 
         if (null === $user) {
             return new Result(
@@ -80,7 +81,11 @@ class PinMapper implements AdapterInterface
          * Users logging in in this way should not have all their regular roles. Since this login
          * method is less secure.
          */
-        //TODO
+        $userRole = new UserRoleModel();
+        $userRole->setRole('sosuser');
+        $userRole->setLidnr($this->lidnr);
+        $user->setRoles([$userRole]);
+
         return new Result(Result::SUCCESS, $user);
     }
 
