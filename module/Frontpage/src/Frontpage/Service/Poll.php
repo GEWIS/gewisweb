@@ -164,6 +164,7 @@ class Poll extends AbstractAclService
         }
 
         $poll->setExpiryDate(new \DateTime());
+        $poll->setCreator($this->getUser());
         $pollMapper = $this->getPollMapper();
         $pollMapper->persist($poll);
         $pollMapper->flush();
