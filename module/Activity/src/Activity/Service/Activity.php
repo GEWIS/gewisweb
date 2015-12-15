@@ -38,8 +38,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getForm()
     {
-        $this->permissionCreateActivityOrException();
-        return new ActivityForm();
+        if (!$this->isAllowed('create', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create an activity')
+            );
+        }
+
+        return $this->getServiceManager()->get('activity_form_activity');
     }
 
     /**

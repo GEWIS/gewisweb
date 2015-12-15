@@ -32,6 +32,21 @@ class Signup extends AbstractAclService
     }
 
     /**
+     * Return the form for signing up
+     */
+    public function getForm()
+    {
+        if (!$this->isAllowed('signup', 'activitySignup')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need to be logged in to sign up for this activity')
+            );
+        }
+
+        return $this->getServiceManager()->get('activity_form_activity_signup');
+    }
+
+    /**
      * Get a list of all the members that are signed up for an activity.
      *
      * @param ActivityModel $activity
