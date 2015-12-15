@@ -90,8 +90,6 @@ class Module
 
                     $acl->allow('user', 'activity', 'create');
 
-                    $acl->allow('admin', 'activity', 'manage');
-
                     return $acl;
                 },
             ]
