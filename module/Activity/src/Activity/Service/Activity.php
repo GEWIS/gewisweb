@@ -4,8 +4,8 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
-use User\Permissions\NotAllowedException;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Activity\Form\Activity as ActivityForm;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -29,6 +29,17 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     protected function getDefaultResourceId()
     {
         return 'activity';
+    }
+
+    /**
+     * Return the form for this activity
+     *
+     * @return ActivityForm
+     */
+    public function getForm()
+    {
+        $this->permissionCreateActivityOrException();
+        return new ActivityForm();
     }
 
     /**
@@ -85,7 +96,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getApprovedActivities()
     {
-        $this->permissionManageActivityOrException();
+        $this->permissionViewActivityOrException();
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getApprovedActivities();
@@ -125,12 +136,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         // Find the creator
-        $user = $this->getServiceManager()->get('user_role');
-        if ($user === 'guest') {
-            throw new NotAllowedException('Guests can not create activities');
-        }
+        $user = $em->merge(
+            $this->getServiceManager()->get('user_role')
+        );
 
-        $user = $em->merge($user);
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
@@ -256,7 +265,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function permissionManageActivityOrException()
     {
-        if (!$this->isAlowed('manage', 'activity')){
+        if (!$this->isAllowed('manage', 'activity')){
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to manage an activity')

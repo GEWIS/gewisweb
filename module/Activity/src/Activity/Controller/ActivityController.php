@@ -5,7 +5,6 @@ namespace Activity\Controller;
 use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
-use Activity\Form\Activity as ActivityForm;
 use Activity\Form\ActivitySignup as SignupForm;
 
 class ActivityController extends AbstractActionController
@@ -55,7 +54,7 @@ class ActivityController extends AbstractActionController
     public function createAction()
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $form = new ActivityForm();
+        $form = $activityService->getForm();
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
 
