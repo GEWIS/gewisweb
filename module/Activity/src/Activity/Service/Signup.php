@@ -188,6 +188,16 @@ class Signup extends AbstractAclService
     }
 
     /**
+     * Is the currently logged in user allowed to signup
+     *
+     * @return bool
+     */
+    public function isAllowedToSubscribe()
+    {
+        return $this->isAllowed('signup', 'activitySignup');
+    }
+
+    /**
      * @return \Activity\Mapper\ActivityFieldValue
      */
     public function getActivityFieldValueMapper(){
