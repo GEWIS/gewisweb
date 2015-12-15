@@ -282,4 +282,15 @@ class Organ
             $this->subdecisions[] = $subdecision;
         }
     }
+
+    /**
+     * Get all subdecisions.of this organ
+     *
+     * @return array
+     */
+    public function getSubdecisions()
+    {
+        return $this->subdecisions;
+    }
+
 }
