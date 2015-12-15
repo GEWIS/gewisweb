@@ -22,6 +22,7 @@ $tables = [
     'members_mailinglists',
     'Organ',
     'OrganMember',
+    'organs_subdecisions',
     'SubDecision'
 ];
 
