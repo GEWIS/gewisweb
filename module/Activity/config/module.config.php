@@ -59,6 +59,15 @@ return [
                             ]
                         ]
                     ],
+                    'touch' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/touch',
+                            'defaults' => [
+                                'action' => 'touch'
+                            ]
+                        ]
+                    ],
                 ],
                 'priority' => 100
             ],

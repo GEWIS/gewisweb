@@ -29,7 +29,7 @@ return [
                             'route' => '/login',
                         ]
                     ],
-                    'pinglogin' => [
+                    'pinlogin' => [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/pinlogin',
