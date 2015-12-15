@@ -109,7 +109,7 @@ class ActivityController extends AbstractActionController
             return $params;
         }
 
-        if ($signupService->isAllowedToSubscribe()) {
+        if (!$signupService->isAllowedToSubscribe()) {
             $params['error'] = $translator->translate('You need to log in to subscribe');
             return $params;
         }
@@ -132,7 +132,7 @@ class ActivityController extends AbstractActionController
             $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
             $params['success'] = true;
         }
-        
+
         return $params;
     }
 
