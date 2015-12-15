@@ -102,7 +102,7 @@ class Signup extends AbstractAclService
         $signup->setActivity($activity);
         $signup->setUser($user);
         $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');
-        foreach ($activity->get('fields') as $field){            
+        foreach ($activity->getFields() as $field){
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
             $value = $fieldResults[$field->get('id')];
