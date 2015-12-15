@@ -292,5 +292,4 @@ class Organ
     {
         return $this->subdecisions;
     }
-
 }
