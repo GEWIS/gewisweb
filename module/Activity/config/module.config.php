@@ -135,12 +135,73 @@ return [
                     ]
                 ],
             ],
+            'activity_api' => [
+                'type'    => 'Literal',
+                'options' => [
+                    'route'    => '/api/activity',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Activity\Controller',
+                        'controller'    => 'Api',
+                        'action'        => 'list',
+                    ],
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'list' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/list',
+                            'defaults' => [
+                                'action' => 'list'
+                            ]
+                        ]
+                    ],
+                    'view' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/view/[:id]',
+                            'constraints' => [
+                                'action'     => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'view'
+                            ]
+                        ],
+                    ],
+                    'signup' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/signup/[:id]',
+                            'constraints' => [
+                                'action'     => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'signup'
+                            ]
+                        ],
+                    ],
+                    'signoff' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/signoff/[:id]',
+                            'constraints' => [
+                                'action'     => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'signoff'
+                            ]
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
         ],
     ],
     'controllers' => [
         'invokables' => [
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
-            'Activity\Controller\Admin' => 'Activity\Controller\AdminController'
+            'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
+            'Activity\Controller\Api' => 'Activity\Controller\ApiController'
         ],
         'factories' => [
             'Activity\Controller\Activity' => function ($sm) {

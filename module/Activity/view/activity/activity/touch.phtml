@@ -1,5 +1,8 @@
 <?php echo $this->doctype(); ?>
-<?php $this->scriptUrl()->requireUrl('user/pinlogin') ?>
+<?php
+    $this->scriptUrl()->requireUrl('user/pinlogin')
+                      ->requireUrl('activity_api/list');
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -115,7 +118,7 @@
             -webkit-transform: translate(0, -50%) !important;
             margin-left: 35%;
             width: 30%;
-            height: 50%;
+            height: 58%;
         }
 
         .modal-content {
