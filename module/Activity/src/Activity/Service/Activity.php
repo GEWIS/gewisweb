@@ -51,7 +51,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getActivity($id)
     {
-        $this->permissionViewActivityOrException();
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getActivityById($id);
@@ -66,7 +71,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getAllActivities()
     {
-        $this->permissionViewActivityOrException();
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
@@ -81,7 +91,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getUnapprovedActivities()
     {
-        $this->permissionManageActivityOrException();
+        if (!$this->isAllowed('viewUnapproved', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getUnapprovedActivities();
@@ -96,7 +111,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getApprovedActivities()
     {
-        $this->permissionViewActivityOrException();
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view approved the activities')
+            );
+        }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getApprovedActivities();
@@ -112,7 +132,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getDisapprovedActivities()
     {
-        $this->permissionManageActivityOrException();
+        if (!$this->isAllowed('viewDisapproved', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the disapproved activities')
+            );
+        }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getDisapprovedActivities();
@@ -129,7 +154,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function createActivity(array $params, $dutch, $english)
     {
-        $this->permissionCreateActivityOrException();
+        if (!$this->isAllowed('create', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create an activity')
+            );
+        }
 
         assert($dutch || $english, "Activities should have either be in dutch or english");
 
@@ -192,7 +222,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function approve(ActivityModel $activity)
     {
-        $this->permissionManageActivityOrException();
+        if (!$this->isAllowed('approve', 'model')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to change the status of the activity')
+            );
+        }
 
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
@@ -207,7 +242,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function reset(ActivityModel $activity)
     {
-        $this->permissionManageActivityOrException();
+        if (!$this->isAllowed('reset', 'model')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to change the status of the activity')
+            );
+        }
 
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
@@ -222,54 +262,16 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function disapprove(ActivityModel $activity)
     {
-        $this->permissionManageActivityOrException();
+        if (!$this->isAllowed('disapprove', 'model')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to change the status of the activity')
+            );
+        }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
-    }
-
-    /*
-     * Some general ACL functions
-     */
-
-    /**
-     * Checks if the user is allowed to view the activity, and if not, throws an used permission exception
-     */
-    public function permissionViewActivityOrException()
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-    }
-
-    /**
-     * Can the user create the activity?
-     */
-    public function permissionCreateActivityOrException()
-    {
-        if (!$this->isAllowed('create', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create an activity')
-            );
-        }
-    }
-
-    /**
-     * Can the user manage an activity
-     */
-    public function permissionManageActivityOrException()
-    {
-        if (!$this->isAllowed('manage', 'activity')){
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to manage an activity')
-            );
-        }
     }
 }

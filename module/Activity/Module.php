@@ -88,6 +88,7 @@ class Module
                     $acl->allow('guest', 'activitySignup', 'signUp');
                     $acl->allow('guest', 'activitySignup', 'view');
 
+
                     $acl->allow('user', 'activity', 'create');
 
                     return $acl;
