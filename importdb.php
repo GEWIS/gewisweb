@@ -7,10 +7,15 @@
  */
 
 // connections
-$pgconn = new PDO('pgsql:host=localhost;dbname=gewis_report;user=;password=');
+$config = include 'config/autoload/gewisdb.local.php';
+
+$pgconn = new PDO('pgsql:host=' . $config['host'] . ';dbname=' . $config['dbname'] . ';user=' . $config['user'] . ';password=' . $config['password']);
 $pgconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$myconn = new PDO('mysql:host=localhost;dbname=gewisweb_dev', '', '');
+$doctrineConf = include 'config/autoload/doctrine.local.php';
+$params = $doctrineConf['doctrine']['connection']['orm_default']['params'];
+
+$myconn = new PDO('mysql:host=' . $params['host'] . ';dbname=' . $params['dbname'], $params['user'], $params['password']);
 $myconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 /* which tables to sync */
