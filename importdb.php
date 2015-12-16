@@ -16,8 +16,10 @@ $pgconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $doctrineConf = include 'config/autoload/doctrine.local.php';
 $params = $doctrineConf['doctrine']['connection']['orm_default']['params'];
 
-$myconn = new PDO('mysql:host=' . $params['host'] . ';dbname=' . $params['dbname'],
-                  $params['user'], $params['password']);
+$myconn = new PDO(
+    'mysql:host=' . $params['host'] . ';dbname=' . $params['dbname'],
+    $params['user'],
+    $params['password']);
 $myconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 /* which tables to sync */
