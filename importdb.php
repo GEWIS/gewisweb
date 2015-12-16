@@ -35,6 +35,7 @@ $tables = [
 
 // to not trip up InnoDB
 $myconn->query('SET foreign_key_checks = 0');
+$myconn->query('START TRANSACTION');
 
 foreach ($tables as $table) {
     $query = "SELECT * FROM $table";
@@ -72,4 +73,5 @@ foreach ($tables as $table) {
     echo "\n\n";
 }
 
+$myconn->query('COMMIT');
 $myconn->query('SET foreign_key_checks = 1');
