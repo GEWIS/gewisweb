@@ -50,23 +50,24 @@ Styleguide: navbar
 
     .navbar-nav > .active > a {
         color: darken($gray, 3%);
-        background-color: darken(#fff, 7%);
+        background-color: #fff;
+        padding-bottom: 27px;
+        border-bottom: 3px solid $brand-primary;
 
         &:hover,
         &:focus {
             color: darken($gray, 3%);
-            background-color: darken(#fff, 9%);
+            background-color: darken(#fff, 4%);
         }
     }
 
     .navbar-nav > .open > a {
-        margin-bottom: -1px;
-        border-bottom: 1px solid darken(#fff, 4%);
-
         &,
         &:hover,
         &:focus {
             color: darken($gray, 3%);
+            border-color: darken(#fff, 15%);
+            border-bottom-color: darken(#fff, 4%);
             background-color: darken(#fff, 4%);
         }
     }
@@ -110,22 +111,13 @@ Styleguide: navbar
 }
 
 .navbar-nav > li > .dropdown-menu {
-    @include transition(
-        opacity $transition-duration ease,
-        visibility $transition-duration ease,
-        transform $transition-duration ease
-    );
-
     display: block;
     padding: 0;
 
-    border: 1px solid #e7e7e7;
-    border-top: 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid darken(#fff, 15%);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     background-color: darken(#fff, 4%);
 
-    @include scale(1, 0.9);
-    @include transform-origin(0 0);
     visibility: hidden;
     opacity: 0;
 
@@ -151,10 +143,27 @@ Styleguide: navbar
     }
 }
 
+.navbar-nav > .open > a {
+    position: relative;
+    z-index: 1001;
+
+    margin-bottom: -1px;
+    padding-left: 17px;
+    padding-right: 17px;
+
+    border: 1px solid;
+    border-top: 0;
+}
+
 .navbar-nav > .open > .dropdown-menu {
     @include scale(1, 1);
     visibility: visible;
     opacity: 1;
+}
+
+.navbar-nav > li > .dropdown-login {
+    padding: 15px;
+    min-width: 240px;
 }
 
 .navbar + .jumbotron {
