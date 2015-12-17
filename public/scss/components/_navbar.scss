@@ -26,15 +26,10 @@ Styleguide: navbar
 }
 
 .navbar-brand {
-    @include transition(opacity $transition-duration ease);
+    @include transition(background $transition-duration ease);
 
     padding: 10px 15px;
     height: auto;
-
-    &:hover,
-    &:focus {
-        opacity: 0.8;
-    }
 }
 
 .navbar-default {
@@ -44,14 +39,16 @@ Styleguide: navbar
         color: $gray;
     }
 
-    .navbar-nav > li > a:hover,
-    .navbar-nav > li > a:focus {
-        color: darken($gray, 3%);
-        background-color: darken(#fff, 4%);
+    .navbar-nav > li > a,
+    .navbar-brand {
+        &:hover,
+        &:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 4%);
+        }
     }
 
-    .navbar-nav > .active > a,
-    .navbar-nav > .open > a {
+    .navbar-nav > .active > a {
         color: darken($gray, 3%);
         background-color: darken(#fff, 7%);
 
@@ -59,6 +56,18 @@ Styleguide: navbar
         &:focus {
             color: darken($gray, 3%);
             background-color: darken(#fff, 9%);
+        }
+    }
+
+    .navbar-nav > .open > a {
+        margin-bottom: -1px;
+        border-bottom: 1px solid darken(#fff, 4%);
+
+        &,
+        &:hover,
+        &:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 4%);
         }
     }
 }
@@ -108,12 +117,15 @@ Styleguide: navbar
     );
 
     display: block;
+    padding: 0;
 
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    border: 1px solid #e7e7e7;
+    border-top: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: darken(#fff, 4%);
 
-    @include scale(1, 0.9);
-    @include transform-origin(0 0);
+    @include scale(0.9);
+    @include transform-origin(20% 0);
     visibility: hidden;
     opacity: 0;
 
@@ -123,18 +135,19 @@ Styleguide: navbar
             color $transition-duration ease
         );
 
-        padding: 6px 18px;
+        padding: 8px 17px;
 
         color: $gray;
-        font-family: $font-family-base;
+        font-weight: 600;
+        font-family: $font-family-alt;
 
-        background-color: #fff;
+        background-color: darken(#fff, 4%);
     }
 
     > li > a:hover,
     > li > a:focus {
         color: darken($gray, 3%);
-        background-color: darken(#fff, 4%);
+        background-color: darken(#fff, 8%);
     }
 }
 
