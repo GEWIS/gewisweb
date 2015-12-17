@@ -20,6 +20,8 @@ Markup:
 Styleguide: navbar
 */
 .navbar {
+    margin: 0;
+
     font-family: $font-family-alt;
     font-weight: 600;
     font-size: 15px;
@@ -164,8 +166,4 @@ Styleguide: navbar
 .navbar-nav > li > .dropdown-login {
     padding: 15px;
     min-width: 240px;
-}
-
-.navbar + .jumbotron {
-    margin-top: -20px;
 }

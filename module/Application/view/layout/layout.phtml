@@ -117,36 +117,41 @@ function getIsActiveClass($view, array $condition)
         </nav>
 
         <?php if (isActive($this, ['frontpage', 'frontpage', 'home'])): ?>
-        <div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/Panorama.jpg);">
-            <div class="container">
-                <h1>Studievereniging GEWIS</h1>
-                <h2>Welkom op de website van Studievereniging GEWIS.</h2>
+            <div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/Panorama.jpg);">
+                <div class="container">
+                    <h1>Studievereniging GEWIS</h1>
+                    <h2>Welkom op de website van Studievereniging GEWIS.</h2>
+                </div>
             </div>
-        </div>
         <?php endif; ?>
 
         <div class="container">
             <?php echo $this->content; ?>
-            <hr>
-            <footer class="row">
-                <div class="col-md-2 col-sm-4">
-                    <img src="<?= $this->basePath() ?>/img/logo-white.png" />
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-4">
+                        <img src="<?= $this->basePath() ?>/img/logo-white.png"/>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <h3>Studievereniging GEWIS</h3>
+                        <address>
+                            MF 3.155<br>
+                            De Groene Loper 5<br>
+                            5612AZ Eindhoven<br>
+                            <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
+                            <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
+                        </address>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <p>&copy; 2013
+                            - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
+                    </div>
                 </div>
-                <div class="col-md-4 col-sm-8">
-                    <h3>Studievereniging GEWIS</h3>
-                    <address>
-                        MF 3.155<br>
-                        De Groene Loper 5<br>
-                        5612AZ Eindhoven<br>
-                        <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
-                        <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
-                    </address>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <p>&copy; 2013 - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
-                </div>
-            </footer>
-        </div> <!-- /container -->
+            </div>
+        </footer>
         <?php echo $this->inlineScript() ?>
         <script>
             <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
