@@ -52,13 +52,6 @@ $form = $packageEditForm;
                                                  )
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
-                    <a href="<?= $this->url("admin_company/editCompany/editPackage/deletePackage",
-                                            array( 
-                                                  "slugCompanyName" => $companyName,
-                                                  "packageID" => $package->getId(),
-                                                 )
-                                           ); ?>"> <?= $this->translate('delete'); ?></a>
-                    </a>
                 </td> 
                 <td>
                     <?php echo $job->isActive() ? 'true' : 'false'?>
