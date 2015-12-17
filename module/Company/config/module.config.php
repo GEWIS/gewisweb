@@ -6,7 +6,8 @@ return [
             'company' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route'    => '/company',
+                    'route' => '/company',
+                    'priority' => 2,
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Company',
@@ -87,11 +88,12 @@ return [
                     ],
                 ],
                 'priority' => 100,
-            ],
+            ),
             'admin_company' => [
+                'priority' => 3,
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/admin/company',
+                    'route' => '/company/admin/company',
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Admin',

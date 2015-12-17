@@ -136,13 +136,15 @@ class AdminController extends AbstractActionController
         // Get parameters
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageID');
+        echo($packageId);
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertJobIntoPackageIDByData($packageId, $request->getPost())) {
+            $job = $companyService->insertJobIntoPackageIDByData($packageId, $request->getPost());
+            if (!is_null($job)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage/editJob',
