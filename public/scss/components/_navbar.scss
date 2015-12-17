@@ -124,8 +124,8 @@ Styleguide: navbar
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     background-color: darken(#fff, 4%);
 
-    @include scale(0.9);
-    @include transform-origin(20% 0);
+    @include scale(1, 0.9);
+    @include transform-origin(0 0);
     visibility: hidden;
     opacity: 0;
 
