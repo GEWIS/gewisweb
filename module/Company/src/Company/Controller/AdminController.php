@@ -237,7 +237,7 @@ class AdminController extends AbstractActionController
      */
     public function editPackageAction()
     {
-By    // Get useful stuff
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $packageForm = $companyService->getPackageForm();
 

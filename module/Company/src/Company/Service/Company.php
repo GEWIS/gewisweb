@@ -294,7 +294,7 @@ class Company extends AbstractACLService
      */
     public function getEditableCompaniesBySlugName($slugName)
     {
-        if ($this->isAllowed('edit')) {
+        if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to edit companies')

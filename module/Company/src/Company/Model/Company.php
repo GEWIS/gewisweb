@@ -420,12 +420,12 @@ class Company // implements ArrayHydrator (for zend2 form)
                 $translation->remove();
             }
         }
-        $this->setName($this->updateIfSet($this->getLanguage().'name',     ''));
-        $this->setSlugName($this->updateIfSet($this->getLanguage().'slugName', ''));
-        $this->setAddress($this->updateIfSet($this->getLanguage().'address',  ''));
-        $this->setEmail($this->updateIfSet($this->getLanguage().'email',    ''));
-        $this->setPhone($this->updateIfSet($this->getLanguage().'phone',    ''));
-        $this->setTranslations($newTranslations);
+        $this->setName($this->updateIfSet($data['name'],''));
+        $this->setSlugName($this->updateIfSet($data['slugName'], ''));
+        $this->setAddress($this->updateIfSet($data['address'],  ''));
+        $this->setEmail($this->updateIfSet($data['email'],''));
+        $this->setPhone($this->updateIfSet($data['phone'],''));
+        $this->translations = $newTranslations;
     }
 
     /**
