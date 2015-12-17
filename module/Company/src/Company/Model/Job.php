@@ -331,10 +331,10 @@ class Job
         $this->setName($this->updateIfSet($data['name'],''));
         $this->setSlugName($this->updateIfSet($data['slugName'],''));
         $this->setLanguage($this->updateIfSet($data['language'],''));
-        $this->setSetWebsite($this->updateIfSet($data['website'],''));
+        $this->setWebsite($this->updateIfSet($data['website'],''));
         $this->setEmail($this->updateIfSet($data['email'],''));
         $this->setPhone($this->updateIfSet($data['phone'],''));
         $this->setDescription($this->updateIfSet($data['description'],''));
-        $this->setActive($data['active'] === 1);
+        $this->setActive($data['active'] === '1');
     }
 }

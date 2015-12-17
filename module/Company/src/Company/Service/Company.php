@@ -200,12 +200,12 @@ class Company extends AbstractACLService
         $jobForm = $this->getJobForm();
         $jobForm->setData($data);
         if ($jobForm->isValid()) {
-            $job = $this->insertJobIntoPackageID($packageId);
+            $job = $this->insertJobIntoPackageID($packageID);
             $job->exchangeArray($data);
             $this->saveCompany();
-            return true;
+            return $job;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -282,6 +282,9 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit packages')
             );
         }
+        if (is_null($packageID)){
+            throw new \Exception('Invalid arguemnt');
+        }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
 
         return $package;
@@ -312,7 +315,7 @@ class Company extends AbstractACLService
      */
     public function getEditableJobsBySlugName($companySlugName, $jobSlugName)
     {
-        if ($this->isAllowed('edit')) {
+        if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to edit jobs')

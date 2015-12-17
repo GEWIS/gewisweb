@@ -6,7 +6,8 @@ return array(
             'company' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/company',
+                    'route' => '/company',
+                    'priority' => 2,
                     'defaults' => array(
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Company',
@@ -89,9 +90,10 @@ return array(
                 'priority' => 100,
             ),
             'admin_company' => array(
+                'priority' => 3,
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/admin/company',
+                    'route' => '/company/admin/company',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Admin',
