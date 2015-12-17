@@ -1,0 +1,8 @@
+input {
+    font-family: $font-family-base;
+    font-weight: normal;
+}
+
+.form-control {
+    @include box-shadow(none);
+}
