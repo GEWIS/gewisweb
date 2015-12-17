@@ -34,6 +34,7 @@ Activity.Touch.init = function () {
         $('#lidnrInput').val('');
         $('#pinInput').val('');
     });
+    setInterval(Activity.Touch.fetchActivities, 600000);
     Activity.Touch.fetchActivities();
     $('#activityList').on( 'tap', 'tr', function() {
         Activity.Touch.showActivity($( this ).data('activity-index'));
@@ -56,6 +57,7 @@ Activity.Touch.Login = function(lidnr, pincode) {
 Activity.Touch.fetchActivities = function () {
     $.getJSON(URLHelper.url('activity_api/list'), function (data) {
        Activity.Touch.activities = data;
+        $('#activityList').html('');
         $.each(data, function(index, activity) {
             $('#activityList').append(
                 '<tr data-activity-index="' + index + '">'
