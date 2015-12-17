@@ -1,0 +1,19 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        flex: 0 0 auto;
+    }
+}
+
+body > .container {
+    flex: 1 0 auto;
+    margin: 30px auto;
+}
