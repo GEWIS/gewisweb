@@ -11,16 +11,47 @@ if(isset($company)){
     $islist = false;
 } else {
     $islist = true;
-    echo "<h1>Companies</h1>";
+?>
+<h1><?= $this->translate('Companies') ?></h1>
 
-    echo "<fieldset> 
-        <legend>Filter</legend> 
-        <label>All <input type='text' id='filter-all'></label> 
-        <label>Name <input type='text' id='filter-name'></label> 
-        <label>Location <input type='text' id='filter-location'></label> 
-        <label>Description <input type='text' id='filter-description'></label> </fieldset> <fieldset> <legend>Sort</legend> 
-        <label>Column <select id='sort-column'><option value='company-name'>[Select column]</option><option value='company-name'>Company Name</option><option value='jobs-amount'>Amount of jobs available</option></select></label> 
-        <label>Order <select id='sort-order'><option value='1'>Ascending</option><option value='-1'>Descending</option></select></label></fieldset>";
+    <fieldset>
+        <legend><?= $this->translate('Filter') ?></legend>
+        <div class="form-group">
+            <label for="filter-all"><?= $this->translate('All') ?></label>
+            <input type="text" class="form-control" id="filter-all">
+        </div>
+        <div class="form-group">
+            <label for="filter-name"><?= $this->translate('Name') ?></label>
+            <input type="text" class="form-control" id="filter-name">
+        </div>
+        <div class="form-group">
+            <label for="filter-location"><?= $this->translate('Location') ?></label>
+            <input type="text" class="form-control" id="filter-location">
+        </div>
+        <div class="form-group">
+            <label for="filter-description"><?= $this->translate('Description') ?></label>
+            <input type="text" class="form-control" id="filter-description">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend><?= $this->translate('Sort') ?></legend>
+        <div class="form-group">
+            <label for="sort-column"><?= $this->translate('Column') ?></label>
+            <select id="sort-column" class="form-control">
+                <option value="company-name">[<?= $this->translate('Select column') ?>]</option>
+                <option value="company-name"><?= $this->translate('Company Name') ?></option>
+                <option value="jobs-amount"><?= $this->translate('Amount of jobs available') ?></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sort-order"><?= $this->translate('Order') ?></label>
+            <select id="sort-order" class="form-control">
+                <option value="1"><?= $this->translate('Ascending') ?></option>
+                <option value="-1"><?= $this->translate('Descending') ?></option>
+            </select>
+        </div>
+    </fieldset>
+<?php
 }
 
 if (!isset($companyList)){
@@ -125,7 +156,7 @@ foreach ($companyList as $company) {
             } else {
                 return -1 * order;
             }
-
+            
         });
 
         companies.detach().appendTo($(".company-list"));
@@ -154,6 +185,7 @@ foreach ($companyList as $company) {
         }
     });
 </script>
+
 
 </div>
 
