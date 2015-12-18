@@ -12,3 +12,6 @@ vendor/
 gewisweb-vagrant/
 node_modules/
 .sass-cache/
+public/css/gewis-theme.css
+public/css/gewis-theme.css.map
+public/styleguide/
