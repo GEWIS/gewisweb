@@ -116,17 +116,10 @@ function getIsActiveClass($view, array $condition)
             </div>
         </nav>
 
-        <?php if (isActive($this, ['frontpage', 'frontpage', 'home'])): ?>
-            <div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/Panorama.jpg);">
-                <div class="container">
-                    <h1>Studievereniging GEWIS</h1>
-                    <h2>Welkom op de website van Studievereniging GEWIS.</h2>
-                </div>
-            </div>
-        <?php endif; ?>
+        <div class="content-container">
+            <?php echo $this->content; ?>
+        </div>
 
-        <?php echo $this->content; ?>
-        
         <footer class="footer">
             <div class="container">
                 <div class="row">
