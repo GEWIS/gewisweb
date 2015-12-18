@@ -1,3 +1,20 @@
 .footer {
-    background: darken(#fff, 3%);
+    padding: 20px 0;
+
+    //background: darken(#fff, 3%);
+    border-top: 1px solid darken(#fff, 5%);
+    color: darken(#fff, 40%);
+
+    h3 {
+        margin: 0 0 5px;
+        font-size: 16px;
+    }
+
+    .row + .row {
+        margin-top: 10px;
+    }
+
+    .glyphicon {
+        margin-right: 5px;
+    }
 }
