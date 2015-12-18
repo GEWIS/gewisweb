@@ -85,10 +85,12 @@ class Module
                     $acl->addResource('activitySignup');
 
                     $acl->allow('guest', 'activity', 'view');
-                    $acl->allow('guest', 'activitySignup', 'signUp');
+
                     $acl->allow('guest', 'activitySignup', 'view');
 
                     $acl->allow('user', 'activity', 'create');
+                    $acl->allow('user', 'activitySignup', 'signUp');
+                    $acl->allow('user', 'activitySignup', 'checkUSerSignedUp');
 
                     return $acl;
                 },
