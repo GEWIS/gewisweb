@@ -67,10 +67,39 @@ Styleguide: navbar
         &,
         &:hover,
         &:focus {
+            margin-bottom: -1px;
+            padding-left: 17px;
+            padding-right: 17px;
+
             color: darken($gray, 3%);
-            border-color: darken(#fff, 15%);
-            border-bottom-color: darken(#fff, 4%);
             background-color: darken(#fff, 4%);
+
+            border: 1px solid darken(#fff, 15%);
+            border-bottom-color: darken(#fff, 4%);
+            border-top: 0;
+        }
+    }
+
+    .navbar-nav > li > .dropdown-menu {
+        > li > a {
+            color: $gray;
+            background-color: darken(#fff, 4%);
+        }
+
+        > li > a:hover,
+        > li > a:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 8%);
+        }
+    }
+
+    .navbar-nav > .open > .dropdown-menu {
+        border: 1px solid darken(#fff, 15%);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-color: darken(#fff, 4%);
+
+        > li > a {
+            color: $gray;
         }
     }
 }
@@ -79,22 +108,63 @@ Styleguide: navbar
     color: #fff;
     background-color: $brand-primary;
 
+    border-bottom: 0;
+
+    .navbar-brand img {
+        // TODO: Make the logo white properly
+        -webkit-filter: grayscale(1) brightness(100);
+    }
+
     .navbar-nav > li > a {
         color: #fff;
     }
 
-    .navbar-nav > li > a:hover,
-    .navbar-nav > li > a:focus {
-        background-color: darken($brand-primary, 3%);
+    .navbar-brand,
+    .navbar-nav > li > a {
+        &:hover,
+        &:focus {
+            background-color: darken($brand-primary, 3%);
+        }
     }
 
-    .navbar-nav > .active > a,
-    .navbar-nav > .open > a {
+    .navbar-nav > .active > a {
         background-color: darken($brand-primary, 6%);
 
         &:hover,
         &:focus {
             background-color: darken($brand-primary, 9%);
+        }
+    }
+
+    .navbar-nav > .open > a {
+        &,
+        &:hover,
+        &:focus {
+            background-color: #fff;
+            color: $gray;
+        }
+    }
+
+    .navbar-nav > li > .dropdown-menu {
+        @include transition(
+            opacity $transition-duration ease,
+            visibility $transition-duration ease
+        );
+
+        border: 1px solid rgba(0,0,0,0.1);
+        border: 0;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.1);
+        background-color: #fff;
+
+        > li > a {
+            color: $gray;
+            background-color: #fff;
+        }
+
+        > li > a:hover,
+        > li > a:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 3%);
         }
     }
 }
@@ -116,12 +186,11 @@ Styleguide: navbar
     display: block;
     padding: 0;
 
-    border: 1px solid darken(#fff, 15%);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    background-color: darken(#fff, 4%);
-
+    overflow: hidden;
     visibility: hidden;
     opacity: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: $border-radius-base;
 
     > li > a {
         @include transition(
@@ -131,34 +200,23 @@ Styleguide: navbar
 
         padding: 8px 17px;
 
-        color: $gray;
         font-weight: 600;
         font-family: $font-family-alt;
-
-        background-color: darken(#fff, 4%);
     }
+}
 
-    > li > a:hover,
-    > li > a:focus {
-        color: darken($gray, 3%);
-        background-color: darken(#fff, 8%);
-    }
+.navbar-nav.navbar-right > li > .dropdown-menu {
+    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: 0;
 }
 
 .navbar-nav > .open > a {
     position: relative;
     z-index: 1001;
-
-    margin-bottom: -1px;
-    padding-left: 17px;
-    padding-right: 17px;
-
-    border: 1px solid;
-    border-top: 0;
 }
 
 .navbar-nav > .open > .dropdown-menu {
-    @include scale(1, 1);
+    //@include scale(1, 1);
     visibility: visible;
     opacity: 1;
 }
