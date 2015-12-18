@@ -59,7 +59,7 @@ return [
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_-]*',
                             ],
-                        ),
+                        ],
                         'may_terminate' => true,
                         'child_routes' => [
                             'joblist' => [
@@ -88,7 +88,7 @@ return [
                     ],
                 ],
                 'priority' => 100,
-            ),
+            ],
             'admin_company' => [
                 'priority' => 3,
                 'type' => 'Literal',
@@ -109,7 +109,7 @@ return [
                             'route' => '/delete/[:slugCompanyName]',
                             'defaults' => [
                                 'action' => 'deleteCompany',
-                            ),
+                            ],
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_-]*',
                             ],
@@ -162,8 +162,8 @@ return [
                                             'route' => '/delete',
                                             'defaults' => [
                                                 'action' => 'deletePackage',
-                                            ),
-                                        ),
+                                            ],
+                                        ],
                                         'may_terminate' => true,
                                     ],
                                     'editJob' => [
@@ -172,15 +172,15 @@ return [
                                             'route' => '/job/:jobName',
                                             'defaults' => [
                                                 'action' => 'editJob',
-                                            ),
+                                            ],
                                             'constraints' => [
                                                 'jobName' => '[a-zA-Z0-9_-]*',
-                                            ),
+                                            ],
                                             'may_terminate' => true,
-                                        ),
-                                    ),
-                                ),
-                            ),
+                                        ],
+                                    ],
+                                ],
+                            ],
                             'addPackage' => [
                                 'type' => 'segment',
                                 'options' => [
@@ -246,7 +246,7 @@ return [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Company/Model/'),
+                'paths' => [__DIR__.'/../src/Company/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

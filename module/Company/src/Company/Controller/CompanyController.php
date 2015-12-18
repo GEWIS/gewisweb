@@ -24,14 +24,14 @@ class CompanyController extends AbstractActionController
                     'translator' => $companyService->getTranslator(),
                 ]);
             }
-            return new ViewModel(array(
+            return new ViewModel([
                 'translator' => $companyService->getTranslator(),
             ]);
         }
-        return new ViewModel(array(
+        return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
-        ));
+        ]);
 
     }
 
