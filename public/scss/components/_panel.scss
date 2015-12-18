@@ -1,0 +1,20 @@
+/*
+Panels
+
+Styleguide: panels
+*/
+
+.panel-group {
+    display: flex;
+    background: #000;
+}
+
+.panel {
+    font-size: 12px;
+    text-align: justify;
+}
+
+.panel-inverse {
+    background: #000;
+    color: #FFF;
+}
