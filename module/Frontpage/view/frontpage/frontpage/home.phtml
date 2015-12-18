@@ -100,16 +100,22 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="well">
-                    <h3><strong><?= $this->translate('Poll') ?></strong></h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Poll') ?></h3>
+                    </div>
                     <?php if (isset($poll['poll'])): ?>
+                        <div class="panel-body">
                         <?= $this->partial('partial/poll.phtml', [
                             'poll' => $poll['poll'],
                             'canVote' => $poll['canVote'],
                             'userVote' => $poll['userVote'],
                             'showResults' => false
                         ]) ?>
-                        <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
+                        </div>
+                        <div class="panel-footer">
+                            <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
+                        </div>
                     <?php else: ?>
                         <?= $this->translate('There currently is no poll.'); ?>
                         <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
