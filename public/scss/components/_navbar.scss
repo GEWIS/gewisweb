@@ -185,12 +185,11 @@ Styleguide: navbar
 .navbar-nav > li > .dropdown-menu {
     display: block;
     padding: 0;
+    min-width: 100%;
 
     overflow: hidden;
     visibility: hidden;
     opacity: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: $border-radius-base;
 
     > li > a {
         @include transition(
@@ -203,11 +202,6 @@ Styleguide: navbar
         font-weight: 600;
         font-family: $font-family-alt;
     }
-}
-
-.navbar-nav.navbar-right > li > .dropdown-menu {
-    border-top-left-radius: $border-radius-base;
-    border-top-right-radius: 0;
 }
 
 .navbar-nav > .open > a {
@@ -224,4 +218,13 @@ Styleguide: navbar
 .navbar-nav > li > .dropdown-login {
     padding: 15px;
     min-width: 240px;
+
+    color: $gray;
+    font-family: $font-family-base;
+    font-weight: normal;
+
+    p {
+        margin: 10px 0 0;
+        text-align: center;
+    }
 }
