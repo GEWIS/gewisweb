@@ -18,21 +18,32 @@
                     <div class="panel-heading">
                         <h3><?= $this->translate('Agenda') ?></h3>
                     </div>
-                    <div class="list-group">
-                    <?php foreach($activities as $activity): ?>
-                        <a class="list-group-item agenda-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                            <h4><?= $activity->getName(); ?></h4>
-                            <?= $activity->getBeginTime()->format('l j F') ?>
-                        </a>
-                    <?php endforeach; ?>
-                    </div>
-                    <div class="panel-footer">
+                    <div class="panel-body">
+                        <div class="list-group">
+                        <?php foreach($activities as $activity): ?>
+                            <a class="list-group-item agenda-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                <span class="badge">
+                                    <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>&nbsp;</span>
+                                    <span><?= $activity->getBeginTime()->format('d') ?></span>
+                                </span>
+
+                                <?= $activity->getName(); ?>
+
+                            </a>
+                        <?php endforeach; ?>
+                        </div>
+
+                        <p>
                         <?= sprintf(
                             $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
                             '<a href="~bac">',
                             '</a>'
                         )
                         ?>
+                        </p>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#"><?= $this->translate('Complete agenda') ?></a>
                     </div>
                 </div>
             </div>
