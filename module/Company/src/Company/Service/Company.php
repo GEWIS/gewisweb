@@ -10,6 +10,16 @@ use Application\Service\AbstractAclService;
  */
 class Company extends AbstractACLService
 {
+    public function getCurrentBanner()
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('showBanner')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed list the companies')
+            );
+        } 
+        return $this->getPackageMapper()->getBannerPackage();
+    }
     /**
      * Returns an list of all companies (excluding hidden companies
      *
@@ -406,6 +416,15 @@ class Company extends AbstractACLService
     public function getPackageMapper()
     {
         return $this->sm->get('company_mapper_package');
+    }
+
+    /**
+     * Returns the packageMapper
+     *
+     */
+    public function getPackageMapper()
+    {
+        return $this->sm->get('company_mapper_bannerpackage');
     }
 
     /**
