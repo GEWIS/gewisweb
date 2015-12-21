@@ -34,6 +34,10 @@ Activity.Touch.init = function () {
         $('#lidnrInput').val('');
         $('#pinInput').val('');
     });
+    $('#logoutModal').on('hidden.bs.modal', function () {
+        clearTimeout(Activity.Touch.logoutTickTimeout);
+        Activity.Touch.resetLogoutTimeout();
+    });
     setInterval(Activity.Touch.fetchActivities, 600000);
     Activity.Touch.fetchActivities();
     $('#activityList').on( 'tap', 'tr', function() {
@@ -73,15 +77,20 @@ Activity.Touch.logoutTick = function () {
             $('.logged-in').hide();
             $('.not-logged-in').show();
             $('#fullName').html('');
+            Activity.Touch.user = null;
+            Activity.Touch.resetLogoutTimeout();
         });
     } else {
-        setTimeout(Activity.Touch.logoutTick, 1000);
+        Activity.Touch.logoutTickTimeout = setTimeout(Activity.Touch.logoutTick, 1000);
     }
 };
 
 Activity.Touch.resetLogoutTimeout = function () {
-    if(Activity.Touch.logoutTimeout !== undefined) {
+    if (Activity.Touch.logoutTimeout !== undefined) {
         clearTimeout(Activity.Touch.logoutTimeout);
+    }
+
+    if (Activity.Touch.user) {
         Activity.Touch.logoutTimeout = setTimeout(Activity.Touch.logout, 15000);
     }
 };
@@ -104,6 +113,7 @@ Activity.Touch.fetchActivities = function () {
 };
 
 Activity.Touch.showActivity = function (index) {
+    Activity.Touch.resetLogoutTimeout();
     var activity = Activity.Touch.activities[index];
     $('#activityModal').modal('show');
     $('#activityModalLabel').html(activity.name);
