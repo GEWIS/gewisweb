@@ -23,3 +23,10 @@ Styleguide: section
     color: $text-inverse-color;
   }
 }
+
+.section {
+    &.alt {
+        background: #000;
+        color: #FFF;
+    }
+}

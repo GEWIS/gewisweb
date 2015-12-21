@@ -29,14 +29,30 @@ Styleguide: panels.panel-default
 
 */
 
-.panel-group {
+.panel-group-horizontal {
     display: flex;
-    background: #000;
+    margin-bottom: 0;
+
+    .panel + .panel {
+        margin-top: 0;
+    }
+}
+
+.panel-group {
+    .panel {
+        border-radius: 0;
+    }
 }
 
 .panel {
     font-size: 12px;
     text-align: justify;
+
+    .panel-heading {
+        h3 {
+            text-transform: uppercase;
+        }
+    }
 }
 
 .panel-inverse {
@@ -84,5 +100,7 @@ Styleguide: panels.panel-default
 }
 
 .panel-emphasize {
-
+    background: #000;
+    border: none;
+    box-shadow: none;
 }
