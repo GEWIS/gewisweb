@@ -89,6 +89,23 @@ class Company
     }
 
     /**
+     * Find all public companies with a certain locale
+     *
+     * @return array
+     */
+    public function findPublicByLocale($locale)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')
+            ->join('c.translations','t')
+            ->where('c.hidden=0')
+            ->andWhere('t.language = ?1')
+            ->setParameter(1, $locale);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Find all companies.
      *
      * @return array
