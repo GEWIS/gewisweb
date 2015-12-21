@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
  * NOTE: Packages will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class BannerPackage
+class Package
 {
     /**
      * Doctrine entity manager.
