@@ -24,7 +24,7 @@ Activity.Touch.init = function () {
                 }
 
                 if (pincode.length == 3) {
-                    Activity.Touch.Login(lidnr, pincode + number);
+                    Activity.Touch.login(lidnr, pincode + number);
                 }
             }
         });
@@ -41,18 +41,42 @@ Activity.Touch.init = function () {
     });
 };
 
-Activity.Touch.Login = function(lidnr, pincode) {
+Activity.Touch.login = function(lidnr, pincode) {
     console.log(lidnr, pincode);
     $("#loginFailed").hide();
     $.post(URLHelper.url('user/pinlogin'), {'lidnr': lidnr, 'pincode': pincode}, function (data) {
         if(data.login) {
             $('#loginModal').modal('hide');
+            Activity.Touch.resetLogoutTimeout();
         } else {
             $("#loginFailed").show();
         }
     });
 };
 
+Activity.Touch.logout = function() {
+    Activity.Touch.logoutSeconds = 11;
+    $('#logoutModal').modal('show');
+    Activity.Touch.logoutTick();
+};
+
+Activity.Touch.logoutTick = function () {
+    Activity.Touch.logoutSeconds--;
+    $("#logoutSeconds").html(Activity.Touch.logoutSeconds);
+    if(Activity.Touch.logoutSeconds == 0) {
+        // TODO: logout
+        $('#logoutModal').modal('hide');
+    } else {
+        setTimeout(Activity.Touch.logoutTick, 1000);
+    }
+};
+
+Activity.Touch.resetLogoutTimeout = function () {
+    if(Activity.Touch.logoutTimeout !== undefined) {
+        clearTimeout(Activity.Touch.logoutTimeout);
+        Activity.Touch.logoutTimeout = setTimeout(Activity.Touch.logout, 15000);
+    }
+};
 
 Activity.Touch.fetchActivities = function () {
     $.getJSON(URLHelper.url('activity_api/list'), function (data) {
