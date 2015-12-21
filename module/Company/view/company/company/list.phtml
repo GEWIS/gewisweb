@@ -1,191 +1,28 @@
-
-<div class="company-list">
 <?php
 
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-if(isset($company)){
-    $companyList = [];
-    $companyList[] = $company;
-    $islist = false;
-} else {
-    $islist = true;
 ?>
-<h1><?= $this->translate('Companies') ?></h1>
+<div class="container">
+    <h1><?= $this->translate('Companies') ?></h1>
 
-    <fieldset>
-        <legend><?= $this->translate('Filter') ?></legend>
-        <div class="form-group">
-            <label for="filter-all"><?= $this->translate('All') ?></label>
-            <input type="text" class="form-control" id="filter-all">
-        </div>
-        <div class="form-group">
-            <label for="filter-name"><?= $this->translate('Name') ?></label>
-            <input type="text" class="form-control" id="filter-name">
-        </div>
-        <div class="form-group">
-            <label for="filter-location"><?= $this->translate('Location') ?></label>
-            <input type="text" class="form-control" id="filter-location">
-        </div>
-        <div class="form-group">
-            <label for="filter-description"><?= $this->translate('Description') ?></label>
-            <input type="text" class="form-control" id="filter-description">
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend><?= $this->translate('Sort') ?></legend>
-        <div class="form-group">
-            <label for="sort-column"><?= $this->translate('Column') ?></label>
-            <select id="sort-column" class="form-control">
-                <option value="company-name">[<?= $this->translate('Select column') ?>]</option>
-                <option value="company-name"><?= $this->translate('Company Name') ?></option>
-                <option value="jobs-amount"><?= $this->translate('Amount of jobs available') ?></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="sort-order"><?= $this->translate('Order') ?></label>
-            <select id="sort-order" class="form-control">
-                <option value="1"><?= $this->translate('Ascending') ?></option>
-                <option value="-1"><?= $this->translate('Descending') ?></option>
-            </select>
-        </div>
-    </fieldset>
-<?php
-}
+    <div class="company-grid row">
+        <?php
 
-if (!isset($companyList)){
-    echo $this->translate("Company not found");
-    return;
-}
-$i = 0;
-foreach ($companyList as $company) {
-    $visible = $company->isHidden();
-    $translated = $company->getTranslationFromLocale($locale) != null;
-    if ($visible && $translated){
-        echo $this->partial('partial/company/company/list/company.phtml', 
-                        ['islist' => $islist, 'company' => $company, 'locale' => $locale]);
-        $i += 1;
-    }
-}
-
-?>
-
-<script type="text/javascript">
-    /* FILTERING */
-
-    function filter_name(name) {
-        $(".company-list-item").each(function() {
-            if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
+        foreach ($companyList as $company) {
+            $visible = $company->isHidden();
+            $translated = $company->getTranslationFromLocale($locale) != null;
+            if ($visible && $translated){
+                echo $this->partial('partial/company/company/grid/company.phtml',
+                    ['company' => $company, 'locale' => $locale]);
             }
-        });
-    }
-
-    function filter_location(location) {
-        $(".company-list-item").each(function() {
-            if ($(this).find(".company-address").text().toLowerCase().indexOf(location.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    function filter_description(description) {
-        $(".company-list-item").each(function() {
-            if ($(this).find(".company-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    function filter_job(job) {
-        $(".company-list-item").each(function() {
-            if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    function filter_all(term) {
-        $(".company-list-item").each(function() {
-            if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    $("#filter-name").keyup(function() {
-        filter_name($(this).val());
-    });
-
-    $("#filter-location").keyup(function() {
-        filter_location($(this).val());
-    });
-
-    $("#filter-description").keyup(function() {
-        filter_description($(this).val());
-    });
-
-    $("#filter-job").keyup(function() {
-        filter_job($(this).val());
-    });
-
-    $("#filter-all").keyup(function() {
-        filter_all($(this).val());
-    });
-
-
-    /* SORTING */
-
-    function sort_name(order) {
-        var companies = $(".company-list-item");
-        companies.sort(function(a,b) {
-
-            if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
-                return order;
-            } else {
-                return -1 * order;
-            }
-            
-        });
-
-        companies.detach().appendTo($(".company-list"));
-    }
-
-    function sort_jobs_amount(order) {
-        var companies = $(".company-list-item");
-        companies.sort(function(a,b) {
-
-            if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
-                return order;
-            } else {
-                return -1 * order;
-            }
-
-        });
-
-        companies.detach().appendTo($(".company-list"));
-    }
-
-    $("#sort-column, #sort-order").change(function() {
-        if ($("#sort-column").val()=="company-name") {
-            sort_name($("#sort-order").val());
-        } else  if ($("#sort-column").val()=="jobs-amount") {
-            sort_jobs_amount($("#sort-order").val());
         }
-    });
-</script>
+
+        ?>
 
 
+
+    </div>
 </div>
 

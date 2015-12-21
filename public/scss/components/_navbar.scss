@@ -115,6 +115,14 @@ Styleguide: navbar
         -webkit-filter: grayscale(1) brightness(100);
     }
 
+    .navbar-toggle {
+        margin: 23px 15px 23px 0;
+    }
+
+    .navbar-toggle .icon-bar {
+        background-color: #fff;
+    }
+
     .navbar-nav > li > a {
         color: #fff;
     }
@@ -183,13 +191,16 @@ Styleguide: navbar
 }
 
 .navbar-nav > li > .dropdown-menu {
-    display: block;
     padding: 0;
     min-width: 100%;
 
     overflow: hidden;
     visibility: hidden;
     opacity: 0;
+
+    @media (min-width: $screen-sm-min) {
+        display: block;
+    }
 
     > li {
         min-width: 160px;
