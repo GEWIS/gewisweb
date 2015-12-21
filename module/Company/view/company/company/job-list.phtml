@@ -1,130 +1,158 @@
-<div class="job-list">
 <?php
 
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-echo "<h1>";
-$this->translate("Joblist");
-echo "</h1>";
 ?>
-
-<fieldset> 
-<legend><?=$this->translate("Filter");?></legend> 
-    <label><?=$this->translate("All");?> <input type='text' id='filter-all'></label> 
-    <label><?=$this->translate("Name");?> <input type='text' id='filter-name'></label> 
-    <label><?=$this->translate("Company");?><input type='text' id='filter-company'></label>
-    <label><?=$this->translate("Description");?><input type='text' id='filter-description'></label> </fieldset> 
-    <fieldset> <legend><?=$this->translate("Sort");?></legend> 
-    <label><?=$this->translate("Column");?> <select id='sort-column'><option value='job-name'>[<?=$this->translate("Select column")?>]</option><option value='job-name'><?=$this->translate("Job Name")?></option></option></select></label> 
-    <label><?=$this->translate("Order");?><select id='sort-order'><option value='1'><?=$this->translate("Ascending");?></option><option value='-1'><?=$this->translate("Descending");?></option></select></label></fieldset>
-<?php
-
-
-foreach ($jobList as $job) {
-    if ($job->isActive() && $job->getLanguage() === $locale){
-?>
-    <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()); ?>">
-    <h2 class="job-name"><a href="<?= $job->getWebsite(); ?>"><?= $job->getName(); ?></a></h2>
-    <div class="job-company-name"><a href="/company/<?= $job->getPackage()->getCompany()->getSlugName();?>"><?= $job->getPackage()->getCompany()->getName(); ?></a></div>
-    <div class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()); ?>"><?= $job->getPhone(); ?></a></div>
-    <div class="job-website"><a href="<?= rawurlencode($job->getWebsite()); ?>">Visit website</a></div>
-    <div class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()); ?>"><?= $job->getEmail(); ?></a></div>
-    <div class="job-description"><?= $job->getDescription(); ?></div>
-
+<section class="">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('company') ?>">
+                    <?= $this->translate('Companies') ?>
+                </a>
+            </li>
+            <li class="active">
+                <?= $this->translate('Jobs') ?>
+            </li>
+        </ol>
     </div>
-<?php
-}}
+</section>
 
-?>
 
-<script type="text/javascript">
-    /* FILTERING */
+<div class="container">
 
-    function filter_name(name) {
-        $(".job-list-item").each(function() {
-            if ($(this).find(".job-name").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
+
+
+
+    <div class="job-list">
+
+
+    <h1><?= $this->translate('Jobs') ?></h1>
+
+    <fieldset>
+        <div class="form-group pull-right">
+            <label for="filter-all"><?= $this->translate('Search') ?></label>
+            <input type="text" class="form-control" id="filter-all" placeholder="<?= $this->translate('Filter results') ?>">
+        </div>
+        <div class="form-group pull-right">
+            <label><?= $this->translate('Sort') ?></label>
+            <div>
+                <a><?= $this->translate('Name') ?> <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> </a>
+                &#124;
+                <a><?= $this->translate('Jobs') ?></a>
+            </div>
+        </div>
+    </fieldset>
+
+    <?php
+
+
+    foreach ($jobList as $job) {
+        if ($job->isActive() && $job->getLanguage() === $locale){
+    ?>
+        <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()); ?>">
+        <h2 class="job-name"><a href="<?= $job->getWebsite(); ?>"><?= $job->getName(); ?></a></h2>
+        <div class="job-company-name"><a href="/company/<?= $job->getPackage()->getCompany()->getSlugName();?>"><?= $job->getPackage()->getCompany()->getName(); ?></a></div>
+        <div class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()); ?>"><?= $job->getPhone(); ?></a></div>
+        <div class="job-website"><a href="<?= rawurlencode($job->getWebsite()); ?>">Visit website</a></div>
+        <div class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()); ?>"><?= $job->getEmail(); ?></a></div>
+        <div class="job-description"><?= $job->getDescription(); ?></div>
+
+        </div>
+    <?php
+    }}
+
+    ?>
+
+    <script type="text/javascript">
+        /* FILTERING */
+
+        function filter_name(name) {
+            $(".job-list-item").each(function() {
+                if ($(this).find(".job-name").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+
+        function filter_description(description) {
+            $(".job-list-item").each(function() {
+                if ($(this).find(".job-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_company(company) {
+            $(".job-list-item").each(function() {
+                if ($(this).find(".job-company-name").text().toLowerCase().indexOf(company.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        function filter_all(term) {
+            $(".company-list-item").each(function() {
+                if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
+                    $(this).css({display: "none"});
+                } else {
+                    $(this).css({display: "block"});
+                }
+            });
+        }
+
+        $("#filter-name").keyup(function() {
+            filter_name($(this).val());
+        });
+
+        $("#filter-company").keyup(function() {
+            filter_company($(this).val());
+        });
+
+        $("#filter-description").keyup(function() {
+            filter_description($(this).val());
+        });
+
+        $("#filter-job").keyup(function() {
+            filter_job($(this).val());
+        });
+
+        $("#filter-all").keyup(function() {
+            filter_all($(this).val());
+        });
+
+
+        /* SORTING */
+
+        function sort_name(order) {
+            var companies = $(".job-list-item");
+            companies.sort(function(a,b) {
+
+                if (a.getElementsByClassName("job-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
+                    return order;
+                } else {
+                    return -1 * order;
+                }
+
+            });
+
+            companies.detach().appendTo($(".job-list"));
+        }
+
+        $("#sort-column, #sort-order").change(function() {
+            if ($("#sort-column").val()=="job-name") {
+                sort_name($("#sort-order").val());
             }
         });
-    }
+    </script>
+    </div>
 
-
-    function filter_description(description) {
-        $(".job-list-item").each(function() {
-            if ($(this).find(".job-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    function filter_company(company) {
-        $(".job-list-item").each(function() {
-            if ($(this).find(".job-company-name").text().toLowerCase().indexOf(company.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    function filter_all(term) {
-        $(".company-list-item").each(function() {
-            if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
-                $(this).css({display: "none"});
-            } else {
-                $(this).css({display: "block"});
-            }
-        });
-    }
-
-    $("#filter-name").keyup(function() {
-        filter_name($(this).val());
-    });
-
-    $("#filter-company").keyup(function() {
-        filter_company($(this).val());
-    });
-
-    $("#filter-description").keyup(function() {
-        filter_description($(this).val());
-    });
-
-    $("#filter-job").keyup(function() {
-        filter_job($(this).val());
-    });
-
-    $("#filter-all").keyup(function() {
-        filter_all($(this).val());
-    });
-
-
-    /* SORTING */
-
-    function sort_name(order) {
-        var companies = $(".job-list-item");
-        companies.sort(function(a,b) {
-
-            if (a.getElementsByClassName("job-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
-                return order;
-            } else {
-                return -1 * order;
-            }
-
-        });
-
-        companies.detach().appendTo($(".job-list"));
-    }
-
-    $("#sort-column, #sort-order").change(function() {
-        if ($("#sort-column").val()=="job-name") {
-            sort_name($("#sort-order").val());
-        }     
-    });
-</script>
 </div>
-
