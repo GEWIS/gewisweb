@@ -134,10 +134,10 @@ class Photo
      */
     public function getPhotoByData($path, $album)
     {
-        return $this->getRepository()->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'path' => $path,
             'album' => $album->getId()
-        ));
+        ]);
     }
 
     /**

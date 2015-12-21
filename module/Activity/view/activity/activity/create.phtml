@@ -1,17 +1,44 @@
 <?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/activity-create.js');
 $form->setAttribute('action', '');
 $form->prepare();
 echo $this->form()->openTag($form);
 ?>
 <div class = "row">
-	<div class="col-md-4">
+	<div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <h2><?php echo $this->translate('Dutch')?></h2>
+            </div>
+            <div class="col-md-4">
+                <h2><?php echo $this->translate('English')?></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class = "col-md-4">
+                <?php echo $this->translate('Language');?>:
+            </div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('language_dutch')); ?>
+            </div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('language_english')); ?>
+            </div>
+        </div>
 		<div class="row">
 			<div class = "col-md-4">
 				<?php echo $this->translate('Name');?>:
 			</div>
-			<div class = "col-md-8">
+			<div class = "col-md-4">
 				<?php echo $this->formRow($form->get('name')); ?>
 			</div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('name_en')); ?>
+            </div>
 		</div>
 		<div class="row">
 			<div class = "col-md-4">
@@ -33,19 +60,28 @@ echo $this->form()->openTag($form);
 			<div class = "col-md-4">
                 <?php echo $this->translate('Location');?>:
 			</div>
-			<div class = "col-md-8">
+			<div class = "col-md-4">
 				<?php echo $this->formRow($form->get('location')); ?>
 			</div>
+            <div class = "col-md-4">
+                <?php echo $this->formRow($form->get('location_en')); ?>
+            </div>
 		</div>
 		<div class="row">
 			<div class = "col-md-4">
                 <?php echo $this->translate('Costs');?>:
 			</div>
-			<div class = "col-md-8">
+			<div class = "col-md-4">
 				<?php echo $this->formRow($form->get('costs')); ?>
-                <?php echo $this->formRow($form->get('costs_unknown'));?> <?php echo $this->translate('Unknown');?>
 			</div>
+            <div class="col-md-4">
+                <?php echo $this->formRow($form->get('costs_en')); ?>
+            </div>
 		</div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8"><?php echo $this->formRow($form->get('costs_unknown'));?> <?php echo $this->translate('Unknown');?></div>
+        </div>
         <div class="row">
             <div class = "col-md-4">
                 <?php echo $this->translate('Can Sign up?');?>:
@@ -54,12 +90,27 @@ echo $this->form()->openTag($form);
                 <?php echo $this->formRow($form->get('canSignUp')); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-4"><?php echo $this->translate('Description');?>: <br /></div>
+            <div class="col-md-4">
+                <?php echo $this->formRow($form->get('description')); ?>
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->formRow($form->get('description_en')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8"><?php echo $this->formSubmit($form->get('submit'));?></div>
+        </div>
 	</div>
-	<div class="col-md-8">
-        <?php echo $this->translate('Description');?>: <br />
-		<?php echo $this->formRow($form->get('description')); ?>
-	</div>
+
 </div>
+    <?php echo $this->translate('Extra fields');
+          echo $this->formCollection($form->get('fields'));
+    ?>
+    <button onclick="return add_field()"><?= $this->translate('Add a field') ?></button>
+    <button onclick="return remove_field()"><?= $this->translate('Remove the last field') ?></button>
 <?php
-echo $this->formSubmit($form->get('submit'));
+
 echo $this->form()->closeTag();

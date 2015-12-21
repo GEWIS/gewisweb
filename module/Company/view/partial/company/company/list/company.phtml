@@ -9,8 +9,8 @@ echo("<h2 class='company-name'><a href='");
 if ($islist===true) {
 
     echo ($this->url('company/companyItem', // Route url
-        array('slugCompanyName' => $company->getSlugName()) // Url parameters
-        ,array() // routeOptions
+        ['slugCompanyName' => $company->getSlugName()] // Url parameters
+        ,[] // routeOptions
         ,true)); // Reuse matched parameters
 }
 else {
@@ -33,8 +33,8 @@ echo ("</a></h2>") ?>
         foreach($package->getJobs() as $job) { ?>
     <?php if ($job->isActive() && $job->getLanguage() === $locale){?>
             <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
-            array('slugCompanyName' => $company->getSlugName(),
-            'slugJobName' => $job->getSlugName()),array(),true) ?>"><?= $job->getName(); ?></a></li>
+            ['slugCompanyName' => $company->getSlugName(),
+            'slugJobName' => $job->getSlugName()],[],true) ?>"><?= $job->getName(); ?></a></li>
         <?php }}} ?>
         </ul>
     </div>

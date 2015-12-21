@@ -6,9 +6,9 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/tree.css')
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
-$this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page'))
+$this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     ->requireUrls(
-        array(
+        [
             'admin_photo/album_edit',
             'admin_photo/album_delete',
             'admin_photo/album_add',
@@ -16,12 +16,12 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page
             'admin_photo/album_delete',
             'admin_photo/album_cover',
             'admin_photo/album_index'
-        ),
-        array('album_id')
+        ],
+        ['album_id']
     )
     ->requireUrls(
-        array('admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'),
-        array('photo_id')
+        ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
+        ['photo_id']
     );
 ?>
 <div class="row">
@@ -42,7 +42,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', array('album_id', 'page
                             <li><a
                                     id="<?= $album->getId() ?>"
                                     href="<?= $context->url('admin_photo/album_index',
-                                        array('album_id' => $album->getId())) ?>">
+                                        ['album_id' => $album->getId()]) ?>">
                                     <?= $context->escapeHtml($album->getName()) ?>
                                 </a>
 

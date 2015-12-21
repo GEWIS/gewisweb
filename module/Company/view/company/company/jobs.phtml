@@ -4,7 +4,7 @@
 
 $escaper = new Zend\Escaper\Escaper('utf-8');
 if(isset($job)){
-    $active_job_list = array();
+    $active_job_list = [];
     $active_job_list[] = $job;
 }
 if(!isset($active_job_list)){

@@ -17,7 +17,7 @@ class Document extends Form implements InputFilterProviderInterface
         parent::__construct();
         $this->translator = $translator;
 
-        $options = array();
+        $options = [];
         foreach ($mapper->findAll() as $meeting) {
             $meeting = $meeting[0];
             $name = $meeting->getType() . '/' . $meeting->getNumber();
@@ -25,35 +25,35 @@ class Document extends Form implements InputFilterProviderInterface
                             . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
-        $this->add(array(
+        $this->add([
             'name' => 'meeting',
             'type' => 'select',
-            'options' => array(
+            'options' => [
                 'label' => $translator->translate('Meeting'),
                 'empty_option' => $translator->translate('Choose a meeting'),
                 'value_options' => $options
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'name',
             'type' => 'text',
-        ));
+        ]);
         $this->get('name')->setLabel($translator->translate('Document name'));
 
-        $this->add(array(
+        $this->add([
             'name' => 'upload',
             'type' => 'file',
-        ));
+        ]);
         $this->get('upload')->setLabel($translator->translate('Document to upload'));
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translator->translate('Upload document')
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -61,37 +61,37 @@ class Document extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array(
-            'name' => array(
+        return [
+            'name' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'string_length',
-                        'options' => array(
+                        'options' => [
                             'min' => 2,
                             'max' => 128
-                        )
-                    )
-                )
-            ),
-            'upload' => array(
+                        ]
+                    ]
+                ]
+            ],
+            'upload' => [
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'File\Extension',
-                        'options' => array(
+                        'options' => [
                             'extension' => 'pdf'
-                        )
-                    ),
-                    array(
+                        ]
+                    ],
+                    [
                         'name' => 'File\MimeType',
-                        'options' => array(
+                        'options' => [
                             'mimeType' => 'application/pdf'
-                        )
-                    )
-                )
-            )
-        );
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 
 }

@@ -3,16 +3,16 @@
 
 <?php
 // prepare memberships
-$oldMembers = array();
-$currentMembers = array();
+$oldMembers = [];
+$currentMembers = [];
 foreach ($organ->getMembers() as $install) {
     if (null === $install->getDischargeDate()) {
         // current member
         if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
-            $currentMembers[$install->getMember()->getLidnr()] = array(
+            $currentMembers[$install->getMember()->getLidnr()] = [
                 'member' => $install->getMember(),
-                'functions' => array()
-            );
+                'functions' => []
+            ];
         }
         if ($install->getFunction() != 'Lid') {
             $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
@@ -41,6 +41,15 @@ $oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) 
         <ul>
         <?php foreach ($oldMembers as $member): ?>
             <li><?= $member->getFullName() ?></li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+
+    <div class="col-md-8">
+        <h2><?= $this->translate('Organ mutations') ?></h2>
+        <ul>
+        <?php foreach ($organ->getSubdecisions() as $subdecision): ?>
+            <li><?= $subdecision->getContent() ?></li>
         <?php endforeach ?>
         </ul>
     </div>

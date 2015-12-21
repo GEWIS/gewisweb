@@ -17,29 +17,34 @@ class Login extends Form
         parent::__construct();
         $this->translate = $translate;
 
-        $this->add(array(
+        $this->add([
             'name' => 'login',
             'type' => 'text',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Membership number or email address')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'password',
             'type' => 'password',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Your password')
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => $translate->translate('Login')
-            )
-        ));
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'redirect',
+            'type' => 'hidden'
+        ]);
 
         $this->initFilters();
     }
@@ -52,18 +57,18 @@ class Login extends Form
         if (!$result->isValid()) {
             switch ($result->getCode()) {
             case Result::FAILURE_IDENTITY_NOT_FOUND:
-                $this->setMessages(array(
-                    'login' => array(
+                $this->setMessages([
+                    'login' => [
                         $this->translate->translate('This user could not be found.')
-                    )
-                ));
+                    ]
+                ]);
                 break;
             case Result::FAILURE_CREDENTIAL_INVALID:
-                $this->setMessages(array(
-                    'password' => array(
+                $this->setMessages([
+                    'password' => [
                         $this->translate->translate('Wrong password provided.')
-                    )
-                ));
+                    ]
+                ]);
                 break;
             }
         }
@@ -73,27 +78,27 @@ class Login extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'login',
             'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty')
-            )
-        ));
+            'validators' => [
+                ['name' => 'not_empty']
+            ]
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'password',
             'required' => true,
-            'validators' => array(
-                array('name' => 'not_empty'),
-                array(
+            'validators' => [
+                ['name' => 'not_empty'],
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 8
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
         $this->setInputFilter($filter);
     }

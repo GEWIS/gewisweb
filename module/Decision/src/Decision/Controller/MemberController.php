@@ -39,18 +39,18 @@ class MemberController extends AbstractActionController
         $name = $this->params()->fromQuery('q');
 
         if (!empty($name)) {
-            $members = array();
+            $members = [];
             foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
                 //TODO: this returns a lot of data, much more than is needed in most cases.
                 $members[] = $member->toArray();
             }
 
-            return new JsonModel(array(
+            return new JsonModel([
                 'members' => $members
-            ));
+            ]);
         }
 
-        return new ViewModel(array());
+        return new ViewModel([]);
     }
 
     /**
@@ -58,9 +58,9 @@ class MemberController extends AbstractActionController
      */
     public function birthdaysAction()
     {
-        return new ViewModel(array(
+        return new ViewModel([
             'members' => $this->getMemberService()->getBirthdayMembers(7)
-        ));
+        ]);
     }
 
     /**

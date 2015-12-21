@@ -12,32 +12,6 @@ use Imagick;
 class Admin extends AbstractAclService
 {
     /**
-     * Generates CFS paths
-     *
-     * @param string $path The path of the photo to generate the path for
-     *
-     * @return string the path at which the photo should be saved
-     */
-    public function generateStoragePath($path)
-    {
-        $config = $this->getConfig();
-        $hash = sha1_file($path);
-        /**
-         * the hash is split to obtain a path
-         * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg
-         */
-        $directory = substr($hash, 0, 2);
-        if (!file_exists($config['upload_dir'] . '/' . $directory)) {
-            mkdir($config['upload_dir'] . '/' . $directory);
-        }
-        $parts = explode('.', $path);
-        $fileType = end($parts);
-        $storagePath = $directory . '/' . substr($hash, 2) . '.' . strtolower($fileType);
-
-        return $storagePath;
-    }
-
-    /**
      * Move the uploaded photo to the storage and store it in the database.
      * All upload actions should use this function to prevent "ghost" files
      * or database entries
@@ -50,14 +24,14 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
-        if (!$this->isAllowed('photo', 'add')) {
+        if (!$this->isAllowed('add', 'photo')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to add photos.')
             );
         }
 
         $config = $this->getConfig();
-        $storagePath = $this->generateStoragePath($path);
+        $storagePath = $newPath = $this->getFileStorageService()->storeFile($path, false);
         //check if photo exists already in the database
         $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
@@ -85,9 +59,7 @@ class Admin extends AbstractAclService
                 ));
 
                 if ($move) {
-                    rename($path, $config['upload_dir'] . '/' . $storagePath);
-                } else {
-                    copy($path, $config['upload_dir'] . '/' . $storagePath);
+                    unlink($path);
                 }
 
                 $mapper->persist($photo);
@@ -122,9 +94,7 @@ class Admin extends AbstractAclService
         //Tempfile is used to generate sha1, not sure this is the best method
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
         $image->writeImage($tempFileName);
-        $newPath = $this->generateStoragePath($tempFileName);
-        $config = $this->getConfig();
-        rename($tempFileName, $config['upload_dir'] . '/' . $newPath);
+        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
         return $newPath;
     }
@@ -142,14 +112,14 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
-        if (!$this->isAllowed('photo', 'import')) {
+        if (!$this->isAllowed('import', 'photo')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to import photos.')
             );
         }
 
         $albumService = $this->getAlbumService();
-        $image = new \Zend\Validator\File\IsImage(array('magicFile' => false));
+        $image = new \Zend\Validator\File\IsImage(['magicFile' => false]);
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
@@ -175,17 +145,13 @@ class Admin extends AbstractAclService
 
     public function upload($files, $album)
     {
-        if (!$this->isAllowed('photo', 'upload')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to upload photos.')
-            );
-        }
+        $this->checkUploadAllowed();
 
         $imageValidator = new \Zend\Validator\File\IsImage(
-            array('magicFile' => false)
+            ['magicFile' => false]
         );
         $extensionValidator = new \Zend\Validator\File\Extension(
-            array('JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG')
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
         $translator = $this->getTranslator();
 
@@ -213,6 +179,18 @@ class Admin extends AbstractAclService
         } else {
             throw new \Exception(
                 $translator->translate('The uploaded file is not a valid image')
+            );
+        }
+    }
+
+    /**
+     * Checks if the current user is allowed to upload photos.
+     */
+    public function checkUploadAllowed()
+    {
+        if (!$this->isAllowed('upload', 'photo')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to upload photos.')
             );
         }
     }
@@ -297,6 +275,16 @@ class Admin extends AbstractAclService
     public function getPhotoService()
     {
         return $this->sm->get('photo_service_photo');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

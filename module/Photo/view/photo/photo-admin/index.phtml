@@ -7,8 +7,8 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
 $this->scriptUrl()->requireUrls(
-    array('admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'),
-    array('photo_id')
+    ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
+    ['photo_id']
 );
 ?>
 <div class="row">
@@ -23,15 +23,15 @@ $this->scriptUrl()->requireUrls(
             <div class="panel-body">
                 <?php if (!is_null($previous)): ?>
                     <a class="thumbnail next-on-delete" href="<?= $previous->getId(); ?>">
-                        <img class="img-responsive" src="<?= $this->photoUrl($previous->getSmallThumbPath()) ?>" alt="">
+                        <img class="img-responsive" src="<?= $this->fileUrl($previous->getSmallThumbPath()) ?>" alt="">
                     </a>
                 <?php endif; ?>
                 <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="<?= $this->photoUrl($photo->getSmallThumbPath()) ?>" alt="">
+                    <img class="img-responsive" src="<?= $this->fileUrl($photo->getSmallThumbPath()) ?>" alt="">
                 </a>
                 <?php if (!is_null($next)): ?>
                     <a class="thumbnail next-on-delete" href="<?= $next->getId(); ?>">
-                        <img class="img-responsive" src="<?= $this->photoUrl($next->getSmallThumbPath()) ?>" alt="">
+                        <img class="img-responsive" src="<?= $this->fileUrl($next->getSmallThumbPath()) ?>" alt="">
                     </a>
                 <?php endif; ?>
             </div>
@@ -41,7 +41,7 @@ $this->scriptUrl()->requireUrls(
     <div class="col-lg-9">
         <ol class="breadcrumb">
             <?php foreach ($path as $album): ?>
-                <li><a href="<?= $this->url('admin_photo', array(), array("fragment" => $album->getId())); ?>">
+                <li><a href="<?= $this->url('admin_photo', [], ["fragment" => $album->getId()]); ?>">
                         <?= $this->escapeHtml($album->getName()) ?></a></li>
             <?php endforeach; ?>
             <li class="active">Photo #<?= $photo->getId() ?></li>
@@ -52,14 +52,14 @@ $this->scriptUrl()->requireUrls(
                 class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete photo') ?></button>
         <hr>
 
-        <img class="img-responsive" src="<?= $this->photoUrl($photo->getLargeThumbPath()) ?>" alt="">
+        <img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt="">
         <row>
             <div class="col-lg-6">
                 <h4>Metadata</h4>
-                <?= $this->partial('partial/metadata.phtml', array('photo' => $photo)) ?>
+                <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
             </div>
 
-            <?= $this->partial('partial/tags.phtml', array('photo' => $photo)) ?>
+            <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
         </row>
     </div>
 </div>

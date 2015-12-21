@@ -36,13 +36,13 @@ class Page
      * @param string $name
      * @return \Frontpage\Model\Page|null
      */
-    public function findPage($category, $subCategory, $name)
+    public function findPage($category, $subCategory = null, $name = null)
     {
-        return $this->getRepository()->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'category' => $category,
             'subCategory' => $subCategory,
             'name' => $name
-        ));
+        ]);
     }
 
     /**

@@ -13,9 +13,48 @@ class DecisionController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel(array(
+        return new ViewModel([
             'meetings' => $this->getDecisionService()->getMeetings()
-        ));
+        ]);
+    }
+
+    /**
+     * Download meeting notes
+     */
+    public function notesAction()
+    {
+        $type = $this->params()->fromRoute('type');
+        $number = $this->params()->fromRoute('number');
+
+        try {
+            $meeting = $this->getDecisionService()->getMeeting($type, $number);
+            $response = $this->getDecisionService()->getMeetingNotesDownload($meeting);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
+
+    }
+
+    public function documentAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        try {
+            $meetingDocument = $this->getDecisionService()->getMeetingDocument($id);
+            $response = $this->getDecisionService()->getMeetingDocumentDownload($meetingDocument);
+            if (is_null($response)) {
+                return $this->notFoundAction();
+            }
+
+            return $response;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
     }
 
     /**
@@ -29,11 +68,10 @@ class DecisionController extends AbstractActionController
 
         try {
             $meeting = $service->getMeeting($type, $number);
-            return new ViewModel(array(
-                'meeting' => $meeting,
-                'notes'   => $service->getMeetingNotes($meeting),
-                'documentPath' => $service->getMeetingDocumentBasePath($meeting)
-            ));
+
+            return new ViewModel([
+                'meeting' => $meeting
+            ]);
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
@@ -51,16 +89,16 @@ class DecisionController extends AbstractActionController
             $result = $service->search($request->getPost());
 
             if (null !== $result) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'result' => $result,
                     'form' => $service->getSearchDecisionForm()
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getSearchDecisionForm()
-        ));
+        ]);
     }
 
     /**

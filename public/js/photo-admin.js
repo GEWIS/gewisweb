@@ -18,7 +18,7 @@ Photo.Admin.loadPage = function (resource) {
             href = URLHelper.url('admin_photo/album_index', {'album_id': album.id});
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
-                    + '<img class="img-responsive" src="' +data.basedir + '/' + album.coverPath + '" alt="">'
+                    + '<img class="img-responsive" src="/data/' + album.coverPath + '" alt="">'
                     + album.name
                     + '</a>'
                     + '</div>');
@@ -33,7 +33,7 @@ Photo.Admin.loadPage = function (resource) {
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<div class="thumbnail">'
                     + '<a href="' + href + '">'
-                    + '<img class="img-responsive" src="' +data.basedir + '/' + photo.smallThumbPath + '" alt="">'
+                    + '<img class="img-responsive" src="/data/' + photo.smallThumbPath + '" alt="">'
                     + '</a>'
                     + '<input type="checkbox" class="thumbnail-checkbox">'
                     + '</div>'
@@ -86,7 +86,7 @@ Photo.Admin.regenerateCover = function () {
     $("#coverSpinner").show();
     $.post(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
         $.getJSON(Photo.Admin.activePage, function (data) {
-            $("#coverPreview").attr('src', data.basedir + '/' + data.album.coverPath);
+            $("#coverPreview").attr('src', '/data/' + data.album.coverPath);
             $("#coverPreview").show();
             $("#coverSpinner").hide();
         });

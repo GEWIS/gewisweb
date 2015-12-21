@@ -31,12 +31,42 @@ class WeeklyPhoto
     /**
      * Check whether the given photo has been a photo of the week.
      * 
-     * @param Photo\Model\Photo $photo
+     * @param \Photo\Model\Photo $photo
      * @return boolean
      */
     public function hasBeenPhotoOfTheWeek($photo)
     {
-        return !is_null($this->getRepository()->findOneBy(array('photo' => $photo)));
+        return !is_null($this->getRepository()->findOneBy(['photo' => $photo]));
+    }
+
+    public function getCurrentPhotoOfTheWeek()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('w')
+            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->setMaxResults(1)
+            ->orderBy('w.week', 'DESC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Retrieves all WeeklyPhotos
+     *
+     * @return array
+     */
+    public function getPhotosOfTheWeek()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('w')
+            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->orderBy('w.week', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

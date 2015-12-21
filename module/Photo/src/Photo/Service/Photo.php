@@ -123,27 +123,10 @@ class Photo extends AbstractAclService
         }
 
         $photo = $this->getPhoto($photoId);
-        $config = $this->getConfig();
-        $file = $config['upload_dir'] . '/' . $photo->getPath();
+        $path =  $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
-        //TODO: ACL
-        $response = new \Zend\Http\Response\Stream();
-        $response->setStream(fopen($file, 'r'));
-        $response->setStatusCode(200);
-        $response->setStreamName($fileName);
-        $headers = new \Zend\Http\Headers();
-        $headers->addHeaders(array(
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-            'Content-Type' => 'application/octet-stream',
-            'Content-Length' => filesize($file),
-            // zf2 parses date as a string for a \DateTime() object:
-            'Expires' => '@0',
-            'Cache-Control' => 'must-revalidate',
-            'Pragma' => 'public'
-        ));
-        $response->setHeaders($headers);
 
-        return $response;
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
     }
 
     /**
@@ -172,11 +155,11 @@ class Photo extends AbstractAclService
         $next = $this->getNextPhoto($photo);
         $previous = $this->getPreviousPhoto($photo);
 
-        return array(
+        return [
             'photo' => $photo,
             'next' => $next,
             'previous' => $previous
-        );
+        ];
     }
 
 
@@ -215,14 +198,7 @@ class Photo extends AbstractAclService
      */
     public function deletePhotoFile($path)
     {
-        $config = $this->getConfig();
-        $fullPath = $config['upload_dir'] . '/' . $path;
-
-        if (!file_exists($fullPath)) {
-            return false;
-        } else {
-            return unlink($fullPath);
-        }
+        return $this->getFileStorageService()->removeFile($path);
 
     }
 
@@ -276,10 +252,14 @@ class Photo extends AbstractAclService
      * 
      * @return \Photo\Model\Photo|null
      */
-    public function generatePhotoOfTheWeek($begindate, $enddate)
+    public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
+        if(is_null($begindate) || is_null($enddate)) {
+            $begindate = (new \DateTime())->sub(new \DateInterval('P1W'));
+            $enddate = new \DateTime();
+        }
         $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
-        if (is_null($bestPhoto)){
+        if (is_null($bestPhoto)) {
             return null;
         }
         $weeklyPhoto = new WeeklyPhotoModel();
@@ -288,7 +268,7 @@ class Photo extends AbstractAclService
         $mapper = $this->getWeeklyPhotoMapper();
         $mapper->persist($weeklyPhoto);
         $mapper->flush();
-        return $bestPhoto;
+        return $weeklyPhoto;
     }
     
     /**
@@ -305,19 +285,28 @@ class Photo extends AbstractAclService
             return null;
         }
         $bestRating = -1;
+        $bestPhoto = null;
         foreach ($results as $res){
             $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
-            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
-                && $this->photoPreference($photo, $res[2])
-                    > $bestRating){
+            $rating = $this->ratePhoto($photo, $res[2]);
+            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo) && $rating > $bestRating) {
                 $bestPhoto = $photo;
-                $bestRating = $this->ratePhoto($photo, $res[2]);
+                $bestRating = $rating;
             }
         }
         return $bestPhoto;
     }
-    
-    
+
+    /**
+     * Retrieves all WeeklyPhotos
+     *
+     * @return array
+     */
+    public function getPhotosOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
+    }
+
     /**
      * Determine the preference rating of the photo.
      * 
@@ -333,7 +322,12 @@ class Photo extends AbstractAclService
         $res = $occurences * (1 + 1 / $age);
         return $tagged ? 1.5 * $res : $res;
     }
-     
+
+    public function getCurrentPhotoOfTheWeek()
+    {
+        return $this->getWeeklyPhotoMapper()->getCurrentPhotoOfTheWeek();
+    }
+
     /**
      * Count a hit for the specified photo. Should be called whenever a photo is viewed.
      *
@@ -469,6 +463,18 @@ class Photo extends AbstractAclService
     }
 
     /**
+     * Get the storage config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getStorageConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['storage'];
+    }
+
+    /**
      * Get the photo mapper.
      *
      * @return \Photo\Mapper\Photo
@@ -543,6 +549,16 @@ class Photo extends AbstractAclService
     }
 
     /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
+    }
+
+    /**
      * Get the default resource ID.
      *
      * @return string
@@ -561,5 +577,4 @@ class Photo extends AbstractAclService
     {
         return $this->sm->get('photo_acl');
     }
-
 }

@@ -11,7 +11,7 @@
  * file.
  */
 
-return array(
+return [
     /**
      * Bcrypt cost.
      *
@@ -29,41 +29,44 @@ return array(
     'bcrypt_cost' => 13,
 
     /**
+     * IP address start for the TU/e. All IP addresses starting with this will
+     * be allowed more base rights, like viewing exams
+     */
+    'tue_range' => '131.155.',
+
+    'storage' => [
+        'storage_dir' => 'public/data',
+        'public_dir' => 'data',
+        'dir_mode' => 0777, // rwx by default
+    ],
+
+    /**
      * Exam and Summary upload directory configration.
      */
-    'education' => array(
+    'education' => [
         'upload_dir' => 'public/data/education',
         'public_dir' => 'data/education',
         'dir_mode' => 0777, // rwx by default
-    ),
+    ],
 
     /**
-     * Meeting notes upload directory configration.
+     * Exam and Summary temporary upload directory configration.
      */
-    'meeting-notes' => array(
-        'upload_dir' => 'public/data/meeting-notes',
-        'public_dir' => 'data/meeting-notes',
+    'education_temp' => [
+        'upload_dir' => 'public/data/education_temp',
+        'public_dir' => 'data/education_temp',
         'dir_mode' => 0777, // rwx by default
-    ),
-
-    /**
-     * Meeting documents upload directory.
-     */
-    'meeting-documents' => array(
-        'upload_dir' => 'public/data/meeting-documents',
-        'public_dir' => 'data/meeting-documents',
-        'dir_mode' => 0777, // rwx by default
-    ),
+    ],
 
     /**
      * Dreamspark configuration.
      */
-    'dreamspark' => array(
+    'dreamspark' => [
         'url' => 'https://e5.onthehub.com/WebStore/Security/AuthenticateUser.aspx?account=%ACCOUNT%&username=%EMAIL%&key=%KEY%&academic_statuses=%GROUPS%',
         // configured locally
         'account' => '',
         'key' => ''
-    ),
+    ],
 
     /**
      * CA Path for SSL certificates, override this locally if necessary.
@@ -73,20 +76,20 @@ return array(
     /**
      * Photo's upload directory configuration
      */
-    'photo' => array(
+    'photo' => [
         'upload_dir' => 'public/data/photo',
         'public_dir' => 'data/photo',
         'max_photos_page' => 20,
         'dir_mode' => 0777, // rwx by default
-        'small_thumb_size' => array(
+        'small_thumb_size' => [
             'width' => 370,
             'height' => 550
-        ),
-        'large_thumb_size' => array(
+        ],
+        'large_thumb_size' => [
             'width' => 825,
             'height' => 550
-        ),
-        'album_cover' => array(
+        ],
+        'album_cover' => [
             'width' => 370,
             'height' => 550,
             'inner_border' => 2,
@@ -94,13 +97,26 @@ return array(
             'cols' => 2,
             'rows' => 2,
             'background' => '#000000'
-        )
-    ),
+        ]
+    ],
 
-    'frontpage' => array(
+    'frontpage' => [
         'activity_count' => 3 // Number of activities to display
-    ),
-    
+    ],
+
+    /**
+     * Doctrine global configuration, like functions
+     */
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'numeric_functions' => [
+                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
+                ]
+            ]
+        ]
+    ],
+
     /**
      * OASE SOAP API configuration.
      *
@@ -111,28 +127,28 @@ return array(
      * impracticalities on our side, and a slow OASE at times on the side of
      * Dienst ICT.
      */
-    'oase' => array(
-        'soap' => array(
+    'oase' => [
+        'soap' => [
             'wsdl' => 'http://dlwtbiz.campus.test.tue.nl/ESB/ESB_ESB_DLWO_ESB_ReceivePort.svc?wsdl',
-            'options' => array(
-                'classmap' => array(
+            'options' => [
+                'classmap' => [
                     'Vraag' => 'Education\Oase\Vraag',
                     'Property' => 'Education\Oase\Property',
                     'Antwoord' => 'Education\Oase\Antwoord'
-                ),
+                ],
                 'soap_version' => SOAP_1_1
-            )
-        ),
+            ]
+        ],
         /**
          * Filters for studies
          */
-        'studies' => array(
+        'studies' => [
             /**
              * Studies of W&I will have these keywords.
              *
              * Only studies with these keywords will be considered.
              */
-            'keywords' => array(
+            'keywords' => [
                 "software science",
                 "web science",
                 "wiskunde",
@@ -147,22 +163,22 @@ return array(
                 "security",
                 "business information systems",
                 "embedded systems"
-            ),
+            ],
             /**
              * Negative keywords.
              *
              * Studies with these keywords will not be considered W&I studies.
              */
-            'negative_keywords' => array(
+            'negative_keywords' => [
                 'leraar',
                 'natuurkunde'
-            ),
+            ],
             /**
              * Group ID's.
              *
              * Only studies with these group ID's will be considered.
              */
-            'group_ids' => array(
+            'group_ids' => [
                 100, // diverse masters
                 110, // schakelprogramma's
                 150, // minoren
@@ -170,14 +186,14 @@ return array(
                 200, // bachelor (pre-bachelor-college)
                 210, // regulier onderwijs (incl. master)
                 212, // coherente keuzepakketten wss
-            ),
+            ],
             /**
              * Education types
              */
-            'education_types' => array(
+            'education_types' => [
                 'master',
                 'bachelor'
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];

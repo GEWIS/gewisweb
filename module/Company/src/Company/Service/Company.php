@@ -380,7 +380,7 @@ class Company extends AbstractACLService
     public function getActiveJobList()
     {
         $jobList = $this->getJobList();
-        $array = array();
+        $array = [];
         foreach ($jobList as $job) {
             if ($job->getActive()) {
                 $array[] = $job;

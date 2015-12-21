@@ -5,7 +5,7 @@
 $form = $this->form;
 $form->prepare();
 
-$form->setAttribute('action', $this->url('admin_decision/default', array('action' => 'notes')));
+$form->setAttribute('action', $this->url('admin_decision/default', ['action' => 'notes']));
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('class', 'form-horizontal');

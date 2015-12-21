@@ -1,124 +1,237 @@
 <?php
-return array(
-    'controllers' => array(
-        'invokables' => array(
+return [
+    'controllers' => [
+        'invokables' => [
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'home' => array(
+            'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
+            'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'home' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller' => 'Frontpage',
                         'action' => 'home',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'page' => array(
+                'child_routes' => [
+                    'page' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[:category[/:sub_category][/:name]][/]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 '__NAMESPACE__' => 'Frontpage\Controller',
                                 'controller' => 'Page',
                                 'action' => 'page',
-                            ),
-                        ),
+                            ],
+                        ],
                         'priority' => -1
-                    ),
-                ),
-            ),
-            'admin_page' => array(
+                    ],
+                ],
+            ],
+            'admin_page' => [
                 'type' => 'Segment',
-                'options' => array(
+                'options' => [
                     'route' => '/admin/page',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Frontpage\Controller',
                         'controller' => 'PageAdmin',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'create' => array(
+                'child_routes' => [
+                    'create' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/create',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'create',
-                            ),
-                        ),
-                    ),
-                    'edit' => array(
+                            ],
+                        ],
+                    ],
+                    'edit' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:page_id]/edit',
-                            'constraints' => array(
+                            'constraints' => [
                                 'page_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'edit',
-                            ),
-                        ),
-                    ),
-                    'delete' => array(
+                            ],
+                        ],
+                    ],
+                    'delete' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:page_id]/delete',
-                            'constraints' => array(
+                            'constraints' => [
                                 'page_id' => '[0-9]+',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'delete',
-                            ),
-                        ),
-                    ),
-                    'upload' => array(
-                        'type' => 'Segment',
-                        'options' => array(
+                            ],
+                        ],
+                    ],
+                    'upload' => [
+                        'type' => 'Literal',
+                        'options' => [
                             'route' => '/upload',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'upload',
-                            ),
-                        ),
-                    ),
-                ),
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100
-            ),
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+            ],
+            'poll' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/poll',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'Poll',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'history' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/history[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'history',
+                            ],
+                        ],
+                    ],
+                    'request' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/request',
+                            'defaults' => [
+                                'action' => 'request',
+                            ],
+                        ],
+                    ],
+                    'view' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/view',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'vote' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/vote',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'vote',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
+            'admin_poll' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/admin/poll',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'PollAdmin',
+                        'action' => 'list',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/list[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'list',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/delete',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                    'approve' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/approve',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'approve',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
+        ],
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'Frontpage' => __DIR__ . '/../view',
-        ),
-        'template_map' => array(
+        ],
+        'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
-        ),
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'frontpage_entities' => array(
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            'frontpage_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Frontpage/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Frontpage/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Frontpage\Model' => 'frontpage_entities'
-                )
-            )
-        )
-    ),
-);
+                ]
+            ]
+        ]
+    ],
+];

@@ -3,47 +3,50 @@
         <!-- wrapping applied -->
         <?php $i=0; ?>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Id'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('id');?></div>
+            <div class="col-md-4"><?php echo $this->translate('Id'); ?></div>
+            <div class="col-md-4"><?php echo $activity->getId();?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Name'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('name');?></div>
+            <div class="col-md-4"><?php echo $this->translate('Name'); ?></div>
+            <div class="col-md-4"><?php echo $activity->getName();?></div>
+            <div class="col-md-4"><?php echo $activity->getNameEn();?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Start time'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('beginTime')->format('Y-m-d H:i:s')?></div>
+            <div class="col-md-4"><?php echo $this->translate('Start time'); ?></div>
+            <div class="col-md-8"><?php echo $activity->getBeginTime()->format('Y-m-d H:i:s')?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('End time'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('endTime')->format('Y-m-d H:i:s')?></div>
+            <div class="col-md-4"><?php echo $this->translate('End time'); ?></div>
+            <div class="col-md-8"><?php echo $activity->getEndTime()->format('Y-m-d H:i:s')?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Location'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('location')?></div>
+            <div class="col-md-4"><?php echo $this->translate('Location'); ?></div>
+            <div class="col-md-4"><?php echo $activity->getLocation(); ?></div>
+            <div class="col-md-4"><?php echo $activity->getLocationEn(); ?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Costs'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('costs');?></div>
+            <div class="col-md-4"><?php echo $this->translate('Costs'); ?></div>
+            <div class="col-md-4"><?php echo $activity->getCosts(); ?></div>
+            <div class="col-md-4"><?php echo $activity->getCostsEn(); ?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Subscribe'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('canSignUp') ? $this->translate("Yes") : $this->translate("No"); ?></div>
+            <div class="col-md-4"><?php echo $this->translate('Subscribe'); ?></div>
+            <div class="col-md-8"><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-            <div class="col-md-6"><?php echo $this->translate('Only GEWIS'); ?></div>
-            <div class="col-md-6"><?php echo $activity->get('onlyGEWIS') ? $this->translate("Yes") : $this->translate("No"); ?></div>
+            <div class="col-md-4"><?php echo $this->translate('Only GEWIS'); ?></div>
+            <div class="col-md-8"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
         </div>
 
         <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/approve', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/approve', ['id' => $activity->getId()])?>">
                     <?php echo $this->translate('Approve'); ?>
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/disapprove', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/disapprove', ['id' => $activity->getId()])?>">
                     <?php echo $this->translate('Disapprove'); ?>
                 </a>
             </div>
@@ -54,7 +57,7 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-6">
-                <a href="<?php echo $this->url('admin_activity/reset', array( 'id' => $activity->get('id')))?>">
+                <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->getId()])?>">
                     <?php echo $this->translate('Revoke approval'); ?>
                 </a>
             </div>
@@ -65,7 +68,7 @@
                 <div class="col-md-6">
                 </div>
                 <div class="col-md-6">
-                    <a href="<?php echo $this->url('admin_activity/reset', array( 'id' => $activity->get('id')))?>">
+                    <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->getId()])?>">
                         <?php echo $this->translate('Revoke disapproval'); ?>
                     </a>
                 </div>

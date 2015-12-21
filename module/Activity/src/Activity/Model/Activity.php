@@ -3,6 +3,7 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
 use User\Model\User;
 
 /**
@@ -31,9 +32,16 @@ class Activity
     /**
      * Name for the activity.
      *
-     * @Orm\Column(type="string")
+     * @Orm\Column(type="string", nullable=true)
      */
     protected $name;
+
+    /**
+     * English name for the activity
+     *
+     * @Orm\Column(type="string", nullable=true)
+     */
+    protected $name_en;
 
     /**
      * The date and time the activity starts.
@@ -52,16 +60,30 @@ class Activity
     /**
      * The location the activity is held at.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $location;
 
     /**
-     * How much does it cost. 0 = free!
+     * English string to denote what location the activity is held on
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $location_en;
+
+    /**
+     * How much does it cost.
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $costs;
+
+    /**
+     * English string to denote how much the activity cost
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $costs_en;
 
     /**
      * Are people able to sign up for this activity?
@@ -89,9 +111,8 @@ class Activity
     /**
      * Who created this activity.
      *
-     * @ORM\Column(nullable=false)
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
      */
     protected $creator;
 
@@ -105,37 +126,238 @@ class Activity
     /**
      * Activity description.
      *
-     * @Orm\Column(type="text")
+     * @Orm\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
-     * all the photo's in this album.
+     * Activity description.
+     *
+     * @Orm\Column(type="text", nullable=true)
+     */
+    protected $description_en;
+
+    /**
+     * all the people who signed up for this activity
      *
      * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
      */
     protected $signUps;
 
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * All additional fields belonging to the activity.
+     * 
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
+     */
+    protected $fields;
+    
     // TODO -> where can i find member organ?
     protected $organ;
 
     /**
-     * Set the approval status of the activity
-     *
-     * @param int $status
+     * @return string
      */
-    public function setStatus($status)
+    public function getName()
     {
-        if (!in_array($status, [static::STATUS_TO_APPROVE, static::STATUS_APPROVED, static::STATUS_DISAPPROVED])) {
-            throw new \InvalidArgumentException('No such status ' . $status);
-        }
-        $this->status = $status;
+        return $this->name;
     }
 
     /**
-     * Get the status of the activity
-     *
-     * @return int $status
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameEn()
+    {
+        return $this->name_en;
+    }
+
+    /**
+     * @param string $name_en
+     */
+    public function setNameEn($name_en)
+    {
+        $this->name_en = $name_en;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getBeginTime()
+    {
+        return $this->beginTime;
+    }
+
+    /**
+     * @param DateTime $beginTime
+     */
+    public function setBeginTime($beginTime)
+    {
+        $this->beginTime = $beginTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * @param DateTime $endTime
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        {
+            $this->location = $location;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationEn()
+    {
+        return $this->location_en;
+    }
+
+    /**
+     * @param string $location_en
+     */
+    public function setLocationEn($location_en)
+    {
+        $this->location_en = $location_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCosts()
+    {
+        return $this->costs;
+    }
+
+    /**
+     * @param string $costs
+     */
+    public function setCosts($costs)
+    {
+        $this->costs = $costs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCostsEn()
+    {
+        return $this->costs_en;
+    }
+
+    /**
+     * @param string $costs_en
+     */
+    public function setCostsEn($costs_en)
+    {
+        $this->costs_en = $costs_en;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCanSignUp()
+    {
+        return $this->canSignUp;
+    }
+
+    /**
+     * @param boolean $canSignUp
+     */
+    public function setCanSignUp($canSignUp)
+    {
+        $this->canSignUp = $canSignUp;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getOnlyGEWIS()
+    {
+        return $this->onlyGEWIS;
+    }
+
+    /**
+     * @param boolean $onlyGEWIS
+     */
+    public function setOnlyGEWIS($onlyGEWIS)
+    {
+        $this->onlyGEWIS = $onlyGEWIS;
+    }
+
+    /**
+     * @return User
+     */
+    public function getApprover()
+    {
+        return $this->approver;
+    }
+
+    /**
+     * @param User $approver
+     */
+    public function setApprover(User $approver)
+    {
+        $this->approver = $approver;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * @return integer
      */
     public function getStatus()
     {
@@ -143,71 +365,66 @@ class Activity
     }
 
     /**
-     * Get the status of a variable
-     *
-     * @param $variable
-     * @return mixed
+     * @param integer $status
      */
-    public function get($variable)
+    public function setStatus($status)
     {
-        return $this->$variable;
+        $this->status = $status;
     }
 
     /**
-     * Get a string format of the costs. Either a number or unknown
      * @return string
      */
-    public function getCostString()
+    public function getDescription()
     {
-        return is_null($this->costs) ? 'Unknown' : $this->costs;
+        return $this->description;
     }
 
     /**
-     * Create a new activity.
-     *
-     * @param array $params Parameters for the new activity
-     *
-     * @throws \Exception If a activity is loaded
-     * @throws \Exception If a necessary parameter is not set
-     *
-     * @return \Activity\Model\Activity the created activity
+     * @param string $description
      */
-    public function create(array $params)
+    public function setDescription($description)
     {
-        if ($this->id != null) {
-            throw new \Exception('There is already a loaded activity');
-        }
-        foreach (['description', 'name', 'beginTime', 'endTime', 'costs', 'location', 'creator', 'canSignUp'] as $param) {
-            if (!isset($params[$param])) {
-                throw new \Exception("create: parameter $param not set");
-            }
-            $this->$param = $params[$param];
-        }
-
-        // If the costs are not yet known, set them to null
-        if (isset($params['costs_unknown']) && $params['costs_unknown'] == 1) {
-            $this->costs = null;
-        }
-
-        /** @var $user User*/
-        $user = $params['creator'];
-
-        $this->beginTime = new \DateTime($this->beginTime);
-        $this->endTime = new \DateTime($this->endTime);
-        $this->creator = $user->getLidNr();
-
-        // TODO: These values need to be set correctly
-        $this->onlyGEWIS = true;
-        $this->status = static::STATUS_TO_APPROVE;
-
-        return $this;
+        $this->description = $description;
     }
 
     /**
-     * Returns if an user can sign up for this activity.
+     * @return string
      */
-    public function canSignUp()
+    public function getDescriptionEn()
     {
-        return $this->canSignUp;
+        return $this->description_en;
+    }
+
+    /**
+     * @param string $description_en
+     */
+    public function setDescriptionEn($description_en)
+    {
+        $this->description_en = $description_en;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSignUps()
+    {
+        return $this->signUps;
+    }
+
+    /**
+     * @param array $signUps
+     */
+    public function setSignUps($signUps)
+    {
+        $this->signUps = $signUps;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

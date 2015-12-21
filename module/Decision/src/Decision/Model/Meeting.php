@@ -55,16 +55,24 @@ class Meeting
     protected $documents;
 
     /**
+     * The notes for this meeting
+     *
+     * @ORM\OneToOne(targetEntity="MeetingNotes", mappedBy="meeting")
+     */
+    protected $meetingNotes;
+
+
+    /**
      * Get all allowed meeting types.
      */
     public static function getTypes()
     {
-        return array(
+        return [
             self::TYPE_BV,
             self::TYPE_AV,
             self::TYPE_VV,
             self::TYPE_VIRT
-        );
+        ];
     }
 
     /**
@@ -95,6 +103,10 @@ class Meeting
         return $this->number;
     }
 
+    public function getNotes()
+    {
+        return $this->meetingNotes;
+    }
     /**
      * Set the meeting type.
      *

@@ -61,7 +61,7 @@ class Signup
 
         return isset($result[0]) ? $result[0] : null;
     }
-
+    
     /**
      * Get all the users that are signed up for an activity.
      *
@@ -83,7 +83,6 @@ class Signup
             ->setParameters([
                 1 => $activityId,
             ]);
-
         $activityArray = $qb->getQuery()->getResult();
 
         // If we do not get any result, there were no members signed up
@@ -96,7 +95,7 @@ class Signup
 
         $members = [];
         /* @var $signUp \Activity\Model\ActivitySignUp*/
-        foreach ($activity->get('signUps') as $signUp) {
+        foreach ($activity->getSignUps() as $signUp) {
             $members[] = $signUp->getUser()->getMember();
         }
 

@@ -28,6 +28,11 @@ class IndexController extends AbstractActionController
             $session->lang = 'nl';
         }
 
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
+        }
+
         return $this->redirect()->toRoute('home');
+
     }
 }

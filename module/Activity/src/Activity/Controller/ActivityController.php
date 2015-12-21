@@ -5,7 +5,7 @@ namespace Activity\Controller;
 use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
-use Activity\Form\Activity as ActivityForm;
+use Activity\Form\ActivitySignup as SignupForm;
 
 class ActivityController extends AbstractActionController
 {
@@ -35,12 +35,23 @@ class ActivityController extends AbstractActionController
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
+        if ($signupService->isAllowedToSubscribe()) {
+            $fields = $activity->getFields();
+            $form = $signupService->getForm($fields);
+        } else {
+            $fields = null;
+            $form = null;
+        }
+
         return [
             'activity' => $activity,
-            'canSignUp' => $activity->canSignUp(),
+            'canSignUp' => $activity->getCanSignUp(),
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
-            'signedUp' => $signupService->getSignedUp($activity),
+            'signedUp' => $signupService->getSignedUpUsers($activity),
+            'signupData' => $signupService->getSignedUpData($activity),
+            'form' => $form,
+            'fields' => $fields
         ];
     }
 
@@ -50,7 +61,7 @@ class ActivityController extends AbstractActionController
     public function createAction()
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $form = new ActivityForm();
+        $form = $activityService->getForm();
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
 
@@ -58,14 +69,19 @@ class ActivityController extends AbstractActionController
                 $data['costs'] = '-1';    // Hack. Because empty string is seen as 0
             }
 
-            $form->setData($this->getRequest()->getPost());
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
 
             if ($form->isValid()) {
-                $activity = $activityService->createActivity($form->getData());
+                $activity = $activityService->createActivity(
+                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
 
-                $this->redirect()->toRoute('activity/view', array(
-                    'id' => $activity->get('id'),
-                ));
+                $this->redirect()->toRoute('activity/view', [
+                    'id' => $activity->getId(),
+                ]);
             }
         }
 
@@ -79,33 +95,50 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        /** @var \Activity\Service\Signup $signupService */
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         /** @var  $activity Activity */
         $activity = $activityService->getActivity($id);
 
+        $translator = $activityService->getTranslator();
+        
+        $params = $this->viewAction();        
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()){
+            $params['error'] = $translator->translate('Use the form to subscribe');
+            return $params;
+        }
+        
         // Assure you can sign up for this activity
-        if (!$activity->canSignup()) {
-            $params['error'] = 'Op dit moment kun je je niet inschrijven voor deze activiteit';
+        if (!$activity->getCanSignup()) {
+            $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
             return $params;
         }
 
-        // Make sure the user is logged in
+        if (!$signupService->isAllowedToSubscribe()) {
+            $params['error'] = $translator->translate('You need to log in to subscribe');
+            return $params;
+        }
+
+        $form = new SignupForm($activity->getFields());
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $params['error'] = $translator->translate('Wrong form');
+            return $params;
+        }
+
         $identity = $this->getServiceLocator()->get('user_role');
-        if ($identity === 'guest') {
-            $params['error'] = 'Je moet ingelogd zijn om je in te kunnen schrijven';
-
-            return $params;
-        }
         $user = $identity->getMember();
 
-        $signupService = $this->getServiceLocator()->get('activity_service_signup');
         if ($signupService->isSignedUp($activity, $user)) {
-            $params['error'] = 'Je hebt je al ingeschreven voor deze activiteit';
+            $params['error'] = $translator->translate('You have already been subscribed for this activity');
         } else {
-            $signupService->signUp($activity, $user);
+            $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
             $params['success'] = true;
         }
-        $params = $this->viewAction();
 
         return $params;
     }
@@ -116,21 +149,25 @@ class ActivityController extends AbstractActionController
     public function signoffAction()
     {
         $id = (int) $this->params('id');
+        /** @var \Activity\Service\Activity $activityService */
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $activity = $activityService->getActivity($id);
+        /** @var \Activity\Service\SignUp $signupService */
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
-        // Make sure the user is logged in
-        $identity = $this->getServiceLocator()->get('user_role');
-        if ($identity === 'guest') {
-            $params['error'] = 'Je moet ingelogd zijn om je uit te kunnen schrijven';
+        $activity = $activityService->getActivity($id);
+        $translator = $activityService->getTranslator();
+
+        if (!$signupService->isAllowedToSubscribe()) {
+            $params['error'] = $translator->translate('You have to be logged in to subscribe for this activity');
 
             return $params;
         }
+
+        $identity = $this->getServiceLocator()->get('user_role');
         $user = $identity->getMember();
 
-        $signupService = $this->getServiceLocator()->get('activity_service_signoff');
         if (!$signupService->isSignedUp($activity, $user)) {
-            $params['error'] = 'Je hebt je al uitgeschreven voor deze activiteit';
+            $params['error'] = $translator->translate('You are not subscribed for this activity!');
         } else {
             $signupService->signOff($activity, $user);
             $params['success'] = true;

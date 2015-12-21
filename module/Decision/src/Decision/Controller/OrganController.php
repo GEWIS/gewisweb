@@ -13,9 +13,9 @@ class OrganController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel(array(
+        return new ViewModel([
             'organs' => $this->getOrganService()->getOrgans()
-        ));
+        ]);
     }
 
     /**
@@ -24,9 +24,9 @@ class OrganController extends AbstractActionController
     public function showAction()
     {
         try {
-            return new ViewModel(array(
+            return new ViewModel([
                 'organ' => $this->getOrganService()->getOrgan($this->params()->fromRoute('organ'))
-            ));
+            ]);
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }

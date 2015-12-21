@@ -13,8 +13,8 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $em = $sm->get('photo_doctrine_em');
         $dem = $em->getEventManager();
-        $dem->addEventListener(array(\Doctrine\ORM\Events::prePersist), new AlbumDateListener());
-        $dem->addEventListener(array(\Doctrine\ORM\Events::preRemove), new RemoveListener($sm));
+        $dem->addEventListener([\Doctrine\ORM\Events::prePersist], new AlbumDateListener());
+        $dem->addEventListener([\Doctrine\ORM\Events::preRemove], new RemoveListener($sm));
     }
 
     /**
@@ -24,13 +24,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -50,15 +50,15 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
+        return [
+            'invokables' => [
                 'photo_service_album' => 'Photo\Service\Album',
                 'photo_service_metadata' => 'Photo\Service\Metadata',
                 'photo_service_photo' => 'Photo\Service\Photo',
                 'photo_service_album_cover' => 'Photo\Service\AlbumCover',
                 'photo_service_admin' => 'Photo\Service\Admin'
-            ),
-            'factories' => array(
+            ],
+            'factories' => [
                 'photo_form_album_edit' => function ($sm) {
                     $form = new Form\EditAlbum(
                         $sm->get('translator')
@@ -118,10 +118,10 @@ class Module
                     $acl->allow('guest', 'album', 'view');
 
                     // Users are allowed to view, remove and add tags
-                    $acl->allow('user', 'tag', array('view', 'add', 'remove'));
+                    $acl->allow('user', 'tag', ['view', 'add', 'remove']);
 
                     // Users are allowed to download photos
-                    $acl->allow('user', 'photo', array('download', 'view_metadata'));
+                    $acl->allow('user', 'photo', ['download', 'view_metadata']);
 
                     return $acl;
                 },
@@ -131,27 +131,8 @@ class Module
                 'photo_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            )
-        );
-    }
-
-    /**
-     * Get view helper configuration.
-     *
-     * @return array
-     */
-    public function getViewHelperConfig()
-    {
-        return array(
-            'factories' => array(
-                'photoUrl' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
-                    $helper = new \Photo\View\Helper\PhotoUrl();
-                    $helper->setPhotoService($locator->get('photo_service_photo'));
-                    return $helper;
-                }
-            )
-        );
+            ]
+        ];
     }
 
 }

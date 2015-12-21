@@ -165,48 +165,50 @@ class Study
      */
     public function createStudy(\SimpleXMLElement $doelgroep)
     {
-        $data = array(
+        $data = [
             'id' => (int) $doelgroep->Id->__toString(),
             'name' => $doelgroep->Omschrijving->__toString(),
             'phase' => $doelgroep->Opleidingstype->__toString(),
             'groupId' => (int) $doelgroep->GroepscategorieId->__toString()
-        );
+        ];
         return $this->hydrator->hydrate($data, new StudyModel());
     }
 
     /**
      * Get ID's of all W&I's studies.
      *
-     * @todo figure out good way to define year in 'GeefDoelgroepen'
+     * @param string $year
      *
      * @return array
      */
-    public function getStudies()
+    public function getStudies($year)
     {
-        $data = $this->client->GeefDoelgroepen('2013', 'NL');
+        $data = $this->client->GeefDoelgroepen($year, 'NL');
 
         // convert doelgroepen to array
-        $doelgroepen = array();
+        $doelgroepen = [];
         foreach ($data->Doelgroep as $doelgroep) {
             $doelgroepen[] = $doelgroep;
         }
 
-        $doelgroepen = array_filter($doelgroepen, array($this, 'filterDoelgroep'));
+        $doelgroepen = array_filter($doelgroepen, [$this, 'filterDoelgroep']);
 
         // since all this filtering, re-index the array
         $doelgroepen = array_values($doelgroepen);
 
         // convert doelgroepen to studies
-        return array_map(array($this, 'createStudy'), $doelgroepen);
+        return array_map([$this, 'createStudy'], $doelgroepen);
     }
 
     /**
      * Get all studies of the TU/e
      *
+     * @param string $year
+     *
      * @return array
      */
-    public function getAllStudies()
+    public function getAllStudies($year)
     {
-        return $this->client->GeefDoelgroepen('2013', 'NL');
+        return $this->client->GeefDoelgroepen($year, 'NL');
     }
 }

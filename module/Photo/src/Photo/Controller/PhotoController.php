@@ -21,11 +21,11 @@ class PhotoController extends AbstractActionController
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
 
-        return new ViewModel(array(
+        return new ViewModel([
             'activeYear' => $year,
             'years' => $years,
             'albums' => $albums
-        ));
+        ]);
     }
 
     /**
@@ -51,6 +51,18 @@ class PhotoController extends AbstractActionController
         $photoId = $this->params()->fromRoute('photo_id');
 
         return $this->getPhotoService()->getPhotoDownload($photoId);
+    }
+
+    /**
+     * Display the page containing previous pictures of the week.
+     */
+    public function weeklyAction()
+    {
+        $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
+
+        return new ViewModel([
+            'weeklyPhotos' => $weeklyPhotos
+        ]);
     }
 
     /**

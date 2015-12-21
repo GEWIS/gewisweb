@@ -47,13 +47,22 @@ class Module
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
+    }
+
+    public function getServiceConfig()
+    {
+        return [
+            'invokables' => [
+                'application_service_storage' => 'Application\Service\FileStorage',
+            ],
+        ];
     }
 
     /**
@@ -63,8 +72,8 @@ class Module
      */
     public function getViewHelperConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'acl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\Acl();
@@ -75,13 +84,13 @@ class Module
                     $helper = new \Application\View\Helper\ScriptUrl();
                     return $helper;
                 },
-                'isAllowed' => function ($sm) {
+                'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Acl();
+                    $helper = new \Application\View\Helper\FileUrl();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 }
-            )
-        );
+            ]
+        ];
     }
 }

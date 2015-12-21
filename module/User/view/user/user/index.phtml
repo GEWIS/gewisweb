@@ -25,7 +25,7 @@ $form->setAttribute('method', 'post');
         <?= $this->formInput($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-
+<?= $this->formInput($form->get('redirect')) ?>
 </dl>
 
 <?= $this->formRow($form->get('submit')); ?>
@@ -33,7 +33,7 @@ $form->setAttribute('method', 'post');
 </p>
 <p>
 <?php
-$url = $this->url('user/default', array('action' => 'register'));
+$url = $this->url('user/default', ['action' => 'register']);
 ?>
 <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
 </p>

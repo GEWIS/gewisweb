@@ -1,52 +1,52 @@
 <?php
 
-return array(
-    'router' => array(
-        'routes' => array(
-            'company' => array(
+return [
+    'router' => [
+        'routes' => [
+            'company' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/company',
                     'priority' => 2,
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Company',
                         'action' => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
                         'actionArgument' => '',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'jobList' => array(
+                'child_routes' => [
+                    'jobList' => [
                         'priority' => 3,
                         'type' => 'literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/jobs',
-                            'defaults' => array(
+                            'defaults' => [
                                 '__NAMESPACE__' => 'Company\Controller',
                                 'controller' => 'Company',
                                 'action' => 'jobList',
                                 'actionArgument' => '',
-                            ),
-                        ),
-                    ),
-                    'list' => array(
+                            ],
+                        ],
+                    ],
+                    'list' => [
                         'priority' => 3,
                         'type' => 'literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/list',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'Company\Controller\Company',
                                 'action' => 'list',
                                 'slugCompanyName' => '',
-                            ),
-                        ),
+                            ],
+                        ],
                         'may_terminate' => true,
-                    ),
-                    'companyItem' => array(
+                    ],
+                    'companyItem' => [
                         'priority' => 2,
                         'type' => 'segment',
-                        'options' => array(
+                        'options' => [
                             // url will be company/<slugCompanyName>/jobs/<slugJobName>/<action>
                             // slugjobname and slugcompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
@@ -56,180 +56,203 @@ return array(
                             // company/list should give a list of companies
                             // company/index should give the frontpage
                             'route' => '/:slugCompanyName',
-                            'constraints' => array(
+                            'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_-]*',
-                            ),
-                        ),
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'joblist' => array(
+                        'child_routes' => [
+                            'joblist' => [
                                 'type' => 'literal',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/jobs',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'controller' => 'Company\Controller\Company',
                                         'action' => 'jobs',
-                                    ),
-                                ),
+                                    ],
+                                ],
                                 'may_terminate' => true,
-                                'child_routes' => array(
-                                    'job_item' => array(
+                                'child_routes' => [
+                                    'job_item' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
                                             'route' => '[/:slugJobName]',
-                                            'constraints' => array(
+                                            'constraints' => [
                                                 'slugJobName' => '[a-zA-Z0-9_-]*',
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
                 'priority' => 100,
-            ),
-            'admin_company' => array(
+            ],
+            'admin_company' => [
                 'priority' => 3,
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/company/admin/company',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Admin',
                         'action' => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'deleteCompany' => array(
+                'child_routes' => [
+                    'deleteCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/delete/[:slugCompanyName]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'deleteCompany',
-                            ),
-                            'constraints' => array(
+                            ],
+                            'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_-]*',
-                            ),
+                            ],
 
-                        ),
+                        ],
                         'may_terminate' => true,
-                    ),
-                    'editCompany' => array(
+                    ],
+                    'editCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/edit/[:slugCompanyName]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'editCompany',
-                            ),
-                            'constraints' => array(
+                            ],
+                            'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_-]*',
-                            ),
+                            ],
 
-                        ),
+                        ],
                         'may_terminate' => true,
 
-                        'child_routes' => array(
-                            'editPackage' => array(
+                        'child_routes' => [
+                            'editPackage' => [
                                 'type' => 'segment',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/package/:packageID',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'action' => 'editPackage',
-                                    ),
-                                    'constraints' => array(
+                                    ],
+                                    'constraints' => [
                                         'packageID' => '[a-zA-Z0-9_-]*',
-                                    ),
-                                ),
+                                    ],
+                                ],
                                 'may_terminate' => true,
-                                'child_routes' => array(
-                                    'addJob' => array(
+                                'child_routes' => [
+                                    'addJob' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
                                             'route' => '/addJob',
-                                            'defaults' => array(
+                                            'defaults' => [
                                                 'action' => 'addJob',
-                                            ),
-                                        ),
+                                            ],
+                                        ],
                                         'may_terminate' => true,
-                                    ),
-                                    'deletePackage' => array(
+                                    ],
+                                    'deletePackage' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
                                             'route' => '/delete',
-                                            'defaults' => array(
+                                            'defaults' => [
                                                 'action' => 'deletePackage',
-                                            ),
-                                        ),
+                                            ],
+                                        ],
                                         'may_terminate' => true,
-                                    ),
-                                    'editJob' => array(
+                                    ],
+                                    'editJob' => [
                                         'type' => 'segment',
-                                        'options' => array(
+                                        'options' => [
                                             'route' => '/job/:jobName',
-                                            'defaults' => array(
+                                            'defaults' => [
                                                 'action' => 'editJob',
-                                            ),
-                                            'constraints' => array(
+                                            ],
+                                            'constraints' => [
                                                 'jobName' => '[a-zA-Z0-9_-]*',
-                                            ),
+                                            ],
                                             'may_terminate' => true,
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            'addPackage' => array(
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            'addPackage' => [
                                 'type' => 'segment',
-                                'options' => array(
+                                'options' => [
                                     'route' => '/addPackage',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'action' => 'addPackage',
-                                    ),
+                                    ],
                                     'may_terminate' => true,
-                                ),
-                            ),
-                        ),
-                    ),
-                    'default' => array(
+                                ],
+                            ],
+                            'addJob' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/addJob',
+                                    'defaults' => [
+                                        'action' => 'addJob'
+                                    ],
+                                    'may_terminate' => true,
+                                ],
+                            ],
+                            'editJob' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/job/:jobName',
+                                    'defaults' => [
+                                        'action' => 'editJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobName'     => '[a-zA-Z0-9_-]*',
+                                    ],
+                                    'may_terminate' => true,
+                                ],
+                            ],
+                        ],
+                    ],
+                    'default' => [
                         'priority' => 2,
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '[/:action[/:slugCompanyName[/:slugJobName]]]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
             'Company\Controller\Company' => 'Company\Controller\CompanyController',
             'Company\Controller\Admin' => 'Company\Controller\AdminController',
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ],
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'company' => __DIR__.'/../view/',
-        ),
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'company_entities' => array(
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__.'/../src/Company/Model/'),
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__.'/../src/Company/Model/'],
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Company\Model' => 'company_entities',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];

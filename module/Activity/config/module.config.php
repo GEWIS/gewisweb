@@ -1,164 +1,164 @@
 <?php
-return array(
-    'router' => array(
-        'routes' => array(
-            'activity' => array(
+return [
+    'router' => [
+        'routes' => [
+            'activity' => [
                 'type'    => 'Literal',
-                'options' => array(
+                'options' => [
                     'route'    => '/activity',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller'    => 'Activity',
                         'action'        => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'view' => array(
+                'child_routes' => [
+                    'view' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/view/[:id]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[0-9]*',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'view'
-                            )
-                        ),
-                    ),
-                    'signup' => array(
+                            ]
+                        ],
+                    ],
+                    'signup' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/signup/[:id]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[0-9]*',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'signup'
-                            )
-                        ),
-                    ),
-					'signoff' => array(
+                            ]
+                        ],
+                    ],
+					'signoff' => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/signoff/[:id]',
-                            'constraints' => array(
+                            'constraints' => [
                                 'action'     => '[0-9]*',
-                            ),
-                            'defaults' => array(
+                            ],
+                            'defaults' => [
                                 'action' => 'signoff'
-                            )
-                        ),
-                    ),
-                    'create' => array(
+                            ]
+                        ],
+                    ],
+                    'create' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/create',
-                            'defaults' => array (
+                            'defaults' => [
                                 'action' => 'create'
-                            )
-                        )
-                    ),
-                ),
+                            ]
+                        ]
+                    ],
+                ],
                 'priority' => 100
-            ),
-            'admin_activity' => array(
+            ],
+            'admin_activity' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/admin/activity',
-                    'defaults' => array(
+                    'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'admin',
                         'action' => 'queue'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'queue' => array(
+                'child_routes' => [
+                    'queue' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/queue',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'queue'
-                            )
-                        )
-                    ),
-                    'view' => array(
+                            ]
+                        ]
+                    ],
+                    'view' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/view/[:id]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'view'
-                            )
-                        )
-                    ),
-                    'approve' => array(
+                            ]
+                        ]
+                    ],
+                    'approve' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/approve/[:id]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'approve'
-                            )
-                        )
-                    ),
-                    'disapprove' => array(
+                            ]
+                        ]
+                    ],
+                    'disapprove' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/disapprove/[:id]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'disapprove'
-                            )
-                        )
-                    ),
-                    'reset' => array(
+                            ]
+                        ]
+                    ],
+                    'reset' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/reset/[:id]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'reset'
-                            )
-                        )
-                    )
-                ),
-            ),
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
+                            ]
+                        ]
+                    ]
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'invokables' => [
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
             'Activity\Controller\Admin' => 'Activity\Controller\AdminController'
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
             'Activity\Controller\Activity' => function ($sm) {
                 $controller = new Activity\Controller\ActivityController;
                 $activity = $sm->getServiceLocator()->get('activity_service');
                 $controller->setActivity($activity);
                 return $controller;
             },
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'activity' => __DIR__ . '/../view/'
-        )
-    ),
-    'doctrine' => array(
-        'driver' => array(
-            'activity_entities' => array(
+        ]
+    ],
+    'doctrine' => [
+        'driver' => [
+            'activity_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Activity/Model/')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Activity/Model/']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'Activity\Model' => 'activity_entities'
-                )
-            )
-        )
-    )
-);
+                ]
+            ]
+        ]
+    ]
+];

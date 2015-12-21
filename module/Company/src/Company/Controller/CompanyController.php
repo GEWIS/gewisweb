@@ -19,19 +19,19 @@ class CompanyController extends AbstractActionController
         if ($companyName != null) {
             $companies = $companyService->getCompaniesBySlugName($companyName);
             if (count($companies) != 0) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'company' => $companies[0],
                     'translator' => $companyService->getTranslator(),
-                ));
+                ]);
             }
-            return new ViewModel(array(
+            return new ViewModel([
                 'translator' => $companyService->getTranslator(),
-            ));
+            ]);
         }
-        return new ViewModel(array(
+        return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
-        ));
+        ]);
 
     }
 
@@ -43,10 +43,10 @@ class CompanyController extends AbstractActionController
     public function jobListAction()
     {
         $companyService = $this->getCompanyService();
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'jobList' => $companyService->getJobList(),
             'translator' => $companyService->getTranslator(),
-        ));
+        ]);
 
         return $vm;
     }
@@ -64,15 +64,15 @@ class CompanyController extends AbstractActionController
         if ($jobName != null) {
             $jobs = $companyService->getJobsBySlugName($companyName, $jobName);
             if (count($jobs) != 0) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'job' => $jobs[0],
-                ));
+                ]);
             } 
             return new ViewModel();
         } 
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'activeJobList' => $companyService->getActiveJobList(),
-        ));
+        ]);
     }
 
     /**

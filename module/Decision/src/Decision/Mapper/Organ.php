@@ -39,9 +39,9 @@ class Organ
      */
     public function findActive()
     {
-        return $this->getRepository()->findBy(array(
+        return $this->getRepository()->findBy([
             'abrogationDate' => null
-        ));
+        ]);
     }
 
     /**

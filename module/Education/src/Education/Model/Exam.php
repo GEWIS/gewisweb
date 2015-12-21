@@ -35,6 +35,13 @@ class Exam implements ResourceInterface
     protected $date;
 
     /**
+     * Filename of the exam.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $filename;
+
+    /**
      * Course belonging to this exam.
      *
      * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="exams")
@@ -63,6 +70,16 @@ class Exam implements ResourceInterface
     }
 
     /**
+     * Get the filename.
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
      * Get the course.
      *
      * @return Course
@@ -80,6 +97,16 @@ class Exam implements ResourceInterface
     public function setDate(\DateTime $date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * Set the filename.
+     *
+     * @param string $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
     }
 
     /**

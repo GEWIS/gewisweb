@@ -132,6 +132,12 @@ class Photo implements ResourceInterface
     protected $tags;
 
     /**
+     * The corresponding WeeklyPhoto entity if this photo has been a weekly photo
+     * @ORM\OneToOne(targetEntity="WeeklyPhoto", mappedBy="photo", cascade={"persist", "remove"})
+     */
+    protected $weeklyPhoto;
+
+    /**
      * Get the ID.
      *
      * @return int
@@ -277,6 +283,14 @@ class Photo implements ResourceInterface
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return \Photo\Model\WeeklyPhoto|null
+     */
+    public function getWeeklyPhoto()
+    {
+        return $this->weeklyPhoto;
     }
 
     /**
@@ -438,7 +452,7 @@ class Photo implements ResourceInterface
      */
     public function toArray()
     {
-        $array = array(
+        $array = [
             'id' => $this->getId(),
             'dateTime' => $this->getDateTime(),
             'artist' => $this->getArtist(),
@@ -453,7 +467,7 @@ class Photo implements ResourceInterface
             'path' => $this->getPath(),
             'smallThumbPath' => $this->getSmallThumbPath(),
             'largeThumbPath' => $this->getLargeThumbPath()
-        );
+        ];
 
         return $array;
     }

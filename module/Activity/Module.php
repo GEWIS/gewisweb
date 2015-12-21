@@ -12,13 +12,13 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     /**
@@ -38,11 +38,12 @@ class Module
      */
     public function getServiceConfig()
     {
-        return array(
-            'invokables' => array(
-                'activity_service_activity' => 'Activity\Service\Activity'
-            ),
-            'factories' => array(
+        return [
+            'invokables' => [
+                'activity_service_activity' => 'Activity\Service\Activity',
+                'activity_form_activity' => 'Activity\Form\Activity'
+            ],
+            'factories' => [
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
@@ -53,7 +54,7 @@ class Module
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-				'activity_service_signoff' => function ($sm) {
+		'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;
@@ -63,6 +64,16 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
+                'activity_mapper_activity_field_value' => function ($sm) {
+                    return new \Activity\Mapper\ActivityFieldValue(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_activity_option' => function ($sm) {
+                    return new \Activity\Mapper\ActivityOption(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },        
                 'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')
@@ -74,14 +85,16 @@ class Module
                     $acl->addResource('activitySignup');
 
                     $acl->allow('guest', 'activity', 'view');
-                    $acl->allow('guest', 'activitySignup', 'signUp');
+
                     $acl->allow('guest', 'activitySignup', 'view');
 
                     $acl->allow('user', 'activity', 'create');
+                    $acl->allow('user', 'activitySignup', 'signUp');
+                    $acl->allow('user', 'activitySignup', 'checkUSerSignedUp');
 
                     return $acl;
                 },
-            )
-        );
+            ]
+        ];
     }
 }

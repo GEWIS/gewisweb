@@ -12,20 +12,22 @@ class EducationController extends AbstractActionController {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $courses = $service->searchCourse($request->getPost());
+        $query = $request->getQuery();
+
+        if (isset($query['query'])) {
+            $courses = $service->searchCourse($query);
 
             if (null !== $courses) {
-                return new ViewModel(array(
+                return new ViewModel([
                     'form' => $service->getSearchCourseForm(),
                     'courses' => $courses
-                ));
+                ]);
             }
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $service->getSearchCourseForm()
-        ));
+        ]);
     }
 
     public function courseAction()
@@ -40,14 +42,24 @@ class EducationController extends AbstractActionController {
 
         // when there is a parent course, redirect to that course
         if (!is_null($course->getParent())) {
-            return $this->redirect()->toRoute('education/course', array(
+            return $this->redirect()->toRoute('education/course', [
                 'code' => $course->getParent()->getCode()
-            ));
+            ]);
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'course' => $course
-        ));
+        ]);
+    }
+
+    /**
+     * Download an exam.
+     */
+    public function downloadAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        return $this->getExamService()->getExamDownload($id);
     }
 
     /**

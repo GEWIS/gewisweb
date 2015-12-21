@@ -85,11 +85,28 @@ class Organ
     protected $members;
 
     /**
+     * Reference to subdecisions.
+     *
+     * @ORM\ManyToMany(targetEntity="SubDecision")
+     * @ORM\JoinTable(name="organs_subdecisions",
+     *      joinColumns={@ORM\JoinColumn(name="organ_id", referencedColumnName="id")},
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="meeting_type", referencedColumnName="meeting_type"),
+     *          @ORM\JoinColumn(name="meeting_number", referencedColumnName="meeting_number"),
+     *          @ORM\JoinColumn(name="decision_point", referencedColumnName="decision_point"),
+     *          @ORM\JoinColumn(name="decision_number", referencedColumnName="decision_number"),
+     *          @ORM\JoinColumn(name="subdecision_number", referencedColumnName="number")
+     *      })
+     */
+    protected $subdecisions;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->subdecisions = new ArrayCollection();
     }
 
     /**
@@ -240,5 +257,39 @@ class Organ
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * Add multiple subdecisions.
+     *
+     * @param array $subdecisions
+     */
+    public function addSubdecisions($subdecisions)
+    {
+        foreach ($subdecisions as $subdecision) {
+            $this->addSubdecision($subdecision);
+        }
+    }
+
+    /**
+     * Add a subdecision.
+     *
+     * @param SubDecision $subdecision
+     */
+    public function addSubdecision(SubDecision $subdecision)
+    {
+        if (!$this->subdecisions->contains($subdecision)) {
+            $this->subdecisions[] = $subdecision;
+        }
+    }
+
+    /**
+     * Get all subdecisions.of this organ
+     *
+     * @return array
+     */
+    public function getSubdecisions()
+    {
+        return $this->subdecisions;
     }
 }

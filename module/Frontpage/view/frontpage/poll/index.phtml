@@ -1,0 +1,15 @@
+<?php if (isset($poll)): ?>
+    <?= $this->partial('partial/poll.phtml', [
+        'poll' => $poll,
+        'canVote' => $canVote,
+        'userVote' => $userVote,
+        'showResults' => true
+    ]) ?>
+
+
+<?php else: ?>
+    <?= $this->translate('There currently is no poll.'); ?>
+<?php endif; ?>
+<a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
+<a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+

@@ -6,7 +6,7 @@ $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
 if(isset($company)){
-    $companyList = array();
+    $companyList = [];
     $companyList[] = $company;
     $islist = false;
 } else {
@@ -33,7 +33,7 @@ foreach ($companyList as $company) {
     $translated = $company->getTranslationFromLocale($locale) != null;
     if ($visible && $translated){
         echo $this->partial('partial/company/company/list/company.phtml', 
-                        array('islist' => $islist, 'company' => $company, 'locale' => $locale));
+                        ['islist' => $islist, 'company' => $company, 'locale' => $locale]);
         $i += 1;
     }
 }
