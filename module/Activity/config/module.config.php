@@ -173,7 +173,7 @@ return [
                         'options' => [
                             'route'    => '/signup/[:id]',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'id'     => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signup'
@@ -185,7 +185,7 @@ return [
                         'options' => [
                             'route'    => '/signoff/[:id]',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'id'     => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signoff'

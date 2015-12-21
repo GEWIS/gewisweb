@@ -52,6 +52,7 @@ Activity.Touch.login = function(lidnr, pincode) {
         if(data.login) {
             Activity.Touch.user = data.user;
             $('#loginModal').modal('hide');
+            $('#activityModal').modal('hide');
             Activity.Touch.resetLogoutTimeout();
             $('.not-logged-in').hide();
             $('.logged-in').show();
@@ -75,6 +76,7 @@ Activity.Touch.logoutTick = function () {
     if (Activity.Touch.logoutSeconds == 0) {
         $.get(URLHelper.url('user/logout'), function (data) {
             $('#logoutModal').modal('hide');
+            $('#activityModal').modal('hide');
             $('.logged-in').hide();
             $('.not-logged-in').show();
             $('#fullName').html('');
@@ -133,7 +135,11 @@ Activity.Touch.showActivity = function (index) {
     Activity.Touch.resetLogoutTimeout();
     var activity = Activity.Touch.activities[index];
 
+    $('#subscribeFailed').hide();
+    $('#unsubscribeFailed').hide();
     if(Activity.Touch.user) {
+        $('#activitySubscribe').attr('onclick', 'Activity.Touch.subscribe(' + activity.id +')');
+        $('#activityUnsubscribe').attr('onclick', 'Activity.Touch.unsubscribe(' + activity.id +')');
         if(Activity.Touch.signedUp.indexOf(activity.id) !== -1) {
             $('#activitySubscribe').hide();
             $('#activityUnsubscribe').show();
@@ -150,4 +156,33 @@ Activity.Touch.showActivity = function (index) {
     $('#activityLocation').html(activity.location);
     $('#activityCosts').html(activity.costs);
     $('#activityAttendeeCount').html(activity.attendees.length);
+};
+
+Activity.Touch.subscribe = function (id) {
+    Activity.Touch.resetLogoutTimeout();
+    $('#activitySubscribe').hide();
+    $.post(URLHelper.url('activity_api/signup', {id: id}), function (data) {
+        if(data.success) {
+            $('#activityUnsubscribe').show();
+            Activity.Touch.signedUp.push(id);
+            $('#activity' + id).addClass('success');
+        } else {
+            $('#subscribeFailed').show();
+        }
+    });
+};
+
+Activity.Touch.unsubscribe = function (id) {
+    Activity.Touch.resetLogoutTimeout();
+    $('#activityUnsubscribe').hide();
+    $.post(URLHelper.url('activity_api/signoff', {id: id}), function (data) {
+        if(data.success) {
+            $('#activitySubscribe').show();
+            var index = Activity.Touch.signedUp.indexOf(id);
+            Activity.Touch.signedUp.splice(index, 1);
+            $('#activity' + id).removeClass('success');
+        } else {
+            $('#unsubscribeFailed').show();
+        }
+    });
 };

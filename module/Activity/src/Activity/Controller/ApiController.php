@@ -39,7 +39,25 @@ class ApiController extends AbstractActionController
      */
     public function signupAction()
     {
+        $id = (int)$this->params('id');
 
+        $activityService = $this->getActivityService();
+        $signupService = $this->getSignupService();
+
+        $activity = $activityService->getActivity($id);
+
+        $params = [];
+        $params['success'] = false;
+        //Assure the form is used
+        if ($this->getRequest()->isPost()) {
+            if ($activity->getCanSignup() && $signupService->isAllowedToSubscribe()) {
+                //TODO: check that the activity doesn't have any extra fields
+                $signupService->signUp($activity, []);
+                $params['success'] = true;
+            }
+        }
+
+        return new JsonModel($params);
     }
 
     /**
@@ -47,7 +65,26 @@ class ApiController extends AbstractActionController
      */
     public function signoffAction()
     {
+        $id = (int) $this->params('id');
 
+        $activityService = $this->getActivityService();
+        $signupService = $this->getSignupService();
+
+        $activity = $activityService->getActivity($id);
+
+        $params = [];
+        $params['success'] = false;
+
+        $identity = $this->getServiceLocator()->get('user_role');
+        $user = $identity->getMember();
+        if ($this->getRequest()->isPost()) {
+            if ($signupService->isAllowedToSubscribe() && $signupService->isSignedUp($activity, $user)) {
+                $signupService->signOff($activity, $user);
+                $params['success'] = true;
+            }
+        }
+
+        return new JsonModel($params);
     }
 
     public function signedupAction()
