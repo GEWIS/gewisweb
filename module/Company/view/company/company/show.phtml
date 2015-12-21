@@ -1,0 +1,28 @@
+<?php
+
+$locale = $this->translator->getLocale();
+$escaper = new Zend\Escaper\Escaper('utf-8');
+
+?>
+<div class="container">
+    <div class="company-list">
+
+        <?php
+
+        if (!isset($company)) {
+            echo $this->translate('Company not found');
+        }
+
+        if (isset($company)) {
+            $visible = $company->isHidden();
+            $translated = $company->getTranslationFromLocale($locale) != null;
+            if ($visible && $translated) {
+                echo $this->partial('partial/company/company/list/company.phtml',
+                    ['company' => $company, 'locale' => $locale]);
+            }
+        }
+
+        ?>
+
+    </div>
+</div>

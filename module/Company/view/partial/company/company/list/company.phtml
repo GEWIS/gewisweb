@@ -1,17 +1,8 @@
-<?php 
+<?php
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
-$companyURL;
-if ($islist===true) {
-
-    $companyURL = $this->url('company/companyItem', // Route url
-        ['slugCompanyName' => $company->getSlugName()], // Url parameters
-        [], // routeOptions
-        true); // Reuse matched parameters
-} else {
-    $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
-}
+$companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 
 ?>
 <div class="company-list-item list-item" id="company-<?= $escaper->escapeHtmlAttr($company->getId()); ?>">
@@ -26,7 +17,7 @@ if ($islist===true) {
                 <h4>Contact</h4>
                 <p class="company-address"><?= nl2br($company->getAddress()); ?></p>
                 <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></p>
-                <p class="company-website"><a href="<?= rawurlencode($company->getTranslationFromLocale($locale)->getWebsite()); ?>">Visit website</a></p>
+                <p class="company-website"><a href="<?= $companyURL ?>">Visit website</a></p>
                 <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></p>
             </div>
             <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
@@ -59,4 +50,3 @@ if ($islist===true) {
         </div>
     </div>
 </div>
-<hr>
