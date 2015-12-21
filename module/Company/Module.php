@@ -57,6 +57,11 @@ class Module
                         $sm->get('company_doctrine_em')
                     );
                 },
+                'company_mapper_bannerpackage' => function ($sm) {
+                    return new \Company\Mapper\BannerPackage(
+                        $sm->get('company_doctrine_em')
+                    );
+                },
                 'company_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
