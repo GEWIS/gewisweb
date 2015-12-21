@@ -161,13 +161,25 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
+                'user_pin_auth_adapter' => function ($sm) {
+                    $adapter = new \User\Authentication\Adapter\PinMapper(
+                        $sm->get('application_service_legacy')
+                    );
+                    $adapter->setMapper($sm->get('user_mapper_user'));
+                    return $adapter;
+                },
                 'user_auth_service' => function ($sm) {
                     return new \Zend\Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );
                 },
-
+                'user_pin_auth_service' => function ($sm) {
+                    return new \Zend\Authentication\AuthenticationService(
+                        $sm->get('user_auth_storage'),
+                        $sm->get('user_pin_auth_adapter')
+                    );
+                },
                 'user_remoteaddress' => function ($sm) {
                     $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
                     return $remote->getIpAddress();
@@ -204,6 +216,7 @@ class Module
                     $acl->addRole(new Role('tueguest'), 'guest');
                     $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
+                    $acl->addrole(new Role('sosuser'), 'apiuser');
                     $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
@@ -227,6 +240,8 @@ class Module
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
 
+                    // sosusers can't do anything
+                    $acl->deny('sosuser');
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
