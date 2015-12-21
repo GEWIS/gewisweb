@@ -27,10 +27,10 @@ class ActivityController extends AbstractActionController
      */
     public function viewAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
 
-        /** @var $activity Activity */
+        /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
 
         $identity = $this->getServiceLocator()->get('user_role');
@@ -96,7 +96,7 @@ class ActivityController extends AbstractActionController
      */
     public function signupAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         /** @var \Activity\Service\Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
@@ -110,7 +110,6 @@ class ActivityController extends AbstractActionController
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = $translator->translate('Use the form to subscribe');
-
             return $params;
         }
 
@@ -122,7 +121,6 @@ class ActivityController extends AbstractActionController
 
         if (!$signupService->isAllowedToSubscribe()) {
             $params['error'] = $translator->translate('You need to log in to subscribe');
-
             return $params;
         }
 
@@ -132,7 +130,6 @@ class ActivityController extends AbstractActionController
         //Assure the form is valid
         if (!$form->isValid()){
             $params['error'] = $translator->translate('Wrong form');
-
             return $params;
         }
 
