@@ -14,3 +14,13 @@ input {
 .form-group {
     margin-bottom: 10px;
 }
+
+.form-horizontal {
+    .radio {
+        padding-top: 0;
+    }
+
+    .progress {
+        margin-bottom: 0;
+    }
+}
