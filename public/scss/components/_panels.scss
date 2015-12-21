@@ -23,13 +23,13 @@ Markup:
 </div>
 
 .panel-default - Default
+panel-emphasize - Emphasize
 
 Styleguide: panels.panel-default
 */
 
 .panel-group {
     display: flex;
-    background: #000;
 }
 
 .panel {
@@ -79,4 +79,8 @@ Styleguide: panels.panel-default
             right: 0;
         }
     }
+}
+
+.panel-emphasize {
+
 }
