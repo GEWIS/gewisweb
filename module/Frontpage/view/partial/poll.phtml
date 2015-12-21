@@ -14,16 +14,14 @@ foreach ($poll->getOptions() as $option) {
 }
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<h4><?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?></h4>
+<p><em><?= ($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion() ?></em></p>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
-        <div class="row">
-            <div class="col-md-5">
-                <?php if ($canVote): ?>
+        <div class="form-group">
+            <?php if ($canVote): ?>
                 <div class="radio">
                     <label>
-
-                        <input type="radio" value="<?= $option->getId() ?>" name="option"/>
+                        <input type="radio" value="<?= $option->getId() ?>" name="option" />
                         <?php endif; ?>
                         <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
                         <?= $voted ? '<strong>' : '' ?>
@@ -33,7 +31,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </label>
                 </div>
             <?php endif; ?>
-            </div>
             <?php if($showResults || !$canVote): ?>
             <div class="col-md-6">
                 <div class="progress">
@@ -57,7 +54,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
     <?php endforeach; ?>
     <p>
         <?php if ($canVote): ?>
-            <button type="submit" class="btn btn-large btn-success">Vote</button>
+            <button type="submit" class="btn btn-large btn-primary">Vote</button>
         <?php endif; ?>
     </p>
 </form>
