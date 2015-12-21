@@ -47,6 +47,9 @@ return [
                         'priority' => 2,
                         'type' => 'segment',
                         'options' => [
+                            'defaults' => [
+                                'action' => 'show', 
+                            ],
                             // url will be company/<slugCompanyName>/jobs/<slugJobName>/<action>
                             // slugjobname and slugcompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
