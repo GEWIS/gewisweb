@@ -6,3 +6,7 @@ input {
 .form-control {
     @include box-shadow(none);
 }
+
+.radio {
+    margin: 0.4em 0;
+}
