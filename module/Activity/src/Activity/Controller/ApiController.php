@@ -44,14 +44,12 @@ class ApiController extends AbstractActionController
         $activityService = $this->getActivityService();
         $signupService = $this->getSignupService();
 
-        $activity = $activityService->getActivity($id);
-
         $params = [];
         $params['success'] = false;
         //Assure the form is used
-        if ($this->getRequest()->isPost()) {
-            if ($activity->getCanSignup() && $signupService->isAllowedToSubscribe()) {
-                //TODO: check that the activity doesn't have any extra fields
+        if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
+            $activity = $activityService->getActivity($id);
+            if ($activity->getFields()->count() == 0 && $activity->getCanSignup()) {
                 $signupService->signUp($activity, []);
                 $params['success'] = true;
             }
@@ -70,15 +68,14 @@ class ApiController extends AbstractActionController
         $activityService = $this->getActivityService();
         $signupService = $this->getSignupService();
 
-        $activity = $activityService->getActivity($id);
-
         $params = [];
         $params['success'] = false;
 
         $identity = $this->getServiceLocator()->get('user_role');
         $user = $identity->getMember();
-        if ($this->getRequest()->isPost()) {
-            if ($signupService->isAllowedToSubscribe() && $signupService->isSignedUp($activity, $user)) {
+        if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
+            $activity = $activityService->getActivity($id);
+            if ($signupService->isSignedUp($activity, $user)) {
                 $signupService->signOff($activity, $user);
                 $params['success'] = true;
             }

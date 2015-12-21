@@ -435,10 +435,7 @@ class Activity
      */
     public function toArray()
     {
-        $fields = [];
-        /*foreach ($this->getFields() as $field) {
-            $fields[] = $field->toArray();
-        }*/
+        $fields = $this->getFields()->count();
 
         $attendees = [];
         foreach ($this->getSignUps() as $signup) {

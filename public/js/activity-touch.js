@@ -119,14 +119,16 @@ Activity.Touch.fetchActivities = function () {
        Activity.Touch.activities = data;
         $('#activityList').html('');
         $.each(data, function(index, activity) {
-            $('#activityList').append(
-                '<tr id="activity' + activity.id + '" data-activity-index="' + index + '">'
-                + '<td>' + activity.beginTime.date.replace(':00.000000', '') + '</td>'
-                + '<td>' + activity.endTime.date.replace(':00.000000', '') + '</td>'
-                + '<td>' + activity.name + '</td>'
-                + '<td>' + activity.costs + '</td>'
-                + '</tr>'
-            );
+            if(activity.fields == 0) {
+                $('#activityList').append(
+                    '<tr id="activity' + activity.id + '" data-activity-index="' + index + '">'
+                    + '<td>' + activity.beginTime.date.replace(':00.000000', '') + '</td>'
+                    + '<td>' + activity.endTime.date.replace(':00.000000', '') + '</td>'
+                    + '<td>' + activity.name + '</td>'
+                    + '<td>' + activity.costs + '</td>'
+                    + '</tr>'
+                );
+            }
         });
         });
 };
@@ -134,7 +136,7 @@ Activity.Touch.fetchActivities = function () {
 Activity.Touch.showActivity = function (index) {
     Activity.Touch.resetLogoutTimeout();
     var activity = Activity.Touch.activities[index];
-
+    console.log(activity);
     $('#subscribeFailed').hide();
     $('#unsubscribeFailed').hide();
     if(Activity.Touch.user) {
