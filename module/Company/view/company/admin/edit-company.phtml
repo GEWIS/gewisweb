@@ -9,7 +9,7 @@ if (is_null($company)){
 
 <?= $this->form()->openTag($form) ?>
 <?php echo $this->partial('partial/company/admin/editors/company.phtml', 
-                          array('form' => $form)
+                          ['form' => $form]
                          ); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
@@ -31,17 +31,17 @@ if (is_null($company)){
             <tr>
                 <td>
                     <a href="<?= $this->url("admin_company/editCompany/editPackage",
-                                            array( 
+                                            [
                                                   "slugCompanyName" => $company->getSlugName(),
                                                   "packageID" => $package->getId(),
-                                                 )
+                                            ]
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
                     <a href="<?= $this->url("admin_company/editCompany/editPackage/deletePackage",
-                                            array( 
+                                            [
                                                   "slugCompanyName" => $company->getSlugName(),
                                                   "packageID" => $package->getId(),
-                                                 )
+                                            ]
                                            ); ?>"> <?= $this->translate('delete'); ?></a>
                     </a>
                 </td> 
@@ -60,8 +60,8 @@ if (is_null($company)){
 </table>
 <br/>
 <a href="<?= $this->url("admin_company/default", 
-                        array("action"=>"addPackage",
-                              "slugCompanyName" => $company->getSlugName())
+                        ["action"          =>"addPackage",
+                         "slugCompanyName" => $company->getSlugName()]
                        ); ?>">
     <?= $this->translate('Add package'); ?>
 </a>

@@ -14,174 +14,174 @@ class EditCompany extends Form
         parent::__construct();
 
         $this->setAttribute('method', 'post');
-        $this->add(array(
+        $this->add([
             'name' => 'id',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'hidden',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'translations',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'hidden',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'languageNeutralId',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'hidden',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'slugName',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
                 'required' => 'required',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Permalink'),
                 'required' => 'required',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'name',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
                 'required' => 'required',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Name'),
                 'required' => 'required',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'languages',
             'type' => 'MultiCheckbox',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Languages'),
-                'value_options' => array(
+                'value_options' => [
                     'en' => $translate->translate('English'),
                     'nl' => $translate->translate('Dutch'),
-                ),
-            ),
-        ));
-        $this->add(array(
+                ],
+            ],
+        ]);
+        $this->add([
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
-            'attributes' => array(
+            'attributes' => [
                 'required' => 'required',
                 'type' => 'textarea',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Location'),
                 'required' => 'required',
-            ),
-        ));
+            ],
+        ]);
         // English version
-        $this->add(array(
+        $this->add([
             'name' => 'en_website',
             'type' => 'Zend\Form\Element\Url',
-            'attributes' => array(
-            ),
-            'options' => array(
+            'attributes' => [
+            ],
+            'options' => [
                 'label' => $translate->translate('Website'),
-            ),
-        ));
+            ],
+        ]);
         // Dutch version
-        $this->add(array(
+        $this->add([
             'name' => 'nl_website',
             'type' => 'Zend\Form\Element\Url',
-            'attributes' => array(
-            ),
-            'options' => array(
+            'attributes' => [
+            ],
+            'options' => [
                 'label' => $translate->translate('Website'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'en_slogan',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Slogan'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'nl_slogan',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Slogan'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
-            'attributes' => array(
+            'attributes' => [
                 'required' => 'required',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Email'),
                 'required' => 'required',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'phone',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Phone'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'nl_logo',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'file',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Logo'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'en_logo',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'file',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Logo'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'en_description',
             'type' => 'Zend\Form\Element\Textarea',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Description'),
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'type' => 'textarea',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'nl_description',
             'type' => 'Zend\Form\Element\Textarea',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Description'),
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'type' => 'textarea',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
-            ),
-        ));
+            ],
+        ]);
 
         $this->initFilters();
     }
@@ -190,23 +190,23 @@ class EditCompany extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'name',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 127,
-                    ),
-                ),
-            ),
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-        ));
+                    ],
+                ],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
 
         /*$filter->add(array(
             'name' => 'en.website',
@@ -256,61 +256,61 @@ class EditCompany extends Form
             )
         ));*/
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'email',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'EmailAddress',
-                    'options' => array(
-                        'messages' => array(
+                    'options' => [
+                        'messages' => [
                             'emailAddressInvalidFormat' => 'Email address format is not valid',
-                        ),
-                    ),
-                ),
-            ),
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'en.logo',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'File\Extension',
-                    'options' => array(
+                    'options' => [
                         'extension' => 'png',
-                    ),
-                ),
-                array(
+                    ],
+                ],
+                [
                     'name' => 'File\MimeType',
-                    'options' => array(
+                    'options' => [
                         'mimeType' => 'image/png',
-                    ),
-                ),
-            ),
-        ));
-        $filter->add(array(
+                    ],
+                ],
+            ],
+        ]);
+        $filter->add([
             'name' => 'nl_logo',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'File\Extension',
-                    'options' => array(
+                    'options' => [
                         'extension' => 'png',
-                    ),
-                ),
-                array(
+                    ],
+                ],
+                [
                     'name' => 'File\MimeType',
-                    'options' => array(
+                    'options' => [
                         'mimeType' => 'image/png',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
         $this->setInputFilter($filter);
     }

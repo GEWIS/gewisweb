@@ -5,13 +5,13 @@
     } else { 
         if (isset($slugJobName)){
             echo $this->partial('company/admin/editJob.phtml', 
-                                 array('slugJobName' => $slugJobName)
+                                 ['slugJobName' => $slugJobName]
                                );
         } else { 
             echo $this->partial('company/admin/editCompany.phtml', 
-                                array('companyEditForm' => $companyEditForm, 
-                                      'company' => $company,
-                                      'joblist' => $joblist)
+                                ['companyEditForm' => $companyEditForm,
+                                 'company'         => $company,
+                                 'joblist'         => $joblist]
                                 );
         } 
     } 

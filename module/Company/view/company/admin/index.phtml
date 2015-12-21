@@ -44,7 +44,7 @@
             <?php
                 foreach ($companyList as $company) {
                     $editUrl = $this->url('admin_company/editCompany', 
-                                          array('slugCompanyName' => $company->getSlugName()));
+                                          ['slugCompanyName' => $company->getSlugName()]);
                 //echo $editUrl;
             ?>
             <tr class="company-list-item">
@@ -52,7 +52,7 @@
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->getNumberOfJobs(); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packages */ ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Package statuses */ ?></a></td>
-                <td><a href=<?= $this->url('admin_company/deleteCompany', array('slugCompanyName' => $company->getSlugName()))?>><?= $this->translate('Delete') ?></a></td>
+                <td><a href=<?= $this->url('admin_company/deleteCompany', ['slugCompanyName' => $company->getSlugName()])?>><?= $this->translate('Delete') ?></a></td>
             </tr>
             <?php
                 }
@@ -67,7 +67,7 @@
             </tr>
         </tfoot>
     </table>
-    <a href=<?=$this->url('admin_company/default', array('action' => 'addCompany'))?>><?=$this->translate('Add Company');?></a>
+    <a href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>><?=$this->translate('Add Company');?></a>
     
 
 

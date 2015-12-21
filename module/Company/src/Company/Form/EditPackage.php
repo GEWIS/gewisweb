@@ -14,54 +14,54 @@ class EditPackage extends Form
         parent::__construct();
 
         $this->setAttribute('method', 'post');
-        $this->add(array(
+        $this->add([
             'name' => 'id',
             'type' => 'hidden',
-        ));
-        $this->add(array(
+        ]);
+        $this->add([
             'name' => 'startDate',
             'type' => 'Zend\Form\Element\Date',
-            'attributes' => array(
+            'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Start date'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'expirationDate',
             'type' => 'Zend\Form\Element\Date',
-            'attributes' => array(
+            'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Expiration date'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'published',
             'type' => 'Zend\Form\Element\Checkbox',
-            'attributes' => array(
+            'attributes' => [
                 'required' => 'required',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Published'),
                 'required' => 'required',
-                'value_options' => array(
+                'value_options' => [
                     '0' => 'Enabled',
-                ),
-            ),
-        ));
-        $this->add(array(
+                ],
+            ],
+        ]);
+        $this->add([
             'name' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
-            ),
-        ));
+            ],
+        ]);
         $this->initFilters();
     }
 
@@ -69,29 +69,29 @@ class EditPackage extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'startDate',
             'required' => true,
-            'validators' => array(
-                array('name' => 'date'),
-            ),
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-        ));
+            'validators' => [
+                ['name' => 'date'],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'expirationDate',
             'required' => true,
-            'validators' => array(
-                array('name' => 'date'),
-            ),
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-        ));
+            'validators' => [
+                ['name' => 'date'],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
 
         $this->setInputFilter($filter);
     }

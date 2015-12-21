@@ -108,7 +108,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $this->translations;
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -438,14 +438,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getArrayCopy()
     {
 
-        $arraycopy = array();
+        $arraycopy = [];
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['phone'] = $this->getPhone();
 
         // Languages
-        $arraycopy['languages'] = array();
+        $arraycopy['languages'] = [];
         foreach ($this->getTranslations() as $translation) {
             $arraycopy[$translation->getLanguage().'_'.'slogan'] = $translation->getSlogan();
             $arraycopy[$translation->getLanguage().'_'.'website'] = $translation->getWebsite();

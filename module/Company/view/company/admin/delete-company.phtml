@@ -10,9 +10,9 @@
 <h1> <?=$this->translate("Delete");?> </h1>
 <?=$this->translate("Do you really want to delete this company?");?>
 <?=$this->partial('partial/company/company/list/company.phtml', 
-    array('islist' => false, 'company' => $company, 'locale' => $locale)); ?>
+    ['islist' => false, 'company' => $company, 'locale' => $locale]); ?>
 
- <form action="<?= $this->url('admin_company/deleteCompany', array('slugCompanyName' => $company->getSlugName()))?>" method="post">
+ <form action="<?= $this->url('admin_company/deleteCompany', ['slugCompanyName' => $company->getSlugName()])?>" method="post">
  <div>
      <input type="submit" name="del" value="Yes" />
      <input type="submit" name="del" value="No" />

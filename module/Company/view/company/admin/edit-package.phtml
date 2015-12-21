@@ -45,11 +45,11 @@ $form = $packageEditForm;
             <tr>
                 <td>
                     <a href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
-                                            array( 
+                                            [
                                                   "slugCompanyName" => $companyName,
                                                   "packageID" => $package->getId(),
                                                   "jobName" => $job->getSlugName(),
-                                                 )
+                                            ]
                                            ); ?>">
                         <?= $this->translate('edit'); ?></a>
                 </td> 
@@ -64,6 +64,6 @@ $form = $packageEditForm;
 </table>
 <br/>
 <a href="<?= $this->url("admin_company/editCompany/editPackage/addJob", 
-    array( "slugCompanyName" => $companyName, 'packageID' => $package->getId())); ?>">
+    ["slugCompanyName" => $companyName, 'packageID' => $package->getId()]); ?>">
     <?= $this->translate('Add job'); ?>
 </a>

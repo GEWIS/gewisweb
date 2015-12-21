@@ -19,9 +19,9 @@ class AdminController extends AbstractActionController
         $companyService = $this->getCompanyService();
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
-        ));
+        ]);
 
         return $vm;
     }
@@ -45,11 +45,11 @@ class AdminController extends AbstractActionController
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default', 
-                    array(
+                    [
                         'action' => 'edit', 
                         'slugCompanyName' => $companyName
-                    ), 
-                    array(), 
+                    ],
+                    [],
                     false
                 );
             }
@@ -62,14 +62,14 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute(
                 'admin_company/default',
-                array('action' => 'addCompany')
+                ['action' => 'addCompany']
             )
         );
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'companyEditForm' => $companyForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -97,8 +97,8 @@ class AdminController extends AbstractActionController
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
-                    array('slugCompanyName' => $companyName), 
-                    array(), 
+                    ['slugCompanyName' => $companyName],
+                    [],
                     false
                 );
             }
@@ -111,13 +111,13 @@ class AdminController extends AbstractActionController
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute('admin_company/editCompany/addPackage',
-            array('slugCompanyName' => $companyName))
+            ['slugCompanyName' => $companyName])
         );
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'companyEditForm' => $packageForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -148,11 +148,11 @@ class AdminController extends AbstractActionController
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage/editJob',
-                    array(
+                    [
                         'slugCompanyName' => $companyName,
                         'packageID' => $packageId,
-                        'jobName' => $job->getName(), 
-                    )
+                        'jobName' => $job->getName(),
+                    ]
                 );
             }
         }
@@ -164,17 +164,17 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage/addJob',
-                array(
+                [
                     'slugCompanyName' => $companyName, 
                     'packageID' => $packageId
-                )
+                ]
             )
         );
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'companyEditForm' => $companyForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -218,16 +218,16 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute(
                 'admin_company/default',
-                array(
+                [
                     'action' => 'editCompany',
-                    'slugCompanyName' => $companyName, 
-                )
+                    'slugCompanyName' => $companyName,
+                ]
             )
         );
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'company' => $company,
             'companyEditForm' => $companyForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -264,19 +264,19 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage',
-                array(
+                [
                     'packageID' => $packageID, 
-                    'slugCompanyName' => $companyName, 
-                )
+                    'slugCompanyName' => $companyName,
+                ]
             )
         );
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'package' => $package,
             'companyName' => $companyName,
             'packageEditForm' => $packageForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -323,18 +323,18 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage/editJob',
-                array(
+                [
                     'slugCompanyName' => $companyName, 
                     'jobName' => $jobName,
                     'packageID' => $packageID,
-                )
+                ]
             )
         );
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'jobEditForm' => $jobForm,
-        ));
+        ]);
 
         return $vm;
     }
@@ -383,10 +383,10 @@ class AdminController extends AbstractActionController
         // No data returned, so instead, ask for confirmation
 
         // Initialize the view
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'companies' => $companyService->getEditableCompaniesBySlugName($slugName),
             'translator' => $companyService->getTranslator(),
-        ));
+        ]);
         return $vm;
     }
 
@@ -412,18 +412,18 @@ class AdminController extends AbstractActionController
             }
             return $this->redirect()->toRoute(
                 'admin_company/editCompany', 
-                array('slugCompanyName' => $companyName)
+                ['slugCompanyName' => $companyName]
             );
         }
 
         // No data returned, so instead, ask for confirmation
 
         // Initialize the view
-        $vm =  new ViewModel(array(
+        $vm =  new ViewModel([
             'package' => $companyService->getEditablePackage($packageID),
             'slugName' => $companyName,
             'translator' => $companyService->getTranslator(),
-        ));
+        ]);
 
         return $vm;
     }

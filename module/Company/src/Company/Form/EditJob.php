@@ -14,107 +14,107 @@ class EditJob extends Form
         parent::__construct();
 
         $this->setAttribute('method', 'post');
-        $this->add(array(
+        $this->add([
             'name' => 'job-id',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'hidden',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'company-id',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'hidden',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'language',
-            'options' => array(
+            'options' => [
                 'label' => 'Language',
-                'value_options' => array(
+                'value_options' => [
                     'nl' => $translate->translate('Dutch'),
                     'en' => $translate->translate('English'),
-                ),
-            ),
-        ));
-        $this->add(array(
+                ],
+            ],
+        ]);
+        $this->add([
             'name' => 'name',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Name'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'slugName',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Permalink'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Active'),
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'website',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Website'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Email'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'phone',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'text',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => $translate->translate('Phone'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Description'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
+            'options' => [
                 'label' => $translate->translate('Active'),
-            ),
-        ));
-        $this->add(array(
+            ],
+        ]);
+        $this->add([
             'name' => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
-            ),
-        ));
+            ],
+        ]);
 
         $this->initFilters();
     }
@@ -123,51 +123,51 @@ class EditJob extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'name',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 127,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'website',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'uri',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'description',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 10000,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'email',
             'required' => true,
-            'validators' => array(
-                array('name' => 'email_address'),
-            ),
-        ));
+            'validators' => [
+                ['name' => 'email_address'],
+            ],
+        ]);
 
         // Cannot upload logo yet
         /*$filter->add(array(

@@ -5,7 +5,7 @@
     ?>
 
 
- <form action="<?= $this->url('admin_company/editCompany/editPackage/deletePackage', array('slugCompanyName' => $slugName, 'packageID' => $package->getId()))?>" method="post">
+ <form action="<?= $this->url('admin_company/editCompany/editPackage/deletePackage', ['slugCompanyName' => $slugName, 'packageID' => $package->getId()])?>" method="post">
  <div>
      <input type="submit" name="del" value="Yes" />
      <input type="submit" name="del" value="No" />
