@@ -29,6 +29,15 @@ return [
                             'route' => '/login',
                         ]
                     ],
+                    'pinglogin' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/pinlogin',
+                            'defaults' => [
+                                'action' => 'pinLogin',
+                            ],
+                        ],
+                    ],
                     'activate' => [
                         'type' => 'Segment',
                         'options' => [

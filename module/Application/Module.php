@@ -61,6 +61,7 @@ class Module
         return [
             'invokables' => [
                 'application_service_storage' => 'Application\Service\FileStorage',
+                'application_service_legacy' => 'Application\Service\Legacy',
             ],
         ];
     }

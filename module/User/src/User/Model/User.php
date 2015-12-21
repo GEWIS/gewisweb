@@ -153,6 +153,21 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
+     * @param array $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function toArray()
+    {
+        return [
+            'lidnr' => $this->getLidnr(),
+            'email' => $this->getEmail()
+        ];
+    }
+    /**
      * Get the user's resource ID.
      *
      * @return string

@@ -1,0 +1,58 @@
+<?php 
+$form=$jobEditForm;
+?>
+
+<?= $this->form()->openTag($form) ?>
+<dl>
+<?php $element = $form->get('name') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('slugName');?>
+    <dt><?= $element->getOption('label'); ?></dt>
+    <dd>
+        <?= $this->formElement($element); ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('language') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('website') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('description') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('active') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formCheckbox($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('phone') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php $element = $form->get('email') ?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+</dl>
+
+<?= $this->formRow($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>

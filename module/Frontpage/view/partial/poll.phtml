@@ -26,7 +26,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php endif; ?>
                         <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
                         <?= $voted ? '<strong>' : '' ?>
-                        <?= ($lang === 'en') ? $option->getEnglishText() : $option->getDutchText() ?>
+                        <?= $this->escapeHtml(($lang === 'en') ? $option->getEnglishText() : $option->getDutchText()) ?>
                         <?= $voted ? '</strong>' : '' ?>
                         <?php if ($canVote): ?>
                     </label>
