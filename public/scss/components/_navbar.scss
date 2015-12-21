@@ -191,6 +191,10 @@ Styleguide: navbar
     visibility: hidden;
     opacity: 0;
 
+    > li {
+        min-width: 160px;
+    }
+
     > li > a {
         @include transition(
             background $transition-duration ease,
