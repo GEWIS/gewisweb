@@ -118,6 +118,30 @@ class Signup extends AbstractAclService
     }
 
     /**
+     * Get the ids of all activities which the current user is signed up for.
+     *
+     * @return array
+     */
+    public function getSignedUpActivityIds()
+    {
+        if (!$this->isAllowed('checkUserSignedUp', 'activitySignup')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view activities which you signed up for')
+            );
+        }
+        $user = $this->getServiceManager()->get('user_role');
+        $activitySignups = $this->getServiceManager()->get('activity_mapper_signup')->getSignedUpActivities(
+            $user->getLidnr()
+        );
+        $activities = [];
+        foreach($activitySignups as $activitySignup) {
+            $activities[] = $activitySignup->getActivity()->getId();
+        }
+        return $activities;
+    }
+
+    /**
      * Sign up  an activity with the specified field values.
      *
      * @param ActivityModel $activity

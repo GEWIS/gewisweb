@@ -90,7 +90,10 @@ class Module
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', 'signUp');
-                    $acl->allow('user', 'activitySignup', 'checkUSerSignedUp');
+                    $acl->allow('user', 'activitySignup', 'checkUserSignedUp');
+
+                    $acl->allow('sosuser', 'activitySignup', 'signUp');
+                    $acl->allow('sosuser', 'activitySignup', 'checkUserSignedUp');
 
                     return $acl;
                 },

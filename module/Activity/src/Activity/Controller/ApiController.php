@@ -19,7 +19,7 @@ class ApiController extends AbstractActionController
         $activityService = $this->getActivityService();
         $activities = $activityService->getApprovedActivities();
         $activitiesArray = [];
-        foreach($activities as $activity) {
+        foreach ($activities as $activity) {
             $activitiesArray[] = $activity->toArray();
         }
 
@@ -50,8 +50,22 @@ class ApiController extends AbstractActionController
 
     }
 
+    public function signedupAction()
+    {
+        $activities = $this->getSignupService()->getSignedUpActivityIds();
+
+        return new JsonModel([
+            'activities' => $activities
+        ]);
+    }
+
     private function getActivityService()
     {
         return $this->getServiceLocator()->get('activity_service_activity');
+    }
+
+    private function getSignupService()
+    {
+        return $this->getServiceLocator()->get('activity_service_signup');
     }
 }

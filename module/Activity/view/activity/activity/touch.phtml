@@ -2,6 +2,7 @@
 <?php
 $this->scriptUrl()->requireUrl('user/pinlogin')
     ->requireUrl('activity_api/list')
+    ->requireUrl('activity_api/signedup')
     ->requireUrl('user/logout');
 ?>
 <html lang="en">
@@ -373,7 +374,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                                 <td id="activityAttendeeCount"></td>
                             </tr>
                         </table>
-                        <div id="activitySignup logged-in" class="logged-in">
+                        <div id="activitySubscribe" class="logged-in">
                             <button
                                 class="btn btn-primary btn-lg btn-block"><?= $this->translate('Subscribe') ?></button>
                         </div>

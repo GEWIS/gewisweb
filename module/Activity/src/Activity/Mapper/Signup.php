@@ -61,7 +61,27 @@ class Signup
 
         return isset($result[0]) ? $result[0] : null;
     }
-    
+
+    /**
+     * Get all activities which a user is signed up for.
+     *
+     * @param int $userId
+     *
+     * @return \Activity\Model\ActivitySignup
+     */
+    public function getSignedUpActivities($userId)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivitySignup', 'a')
+            ->join('a.user', 'u')
+            ->where('u.lidnr = ?1')
+            ->setParameter(1, $userId);
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
     /**
      * Get all the users that are signed up for an activity.
      *

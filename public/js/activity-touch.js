@@ -56,6 +56,7 @@ Activity.Touch.login = function(lidnr, pincode) {
             $('.not-logged-in').hide();
             $('.logged-in').show();
             $('#fullName').html(data.user.member.fullName);
+            Activity.Touch.fetchSignedup();
         } else {
             $("#loginFailed").show();
         }
@@ -77,6 +78,7 @@ Activity.Touch.logoutTick = function () {
             $('.logged-in').hide();
             $('.not-logged-in').show();
             $('#fullName').html('');
+            Activity.Touch.clearSignedup();
             Activity.Touch.user = null;
             Activity.Touch.resetLogoutTimeout();
         });
@@ -95,13 +97,28 @@ Activity.Touch.resetLogoutTimeout = function () {
     }
 };
 
+Activity.Touch.fetchSignedup = function () {
+    $.getJSON(URLHelper.url('activity_api/signedup'), function (data) {
+        Activity.Touch.clearSignedup();
+        Activity.Touch.signedUp = data.activities;
+        for(var i = 0; i < data.activities.length; i++)
+        {
+            $('#activity' + data.activities[i]).addClass('success');
+        }
+    });
+};
+
+Activity.Touch.clearSignedup = function () {
+    $('#activityList tr').removeClass('success');
+};
+
 Activity.Touch.fetchActivities = function () {
     $.getJSON(URLHelper.url('activity_api/list'), function (data) {
        Activity.Touch.activities = data;
         $('#activityList').html('');
         $.each(data, function(index, activity) {
             $('#activityList').append(
-                '<tr data-activity-index="' + index + '">'
+                '<tr id="activity' + activity.id + '" data-activity-index="' + index + '">'
                 + '<td>' + activity.beginTime.date.replace(':00.000000', '') + '</td>'
                 + '<td>' + activity.endTime.date.replace(':00.000000', '') + '</td>'
                 + '<td>' + activity.name + '</td>'
@@ -115,6 +132,17 @@ Activity.Touch.fetchActivities = function () {
 Activity.Touch.showActivity = function (index) {
     Activity.Touch.resetLogoutTimeout();
     var activity = Activity.Touch.activities[index];
+
+    if(Activity.Touch.user) {
+        if(Activity.Touch.signedUp.indexOf(activity.id) !== -1) {
+            $('#activitySubscribe').hide();
+            $('#activityUnsubscribe').show();
+        } else {
+            $('#activitySubscribe').show();
+            $('#activityUnsubscribe').hide();
+        }
+    }
+
     $('#activityModal').modal('show');
     $('#activityModalLabel').html(activity.name);
     $('#activityDescription').html(activity.description);
@@ -122,5 +150,4 @@ Activity.Touch.showActivity = function (index) {
     $('#activityLocation').html(activity.location);
     $('#activityCosts').html(activity.costs);
     $('#activityAttendeeCount').html(activity.attendees.length);
-
 };

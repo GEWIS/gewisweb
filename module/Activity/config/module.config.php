@@ -192,6 +192,15 @@ return [
                             ]
                         ],
                     ],
+                    'signedup' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'    => '/signedup',
+                            'defaults' => [
+                                'action' => 'signedup'
+                            ]
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
