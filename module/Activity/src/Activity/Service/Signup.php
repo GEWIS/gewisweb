@@ -89,7 +89,7 @@ class Signup extends AbstractAclService
             $entry['member'] = $signup->getUser()->getMember()->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
-                $entry['values'][$fieldValue->get('field')->get('id')] = $fieldValue->get('value');
+                $entry['values'][$fieldValue->getField()->getId()] = $fieldValue->getValue();
             }
             $result[] = $entry;            
         }
@@ -171,10 +171,10 @@ class Signup extends AbstractAclService
         foreach ($activity->getFields() as $field){
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
-            $value = $fieldResults[$field->get('id')];
+            $value = $fieldResults[$field->getId()];
             
             //Change the value into the actual format
-            switch ($field->get('type')) {
+            switch ($field->getType()) {
                 case 0://'Text'
                     break;
                 case 1://'Yes/No'
@@ -184,7 +184,7 @@ class Signup extends AbstractAclService
                     break;
                 case 3://'Choice' 
                     var_dump($value);
-                    $value = $optionMapper->getOptionById((int)$value)->get('value');
+                    $value = $optionMapper->getOptionById((int)$value)->getValue();
                     break;
             }
             $fieldValue->setValue($value);

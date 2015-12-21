@@ -139,9 +139,33 @@ class ActivityField
         $this->maximumValue = $maximumValue;
     }
 
-        
-    public function get($variable)
+    public function getId() 
     {
-        return $this->$variable;
+        return $this->id;
+    }
+
+    public function getName() 
+    {
+        return $this->name;
+    }
+
+    public function getType() 
+    {
+        return $this->type;
+    }
+
+    public function getMinimumValue() 
+    {
+        return $this->minimumValue;
+    }
+
+    public function getMaximumValue() 
+    {
+        return $this->maximumValue;
+    }
+
+    public function getOptions() 
+    {
+        return $this->options;
     }
 }

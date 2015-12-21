@@ -64,9 +64,9 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     protected function createFieldElementArray(\Activity\Model\ActivityField $field){
         
         $result = [
-            'name' => $field->get('id'),
+            'name' => $field->getId(),
         ];
-        switch($field->get('type')){
+        switch($field->getType()){
             case 0: //'Text'
                 $result['type'] = 'Text';
                 break;
@@ -82,19 +82,19 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             case 2: //'Number'
                 $result['type'] = 'Zend\Form\Element\Number';
                 $result['attributes'] = [
-                    'min' => $field->get('minimumValue'),
-                    'max' => $field->get('maximumValue'),
+                    'min' => $field->getMinimumValue(),
+                    'max' => $field->getMaximumValue(),
                     'step' => '1'
                 ];
                 break;
             case 3: //'Choice'
                 $values = [];
-                foreach($field->get('options') as $option){
-                    $values[$option->get('id')] = $option->get('value');
+                foreach($field->getOptions() as $option){
+                    $values[$option->getId()] = $option->getValue();
                 }
                 $result['type'] = 'Zend\Form\Element\Select';
                 $result['options'] = [
-                    'empty_option' => 'Make a choice',
+                    //'empty_option' => 'Make a choice',
                     'value_options' => $values
                 ];
                 break;

@@ -55,9 +55,18 @@ class ActivityOption
     {        
         $this->value = $value;
     }
-    
-    public function get($variable)
+    public function getId() 
     {
-        return $this->$variable;
+        return $this->id;
+    }
+
+    public function getField() 
+    {
+        return $this->field;
+    }
+
+    public function getValue() 
+    {
+        return $this->value;
     }
 }

@@ -47,7 +47,7 @@
             <tr>
                 <th><?php echo$this->translate('Name');?> </th>
                 <?php foreach($fields as $field):?>
-                <th><?php echo $field->get('name');?></th>
+                <th><?php echo $field->getName();?></th>
                 <?php endforeach;?>
             </tr>
         </thead>
@@ -82,8 +82,8 @@
             <table>
                 <?php foreach($fields as $field):?>
                 <tr>
-                    <td><?php echo $field->get('name');?>:</td>
-                    <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
+                    <td><?php echo $field->getName();?>:</td>
+                    <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
                 </tr>
                 <?php endforeach;?>
             </table>
