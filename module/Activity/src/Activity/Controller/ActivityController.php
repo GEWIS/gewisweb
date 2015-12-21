@@ -44,8 +44,6 @@ class ActivityController extends AbstractActionController
             $fields = null;
             $form = null;
         }
-
-
         return [
             'activity' => $activity,
             'canSignUp' => $activity->getCanSignUp(),
