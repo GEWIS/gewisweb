@@ -4,8 +4,10 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
     ->requireUrl('activity_api/list')
     ->requireUrl('activity_api/signedup')
     ->requireUrl('user/logout')
-->requireUrls(['activity_api/signup',
-    'activity_api/signoff'], ['id']);
+    ->requireUrls([
+        'activity_api/signup',
+        'activity_api/signoff'
+    ], ['id']);
 ?>
 <html lang="en">
 <head>
@@ -97,6 +99,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
         .container-fluid {
             padding-top: 20px;
         }
+
         .modal-dialog {
             position: absolute;
             top: 50% !important;
@@ -237,7 +240,8 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <?= sprintf($this->translate('Welcome %s. Tap an activity to view it.'),'<span id="fullName"></span>') ?>
+                    <?= sprintf($this->translate('Welcome %s. Tap an activity to view it.'),
+                        '<span id="fullName"></span>') ?>
                 </div>
             </div>
         </div>
@@ -385,14 +389,14 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                                 class="btn btn-danger btn-lg btn-block"><?= $this->translate('Unsubscribe') ?></button>
                         </div>
 
-                            <div id="subscribeFailed" class="alert alert-danger" style="display: none" role="alert">
-                                <strong><?= $this->translate('Activity subscription failed') ?>,</strong>
-                                <?= $this->translate('please try again later or use the website.') ?>
-                            </div>
-                            <div id="unsubscribeFailed" class="alert alert-danger" style="display: none" role="alert">
-                                <strong><?= $this->translate('Failed to unsubscribe from this activity') ?>,</strong>
-                                <?= $this->translate('please try again later or use the website.') ?>
-                            </div>
+                        <div id="subscribeFailed" class="alert alert-danger" style="display: none" role="alert">
+                            <strong><?= $this->translate('Activity subscription failed') ?>,</strong>
+                            <?= $this->translate('please try again later or use the website.') ?>
+                        </div>
+                        <div id="unsubscribeFailed" class="alert alert-danger" style="display: none" role="alert">
+                            <strong><?= $this->translate('Failed to unsubscribe from this activity') ?>,</strong>
+                            <?= $this->translate('please try again later or use the website.') ?>
+                        </div>
                         <div class="not-logged-in">
                             <?= $this->translate('To sign up for an activity you must login using an RFID pass or your SuSOS pincode.') ?>
                             <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"

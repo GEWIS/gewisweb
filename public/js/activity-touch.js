@@ -1,24 +1,24 @@
-Activity= {};
+Activity = {};
 
 Activity.Touch = {};
 Activity.Touch.activities = [];
 
 Activity.Touch.init = function () {
     $('.btn-keypad').each(function (index) {
-        $(this).click(function() {
+        $(this).click(function () {
             var number = $(this).val();
             var lidnr = $('#lidnrInput').val();
             var pincode = $('#pinInput').val();
-            if(number < 0) {
+            if (number < 0) {
                 //backspace
-                if(pincode.length > 0) {
+                if (pincode.length > 0) {
                     $('#pinInput').val(pincode.substr(0, pincode.length - 1));
-                } else if(lidnr.length > 0) {
+                } else if (lidnr.length > 0) {
                     $('#lidnrInput').val(lidnr.substr(0, lidnr.length - 1));
                 }
             } else {
-                if(lidnr.length < 4 || (lidnr.length < 5 && lidnr.charAt(0) == '1')) {
-                    $('#lidnrInput').val( lidnr + number);
+                if (lidnr.length < 4 || (lidnr.length < 5 && lidnr.charAt(0) == '1')) {
+                    $('#lidnrInput').val(lidnr + number);
                 } else if (pincode.length < 4) {
                     $('#pinInput').val(pincode + number);
                 }
@@ -40,16 +40,16 @@ Activity.Touch.init = function () {
     });
     setInterval(Activity.Touch.fetchActivities, 600000);
     Activity.Touch.fetchActivities();
-    $('#activityList').on( 'tap', 'tr', function() {
-        Activity.Touch.showActivity($( this ).data('activity-index'));
+    $('#activityList').on('tap', 'tr', function () {
+        Activity.Touch.showActivity($(this).data('activity-index'));
     });
 };
 
-Activity.Touch.login = function(lidnr, pincode) {
+Activity.Touch.login = function (lidnr, pincode) {
     console.log(lidnr, pincode);
     $("#loginFailed").hide();
     $.post(URLHelper.url('user/pinlogin'), {'lidnr': lidnr, 'pincode': pincode}, function (data) {
-        if(data.login) {
+        if (data.login) {
             Activity.Touch.user = data.user;
             $('#loginModal').modal('hide');
             $('#activityModal').modal('hide');
@@ -64,7 +64,7 @@ Activity.Touch.login = function(lidnr, pincode) {
     });
 };
 
-Activity.Touch.logout = function() {
+Activity.Touch.logout = function () {
     Activity.Touch.logoutSeconds = 11;
     $('#logoutModal').modal('show');
     Activity.Touch.logoutTick();
@@ -103,8 +103,7 @@ Activity.Touch.fetchSignedup = function () {
     $.getJSON(URLHelper.url('activity_api/signedup'), function (data) {
         Activity.Touch.clearSignedup();
         Activity.Touch.signedUp = data.activities;
-        for(var i = 0; i < data.activities.length; i++)
-        {
+        for (var i = 0; i < data.activities.length; i++) {
             $('#activity' + data.activities[i]).addClass('success');
         }
     });
@@ -116,10 +115,10 @@ Activity.Touch.clearSignedup = function () {
 
 Activity.Touch.fetchActivities = function () {
     $.getJSON(URLHelper.url('activity_api/list'), function (data) {
-       Activity.Touch.activities = data;
+        Activity.Touch.activities = data;
         $('#activityList').html('');
-        $.each(data, function(index, activity) {
-            if(activity.fields == 0) {
+        $.each(data, function (index, activity) {
+            if (activity.fields == 0) {
                 $('#activityList').append(
                     '<tr id="activity' + activity.id + '" data-activity-index="' + index + '">'
                     + '<td>' + activity.beginTime.date.replace(':00.000000', '') + '</td>'
@@ -130,7 +129,7 @@ Activity.Touch.fetchActivities = function () {
                 );
             }
         });
-        });
+    });
 };
 
 Activity.Touch.showActivity = function (index) {
@@ -139,10 +138,10 @@ Activity.Touch.showActivity = function (index) {
     console.log(activity);
     $('#subscribeFailed').hide();
     $('#unsubscribeFailed').hide();
-    if(Activity.Touch.user) {
-        $('#activitySubscribe').attr('onclick', 'Activity.Touch.subscribe(' + activity.id +')');
-        $('#activityUnsubscribe').attr('onclick', 'Activity.Touch.unsubscribe(' + activity.id +')');
-        if(Activity.Touch.signedUp.indexOf(activity.id) !== -1) {
+    if (Activity.Touch.user) {
+        $('#activitySubscribe').attr('onclick', 'Activity.Touch.subscribe(' + activity.id + ')');
+        $('#activityUnsubscribe').attr('onclick', 'Activity.Touch.unsubscribe(' + activity.id + ')');
+        if (Activity.Touch.signedUp.indexOf(activity.id) !== -1) {
             $('#activitySubscribe').hide();
             $('#activityUnsubscribe').show();
         } else {
@@ -164,7 +163,7 @@ Activity.Touch.subscribe = function (id) {
     Activity.Touch.resetLogoutTimeout();
     $('#activitySubscribe').hide();
     $.post(URLHelper.url('activity_api/signup', {id: id}), function (data) {
-        if(data.success) {
+        if (data.success) {
             $('#activityUnsubscribe').show();
             Activity.Touch.signedUp.push(id);
             $('#activity' + id).addClass('success');
@@ -178,7 +177,7 @@ Activity.Touch.unsubscribe = function (id) {
     Activity.Touch.resetLogoutTimeout();
     $('#activityUnsubscribe').hide();
     $.post(URLHelper.url('activity_api/signoff', {id: id}), function (data) {
-        if(data.success) {
+        if (data.success) {
             $('#activitySubscribe').show();
             var index = Activity.Touch.signedUp.indexOf(id);
             Activity.Touch.signedUp.splice(index, 1);

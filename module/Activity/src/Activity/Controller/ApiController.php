@@ -12,7 +12,7 @@ use Zend\View\Model\JsonModel;
 class ApiController extends AbstractActionController
 {
     /**
-     * View all activities.
+     * List all activities.
      */
     public function listAction()
     {
@@ -24,14 +24,6 @@ class ApiController extends AbstractActionController
         }
 
         return new JsonModel($activitiesArray);
-    }
-
-    /**
-     * View one activity.
-     */
-    public function viewAction()
-    {
-
     }
 
     /**
@@ -63,7 +55,7 @@ class ApiController extends AbstractActionController
      */
     public function signoffAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
 
         $activityService = $this->getActivityService();
         $signupService = $this->getSignupService();
@@ -84,6 +76,9 @@ class ApiController extends AbstractActionController
         return new JsonModel($params);
     }
 
+    /**
+     * Get all activities which the current user has subscribed to
+     */
     public function signedupAction()
     {
         $activities = $this->getSignupService()->getSignedUpActivityIds();
@@ -93,11 +88,21 @@ class ApiController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Get the activity service
+     *
+     * @return \Activity\Service\Activity
+     */
     private function getActivityService()
     {
         return $this->getServiceLocator()->get('activity_service_activity');
     }
 
+    /**
+     * Get the signup service
+     *
+     * @return \Activity\Service\Signup
+     */
     private function getSignupService()
     {
         return $this->getServiceLocator()->get('activity_service_signup');
