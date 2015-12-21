@@ -1,7 +1,8 @@
 <?php echo $this->doctype(); ?>
 <?php
 $this->scriptUrl()->requireUrl('user/pinlogin')
-    ->requireUrl('activity_api/list');
+    ->requireUrl('activity_api/list')
+    ->requireUrl('user/logout');
 ?>
 <html lang="en">
 <head>
@@ -150,6 +151,10 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
 
         }
 
+        .logged-in {
+            display: none;
+        }
+
         .btn-keypad {
             width: 100%;
             /* Hack to make height equal to width */
@@ -195,7 +200,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
         <div class="navbar-header">
             <h3><?= $this->translate('Signup for GEWIS activities'); ?></h3>
         </div>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right logged-in">
             <li onclick="Activity.Touch.logout()"><h3><?= $this->translate('Logout') ?></h3></a></li>
         </ul>
     </div>
@@ -207,7 +212,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
     </div>
 
     <div class="container-fluid">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary not-logged-in">
             <div class="panel-heading">
                 <strong><?= $this->translate('Log in') ?></strong>
             </div>
@@ -220,6 +225,16 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                             <?= $this->translate('Login') ?>
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary logged-in">
+            <div class="panel-heading">
+                <strong><?= $this->translate('Welcome') ?></strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <?= sprintf($this->translate('Welcome %s. Tap an activity to view it.'),'<span id="fullName"></span>') ?>
                 </div>
             </div>
         </div>
@@ -358,15 +373,15 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                                 <td id="activityAttendeeCount"></td>
                             </tr>
                         </table>
-                        <div id="activitySignup">
+                        <div id="activitySignup logged-in" class="logged-in">
                             <button
                                 class="btn btn-primary btn-lg btn-block"><?= $this->translate('Subscribe') ?></button>
                         </div>
-                        <div id="activityUnsubscribe">
+                        <div id="activityUnsubscribe" class="logged-in">
                             <button
                                 class="btn btn-danger btn-lg btn-block"><?= $this->translate('Unsubscribe') ?></button>
                         </div>
-                        <div id="activityNotLoggedIn">
+                        <div class="not-logged-in">
                             <?= $this->translate('To sign up for an activity you must login using an RFID pass or your SuSOS pincode.') ?>
                             <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
                                     data-target="#loginModal">

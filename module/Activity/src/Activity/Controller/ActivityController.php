@@ -7,6 +7,7 @@ use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 
 use Activity\Form\ActivitySignup as SignupForm;
+use Zend\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {

@@ -46,8 +46,12 @@ Activity.Touch.login = function(lidnr, pincode) {
     $("#loginFailed").hide();
     $.post(URLHelper.url('user/pinlogin'), {'lidnr': lidnr, 'pincode': pincode}, function (data) {
         if(data.login) {
+            Activity.Touch.user = data.user;
             $('#loginModal').modal('hide');
             Activity.Touch.resetLogoutTimeout();
+            $('.not-logged-in').hide();
+            $('.logged-in').show();
+            $('#fullName').html(data.user.member.fullName);
         } else {
             $("#loginFailed").show();
         }
@@ -63,9 +67,13 @@ Activity.Touch.logout = function() {
 Activity.Touch.logoutTick = function () {
     Activity.Touch.logoutSeconds--;
     $("#logoutSeconds").html(Activity.Touch.logoutSeconds);
-    if(Activity.Touch.logoutSeconds == 0) {
-        // TODO: logout
-        $('#logoutModal').modal('hide');
+    if (Activity.Touch.logoutSeconds == 0) {
+        $.get(URLHelper.url('user/logout'), function (data) {
+            $('#logoutModal').modal('hide');
+            $('.logged-in').hide();
+            $('.not-logged-in').show();
+            $('#fullName').html('');
+        });
     } else {
         setTimeout(Activity.Touch.logoutTick, 1000);
     }

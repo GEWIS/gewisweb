@@ -29,6 +29,12 @@ return [
                             'route' => '/login',
                         ]
                     ],
+                    'logout' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/logout',
+                        ]
+                    ],
                     'pinlogin' => [
                         'type' => 'Literal',
                         'options' => [
