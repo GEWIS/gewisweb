@@ -57,7 +57,8 @@ class UserController extends AbstractActionController
             if (null !== $login) {
 
                 return new JsonModel([
-                    'login' => true
+                    'login' => true,
+                    'user' => $login->toArray()
                 ]);
             }
         }
