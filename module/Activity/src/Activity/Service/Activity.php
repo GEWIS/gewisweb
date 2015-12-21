@@ -187,10 +187,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $activity->setName($params['name']);
             $activity->setLocation($params['location']);
             if (!$params['costs_unknown']) {
-                $activity->setCostsEn($params['costs']);
+                $activity->setCosts($params['costs']);
             }
             $activity->setDescription($params['description']);
-        } else if ($english) {
+        } 
+        if ($english) {
             $activity->setNameEn($params['name_en']);
             $activity->setLocationEn($params['location_en']);
             if (!$params['costs_unknown']) {
