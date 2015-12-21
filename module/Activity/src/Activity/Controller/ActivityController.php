@@ -37,12 +37,11 @@ class ActivityController extends AbstractActionController
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
+        $fields = $activity->getFields();
+        $form = null;
+
         if ($signupService->isAllowedToSubscribe()) {
-            $fields = $activity->getFields();
             $form = $signupService->getForm($fields);
-        } else {
-            $fields = null;
-            $form = null;
         }
         return [
             'activity' => $activity,
