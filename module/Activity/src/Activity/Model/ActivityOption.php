@@ -35,6 +35,13 @@ class ActivityOption
      * @ORM\Column(type="string", nullable=false) 
      */
     protected $value;
+
+    /**
+     * The value of the option, in English.
+     * 
+     * @ORM\Column(type="string", nullable=false) 
+     */
+    protected $value_en;
     
     /**
      * Set the field the option belongs to.
@@ -55,6 +62,13 @@ class ActivityOption
     {        
         $this->value = $value;
     }
+    
+    public function setValue_en($value_en)
+    {        
+        $this->value_en = $value_en;
+    }
+    
+    
     public function getId() 
     {
         return $this->id;
@@ -69,4 +83,9 @@ class ActivityOption
     {
         return $this->value;
     }
+    
+    public function getValue_en() 
+    {
+        return $this->value_en;
+    }    
 }

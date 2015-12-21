@@ -5,6 +5,7 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
+use Activity\Model\ActivityOption as ActivityOptionModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -209,7 +210,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if (isset($params['fields'])) {
             foreach ($params['fields'] as $fieldparams){
 
-                $field = $this->createActivityField($fieldparams, $activity);
+                $field = $this->createActivityField($fieldparams, $activity, $dutch, $english);
                 $em->persist($field);
             }
             $em->flush();
@@ -228,18 +229,23 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * 
      * @param array $params Parameters for the new field.
      * @param AcitivityModel $activity The activity the field belongs to.
+     * @param bool $dutch 
+     * @param bool $english
      * @return \Activity\Model\ActivityField The new field.
      */
-    public function createActivityField(array $params, ActivityModel $activity)
+    public function createActivityField(array $params, ActivityModel $activity, $dutch, $english)
     {
-        //Checking whether the following values exist is not needed yet,
-        //since a form(or any other decent solution) 
-        //can be used to validate everything after when method is moved to the service
+        assert($dutch || $english, "Activities should have either be in dutch or english");
         
         $field = new ActivityFieldModel();
 
         $field->setActivity($activity);
-        $field->setName($params['name']);
+        if ($dutch){
+            $field->setName($params['name']);
+        }
+        if ($english){
+            $field->setName_en($params['name_en']);
+        }
         $field->setType($params['type']);
         
         if ($params['type'] === '2'){
@@ -247,15 +253,25 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $field->setMaximumValue($params['max. value']);
         }
         
-        if ($params['options'] !== ''){
+        if ($params['options'] !== '' || $params['options_en'] != ''){
             $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+            
+            $options_en = explode(',', $params['options_en']);
             $options = explode(',', $params['options']);
-            foreach ($options as $optionparam){
+            $num_options = count($options_en);
+            if ($params['options'] !== ''){
+                $num_options = count($options);
+            }
+            for ($i=0; $i<$num_options; $i++){
             
-                $option = new ActivityOption();
-                $option->setValue($optionparam);
+                $option = new ActivityOptionModel();
+                if ($dutch){
+                    $option->setValue($options[$i]);
+                }
+                if ($english){
+                    $option->setValue_en($options_en[$i]);
+                }
                 $option->setField($field);
-            
                 $em->persist($option);           
             }
             

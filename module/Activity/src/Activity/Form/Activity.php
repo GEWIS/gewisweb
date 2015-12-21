@@ -29,7 +29,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'uncheckedValue' => null,
         ]);
 
-        $this->Add([
+        $this->add([
             'name' => 'language_english',
             'type' => 'checkbox',
             'uncheckedValue' => null,
@@ -156,9 +156,9 @@ class Activity extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => array(
+                'target_element' => [
                     'type' => 'Activity\Form\ActivityFieldFieldset'
-                )
+                ]
             )
         ]);
 
@@ -276,14 +276,13 @@ class Activity extends Form implements InputFilterProviderInterface
 
 
         if ($this->data['language_english']) {
-            $filter += $this->inputFilterEnglish();
+            $filter += $this->inputFilterEnglish();            
         }
 
 
         if ($this->data['language_dutch']) {
             $filter += $this->inputFilterDutch();
         }
-
         // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
         // they need to be set
 

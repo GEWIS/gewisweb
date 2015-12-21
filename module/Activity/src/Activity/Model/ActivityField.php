@@ -36,6 +36,13 @@ class ActivityField
     protected $name;
 
     /**
+     * The name of the field, in English.
+     * 
+     * @ORM\Column(type="string", nullable=false) 
+     */
+    protected $name_en;
+
+    /**
      * The type of the field.
      * 
      * @ORM\Column(type="integer", nullable=false)
@@ -62,57 +69,6 @@ class ActivityField
      * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
      */
     protected $options;
-
-    /**
-     * Create a new field. TODO: Move to service (move Model\Activity first)
-     *
-     * @param array $params Parameters for the new field
-     * @param Activity $activity The activity 
-     *        the field is associated with
-     * @param EntityManager $em The relevant entity manager
-     * 
-     * @throws \Exception If a field is loaded
-     * @throws \Exception If a necessary parameter is not set
-     *
-     * @return \Activity\Model\ActivityField the created field
-     */   
-    public function create(array $params, Activity $activity, $em){
-        
-        if ($this->id != null) {
-            throw new \Exception('There is already a loaded activity');
-        }
-        
-        //Checking whether the following values exist is not needed yet,
-        //since a form(or any other decent solution) 
-        //can be used to validate everything after when method is moved to the service
-        $this->name = $params['name'];
-        $this->type = $params['type'];
-        
-        //Add min,max for numerical fields
-        if ($params['type'] === '2'){
-            $this->minimumValue = $params['min. value'];
-            $this->maximumValue = $params['max. value'];
-        }
-        
-        
-        $this->activity = $activity;
-        
-        if ($params['options'] !== ''){
-            
-            $options = explode(',', $params['options']);
-            foreach ($options as $optionparam){
-            
-                $option = new ActivityOption();
-                $option->setValue($optionparam);
-                $option->setField($this);
-            
-                $em->persist($option);           
-            }
-        
-            $em->flush();
-        }
-        return $this;
-    }
     
     public function setActivity($activity)
     {
@@ -122,6 +78,11 @@ class ActivityField
     public function setName($name)
     {
         $this->name = $name;
+    }
+    
+    public function setName_en($name_en)
+    {
+        $this->name_en = $name_en;
     }
 
     public function setType($type) 
@@ -149,7 +110,12 @@ class ActivityField
         return $this->name;
     }
 
-    public function getType() 
+    public function getName_en()
+    {
+        return $this->name_en;
+    }
+
+    public function getType()
     {
         return $this->type;
     }

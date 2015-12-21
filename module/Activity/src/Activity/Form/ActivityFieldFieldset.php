@@ -17,49 +17,56 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         $this->setHydrator(new ClassMethodsHydrator(false))
              ->setObject(new ActivityField());
       
-        $this->add(array(
+        $this->add([
             'name' => 'name',
-            'options' => array(
-                'label' => 'Name'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-                
+            'options' => ['label' => 'Name'],
+        ]);
+
+        $this->add([
+            'name' => 'name_en',
+            'options' => ['label' => 'Name(English)'],
+        ]);
+
         $this->add([
             'name' => 'type',
             'type' => 'Zend\Form\Element\Select',
-            'options' => array(
-                'value_options' => array(
+            'options' => [
+                'value_options' => [
                     '0' => 'Text',
                     '1' => 'Yes/No',
                     '2' => 'Number',
                     '3' => 'Choice'
-                ),
+                ],
                 'label' => 'Type'
-            )
+            ]
         ]);
         
         $this->add([
             'name' => 'min. value',                          
-            'options' => array(
+            'options' => [
                 'label' => 'Min. value'
-            )
+            ]
         ]);
         
         $this->add([
             'name' => 'max. value',
-            'options' => array(
+            'options' => [
                 'label' => 'Max. value'
-            )
+            ]
         ]);
         
         $this->add([
             'name' => 'options',            
-            'options' => array(
+            'options' => [
                 'label' => 'Options'
-            )
+            ]
+        ]);
+        
+         $this->add([
+            'name' => 'options_en',            
+            'options' => [
+                'label' => 'Options (English)'
+            ]
         ]);
     }
     
@@ -71,6 +78,9 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         
         return [
             'name' => [
+                'required' => true
+            ],
+            'name_en' => [
                 'required' => true
             ],
             'type' => [
@@ -94,7 +104,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                             'callback' => function($value, $context=null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
                                        $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
-                                       $this->fieldDependantRequired($value, $context, 'options', '3');
+                                       ($this->fieldDependantRequired($value, $context, 'options', '3') ||
+                                        $this->fieldDependantRequired($value, $context, 'options_en', '3')); 
                             }
                         ]
                     ]
@@ -111,7 +122,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
-            ]                    
+            ]
         ];
     }
 
@@ -125,7 +136,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
      * @param string $testvalue 
      * @return boolean 
      */
-    public function fieldDependantRequired($value, $context, $child, $testvalue){
+    protected function fieldDependantRequired($value, $context, $child, $testvalue){
         
         if ($value === $testvalue){
             return (new NotEmpty())->isValid($context[$child]);
