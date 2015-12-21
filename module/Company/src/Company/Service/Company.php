@@ -18,7 +18,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed list the companies')
             );
         } 
-        return $this->getPackageMapper()->getBannerPackage();
+        return $this->getBannerPackageMapper()->getBannerPackage();
     }
     /**
      * Returns an list of all companies (excluding hidden companies
@@ -422,7 +422,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    public function getPackageMapper()
+    public function getBannerPackageMapper()
     {
         return $this->sm->get('company_mapper_bannerpackage');
     }

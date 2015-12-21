@@ -34,7 +34,8 @@ class BannerPackage extends Package
      *
      */
     public function getBannerPackage(){
-        array_rand($this->findVisiblePackages());
+        $banners = $this->findVisiblePackages();
+        return $banners[array_rand($banners)];
     }
 
     /**

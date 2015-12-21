@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyPackage as PackageModel;
+use Company\Model\CompanyJobPackage as PackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -70,7 +70,10 @@ class Package
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.published=1')->andWhere('p.startingDate>=NOW()')->andWhere('p.expirationDate<=NOW()');
+        $qb->select('p')
+            ->where('p.published=1')
+            ->andWhere('p.starts<=CURRENT_DATE()')
+            ->andWhere('p.expires>=CURRENT_DATE()');
         $packages = $qb->getQuery()->getResult();
 
         return $packages;
@@ -118,6 +121,6 @@ class Package
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\CompanyBannerPackage');
+        return $this->em->getRepository('Company\Model\CompanyJobPackage');
     }
 }

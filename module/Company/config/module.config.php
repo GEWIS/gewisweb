@@ -90,7 +90,7 @@ return [
                 'priority' => 100,
             ],
             'admin_company' => [
-                'priority' => 105,
+                'priority' => 1000,
                 'type' => 'Literal',
                 'options' => [
                     'route' => '/admin/company',
