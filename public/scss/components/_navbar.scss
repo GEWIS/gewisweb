@@ -1,0 +1,234 @@
+/*
+Navbar
+
+Markup:
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand">
+            <img src="/img/logo-header.png"/>
+        </a>
+    </div>
+</div>
+<div class="navbar navbar-gewis">
+    <div class="navbar-header">
+        <a class="navbar-brand">
+            <img src="/img/logo-header.png" style="-webkit-filter: grayscale(1) brightness(100);"/>
+        </a>
+    </div>
+</div>
+
+Styleguide: navbar
+*/
+.navbar {
+    margin: 0;
+
+    font-family: $font-family-alt;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.navbar-brand {
+    @include transition(background $transition-duration ease);
+
+    padding: 10px 15px;
+    height: auto;
+}
+
+.navbar-default {
+    background-color: #fff;
+
+    .navbar-nav > li > a {
+        color: $gray;
+    }
+
+    .navbar-nav > li > a,
+    .navbar-brand {
+        &:hover,
+        &:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 4%);
+        }
+    }
+
+    .navbar-nav > .active > a {
+        color: darken($gray, 3%);
+        background-color: #fff;
+        padding-bottom: 27px;
+        border-bottom: 3px solid $brand-primary;
+
+        &:hover,
+        &:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 4%);
+        }
+    }
+
+    .navbar-nav > .open > a {
+        &,
+        &:hover,
+        &:focus {
+            margin-bottom: -1px;
+            padding-left: 17px;
+            padding-right: 17px;
+
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 4%);
+
+            border: 1px solid darken(#fff, 15%);
+            border-bottom-color: darken(#fff, 4%);
+            border-top: 0;
+        }
+    }
+
+    .navbar-nav > li > .dropdown-menu {
+        > li > a {
+            color: $gray;
+            background-color: darken(#fff, 4%);
+        }
+
+        > li > a:hover,
+        > li > a:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 8%);
+        }
+    }
+
+    .navbar-nav > .open > .dropdown-menu {
+        border: 1px solid darken(#fff, 15%);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-color: darken(#fff, 4%);
+
+        > li > a {
+            color: $gray;
+        }
+    }
+}
+
+.navbar-gewis {
+    color: #fff;
+    background-color: $brand-primary;
+
+    border-bottom: 0;
+
+    .navbar-brand img {
+        // TODO: Make the logo white properly
+        -webkit-filter: grayscale(1) brightness(100);
+    }
+
+    .navbar-nav > li > a {
+        color: #fff;
+    }
+
+    .navbar-brand,
+    .navbar-nav > li > a {
+        &:hover,
+        &:focus {
+            background-color: darken($brand-primary, 3%);
+        }
+    }
+
+    .navbar-nav > .active > a {
+        background-color: darken($brand-primary, 6%);
+
+        &:hover,
+        &:focus {
+            background-color: darken($brand-primary, 9%);
+        }
+    }
+
+    .navbar-nav > .open > a {
+        &,
+        &:hover,
+        &:focus {
+            background-color: #fff;
+            color: $gray;
+        }
+    }
+
+    .navbar-nav > li > .dropdown-menu {
+        @include transition(
+            opacity $transition-duration ease,
+            visibility $transition-duration ease
+        );
+
+        border: 1px solid rgba(0,0,0,0.1);
+        border: 0;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.1);
+        background-color: #fff;
+
+        > li > a {
+            color: $gray;
+            background-color: #fff;
+        }
+
+        > li > a:hover,
+        > li > a:focus {
+            color: darken($gray, 3%);
+            background-color: darken(#fff, 3%);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li > a {
+        padding: 30px 18px;
+    }
+}
+
+.navbar-nav > li > a {
+    @include transition(
+        background $transition-duration ease,
+        color $transition-duration ease
+    );
+}
+
+.navbar-nav > li > .dropdown-menu {
+    display: block;
+    padding: 0;
+    min-width: 100%;
+
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+
+    > li {
+        min-width: 160px;
+    }
+
+    > li > a {
+        @include transition(
+            background $transition-duration ease,
+            color $transition-duration ease
+        );
+
+        padding: 8px 17px;
+
+        font-weight: 600;
+        font-family: $font-family-alt;
+    }
+}
+
+.navbar-nav > .open > a {
+    position: relative;
+    z-index: 1001;
+}
+
+.navbar-nav > .open > .dropdown-menu {
+    //@include scale(1, 1);
+    visibility: visible;
+    opacity: 1;
+}
+
+.navbar-nav > li > .dropdown-login {
+    padding: 15px;
+    min-width: 240px;
+
+    color: $gray;
+    font-family: $font-family-base;
+    font-weight: normal;
+
+    p {
+        margin: 10px 0 0;
+        text-align: center;
+    }
+}
