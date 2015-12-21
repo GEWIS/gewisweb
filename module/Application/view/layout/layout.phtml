@@ -80,7 +80,8 @@ function getIsActiveClass($view, array $condition)
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (null === $this->identity()): ?>
-                            <li class="dropdown">
+                            <li class="visible-xs"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
+                            <li class="dropdown hidden-xs">
                                 <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->translate('Login') ?></a>
                                 <div class="dropdown-menu dropdown-login">
                                     <form action="#" method="post">
