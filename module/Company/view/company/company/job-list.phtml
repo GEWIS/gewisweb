@@ -68,37 +68,6 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
     <script type="text/javascript">
         /* FILTERING */
 
-        function filter_name(name) {
-            $(".job-list-item").each(function() {
-                if ($(this).find(".job-name").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-
-        function filter_description(description) {
-            $(".job-list-item").each(function() {
-                if ($(this).find(".job-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        function filter_company(company) {
-            $(".job-list-item").each(function() {
-                if ($(this).find(".job-company-name").text().toLowerCase().indexOf(company.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
         function filter_all(term) {
             $(".company-list-item").each(function() {
                 if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
@@ -108,22 +77,6 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
                 }
             });
         }
-
-        $("#filter-name").keyup(function() {
-            filter_name($(this).val());
-        });
-
-        $("#filter-company").keyup(function() {
-            filter_company($(this).val());
-        });
-
-        $("#filter-description").keyup(function() {
-            filter_description($(this).val());
-        });
-
-        $("#filter-job").keyup(function() {
-            filter_job($(this).val());
-        });
 
         $("#filter-all").keyup(function() {
             filter_all($(this).val());
