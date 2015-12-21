@@ -2,6 +2,29 @@
 Panels
 
 Styleguide: panels
+
+*/
+
+/*
+
+Panel styles
+
+Markup:
+<div class="{{modifier_class}}">
+    <div class="panel-heading">
+        <h3>Heading</h3>
+    </div>
+    <div class="panel-body">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id metus non tellus commodo fringilla in non nisl.
+    </div>
+    <div class="panel-footer">
+        <a href="#">Link</a>
+    </div>
+</div>
+
+.panel-default - Default
+
+Styleguide: panels.panel-default
 */
 
 .panel-group {
@@ -17,4 +40,43 @@ Styleguide: panels
 .panel-inverse {
     background: #000;
     color: #FFF;
+}
+
+.panel-default {
+    > .panel-heading {
+        background: none;
+        padding: 20px 15px;
+        border: none;
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    > .panel-body {
+        padding: 0 15px;
+    }
+
+    > .panel-footer {
+        border: none;
+        padding: 25px 15px 15px;
+        background: none;
+        text-transform: uppercase;
+
+        a {
+            padding-right: 20px;
+            position: relative;
+        }
+
+        a:hover {
+            padding-right: 25px;
+        }
+
+        a:after {
+            content: "->";
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
 }
