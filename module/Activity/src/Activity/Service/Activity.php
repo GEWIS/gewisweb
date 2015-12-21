@@ -4,6 +4,7 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityField as ActivityFieldModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -153,7 +154,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
     /**
      * Create an activity from parameters.
-     *
+     * @pre $params is valid data of Activity\Form\Activity
+     * 
      * @param array $params Parameters describing activity
      *
      * @return ActivityModel Activity that was created.
@@ -207,8 +209,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if (isset($params['fields'])) {
             foreach ($params['fields'] as $fieldparams){
 
-                $field = new ActivityField();
-                $field->create($fieldparams, $this, $em);
+                $field = $this->createActivityField($fieldparams, $activity);
                 $em->persist($field);
             }
             $em->flush();
@@ -219,8 +220,50 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         return $activity;
     }
+    
+    /**
+     * Create a new field 
+     * 
+     * @pre $params is valid data of Activity\Form\ActivityFieldFieldset 
+     * 
+     * @param array $params Parameters for the new field.
+     * @param AcitivityModel $activity The activity the field belongs to.
+     * @return \Activity\Model\ActivityField The new field.
+     */
+    public function createActivityField(array $params, ActivityModel $activity)
+    {
+        //Checking whether the following values exist is not needed yet,
+        //since a form(or any other decent solution) 
+        //can be used to validate everything after when method is moved to the service
+        
+        $field = new ActivityFieldModel();
 
-
+        $field->setActivity($activity);
+        $field->setName($params['name']);
+        $field->setType($params['type']);
+        
+        if ($params['type'] === '2'){
+            $field->setMinimumValue($params['min. value']);
+            $field->setMaximumValue($params['max. value']);
+        }
+        
+        if ($params['options'] !== ''){
+            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+            $options = explode(',', $params['options']);
+            foreach ($options as $optionparam){
+            
+                $option = new ActivityOption();
+                $option->setValue($optionparam);
+                $option->setField($field);
+            
+                $em->persist($option);           
+            }
+            
+            $em->flush();
+        }
+        return $field;
+    }
+    
     /**
      * Approve of an activity
      *

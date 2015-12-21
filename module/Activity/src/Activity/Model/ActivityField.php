@@ -87,6 +87,7 @@ class ActivityField
         //can be used to validate everything after when method is moved to the service
         $this->name = $params['name'];
         $this->type = $params['type'];
+        
         //Add min,max for numerical fields
         if ($params['type'] === '2'){
             $this->minimumValue = $params['min. value'];
@@ -113,6 +114,32 @@ class ActivityField
         return $this;
     }
     
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
+    }
+    
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setType($type) 
+    {
+        $this->type = $type;
+    }
+
+    public function setMinimumValue($minimumValue) 
+    {
+        $this->minimumValue = $minimumValue;
+    }
+
+    public function setMaximumValue($maximumValue) 
+    {
+        $this->maximumValue = $maximumValue;
+    }
+
+        
     public function get($variable)
     {
         return $this->$variable;

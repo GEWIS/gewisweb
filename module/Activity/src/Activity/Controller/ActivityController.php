@@ -121,7 +121,7 @@ class ActivityController extends AbstractActionController
             return $params;
         }
 
-        $form = new SignupForm($activity->getFields());
+        $form = $signupService->getForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
