@@ -22,7 +22,8 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     ->requireUrls(
         ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
         ['photo_id']
-    );
+    )
+    ->requireUrl('home');
 ?>
 <div class="row">
     <div class="col-lg-12">
