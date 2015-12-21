@@ -13,6 +13,17 @@ input {
 
 .form-group {
     margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: $brand-danger;
+    border-color: $brand-danger;
 }
 
 .form-horizontal {

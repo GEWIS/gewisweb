@@ -1,43 +1,62 @@
 <?php 
 $escaper = new Zend\Escaper\Escaper('utf-8');
-?>
-    <div class="company-list-item list-item" id="<?= $escaper->escapeHtmlAttr($company->getName()); ?>">
-<?php  // Display title
-echo("<h2 class='company-name'><a href='"); 
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
+$companyURL;
 if ($islist===true) {
 
-    echo ($this->url('company/companyItem', // Route url
-        ['slugCompanyName' => $company->getSlugName()] // Url parameters
-        ,[] // routeOptions
-        ,true)); // Reuse matched parameters
+    $companyURL = $this->url('company/companyItem', // Route url
+        ['slugCompanyName' => $company->getSlugName()], // Url parameters
+        [], // routeOptions
+        true); // Reuse matched parameters
+} else {
+    $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 }
-else {
-    echo($company->getTranslationFromLocale($locale)->getWebsite());
-}
-echo("'>"); 
-echo ($company->getName()); // Text of the title
-echo ("</a></h2>") ?>
 
-    <div class="company-slogan"><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></div>
-    <div class="company-logo"><img src="<?= print("hoi"); //$escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" /></div>
-    <div class="company-address"><?= $company->getAddress(); ?></div>
-    <div class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></div>
-    <div class="company-website"><a href="<?= $company->getTranslationFromLocale($locale)->getWebsite(); ?>">Visit website</a></div>
-    <div class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></div>
-    <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
-        <ul class="company-jobs-list">
-<?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
-    foreach ($company->getPackages() as $package){ 
-        foreach($package->getJobs() as $job) { ?>
-    <?php if ($job->isActive() && $job->getLanguage() === $locale){?>
-            <li class="company-jobs-job"><a href="<?=$this->url('company/companyItem/joblist/job_item',
-            ['slugCompanyName' => $company->getSlugName(),
-            'slugJobName' => $job->getSlugName()],[],true) ?>"><?= $job->getName(); ?></a></li>
-        <?php }}} ?>
-        </ul>
-    </div>
-    <div class="company-description"><?= $company->getTranslationFromLocale($locale)->getDescription(); ?></div>
+?>
+<div class="company-list-item list-item" id="company-<?= $escaper->escapeHtmlAttr($company->getId()); ?>">
+<h2 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h2>
+    <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+    <div class="row">
+        <div class="col-md-3">
+            <a href="<?= $companyURL ?>">
+                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+            </a>
+            <div class="">
+                <h4>Contact</h4>
+                <p class="company-address"><?= nl2br($company->getAddress()); ?></p>
+                <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></p>
+                <p class="company-website"><a href="<?= rawurlencode($company->getTranslationFromLocale($locale)->getWebsite()); ?>">Visit website</a></p>
+                <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></p>
+            </div>
+            <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
+                <?php if ($company->getNumberOfJobs() > 0) { ?>
+                    <h4><?= $this->translate('Jobs') ?></h4>
+                <?php } ?>
+                <ul class="company-jobs-list">
+                    <?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
+                    foreach ($company->getPackages() as $package) {
+                        foreach($package->getJobs() as $job) {
+                            if ($job->isActive() && $job->getLanguage() === $locale) { ?>
+                                <li class="company-jobs-job">
+                                    <a href="<?= $this->url('company/companyItem/joblist/job_item',
+                                        ['slugCompanyName' => $company->getSlugName(),
+                                         'slugJobName' => $job->getSlugName()
+                                        ], [], true) ?>"><?= $job->getName(); ?></a>
+                                </li>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h4>Description</h4>
+            <div class="company-description text-justify"><?= nl2br($company->getTranslationFromLocale($locale)->getDescription()); ?></div>
 
+        </div>
     </div>
+</div>
+<hr>
