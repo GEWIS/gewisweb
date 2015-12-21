@@ -10,18 +10,13 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
-    protected $inputFilter;
-    protected $fields;
-    public function __construct($fields)
+    
+    public function __construct()
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\ActivitySignup());
-        $this->fields = $fields;
-        foreach($fields as $field){
-            $this->add($this->createFieldElementArray($field));
-        }
         
         $this->add([
             'name' => 'submit',
@@ -32,6 +27,18 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    /**
+     * Add every field in $fields to the form.
+     * 
+     * @param ActivityField $fields
+     */
+    public function setFields($fields)
+    {
+        foreach($fields as $field){
+            $this->add($this->createFieldElementArray($field));
+        }
+    }
+    
     /**
      * Apparently, validators are automatically added, so this works. 
      * 

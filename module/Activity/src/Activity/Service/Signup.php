@@ -34,7 +34,7 @@ class Signup extends AbstractAclService
     /**
      * Return the form for signing up
      */
-    public function getForm()
+    public function getForm($fields)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -42,8 +42,9 @@ class Signup extends AbstractAclService
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
-
-        return $this->getServiceManager()->get('activity_form_activity_signup');
+        $form = $this->getServiceManager()->get('activity_form_activity_signup');
+        $form->setFields($fields);
+        return $form;
     }
 
     /**
