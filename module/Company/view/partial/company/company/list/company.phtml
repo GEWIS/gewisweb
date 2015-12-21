@@ -18,9 +18,9 @@ if ($islist===true) {
 <h2 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h2>
     <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="Logo of <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
             </a>
             <div class="">
                 <h4>Contact</h4>
@@ -30,7 +30,9 @@ if ($islist===true) {
                 <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></p>
             </div>
             <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
-                <h4><?= $this->translate('Jobs') ?></h4>
+                <?php if ($company->getNumberOfJobs() > 0) { ?>
+                    <h4><?= $this->translate('Jobs') ?></h4>
+                <?php } ?>
                 <ul class="company-jobs-list">
                     <?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
                     foreach ($company->getPackages() as $package) {
@@ -50,10 +52,11 @@ if ($islist===true) {
                 </ul>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <h4>Description</h4>
-            <div class="company-description text-justify"><?= $company->getTranslationFromLocale($locale)->getDescription(); ?></div>
+            <div class="company-description text-justify"><?= nl2br($company->getTranslationFromLocale($locale)->getDescription()); ?></div>
 
         </div>
     </div>
 </div>
+<hr>
