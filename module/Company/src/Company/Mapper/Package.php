@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
  * NOTE: Packages will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Package
+class BannerPackage
 {
     /**
      * Doctrine entity manager.
@@ -62,6 +62,22 @@ class Package
     }
 
     /**
+     * Find all packages that should be visible, and returns an editable version of them.
+     *
+     * @return array
+     */
+    public function findVisiblePackages()
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')->where('p.published=1')->andWhere('p.startingDate>=NOW()')->andWhere('p.expirationDate<=NOW()');
+        $packages = $qb->getQuery()->getResult();
+
+        return $packages;
+
+    }
+
+    /**
      * Find all packages, and returns an editable version of them.
      *
      * @return array
@@ -102,6 +118,6 @@ class Package
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\CompanyPackage');
+        return $this->em->getRepository('Company\Model\CompanyBannerPackage');
     }
 }
