@@ -5,7 +5,6 @@ namespace Company\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
-
 /**
  * CompanyPackage model.
  *
@@ -29,7 +28,7 @@ class CompanyJobPackage extends CompanyPackage
 
     /**
      * Get the jobs in the package.
-     * 
+     *
      * @return array jobs in the package
      */
     public function getJobs()
@@ -39,7 +38,7 @@ class CompanyJobPackage extends CompanyPackage
 
     /**
      * Adds a job to the package.
-     * 
+     *
      * @param Job $job job to be added
      */
     public function addJob(Job $job)
@@ -49,7 +48,7 @@ class CompanyJobPackage extends CompanyPackage
 
     /**
      * Removes a job from the package.
-     * 
+     *
      * @param Job $job job to be removed
      */
     public function removeJob(Job $job)

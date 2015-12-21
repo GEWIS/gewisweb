@@ -101,8 +101,9 @@ class Package
         return $packages[0];
     }
 
-    private function createPackage($type){
-        if($type === "job"){
+    private function createPackage($type)
+    {
+        i f($type === "job"){
             return new PackageModel($this->em);
         }
         return new BannerPackageModel($this->em);

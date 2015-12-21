@@ -166,12 +166,12 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName,$data,$type="job")
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job")
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()) {
-            $package = $this->insertPackageForCompanySlugName($companySlugName,$type);
+            $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             $package->exchangeArray($data);
             $this->savePackage();
             return true;
@@ -184,7 +184,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $companySlugName
      */
-    public function insertPackageForCompanySlugName($companySlugName,$type="job")
+    public function insertPackageForCompanySlugName($companySlugName, $type = "job")
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -195,7 +195,7 @@ class Company extends AbstractACLService
         $companies = $this->getEditableCompaniesBySlugName($companySlugName);
         var_dump($companySlugName);
         $company = $companies[0];
-        return $this->getPackageMapper()->insertPackageIntoCompany($company,$type);
+        return $this->getPackageMapper()->insertPackageIntoCompany($company, $type);
     }
 
     /**

@@ -33,7 +33,8 @@ class BannerPackage extends Package
      * Returns an random banner from the active banners
      *
      */
-    public function getBannerPackage(){
+    public function getBannerPackage()
+    {
         $banners = $this->findVisiblePackages();
         return $banners[array_rand($banners)];
     }
