@@ -15,23 +15,25 @@ class CompanyController extends AbstractActionController
     public function listAction()
     {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('slugCompanyName');
-        if ($companyName != null) {
-            $companies = $companyService->getCompaniesBySlugName($companyName);
-            if (count($companies) != 0) {
-                return new ViewModel([
-                    'company' => $companies[0],
-                    'translator' => $companyService->getTranslator(),
-                ]);
-            }
-            return new ViewModel([
-                'translator' => $companyService->getTranslator(),
-            ]);
-        }
         return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
         ]);
+
+    }
+
+    public function showAction()
+    {
+        $companyService = $this->getCompanyService();
+        $companyName = $this->params('slugCompanyName');
+        $companies = $companyService->getCompaniesBySlugName($companyName);
+        if (count($companies) == 1) {
+            return new ViewModel([
+                'company' => $companies[0],
+                'translator' => $companyService->getTranslator(),
+            ]);
+        }
+        $this->getResponse()->setStatusCode(404);
 
     }
 
