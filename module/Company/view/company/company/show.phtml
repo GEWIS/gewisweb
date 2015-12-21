@@ -4,25 +4,23 @@ $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
 ?>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('company') ?>">
+                    <?= $this->translate('Companies') ?>
+                </a>
+            </li>
+            <li class="active">
+                <?= $company->getName(); ?>
+            </li>
+        </ol>
+    </div>
+</section>
 <div class="container">
     <div class="company-list">
-
-        <?php
-
-        if (!isset($company)) {
-            echo $this->translate('Company not found');
-        }
-
-        if (isset($company)) {
-            $visible = $company->isHidden();
-            $translated = $company->getTranslationFromLocale($locale) != null;
-            if ($visible && $translated) {
-                echo $this->partial('partial/company/company/list/company.phtml',
-                    ['company' => $company, 'locale' => $locale]);
-            }
-        }
-
-        ?>
-
+        <?= $this->partial('partial/company/company/list/company.phtml',
+            ['company' => $company, 'locale' => $locale]) ?>
     </div>
 </div>
