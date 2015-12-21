@@ -25,3 +25,13 @@ input {
     color: $brand-danger;
     border-color: $brand-danger;
 }
+
+.form-horizontal {
+    .radio {
+        padding-top: 0;
+    }
+
+    .progress {
+        margin-bottom: 0;
+    }
+}

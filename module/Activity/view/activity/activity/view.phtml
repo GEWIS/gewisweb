@@ -78,21 +78,23 @@
     <?php echo $this->translate('Login to subscribe');?>
 <?php endif; ?>
 
-<?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
-$form->prepare();
-echo $this->form()->openTag($form); ?>
-        <table>
-            <?php foreach($fields as $field):?>
-            <tr>
-                <td><?php echo $field->get('name');?>:</td>
-                <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
-            </tr>
-            <?php endforeach;?>
-        </table>
-<?php echo $this->formSubmit($form->get('submit'));
-      echo $this->form()->closeTag();?>
-	</div>
-</div>
+<?php if (!is_null($form)):?>
+    <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
+    $form->prepare();
+    echo $this->form()->openTag($form); ?>
+            <table>
+                <?php foreach($fields as $field):?>
+                <tr>
+                    <td><?php echo $field->get('name');?>:</td>
+                    <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
+                </tr>
+                <?php endforeach;?>
+            </table>
+    <?php echo $this->formSubmit($form->get('submit'));
+          echo $this->form()->closeTag();?>
+        </div>
+    </div>
+<?php endif; ?>
 
 <?php if ($activity->getCanSignUp()): ?>
     <h2>

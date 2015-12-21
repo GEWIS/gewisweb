@@ -26,10 +26,12 @@ Markup:
 panel-emphasize - Emphasize
 
 Styleguide: panels.panel-default
+
 */
 
 .panel-group {
     display: flex;
+    background: #000;
 }
 
 .panel {

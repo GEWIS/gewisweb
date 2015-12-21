@@ -26,8 +26,8 @@ $this->scriptUrl()->requireUrls(
     <?php foreach ($unapprovedPolls as $poll): ?>
         <tr>
             <td><?= $poll->getId() ?></td>
-            <td><?= $poll->getDutchQuestion() ?></td>
-            <td><?= $poll->getEnglishQuestion() ?></td>
+            <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
+            <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
             <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
             <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
             <td></td>
@@ -65,8 +65,8 @@ $this->scriptUrl()->requireUrls(
         <?php foreach ($paginator as $poll): ?>
             <tr>
                 <td><?= $poll->getId() ?></td>
-                <td><?= $poll->getDutchQuestion() ?></td>
-                <td><?= $poll->getEnglishQuestion() ?></td>
+                <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
+                <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
                 <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
                 <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
                 <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>

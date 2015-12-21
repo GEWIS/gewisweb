@@ -7,58 +7,81 @@ use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
-
+    /**
+     *
+     * Action to display a list of all nonhidden companies
+     *
+     */
     public function listAction()
     {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('asciiCompanyName');    
+        $companyName = $this->params('slugCompanyName');
         if ($companyName != null) {
-            $companies = $companyService->getCompaniesWithAsciiName($companyName);
-            if (count($companies)!=0){
-                $vm = new ViewModel([
-                    'company' => $companies[0]
+            $companies = $companyService->getCompaniesBySlugName($companyName);
+            if (count($companies) != 0) {
+                return new ViewModel([
+                    'company' => $companies[0],
+                    'translator' => $companyService->getTranslator(),
                 ]);
             }
-            else {$vm = new ViewModel();}
-        }
-        else {
-            $vm = new ViewModel([
-                'company_list' => $companyService->getCompanyList()
+            return new ViewModel([
+                'translator' => $companyService->getTranslator(),
             ]);
         }
-        return $vm;
+        return new ViewModel([
+            'companyList' => $companyService->getCompanyList(),
+            'translator' => $companyService->getTranslator(),
+        ]);
 
     }
 
+    /**
+     *
+     * Action that displays a list of all jobs (facaturebank)
+     *
+     */
+    public function jobListAction()
+    {
+        $companyService = $this->getCompanyService();
+        $vm = new ViewModel([
+            'jobList' => $companyService->getJobList(),
+            'translator' => $companyService->getTranslator(),
+        ]);
+
+        return $vm;
+    }
+
+    /**
+     *
+     * Action to list jobs of a certain company
+     *
+     */
     public function jobsAction()
     {
         $companyService = $this->getCompanyService();
-        $jobName = $this->params('asciiJobName');    
-        $companyName = $this->params('asciiCompanyName');    
+        $jobName = $this->params('slugJobName');
+        $companyName = $this->params('slugCompanyName');
         if ($jobName != null) {
-            $jobs = $companyService->getJobsWithAsciiName($companyName,$jobName);
-            if (count($jobs)!=0){
-                $vm = new ViewModel([
-                    'job' => $jobs[0]
+            $jobs = $companyService->getJobsBySlugName($companyName, $jobName);
+            if (count($jobs) != 0) {
+                return new ViewModel([
+                    'job' => $jobs[0],
                 ]);
-            }
-            else {
-                $vm = new ViewModel();
-            }
-        }
-
-        else {
-            $vm = new ViewModel([
-                'activeJobList' => $companyService->getActiveJobList()
-            ]);
-        }
-        return $vm;
-
+            } 
+            return new ViewModel();
+        } 
+        $vm = new ViewModel([
+            'activeJobList' => $companyService->getActiveJobList(),
+        ]);
     }
 
+    /**
+     * Method that returns the service object for the company module.
+     *
+     *
+     */
     protected function getCompanyService()
     {
-        return $this->getServiceLocator()->get("company_service_company");
+        return $this->getServiceLocator()->get('company_service_company');
     }
-
 }

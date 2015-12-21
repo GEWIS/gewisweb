@@ -134,6 +134,30 @@ class User extends AbstractService
     }
 
     /**
+     * Login using a pin code.
+     *
+     * @param array $data
+     * @return UserModel Authenticated user. Null if not authenticated.
+     */
+    public function pinLogin($data)
+    {
+        // try to authenticate
+        $auth = $this->getServiceManager()->get('user_pin_auth_service');
+        $authAdapter = $auth->getAdapter();
+
+        $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
+
+        $result = $auth->authenticate();
+
+        // process the result
+        if (!$result->isValid()) {
+            return null;
+        }
+
+        return $auth->getIdentity();
+    }
+
+    /**
      * Log the user out.
      */
     public function logout()
