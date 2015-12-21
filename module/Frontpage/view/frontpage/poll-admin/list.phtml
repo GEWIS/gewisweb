@@ -24,7 +24,32 @@ $this->scriptUrl()->requireUrls(
     </thead>
     <tbody>
     <?php foreach ($unapprovedPolls as $poll): ?>
-        <tr>
+        <?php ob_start() /* start buffer for poll options */ ?>
+        <dl>
+            <dt><?= $this->translate('Dutch question') ?></dt>
+            <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
+
+            <dt><?= $this->translate('English question') ?></dt>
+            <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
+        </dl>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Dutch option') ?></th>
+                <th><?= $this->translate('English option') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($poll->getOptions() as $option): ?>
+                <tr>
+                    <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
+                    <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+        <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
+        <tr id="admin-poll-<?= $poll->getId() ?>" data-options="<?= $this->escapeHtmlAttr($options) ?>">
             <td><?= $poll->getId() ?></td>
             <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
             <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
@@ -63,7 +88,32 @@ $this->scriptUrl()->requireUrls(
     <table class="table table-striped">
         <tbody>
         <?php foreach ($paginator as $poll): ?>
+        <?php ob_start() /* start buffer for poll options */ ?>
+        <dl>
+            <dt><?= $this->translate('Dutch question') ?></dt>
+            <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
+
+            <dt><?= $this->translate('English question') ?></dt>
+            <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
+        </dl>
+        <table class="table table-striped">
+            <thead>
             <tr>
+                <th><?= $this->translate('Dutch option') ?></th>
+                <th><?= $this->translate('English option') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($poll->getOptions() as $option): ?>
+                <tr>
+                    <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
+                    <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+        <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
+            <tr id="admin-poll-<?= $poll->getId() ?>" data-options="<?= $this->escapeHtmlAttr($options) ?>">
                 <td><?= $poll->getId() ?></td>
                 <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
                 <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
@@ -94,6 +144,8 @@ $this->scriptUrl()->requireUrls(
             </div>
             <div class="modal-body">
                 <p><?= $this->translate('Are you sure you want to delete this poll?') ?> </p>
+                <p class="options">
+                </p>
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" method="POST">
@@ -117,6 +169,9 @@ $this->scriptUrl()->requireUrls(
                 <h4 class="modal-title"><?= $this->translate('Approve poll') ?></h4>
             </div>
             <div class="modal-body">
+                <p><?= $this->translate('Are you sure that you want to approve this poll?') ?></p>
+                <p class="options">
+                </p>
                 <?php
                 $form = $this->approvalForm;
                 $form->prepare();

@@ -17,7 +17,7 @@ class PollApproval extends Form implements InputFilterProviderInterface
             'name' => 'expiryDate',
             'type' => 'Zend\Form\Element\Date',
             'options' => [
-                'label' => $translator->translate('ExpiryDate')
+                'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)')
             ]
         ]);
 
