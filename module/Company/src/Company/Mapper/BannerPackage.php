@@ -29,6 +29,15 @@ class BannerPackage extends Package
     }
 
     /**
+     *
+     * Returns an random banner from the active banners
+     *
+     */
+    public function getBannerPackage(){
+        array_rand($this->findVisiblePackages());
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
