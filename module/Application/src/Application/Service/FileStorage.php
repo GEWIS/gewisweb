@@ -145,9 +145,9 @@ class FileStorage extends AbstractService
             'Content-Type' => $type,
             'Content-Length' => filesize($file),
             // zf2 parses date as a string for a \DateTime() object:
-            'Expires' => '@0',
-            'Cache-Control' => 'must-revalidate',
-            'Pragma' => 'public'
+            'Expires' => '+1 year',
+            'Cache-Control' => 'public',
+            'Pragma' => ''
         ]);
         $response->setHeaders($headers);
 
