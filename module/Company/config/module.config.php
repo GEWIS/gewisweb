@@ -184,9 +184,12 @@ return [
                             'addPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/addPackage',
+                                    'route' => '/addPackage/:type',
                                     'defaults' => [
                                         'action' => 'addPackage',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '[a-zA-Z0-9_-]*',
                                     ],
                                     'may_terminate' => true,
                                 ],

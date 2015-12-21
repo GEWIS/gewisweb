@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Company\Model\CompanyJobPackage as PackageModel;
+use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -100,14 +101,19 @@ class Package
         return $packages[0];
     }
 
+    private function createPackage($type){
+        if($type === "job"){
+            return new PackageModel($this->em);
+        }
+        return new BannerPackageModel($this->em);
+    }
     /**
      * Inserts a new package into the given company
      *
      */
-    public function insertPackageIntoCompany($company)
+    public function insertPackageIntoCompany($company, $type)
     {
-        $package = new PackageModel($this->em);
-
+        $package = $this->createPackage($type);
         $package->setCompany($company);
         $this->em->persist($package);
 

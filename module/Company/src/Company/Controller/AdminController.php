@@ -87,13 +87,14 @@ class AdminController extends AbstractActionController
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');
+        $type = $this->params('type');
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertPackageForCompanySlugNameByData($companyName,$request->getPost())){
+            if ($companyService->insertPackageForCompanySlugNameByData($companyName,$request->getPost(),$type)){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
@@ -110,8 +111,10 @@ class AdminController extends AbstractActionController
         // Initialize the form
         $packageForm->setAttribute(
             'action',
-            $this->url()->fromRoute('admin_company/editCompany/addPackage',
-            ['slugCompanyName' => $companyName])
+            $this->url()->fromRoute(
+                'admin_company/editCompany/addPackage',
+                ['slugCompanyName' => $companyName,'type' => $type]
+            )
         );
 
         // Initialize the view
