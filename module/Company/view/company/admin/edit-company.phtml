@@ -1,0 +1,67 @@
+<?php 
+$form = $companyEditForm;
+if (is_null($company)){
+    echo "Company not found";
+    return;
+}
+?>
+<h1> <?= $this->translate('Edit Company'); ?> </h1>
+
+<?= $this->form()->openTag($form) ?>
+<?php echo $this->partial('partial/company/admin/editors/company.phtml', 
+                          ['form' => $form]
+                         ); ?>
+<?= $this->formRow($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>
+<h2> <?= $this->translate('Packages') ?> </h2>
+<table class="packagelist">
+        <tr>
+            <th>
+                        <?= $this->translate('Package'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Active'); ?>
+            </th>
+            <th>
+                        <?= $this->translate('Jobs'); ?>
+            </th>
+        </tr>
+    <?php if (!empty($company->getPackages())) { 
+        foreach($company->getPackages() as $package) { ?>
+            <tr>
+                <td>
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage",
+                                            [
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packageID" => $package->getId(),
+                                            ]
+                                           ); ?>">
+                        <?= $this->translate('edit'); ?></a>
+                    <a href="<?= $this->url("admin_company/editCompany/editPackage/deletePackage",
+                                            [
+                                                  "slugCompanyName" => $company->getSlugName(),
+                                                  "packageID" => $package->getId(),
+                                            ]
+                                           ); ?>"> <?= $this->translate('delete'); ?></a>
+                    </a>
+                </td> 
+                <td>
+                    <?php echo $package->isActive() ? 'true' : 'false'?>
+                </td>
+                <td>
+                    <?= count($package->getJobs()) ?>
+                <td>
+                </td>
+            </tr>
+    <?php 
+        } 
+    } else { print("Empty"); }
+    ?>
+</table>
+<br/>
+<a href="<?= $this->url("admin_company/default", 
+                        ["action"          =>"addPackage",
+                         "slugCompanyName" => $company->getSlugName()]
+                       ); ?>">
+    <?= $this->translate('Add package'); ?>
+</a>
