@@ -90,10 +90,10 @@ return [
                 'priority' => 100,
             ],
             'admin_company' => [
-                'priority' => 3,
+                'priority' => 105,
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/company/admin/company',
+                    'route' => '/admin/company',
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
                         'controller' => 'Admin',
