@@ -240,6 +240,8 @@ class Module
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
 
+                    // sosusers can't do anything
+                    $acl->deny('sosuser');
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
