@@ -1,0 +1,31 @@
+/*
+List group
+
+Markup:
+
+Styleguide: list-group
+*/
+
+.agenda-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    padding: 0;
+    border: none;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    .badge {
+        margin-right: 1em;
+    }
+}
+
+a.agenda-item {
+    &:hover {
+        background: none;
+        color: $brand-primary;
+    }
+}
