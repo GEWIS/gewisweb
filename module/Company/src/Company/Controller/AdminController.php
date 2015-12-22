@@ -96,7 +96,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             $files = $request->getFiles();//->toArray();
             //$files = array_merge($files,$request->getPost()->toArray());
-            if (count($files) != 1 && $type === 'banner') {
+            if (!isset($files['banner']) && $type === 'banner') {
                 //$this->getResponse()->setStatusCode(404);
                 //$companyService->getTranslator()->translate('Error uploading file');
                 //return;
@@ -104,8 +104,7 @@ class AdminController extends AbstractActionController
 
             // Check if data is valid, and insert when it is
             var_dump($files);
-            die();
-            if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type, $files)){
+            if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type, $files['banner'])){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
