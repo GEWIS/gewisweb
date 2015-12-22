@@ -13,7 +13,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GEWIS/gewisweb-migrate",
-                "reference": "d70b1e01451e2a2d2b6da9722e1061ddb322b20b"
+                "reference": "a543cbc135587a61cec4ab95460cc573bfd92f8e"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -35,7 +35,7 @@
             "keywords": [
                 "gewis"
             ],
-            "time": "2015-08-23 14:35:29"
+            "time": "2015-12-22 13:02:50"
         },
         {
             "name": "doctrine/annotations",
@@ -1009,16 +1009,16 @@
         },
         {
             "name": "michelf/php-markdown",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9"
+                "reference": "155287e4222d2dd69b6a21221617b50668d5892e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/e1aabe18173231ebcefc90e615565742fc1c7fd9",
-                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/155287e4222d2dd69b6a21221617b50668d5892e",
+                "reference": "155287e4222d2dd69b6a21221617b50668d5892e",
                 "shasum": ""
             },
             "require": {
@@ -1035,20 +1035,20 @@
                     "Michelf": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "John Gruber",
-                    "homepage": "http://daringfireball.net/"
-                },
-                {
                     "name": "Michel Fortin",
                     "email": "michel.fortin@michelf.ca",
                     "homepage": "https://michelf.ca/",
                     "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
                 }
             ],
             "description": "PHP Markdown",
@@ -1056,7 +1056,7 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2015-03-01 12:03:08"
+            "time": "2015-12-22 18:18:12"
         },
         {
             "name": "symfony/console",
