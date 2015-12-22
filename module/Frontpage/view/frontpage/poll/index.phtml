@@ -35,7 +35,7 @@
 <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
 <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
 
-<?php if (isset($poll)): ?>
+<?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
 <div class="row">
     <h2><?= $this->translate('Comments') ?></h2>
     <?php if (count($poll->getComments()) == 0): ?>

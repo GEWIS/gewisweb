@@ -96,9 +96,10 @@ class Module
 
                     $acl->addResource('page');
                     $acl->addResource('poll');
+                    $acl->addResource('poll_comment');
 
-                    $acl->allow('user', 'poll', 'vote');
-                    $acl->allow('user', 'poll', 'request');
+                    $acl->allow('user', 'poll', ['vote', 'request']);
+                    $acl->allow('user', 'poll_comment', 'view');
 
                     return $acl;
                 },
