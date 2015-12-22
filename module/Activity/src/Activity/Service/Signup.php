@@ -183,7 +183,6 @@ class Signup extends AbstractAclService
                 case 2://'Number'
                     break;
                 case 3://'Choice' 
-                    var_dump($value);
                     $value = $optionMapper->getOptionById((int)$value)->getValue();
                     break;
             }
