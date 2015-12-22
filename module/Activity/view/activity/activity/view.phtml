@@ -1,3 +1,7 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); 
+          $formlang = ($lang==='nl' && $availableLangs['dutch'] || $lang ==='en' && !$availableLangs['english'])? 'nl': 'en'; 
+      $form = ($formlang==='en') ? $formEn : $formNl ;
+?>
 <div class="row">
 <div class="col-md-4">
 <!-- wrapping applied -->
@@ -47,7 +51,7 @@
             <tr>
                 <th><?php echo$this->translate('Name');?> </th>
                 <?php foreach($fields as $field):?>
-                <th><?php echo $field->getName();?></th>
+                <th><?= ($formlang === 'en')  ? $field->getNameEn() : $field->getName();?></th>
                 <?php endforeach;?>
             </tr>
         </thead>
@@ -82,14 +86,14 @@
             <table>
                 <?php foreach($fields as $field):?>
                 <tr>
-                    <td><?php echo $field->getName();?>:</td>
+                    <td><?= ($formlang === 'en')  ? $field->getNameEn() : $field->getName();?>:</td>
                     <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
                 </tr>
                 <?php endforeach;?>
             </table>
     <?php echo $this->formSubmit($form->get('submit'));
           echo $this->form()->closeTag();?>
-<?php endif; ?>        
+<?php endif; ?>
         </div>
     </div>
 

@@ -254,33 +254,53 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $field->setMaximumValue($params['max. value']);
         }
 
-        if ($params['options'] !== '' || $params['optionsEn'] != ''){
-            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-            $optionsEn = explode(',', $params['optionsEn']);
-            $options = explode(',', $params['options']);
-            $num_options = count($optionsEn);
-            if ($params['options'] !== ''){
-                $num_options = count($options);
-            }
-            for ($i=0; $i<$num_options; $i++){
-
-                $option = new ActivityOptionModel();
-                if ($dutch){
-                    $option->setValue($options[$i]);
-                }
-                if ($english){
-                    $option->setValueEn($optionsEn[$i]);
-                }
-                $option->setField($field);
-                $em->persist($option);
-            }
-
-            $em->flush();
+        if ($params['type'] === '3'){
+            $this->createActivityOptions($field, $params,
+                    $params['options'] !== '' && $dutch, 
+                    $params['optionsEn'] != '' && $english);
         }
         return $field;
     }
-
+    
+    /**
+     * Creates options for both languages specified and adds it to $field. 
+     * If no languages are specified, this method does nothing.
+     * @pre The options corresponding to the languages specified are filled in 
+     * $params. If both languages are specified, they must have the same amount of options.
+     * 
+     * @param ActivityFieldModel $field The field to add the options to.
+     * @param array $params The array containing the options strings.
+     * @param bool $createEnglishOptions 
+     * @param bool $createDutchOptions 
+     */
+    protected function createActivityOptions($field, $params, $createEnglishOptions, $createDutchOptions)
+    {
+        $numOptions = 0;
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        
+        if ($createDutchOptions){
+            $options = explode(',', $params['options']);
+            $numOptions = count($options);
+        }
+        if ($createEnglishOptions){
+            $optionsEn = explode(',', $params['optionsEn']);
+            $numOptions = count($optionsEn);
+        }
+        for ($i=0; $i<$numOptions; $i++){
+            
+            $option = new ActivityOptionModel();
+            if ($createDutchOptions){
+                $option->setValue($options[$i]);
+            }
+            if ($createEnglishOptions){
+                $option->setValueEn($optionsEn[$i]);
+            }
+            $option->setField($field);
+            $em->persist($option);
+        }
+        $em->flush();
+    }
+    
     /**
      * Approve of an activity
      *

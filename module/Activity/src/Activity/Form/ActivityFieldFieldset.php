@@ -23,7 +23,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
 
         $this->add([
-            'name' => 'name_en',
+            'name' => 'nameEn',
             'options' => ['label' => 'Name(English)'],
         ]);
 
@@ -63,7 +63,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
 
         $this->add([
-            'name' => 'options_en',
+            'name' => 'optionsEn',
             'options' => [
                 'label' => 'Options (English)'
             ]
@@ -80,7 +80,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'name' => [
                 'required' => true
             ],
-            'name_en' => [
+            'nameEn' => [
                 'required' => true
             ],
             'type' => [
@@ -105,7 +105,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
                                        $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
                                        ($this->fieldDependantRequired($value, $context, 'options', '3') ||
-                                        $this->fieldDependantRequired($value, $context, 'options_en', '3'));
+                                        $this->fieldDependantRequired($value, $context, 'optionsEn', '3'));
                             }
                         ]
                     ]

@@ -38,10 +38,14 @@ class ActivityController extends AbstractActionController
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         $fields = $activity->getFields();
-        $form = null;
-
+        $formNl = null;
+        $formEn = null;
+        $availableLangs = ['english' => !is_null($activity->getNameEn()), 
+            'dutch' => !is_null($activity->getName())];
         if ($signupService->isAllowedToSubscribe()) {
-            $form = $signupService->getForm($fields);
+            //Create forms of the respective language, if available
+            $formNl = $signupService->getForm($fields, !$availableLangs['dutch']);
+            $formEn = $signupService->getForm($fields, $availableLangs['english']);
         }
         return [
             'activity' => $activity,
@@ -50,8 +54,10 @@ class ActivityController extends AbstractActionController
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($activity),
             'signupData' => $signupService->getSignedUpData($activity),
-            'form' => $form,
-            'fields' => $fields
+            'formNl' => $formNl,
+            'formEn' => $formEn,
+            'fields' => $fields,
+            'availableLangs' => $availableLangs
         ];
     }
 

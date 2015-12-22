@@ -30,11 +30,17 @@ class Signup extends AbstractAclService
     {
         return 'activitySignup';
     }
-
+    
     /**
-     * Return the form for signing up
+     * Return the form for signing up in the preferred language, if available.
+     * Otherwise, it returns it in the avaiable language.
+     * 
+     * @param type $fields
+     * @param bool $setEnglish 
+     * @return type
+     * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm($fields)
+    public function getForm($fields, $setEnglish)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -42,8 +48,8 @@ class Signup extends AbstractAclService
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
-        $form = $this->getServiceManager()->get('activity_form_activity_signup');
-        $form->setFields($fields);
+        $form = new \Activity\Form\ActivitySignup();
+        $form->initialiseForm($fields, $setEnglish);
         return $form;
     }
 
