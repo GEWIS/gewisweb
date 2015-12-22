@@ -427,4 +427,35 @@ class Activity
     {
         return $this->fields;
     }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $fields = $this->getFields()->count();
+
+        $attendees = [];
+        foreach ($this->getSignUps() as $signup) {
+            $attendees[] = $signup->getUser()->getMember()->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'nameEn' => $this->getNameEn(),
+            'beginTime' => $this->getBeginTime(),
+            'endTime' => $this->getEndTime(),
+            'location' => $this->getLocation(),
+            'LocationEn' => $this->getLocationEn(),
+            'costs' => $this->getCosts(),
+            'costsEn' => $this->getCostsEn(),
+            'description' => $this->getDescription(),
+            'descriptionEn' => $this->getDescriptionEn(),
+            'attendees' => $attendees,
+            'fields' => $fields,
+        ];
+    }
 }

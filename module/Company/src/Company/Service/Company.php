@@ -22,7 +22,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed list the companies')
             );
         }
-        return $this->getCompanyMapper()->findAll($translator->getLocale());
+        return $this->getCompanyMapper()->findPublicByLocale($translator->getLocale());
     }
     // Company list for admin interface
     /**

@@ -66,7 +66,7 @@ class ActivitySignup
     {
         return $this->id;
     }
-    
+
     /**
      * Get the user that is signed up.
      *
@@ -75,5 +75,15 @@ class ActivitySignup
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Get the activity which the user is signed up for.
+     *
+     * @return Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

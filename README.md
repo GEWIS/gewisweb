@@ -83,6 +83,36 @@ Also, the console routes `oase show course <code>` and `oase show studies` are
 available for debugging purposes. These will directly contact OASE to obtain
 the information.
 
+JavaScript URL Helper
+=====================
+
+If you need to create dynamic routes within JavaScript code, we have the
+JavaScript URL Helper for that. Here we have two components.
+
+First, to be able to use a route in JavaScript code, you need to tell the
+ScriptUrl view helper to expose that URL to the JavaScript URL helper. You do
+this in the view where you need the JavaScript URL helper. For example:
+
+```php
+<?php
+// for a route `home` without any parameters
+$this->scriptUrl()->requireUrl('home');
+
+// for a route `activity/show` with a parameter `id`
+$this->scriptUrl()->requireUrl('activity/show', ['id']);
+```
+
+Now, in JavaScript code (even in `*.js` files), you can use these routes
+almost like you are using the normal URL view helper:
+
+```javascript
+text = '<a href="' + URLHelper.url('home') + '">';
+
+// or with parameters:
+text = '<a href="' + URLHelper.url('activity/show', { id: 32 }) + '">';
+
+```
+
 Translation
 ===========
 

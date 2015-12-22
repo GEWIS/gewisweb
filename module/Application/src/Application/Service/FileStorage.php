@@ -70,7 +70,7 @@ class FileStorage extends AbstractService
      * Stores files in the content based file system
      *
      * @param string $source The source file to store
-     * @param boolean $move indicating wether the file should be moved or copied
+     * @param boolean $move indicating whether the file should be moved or copied
      *
      * @return string the path at which the file was stored.
      */
@@ -145,9 +145,9 @@ class FileStorage extends AbstractService
             'Content-Type' => $type,
             'Content-Length' => filesize($file),
             // zf2 parses date as a string for a \DateTime() object:
-            'Expires' => '@0',
-            'Cache-Control' => 'must-revalidate',
-            'Pragma' => 'public'
+            'Expires' => '+1 year',
+            'Cache-Control' => 'public',
+            'Pragma' => ''
         ]);
         $response->setHeaders($headers);
 

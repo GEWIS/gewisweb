@@ -18,7 +18,7 @@ Photo.Admin.loadPage = function (resource) {
             href = URLHelper.url('admin_photo/album_index', {'album_id': album.id});
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<a class="thumbnail" href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/' + album.coverPath + '" alt="">'
+                    + '<img class="img-responsive" src="' + URLHelper.url('home') + 'data/' + album.coverPath + '" alt="">'
                     + album.name
                     + '</a>'
                     + '</div>');
@@ -33,7 +33,7 @@ Photo.Admin.loadPage = function (resource) {
             $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
                     + '<div class="thumbnail">'
                     + '<a href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/' + photo.smallThumbPath + '" alt="">'
+                    + '<img class="img-responsive" src="' + URLHelper.url('home') + 'data/' + photo.smallThumbPath + '" alt="">'
                     + '</a>'
                     + '<input type="checkbox" class="thumbnail-checkbox">'
                     + '</div>'
@@ -86,7 +86,7 @@ Photo.Admin.regenerateCover = function () {
     $("#coverSpinner").show();
     $.post(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
         $.getJSON(Photo.Admin.activePage, function (data) {
-            $("#coverPreview").attr('src', '/data/' + data.album.coverPath);
+            $("#coverPreview").attr('src', URLHelper.url('home') + 'data/' + data.album.coverPath);
             $("#coverPreview").show();
             $("#coverSpinner").hide();
         });
@@ -238,28 +238,7 @@ Photo.Admin.clearSelection = function() {
     $("#btnMultipleDelete").addClass("btn-hidden");
     $("#btnMultipleMove").addClass("btn-hidden");
 }
-Photo.Admin.initAdd = function () {
-    $("#btnImport").click(function () {
-        $.post("import",
-                {
-                    folder_path: $("#folderInput").val()
-                },
-        function (data) {
-            $("#spinner").hide();
-            if (data.success) {
-                $("#successAlert").show();
-            } else {
-                $("#errorAlert").html(data.error);
-                $("#errorAlert").show();
-                $("#import").show();
-            }
-        });
-        $("#errorAlert").hide();
-        $("#spinner").show();
-        $("#import").hide();
-    });
 
-}
 Photo.Admin.updateBreadCrumb = function (target) {
 
     if (target.attr('class') == 'thumbnail') {

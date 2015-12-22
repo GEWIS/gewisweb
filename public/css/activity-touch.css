@@ -1,0 +1,156 @@
+body {
+    overflow: hidden;
+}
+
+#wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 475px;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+#scroller {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+.navbar-inverse {
+    color: #fff;
+    background-color: #D40026;
+}
+
+.jumbotron-header > .container {
+    height: 150px;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #D40026;
+    font-size: 20px;
+}
+
+#activities > tbody > tr > td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 38px;
+    overflow: hidden;
+}
+
+.panel-body {
+    font-size: 28px;
+}
+
+.more-padding {
+    padding-top: 200px;
+    padding-bottom: 20px;
+}
+
+#content {
+    background-color: #fff;
+    width: 100%;
+    z-index: 100;
+    position: fixed;
+    padding-top: 20px;
+}
+
+.container-fluid {
+    padding-top: 20px;
+}
+
+.modal-dialog {
+    position: absolute;
+    top: 50% !important;
+    transform: translate(0, -50%) !important;
+    -ms-transform: translate(0, -50%) !important;
+    -webkit-transform: translate(0, -50%) !important;
+}
+
+#activityModal > .modal-dialog {
+    margin: auto 5%;
+    width: 90%;
+    height: 80%;
+}
+
+#loginModal > .modal-dialog {
+    margin-left: 35%;
+    width: 30%;
+    height: 58%;
+}
+
+#logoutModal > .modal-dialog {
+    margin-left: 35%;
+    width: 30%;
+    height: 25%;
+}
+
+.modal-content {
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.modal-body {
+    position: absolute;
+    top: 45px;
+    bottom: 45px;
+    left: 0;
+    right: 0;
+    font-size: 24px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.modal-title {
+    text-align: center;
+
+}
+
+.logged-in {
+    display: none;
+}
+
+.btn-keypad {
+    width: 100%;
+    /* Hack to make height equal to width */
+    height: 0;
+    padding-bottom: 20%;
+    padding-top: 15%;
+
+    line-height: 100%;
+}
+
+.digit-input {
+    text-align: center;
+}
+
+#loginModal {
+    z-index: 19000;
+}

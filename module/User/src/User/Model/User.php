@@ -164,7 +164,8 @@ class User implements RoleInterface, ResourceInterface
     {
         return [
             'lidnr' => $this->getLidnr(),
-            'email' => $this->getEmail()
+            'email' => $this->getEmail(),
+            'member' => $this->getMember()->toArray()
         ];
     }
     /**
