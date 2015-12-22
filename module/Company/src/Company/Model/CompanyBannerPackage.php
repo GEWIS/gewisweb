@@ -23,13 +23,6 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
     protected $image;
 
     /**
-     * The banner's HTML.
-     *
-     * @ORM\Column(type="text")
-     */
-    protected $html;
-
-    /**
      * Get the banner's image's URL.
      *
      * @return string
@@ -50,56 +43,11 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
     }
 
     /**
-     * Get the banner's HTML.
-     *
-     * @return string
-     */
-    public function getHTML()
-    {
-        return $this->html;
-    }
-
-    /**
-     * Set the banner's HTML.
-     *
-     * @param string $html
-     */
-    public function setHTML($html)
-    {
-        $this->html = $html;
-    }
-
-    /**
      * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        // todo
-    }
-
-    public function publish()
-    {
-        // todo
-    }
-
-    public function unpublish()
-    {
-        // todo
-    }
-
-    public function create()
-    {
-        // todo
-    }
-
-    public function save()
-    {
-        // todo   
-    }
-
-    public function delete()
-    {
         // todo
     }
 }

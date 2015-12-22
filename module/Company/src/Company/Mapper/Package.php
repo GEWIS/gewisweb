@@ -2,7 +2,8 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyPackage as PackageModel;
+use Company\Model\CompanyJobPackage as PackageModel;
+use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -62,6 +63,25 @@ class Package
     }
 
     /**
+     * Find all packages that should be visible, and returns an editable version of them.
+     *
+     * @return array
+     */
+    public function findVisiblePackages()
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.published=1')
+            ->andWhere('p.starts<=CURRENT_DATE()')
+            ->andWhere('p.expires>=CURRENT_DATE()');
+        $packages = $qb->getQuery()->getResult();
+
+        return $packages;
+
+    }
+
+    /**
      * Find all packages, and returns an editable version of them.
      *
      * @return array
@@ -81,14 +101,20 @@ class Package
         return $packages[0];
     }
 
+    private function createPackage($type)
+    {
+        if ($type === "job") {
+            return new PackageModel($this->em);
+        }
+        return new BannerPackageModel($this->em);
+    }
     /**
      * Inserts a new package into the given company
      *
      */
-    public function insertPackageIntoCompany($company)
+    public function insertPackageIntoCompany($company, $type)
     {
-        $package = new PackageModel($this->em);
-
+        $package = $this->createPackage($type);
         $package->setCompany($company);
         $this->em->persist($package);
 
@@ -102,6 +128,6 @@ class Package
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\CompanyPackage');
+        return $this->em->getRepository('Company\Model\CompanyJobPackage');
     }
 }

@@ -10,6 +10,16 @@ use Application\Service\AbstractAclService;
  */
 class Company extends AbstractACLService
 {
+    public function getCurrentBanner()
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('showBanner')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed list the companies')
+            );
+        } 
+        return $this->getBannerPackageMapper()->getBannerPackage();
+    }
     /**
      * Returns an list of all companies (excluding hidden companies
      *
@@ -156,12 +166,12 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName,$data)
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job")
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()) {
-            $package = $this->insertPackageForCompanySlugName($companySlugName);
+            $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             $package->exchangeArray($data);
             $this->savePackage();
             return true;
@@ -174,7 +184,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $companySlugName
      */
-    public function insertPackageForCompanySlugName($companySlugName)
+    public function insertPackageForCompanySlugName($companySlugName, $type = "job")
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -183,9 +193,8 @@ class Company extends AbstractACLService
             );
         }
         $companies = $this->getEditableCompaniesBySlugName($companySlugName);
-        var_dump($companySlugName);
         $company = $companies[0];
-        return $this->getPackageMapper()->insertPackageIntoCompany($company);
+        return $this->getPackageMapper()->insertPackageIntoCompany($company, $type);
     }
 
     /**
@@ -417,6 +426,15 @@ class Company extends AbstractACLService
     public function getPackageMapper()
     {
         return $this->sm->get('company_mapper_package');
+    }
+
+    /**
+     * Returns the packageMapper
+     *
+     */
+    public function getBannerPackageMapper()
+    {
+        return $this->sm->get('company_mapper_bannerpackage');
     }
 
     /**
