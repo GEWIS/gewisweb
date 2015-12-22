@@ -21,7 +21,7 @@ class Company extends AbstractACLService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed list the companies')
             );
-        } 
+        }
         return $this->getCompanyMapper()->findAll($translator->getLocale());
     }
     // Company list for admin interface
@@ -51,7 +51,7 @@ class Company extends AbstractACLService
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()){
-            $package->exchangeArray($data); 
+            $package->exchangeArray($data);
             $this->savePackage();
         }
     }
@@ -67,7 +67,7 @@ class Company extends AbstractACLService
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
         if ($companyForm->isValid()){
-            $company->exchangeArray($data); 
+            $company->exchangeArray($data);
             $this->saveCompany();
         }
     }
@@ -83,7 +83,7 @@ class Company extends AbstractACLService
         $jobForm = $this->getJobForm();
         $jobForm->setData($data);
         if ($jobForm->isValid()){
-            $job->exchangeArray($data); 
+            $job->exchangeArray($data);
             $this->saveJob();
         }
     }
@@ -116,7 +116,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, inserts the company, and sets 
+     * Checks if the data is valid, and if it is, inserts the company, and sets
      * all data
      *
      * @param mixed $data
@@ -189,7 +189,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, assigns a job, and bind it to 
+     * Checks if the data is valid, and if it is, assigns a job, and bind it to
      * the given package
      *
      * @param mixed $packageID
@@ -239,7 +239,7 @@ class Company extends AbstractACLService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to delete packages')
             );
-        } 
+        }
         return $this->getPackageMapper()->delete($packageID);
     }
 
@@ -307,7 +307,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all jobs with a given slugname, owned by a company with 
+     * Returns all jobs with a given slugname, owned by a company with
      * $companySlugName
      *
      * @param mixed $companySlugName
@@ -325,7 +325,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all jobs with a $jobSlugName, owned by a company with a 
+     * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName
      *
      * @param mixed $companySlugName
@@ -334,6 +334,17 @@ class Company extends AbstractACLService
     public function getJobsBySlugName($companySlugName, $jobSlugName)
     {
         return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
+    }
+
+    /**
+     * Returns all jobs with owned by a company with a
+     * $companySlugName
+     *
+     * @param mixed $companySlugName
+     */
+    public function getJobsByCompanyName($companySlugName)
+    {
+        return $this->getJobMapper()->findJobByCompanySlugName($companySlugName);
     }
 
     /**
@@ -382,12 +393,12 @@ class Company extends AbstractACLService
         $jobList = $this->getJobList();
         $array = [];
         foreach ($jobList as $job) {
-            if ($job->getActive()) {
+            if ($job->isActive()) {
                 $array[] = $job;
             }
         }
 
-        return $r;
+        return $array;
     }
 
     /**

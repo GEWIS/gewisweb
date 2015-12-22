@@ -34,7 +34,6 @@ class CompanyController extends AbstractActionController
             ]);
         }
         $this->getResponse()->setStatusCode(404);
-
     }
 
     /**
@@ -45,12 +44,20 @@ class CompanyController extends AbstractActionController
     public function jobListAction()
     {
         $companyService = $this->getCompanyService();
-        $vm = new ViewModel([
+        $companyName = $this->params('slugCompanyName');
+        if (isset($companyName)) {
+            // jobs for a single company
+            return new ViewModel([
+                'company' => $companyService->getCompaniesBySlugName($companyName)[0],
+                'jobList' => $companyService->getJobsByCompanyName($companyName),
+                'translator' => $companyService->getTranslator(),
+            ]);
+        }
+        // all jobs
+        return new ViewModel([
             'jobList' => $companyService->getJobList(),
             'translator' => $companyService->getTranslator(),
         ]);
-
-        return $vm;
     }
 
     /**
@@ -73,8 +80,9 @@ class CompanyController extends AbstractActionController
             }
             return new ViewModel();
         }
-        $vm = new ViewModel([
-            'activeJobList' => $companyService->getActiveJobList()
+        return new ViewModel([
+            'activeJobList' => $companyService->getActiveJobList(),
+            'translator' => $companyService->getTranslator(),
         ]);
     }
 

@@ -16,7 +16,11 @@ $companyURL = $this->url('company/companyItem', // Route url
         <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
         <div class="">
             <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
-            <div><?= $company->getNumberOfJobs() ?> <?= $company->getNumberOfJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?></div>
+            <p>
+                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                    <?= $company->getNumberOfJobs() ?> <?= $company->getNumberOfJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
+                </a>
+            </p>
         </div>
         <hr class="visible-xs">
     </div>
