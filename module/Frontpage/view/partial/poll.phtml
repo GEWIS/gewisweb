@@ -14,7 +14,15 @@ foreach ($poll->getOptions() as $option) {
 }
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<h4><?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?></h4>
+<h4>
+    <?php if (isset($viewLink) && $viewLink): ?>
+    <a href="<?= $this->url('poll/view', ['id' => $poll->getId()]) ?>">
+    <?php endif ?>
+        <?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?>
+    <?php if (isset($viewLink) && $viewLink): ?>
+    </a>
+    <?php endif ?>
+</h4>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
         <div class="row">
