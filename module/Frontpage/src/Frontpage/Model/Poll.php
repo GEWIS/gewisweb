@@ -52,9 +52,18 @@ class Poll implements ResourceInterface
     protected $englishQuestion;
 
     /**
+     * Poll options.
+     *
      * @ORM\OneToMany(targetEntity="PollOption", mappedBy="poll", cascade={"persist", "remove"})
      */
     protected $options;
+
+    /**
+     * Poll comments.
+     *
+     * @ORM\OneToMany(targetEntity="PollComment", mappedBy="poll", cascade={"persist", "remove"})
+     */
+    protected $comments;
 
     /**
      * Who approved this poll. If null then nobody approved it.
