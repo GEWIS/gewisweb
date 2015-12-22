@@ -45,7 +45,8 @@ class Photo
             ->from('Photo\Model\Photo', 'a')
             ->where('a.album = ?1')
             ->setParameter(1, $album)
-            ->setFirstResult($start);
+            ->setFirstResult($start)
+            ->orderBy('a.dateTime', 'ASC');
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
@@ -90,10 +91,10 @@ class Photo
 
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a')
-            ->where('a.id > ?1 AND a.album = ?2')
-            ->setParameter(1, $photo->getId())
+            ->where('a.dateTime > ?1 AND a.album = ?2')
+            ->setParameter(1, $photo->getDateTime())
             ->setParameter(2, $photo->getAlbum())
-            ->addOrderBy('a.id', 'ASC')
+            ->orderBy('a.dateTime', 'ASC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 
@@ -114,10 +115,10 @@ class Photo
 
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a')
-            ->where('a.id < ?1 AND a.album = ?2')
-            ->setParameter(1, $photo->getId())
+            ->where('a.dateTime < ?1 AND a.album = ?2')
+            ->setParameter(1, $photo->getDateTime())
             ->setParameter(2, $photo->getAlbum())
-            ->addOrderBy('a.id', 'DESC')
+            ->orderBy('a.dateTime', 'ASC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 

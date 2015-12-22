@@ -15,7 +15,9 @@ $this->scriptUrl()->requireUrl('member/search');
     </div>
     <div class="row">
         <div class="col-lg-9">
-            <a href="<?= $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>"><img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/></a>
+            <a href="<?= is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>">
+                <img class="img-responsive" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/>
+            </a>
             <?php if(!is_null($photo->getWeeklyPhoto())): ?>
                 <!-- TOOD: Make this more responsive -->
                 <div class="ribbon-container">
