@@ -1,3 +1,7 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); 
+          $formlang = ($lang==='nl' && $availableLangs['dutch'] || $lang ==='en' && !$availableLangs['english'])? 'nl': 'en'; 
+      $form = ($formlang==='en') ? $formEn : $formNl ;
+?>
 <div class="row">
 <div class="col-md-4">
 <!-- wrapping applied -->
@@ -47,7 +51,7 @@
             <tr>
                 <th><?php echo$this->translate('Name');?> </th>
                 <?php foreach($fields as $field):?>
-                <th><?php echo $field->get('name');?></th>
+                <th><?= ($formlang === 'en')  ? $field->getNameEn() : $field->getName();?></th>
                 <?php endforeach;?>
             </tr>
         </thead>
@@ -70,44 +74,29 @@
 		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->getId()]);?>">
 		    <?php echo $this->translate('Unsubscribe');?>
 		</a>
-<?php elseif($canSignUp && $isLoggedIn):?>
-        <a href="<?php echo $this->url('activity/signup', ['id' => $activity->getId()]);?>">
-            <?php echo $this->translate('Subscribe');?>
-        </a>
-<?php elseif ($canSignUp):?>
+<?php endif; ?>
+<?php if ($canSignUp && !$isLoggedIn):?>
     <?php echo $this->translate('Login to subscribe');?>
 <?php endif; ?>
 
-<?php if (!is_null($form)):?>
+<?php if (!is_null($form) && !$isSignedUp): //display the form ?>
     <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
     $form->prepare();
     echo $this->form()->openTag($form); ?>
             <table>
                 <?php foreach($fields as $field):?>
                 <tr>
-                    <td><?php echo $field->get('name');?>:</td>
-                    <td><?php echo $this->formRow($form->get($field->get('id'))); ?></td>
+                    <td><?= ($formlang === 'en')  ? $field->getNameEn() : $field->getName();?>:</td>
+                    <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
                 </tr>
                 <?php endforeach;?>
             </table>
     <?php echo $this->formSubmit($form->get('submit'));
           echo $this->form()->closeTag();?>
+<?php endif; ?>
         </div>
     </div>
-<?php endif; ?>
 
-<?php if ($activity->getCanSignUp()): ?>
-    <h2>
-        <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
-    </h2>
-
-    <?php $i = 2;?>
-    <?php foreach($signedUp as $member):?>
-    <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-        <div class="col-md-12"><?= $member->getFullName()?></div>
-    </div>
-    <?php endforeach;?>
-<?php endif;?>
 
 <div class="row">
 	<div class="col-md-12">

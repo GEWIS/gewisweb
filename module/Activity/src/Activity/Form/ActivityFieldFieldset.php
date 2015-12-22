@@ -11,70 +11,80 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct() {
-        
+
         parent::__construct('activityfield');
-        
+
         $this->setHydrator(new ClassMethodsHydrator(false))
              ->setObject(new ActivityField());
-      
-        $this->add(array(
+
+        $this->add([
             'name' => 'name',
-            'options' => array(
-                'label' => 'Name'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-                
+            'options' => ['label' => 'Name'],
+        ]);
+
+        $this->add([
+            'name' => 'nameEn',
+            'options' => ['label' => 'Name(English)'],
+        ]);
+
         $this->add([
             'name' => 'type',
             'type' => 'Zend\Form\Element\Select',
-            'options' => array(
-                'value_options' => array(
+            'options' => [
+                'value_options' => [
                     '0' => 'Text',
                     '1' => 'Yes/No',
                     '2' => 'Number',
                     '3' => 'Choice'
-                ),
+                ],
                 'label' => 'Type'
-            )
+            ]
         ]);
-        
+
         $this->add([
-            'name' => 'min. value',                          
-            'options' => array(
+            'name' => 'min. value',
+            'options' => [
                 'label' => 'Min. value'
-            )
+            ]
         ]);
-        
+
         $this->add([
             'name' => 'max. value',
-            'options' => array(
+            'options' => [
                 'label' => 'Max. value'
-            )
+            ]
         ]);
-        
+
         $this->add([
-            'name' => 'options',            
-            'options' => array(
+            'name' => 'options',
+            'options' => [
                 'label' => 'Options'
-            )
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'optionsEn',
+            'options' => [
+                'label' => 'Options (English)'
+            ]
         ]);
     }
-    
+
 
     /**
      * @return array
      */
     public function getInputFilterSpecification() {
-        
+
         return [
             'name' => [
                 'required' => true
             ],
+            'nameEn' => [
+                'required' => true
+            ],
             'type' => [
-                'required' => true, 
+                'required' => true,
                 'validators' => [
                     [
                         'name' => 'Between',
@@ -88,13 +98,14 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                            \Zend\Validator\Callback::INVALID_VALUE => 
+                            \Zend\Validator\Callback::INVALID_VALUE =>
                                 'Some of the required fields for this type are empty'
                             ],
                             'callback' => function($value, $context=null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
                                        $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
-                                       $this->fieldDependantRequired($value, $context, 'options', '3');
+                                       ($this->fieldDependantRequired($value, $context, 'options', '3') ||
+                                        $this->fieldDependantRequired($value, $context, 'optionsEn', '3'));
                             }
                         ]
                     ]
@@ -111,26 +122,26 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
-            ]                    
+            ]
         ];
     }
 
     /**
      * Tests if the child field is not empty if the current field has the test
      * value. If so, returns true else false.
-     * 
+     *
      * @param string $value The value to use for validation
      * @param array $context The field context
      * @param string $child The name of the element to test for emptiness
-     * @param string $testvalue 
-     * @return boolean 
+     * @param string $testvalue
+     * @return boolean
      */
-    public function fieldDependantRequired($value, $context, $child, $testvalue){
-        
+    protected function fieldDependantRequired($value, $context, $child, $testvalue){
+
         if ($value === $testvalue){
             return (new NotEmpty())->isValid($context[$child]);
         }
-            
+
         return true;
     }
 }

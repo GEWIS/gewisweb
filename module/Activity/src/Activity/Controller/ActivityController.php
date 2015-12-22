@@ -37,12 +37,15 @@ class ActivityController extends AbstractActionController
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
+        $fields = $activity->getFields();
+        $formNl = null;
+        $formEn = null;
+        $availableLangs = ['english' => !is_null($activity->getNameEn()), 
+            'dutch' => !is_null($activity->getName())];
         if ($signupService->isAllowedToSubscribe()) {
-            $fields = $activity->getFields();
-            $form = $signupService->getForm($fields);
-        } else {
-            $fields = null;
-            $form = null;
+            //Create forms of the respective language, if available
+            $formNl = $signupService->getForm($fields, !$availableLangs['dutch']);
+            $formEn = $signupService->getForm($fields, $availableLangs['english']);
         }
         return [
             'activity' => $activity,
@@ -51,8 +54,10 @@ class ActivityController extends AbstractActionController
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($activity),
             'signupData' => $signupService->getSignedUpData($activity),
-            'form' => $form,
-            'fields' => $fields
+            'formNl' => $formNl,
+            'formEn' => $formEn,
+            'fields' => $fields,
+            'availableLangs' => $availableLangs
         ];
     }
 
@@ -103,8 +108,8 @@ class ActivityController extends AbstractActionController
         $activity = $activityService->getActivity($id);
 
         $translator = $activityService->getTranslator();
-        
-        $params = $this->viewAction();        
+
+        $params = $this->viewAction();
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = $translator->translate('Use the form to subscribe');
@@ -122,7 +127,7 @@ class ActivityController extends AbstractActionController
             return $params;
         }
 
-        $form = new SignupForm($activity->getFields());
+        $form = $signupService->getForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid

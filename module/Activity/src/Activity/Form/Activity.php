@@ -29,7 +29,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'uncheckedValue' => null,
         ]);
 
-        $this->Add([
+        $this->add([
             'name' => 'language_english',
             'type' => 'checkbox',
             'uncheckedValue' => null,
@@ -44,7 +44,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'name_en',
+            'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -82,7 +82,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'location_en',
+            'name' => 'locationEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -97,7 +97,7 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ]);
         $this->add([
-            'name' => 'costs_en',
+            'name' => 'costsEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -133,7 +133,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'description_en',
+            'name' => 'descriptionEn',
             'attributes' => [
                 'type' => 'textarea',
                 'style' => 'width:100%; height:10em; resize:none',
@@ -148,7 +148,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'unchecked_value' => 0,
             ],
         ]);
-        
+
         $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
@@ -156,9 +156,9 @@ class Activity extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => array(
+                'target_element' => [
                     'type' => 'Activity\Form\ActivityFieldFieldset'
-                )
+                ]
             )
         ]);
 
@@ -179,7 +179,7 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function inputFilterEnglish()
     {
-        return $this->inputFilterGeneric('_en');
+        return $this->inputFilterGeneric('En');
     }
 
     /***
@@ -283,7 +283,6 @@ class Activity extends Form implements InputFilterProviderInterface
         if ($this->data['language_dutch']) {
             $filter += $this->inputFilterDutch();
         }
-
         // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
         // they need to be set
 

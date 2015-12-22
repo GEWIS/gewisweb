@@ -41,7 +41,7 @@ class Activity
      *
      * @Orm\Column(type="string", nullable=true)
      */
-    protected $name_en;
+    protected $nameEn;
 
     /**
      * The date and time the activity starts.
@@ -69,7 +69,7 @@ class Activity
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $location_en;
+    protected $locationEn;
 
     /**
      * How much does it cost.
@@ -83,7 +83,7 @@ class Activity
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $costs_en;
+    protected $costsEn;
 
     /**
      * Are people able to sign up for this activity?
@@ -135,7 +135,7 @@ class Activity
      *
      * @Orm\Column(type="text", nullable=true)
      */
-    protected $description_en;
+    protected $descriptionEn;
 
     /**
      * all the people who signed up for this activity
@@ -154,11 +154,11 @@ class Activity
 
     /**
      * All additional fields belonging to the activity.
-     * 
+     *
      * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
      */
     protected $fields;
-    
+
     // TODO -> where can i find member organ?
     protected $organ;
 
@@ -183,15 +183,15 @@ class Activity
      */
     public function getNameEn()
     {
-        return $this->name_en;
+        return $this->nameEn;
     }
 
     /**
-     * @param string $name_en
+     * @param string $nameEn
      */
-    public function setNameEn($name_en)
+    public function setNameEn($nameEn)
     {
-        $this->name_en = $name_en;
+        $this->nameEn = $nameEn;
     }
 
     /**
@@ -249,15 +249,15 @@ class Activity
      */
     public function getLocationEn()
     {
-        return $this->location_en;
+        return $this->locationEn;
     }
 
     /**
-     * @param string $location_en
+     * @param string $locationEn
      */
-    public function setLocationEn($location_en)
+    public function setLocationEn($locationEn)
     {
-        $this->location_en = $location_en;
+        $this->locationEn = $locationEn;
     }
 
     /**
@@ -281,15 +281,15 @@ class Activity
      */
     public function getCostsEn()
     {
-        return $this->costs_en;
+        return $this->costsEn;
     }
 
     /**
-     * @param string $costs_en
+     * @param string $costsEn
      */
-    public function setCostsEn($costs_en)
+    public function setCostsEn($costsEn)
     {
-        $this->costs_en = $costs_en;
+        $this->costsEn = $costsEn;
     }
 
     /**
@@ -393,15 +393,15 @@ class Activity
      */
     public function getDescriptionEn()
     {
-        return $this->description_en;
+        return $this->descriptionEn;
     }
 
     /**
-     * @param string $description_en
+     * @param string $descriptionEn
      */
-    public function setDescriptionEn($description_en)
+    public function setDescriptionEn($descriptionEn)
     {
-        $this->description_en = $description_en;
+        $this->descriptionEn = $descriptionEn;
     }
 
     /**

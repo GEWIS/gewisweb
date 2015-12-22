@@ -42,18 +42,7 @@ class ActivityFieldValue
      * @ORM\Column(type="string")
      */
     protected $value;
-    
-    /**
-     * Get the status of a variable
-     *
-     * @param $variable
-     * @return mixed
-     */
-    public function get($variable)
-    {
-        return $this->$variable;
-    }
-    
+        
     /**
      * Set the field.
      * 
@@ -82,5 +71,16 @@ class ActivityFieldValue
     public function setValue($value)
     {
         $this->value = $value;
+    }
+    
+
+    public function getField() 
+    {
+        return $this->field;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 }

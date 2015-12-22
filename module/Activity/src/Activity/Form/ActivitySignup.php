@@ -10,19 +10,14 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
-    protected $inputFilter;
-    protected $fields;
-    public function __construct($fields)
+
+    public function __construct()
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\ActivitySignup());
-        $this->fields = $fields;
-        foreach($fields as $field){
-            $this->add($this->createFieldElementArray($field));
-        }
-        
+
         $this->add([
             'name' => 'submit',
             'attributes' => [
@@ -33,33 +28,47 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Apparently, validators are automatically added, so this works. 
+     * Initilialise the form, i.e. set the language and the fields
+     * Add every field in $fields to the form.
      * 
+     * @param ActivityField $fields
+     */
+    public function initialiseForm($fields, $setEnglish)
+    {
+        foreach($fields as $field){
+            $this->add($this->createFieldElementArray($field, $setEnglish));
+        }
+    }
+
+    /**
+     * Apparently, validators are automatically added, so this works.
+     *
      * @return type array
      */
     public function getInputFilterSpecification()
     {
         return [];
     }
-    
+
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception('Not used');
     }
-    
+
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
-     * 
+     *
      * @param \Activity\Model\ActivityField $field
-     * @return array 
+     * @param bool $setEnglish
+     * @return array
      */
-    protected function createFieldElementArray(\Activity\Model\ActivityField $field){
-        
+    protected function createFieldElementArray(\Activity\Model\ActivityField $field, $setEnglish){
+
         $result = [
-            'name' => $field->get('id'),
+            'name' => $field->getId(),
         ];
-        switch($field->get('type')){
+        switch($field->getType()){
             case 0: //'Text'
                 $result['type'] = 'Text';
                 break;
@@ -75,23 +84,24 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             case 2: //'Number'
                 $result['type'] = 'Zend\Form\Element\Number';
                 $result['attributes'] = [
-                    'min' => $field->get('minimumValue'),
-                    'max' => $field->get('maximumValue'),
+                    'min' => $field->getMinimumValue(),
+                    'max' => $field->getMaximumValue(),
                     'step' => '1'
                 ];
                 break;
             case 3: //'Choice'
                 $values = [];
-                foreach($field->get('options') as $option){
-                    $values[$option->get('id')] = $option->get('value');
+                foreach($field->getOptions() as $option){
+                    $values[$option->getId()] = 
+                            $setEnglish ? $option->getValueEn() : $option->getValue();
                 }
                 $result['type'] = 'Zend\Form\Element\Select';
                 $result['options'] = [
-                    'empty_option' => 'Make a choice',
+                    //'empty_option' => 'Make a choice',
                     'value_options' => $values
                 ];
                 break;
         }
-        return $result;        
+        return $result;
     }
 }

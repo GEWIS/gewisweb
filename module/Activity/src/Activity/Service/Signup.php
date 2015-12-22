@@ -30,11 +30,17 @@ class Signup extends AbstractAclService
     {
         return 'activitySignup';
     }
-
+    
     /**
-     * Return the form for signing up
+     * Return the form for signing up in the preferred language, if available.
+     * Otherwise, it returns it in the avaiable language.
+     * 
+     * @param type $fields
+     * @param bool $setEnglish 
+     * @return type
+     * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm()
+    public function getForm($fields, $setEnglish)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -42,8 +48,9 @@ class Signup extends AbstractAclService
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
-
-        return $this->getServiceManager()->get('activity_form_activity_signup');
+        $form = new \Activity\Form\ActivitySignup();
+        $form->initialiseForm($fields, $setEnglish);
+        return $form;
     }
 
     /**
@@ -67,8 +74,8 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Gets an array of 
-     * 
+     * Gets an array of
+     *
      * @param ActivityModel $activity
      * @return array
      */
@@ -88,9 +95,9 @@ class Signup extends AbstractAclService
             $entry['member'] = $signup->getUser()->getMember()->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
-                $entry['values'][$fieldValue->get('field')->get('id')] = $fieldValue->get('value');
+                $entry['values'][$fieldValue->getField()->getId()] = $fieldValue->getValue();
             }
-            $result[] = $entry;            
+            $result[] = $entry;
         }
         return $result;
     }
@@ -170,10 +177,10 @@ class Signup extends AbstractAclService
         foreach ($activity->getFields() as $field){
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
-            $value = $fieldResults[$field->get('id')];
-            
+            $value = $fieldResults[$field->getId()];
+
             //Change the value into the actual format
-            switch ($field->get('type')) {
+            switch ($field->getType()) {
                 case 0://'Text'
                     break;
                 case 1://'Yes/No'
@@ -181,9 +188,8 @@ class Signup extends AbstractAclService
                     break;
                 case 2://'Number'
                     break;
-                case 3://'Choice' 
-                    var_dump($value);
-                    $value = $optionMapper->getOptionById((int)$value)->get('value');
+                case 3://'Choice'
+                    $value = $optionMapper->getOptionById((int)$value)->getValue();
                     break;
             }
             $fieldValue->setValue($value);
@@ -240,7 +246,7 @@ class Signup extends AbstractAclService
      * @return \Activity\Mapper\ActivityFieldValue
      */
     public function getActivityFieldValueMapper(){
-        
+
         return $this->getServiceManager()->get('activity_mapper_activity_field_value');
     }
 }

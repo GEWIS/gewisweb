@@ -41,7 +41,9 @@ class Module
         return [
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
-                'activity_form_activity' => 'Activity\Form\Activity'
+                'activity_form_activity' => 'Activity\Form\Activity',
+                'activity_form_activity_signup' => 'Activity\Form\ActivitySignup',
+                'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet'
             ],
             'factories' => [
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
@@ -89,7 +91,7 @@ class Module
                     $acl->allow('guest', 'activitySignup', 'view');
 
                     $acl->allow('user', 'activity', 'create');
-                    $acl->allow('user', 'activitySignup', 'signUp');
+                    $acl->allow('user', 'activitySignup', 'signup');
                     $acl->allow('user', 'activitySignup', 'checkUserSignedUp');
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);

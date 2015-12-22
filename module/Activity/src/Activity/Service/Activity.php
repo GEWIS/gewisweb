@@ -4,6 +4,8 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityField as ActivityFieldModel;
+use Activity\Model\ActivityOption as ActivityOptionModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -153,6 +155,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
     /**
      * Create an activity from parameters.
+     * @pre $params is valid data of Activity\Form\Activity
      *
      * @param array $params Parameters describing activity
      *
@@ -184,16 +187,17 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $activity->setName($params['name']);
             $activity->setLocation($params['location']);
             if (!$params['costs_unknown']) {
-                $activity->setCostsEn($params['costs']);
+                $activity->setCosts($params['costs']);
             }
             $activity->setDescription($params['description']);
-        } else if ($english) {
-            $activity->setNameEn($params['name_en']);
-            $activity->setLocationEn($params['location_en']);
+        }
+        if ($english) {
+            $activity->setNameEn($params['nameEn']);
+            $activity->setLocationEn($params['locationEn']);
             if (!$params['costs_unknown']) {
-                $activity->setCostsEn($params['costs_en']);
+                $activity->setCostsEn($params['costsEn']);
             }
-            $activity->setDescriptionEn($params['description_en']);
+            $activity->setDescriptionEn($params['descriptionEn']);
         }
 
 
@@ -207,8 +211,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if (isset($params['fields'])) {
             foreach ($params['fields'] as $fieldparams){
 
-                $field = new ActivityField();
-                $field->create($fieldparams, $this, $em);
+                $field = $this->createActivityField($fieldparams, $activity, $dutch, $english);
                 $em->persist($field);
             }
             $em->flush();
@@ -220,6 +223,86 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $activity;
     }
 
+    /**
+     * Create a new field
+     *
+     * @pre $params is valid data of Activity\Form\ActivityFieldFieldset
+     *
+     * @param array $params Parameters for the new field.
+     * @param AcitivityModel $activity The activity the field belongs to.
+     * @param bool $dutch
+     * @param bool $english
+     * @return \Activity\Model\ActivityField The new field.
+     */
+    public function createActivityField(array $params, ActivityModel $activity, $dutch, $english)
+    {
+        assert($dutch || $english, "Activities should have either be in dutch or english");
+
+        $field = new ActivityFieldModel();
+
+        $field->setActivity($activity);
+        if ($dutch){
+            $field->setName($params['name']);
+        }
+        if ($english){
+            $field->setNameEn($params['nameEn']);
+        }
+        $field->setType($params['type']);
+
+        if ($params['type'] === '2'){
+            $field->setMinimumValue($params['min. value']);
+            $field->setMaximumValue($params['max. value']);
+        }
+
+        if ($params['type'] === '3'){
+            $this->createActivityOptions(
+                $field,
+                $params,
+                $params['options'] !== '' && $dutch,
+                $params['optionsEn'] != '' && $english
+            );
+        }
+        return $field;
+    }
+
+    /**
+     * Creates options for both languages specified and adds it to $field.
+     * If no languages are specified, this method does nothing.
+     * @pre The options corresponding to the languages specified are filled in
+     * $params. If both languages are specified, they must have the same amount of options.
+     *
+     * @param ActivityFieldModel $field The field to add the options to.
+     * @param array $params The array containing the options strings.
+     * @param bool $createEnglishOptions
+     * @param bool $createDutchOptions
+     */
+    protected function createActivityOptions($field, $params, $createEnglishOptions, $createDutchOptions)
+    {
+        $numOptions = 0;
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+        if ($createDutchOptions){
+            $options = explode(',', $params['options']);
+            $numOptions = count($options);
+        }
+        if ($createEnglishOptions){
+            $optionsEn = explode(',', $params['optionsEn']);
+            $numOptions = count($optionsEn);
+        }
+        for ($i=0; $i<$numOptions; $i++){
+
+            $option = new ActivityOptionModel();
+            if ($createDutchOptions){
+                $option->setValue($options[$i]);
+            }
+            if ($createEnglishOptions){
+                $option->setValueEn($optionsEn[$i]);
+            }
+            $option->setField($field);
+            $em->persist($option);
+        }
+        $em->flush();
+    }
 
     /**
      * Approve of an activity
