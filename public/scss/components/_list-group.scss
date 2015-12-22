@@ -6,13 +6,14 @@ Markup:
 Styleguide: list-group
 */
 
-.agenda-item {
+a.agenda-item {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin-top: 15px;
     padding: 0;
     border: none;
+    color: $panel-color;
 
     &:first-child {
         margin-top: 0;

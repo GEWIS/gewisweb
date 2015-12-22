@@ -63,7 +63,7 @@ Styleguide: panels.panel-default
 .panel-default {
     > .panel-heading {
         background: none;
-        padding: 20px 15px;
+        padding: 1.5em;
         border: none;
 
         h3 {
@@ -77,7 +77,7 @@ Styleguide: panels.panel-default
 
     > .panel-footer {
         border: none;
-        padding: 25px 15px 15px;
+        padding: 2em 1.5em 1.5em;
         background: none;
         text-transform: uppercase;
         font-family: Raleway;
@@ -85,6 +85,12 @@ Styleguide: panels.panel-default
         a {
             position: relative;
             text-decoration: none;
+            display: block;
+            margin-bottom: 0.8em;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
         a .glyphicon {
