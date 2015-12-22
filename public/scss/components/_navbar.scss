@@ -111,8 +111,11 @@ Styleguide: navbar
     border-bottom: 0;
 
     .navbar-brand img {
-        // TODO: Make the logo white properly
-        -webkit-filter: grayscale(1) brightness(100);
+        height: 100%;
+    }
+
+    .navbar-brand {
+        height: 80px;
     }
 
     .navbar-toggle {
