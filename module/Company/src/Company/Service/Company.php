@@ -131,16 +131,23 @@ class Company extends AbstractACLService
      *
      * @param mixed $data
      */
-    public function insertCompanyByData($data)
+    public function insertCompanyByData($data,$files)
     {
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
-        if ($companyForm->isValid()) {
+        //if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
+            foreach ($company->getTranslations() as $translation) {
+                $file = $files[$translation->getLanguage() . '_logo'];
+                var_dump($files);
+                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                $translation->setLogo($newPath);
+            }
             $this->saveCompany();
             return true;
-        }
+        //}
+        die();
         return false;
     }
 
@@ -175,7 +182,6 @@ class Company extends AbstractACLService
             if ($type === 'banner') {
                 $newPath = $this->getFileStorageService()->storeUploadedFile($files);
                 $package->setImage($newPath);
-
             }
             $package->exchangeArray($data);
             $this->savePackage();

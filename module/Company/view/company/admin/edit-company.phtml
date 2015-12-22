@@ -7,12 +7,17 @@ if (is_null($company)){
 ?>
 <h1> <?= $this->translate('Edit Company'); ?> </h1>
 
+<?php $form->prepare() ?>
 <?= $this->form()->openTag($form) ?>
-<?php echo $this->partial('partial/company/admin/editors/company.phtml', 
-                          ['form' => $form]
-                         ); ?>
+<?= $this->partial('partial/company/admin/editors/company.phtml', 
+        ['form' => $form]
+    ); ?>
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
+<h2> <?= $this->translate('Dutch logo') ?></h2>
+    <img src='<?=$this->fileUrl($company->getTranslationFromLocale('nl')->getLogo()) ?>'><?= $this->translate('Dutch logo') ?></img>
+<h2> <?= $this->translate('English logo') ?></h2>
+    <img src='<?=$this->fileUrl($company->getTranslationFromLocale('en')->getLogo()) ?>'><?= $this->translate('English logo') ?></img>
 <h2> <?= $this->translate('Packages') ?> </h2>
 <table class="packagelist">
         <tr>

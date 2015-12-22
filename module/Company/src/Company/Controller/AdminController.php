@@ -41,7 +41,10 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            if ($companyService->insertCompanyByData($request->getPost())) {
+            if ($companyService->insertCompanyByData(
+                $request->getPost(),
+                $request->getFiles()
+            )) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default', 
@@ -94,8 +97,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $files = $request->getFiles();//->toArray();
-            //$files = array_merge($files,$request->getPost()->toArray());
+            $files = $request->getFiles();
             if (!isset($files['banner']) && $type === 'banner') {
                 $this->getResponse()->setStatusCode(500);
                 // todo: better error handling
