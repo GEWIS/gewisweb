@@ -17,6 +17,14 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 abstract class CompanyPackage
 {
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
+    /**
      * The package's id.
      *
      * @ORM\Id
@@ -143,6 +151,23 @@ abstract class CompanyPackage
     public function setCompany(Company $company)
     {
         $this->company = $company;
+    }
+
+    /**
+     * Get's the type of the package
+     *
+     */
+    public function getType()
+    {
+        switch (get_class($this)) {
+            case "Company\Model\CompanyBannerPackage":
+                return "banner";
+            case "Company\Model\CompanyJobPackage":
+                return "job";
+            case "Company\Model\CompanyFeaturedPackage":
+                return "featured";
+        }
+
     }
 
 

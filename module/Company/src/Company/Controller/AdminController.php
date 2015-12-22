@@ -94,13 +94,17 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $files = $request->getFiles();
+            $files = $request->getFiles();//->toArray();
+            //$files = array_merge($files,$request->getPost()->toArray());
             if (count($files) != 1 && $type === 'banner') {
-                $this->getResponse()->setStatusCode(500);
-                $result['error'] = $companyService->getTranslator()->translate('Error uploading file');
+                //$this->getResponse()->setStatusCode(404);
+                //$companyService->getTranslator()->translate('Error uploading file');
+                //return;
             }
 
             // Check if data is valid, and insert when it is
+            var_dump($files);
+            die();
             if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type, $files)){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
@@ -127,6 +131,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         $vm = new ViewModel([
             'companyEditForm' => $packageForm,
+            'type' => $type,
         ]);
 
         return $vm;
@@ -251,7 +256,6 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $packageForm = $companyService->getPackageForm();
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
@@ -259,6 +263,11 @@ class AdminController extends AbstractActionController
 
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageID);
+        $type = $package->getType();
+
+        // Get form
+        $packageForm = $companyService->getPackageForm($type);
+
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -277,6 +286,7 @@ class AdminController extends AbstractActionController
                 [
                     'packageID' => $packageID, 
                     'slugCompanyName' => $companyName,
+                    'type' => $type,
                 ]
             )
         );
@@ -286,6 +296,7 @@ class AdminController extends AbstractActionController
             'package' => $package,
             'companyName' => $companyName,
             'packageEditForm' => $packageForm,
+            'type' => $type,
         ]);
 
         return $vm;

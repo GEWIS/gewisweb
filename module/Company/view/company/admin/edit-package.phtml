@@ -25,10 +25,20 @@ $form = $packageEditForm;
         <?= $this->formElementErrors($element); ?>
     </dd>
 
+<?php if ($type === 'banner') {
+    $element = $form->get('banner')?>
+        <img src=<?=$package->getImage()?>><?=$this->translate('Company Logo')?></img>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php }?>
+
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
 
-
+<?php if ($type === 'job') { ?>
 <h2> <?= $this->translate('Jobs') ?> </h2>
 <table class="packagelist">
         <tr>
@@ -67,3 +77,4 @@ $form = $packageEditForm;
     ["slugCompanyName" => $companyName, 'packageID' => $package->getId()]); ?>">
     <?= $this->translate('Add job'); ?>
 </a>
+<?php }?>

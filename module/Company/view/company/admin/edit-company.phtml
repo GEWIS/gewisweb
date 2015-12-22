@@ -49,7 +49,11 @@ if (is_null($company)){
                     <?php echo $package->isActive() ? 'true' : 'false'?>
                 </td>
                 <td>
-                    <?= count($package->getJobs()) ?>
+                    <?php if (get_class($package) === 'CompanyJobPackage') {
+                              count($package->getJobs()) ;
+                          } else {
+                              echo 'Banner';
+                          } ?>
                 <td>
                 </td>
             </tr>
