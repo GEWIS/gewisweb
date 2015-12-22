@@ -47,7 +47,10 @@ class Package
     public function delete($packageID)
     {
         $package = $this->findEditablePackage($packageID);
-        $this->findEditablePackage($packageID);
+        if (is_null($package)) {
+            return;
+        }
+
         $this->em->remove($package);
         $this->em->flush();
     }

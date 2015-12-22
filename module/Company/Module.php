@@ -67,7 +67,14 @@ class Module
                 },
                 'company_admin_edit_package_form' => function ($sm) {
                     return new \Company\Form\EditPackage(
-                        $sm->get('translator')
+                        $sm->get('translator'),
+                        "job"
+                    );
+                },
+                'company_admin_edit_bannerpackage_form' => function ($sm) {
+                    return new \Company\Form\EditPackage(
+                        $sm->get('translator'),
+                        "banner"
                     );
                 },
                 'company_admin_edit_company_form' => function ($sm) {
