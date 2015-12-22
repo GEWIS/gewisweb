@@ -3,6 +3,9 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
+// randomize ordering of jobs
+shuffle($jobList);
+
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -12,6 +15,13 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
                     <?= $this->translate('Companies') ?>
                 </a>
             </li>
+            <?php if (isset($this->company)): ?>
+                <li>
+                    <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
+                        <?= $this->company->getName(); ?>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="active">
                 <?= $this->translate('Jobs') ?>
             </li>
@@ -24,7 +34,16 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
     <div class="job-list">
 
         <div class="row">
-            <h1 class="col-md-5 col-sm-5 col-xs-5"><?= $this->translate('Jobs') ?></h1>
+            <h1 class="col-md-5 col-sm-5 col-xs-5"><?= $this->translate('Jobs') ?>
+                <?php if (isset($this->company)): ?>
+                    <small>
+                        <?= $this->translate('at') ?>
+                        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
+                            <?= $this->company->getName(); ?>
+                        </a>
+                    </small>
+                <?php endif; ?>
+            </h1>
 
             <fieldset class="col-md-3 col-sm-4 col-xs-12 filters pull-right">
                 <div class="form-group">

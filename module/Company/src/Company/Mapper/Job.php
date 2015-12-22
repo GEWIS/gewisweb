@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * Mappers for jobs.
  *
- * NOTE: Jobs will be modified externally by a script. Modifycations will be
+ * NOTE: Jobs will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Job
@@ -65,7 +65,7 @@ class Job
     }
 
     /**
-     * Find all jobs identified by $jobSlugName that are owned by a company 
+     * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName
      *
      * @param mixed $companySlugName
@@ -81,6 +81,21 @@ class Job
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Find all jobs that are owned by a company identified with $companySlugName
+     *
+     * @param mixed $companySlugName
+     */
+    public function findJobByCompanySlugName($companySlugName)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('c.slugName=:companySlugName');
+        $qb->setParameter('companySlugName', $companySlugName);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * Get the repository for this mapper.

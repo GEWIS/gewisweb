@@ -15,13 +15,12 @@ $company = $job->getPackage()->getCompany();
                 </a>
             </li>
             <li>
-                <a href="<?= $this->url('company/companyItem',
-                    ['slugCompanyName' => $company->getSlugName()]) ?>">
-                    <?= $company->getName() ?>
+                <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                    <?= $company->getName(); ?>
                 </a>
             </li>
             <li>
-                <a href="<?= $this->url('company/jobList') ?>">
+                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
                     <?= $this->translate('Jobs') ?>
                 </a>
             </li>
