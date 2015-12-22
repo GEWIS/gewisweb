@@ -1,30 +1,63 @@
-<h1>Jobs</h1>
-<div class="job-list">
 <?php
 
+$locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
-if(isset($job)){
-    $active_job_list = [];
-    $active_job_list[] = $job;
-}
-if(!isset($active_job_list)){
-    echo $this->translate("Job not found");
-    return;
-}
-foreach ($active_job_list as $job) {
-?>
-    <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()); ?>">
-    <h2 class="job-name"><a href="<?= $job->getWebsite(); ?>"><?= $job->getName(); ?></a></h2>
-    <div class="job-company-name"><a href="/company/<?= $job->getPackage()->getCompany()->getSlugName();?>"><?= $job->getPackage()->getCompany()->getName(); ?></a></div>
-    <div class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()); ?>"><?= $job->getPhone(); ?></a></div>
-    <div class="job-website"><a href="<?= rawurlencode($job->getWebsite()); ?>">Visit website</a></div>
-    <div class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()); ?>"><?= $job->getEmail(); ?></a></div>
-    <div class="description"><?= $job->getDescription(); ?></div>
 
+$company = $job->getPackage()->getCompany();
+
+?>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('company') ?>">
+                    <?= $this->translate('Companies') ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?= $this->url('company/companyItem',
+                    ['slugCompanyName' => $company->getSlugName()]) ?>">
+                    <?= $company->getName() ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?= $this->url('company/jobList') ?>">
+                    <?= $this->translate('Jobs') ?>
+                </a>
+            </li>
+            <li class="active">
+                <?= $job->getName() ?>
+            </li>
+        </ol>
     </div>
-<?php
-}
+</section>
+<div class="container">
+    <div class="job-list">
 
-?>
+        <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()) ?>">
+            <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
+                    ['slugCompanyName' => $company->getSlugName(),
+                     'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
+                <small><?= $this->translate('at') ?> <a href="<?= $this->url('company/companyItem',
+                        ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a></small>
+            </h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                        <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+                    </a>
+                    <div class="">
+                        <h4><?= $this->translate('Contact') ?></h4>
+                        <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
+                        <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
+                        <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('Visit website') ?></a></p>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <h4><?= $this->translate('Description') ?></h4>
+                    <div class="job-description text-justify"><?= nl2br($job->getDescription()) ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-

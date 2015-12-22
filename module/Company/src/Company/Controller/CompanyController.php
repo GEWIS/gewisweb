@@ -68,12 +68,13 @@ class CompanyController extends AbstractActionController
             if (count($jobs) != 0) {
                 return new ViewModel([
                     'job' => $jobs[0],
+                    'translator' => $companyService->getTranslator(),
                 ]);
-            } 
+            }
             return new ViewModel();
-        } 
+        }
         $vm = new ViewModel([
-            'activeJobList' => $companyService->getActiveJobList(),
+            'activeJobList' => $companyService->getActiveJobList()
         ]);
     }
 

@@ -11,24 +11,24 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
     <div class="row">
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()) ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>" />
             </a>
             <div class="">
-                <h4>Contact</h4>
-                <p class="company-address"><?= nl2br($company->getAddress()); ?></p>
-                <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()); ?>"><?= $company->getPhone(); ?></a></p>
+                <h4><?= $this->translate('Contact') ?></h4>
+                <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
+                <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()) ?>"><?= $company->getPhone() ?></a></p>
                 <p class="company-website"><a href="<?= $companyURL ?>">Visit website</a></p>
-                <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()); ?>"><?= $company->getEmail(); ?></a></p>
+                <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()) ?>"><?= $company->getEmail() ?></a></p>
             </div>
-            <div class="company-jobs" data-amount="<?php echo $company->getNumberOfJobs(); ?>">
+            <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs() ?>">
                 <?php if ($company->getNumberOfJobs() > 0) { ?>
                     <h4><?= $this->translate('Jobs') ?></h4>
                 <?php } ?>
                 <ul class="company-jobs-list">
                     <?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
-                    foreach ($company->getPackages() as $package) {
-                        foreach($package->getJobs() as $job) {
-                            if ($job->isActive() && $job->getLanguage() === $locale) { ?>
+                    foreach ($company->getPackages() as $package):
+                        foreach($package->getJobs() as $job):
+                            if ($job->isActive() && $job->getLanguage() === $locale): ?>
                                 <li class="company-jobs-job">
                                     <a href="<?= $this->url('company/companyItem/joblist/job_item',
                                         ['slugCompanyName' => $company->getSlugName(),
@@ -36,17 +36,16 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
                                         ], [], true) ?>"><?= $job->getName(); ?></a>
                                 </li>
                                 <?php
-                            }
-                        }
-                    }
+                            endif;
+                        endforeach;
+                    endforeach;
                     ?>
                 </ul>
             </div>
         </div>
         <div class="col-md-9">
-            <h4>Description</h4>
-            <div class="company-description text-justify"><?= nl2br($company->getTranslationFromLocale($locale)->getDescription()); ?></div>
-
+            <h4><?= $this->translate('Description') ?></h4>
+            <div class="company-description text-justify"><?= nl2br($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
         </div>
     </div>
 </div>
