@@ -44,7 +44,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'name_en',
+            'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -82,7 +82,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'location_en',
+            'name' => 'locationEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -97,7 +97,7 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ]);
         $this->add([
-            'name' => 'costs_en',
+            'name' => 'costsEn',
             'attributes' => [
                 'type' => 'text',
                 'style' => 'width:100%',
@@ -133,7 +133,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'description_en',
+            'name' => 'descriptionEn',
             'attributes' => [
                 'type' => 'textarea',
                 'style' => 'width:100%; height:10em; resize:none',
@@ -148,7 +148,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'unchecked_value' => 0,
             ],
         ]);
-        
+
         $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
@@ -179,7 +179,7 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function inputFilterEnglish()
     {
-        return $this->inputFilterGeneric('_en');
+        return $this->inputFilterGeneric('En');
     }
 
     /***
@@ -276,7 +276,7 @@ class Activity extends Form implements InputFilterProviderInterface
 
 
         if ($this->data['language_english']) {
-            $filter += $this->inputFilterEnglish();            
+            $filter += $this->inputFilterEnglish();
         }
 
 

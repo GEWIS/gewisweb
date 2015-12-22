@@ -10,14 +10,14 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
-    
+
     public function __construct()
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\ActivitySignup());
-        
+
         $this->add([
             'name' => 'submit',
             'attributes' => [
@@ -29,7 +29,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
 
     /**
      * Add every field in $fields to the form.
-     * 
+     *
      * @param ActivityField $fields
      */
     public function setFields($fields)
@@ -38,31 +38,31 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             $this->add($this->createFieldElementArray($field));
         }
     }
-    
+
     /**
-     * Apparently, validators are automatically added, so this works. 
-     * 
+     * Apparently, validators are automatically added, so this works.
+     *
      * @return type array
      */
     public function getInputFilterSpecification()
     {
         return [];
     }
-    
+
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception('Not used');
     }
-    
+
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
-     * 
+     *
      * @param \Activity\Model\ActivityField $field
-     * @return array 
+     * @return array
      */
     protected function createFieldElementArray(\Activity\Model\ActivityField $field){
-        
+
         $result = [
             'name' => $field->getId(),
         ];
@@ -99,6 +99,6 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
                 ];
                 break;
         }
-        return $result;        
+        return $result;
     }
 }

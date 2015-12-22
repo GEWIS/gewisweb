@@ -68,8 +68,8 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Gets an array of 
-     * 
+     * Gets an array of
+     *
      * @param ActivityModel $activity
      * @return array
      */
@@ -91,7 +91,7 @@ class Signup extends AbstractAclService
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
                 $entry['values'][$fieldValue->getField()->getId()] = $fieldValue->getValue();
             }
-            $result[] = $entry;            
+            $result[] = $entry;
         }
         return $result;
     }
@@ -172,7 +172,7 @@ class Signup extends AbstractAclService
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
             $value = $fieldResults[$field->getId()];
-            
+
             //Change the value into the actual format
             switch ($field->getType()) {
                 case 0://'Text'
@@ -182,7 +182,7 @@ class Signup extends AbstractAclService
                     break;
                 case 2://'Number'
                     break;
-                case 3://'Choice' 
+                case 3://'Choice'
                     $value = $optionMapper->getOptionById((int)$value)->getValue();
                     break;
             }
@@ -240,7 +240,7 @@ class Signup extends AbstractAclService
      * @return \Activity\Mapper\ActivityFieldValue
      */
     public function getActivityFieldValueMapper(){
-        
+
         return $this->getServiceManager()->get('activity_mapper_activity_field_value');
     }
 }

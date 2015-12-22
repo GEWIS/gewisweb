@@ -19,7 +19,7 @@ class ActivityField
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * Activity that the field belongs to.
      *
@@ -27,92 +27,92 @@ class ActivityField
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
-    
+
     /**
      * The name of the field.
-     * 
-     * @ORM\Column(type="string", nullable=true) 
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
      * The name of the field, in English.
-     * 
-     * @ORM\Column(type="string", nullable=true) 
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $name_en;
+    protected $nameEn;
 
     /**
      * The type of the field.
-     * 
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $type;
-    
+
     /**
      * The minimal value constraint for the ``number'' type
-     * 
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $minimumValue;
-    
+
     /**
      * The maximal value constraint for the ``number'' type.
-     * 
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $maximumValue;
-    
+
     /**
      * The allowed options for the field of the ``option'' type.
-     * 
+     *
      * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
      */
     protected $options;
-    
+
     public function setActivity($activity)
     {
         $this->activity = $activity;
     }
-    
+
     public function setName($name)
     {
         $this->name = $name;
     }
-    
-    public function setName_en($name_en)
+
+    public function setNameEn($nameEn)
     {
-        $this->name_en = $name_en;
+        $this->nameEn = $nameEn;
     }
 
-    public function setType($type) 
+    public function setType($type)
     {
         $this->type = $type;
     }
 
-    public function setMinimumValue($minimumValue) 
+    public function setMinimumValue($minimumValue)
     {
         $this->minimumValue = $minimumValue;
     }
 
-    public function setMaximumValue($maximumValue) 
+    public function setMaximumValue($maximumValue)
     {
         $this->maximumValue = $maximumValue;
     }
 
-    public function getId() 
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getName_en()
+    public function getNameEn()
     {
-        return $this->name_en;
+        return $this->nameEn;
     }
 
     public function getType()
@@ -120,17 +120,17 @@ class ActivityField
         return $this->type;
     }
 
-    public function getMinimumValue() 
+    public function getMinimumValue()
     {
         return $this->minimumValue;
     }
 
-    public function getMaximumValue() 
+    public function getMaximumValue()
     {
         return $this->maximumValue;
     }
 
-    public function getOptions() 
+    public function getOptions()
     {
         return $this->options;
     }

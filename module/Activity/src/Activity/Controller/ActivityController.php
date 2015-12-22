@@ -102,8 +102,8 @@ class ActivityController extends AbstractActionController
         $activity = $activityService->getActivity($id);
 
         $translator = $activityService->getTranslator();
-        
-        $params = $this->viewAction();        
+
+        $params = $this->viewAction();
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = $translator->translate('Use the form to subscribe');

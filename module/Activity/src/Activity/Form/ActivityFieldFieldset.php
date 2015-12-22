@@ -11,12 +11,12 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct() {
-        
+
         parent::__construct('activityfield');
-        
+
         $this->setHydrator(new ClassMethodsHydrator(false))
              ->setObject(new ActivityField());
-      
+
         $this->add([
             'name' => 'name',
             'options' => ['label' => 'Name'],
@@ -40,42 +40,42 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'label' => 'Type'
             ]
         ]);
-        
+
         $this->add([
-            'name' => 'min. value',                          
+            'name' => 'min. value',
             'options' => [
                 'label' => 'Min. value'
             ]
         ]);
-        
+
         $this->add([
             'name' => 'max. value',
             'options' => [
                 'label' => 'Max. value'
             ]
         ]);
-        
+
         $this->add([
-            'name' => 'options',            
+            'name' => 'options',
             'options' => [
                 'label' => 'Options'
             ]
         ]);
-        
-         $this->add([
-            'name' => 'options_en',            
+
+        $this->add([
+            'name' => 'options_en',
             'options' => [
                 'label' => 'Options (English)'
             ]
         ]);
     }
-    
+
 
     /**
      * @return array
      */
     public function getInputFilterSpecification() {
-        
+
         return [
             'name' => [
                 'required' => true
@@ -84,7 +84,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'required' => true
             ],
             'type' => [
-                'required' => true, 
+                'required' => true,
                 'validators' => [
                     [
                         'name' => 'Between',
@@ -98,14 +98,14 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                            \Zend\Validator\Callback::INVALID_VALUE => 
+                            \Zend\Validator\Callback::INVALID_VALUE =>
                                 'Some of the required fields for this type are empty'
                             ],
                             'callback' => function($value, $context=null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
                                        $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
                                        ($this->fieldDependantRequired($value, $context, 'options', '3') ||
-                                        $this->fieldDependantRequired($value, $context, 'options_en', '3')); 
+                                        $this->fieldDependantRequired($value, $context, 'options_en', '3'));
                             }
                         ]
                     ]
@@ -129,19 +129,19 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
     /**
      * Tests if the child field is not empty if the current field has the test
      * value. If so, returns true else false.
-     * 
+     *
      * @param string $value The value to use for validation
      * @param array $context The field context
      * @param string $child The name of the element to test for emptiness
-     * @param string $testvalue 
-     * @return boolean 
+     * @param string $testvalue
+     * @return boolean
      */
     protected function fieldDependantRequired($value, $context, $child, $testvalue){
-        
+
         if ($value === $testvalue){
             return (new NotEmpty())->isValid($context[$child]);
         }
-            
+
         return true;
     }
 }

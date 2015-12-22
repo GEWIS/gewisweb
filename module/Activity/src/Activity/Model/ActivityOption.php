@@ -5,7 +5,7 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity option model. 
+ * Activity option model.
  * Contains the possible options of a field of type ``option''.
  *
  * @ORM\Entity
@@ -20,7 +20,7 @@ class ActivityOption
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * Field that the option belongs to.
      *
@@ -28,64 +28,64 @@ class ActivityOption
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;
-    
+
     /**
      * The value of the option.
-     * 
-     * @ORM\Column(type="string", nullable=true) 
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $value;
 
     /**
      * The value of the option, in English.
-     * 
-     * @ORM\Column(type="string", nullable=true) 
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $value_en;
-    
+    protected $valueEn;
+
     /**
      * Set the field the option belongs to.
-     * 
+     *
      * @param Activity\Model\ActivityField $field
      */
     public function setField($field)
-    {        
+    {
         $this->field = $field;
     }
-    
+
     /**
      * Set the value of the option.
-     * 
+     *
      * @param string $value
      */
     public function setValue($value)
-    {        
+    {
         $this->value = $value;
     }
-    
-    public function setValue_en($value_en)
-    {        
-        $this->value_en = $value_en;
+
+    public function setValueEn($valueEn)
+    {
+        $this->valueEn = $valueEn;
     }
-    
-    
-    public function getId() 
+
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getField() 
+    public function getField()
     {
         return $this->field;
     }
 
-    public function getValue() 
+    public function getValue()
     {
         return $this->value;
     }
-    
-    public function getValue_en() 
+
+    public function getValueEn()
     {
-        return $this->value_en;
-    }    
+        return $this->valueEn;
+    }
 }

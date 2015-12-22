@@ -74,11 +74,13 @@ class ActivityFieldValue
     }
     
 
-    public function getField() {
+    public function getField() 
+    {
         return $this->field;
     }
 
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 }

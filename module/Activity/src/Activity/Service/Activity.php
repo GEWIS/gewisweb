@@ -156,7 +156,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Create an activity from parameters.
      * @pre $params is valid data of Activity\Form\Activity
-     * 
+     *
      * @param array $params Parameters describing activity
      *
      * @return ActivityModel Activity that was created.
@@ -190,14 +190,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 $activity->setCosts($params['costs']);
             }
             $activity->setDescription($params['description']);
-        } 
+        }
         if ($english) {
-            $activity->setNameEn($params['name_en']);
-            $activity->setLocationEn($params['location_en']);
+            $activity->setNameEn($params['nameEn']);
+            $activity->setLocationEn($params['locationEn']);
             if (!$params['costs_unknown']) {
-                $activity->setCostsEn($params['costs_en']);
+                $activity->setCostsEn($params['costsEn']);
             }
-            $activity->setDescriptionEn($params['description_en']);
+            $activity->setDescriptionEn($params['descriptionEn']);
         }
 
 
@@ -222,22 +222,22 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         return $activity;
     }
-    
+
     /**
-     * Create a new field 
-     * 
-     * @pre $params is valid data of Activity\Form\ActivityFieldFieldset 
-     * 
+     * Create a new field
+     *
+     * @pre $params is valid data of Activity\Form\ActivityFieldFieldset
+     *
      * @param array $params Parameters for the new field.
      * @param AcitivityModel $activity The activity the field belongs to.
-     * @param bool $dutch 
+     * @param bool $dutch
      * @param bool $english
      * @return \Activity\Model\ActivityField The new field.
      */
     public function createActivityField(array $params, ActivityModel $activity, $dutch, $english)
     {
         assert($dutch || $english, "Activities should have either be in dutch or english");
-        
+
         $field = new ActivityFieldModel();
 
         $field->setActivity($activity);
@@ -245,42 +245,42 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $field->setName($params['name']);
         }
         if ($english){
-            $field->setName_en($params['name_en']);
+            $field->setNameEn($params['nameEn']);
         }
         $field->setType($params['type']);
-        
+
         if ($params['type'] === '2'){
             $field->setMinimumValue($params['min. value']);
             $field->setMaximumValue($params['max. value']);
         }
-        
-        if ($params['options'] !== '' || $params['options_en'] != ''){
+
+        if ($params['options'] !== '' || $params['optionsEn'] != ''){
             $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-            
-            $options_en = explode(',', $params['options_en']);
+
+            $optionsEn = explode(',', $params['optionsEn']);
             $options = explode(',', $params['options']);
-            $num_options = count($options_en);
+            $num_options = count($optionsEn);
             if ($params['options'] !== ''){
                 $num_options = count($options);
             }
             for ($i=0; $i<$num_options; $i++){
-            
+
                 $option = new ActivityOptionModel();
                 if ($dutch){
                     $option->setValue($options[$i]);
                 }
                 if ($english){
-                    $option->setValue_en($options_en[$i]);
+                    $option->setValueEn($optionsEn[$i]);
                 }
                 $option->setField($field);
-                $em->persist($option);           
+                $em->persist($option);
             }
-            
+
             $em->flush();
         }
         return $field;
     }
-    
+
     /**
      * Approve of an activity
      *
