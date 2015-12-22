@@ -193,7 +193,6 @@ class Company extends AbstractACLService
             );
         }
         $companies = $this->getEditableCompaniesBySlugName($companySlugName);
-        var_dump($companySlugName);
         $company = $companies[0];
         return $this->getPackageMapper()->insertPackageIntoCompany($company, $type);
     }
