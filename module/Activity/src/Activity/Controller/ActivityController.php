@@ -5,7 +5,9 @@ namespace Activity\Controller;
 use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
+
 use Activity\Form\ActivitySignup as SignupForm;
+use Zend\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {
@@ -42,7 +44,6 @@ class ActivityController extends AbstractActionController
             $fields = null;
             $form = null;
         }
-
         return [
             'activity' => $activity,
             'canSignUp' => $activity->getCanSignUp(),
@@ -109,7 +110,7 @@ class ActivityController extends AbstractActionController
             $params['error'] = $translator->translate('Use the form to subscribe');
             return $params;
         }
-        
+
         // Assure you can sign up for this activity
         if (!$activity->getCanSignup()) {
             $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
@@ -175,5 +176,14 @@ class ActivityController extends AbstractActionController
         $params = $this->viewAction();
 
         return $params;
+    }
+
+    public function touchAction()
+    {
+        $viewModel = new ViewModel();
+        $viewModel->setVariables(array('key' => 'value'))
+            ->setTerminal(true);
+
+        return $viewModel;
     }
 }
