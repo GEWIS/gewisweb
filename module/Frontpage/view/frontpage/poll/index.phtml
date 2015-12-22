@@ -29,3 +29,20 @@
         </a>
     </div>
 </div>
+<?php else: ?>
+    <?= $this->translate('There currently is no poll.'); ?>
+<?php endif ?>
+<a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
+<a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+
+<?php if (isset($poll)): ?>
+    <h2><?= $this->translate('Comments') ?></h2>
+    <?php if (count($poll->getComments()) == 0): ?>
+        <?= $this->translate('This poll has no comments') ?>
+    <?php else: ?>
+    <?php foreach ($poll->getComments() as $comment): ?>
+        <?php var_dump($comment) ?>
+    <?php endforeach ?>
+    <?php endif ?>
+<?php endif ?>
+
