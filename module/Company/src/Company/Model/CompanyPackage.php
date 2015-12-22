@@ -186,9 +186,9 @@ class CompanyPackage
         $this->jobs->removeElement($job);
     }
 
-    public function isExpired()
+    public function isExpired($now)
     {
-        if(new \DateTime() > $this->getExpirationDate()){
+        if ($now > $this->getExpirationDate()) {
             return true;
         }
 
@@ -197,10 +197,15 @@ class CompanyPackage
 
     public function isActive()
     {
-        if ($this->isExpired()) {
+        $now = new \DateTime();
+        if ($this->isExpired($now)) {
             // unpublish activity
             $this->setPublished(false);
 
+            return false;
+        }
+
+        if ($now < $this->getStartingDate()) {
             return false;
         }
 
