@@ -1,5 +1,6 @@
 <?php 
 $form=$companyEditForm;
+$form->prepare();
 ?>
 
 <?= $this->form()->openTag($form) ?>
@@ -22,6 +23,14 @@ $form=$companyEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
+<?php if ($type === 'banner') {
+    $element = $form->get('banner')?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php }?>
 
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>

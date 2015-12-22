@@ -90,7 +90,7 @@ return [
                 'priority' => 100,
             ],
             'admin_company' => [
-                'priority' => 105,
+                'priority' => 1000,
                 'type' => 'Literal',
                 'options' => [
                     'route' => '/admin/company',
@@ -184,9 +184,12 @@ return [
                             'addPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/addPackage',
+                                    'route' => '/addPackage/:type',
                                     'defaults' => [
                                         'action' => 'addPackage',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '[a-zA-Z0-9_-]*',
                                     ],
                                     'may_terminate' => true,
                                 ],

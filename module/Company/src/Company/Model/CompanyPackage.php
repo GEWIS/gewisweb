@@ -10,9 +10,20 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * CompanyPackage model.
  *
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="packageType",type="string")
+ * @ORM\DiscriminatorMap({"job"="CompanyJobPackage","banner"="CompanyBannerPackage","featured"="CompanyFeaturedPackage"})
  */
-class CompanyPackage
+abstract class CompanyPackage
 {
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
     /**
      * The package's id.
      *
@@ -50,20 +61,6 @@ class CompanyPackage
      */
     protected $company;
 
-    /**
-     * The package's jobs.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package")
-     */
-    protected $jobs;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->jobs = new ArrayCollection();
-    }
 
     /**
      * Get the package's id.
@@ -157,34 +154,22 @@ class CompanyPackage
     }
 
     /**
-     * Get the jobs in the package.
-     * 
-     * @return array jobs in the package
+     * Get's the type of the package
+     *
      */
-    public function getJobs()
+    public function getType()
     {
-        return $this->jobs;
+        switch (get_class($this)) {
+            case "Company\Model\CompanyBannerPackage":
+                return "banner";
+            case "Company\Model\CompanyJobPackage":
+                return "job";
+            case "Company\Model\CompanyFeaturedPackage":
+                return "featured";
+        }
+
     }
 
-    /**
-     * Adds a job to the package.
-     * 
-     * @param Job $job job to be added
-     */
-    public function addJob(Job $job)
-    {
-        $this->jobs->add($job);
-    }
-
-    /**
-     * Removes a job from the package.
-     * 
-     * @param Job $job job to be removed
-     */
-    public function removeJob(Job $job)
-    {
-        $this->jobs->removeElement($job);
-    }
 
     public function isExpired($now)
     {

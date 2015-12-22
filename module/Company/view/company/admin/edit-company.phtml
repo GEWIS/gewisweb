@@ -49,7 +49,11 @@ if (is_null($company)){
                     <?php echo $package->isActive() ? 'true' : 'false'?>
                 </td>
                 <td>
-                    <?= count($package->getJobs()) ?>
+                    <?php if (get_class($package) === 'CompanyJobPackage') {
+                              count($package->getJobs()) ;
+                          } else {
+                              echo 'Banner';
+                          } ?>
                 <td>
                 </td>
             </tr>
@@ -59,9 +63,16 @@ if (is_null($company)){
     ?>
 </table>
 <br/>
-<a href="<?= $this->url("admin_company/default", 
-                        ["action"          =>"addPackage",
+<a href="<?= $this->url("admin_company/editCompany/addPackage", 
+                        ["type"          =>"job",
                          "slugCompanyName" => $company->getSlugName()]
                        ); ?>">
-    <?= $this->translate('Add package'); ?>
+    <?= $this->translate('Add Job package'); ?>
+</a>
+<br/>
+<a href="<?= $this->url("admin_company/editCompany/addPackage", 
+                        ["type"          =>"banner",
+                         "slugCompanyName" => $company->getSlugName()]
+                       ); ?>">
+    <?= $this->translate('Add Banner package'); ?>
 </a>
