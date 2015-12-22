@@ -254,7 +254,8 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete packages')
             );
         } 
-        return $this->getPackageMapper()->delete($packageID);
+        $this->getPackageMapper()->delete($packageID);
+        $this->getBannerPackageMapper()->delete($packageID);
     }
 
     /**
