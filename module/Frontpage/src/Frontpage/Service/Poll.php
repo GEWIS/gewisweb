@@ -190,6 +190,16 @@ class Poll extends AbstractAclService
     }
 
     /**
+     * Get the comment form.
+     *
+     * @return \Frontpage\Form\PollComment
+     */
+    public function getCommentForm()
+    {
+        return $this->sm->get('frontpage_form_poll_comment');
+    }
+
+    /**
      * Deletes the given poll.
      *
      * @param \Frontpage\Model\Poll $poll The poll to delete

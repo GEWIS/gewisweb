@@ -37,6 +37,7 @@ class PollComment extends Form implements InputFilterProviderInterface
                 'value' => $translator->translate('Comment')
             ]
         ]);
+        $this->get('submit')->setLabel($translator->translate('Comment'));
     }
 
     /**

@@ -23,6 +23,7 @@ class PollController extends AbstractActionController
 
             return new ViewModel(array_merge($details, [
                 'poll' => $poll,
+                'commentForm' => $pollService->getCommentForm()
             ]));
         }
 

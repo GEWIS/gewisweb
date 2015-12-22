@@ -46,4 +46,56 @@
         <?php endif ?>
     </div>
     <?php endif ?>
+    <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
+    <div class="row">
+        <h3><?= $this->translate('Comment on this poll') ?></h3>
+<?php
+$commentForm->prepare();
+
+// TODO set action
+// $form->setAttribute('action', $this->url('admin_education/default', ['action' => 'edit']));
+$commentForm->setAttribute('class', 'form-horizontal');
+?>
+
+        <?= $this->form()->openTag($commentForm) ?>
+
+<?php
+$element = $commentForm->get('author');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+
+<?php
+$element = $commentForm->get('content');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formTextarea($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <?php
+                $submit = $commentForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-primary');
+                ?>
+                <?= $this->formButton($submit) ?>
+            </div>
+        </div>
+
+        <?= $this->form()->closeTag() ?>
+    </div>
+    <?php endif ?>
 </div>
