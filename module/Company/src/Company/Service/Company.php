@@ -166,12 +166,17 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job")
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job")
     {
-        $packageForm = $this->getPackageForm();
+        $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
+            if ($type === 'banner') {
+                $newPath = $this->getFileStorageService()->storeUploadedFile($files);
+                $package->setImage($newPath);
+
+            }
             $package->exchangeArray($data);
             $this->savePackage();
             return true;
@@ -248,8 +253,9 @@ class Company extends AbstractACLService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to delete packages')
             );
-        }
-        return $this->getPackageMapper()->delete($packageID);
+        } 
+        $this->getPackageMapper()->delete($packageID);
+        $this->getBannerPackageMapper()->delete($packageID);
     }
 
     /**
@@ -295,6 +301,10 @@ class Company extends AbstractACLService
             throw new \Exception('Invalid arguemnt');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
+        if (is_null($package)) {
+            $package = $this->getBannerPackageMapper()->findEditablePackage($packageID);
+
+        }
 
         return $package;
     }
@@ -379,8 +389,11 @@ class Company extends AbstractACLService
      * Returns a the form for entering packages
      *
      */
-    public function getPackageForm()
+    public function getPackageForm($type = 'job')
     {
+        if ($type === 'banner') {
+            return $this->sm->get('company_admin_edit_bannerpackage_form');
+        }
         return $this->sm->get('company_admin_edit_package_form');
     }
 
@@ -464,5 +477,15 @@ class Company extends AbstractACLService
     protected function getDefaultResourceId()
     {
         return 'company';
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 }

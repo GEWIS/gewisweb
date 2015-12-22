@@ -17,6 +17,7 @@ class CompanyJobPackage extends CompanyPackage
      */
     public function __construct()
     {
+        parent::__construct();
         $this->jobs = new ArrayCollection();
     }
     /**
