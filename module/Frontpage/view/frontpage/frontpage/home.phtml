@@ -9,16 +9,16 @@
             <h3><strong><?= $this->translate('Agenda') ?></strong></h3>
             <?php foreach($activities as $activity): ?>
                 <div class="agenda-item">
-                    <a href="<?= $this->url('activity/view', ['id' => $activity->get('id')]) ?>">
+                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
                         <div class="date-icon">
                             <div class="day">
-                                <h4><strong><?= $activity->get('beginTime')->format('d') ?></strong></h4>
+                                <h4><strong><?= $activity->getBeginTime()->format('d') ?></strong></h4>
                             </div>
                             <div class="month">
-                                <?= $activity->get('beginTime')->format('M') ?>
+                                <?= $activity->getBeginTime()->format('M') ?>
                             </div>
                         </div>
-                        &nbsp;<h4><?= $activity->get('name'); ?></h4>
+                        &nbsp;<h4><?= $activity->getName(); ?></h4>
                     </a>
                 </div>
             <?php endforeach; ?>
