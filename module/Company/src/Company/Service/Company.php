@@ -166,7 +166,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job", $files)
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job")
     {
         $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);

@@ -101,7 +101,12 @@ class AdminController extends AbstractActionController
                 // todo: better error handling
             }
 
-            if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type, $files['banner'])){
+            if ($companyService->insertPackageForCompanySlugNameByData(
+                $companyName,
+                $request->getPost(),
+                $files['banner'],
+                $type
+            )){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
