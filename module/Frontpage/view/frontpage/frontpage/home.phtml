@@ -1,89 +1,159 @@
-<div class="row">
-    <div class="col-md-8">
-        <h2><?= $this->translate('Study association GEWIS') ?></h2>
-        <p><?= sprintf($this->translate('Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented.'), '<span class="gewis-red">', '</span>') ?></p>
-        <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <div class="well agenda">
-            <h3><strong><?= $this->translate('Agenda') ?></strong></h3>
-            <?php foreach($activities as $activity): ?>
-                <div class="agenda-item">
-                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                        <div class="date-icon">
-                            <div class="day">
-                                <h4><strong><?= $activity->getBeginTime()->format('d') ?></strong></h4>
-                            </div>
-                            <div class="month">
-                                <?= $activity->getBeginTime()->format('M') ?>
-                            </div>
-                        </div>
-                        &nbsp;<h4><?= $activity->getName(); ?></h4>
-                    </a>
-                </div>
-            <?php endforeach; ?>
-            <?= sprintf(
-                $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
-                '<a href="~bac">',
-                '</a>'
-                )
-            ?>
-        </div>
+<div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/panorama.jpg);">
+    <div class="container">
+        <h1>Studievereniging GEWIS</h1>
+        <h2>Welkom op de website van Studievereniging GEWIS.</h2>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="well">
-            <h3><strong><?= $this->translate('Birthdays today!') ?></strong></h3>
-            <?php if(!is_null($birthdayTag)): ?>
-            <div class="thumb">
-                <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $birthdayTag->getPhoto()->getId()]); ?>">
-                    <img class="img-responsive" src="<?= $this->fileUrl($birthdayTag->getPhoto()->getSmallThumbPath()) ?>" alt="">
-                </a>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-md-8">
+                <h1><?= $this->translate('Study association GEWIS') ?></h1>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p><a class="btn btn-success" href="https://github.com/GEWIS/gewisweb" target="_blank"><?php echo $this->translate('Fork the GEWIS website on GitHub') ?> &raquo;</a></p>
             </div>
-            <?php endif; ?>
-            <?php if (!empty($birthdays)): ?>
-                <ul>
-                    <?php foreach ($birthdays as $birthday): ?>
-                        <li><?= sprintf($this->translate('%s wil be %s years old today!'), $birthday['member']->getFullName(),
-                                $birthday['age']) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <?= $this->translate('Nobody seems to have a birthday today, be the first one!') ?>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="well">
-            <h3><strong><?= $this->translate('Photo of the week') ?></strong></h3>
-            <?php if(!is_null($weeklyPhoto)): ?>
-                <div class="thumb">
-                    <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>">
-                        <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
-                    </a>
+            <div class="col-sm-5 col-md-4">
+                <div class="panel panel-default agenda">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Agenda') ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                        <?php foreach($activities as $activity): ?>
+                            <a class="list-group-item agenda-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                <span class="badge">
+                                    <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>&nbsp;</span>
+                                    <span><?= $activity->getBeginTime()->format('d') ?></span>
+                                </span>
+
+                                <?= $activity->getName(); ?>
+
+                            </a>
+                        <?php endforeach; ?>
+                        </div>
+
+                        <p>
+                        <?= sprintf(
+                            $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
+                            '<a href="~bac">',
+                            '</a>'
+                        )
+                        ?>
+                        </p>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="<?= $this->url('activity') ?>">
+                            <?= $this->translate('Complete agenda') ?>
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </a>
+                    </div>
                 </div>
-            <?php endif; ?>
+            </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="well">
-            <h3><strong><?= $this->translate('Poll') ?></strong></h3>
-            <?php if (isset($poll['poll'])): ?>
-                <?= $this->partial('partial/poll.phtml', [
-                    'poll' => $poll['poll'],
-                    'canVote' => $poll['canVote'],
-                    'userVote' => $poll['userVote'],
-                    'showResults' => false
-                ]) ?>
-                <?= $this->translate('View the')?> <a href="<?= $this->url('poll') ?>"><?=$this->translate('results') ?></a>
-            <?php else: ?>
-                <?= $this->translate('There currently is no poll.'); ?>
-                <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
-                <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
-            <?php endif; ?>
+</section>
+<section class="section alt">
+    <div class="container panel-group panel-group-horizontal">
+        <div class="panel panel-emphasize" style="display: flex; flex-direction: column-reverse">
+            <div class="panel-heading">
+                <h3><?= $this->translate('News') ?></h3>
+            </div>
+        </div>
+        <div class="panel panel-emphasize">
+            <div class="panel-heading">
+                <h4>AC Sock Hanging</h4>
+            </div>
+            <div class="panel-body">
+                Are you not happy with the presents that Sinterklaas gave you? Don’t worry, because there is another opportunity to get some sweet presents this year! The AC wants to help cheer you up, and therefore presents AC Sock Hanging!
+            </div>
+        </div>
+        <div class="panel panel-emphasize">
+            <div class="panel-heading">
+                <h4>I.V.V Decadent Weekend</h4>
+            </div>
+            <div class="panel-body">
+                Het is ons een grote eer en een waar genoegen u het volgende Decadent Weekend aan te mogen bieden. Logischerwijs zal dit weekend weer in het teken staan van de decadente geneugten des levens, georganiseerd door Dispuut "In Vino Veritas". U kunt vanzelfsprekend weer genieten van de beste wijnen, de heerlijkste gerechten en een prachtige locatie.
+            </div>
+        </div>
+        <div class="panel panel-emphasize">
+            <div class="panel-heading">
+                <h4>I.V.V Decadent Weekend</h4>
+            </div>
+            <div class="panel-body">
+                Het is ons een grote eer en een waar genoegen u het volgende Decadent Weekend aan te mogen bieden. Logischerwijs zal dit weekend weer in het teken staan van de decadente geneugten des levens, georganiseerd door Dispuut "In Vino Veritas". U kunt vanzelfsprekend weer genieten van de beste wijnen, de heerlijkste gerechten en een prachtige locatie.
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <h3><strong><?= $this->translate('Birthdays today!') ?></strong></h3>
+                    <?php if(!is_null($birthdayTag)): ?>
+                        <div class="thumb">
+                            <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $birthdayTag->getPhoto()->getId()]); ?>">
+                                <img class="img-responsive" src="<?= $this->fileUrl($birthdayTag->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($birthdays)): ?>
+                        <ul>
+                            <?php foreach ($birthdays as $birthday): ?>
+                                <li><?= sprintf($this->translate('%s wil be %s years old today!'), $birthday['member']->getFullName(),
+                                        $birthday['age']) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <?= $this->translate('Nobody seems to have a birthday today, be the first one!') ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Photo of the week') ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <?php if(!is_null($weeklyPhoto)): ?>
+                            <div class="thumb">
+                                <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>">
+                                    <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Poll') ?></h3>
+                    </div>
+                    <?php if (isset($poll['poll'])): ?>
+                        <div class="panel-body">
+                        <?= $this->partial('partial/poll.phtml', [
+                            'poll' => $poll['poll'],
+                            'canVote' => $poll['canVote'],
+                            'userVote' => $poll['userVote'],
+                            'showResults' => false
+                        ]) ?>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="<?= $this->url('poll') ?>"><?=$this->translate('View the results') ?></a>
+                        </div>
+                    <?php else: ?>
+                        <?= $this->translate('There currently is no poll.'); ?>
+                        <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
+                        <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+                    <?php endif; ?>
+
+                </div>
+            </div>
 
         </div>
     </div>
-
-</div>
+</section>

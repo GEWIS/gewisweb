@@ -1,0 +1,28 @@
+<?php
+$escaper = new Zend\Escaper\Escaper('utf-8');
+
+// If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
+$companyURL = $this->url('company/companyItem', // Route url
+    ['slugCompanyName' => $company->getSlugName()], // Url parameters
+    [], // routeOptions
+    true); // Reuse matched parameters
+
+?>
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="company-grid-item grid-item col-md-12" id="company-<?= $escaper->escapeHtmlAttr($company->getId()); ?>">
+        <a href="<?= $companyURL ?>">
+            <img class="company-logo img-responsive" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+        </a>
+        <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
+        <div class="">
+            <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+            <p>
+                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                    <?= $company->getNumberOfJobs() ?> <?= $company->getNumberOfJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
+                </a>
+            </p>
+        </div>
+        <hr class="visible-xs">
+    </div>
+</div>
+

@@ -43,7 +43,7 @@ function getIsActiveClass($view, array $condition)
     return isActive($view, $condition) ? 'active' : '';
 }
 ?>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,31 +51,40 @@ function getIsActiveClass($view, array $condition)
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <a href="/" class="navbar-brand">
+                        <!-- TODO: Replace with SVG -->
+                        <img src="<?= $this->basePath() ?>/img/logo-header.png" alt="GEWIS Logo">
+                    </a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden-sm hidden-md hidden-lg"><a href="<?= $this->url('home') ?>"><?= $this->translate('Home') ?></a></li>
-                        <li class="hidden-sm <?= getIsActiveClass($this, ['frontpage']) ?>"><a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>"><?= $this->translate('Association') ?></a></li>
-                        <li class="hidden-xs hidden-md hidden-lg dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <?= $this->translate('Association') ?> <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>"><?= $this->translate('Association') ?></a></li>
-                                <li><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
-                                <li><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
-                                <?php if (null !== $this->identity()): ?>
-                                    <li><a href="<?= $this->url('decision') ?>"><?= $this->translate('Members') ?></a></li>
-                                <?php endif ?>
-                            </ul>
-                        </li>
+                    <ul class="nav navbar-nav">
+                        <!-- TODO: Fix "association" active class -->
+                        <li class="<?= getIsActiveClass($this, ['vereniging']) ?>"><a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>"><?= $this->translate('Association') ?></a></li>
                         <li class="<?= getIsActiveClass($this, ['company']) ?>"><a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a></li>
                         <li class="<?= getIsActiveClass($this, ['education']) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
-                        <li class="hidden-sm <?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
-                        <li class="hidden-sm <?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
-
+                        <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
+                        <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
                         <?php if (null === $this->identity()): ?>
-                            <li class="open"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
+                            <li class="visible-xs"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
+                            <li class="dropdown hidden-xs">
+                                <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->translate('Login') ?></a>
+                                <div class="dropdown-menu dropdown-login">
+                                    <form action="<?= $this->url('user') ?>" method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="login" class="form-control" placeholder="<?= $this->translate("Lidnummer of e-mailadres") ?>" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control" placeholder="<?= $this->translate("Wachtwoord") ?>">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                        <p>Of ga naar de <a href="#register">registratie pagina</a></p>
+
+                                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                                    </form>
+                                </div>
+                            </li>
                         <?php else: ?>
                             <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
                             <?php $member = $this->identity()->getMember() ?>
@@ -98,40 +107,57 @@ function getIsActiveClass($view, array $condition)
             </div>
         </nav>
 
-        <div class="jumbotron jumbotron-header<?= isActive($this, ['frontpage', 'frontpage', 'home']) ? ' jumbotron-large' : '' ?>">
-            <div class="container hidden-xs">
-                <a href="<?= $this->url('home') ?>">
-                    <img src="<?= $this->basePath() ?>/img/logo.png" class="img-circle" />
-                </a>
-            </div>
+        <div class="content-container">
+            <?php echo $this->content; ?>
         </div>
 
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer class="row">
-                <div class="col-md-2 col-sm-4">
-                    <img src="<?= $this->basePath() ?>/img/logo-white.png" />
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2 col-md-1">
+                        <img src="<?= $this->basePath() ?>/img/logo-footer.png"/>
+                    </div>
+                    <div class="col-sm-10 col-md-7">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Infima</h3>
+                                <p>
+                                    <?= $this->infima() ?>
+                                </p>
+                                <p>&copy; 2013
+                                    - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>Bezoekadres</h3>
+                                <address>
+                                    Studievereniging GEWIS<br>
+                                    MF 3.155<br>
+                                    De Groene Loper 5<br>
+                                    5612 AZ Eindhoven<br>
+                                    Nederland
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3>Postadres</h3>
+                                <address>
+                                    Studievereniging GEWIS<br>
+                                    MF 3.155<br>
+                                    Postbus 513<br>
+                                    5600 MB Eindhoven<br>
+                                    Nederland
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <i class="glyphicon glyphicon-earphone"></i> <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
+                                <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4 col-sm-8">
-                    <h3>Studievereniging GEWIS</h3>
-                    <address>
-                        MF 3.155<br>
-                        De Groene Loper 5<br>
-                        5612AZ Eindhoven<br>
-                        <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
-                        <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
-                    </address>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <h3>Infima</h3>
-                    <p>
-                        <?= $this->infima() ?>
-                    </p>
-                    <p>&copy; 2013 - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
-                </div>
-            </footer>
-        </div> <!-- /container -->
+            </div>
+        </footer>
         <?php echo $this->inlineScript() ?>
         <script>
             <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>

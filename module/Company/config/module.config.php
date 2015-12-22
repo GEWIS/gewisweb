@@ -47,6 +47,9 @@ return [
                         'priority' => 2,
                         'type' => 'segment',
                         'options' => [
+                            'defaults' => [
+                                'action' => 'show',
+                            ],
                             // url will be company/<slugCompanyName>/jobs/<slugJobName>/<action>
                             // slugjobname and slugcompanyname will be in database, and can be set from the admin panel
                             // company/apple should give page of apple
@@ -68,7 +71,7 @@ return [
                                     'route' => '/jobs',
                                     'defaults' => [
                                         'controller' => 'Company\Controller\Company',
-                                        'action' => 'jobs',
+                                        'action' => 'jobList',
                                     ],
                                 ],
                                 'may_terminate' => true,
@@ -76,9 +79,13 @@ return [
                                     'job_item' => [
                                         'type' => 'segment',
                                         'options' => [
-                                            'route' => '[/:slugJobName]',
+                                            'route' => '/:slugJobName',
                                             'constraints' => [
                                                 'slugJobName' => '[a-zA-Z0-9_-]*',
+                                            ],
+                                            'defaults' => [
+                                                'controller' => 'Company\Controller\Company',
+                                                'action' => 'jobs',
                                             ],
                                         ],
                                     ],

@@ -25,13 +25,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 </h4>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
-        <div class="row">
-            <div class="col-md-5">
+        <div class="form-group">
+            <div class="col-md-6">
                 <?php if ($canVote): ?>
                 <div class="radio">
                     <label>
-
-                        <input type="radio" value="<?= $option->getId() ?>" name="option"/>
+                        <input type="radio" value="<?= $option->getId() ?>" name="option" />
                         <?php endif; ?>
                         <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
                         <?= $voted ? '<strong>' : '' ?>
@@ -40,10 +39,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if ($canVote): ?>
                     </label>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
             </div>
+
             <?php if($showResults || !$canVote): ?>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="progress">
                     <div class="progress-bar poll-bar" role="progressbar"
                          aria-valuenow="<?= $percentages[$option->getId()] ?>"
@@ -53,19 +53,17 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </div>
                 </div>
             </div>
-            <div class="col-md-1">
-                <span class="pull-right"><?= sprintf(
-                        $this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'),
-                        $option->getVotesCount()
-                    ) ?>
-                </span>
+            <div class="col-md-1 text-right">
+                <?= sprintf($this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'), $option->getVotesCount()) ?>
             </div>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
-    <p>
-        <?php if ($canVote): ?>
-            <button type="submit" class="btn btn-large btn-success">Vote</button>
-        <?php endif; ?>
-    </p>
+    <div class="form-group">
+        <div class="col-md-12">
+            <?php if ($canVote): ?>
+                <button type="submit" class="btn btn-large btn-primary">Vote</button>
+            <?php endif; ?>
+        </div>
+    </div>
 </form>

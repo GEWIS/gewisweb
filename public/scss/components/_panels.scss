@@ -1,0 +1,111 @@
+/*
+Panels
+
+Styleguide: panels
+
+*/
+
+/*
+
+Panel styles
+
+Markup:
+<div class="{{modifier_class}}">
+    <div class="panel-heading">
+        <h3>Heading</h3>
+    </div>
+    <div class="panel-body">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id metus non tellus commodo fringilla in non nisl.
+    </div>
+    <div class="panel-footer">
+        <a href="#">Link</a>
+    </div>
+</div>
+
+.panel-default - Default
+panel-emphasize - Emphasize
+
+Styleguide: panels.panel-default
+
+*/
+
+.panel-group-horizontal {
+    display: flex;
+    margin-bottom: 0;
+
+    .panel + .panel {
+        margin-top: 0;
+    }
+}
+
+.panel-group {
+    .panel {
+        border-radius: 0;
+    }
+}
+
+.panel {
+    font-size: 12px;
+    text-align: justify;
+
+    .panel-heading {
+        h3 {
+            text-transform: uppercase;
+        }
+    }
+}
+
+.panel-inverse {
+    background: #000;
+    color: #FFF;
+}
+
+.panel-default {
+    > .panel-heading {
+        background: none;
+        padding: 1.5em;
+        border: none;
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    > .panel-body {
+        padding: 0 15px;
+    }
+
+    > .panel-footer {
+        border: none;
+        padding: 2em 1.5em 1.5em;
+        background: none;
+        text-transform: uppercase;
+        font-family: Raleway;
+
+        a {
+            position: relative;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8em;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a .glyphicon {
+            padding-left: 1em;
+            transition: padding-left $transition-duration-fast linear;
+        }
+
+        a:hover .glyphicon {
+            padding-left: 1.5em;
+        }
+    }
+}
+
+.panel-emphasize {
+    background: #000;
+    border: none;
+    box-shadow: none;
+}

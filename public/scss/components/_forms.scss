@@ -1,0 +1,37 @@
+input {
+    font-family: $font-family-base;
+    font-weight: normal;
+
+    &[type="radio"] {
+        margin: 1px 0;
+    }
+}
+
+.form-control {
+    @include box-shadow(none);
+}
+
+.form-group {
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: $brand-danger;
+    border-color: $brand-danger;
+}
+
+.form-horizontal {
+    .radio {
+        padding-top: 0;
+    }
+
+    .progress {
+        margin-bottom: 0;
+    }
+}
