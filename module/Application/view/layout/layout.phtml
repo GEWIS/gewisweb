@@ -60,7 +60,14 @@ function getIsActiveClass($view, array $condition)
                     <ul class="nav navbar-nav">
                         <!-- TODO: Fix "association" active class -->
                         <li class="<?= getIsActiveClass($this, ['vereniging']) ?>"><a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>"><?= $this->translate('Association') ?></a></li>
-                        <li class="<?= getIsActiveClass($this, ['company']) ?>"><a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a></li>
+                        <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['company']) ?> <?= isActive($this, ['company']) ? 'default' : '' ?>">
+                            <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Companies') ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
+                            </ul>
+                        </li>
                         <li class="<?= getIsActiveClass($this, ['education']) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
                         <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
                         <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>

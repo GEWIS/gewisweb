@@ -243,3 +243,37 @@ Styleguide: navbar
         text-align: center;
     }
 }
+
+
+.nav {
+
+    li.dropdown.dropdown-hover.default > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        position: static;
+        float: none;
+        margin-top: 0;
+        display: block;
+    }
+
+    @media (min-width: $screen-sm-min) {
+        li.dropdown.dropdown-hover.default:not(:hover) > .dropdown-menu {
+            visibility: hidden;
+            opacity: 0;
+            display: none;
+            position: absolute;
+        }
+
+        li.dropdown.dropdown-hover.default:hover > .dropdown-menu {
+            position: absolute;
+        }
+
+        // open sub-menus on hover
+        li.dropdown.dropdown-hover:hover > .dropdown-menu {
+            visibility: visible;
+            opacity: 1;
+            display: block;
+            position: absolute;
+        }
+    }
+}
