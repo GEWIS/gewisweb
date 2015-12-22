@@ -74,6 +74,15 @@ return [
                             ],
                         ],
                     ],
+                    'bulk_upload' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/bulk',
+                            'defaults' => [
+                                'action' => 'bulk'
+                            ]
+                        ]
+                    ],
                 ],
                 'priority' => 100
             ]

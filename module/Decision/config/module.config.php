@@ -84,6 +84,24 @@ return [
                             ],
                         ],
                     ],
+                    'notes' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/notes',
+                            'defaults' => [
+                                'action' => 'notes'
+                            ]
+                        ]
+                    ],
+                    'document' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/document',
+                            'defaults' => [
+                                'action' => 'document'
+                            ]
+                        ]
+                    ],
                 ],
                 'priority' => 100
             ],

@@ -126,7 +126,13 @@ function getIsActiveClass($view, array $condition)
         </nav>
 
         <div class="content-container">
-            <?php echo $this->content; ?>
+            <?php $viewModel = current($this->viewModel()->getCurrent()->getChildren());
+                if(strstr($viewModel->getTemplate(), 'admin')) {
+                    echo $this->partial('partial/admin-nav.phtml', ['content' => $this->content]);
+                } else {
+                    echo $this->content;
+                }
+             ?>
         </div>
 
         <footer class="footer">
