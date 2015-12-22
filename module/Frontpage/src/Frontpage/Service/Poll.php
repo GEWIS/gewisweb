@@ -4,6 +4,7 @@ namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
 use Frontpage\Model\PollVote as PollVoteModel;
+use Frontpage\Model\PollComment;
 use Frontpage\Model\Poll as PollModel;
 
 /**
@@ -145,6 +146,44 @@ class Poll extends AbstractAclService
         $pollMapper = $this->getPollMapper();
         $pollMapper->persist($pollOption);
         $pollMapper->flush();
+    }
+
+    /**
+     * Creates a comment on the given poll
+     *
+     * @param int $pollId
+     * @param array $data
+     */
+    public function createComment($pollId, $data)
+    {
+        if (!$this->isAllowed('create', 'poll_comment')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create comments on this poll')
+            );
+        }
+
+        $poll = $this->getPoll($pollId);
+
+        $form = $this->getCommentForm();
+
+        $form->bind(new PollComment());
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return;
+        }
+
+        $comment = $form->getData();
+        $comment->setUser($this->getUser());
+
+        $poll->addComment($comment);
+
+        $this->getPollMapper()->persist($poll);
+        $this->getPollMapper()->flush();
+
+        // reset the form
+        $form->setData([]);
     }
 
     /**

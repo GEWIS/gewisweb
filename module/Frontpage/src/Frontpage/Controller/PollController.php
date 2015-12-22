@@ -61,6 +61,25 @@ class PollController extends AbstractActionController
     }
 
     /**
+     * Submits a comment.
+     */
+    public function commentAction()
+    {
+        $request = $this->getRequest();
+        $service = $this->getPollService();
+
+        if ($request->isPost()) {
+            $pollId = $this->params()->fromRoute('poll_id');
+            $service->createComment($pollId, $request->getPost());
+        }
+
+        // execute the index action and show the poll
+        $vm = $this->indexAction();
+        $vm->setTemplate('frontpage/poll/index');
+        return $vm;
+    }
+
+    /**
      * View all previous polls
      */
     public function historyAction()
