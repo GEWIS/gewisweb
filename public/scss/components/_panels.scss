@@ -80,21 +80,20 @@ Styleguide: panels.panel-default
         padding: 25px 15px 15px;
         background: none;
         text-transform: uppercase;
+        font-family: Raleway;
 
         a {
-            padding-right: 20px;
             position: relative;
+            text-decoration: none;
         }
 
-        a:hover {
-            padding-right: 25px;
+        a .glyphicon {
+            padding-left: 1em;
+            transition: padding-left $transition-duration-fast linear;
         }
 
-        a:after {
-            content: "->";
-            position: absolute;
-            top: 0;
-            right: 0;
+        a:hover .glyphicon {
+            padding-left: 1.5em;
         }
     }
 }
