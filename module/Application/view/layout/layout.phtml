@@ -80,13 +80,13 @@ function getIsActiveClass($view, array $condition)
                                 <div class="dropdown-menu dropdown-login">
                                     <form action="<?= $this->url('user') ?>" method="post">
                                         <div class="form-group">
-                                            <input type="text" name="login" class="form-control" placeholder="<?= $this->translate("Lidnummer of e-mailadres") ?>" />
+                                            <input type="text" name="login" class="form-control" placeholder="<?= $this->translate('Membership number or email address') ?>" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control" placeholder="<?= $this->translate("Wachtwoord") ?>">
+                                            <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                        <p>Of ga naar de <a href="#register">registratie pagina</a></p>
+                                        <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
+                                        <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
 
                                         <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
                                     </form>
@@ -102,7 +102,7 @@ function getIsActiveClass($view, array $condition)
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
-                                    <li><a href="#">SuSOS</a></li>
+                                    <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                                     <li><a href="<?= $this->url('user/default', [
                                         'action' => 'logout'
                                         ]) ?>"><?= $this->translate('Logout') ?></a></li>
