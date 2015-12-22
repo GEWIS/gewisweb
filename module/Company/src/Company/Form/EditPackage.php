@@ -8,7 +8,7 @@ use Zend\Mvc\I18n\Translator;
 
 class EditPackage extends Form
 {
-    public function __construct(Translator $translate)
+    public function __construct(Translator $translate, $type)
     {
         // we want to ignore the name passed
         parent::__construct();
@@ -54,6 +54,20 @@ class EditPackage extends Form
                 ],
             ],
         ]);
+        if ($type === "banner") {
+            $this->add([
+                'name' => 'banner',
+                'type' => '\Zend\Form\Element\File',
+                'attributes' => [
+                    'required' => 'required',
+                ],
+                'options' => [
+                    'label' => $translate->translate('Banner'),
+                    'type' => 'image',
+                ],
+
+            ]);
+        }
         $this->add([
             'name' => 'submit',
             'attributes' => [

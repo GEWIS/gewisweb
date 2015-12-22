@@ -83,18 +83,25 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $packageForm = $companyService->getPackageForm();
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');
         $type = $this->params('type');
 
+        // Get form
+        $packageForm = $companyService->getPackageForm($type);
+
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $files = $request->getFiles();
+            if (count($files) != 1 && $type === 'banner') {
+                $this->getResponse()->setStatusCode(500);
+                $result['error'] = $companyService->getTranslator()->translate('Error uploading file');
+            }
 
             // Check if data is valid, and insert when it is
-            if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type)){
+            if ($companyService->insertPackageForCompanySlugNameByData($companyName, $request->getPost(), $type, $files)){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany', 
