@@ -15,7 +15,9 @@ class PollController extends AbstractActionController
     public function indexAction()
     {
         $pollService = $this->getPollService();
-        $poll = $pollService->getNewestPoll();
+
+        $poll = $this->obtainPoll();
+
         if (!is_null($poll)) {
             $details = $pollService->getPollDetails($poll);
 
@@ -25,6 +27,22 @@ class PollController extends AbstractActionController
         }
 
         return new ViewModel();
+    }
+
+    /**
+     * Get the right from the route.
+     *
+     * @param int $pollId
+     */
+    public function obtainPoll()
+    {
+        $pollService = $this->getPollService();
+        $pollId = $this->params()->fromRoute('poll_id');
+
+        if (is_null($pollId)) {
+            return $pollService->getNewestPoll();
+        }
+        return $pollService->getPoll($pollId);
     }
 
     /**
