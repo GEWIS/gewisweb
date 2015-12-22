@@ -45,7 +45,6 @@
         <?php endforeach ?>
         <?php endif ?>
     </div>
-    <?php endif ?>
     <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
     <div class="row">
         <h3><?= $this->translate('Comment on this poll') ?></h3>
@@ -53,7 +52,7 @@
 $commentForm->prepare();
 
 // TODO set action
-// $form->setAttribute('action', $this->url('admin_education/default', ['action' => 'edit']));
+$commentForm->setAttribute('action', $this->url('poll/comment', ['poll_id' => $poll->getId()]));
 $commentForm->setAttribute('class', 'form-horizontal');
 ?>
 
@@ -97,5 +96,6 @@ $element->setAttribute('placeholder', $element->getLabel());
 
         <?= $this->form()->closeTag() ?>
     </div>
+    <?php endif ?>
     <?php endif ?>
 </div>

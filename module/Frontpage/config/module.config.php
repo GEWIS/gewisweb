@@ -156,6 +156,18 @@ return [
                             ],
                         ],
                     ],
+                    'comment' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/comment',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'comment',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
