@@ -173,8 +173,8 @@ class Company extends AbstractACLService
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             if ($type === 'banner') {
-                $newPath = $this->getFileStorageService()->storeFile($files[0]);
-                $package->setBanner($newPath);
+                $newPath = $this->getFileStorageService()->storeUploadedFile($files);
+                $package->setImage($newPath);
 
             }
             $package->exchangeArray($data);
@@ -300,6 +300,10 @@ class Company extends AbstractACLService
             throw new \Exception('Invalid arguemnt');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
+        if (is_null($package)) {
+            $package = $this->getBannerPackageMapper()->findEditablePackage($packageID);
+
+        }
 
         return $package;
     }
@@ -472,5 +476,15 @@ class Company extends AbstractACLService
     protected function getDefaultResourceId()
     {
         return 'company';
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 }

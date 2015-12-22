@@ -59,11 +59,10 @@ class EditPackage extends Form
                 'name' => 'banner',
                 'type' => '\Zend\Form\Element\File',
                 'attributes' => [
-                    'required' => 'required',
+                    'type' => 'file',
                 ],
                 'options' => [
                     'label' => $translate->translate('Banner'),
-                    'type' => 'image',
                 ],
 
             ]);
