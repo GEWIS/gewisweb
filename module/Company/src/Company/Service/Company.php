@@ -166,12 +166,17 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job")
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $type = "job", $files)
     {
-        $packageForm = $this->getPackageForm();
+        $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
+            if ($type === 'banner') {
+                $newPath = $this->getFileStorageService()->storeFile($files[0]);
+                $package->setBanner($newPath);
+
+            }
             $package->exchangeArray($data);
             $this->savePackage();
             return true;
@@ -379,8 +384,11 @@ class Company extends AbstractACLService
      * Returns a the form for entering packages
      *
      */
-    public function getPackageForm()
+    public function getPackageForm($type = 'job')
     {
+        if ($type === 'banner') {
+            return $this->sm->get('company_admin_edit_bannerpackage_form');
+        }
         return $this->sm->get('company_admin_edit_package_form');
     }
 
