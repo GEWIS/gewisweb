@@ -13,7 +13,8 @@ return [
         'Activity',
         'Photo',
         'Education',
-        'Migration'
+        'Migration',
+        'MaglMarkdown'
     ],
 
     // These are various options for the listeners attached to the ModuleManager
