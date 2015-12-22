@@ -24,3 +24,43 @@ p {
 p.lead {
     line-height: 1.6;
 }
+
+#deal-with-it {
+    overflow: hidden;
+    position: relative;
+
+    &:hover {
+        .glyphicon {
+            animation: 4s linear 0s dealWithIt;
+        }
+    }
+
+    &:after {
+        content: "DEAL WITH IT";
+        width: 100%;
+        text-align: center;
+        font-family: "Comic Sans MS";
+        font-size: 1.2em;
+        font-weight: 600;
+        opacity: 0;
+        position: absolute;
+        bottom: 1em;
+        left: 0;
+    }
+
+    &:hover {
+        &:after {
+            opacity: 1;
+        }
+
+        h4 {
+            opacity: 0;
+        }
+    }
+}
+
+@keyframes dealWithIt {
+    0%  { transform: translateY(-2em) }
+    50% { transform: translateY(0); }
+    80% { transform: rotate(360deg) scale(1.4) }
+}

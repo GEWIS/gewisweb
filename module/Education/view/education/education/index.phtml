@@ -20,7 +20,7 @@
                 <h4><?= $this->translate('Dreamspark') ?></h4>
             </div>
         </a>
-        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3">
+        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3" id="deal-with-it">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-sunglasses"></div>
                 <h4><?= $this->translate('Complaints') ?></h4>
@@ -95,3 +95,18 @@
         </div>
     </div>
 </div>
+<script>
+$("#deal-with-it")
+    .mouseenter(function(){
+        $("<audio></audio>").attr({
+            'id': 'na-na-na',
+            'src': 'na-na-na.mp3',
+            'volume': 1,
+            'autoplay': 'autoplay',
+            'loop': 'loop'
+        }).appendTo("body");
+    })
+    .mouseleave(function(){
+        $("#na-na-na").remove();
+    });
+</script>
