@@ -33,7 +33,10 @@ return [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/logout',
-                        ]
+                            'defaults' => [
+                                'action' => 'logout'
+                            ]
+                        ],
                     ],
                     'pinlogin' => [
                         'type' => 'Literal',
