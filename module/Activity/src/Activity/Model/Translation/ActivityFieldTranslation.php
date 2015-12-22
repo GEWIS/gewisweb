@@ -45,6 +45,11 @@ class ActivityFieldTranslation
      */
     protected $options;
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function setActivity($activity)
     {
         $this->activity = $activity;
@@ -68,6 +73,11 @@ class ActivityFieldTranslation
     public function setMaximumValue($maximumValue)
     {
         $this->maximumValue = $maximumValue;
+    }
+
+    public function setOptions($options)
+    {
+        $this->options = $options;
     }
 
     public function getId()
@@ -98,5 +108,10 @@ class ActivityFieldTranslation
     public function getOptions()
     {
         return $this->options;
+    }
+
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

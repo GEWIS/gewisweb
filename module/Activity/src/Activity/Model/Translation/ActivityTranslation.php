@@ -301,6 +301,10 @@ class ActivityTranslation
         return $this->fields;
     }
 
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
     /**
      * Returns an associative array representation of this object.
      *

@@ -134,4 +134,9 @@ class ActivityField
     {
         return $this->options;
     }
+
+    public function getActivity()
+    {
+        return $this->activity;
+    }
 }
