@@ -1,48 +1,86 @@
-<?php
-$form = $this->form;
-$form->prepare();
+<div class="container">
+    <h1><?= $this->translate("Onderwijs") ?></h1>
 
-$form->setAttribute('action', $this->url('education'));
-$form->setAttribute('method', 'get');
+    <div class="row">
+        <div class="panel panel-image col-md-4">
+            <div class="glyphicon glyphicon-book"></div>
+            <h4>Boeken</h4>
+        </div>
+        <div class="panel panel-image col-md-4">
+            <div class="glyphicon glyphicon-cd"></div>
+            <h4>MSDN</h4>
+        </div>
+        <div class="panel panel-image col-md-4">
+            <div class="glyphicon glyphicon-education"></div>
+            <h4>Tentamens</h4>
+        </div>
+    </div>
 
-$form->setAttribute('role', 'form');
+    <div class="row">
+        <div class="col-md-12">
+            <h2><?= $this->translate('Tentamens') ?></h2>
+        </div>
+        <div class="col-md-6">
+            <?php
+            $form = $this->form;
+            $form->prepare();
 
-echo $this->form()->openTag($form);
-?>
-<div class="form-group">
-<?php
-$element = $form->get('query');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $this->translate('Search query'));
-?>
-    <?= $this->formLabel($element) ?>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
+            $form->setAttribute('action', $this->url('education'));
+            $form->setAttribute('method', 'get');
+            $form->setAttribute('class', 'form-inline');
+
+            $form->setAttribute('role', 'form');
+
+            echo $this->form()->openTag($form);
+            ?>
+            <div class="form-group">
+            <?php
+            $element = $form->get('query');
+            $element->setAttribute('class', 'form-control');
+            $element->setAttribute('placeholder', $this->translate('Vakcode/vaknaam'));
+            ?>
+                <!-- <?= $this->formLabel($element) ?> -->
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+
+
+                <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+            </div>
+
+            <?= $this->form()->closeTag(); ?>
+
+            <p><?= $this->translate("Voor oude tentamens van minor vakken kun je ook kijken bij:") ?></p>
+            <ul>
+                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Technische Natuurkunde") ?>)</li>
+                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedische Technologie") ?>)</li>
+                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Elektrotechniek") ?>)</li>
+                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Scheikundige Technologie") ?>)</li>
+                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Technische Innovatiewetenschappen") ?>)</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <?php if (!empty($courses)): ?>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?= $this->translate('Course code') ?></th>
+                    <th><?= $this->translate('Course description') ?></th>
+                </tr>
+                </thead>
+                <tbody>
+            <?php foreach ($courses as $course): ?>
+                <tr>
+                    <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
+            <?= $course->getCode() ?>
+                    </a></td>
+                    <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
+            <?= $course->getName() ?>
+                    </a></td>
+                </tr>
+            <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
-
-<button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
-
-<?= $this->form()->closeTag(); ?>
-
-<?php if (!empty($courses)): ?>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th><?= $this->translate('Course code') ?></th>
-        <th><?= $this->translate('Course description') ?></th>
-    </tr>
-    </thead>
-    <tbody>
-<?php foreach ($courses as $course): ?>
-    <tr>
-        <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
-<?= $course->getCode() ?>
-        </a></td>
-        <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
-<?= $course->getName() ?>
-        </a></td>
-    </tr>
-<?php endforeach; ?>
-    </tbody>
-</table>
-<?php endif; ?>

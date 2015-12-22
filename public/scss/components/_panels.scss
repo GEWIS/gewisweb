@@ -109,3 +109,11 @@ Styleguide: panels.panel-default
     border: none;
     box-shadow: none;
 }
+
+.panel-image {
+    text-align: center;
+
+    .glyphicon {
+        font-size: 3em;
+    }
+}
