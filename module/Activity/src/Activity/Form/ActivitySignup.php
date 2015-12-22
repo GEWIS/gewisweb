@@ -35,9 +35,9 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      */
     public function initialiseForm($fields, $setEnglish)
     {
-            foreach($fields as $field){
-                $this->add($this->createFieldElementArray($field, $setEnglish));
-            }
+        foreach($fields as $field){
+            $this->add($this->createFieldElementArray($field, $setEnglish));
+        }
     }
 
     /**
