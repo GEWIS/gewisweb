@@ -6,8 +6,11 @@
 </div>
 <?php endif; ?>
 
-<?php
-echo $this->partial('activity/activity/list.phtml',[
-        'activities' => $activities,
-]);
-
+<div class="container">
+	<h1><?= $this->translate('Activiteiten') ?></h1>
+	<?php
+		echo $this->partial('activity/activity/list.phtml',[
+	        'activities' => $activities,
+	]);
+	?>
+</div>
