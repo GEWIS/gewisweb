@@ -31,14 +31,14 @@ class ActivityField
     /**
      * The name of the field.
      * 
-     * @ORM\Column(type="string", nullable=false) 
+     * @ORM\Column(type="string", nullable=true) 
      */
     protected $name;
 
     /**
      * The name of the field, in English.
      * 
-     * @ORM\Column(type="string", nullable=false) 
+     * @ORM\Column(type="string", nullable=true) 
      */
     protected $name_en;
 

@@ -32,14 +32,14 @@ class ActivityOption
     /**
      * The value of the option.
      * 
-     * @ORM\Column(type="string", nullable=false) 
+     * @ORM\Column(type="string", nullable=true) 
      */
     protected $value;
 
     /**
      * The value of the option, in English.
      * 
-     * @ORM\Column(type="string", nullable=false) 
+     * @ORM\Column(type="string", nullable=true) 
      */
     protected $value_en;
     
