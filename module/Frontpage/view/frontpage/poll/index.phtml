@@ -28,28 +28,22 @@
             <?= $this->translate('Old polls') ?>
         </a>
     </div>
-</div>
-<?php else: ?>
-    <?= $this->translate('There currently is no poll.'); ?>
-<?php endif ?>
-<a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
-<a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
 
-<?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
-<div class="row">
-    <h2><?= $this->translate('Comments') ?></h2>
-    <?php if (count($poll->getComments()) == 0): ?>
-        <?= $this->translate('This poll has no comments') ?>
-    <?php else: ?>
-    <?php foreach ($poll->getComments() as $comment): ?>
-    <div class="col-sm-2">
-        <strong><?= $comment->getAuthor() ?></strong>
+    <?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
+    <div class="row">
+        <h2><?= $this->translate('Comments') ?></h2>
+        <?php if (count($poll->getComments()) == 0): ?>
+            <?= $this->translate('This poll has no comments') ?>
+        <?php else: ?>
+        <?php foreach ($poll->getComments() as $comment): ?>
+        <div class="col-sm-2">
+            <strong><?= $comment->getAuthor() ?></strong>
+        </div>
+        <div class="col-sm-10">
+            <?= $comment->getContent() ?>
+        </div>
+        <?php endforeach ?>
+        <?php endif ?>
     </div>
-    <div class="col-sm-10">
-        <?= $comment->getContent() ?>
-    </div>
-    <?php endforeach ?>
     <?php endif ?>
 </div>
-<?php endif ?>
-
