@@ -10,58 +10,71 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <?php if($this->acl('activity_acl')->isAllowed('activity', 'approve')): ?>
+                    <?php if ($this->acl('activity_acl')->isAllowed('activity', 'approve')): ?>
                         <li><a href="<?= $this->url('admin_activity') ?>">
                                 <?= $this->translate('Activities') ?>
                             </a></li>
                     <?php endif; ?>
-                    <?php if($this->acl('company_acl')->isAllowed('company', 'listall')): ?>
+                    <?php if ($this->acl('company_acl')->isAllowed('company', 'listall')): ?>
                         <li><a href="<?= $this->url('admin_company') ?>"><?= $this->translate('Career') ?></a></li>
                     <?php endif; ?>
-                    <?php if($this->acl('decision_acl')->isAllowed('meeting', 'upload_notes')): ?>
+                    <?php if ($this->acl('decision_acl')->isAllowed('meeting', 'upload_notes')): ?>
                         <li class="dropdown">
-                            <a href="<?= $this->url('admin_decision') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="<?= $this->url('admin_decision') ?>" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Meetings') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('admin_decision/notes') ?>"><?= $this->translate('Notes') ?></a></li>
-                                <li><a href="<?= $this->url('admin_decision/document') ?>"><?= $this->translate('Documents') ?></a></li>
+                                <li>
+                                    <a href="<?= $this->url('admin_decision/notes') ?>"><?= $this->translate('Notes') ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_decision/document') ?>"><?= $this->translate('Documents') ?></a>
+                                </li>
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if($this->acl('education_acl')->isAllowed('exam', 'upload')): ?>
+                    <?php if ($this->acl('education_acl')->isAllowed('exam', 'upload')): ?>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Education') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('admin_education/bulk_upload') ?>"><?= $this->translate('Upload exams') ?></a></li>
+                                <li>
+                                    <a href="<?= $this->url('admin_education/bulk_upload') ?>"><?= $this->translate('Upload exams') ?></a>
+                                </li>
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if($this->acl('frontpage_acl')->isAllowed('poll', 'approve')): ?>
+                    <?php if ($this->acl('frontpage_acl')->isAllowed('poll', 'approve')): ?>
                         <li><a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a></li>
                     <?php endif; ?>
-                    <?php if($this->acl('frontpage_acl')->isAllowed('page', 'create')): ?>
+                    <?php if ($this->acl('frontpage_acl')->isAllowed('page', 'create')): ?>
                         <li><a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a></li>
                     <?php endif; ?>
-                    <?php if($this->acl('photo_acl')->isAllowed('album', 'nodate')): ?>
+                    <?php if ($this->acl('photo_acl')->isAllowed('album', 'nodate')): ?>
                         <li><a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a></li>
                     <?php endif; ?>
-                    <?php if($this->acl('acl')->isAllowed('apiuser', 'add')): ?>
+                    <?php if ($this->acl('acl')->isAllowed('apiuser', 'add')): ?>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Users') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('user_admin/api') ?>"><?= $this->translate('API Users') ?></a></li>
+                                <li>
+                                    <a href="<?= $this->url('user_admin/api') ?>"><?= $this->translate('API Users') ?></a>
+                                </li>
                             </ul>
                         </li>
                     <?php endif; ?>
 
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
     </nav>
     <br>
     <?= $this->content ?>
