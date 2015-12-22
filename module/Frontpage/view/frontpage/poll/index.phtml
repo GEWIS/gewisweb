@@ -36,13 +36,20 @@
 <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
 
 <?php if (isset($poll)): ?>
+<div class="row">
     <h2><?= $this->translate('Comments') ?></h2>
     <?php if (count($poll->getComments()) == 0): ?>
         <?= $this->translate('This poll has no comments') ?>
     <?php else: ?>
     <?php foreach ($poll->getComments() as $comment): ?>
-        <?php var_dump($comment) ?>
+    <div class="col-sm-2">
+        <strong><?= $comment->getAuthor() ?></strong>
+    </div>
+    <div class="col-sm-10">
+        <?= $comment->getContent() ?>
+    </div>
     <?php endforeach ?>
     <?php endif ?>
+</div>
 <?php endif ?>
 
