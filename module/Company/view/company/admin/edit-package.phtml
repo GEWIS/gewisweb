@@ -27,7 +27,7 @@ $form = $packageEditForm;
 
 <?php if ($type === 'banner') {
     $element = $form->get('banner')?>
-        <img src=<?=$package->getImage()?>><?=$this->translate('Company Logo')?></img>
+        <img src=<?= $this->fileUrl($package->getImage()) ?>><?= $this->translate('Company Logo') ?></img>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>
