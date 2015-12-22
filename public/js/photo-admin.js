@@ -238,28 +238,7 @@ Photo.Admin.clearSelection = function() {
     $("#btnMultipleDelete").addClass("btn-hidden");
     $("#btnMultipleMove").addClass("btn-hidden");
 }
-Photo.Admin.initAdd = function () {
-    $("#btnImport").click(function () {
-        $.post("import",
-                {
-                    folder_path: $("#folderInput").val()
-                },
-        function (data) {
-            $("#spinner").hide();
-            if (data.success) {
-                $("#successAlert").show();
-            } else {
-                $("#errorAlert").html(data.error);
-                $("#errorAlert").show();
-                $("#import").show();
-            }
-        });
-        $("#errorAlert").hide();
-        $("#spinner").show();
-        $("#import").hide();
-    });
 
-}
 Photo.Admin.updateBreadCrumb = function (target) {
 
     if (target.attr('class') == 'thumbnail') {
