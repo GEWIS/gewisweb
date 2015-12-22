@@ -70,7 +70,7 @@ class FileStorage extends AbstractService
      * Stores files in the content based file system
      *
      * @param string $source The source file to store
-     * @param boolean $move indicating wether the file should be moved or copied
+     * @param boolean $move indicating whether the file should be moved or copied
      *
      * @return string the path at which the file was stored.
      */
