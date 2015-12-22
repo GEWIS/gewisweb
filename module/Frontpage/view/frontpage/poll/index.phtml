@@ -38,6 +38,9 @@
         <?php foreach ($poll->getComments() as $comment): ?>
         <div class="col-sm-2">
             <strong><?= $comment->getAuthor() ?></strong>
+            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
+                (<?= $comment->getUser()->getLidnr() ?>)
+            <?php endif ?>
         </div>
         <div class="col-sm-10">
             <?= $comment->getContent() ?>
