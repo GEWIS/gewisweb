@@ -1,33 +1,44 @@
 <div class="container">
-    <h1><?= $this->translate("Onderwijs") ?></h1>
+    <h1><?= $this->translate("Education") ?></h1>
 
     <div class="row">
-        <div class="panel panel-image col-md-4">
-            <div class="glyphicon glyphicon-book"></div>
-            <h4>Boeken</h4>
-        </div>
-        <div class="panel panel-image col-md-4">
-            <div class="glyphicon glyphicon-cd"></div>
-            <h4>MSDN</h4>
-        </div>
-        <div class="panel panel-image col-md-4">
-            <div class="glyphicon glyphicon-education"></div>
-            <h4>Tentamens</h4>
-        </div>
+        <a href="https://gewis.nl/onderwijs/boeken.php" target="_blank" class="panel panel-image col-md-3">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-book"></div>
+                <h4><?= $this->translate('Books') ?></h4>
+            </div>
+        </a>
+        <a href="#" class="panel panel-image col-md-3">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-education"></div>
+                <h4><?= $this->translate('Exams') ?></h4>
+            </div>
+        </a>
+        <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image col-md-3">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-cd"></div>
+                <h4><?= $this->translate('Dreamspark') ?></h4>
+            </div>
+        </a>
+        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-sunglasses"></div>
+                <h4><?= $this->translate('Complaints') ?></h4>
+            </div>
+        </a>
     </div>
 
+    <h2><?= $this->translate('Exams') ?></h2>
+
     <div class="row">
-        <div class="col-md-12">
-            <h2><?= $this->translate('Tentamens') ?></h2>
-        </div>
         <div class="col-md-6">
+            <p><?= $this->translate('Zoeken naar oude tentamens en eventuele uitwerkingen') ?></p>
             <?php
             $form = $this->form;
             $form->prepare();
 
             $form->setAttribute('action', $this->url('education'));
             $form->setAttribute('method', 'get');
-            $form->setAttribute('class', 'form-inline');
 
             $form->setAttribute('role', 'form');
 
