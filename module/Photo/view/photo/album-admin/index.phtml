@@ -25,97 +25,95 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     )
     ->requireUrl('home');
 ?>
-<div class="row">
-    <div class="col-lg-12">
-        <h1><?= $this->translate('Photo admin') ?></h1>
-        <hr>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="tree">
-                    <?php
-                    function showTree($albums, $context)
-                    {
-                        foreach ($albums as $album): ?>
-                            <li><a
-                                    id="<?= $album->getId() ?>"
-                                    href="<?= $context->url('admin_photo/album_index',
-                                        ['album_id' => $album->getId()]) ?>">
-                                    <?= $context->escapeHtml($album->getName()) ?>
-                                </a>
-
-                                <?php $children = $album->getChildren() ?>
-                                <?php if (!empty($children)): ?>
-                                    <ul>
-                                        <?php showTree($children, $context); ?>
-                                    </ul>
-                                <?php endif; ?>
-                            </li>
+<div class="container">
+    <h1><?= $this->translate('Photo admin') ?></h1>
+    <hr>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="tree">
                         <?php
-                        endforeach;
-                    }
+                        function showTree($albums, $context)
+                        {
+                            foreach ($albums as $album): ?>
+                                <li><a
+                                        id="<?= $album->getId() ?>"
+                                        href="<?= $context->url('admin_photo/album_index',
+                                            ['album_id' => $album->getId()]) ?>">
+                                        <?= $context->escapeHtml($album->getName()) ?>
+                                    </a>
 
-                    foreach ($albumsByYear as $year => $albums):
-                        if (!empty($albums)):
-                            $nextYear = $year + 1;
+                                    <?php $children = $album->getChildren() ?>
+                                    <?php if (!empty($children)): ?>
+                                        <ul>
+                                            <?php showTree($children, $context); ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php
+                            endforeach;
+                        }
+
+                        foreach ($albumsByYear as $year => $albums):
+                            if (!empty($albums)):
+                                $nextYear = $year + 1;
+                                ?>
+                                <li>
+                                    <?= "$year/$nextYear" ?>
+                                    <ul>
+                                        <?php showTree($albums, $this); ?>
+                                    </ul>
+                                </li>
+                            <?php endif;
+                        endforeach;
+                        if (!empty($albumsWithoutDate)):
                             ?>
                             <li>
-                                <?= "$year/$nextYear" ?>
+                                <?= $this->translate('Other albums'); ?>
                                 <ul>
-                                    <?php showTree($albums, $this); ?>
+                                    <?php showTree($albumsWithoutDate, $this); ?>
                                 </ul>
                             </li>
-                        <?php endif;
-                    endforeach;
-                    if (!empty($albumsWithoutDate)):
-                        ?>
-                        <li>
-                            <?= $this->translate('Other albums'); ?>
-                            <ul>
-                                <?php showTree($albumsWithoutDate, $this); ?>
-                            </ul>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-9">
+        <div class="col-lg-9">
 
-        <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>"><span
-                class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
-        <hr>
-        <div id="albumControls">
-            <ol id="breadcrumb" class="breadcrumb"></ol>
-            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
-            </a>
-            <a id="btnAdd" class="btn btn-primary" href=""><span
-                    class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>
-            <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span
-                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
-            <button type="button" data-toggle="modal" data-target="#multipleMoveModal"
-                    class="btn btn-primary btn-hidden" id="btnMultipleMove"><span
-                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
-            </button>
-            <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate">
-                <span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
-            </button>
-            <br><br>
-            <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
-                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
-            <button type="button" data-toggle="modal" data-target="#multipleDeleteModal"
-                    class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span
-                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>"><span
+                    class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
+            <hr>
+            <div id="albumControls">
+                <ol id="breadcrumb" class="breadcrumb"></ol>
+                <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
+                </a>
+                <a id="btnAdd" class="btn btn-primary" href=""><span
+                        class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>
+                <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
+                <button type="button" data-toggle="modal" data-target="#multipleMoveModal"
+                        class="btn btn-primary btn-hidden" id="btnMultipleMove"><span
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
+                </button>
+                <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate">
+                    <span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
+                </button>
+                <br><br>
+                <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
+                        class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
+                <button type="button" data-toggle="modal" data-target="#multipleDeleteModal"
+                        class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span
+                        class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+            </div>
+            <hr>
+
+            <nav>
+                <ul class="pagination" id="paging"></ul>
+            </nav>
+            <div id="album"></div>
         </div>
-        <hr>
-
-        <nav>
-            <ul class="pagination" id="paging"></ul>
-        </nav>
-        <div id="album"></div>
     </div>
 </div>
 
