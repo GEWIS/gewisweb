@@ -69,7 +69,7 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $form = $activityService->getForm();
         if ($this->getRequest()->isPost()) {
-            
+
             $postData = $this->getRequest()->getPost();
             $form->setData($postData);
 

@@ -104,17 +104,6 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ]);
 
-
-        $this->add([
-            'name' => 'costs_unknown',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
-
         /*$this->add([
             'name' => 'approved',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -230,6 +219,19 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
+            'costs'. $languagePostFix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
+                    ],
+                ],
+            ],
             'description'. $languagePostFix => [
                 'required' => true,
                 'validators' => [
@@ -266,9 +268,6 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true,
             ],
             'canSignUp' => [
-                'required' => true
-            ],
-            'costs_unknown' => [
                 'required' => true
             ],
         ];
