@@ -1,3 +1,6 @@
+<?php echo $this->headScript()
+    ->prependFile($this->basePath() . '/js/etc.js')
+?>
 <div class="container">
     <h1><?= $this->translate("Education") ?></h1>
 
@@ -20,7 +23,7 @@
                 <h4><?= $this->translate('Dreamspark') ?></h4>
             </div>
         </a>
-        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3" id="deal-with-it">
+        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-sunglasses"></div>
                 <h4><?= $this->translate('Complaints') ?></h4>
@@ -82,8 +85,6 @@
                 </tbody>
             </table>
             <?php endif; ?>
-
-
         </div>
         <div class="col-md-6">
             <p><?= $this->translate("Voor oude tentamens van minor vakken kun je ook kijken bij:") ?></p>
@@ -97,18 +98,3 @@
         </div>
     </div>
 </div>
-<script>
-$("#deal-with-it")
-    .mouseenter(function(){
-        $("<audio></audio>").attr({
-            'id': 'na-na-na',
-            'src': 'na-na-na.mp3',
-            'volume': 1,
-            'autoplay': 'autoplay',
-            'loop': 'loop'
-        }).appendTo("body");
-    })
-    .mouseleave(function(){
-        $("#na-na-na").remove();
-    });
-</script>
