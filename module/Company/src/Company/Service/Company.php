@@ -303,7 +303,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        $companies = $this->getCompaniesBySlugName($slugName);
+        $companies = $this->getCompaniesBySlugName($slug);
         if (count($companies == 1)) {
             $this->getFileStorageService()->deleteFile($companies[0]->getLogo());
             $this->getCompanyMapper()->deleteBySlug($slug);
