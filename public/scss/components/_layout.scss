@@ -25,7 +25,7 @@ p.lead {
     line-height: 1.6;
 }
 
-#deal-with-it {
+a[href^='mailto:klachten@gewis.nl'] {
     overflow: hidden;
     position: relative;
 
