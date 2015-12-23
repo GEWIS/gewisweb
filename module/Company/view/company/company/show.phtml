@@ -3,6 +3,9 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
+$this->headTitle($company->getName());
+$this->headTitle($this->translate('Companies'));
+
 ?>
 <section class="section section-breadcrumb">
     <div class="container">

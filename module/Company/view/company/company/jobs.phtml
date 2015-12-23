@@ -5,6 +5,9 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 
 $company = $job->getPackage()->getCompany();
 
+$this->headTitle($job->getName());
+$this->headTitle($this->translate('Jobs'));
+
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
