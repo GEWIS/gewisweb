@@ -11,7 +11,7 @@ Styleguide: badges
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    font-family: Raleway;
+    font-family: Raleway, sans-serif;
     font-weight: 300;
     font-size: 16px;
     text-align: center;
@@ -21,8 +21,11 @@ Styleguide: badges
     justify-content: center;
     flex-direction: row;
     align-items: center;
-    > span {
 
+    &.badge-large {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
     }
 }
 

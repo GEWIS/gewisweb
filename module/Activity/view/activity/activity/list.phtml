@@ -2,33 +2,41 @@
 <?php foreach($activities as $activity):?>
     <li class="list-group-item agenda-item row">
         <div class="agenda-item-heading col-md-2">
-            <span class="badge">
+            <span class="badge badge-large">
                 <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
                 <?= $activity->getBeginTime()->format('d') ?>
             </span>
         </div>
         <div class="agenda-item-body col-md-10">
             <div class="row">
-            <div class="col-md-12">
-                <h4><?= $activity->getName() ?></h4>
-            </div>
-            <div class="col-md-8">
-                <p><?= $activity->getDescription() ?></p>
-            </div>
-            <div class="col-md-4">
-                Start: <?php echo $activity->getBeginTime()->format('Y-m-d H:i:s');?>
-                End: <?php echo $activity->getEndTime()->format('Y-m-d H:i:s');?>
+                <div class="col-md-12">
+                    <h4>
+                        <a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
+                            <?= $activity->getName() ?>
+                        </a>
+                    </h4>
+                </div>
+                <div class="col-md-8">
+                    <p><?= $activity->getDescription() ?></p>
+                </div>
+                <div class="col-md-4">
+                    <dl>
+                        <dt><?= $this->translate('Start') ?></dt>
+                        <dd><?= $activity->getBeginTime()->format('l d M Y H:i'); ?></dd>
 
-                Location: <?php echo $activity->getLocation();?>
+                        <dt><?= $this->translate('End') ?></dt>
+                        <dd><?= $activity->getEndTime()->format('l d M Y H:i'); ?></dd>
 
-                Costs: <?php echo $this->translate((string)$activity->getCosts());?>
+                        <dt><?= $this->translate('Location') ?></dt>
+                        <dd><?= $activity->getLocation(); ?></dd>
 
-                Subscribe before: <?php echo $activity->getSubscriptionDeadline()->format('Y-m-d H:i:s');?>
+                        <dt><?= $this->translate('Subscribe before') ?></dt>
+                        <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s');?></dd>
 
-                <a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
-                    <?php echo $this->translate('View');?>
-                </a>
-            </div>
+                        <dt><?= $this->translate('Costs') ?></dt>
+                        <dd><?= $this->translate((string)$activity->getCosts()); ?></dd>
+                    </dl>
+                </div>
             </div>
         </div>
     </li>
