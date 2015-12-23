@@ -135,7 +135,7 @@ class Company extends AbstractACLService
     {
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
-        //if ($companyForm->isValid()) {
+        if ($companyForm->isValid()) {
             //echo "hoi";
             //var_dump($files);
             $company = $this->insertCompany($data['languages']);
@@ -145,12 +145,11 @@ class Company extends AbstractACLService
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
                 //var_dump($file);
-                try{
+                try {
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     echo $newPath;
                     $translation->setLogo($newPath);
-                }
-                catch (\Exception $exception) {
+                } catch (\Exception $exception) {
                     var_dump($exception);
 
                 }
@@ -158,7 +157,7 @@ class Company extends AbstractACLService
             }
             $this->saveCompany();
             return true;
-        //}
+        }
         return false;
     }
 
