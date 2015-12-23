@@ -1,4 +1,6 @@
 <?php
+$this->headTitle($this->translate('Create activity'));
+
 $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js');
 $form->setAttribute('action', '');
