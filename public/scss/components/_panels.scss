@@ -53,6 +53,13 @@ Styleguide: panels.panel-default
             text-transform: uppercase;
         }
     }
+
+    .panel-body {
+        .table > tbody > tr > td {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 .panel-inverse {
@@ -63,7 +70,7 @@ Styleguide: panels.panel-default
 .panel-default {
     > .panel-heading {
         background: none;
-        padding: 1.5em;
+        padding: 15px;
         border: none;
 
         h3 {
@@ -134,5 +141,22 @@ a {
 
     .glyphicon {
         font-size: 3em;
+    }
+}
+
+.panel-details {
+    box-shadow: none;
+    border-radius: 0;
+    background: #f5f5f5;
+    border: none;
+
+    .panel-heading {
+        background-color: #f0f0f0;
+        padding-top: 1.4em;
+        padding-bottom: 1.4em;
+
+        h3 {
+            margin: 0;
+        }
     }
 }
