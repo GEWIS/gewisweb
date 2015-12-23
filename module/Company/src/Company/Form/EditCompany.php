@@ -137,6 +137,7 @@ class EditCompany extends Form
         ]);
         $this->add([
             'name' => 'nl_logo',
+            'type' => '\Zend\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
             ],
@@ -146,6 +147,7 @@ class EditCompany extends Form
         ]);
         $this->add([
             'name' => 'en_logo',
+            'type' => '\Zend\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
             ],
