@@ -3,6 +3,8 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
+$this->headTitle($this->translate('Companies'));
+
 ?>
 <div class="container">
     <h1><?= $this->translate('Companies') ?></h1>
@@ -20,8 +22,6 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
         }
 
         ?>
-
-
 
     </div>
 </div>

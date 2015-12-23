@@ -6,6 +6,13 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 // randomize ordering of jobs
 shuffle($jobList);
 
+// set title
+if (isset($this->company)) {
+    $this->headTitle($this->company->getName());
+}
+$this->headTitle($this->translate('Jobs'));
+
+
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
