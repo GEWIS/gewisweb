@@ -18,8 +18,6 @@
 
     <div class="row">
         <div class="col-md-8">
-            <h2><?= $this->translate('Exams and summaries') ?></h2>
-
             <?php foreach ($course->getChildren() as $child): ?>
                 <?php foreach ($child->getExams() as $exam): ?>
                     <li><a href="<?= $this->url('education/course/download', [
@@ -35,18 +33,31 @@
                     </a></li>
                 <?php endforeach; ?>
             <?php endforeach; ?>
-            <?php foreach ($course->getExams() as $exam): ?>
-                <li><a href="<?= $this->url('education/course/download', [
-                    'code' => $exam->getCourse()->getCode(),
-                    'id' => $exam->getId()
-                    ]) ?>">
+
+            <h3><?= $this->translate('Summaries') ?></h3>
+            <ul class="list-group">
+                <?php foreach ($course->getExams() as $exam): ?>
                 <?php if ($exam instanceof \Education\Model\Summary): ?>
-                <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
-                <?php else: ?>
-                <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+                <li class="list-group-item">
+                    <a href="<?= $this->url('education/course/download', ['code' => $exam->getCourse()->getCode(), 'id' => $exam->getId()]) ?>">
+                        <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+                    </a>
+                </li>
                 <?php endif ?>
-                </a></li>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </ul>
+
+            <h3><?= $this->translate('Exams') ?></h3>
+            <ul class="list-group">
+                <?php foreach ($course->getExams() as $exam): ?>
+                <?php if ($exam instanceof \Education\Model\Exam): ?>
+                <li class="list-group-item">
+                    <a href="<?= $this->url('education/course/download', ['code' => $exam->getCourse()->getCode(), 'id' => $exam->getId()]) ?>">
+                        <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+                    </a>
+                </li>
+                <?php endif ?>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class="col-md-4">
