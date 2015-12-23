@@ -7,13 +7,13 @@
 // Mixins
 @import 'mixins/buttons';
 @import 'mixins/vendor-prefixes';
+@import 'mixins/actions';
 
 // Components
 @import 'components/badges';
 @import 'components/breadcrumbs';
 @import 'components/button-groups';
 @import 'components/buttons';
-@import 'components/filters';
 @import 'components/footer';
 @import 'components/forms';
 @import 'components/jumbotron';

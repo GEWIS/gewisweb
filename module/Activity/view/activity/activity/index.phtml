@@ -1,13 +1,21 @@
-<?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-<div class="row">
-	<div class="col-md-12">
-		<button style="width:100%" onclick="window.location.href='activity/create'" class="btn btn-primary"><?php echo $this->translate('Create Activity'); ?></button>
-	</div>
-</div>
-<?php endif; ?>
-
+<?php
+$this->headTitle($this->translate('Activities'));
+?>
 <div class="container">
-	<h1><?= $this->translate('Activiteiten') ?></h1>
+    <div class="row">
+        <h1 class="col-md-5 col-sm-5 col-xs-5">
+            <?= $this->translate('Activiteiten') ?>
+        </h1>
+
+        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+            <a href="<?= $this->url('activity/create') ?>" class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
+                <button class="btn btn-default">
+                    <?php echo $this->translate('Create Activity'); ?>
+                </button>
+            </a>
+        <?php endif; ?>
+    </div>
+
 	<?php
 		echo $this->partial('activity/activity/list.phtml',[
 	        'activities' => $activities,
