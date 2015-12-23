@@ -39,15 +39,15 @@
 
             $form->setAttribute('action', $this->url('education'));
             $form->setAttribute('method', 'get');
-
+            $form->setAttribute('class', '');
             $form->setAttribute('role', 'form');
 
             echo $this->form()->openTag($form);
             ?>
-            <div class="form-group">
+            <div class="form-inline">
             <?php
             $element = $form->get('query');
-            $element->setAttribute('class', 'form-control');
+            $element->setAttribute('class', 'form-control form');
             $element->setAttribute('placeholder', $this->translate('Vakcode/vaknaam'));
             ?>
                 <!-- <?= $this->formLabel($element) ?> -->
@@ -60,17 +60,9 @@
 
             <?= $this->form()->closeTag(); ?>
 
-            <p><?= $this->translate("Voor oude tentamens van minor vakken kun je ook kijken bij:") ?></p>
-            <ul>
-                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Technische Natuurkunde") ?>)</li>
-                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedische Technologie") ?>)</li>
-                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Elektrotechniek") ?>)</li>
-                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Scheikundige Technologie") ?>)</li>
-                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Technische Innovatiewetenschappen") ?>)</li>
-            </ul>
-        </div>
-        <div class="col-md-6">
             <?php if (!empty($courses)): ?>
+                <br />
+                <br />
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -81,17 +73,27 @@
                 <tbody>
             <?php foreach ($courses as $course): ?>
                 <tr>
-                    <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
-            <?= $course->getCode() ?>
-                    </a></td>
-                    <td><a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>" style="display: block; height: 100%; width:100%;">
-            <?= $course->getName() ?>
-                    </a></td>
+                    <td>
+                        <a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>"><?= $course->getCode() ?></a>
+                    </td>
+                    <td><?= $course->getName() ?></td>
                 </tr>
             <?php endforeach; ?>
                 </tbody>
             </table>
             <?php endif; ?>
+
+
+        </div>
+        <div class="col-md-6">
+            <p><?= $this->translate("Voor oude tentamens van minor vakken kun je ook kijken bij:") ?></p>
+            <ul>
+                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Technische Natuurkunde") ?>)</li>
+                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedische Technologie") ?>)</li>
+                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Elektrotechniek") ?>)</li>
+                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Scheikundige Technologie") ?>)</li>
+                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Technische Innovatiewetenschappen") ?>)</li>
+            </ul>
         </div>
     </div>
 </div>
