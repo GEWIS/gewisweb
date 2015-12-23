@@ -4,6 +4,7 @@
 
         if (today.getMonth() === 3 && today.getDate() === 1) { // 1 April
             $("a[href^='mailto:klachten@gewis.nl']")
+                .attr("id", "dealWithIt")
                 .mouseenter(function(){
                     $("<audio></audio>").attr({
                         "id": "na-na-na",
