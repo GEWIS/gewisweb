@@ -5,7 +5,7 @@ namespace Activity\Controller;
 use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
-
+use Zend\Session\Container as SessionContainer;
 use Activity\Form\ActivitySignup as SignupForm;
 use Zend\View\Model\ViewModel;
 
@@ -17,9 +17,14 @@ class ActivityController extends AbstractActionController
     public function indexAction()
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $session = new SessionContainer('lang');
         $activities = $activityService->getApprovedActivities();
-
-        return ['activities' => $activities];
+        $translatedActivities = [];
+        foreach ($activities as $activity){
+            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $session->lang);
+        }
+        return ['activities' => $translatedActivities];
     }
 
     /**
@@ -29,35 +34,30 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $session = new SessionContainer('lang');
 
         /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
-
+        
+        $translatedActivity = $translatorService->getTranslatedActivity($activity, $session->lang);
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
-        $fields = $activity->getFields();
-        $formNl = null;
-        $formEn = null;
-        $availableLangs = ['english' => !is_null($activity->getNameEn()), 
-            'dutch' => !is_null($activity->getName())];
+        $fields = $translatedActivity->getFields();
         if ($signupService->isAllowedToSubscribe()) {
-            //Create forms of the respective language, if available
-            $formNl = $signupService->getForm($fields, !$availableLangs['dutch']);
-            $formEn = $signupService->getForm($fields, $availableLangs['english']);
+            $form = $signupService->getForm($fields);
         }
         return [
-            'activity' => $activity,
+            'activity' => $translatedActivity,
             'canSignUp' => $activity->getCanSignUp(),
             'isLoggedIn' => $identity !== 'guest',
-            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
-            'signedUp' => $signupService->getSignedUpUsers($activity),
-            'signupData' => $signupService->getSignedUpData($activity),
-            'formNl' => $formNl,
-            'formEn' => $formEn,
-            'fields' => $fields,
-            'availableLangs' => $availableLangs
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
+            'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
+            'signupData' => $signupService->getSignedUpData($translatedActivity),
+            'form' => $form,
+            'fields' => $fields
         ];
     }
 

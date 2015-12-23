@@ -36,11 +36,10 @@ class Signup extends AbstractAclService
      * Otherwise, it returns it in the avaiable language.
      * 
      * @param type $fields
-     * @param bool $setEnglish 
      * @return type
      * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm($fields, $setEnglish)
+    public function getForm($fields)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -49,7 +48,7 @@ class Signup extends AbstractAclService
             );
         }
         $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseForm($fields, $setEnglish);
+        $form->initialiseForm($fields);
         return $form;
     }
 
@@ -60,7 +59,7 @@ class Signup extends AbstractAclService
      *
      * @return array
      */
-    public function getSignedUpUsers(ActivityModel $activity)
+    public function getSignedUpUsers($activity)
     {
         if (!$this->isAllowed('view', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -77,9 +76,10 @@ class Signup extends AbstractAclService
      * Gets an array of
      *
      * @param ActivityModel $activity
+     * @param string $preferredlanguage 'en' or 'nl'
      * @return array
      */
-    public function getSignedUpData(ActivityModel $activity)
+    public function getSignedUpData($activity)
     {
         if (!$this->isAllowed('view', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -110,7 +110,7 @@ class Signup extends AbstractAclService
      *
      * @return bool
      */
-    public function isSignedUp(ActivityModel $activity, Member $user)
+    public function isSignedUp($activity, Member $user)
     {
         if (!$this->isAllowed('checkUserSignedUp', 'activitySignup')) {
             $translator = $this->getTranslator();

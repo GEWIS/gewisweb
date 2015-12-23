@@ -100,6 +100,11 @@ class ActivityTranslation
     {
         return $this->id;
     }
+    
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string
@@ -224,7 +229,7 @@ class ActivityTranslation
     /**
      * @param User $approver
      */
-    public function setApprover(User $approver)
+    public function setApprover($approver)
     {
         $this->approver = $approver;
     }

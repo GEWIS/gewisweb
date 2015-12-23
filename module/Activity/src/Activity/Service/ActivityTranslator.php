@@ -3,6 +3,12 @@
 namespace Activity\Service;
 
 use Application\Service\AbstractService;
+use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityField as ActivityFieldModel;
+use Activity\Model\ActivityOption as ActivityOptionModel;
+use Activity\Model\ActivityTranslation as ActivityTranslationModel;
+use Activity\Model\ActivityFieldTranslation as FieldTranslationModel;
+use Activity\Model\ActivityOptionTranslation as OptionTranslationModel;
 
 class ActivityTranslator extends AbstractService
 {
@@ -22,7 +28,24 @@ class ActivityTranslator extends AbstractService
 
         return $this->createActivityTranslation($activity, $language);
     }
+    
+    /**
+     * Get the translated fieldset for the preferred language if it is avaiable,
+     * otherwise get the other language
+     * 
+     * @param ActivityFieldModel $field
+     * @param type $preferredLanguage 'nl' or 'en'
+     * @return type
+     */
+    public function getTranslatedField(ActivityFieldModel $field, $preferredLanguage)
+    {
+        //Get the preferred language if it is available, otherwise get the other language
+        $language = ($preferredLanguage === 'nl' && !is_null($field->getName())) ||
+            ($preferredLanguage === 'en' && is_null($field->getNameEn())) ? 'nl':'en';
 
+        return $this->createActivityFieldTranslation($field, $language);
+    }
+    
     /**
      * Create an activity translation of the specified language
      *
@@ -32,7 +55,7 @@ class ActivityTranslator extends AbstractService
      */
     protected function createActivityTranslation(ActivityModel $activity, $language)
     {
-        $activityTranslation = new \Activity\Model\ActivityTranslation();
+        $activityTranslation = new ActivityTranslationModel();
 
         //Populate the common-language parts
         $activityTranslation->setId($activity->getId());
@@ -61,7 +84,7 @@ class ActivityTranslator extends AbstractService
         }
         $fieldTranslations = [];
         foreach ($activity->getFields() as $field){
-            $fieldTranslations += $this->createActivityFieldTranslation($field, $language);
+            $fieldTranslations[] = $this->createActivityFieldTranslation($field, $language);
         }
         $activityTranslation->setFields($fieldTranslations);
 
@@ -70,7 +93,7 @@ class ActivityTranslator extends AbstractService
 
     protected function createActivityFieldTranslation(ActivityFieldModel $field, $language) {
 
-        $fieldTranslation = new \Activity\Model\ActivityFieldTranslation();
+        $fieldTranslation = new FieldTranslationModel();
 
         //Populate the common-language parts
         $fieldTranslation->setId($field->getId());
@@ -87,7 +110,7 @@ class ActivityTranslator extends AbstractService
         }
         $optionTranslations = [];
         foreach ($field->getOptions() as $option){
-            $optionTranslations += $this->createActivityOptionTranslation($option, $language);
+            $optionTranslations[] = $this->createActivityOptionTranslation($option, $language);
         }
         $fieldTranslation->setOptions($optionTranslations);
 
@@ -102,7 +125,7 @@ class ActivityTranslator extends AbstractService
      */
     protected function createActivityOptionTranslation(ActivityOptionModel $option, $language) {
 
-        $optionTranslation = new \Activity\Model\ActivityOptionTranslation();
+        $optionTranslation = new OptionTranslationModel();
 
         //Populate the common-language parts
         $optionTranslation->setField($option->getField());
