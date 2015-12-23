@@ -11,7 +11,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
     <div class="row">
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($company->getTranslationFromLocale($locale)->getLogo()) ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>" />
+                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())) ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>" />
             </a>
             <div class="">
                 <h4><?= $this->translate('Contact') ?></h4>
