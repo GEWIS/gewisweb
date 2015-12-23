@@ -35,3 +35,11 @@ input {
         margin-bottom: 0;
     }
 }
+
+.form-inline {
+    display: flex;
+
+    .form-control {
+        flex: 1;
+    }
+}

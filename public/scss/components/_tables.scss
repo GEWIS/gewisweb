@@ -1,0 +1,22 @@
+thead {
+    font-family: Raleway;
+    font-weight: 600;
+}
+
+.table > thead > tr > th, .table > tbody > tr > td {
+    padding: 0;
+}
+
+.table > thead > tr > th {
+    padding: 0 0.8em 10px;
+    border-bottom: 1px solid #CCC;
+}
+
+.table > tbody > tr > td {
+    padding: 0.6em 0.8em;
+    border: none;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f0f0f0;
+}

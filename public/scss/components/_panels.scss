@@ -109,3 +109,30 @@ Styleguide: panels.panel-default
     border: none;
     box-shadow: none;
 }
+
+a {
+    &.panel-image {
+        color: #000;
+        text-decoration: none;
+    }
+}
+
+.panel-image {
+    text-align: center;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    margin: 1.5em 0;
+
+    &:hover {
+        background: #f0f0f0;
+    }
+
+    h4 {
+        margin-bottom: 0;
+    }
+
+    .glyphicon {
+        font-size: 3em;
+    }
+}
