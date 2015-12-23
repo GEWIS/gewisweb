@@ -37,14 +37,14 @@
         <?php else: ?>
         <?php foreach ($poll->getComments() as $comment): ?>
         <div class="col-sm-2">
-            <strong><?= $comment->getAuthor() ?></strong>
+            <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
             <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
                 (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
             <?php endif ?>
         </div>
         <div class="col-sm-10">
-            <?= $comment->getContent() ?>
+            <?= $this->escapeHtml($comment->getContent()) ?>
         </div>
         <?php endforeach ?>
         <?php endif ?>
