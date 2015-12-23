@@ -140,14 +140,19 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                var_dump($files);
-                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                $translation->setLogo($newPath);
+                //var_dump($file);
+                try{
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $translation->setLogo($newPath);
+                }
+                catch (\Exception $exception) {
+                    var_dump($exception);
+
+                }
             }
             $this->saveCompany();
             return true;
         //}
-        die();
         return false;
     }
 
