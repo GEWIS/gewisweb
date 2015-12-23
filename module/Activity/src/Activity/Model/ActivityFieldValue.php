@@ -22,7 +22,7 @@ class ActivityFieldValue
 
     /**
      * Field which the value belongs to.
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="ActivityField")
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
@@ -37,44 +37,61 @@ class ActivityFieldValue
     protected $signup;
 
     /**
-     * The value of the assoctiated field.
-     * 
+     * The value of the assoctiated field, is not an option.
+     *
      * @ORM\Column(type="string")
      */
     protected $value;
-        
+
+    /**
+     * The option chosen.
+     *
+     * @ORM\ManyToOne(targetEntity="ActivityOption")
+     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
+     */
+    protected $option;
+
     /**
      * Set the field.
-     * 
+     *
      * @param \Activity\Model\Activity\Model\ActivityField $field
      */
     public function setField(\Activity\Model\ActivityField $field)
     {
         $this->field = $field;
     }
-    
+
     /**
      * Set the signup.
-     * 
+     *
      * @param \Activity\Model\Activity\Model\ActivitySignup $signup
      */
     public function setSignup(\Activity\Model\ActivitySignup $signup)
     {
         $this->signup = $signup;
     }
-    
+
     /**
      * Set the value.
-     * 
+     *
      * @param string $value
      */
     public function setValue($value)
     {
         $this->value = $value;
     }
-    
 
-    public function getField() 
+    public function getOption()
+    {
+        return $this->option;
+    }
+
+    public function setOption($option)
+    {
+        $this->option = $option;
+    }
+
+        public function getField()
     {
         return $this->field;
     }
