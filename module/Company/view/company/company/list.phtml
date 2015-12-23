@@ -13,12 +13,8 @@ $this->headTitle($this->translate('Companies'));
         <?php
 
         foreach ($companyList as $company) {
-            $visible = $company->isHidden();
-            $translated = $company->getTranslationFromLocale($locale) != null;
-            if ($visible && $translated){
-                echo $this->partial('partial/company/company/grid/company.phtml',
-                    ['company' => $company, 'locale' => $locale]);
-            }
+            echo $this->partial('partial/company/company/grid/company.phtml',
+                ['company' => $company, 'locale' => $locale]);
         }
 
         ?>
