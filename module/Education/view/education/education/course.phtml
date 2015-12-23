@@ -102,15 +102,14 @@
                                 <td><?= $this->translate('Course parts') ?></td>
                                 <td>
                                     <?php $children = $course->getChildren() ?>
-                                    <?php if (!empty($children)): ?>
+                                    <?php if (!empty($children) && count($children) > 0): ?>
                                     <ul>
-                                        <li>2ID51 Midterm test to long description lala cha cha hoi hoe gaat het</li>
-                                        <li>2ID52 Final test</li>
-                                        <li>2ID53 Tussentoets</li>
                                         <?php foreach ($course->getChildren() as $child): ?>
                                         <li><strong><?= $child->getCode() ?></strong> <?= $child->getName() ?></li>
                                         <?php endforeach; ?>
                                     </ul>
+                                    <?php else: ?>
+                                    <em><?= $this->translate('No course parts available') ?></em>
                                     <?php endif; ?>
                                 </td>
                             </tr>
