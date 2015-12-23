@@ -41,6 +41,7 @@ class Module
         return [
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
+                'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
                 'activity_form_activity' => 'Activity\Form\Activity',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet'

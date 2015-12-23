@@ -33,10 +33,10 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      * 
      * @param ActivityField $fields
      */
-    public function initialiseForm($fields, $setEnglish)
+    public function initialiseForm($fields)
     {
         foreach($fields as $field){
-            $this->add($this->createFieldElementArray($field, $setEnglish));
+            $this->add($this->createFieldElementArray($field));
         }
     }
 
@@ -63,7 +63,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      * @param bool $setEnglish
      * @return array
      */
-    protected function createFieldElementArray(\Activity\Model\ActivityField $field, $setEnglish){
+    protected function createFieldElementArray($field){
 
         $result = [
             'name' => $field->getId(),
@@ -92,8 +92,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             case 3: //'Choice'
                 $values = [];
                 foreach($field->getOptions() as $option){
-                    $values[$option->getId()] = 
-                            $setEnglish ? $option->getValueEn() : $option->getValue();
+                    $values[$option->getId()] =  $option->getValue();
                 }
                 $result['type'] = 'Zend\Form\Element\Select';
                 $result['options'] = [

@@ -2,73 +2,53 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity field model.
- *
- * @ORM\Entity
+ * Tranlated version of the ActivityField model. Populate with values from an
+ * instance of Activity\Model\ActivityField, to only expose one language.
+ * This model should NOT be preserved in the database.
  */
-class ActivityField
+class ActivityFieldTranslation
 {
     /**
      * ID for the field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
     /**
      * Activity that the field belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields", cascade={"persist"})
-     * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
 
     /**
      * The name of the field.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
-     * The name of the field, in English.
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $nameEn;
-
-    /**
      * The type of the field.
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
     protected $type;
 
     /**
      * The minimal value constraint for the ``number'' type
-     *
-     * @ORM\Column(type="integer", nullable=true)
      */
     protected $minimumValue;
 
     /**
      * The maximal value constraint for the ``number'' type.
-     *
-     * @ORM\Column(type="integer", nullable=true)
      */
     protected $maximumValue;
 
     /**
      * The allowed options for the field of the ``option'' type.
-     *
-     * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
      */
     protected $options;
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function setActivity($activity)
     {
@@ -78,11 +58,6 @@ class ActivityField
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function setNameEn($nameEn)
-    {
-        $this->nameEn = $nameEn;
     }
 
     public function setType($type)
@@ -100,6 +75,11 @@ class ActivityField
         $this->maximumValue = $maximumValue;
     }
 
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -108,11 +88,6 @@ class ActivityField
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getNameEn()
-    {
-        return $this->nameEn;
     }
 
     public function getType()
