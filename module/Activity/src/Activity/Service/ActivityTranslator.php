@@ -28,11 +28,11 @@ class ActivityTranslator extends AbstractService
 
         return $this->createActivityTranslation($activity, $language);
     }
-    
+
     /**
      * Get the translated fieldset for the preferred language if it is avaiable,
      * otherwise get the other language
-     * 
+     *
      * @param ActivityFieldModel $field
      * @param type $preferredLanguage 'nl' or 'en'
      * @return type
@@ -45,7 +45,31 @@ class ActivityTranslator extends AbstractService
 
         return $this->createActivityFieldTranslation($field, $language);
     }
-    
+
+    /**
+     * Get the translated version of the signedupdata, i.e. this translates the
+     * options. Probably too much effort
+     * @param ActivityModel $activity
+     * @param type $preferredLanguage
+     * @return type
+     */
+    public function getTranslatedSignedUpData(ActivityModel $activity, $preferredLanguage)
+    {
+        //Get the preferred language if it is available, otherwise get the other language
+        $language = ($preferredLanguage === 'nl' && !is_null($activity->getName())) ||
+            ($preferredLanguage === 'en' && is_null($activity->getNameEn())) ? 'nl':'en';
+        $signupService = $this->getServiceManager()->get('activity_service_signup');
+        $translatedSignupData = $signupService->getSignedUpData($activity);
+        for ($i=0; $i<count($translatedSignupData);$i++){
+            foreach ($activity->getFields() as $field){
+                if ($field->getType() === 3){
+                    $translatedSignupData[$i]['values'][$field->getId()] = $this->createActivityOptionTranslation($translatedSignupData[$i]['values'][$field->getId()], $language)->getValue();
+                }
+            }
+        }
+        return $translatedSignupData;
+    }
+
     /**
      * Create an activity translation of the specified language
      *

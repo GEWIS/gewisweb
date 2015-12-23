@@ -39,7 +39,7 @@ class ActivityController extends AbstractActionController
 
         /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
-        
+
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $session->lang);
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
@@ -55,7 +55,7 @@ class ActivityController extends AbstractActionController
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
-            'signupData' => $signupService->getSignedUpData($translatedActivity),
+            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $session->lang),
             'form' => $form,
             'fields' => $fields
         ];

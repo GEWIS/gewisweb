@@ -54,15 +54,15 @@
             <tr>
                 <td><?php echo $signup['member'];?></td>
                 <?php foreach($signup['values'] as $value):?>
-                <td><?php echo $value;?></td>
+                <td><?= $value;?></td>
                 <?php endforeach;?>
             </tr>
         <?php endforeach;?>
         </tbody>
     </table>
-<?php endif;?>    
+<?php endif;?>
     <div class="col-md-12">
-        
+
 <?php if ($isSignedUp) :?>
         <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
 		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->getId()]);?>">

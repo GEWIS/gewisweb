@@ -39,7 +39,7 @@ class ActivityFieldValue
     /**
      * The value of the assoctiated field, is not an option.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     protected $value;
 

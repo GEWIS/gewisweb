@@ -30,11 +30,11 @@ class Signup extends AbstractAclService
     {
         return 'activitySignup';
     }
-    
+
     /**
      * Return the form for signing up in the preferred language, if available.
      * Otherwise, it returns it in the avaiable language.
-     * 
+     *
      * @param type $fields
      * @return type
      * @throws \User\Permissions\NotAllowedException
@@ -75,10 +75,9 @@ class Signup extends AbstractAclService
     /**
      * Gets an array of the signed up users and the associated data
      *
-     * @param string $preferredlanguage 'en' or 'nl'
      * @return array
      */
-    public function getSignedUpData($activity)
+    public function getSignedUpData(ActivityModel $activity)
     {
         if (!$this->isAllowed('view', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -183,7 +182,7 @@ class Signup extends AbstractAclService
             //Change the value into the actual format
             switch ($field->getType()) {
                 case 0://'Text'
-                case 2://'Number'                    
+                case 2://'Number'
                     $fieldValue->setValue($value);
                     break;
                 case 1://'Yes/No'
