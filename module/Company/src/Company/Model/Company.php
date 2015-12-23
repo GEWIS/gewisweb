@@ -243,7 +243,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         // When any packages is not expired, the company should be shown to the user
         foreach($this->getPackages() as $package) {
-            if(!$package->isExpired()){
+            if(!$package->isExpired(new \DateTime)){
                 $visible = true;
             }
         }
@@ -294,7 +294,9 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $jobcount;
         }
         foreach ($this->getPackages() as $package) {
-            $jobcount +=  $package->getJobs()->count();
+            if ($package->getType() === 'job') {
+                $jobcount +=  $package->getJobs()->count();
+            }
         }
 
         return $jobcount;
