@@ -18,6 +18,8 @@
 
     <div class="row">
         <div class="col-md-8">
+            <p><?= $this->translate(sprintf('Do you want to help future students pass %s? Send GEWIS your summary or exam to %s.', '<em>' . $course->getName() . '</em>', '<a href="mailto:co@gewis.nl">co@gewis.nl</a>')) ?></p>
+
             <?php foreach ($course->getChildren() as $child): ?>
                 <?php foreach ($child->getExams() as $exam): ?>
                     <li><a href="<?= $this->url('education/course/download', [
@@ -36,8 +38,10 @@
 
             <h3><?= $this->translate('Summaries') ?></h3>
             <ul class="list-group">
+                <?php $hasSummary = false ?>
                 <?php foreach ($course->getExams() as $exam): ?>
                 <?php if ($exam instanceof \Education\Model\Summary): ?>
+                <?php $hasSummary = true ?>
                 <li class="list-group-item">
                     <a href="<?= $this->url('education/course/download', ['code' => $exam->getCourse()->getCode(), 'id' => $exam->getId()]) ?>">
                         <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
@@ -45,12 +49,17 @@
                 </li>
                 <?php endif ?>
                 <?php endforeach; ?>
+                <?php if (!$hasSummary): ?>
+                    <p>Unfortunately there aren't any summaries available.</p>
+                <?php endif; ?>
             </ul>
 
             <h3><?= $this->translate('Exams') ?></h3>
             <ul class="list-group">
-                <?php foreach ($course->getExams() as $exam): ?>
+                <?php $hasExan = false ?>
+                <?php foreach (/* $course->getExams() */[] as $exam): ?>
                 <?php if ($exam instanceof \Education\Model\Exam): ?>
+                <?php $hasExan = true ?>
                 <li class="list-group-item">
                     <a href="<?= $this->url('education/course/download', ['code' => $exam->getCourse()->getCode(), 'id' => $exam->getId()]) ?>">
                         <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
@@ -58,6 +67,9 @@
                 </li>
                 <?php endif ?>
                 <?php endforeach; ?>
+                <?php if (!$hasExan): ?>
+                    <p>Unfortunately there aren't any exams available.</p>
+                <?php endif; ?>
             </ul>
         </div>
         <div class="col-md-4">
