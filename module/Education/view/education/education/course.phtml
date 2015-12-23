@@ -16,51 +16,76 @@
     <h1>Onderwijs</h1>
     <h2><?= $course->getCode() ?> - <?= $course->getName() ?></h2>
 
-    <ul>
-        <li><strong>Course url:</strong> <a href="<?= $course->getUrl() ?>">
-        <?= $course->getUrl() ?>
-        </a></li>
-    </ul>
+    <div class="row">
+        <div class="col-md-8">
+            <h2><?= $this->translate('Exams and summaries') ?></h2>
 
-    <?php $children = $course->getChildren() ?>
-    <?php if (!empty($children)): ?>
-    <h2><?= $this->translate('Course parts') ?></h2>
-    <ul>
-    <?php foreach ($course->getChildren() as $child): ?>
-        <li><strong><?= $child->getCode() ?></strong> <?= $child->getName() ?></li>
-    <?php endforeach; ?>
-    </ul>
-    <?php endif; ?>
-
-    <h2><?= $this->translate('Exams and summaries') ?></h2>
-
-    <ul>
-    <?php foreach ($course->getChildren() as $child): ?>
-        <?php foreach ($child->getExams() as $exam): ?>
-            <li><a href="<?= $this->url('education/course/download', [
-                'code' => $exam->getCourse()->getCode(),
-                'id' => $exam->getId()
-                ]) ?>">
-            <strong>(<?= $child->getCode() ?>)</strong>
-            <?php if ($exam instanceof \Education\Model\Summary): ?>
-            <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
-            <?php else: ?>
-            <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
-            <?php endif ?>
-            </a></li>
-        <?php endforeach; ?>
-    <?php endforeach; ?>
-    <?php foreach ($course->getExams() as $exam): ?>
-        <li><a href="<?= $this->url('education/course/download', [
-            'code' => $exam->getCourse()->getCode(),
-            'id' => $exam->getId()
-            ]) ?>">
-        <?php if ($exam instanceof \Education\Model\Summary): ?>
-        <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
-        <?php else: ?>
-        <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
-        <?php endif ?>
-        </a></li>
-    <?php endforeach; ?>
-    </ul>
+            <?php foreach ($course->getChildren() as $child): ?>
+                <?php foreach ($child->getExams() as $exam): ?>
+                    <li><a href="<?= $this->url('education/course/download', [
+                        'code' => $exam->getCourse()->getCode(),
+                        'id' => $exam->getId()
+                        ]) ?>">
+                    <strong>(<?= $child->getCode() ?>)</strong>
+                    <?php if ($exam instanceof \Education\Model\Summary): ?>
+                    <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+                    <?php else: ?>
+                    <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+                    <?php endif ?>
+                    </a></li>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+            <?php foreach ($course->getExams() as $exam): ?>
+                <li><a href="<?= $this->url('education/course/download', [
+                    'code' => $exam->getCourse()->getCode(),
+                    'id' => $exam->getId()
+                    ]) ?>">
+                <?php if ($exam instanceof \Education\Model\Summary): ?>
+                <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+                <?php else: ?>
+                <?= sprintf($this->translate('Exam of %s'), $exam->getDate()->format('Y-m-d')) ?>
+                <?php endif ?>
+                </a></li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3><?= $this->translate("Details") ?></h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><?= $this->translate('Course code') ?></td>
+                                <td><?= $course->getCode() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= $this->translate('Course name') ?></td>
+                                <td><?= $course->getName() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= $this->translate('Course url') ?></td>
+                                <td><?= $course->getUrl() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= $this->translate('Course parts') ?></td>
+                                <td>
+                                    <?php $children = $course->getChildren() ?>
+                                    <?php if (!empty($children)): ?>
+                                    <ul>
+                                        <?php foreach ($course->getChildren() as $child): ?>
+                                        <li><strong><?= $child->getCode() ?></strong> <?= $child->getName() ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
