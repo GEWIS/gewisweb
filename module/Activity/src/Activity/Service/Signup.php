@@ -30,11 +30,11 @@ class Signup extends AbstractAclService
     {
         return 'activitySignup';
     }
-    
+
     /**
      * Return the form for signing up in the preferred language, if available.
      * Otherwise, it returns it in the avaiable language.
-     * 
+     *
      * @param type $fields
      * @return type
      * @throws \User\Permissions\NotAllowedException
@@ -73,13 +73,11 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Gets an array of
+     * Gets an array of the signed up users and the associated data
      *
-     * @param ActivityModel $activity
-     * @param string $preferredlanguage 'en' or 'nl'
      * @return array
      */
-    public function getSignedUpData($activity)
+    public function getSignedUpData(ActivityModel $activity)
     {
         if (!$this->isAllowed('view', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -95,7 +93,10 @@ class Signup extends AbstractAclService
             $entry['member'] = $signup->getUser()->getMember()->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
-                $entry['values'][$fieldValue->getField()->getId()] = $fieldValue->getValue();
+                //If there is an option type, get the option object as a 'value'.
+                $isOption = $fieldValue->getField()->getType() === 3;
+                $value = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
+                $entry['values'][$fieldValue->getField()->getId()] = $value;
             }
             $result[] = $entry;
         }
@@ -182,17 +183,16 @@ class Signup extends AbstractAclService
             //Change the value into the actual format
             switch ($field->getType()) {
                 case 0://'Text'
+                case 2://'Number'
+                    $fieldValue->setValue($value);
                     break;
                 case 1://'Yes/No'
-                    $value =  ($value) ? 'Yes' : 'No';
-                    break;
-                case 2://'Number'
+                    $fieldValue->setValue(($value) ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $value = $optionMapper->getOptionById((int)$value)->getValue();
+                    $fieldValue->setOption($optionMapper->getOptionById((int)$value));
                     break;
             }
-            $fieldValue->setValue($value);
             $fieldValue->setSignup($signup);
             $em->persist($fieldValue);
         }
