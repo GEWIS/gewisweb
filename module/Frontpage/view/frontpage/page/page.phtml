@@ -1,22 +1,26 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
-<ol class="breadcrumb">
-    <li class="active"><a href="/"><?= $this->translate('Home') ?></a></li>
-    <?php foreach ($parents as $parent): ?>
-        <?php if (is_null($parent)): ?>
-            <li>...</li>
-        <?php else: ?>
-            <li><a href="<?= $this->url('home/page', [
-                    'category' => $parent->getCategory(),
-                    'sub_category' => $parent->getSubCategory(),
-                    'name' => $parent->getName()
-                ]) ?>">
-                    <?= $this->escapeHtml(($lang === 'en') ? $parent->getEnglishTitle() : $parent->getDutchTitle()) ?>
-                </a></li>
-        <?php endif; ?>
-    <?php endforeach; ?>
-    <li class="active">
-        <?= $this->escapeHtml(($lang === 'en') ? $page->getEnglishTitle() : $page->getDutchTitle()) ?></li>
-</ol>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="active"><a href="/"><?= $this->translate('Home') ?></a></li>
+            <?php foreach ($parents as $parent): ?>
+                <?php if (is_null($parent)): ?>
+                    <li>...</li>
+                <?php else: ?>
+                    <li><a href="<?= $this->url('home/page', [
+                            'category' => $parent->getCategory(),
+                            'sub_category' => $parent->getSubCategory(),
+                            'name' => $parent->getName()
+                        ]) ?>"><?= $this->escapeHtml(($lang === 'en') ? $parent->getEnglishTitle() : $parent->getDutchTitle()) ?></a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <li class="active">
+                <?= $this->escapeHtml(($lang === 'en') ? $page->getEnglishTitle() : $page->getDutchTitle()) ?></li>
+        </ol>
+    </div>
+</section>
+<div class="container">
 <?php if ($lang === 'en'): ?>
     <h3><?= $this->escapeHtml($page->getEnglishTitle()) ?></h3>
     <?php $this->headTitle($page->getEnglishTitle()) ?>
@@ -26,3 +30,5 @@
 <?php endif; ?>
 
 <?= $lang === 'en' ? $page->getEnglishContent() : $page->getDutchContent() ?>
+
+</div>
