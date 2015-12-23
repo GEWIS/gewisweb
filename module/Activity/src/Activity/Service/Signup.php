@@ -95,7 +95,8 @@ class Signup extends AbstractAclService
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
                 //If there is an option type, get the option object as a 'value'.
                 $isOption = $fieldValue->getField()->getType() === 3;
-                $entry['values'][$fieldValue->getField()->getId()] = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
+                $value = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
+                $entry['values'][$fieldValue->getField()->getId()] = $value;
             }
             $result[] = $entry;
         }

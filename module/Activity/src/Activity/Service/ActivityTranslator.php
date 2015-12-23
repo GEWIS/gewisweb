@@ -60,10 +60,14 @@ class ActivityTranslator extends AbstractService
             ($preferredLanguage === 'en' && is_null($activity->getNameEn())) ? 'nl':'en';
         $signupService = $this->getServiceManager()->get('activity_service_signup');
         $translatedSignupData = $signupService->getSignedUpData($activity);
-        for ($i=0; $i<count($translatedSignupData);$i++){
+        for ($i=0; $i<count($translatedSignupData); $i++){
             foreach ($activity->getFields() as $field){
                 if ($field->getType() === 3){
-                    $translatedSignupData[$i]['values'][$field->getId()] = $this->createActivityOptionTranslation($translatedSignupData[$i]['values'][$field->getId()], $language)->getValue();
+                    $value = $this->createActivityOptionTranslation(
+                        $translatedSignupData[$i]['values'][$field->getId()],
+                        $language
+                        )->getValue();
+                    $translatedSignupData[$i]['values'][$field->getId()] = $value;
                 }
             }
         }

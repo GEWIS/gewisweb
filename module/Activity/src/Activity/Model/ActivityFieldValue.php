@@ -91,7 +91,7 @@ class ActivityFieldValue
         $this->option = $option;
     }
 
-        public function getField()
+    public function getField()
     {
         return $this->field;
     }
