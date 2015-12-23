@@ -52,14 +52,26 @@ function getIsActiveClass($view, array $condition)
                         <span class="icon-bar"></span>
                     </button>
                     <a href="<?= $this->url('home') ?>" class="navbar-brand">
-                        <!-- TODO: Replace with SVG -->
                         <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
                     </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <!-- TODO: Fix "association" active class -->
-                        <li class="<?= getIsActiveClass($this, ['vereniging']) ?>"><a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>"><?= $this->translate('Association') ?></a></li>
+                        <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['vereniging']) ?>">
+                            <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Association') ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'av']) ?>"><?= $this->translate('General Meeting') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'commissies']) ?>"><?= $this->translate('Commissions') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'disputen']) ?>"><?= $this->translate('Fraternities') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a></li>
+                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['company']) ?> <?= isActive($this, ['company']) ? 'default' : '' ?>">
                             <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Companies') ?>
