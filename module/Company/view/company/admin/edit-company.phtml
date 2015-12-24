@@ -15,9 +15,15 @@ if (is_null($company)){
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>
 <h2> <?= $this->translate('Dutch logo') ?></h2>
-    <img src='<?=$this->fileUrl($company->getTranslationFromLocale('nl')->getLogo()) ?>'><?= $this->translate('Dutch logo') ?></img>
+    <img src='<?php $translation = $company->getTranslationFromLocale('nl');
+        if (!is_null($translation)):
+            echo $this->fileUrl($translation->getLogo());
+        endif; ?>'/>
 <h2> <?= $this->translate('English logo') ?></h2>
-    <img src='<?=$this->fileUrl($company->getTranslationFromLocale('en')->getLogo()) ?>'><?= $this->translate('English logo') ?></img>
+    <img src='<?php $translation = $company->getTranslationFromLocale('en');
+        if (!is_null($translation)):
+            echo $this->fileUrl($translation->getLogo());
+        endif; ?>'/>
 <h2> <?= $this->translate('Packages') ?> </h2>
 <table class="packagelist">
         <tr>

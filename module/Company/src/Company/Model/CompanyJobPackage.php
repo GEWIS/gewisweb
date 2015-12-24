@@ -38,6 +38,22 @@ class CompanyJobPackage extends CompanyPackage
     }
 
     /**
+     * Get number of active jobs.
+     *
+     * @return number of active jobs
+     */
+    public function getNumberOfActiveJobs()
+    {
+        $jobCount = 0;
+        foreach ($this->jobs as $job) {
+            if ($job->isActive()) {
+                $jobCount += 1;
+            }
+        }
+        return $jobCount;
+    }
+
+    /**
      * Adds a job to the package.
      *
      * @param Job $job job to be added

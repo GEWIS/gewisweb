@@ -314,8 +314,8 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $jobcount;
         }
         foreach ($this->getPackages() as $package) {
-            if ($package->getType() === 'job' && !$package->isActive()) {
-                $jobcount +=  $package->getJobs()->count();
+            if ($package->getType() === 'job' && $package->isActive()) {
+                $jobcount +=  $package->getNumberOfActiveJobs();
             }
         }
 
