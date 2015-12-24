@@ -69,12 +69,6 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $form = $activityService->getForm();
         if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-
-            if ($data['costs'] === '' && $data['costs_unknown'] != 1) {
-                $data['costs'] = '-1';    // Hack. Because empty string is seen as 0
-            }
-
             $postData = $this->getRequest()->getPost();
             $form->setData($postData);
 
