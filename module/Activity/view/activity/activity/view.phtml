@@ -6,6 +6,7 @@ $this->headTitle($this->translate('Activities'));
 
 
 ?>
+<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
@@ -20,8 +21,9 @@ $this->headTitle($this->translate('Activities'));
         </ol>
     </div>
 </section>
+<?php endif; ?>
 <div class="container">
-<h1><?= $activity->getName() ?></h1>
+    <h1><?= $activity->getName() ?></h1>
     <ul class="list-group">
         <li class="list-group-item agenda-item row">
             <div class="agenda-item-heading col-md-2">
@@ -58,51 +60,41 @@ $this->headTitle($this->translate('Activities'));
         </li>
     </ul>
 
+    <!--<div class="col-md-4"><?php /*echo $activity->getId();*/?></div>
+        <div class="col-md-8"><?php /*echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); */?></div>
+        <div class="col-md-8"><?php /*echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); */?></div>-->
 
-
-    <div class="row">
-    <div class="col-md-4">
-    <!-- wrapping applied -->
-    <?php $i=0; ?>
-    <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-        <div class="col-md-4"><?php echo $this->translate('Id'); ?></div>
-        <div class="col-md-4"><?php echo $activity->getId();?></div>
-    </div>
-    <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-        <div class="col-md-4"><?php echo $this->translate('Subscribe'); ?></div>
-        <div class="col-md-8"><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></div>
-    </div>
-    <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-        <div class="col-md-4"><?php echo $this->translate('Only GEWIS'); ?></div>
-        <div class="col-md-8"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
-    </div>
-    <div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
     <?php if ($signupOpen): ?>
         <h2>
-            <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
+            <?= $this->translate('Current subscriptions') ?>
         </h2>
-        <table>
-            <thead>
-                <tr>
-                    <th><?php echo $this->translate('Name');?> </th>
-                    <?php foreach($fields as $field):?>
-                    <th><?= $field->getName();?></th>
-                    <?php endforeach;?>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($signupData as $signup):?>
-                <tr>
-                    <td><?php echo $signup['member'];?></td>
-                    <?php foreach($signup['values'] as $value):?>
-                        <td><?= $value;?></td>
-                    <?php endforeach;?>
-                </tr>
-            <?php endforeach;?>
-            </tbody>
-        </table>
-    <?php endif;?>
-        <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="25"></th>
+                        <th><?= $this->translate('Name') ?> </th>
+                        <?php foreach($fields as $field):?>
+                        <th><?= $field->getName() ?></th>
+                        <?php endforeach;?>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $i = 1; ?>
+                <?php foreach($signupData as $signup): ?>
+                    <tr>
+                        <td><?php echo $i; $i = $i + 1; ?></td>
+                        <td><?= $signup['member'] ?></td>
+                        <?php foreach($signup['values'] as $value):?>
+                        <td><?= $value ?></td>
+                        <?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+
     <?php if ($isSignedUp) :?>
             <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
             <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
@@ -114,27 +106,27 @@ $this->headTitle($this->translate('Activities'));
             ?>
     <?php endif; ?>
     <?php if ($signupOpen && !$isLoggedIn):?>
-        <?php echo $this->translate('Login to subscribe');?>
+        <a href="<?= $this->url('user') ?>">
+            <?= $this->translate('Login to subscribe') ?>
+        </a>
     <?php endif; ?>
 
     <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>
         <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
         $form->prepare();
         echo $this->form()->openTag($form); ?>
-                <table>
-                    <?php foreach($fields as $field):?>
-                    <tr>
-                        <td><?= $field->getName();?>:</td>
-                        <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
-                    </tr>
-                    <?php endforeach;?>
-                </table>
-        <?php echo $this->formSubmit($form->get('submit'));
-              echo $this->form()->closeTag();?>
+            <table>
+                <?php foreach($fields as $field):?>
+                <tr>
+                    <td><?= $field->getName();?>:</td>
+                    <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
+                </tr>
+                <?php endforeach;?>
+            </table>
+        <?php
+        $submit = $form->get('submit');
+        $submit->setAttribute('class', 'btn btn-primary');
+        echo $this->formSubmit($submit);
+        echo $this->form()->closeTag();?>
     <?php endif; ?>
-            </div>
-        </div>
-
-    </div>
-    </div>
 </div>
