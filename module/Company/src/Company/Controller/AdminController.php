@@ -279,7 +279,8 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->savePackageByData($package,
+            $companyService->savePackageByData(
+                $package,
                 $request->getPost(),
                 $request->getFiles()
             );
