@@ -69,12 +69,10 @@ class EditCompany extends Form
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => [
-                'required' => 'required',
                 'type' => 'textarea',
             ],
             'options' => [
                 'label' => $translate->translate('Location'),
-                'required' => 'required',
             ],
         ]);
         // English version
@@ -119,11 +117,9 @@ class EditCompany extends Form
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
-                'required' => 'required',
             ],
             'options' => [
                 'label' => $translate->translate('Email'),
-                'required' => 'required',
             ],
         ]);
         $this->add([
@@ -260,7 +256,6 @@ class EditCompany extends Form
 
         $filter->add([
             'name' => 'email',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'EmailAddress',
