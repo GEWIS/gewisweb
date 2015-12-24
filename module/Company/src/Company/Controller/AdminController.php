@@ -41,16 +41,17 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            if ($companyService->insertCompanyByData(
+            $company = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()
-            )) {
+            );
+            if (!is_null($company)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default', 
                     [
                         'action' => 'edit', 
-                        'slugCompanyName' => $companyName
+                        'slugCompanyName' => $company->getSlugName(),
                     ],
                     [],
                     false
