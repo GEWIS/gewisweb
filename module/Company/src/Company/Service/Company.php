@@ -61,8 +61,8 @@ class Company extends AbstractACLService
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()){
+            $package->exchangeArray($data);
             if ($package->getType() == 'banner'){
-                $package->exchangeArray($data);
                 $file = $files['banner'];
                 if ($file['error'] !== 4) {
                     if ($file['error'] !== 0) {
