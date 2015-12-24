@@ -46,6 +46,7 @@ class ActivityController extends AbstractActionController
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         $fields = $translatedActivity->getFields();
+        $form = null;
         if ($signupService->isAllowedToSubscribe()) {
             $form = $signupService->getForm($fields);
         }
