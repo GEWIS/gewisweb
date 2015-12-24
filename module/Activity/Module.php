@@ -86,16 +86,14 @@ class Module
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
                     $acl->addResource('activitySignup');
+                    $acl->addResource('model');
 
                     $acl->allow('guest', 'activity', 'view');
-
                     $acl->allow('guest', 'activitySignup', 'view');
 
                     $acl->allow('user', 'activity', 'create');
-                    $acl->allow('user', 'activitySignup', 'signup');
-                    $acl->allow('user', 'activitySignup', 'signoff');
-                    $acl->allow('user', 'activitySignup', 'checkUserSignedUp');
-                    
+                    $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
+
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
                     return $acl;
