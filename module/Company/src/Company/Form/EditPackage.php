@@ -44,11 +44,9 @@ class EditPackage extends Form
             'name' => 'published',
             'type' => 'Zend\Form\Element\Checkbox',
             'attributes' => [
-                'required' => 'required',
             ],
             'options' => [
                 'label' => $translate->translate('Published'),
-                'required' => 'required',
                 'value_options' => [
                     '0' => 'Enabled',
                 ],
