@@ -68,11 +68,11 @@ $this->headTitle($this->translate('Activities'));
         <h2>
             <?= $this->translate('Current subscriptions') ?>
         </h2>
-        <div class="table-responsive">
+        <div class="table-responsive agenda-subscriptions">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="25"></th>
+                        <th></th>
                         <th><?= $this->translate('Name') ?> </th>
                         <?php foreach($fields as $field):?>
                         <th><?= $field->getName() ?></th>

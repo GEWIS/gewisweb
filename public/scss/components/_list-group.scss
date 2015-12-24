@@ -50,3 +50,9 @@ a.agenda-item {
         color: $brand-primary;
     }
 }
+
+.agenda-subscriptions {
+    th:first-child, td:first-child {
+        width: 25px;
+    }
+}
