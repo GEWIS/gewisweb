@@ -283,7 +283,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the number of jobs that is contained in all packages of this 
+     * Returns the number of jobs that are contained in all packages of this
      * company.
      *
      */
@@ -300,6 +300,63 @@ class Company // implements ArrayHydrator (for zend2 form)
         }
 
         return $jobcount;
+    }
+
+    /**
+     * Returns the number of jobs that are contained in all active packages of this
+     * company.
+     *
+     */
+    public function getNumberOfActiveJobs()
+    {
+        $jobcount = 0;
+        if (is_null($this->getPackages())) {
+            return $jobcount;
+        }
+        foreach ($this->getPackages() as $package) {
+            if ($package->getType() === 'job' && !$package->isActive()) {
+                $jobcount +=  $package->getJobs()->count();
+            }
+        }
+
+        return $jobcount;
+    }
+
+    /**
+     * Returns the number of expired packages
+     *
+     */
+    public function getNumberOfExpiredPackages()
+    {
+        $packageCount = 0;
+        if (is_null($this->getPackages())) {
+            return $packageCount;
+        }
+        foreach ($this->getPackages() as $package) {
+            if ($package->isExpired(new \DateTime)) {
+                $packageCount +=  1;
+            }
+        }
+
+        return $packageCount;
+    }
+
+    /**
+     * Returns true if a banner is active, and false when there is no banner active
+     *
+     */
+    public function isBannerActive()
+    {
+        if (is_null($this->getPackages())) {
+            return false;
+        }
+        foreach ($this->getPackages() as $package) {
+            if ($package->getType() === 'banner' && $package->isActive()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

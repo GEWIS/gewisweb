@@ -35,8 +35,9 @@
             <tr>
                 <th><?= $this->translate('Name') ?></th>
                 <th><?= $this->translate('Jobs') ?></th>
-                <th><?= $this->translate('Package expiry dates') ?></th>
-                <th><?= $this->translate('Package statuses') ?></th>
+                <th><?= $this->translate('Active jobs') ?></th>
+                <th><?= $this->translate('Banner active') ?></th>
+                <th><?= $this->translate('Expired packages') ?></th>
                 <th><?= $this->translate('Actions') ?></th>
             </tr>
         </thead>
@@ -50,8 +51,9 @@
             <tr class="company-list-item">
                 <td><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
                 <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->getNumberOfJobs(); ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Packages */ ?></a></td>
-                <td><a href="#?id=<?= $company->getId(); ?>"><?= 0 /* TODO: Package statuses */ ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->getNumberOfActiveJobs(); ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->isBannerActive() ? $this->translate('true') : $this->translate('false'); ?></a></td>
+                <td><a href="#?id=<?= $company->getId(); ?>"><?= $company->getNumberOfExpiredPackages(); ?></a></td>
                 <td><a href=<?= $this->url('admin_company/deleteCompany', ['slugCompanyName' => $company->getSlugName()])?>><?= $this->translate('Delete') ?></a></td>
             </tr>
             <?php
@@ -62,8 +64,10 @@
             <tr>
                 <th><?= $this->translate('Name') ?></th>
                 <th><?= $this->translate('Jobs') ?></th>
-                <th><?= $this->translate('Package expiry date') ?></th>
-                <th><?= $this->translate('Package status') ?></th>
+                <th><?= $this->translate('Active jobs') ?></th>
+                <th><?= $this->translate('Banner active') ?></th>
+                <th><?= $this->translate('Expired packages') ?></th>
+                <th><?= $this->translate('Actions') ?></th>
             </tr>
         </tfoot>
     </table>
