@@ -72,7 +72,6 @@ class Company extends AbstractACLService
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 } catch (\Exception $exception) {
-
                 }
 
             }
@@ -102,7 +101,6 @@ class Company extends AbstractACLService
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 } catch (\Exception $exception) {
-
                 }
             }
             $this->saveCompany();
