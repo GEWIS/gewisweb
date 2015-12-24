@@ -279,7 +279,10 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->savePackageByData($package,$request->getPost());
+            $companyService->savePackageByData($package,
+                $request->getPost(),
+                $request->getFiles()
+            );
             // TODO: possibly redirect to company
         }
         // TODO: display error page when package is not found

@@ -56,12 +56,31 @@ class Company extends AbstractACLService
      * @param mixed $package
      * @param mixed $data
      */
-    public function savePackageByData($package,$data)
+    public function savePackageByData($package, $data, $files)
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()){
-            $package->exchangeArray($data);
+            if ($package->getType() == 'banner'){
+                $package->exchangeArray($data);
+                $file = $files['banner'];
+                try {
+                    $oldPath = $package->getImage();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $package->setImage($newPath);
+                    echo $newPath;
+                    if ($oldPath != '' && oldPath != newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                    echo $package->getImage();
+                } catch (\Exception $exception) {
+                    echo $exception;
+
+                }
+                echo $oldPath;
+                echo $newPath;
+
+            }
             $this->savePackage();
         }
     }
@@ -169,7 +188,6 @@ class Company extends AbstractACLService
                     var_dump($exception);
 
                 }
-                var_dump($translation->getLogo());
             }
             $this->saveCompany();
             return true;
