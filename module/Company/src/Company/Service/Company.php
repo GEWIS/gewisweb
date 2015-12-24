@@ -68,17 +68,12 @@ class Company extends AbstractACLService
                     $oldPath = $package->getImage();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $package->setImage($newPath);
-                    echo $newPath;
                     if ($oldPath != '' && oldPath != newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                    echo $package->getImage();
                 } catch (\Exception $exception) {
-                    echo $exception;
 
                 }
-                echo $oldPath;
-                echo $newPath;
 
             }
             $this->savePackage();
@@ -103,13 +98,10 @@ class Company extends AbstractACLService
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
-                    echo $newPath;
                     if ($oldPath != '' && oldPath != newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                    echo $translation->getLogo();
                 } catch (\Exception $exception) {
-                    var_dump($exception);
 
                 }
             }
@@ -171,21 +163,14 @@ class Company extends AbstractACLService
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
         if ($companyForm->isValid()) {
-            //echo "hoi";
-            //var_dump($files);
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
-            //echo "hoi";
-            //var_dump($files);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                //var_dump($file);
                 try {
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    echo $newPath;
                     $translation->setLogo($newPath);
                 } catch (\Exception $exception) {
-                    var_dump($exception);
 
                 }
             }
