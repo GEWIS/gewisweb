@@ -169,7 +169,6 @@ class Company extends AbstractACLService
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                 } catch (\Exception $exception) {
-
                 }
             }
             $this->saveCompany();
