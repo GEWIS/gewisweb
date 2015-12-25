@@ -206,9 +206,9 @@ class EditCompany extends Form
             ],
         ]);
 
-        /*$filter->add(array(
-            'name' => 'en.website',
-            'required' => true,
+        $filter->add(array(
+            'name' => 'en_website',
+            'required' => false,
             'filters' => array(
                 array('name' => 'StripTags'),
                 array('name' => 'StringTrim')
@@ -218,8 +218,8 @@ class EditCompany extends Form
         ));
         
         $filter->add(array(
-            'name' => 'nl.website',
-            'required' => true,
+            'name' => 'nl_website',
+            'required' => false,
             'filters' => array(
                 array('name' => 'StripTags'),
                 array('name' => 'StringTrim')
@@ -228,8 +228,8 @@ class EditCompany extends Form
             )
         ));
         $filter->add(array(
-            'name' => 'en.description',
-            'required' => true,
+            'name' => 'en_description',
+            'required' => false,
             'validators' => array(
                 array(
                     'name' => 'string_length',
@@ -241,8 +241,8 @@ class EditCompany extends Form
             )
         ));
         $filter->add(array(
-            'name' => 'nl.description',
-            'required' => true,
+            'name' => 'nl_description',
+            'required' => false,
             'validators' => array(
                 array(
                     'name' => 'string_length',
@@ -252,7 +252,7 @@ class EditCompany extends Form
                     )
                 )
             )
-        ));*/
+        ));
 
         $filter->add([
             'name' => 'email',
@@ -273,7 +273,7 @@ class EditCompany extends Form
         ]);
 
         $filter->add([
-            'name' => 'en.logo',
+            'name' => 'en_logo',
             'required' => false,
             'validators' => [
                 [
