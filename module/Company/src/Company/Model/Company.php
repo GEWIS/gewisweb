@@ -289,7 +289,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfJobs()
     {
-        $jobCount = function($package) {
+        $jobCount = function ($package) {
             if ($package->getType() == 'job') {
                 return $package->getJobs()->count();
             }
@@ -306,7 +306,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfActiveJobs()
     {
-        $jobCount = function($package) {
+        $jobCount = function ($package) {
             return $package->getNumberOfActiveJobs();
         };
 
@@ -319,7 +319,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfExpiredPackages()
     {
-        return count(array_filter($this->getPackages(), function($package) {
+        return count(array_filter($this->getPackages(), function ($package) {
             return $package->isExpired();
         }));
     }
@@ -330,7 +330,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function isBannerActive()
     {
-        return !empty(array_filter($this->getPackages(), function($package) {
+        return !empty(array_filter($this->getPackages(), function ($package) {
             return $package->getType() === 'banner' && $package->isActive();
 
         }));
@@ -414,7 +414,8 @@ class Company // implements ArrayHydrator (for zend2 form)
             $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
             $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
 
-            // Do not set logo, because most likely, $data[logo] is bogus. instead, the user should set this property himself later.
+            // Do not set logo, because most likely, $data[logo] is bogus.
+            // Instead, the user should set this property himself later.
             return $translation;
         }
     }
