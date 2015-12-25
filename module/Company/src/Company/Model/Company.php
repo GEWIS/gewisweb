@@ -289,17 +289,14 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfJobs()
     {
-        $jobcount = 0;
-        if (is_null($this->getPackages())) {
-            return $jobcount;
-        }
-        foreach ($this->getPackages() as $package) {
-            if ($package->getType() === 'job') {
-                $jobcount +=  $package->getJobs()->count();
+        $jobCount = function($package) {
+            if ($package->getType() == 'job') {
+                return $package->getJobs()->count();
             }
-        }
+            return 0;
+        };
 
-        return $jobcount;
+        return array_sum(array_map($jobCount, $this->getPackages()));
     }
 
     /**
@@ -309,17 +306,11 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfActiveJobs()
     {
-        $jobcount = 0;
-        if (is_null($this->getPackages())) {
-            return $jobcount;
-        }
-        foreach ($this->getPackages() as $package) {
-            if ($package->getType() === 'job' && $package->isActive()) {
-                $jobcount +=  $package->getNumberOfActiveJobs();
-            }
-        }
+        $jobCount = function($package) {
+            return $package->getNumberOfActiveJobs();
+        };
 
-        return $jobcount;
+        return array_sum(array_map($jobCount, $this->getPackages()));
     }
 
     /**
@@ -328,17 +319,9 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfExpiredPackages()
     {
-        $packageCount = 0;
-        if (is_null($this->getPackages())) {
-            return $packageCount;
-        }
-        foreach ($this->getPackages() as $package) {
-            if ($package->isExpired(new \DateTime)) {
-                $packageCount +=  1;
-            }
-        }
-
-        return $packageCount;
+        return count(array_filter($this->getPackages(), function($package) {
+            return $package->isExpired();
+        }));
     }
 
     /**
@@ -347,37 +330,12 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function isBannerActive()
     {
-        if (is_null($this->getPackages())) {
-            return false;
-        }
-        foreach ($this->getPackages() as $package) {
-            if ($package->getType() === 'banner' && $package->isActive()) {
-                return true;
-            }
-        }
+        return !empty(array_filter($this->getPackages(), function($package) {
+            return $package->getType() === 'banner' && $package->isActive();
 
-        return false;
+        }));
     }
 
-    /**
-     * Add a package to the company.
-     *
-     * @param CompanyPackages $package
-     */
-    public function addPackage(CompanyPackage $package)
-    {
-        $this->packages->add($package);
-    }
-
-    /**
-     * Remove a package from the company.
-     * 
-     * @param CompanyPackage $package package to remove
-     */
-    public function removePackage(CompanyPackage $package)
-    {
-        $this->packages->removeElement($package);
-    }
 
     /**
      * Get the company's language.
