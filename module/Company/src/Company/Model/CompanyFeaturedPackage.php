@@ -52,16 +52,16 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     }
 
     /**
-     * The packet's language.
+     * The package's language.
      *
      * @ORM\Column(type="string")
      */
     protected $language;
 
     /**
-     * Get the packet's language.
+     * Get the package's language.
      * 
-     * @return string language of the packet
+     * @return string language of the package
      */
     public function getLanguage()
     {
@@ -69,9 +69,9 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     }
 
     /**
-     * Set the packet's language.
+     * Set the package's language.
      * 
-     * @param string $language language of the packet
+     * @param string $language language of the package
      */
     public function setLanguage($language)
     {
