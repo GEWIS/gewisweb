@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 15:33+0100\n"
+"POT-Creation-Date: 2015-12-25 01:36+0100\n"
 "PO-Revision-Date: 2015-11-03 15:49+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
@@ -18,6 +18,234 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.5\n"
 
+#: module/Company/view/company/company/show.phtml:7
+#: module/Company/view/company/company/show.phtml:15
+#: module/Company/view/company/company/job-list.phtml:22
+#: module/Company/view/company/company/list.phtml:6
+#: module/Company/view/company/company/list.phtml:10
+#: module/Company/view/company/company/jobs.phtml:17
+#: module/Application/view/layout/layout.phtml:76
+msgid "Companies"
+msgstr "Bedrijven"
+
+#: module/Company/view/company/company/job-list.phtml:13
+#: module/Company/view/company/company/job-list.phtml:33
+#: module/Company/view/company/company/job-list.phtml:44
+#: module/Company/view/company/company/jobs.phtml:9
+#: module/Company/view/company/company/jobs.phtml:27
+#: module/Company/view/company/admin/index.phtml:37
+#: module/Company/view/company/admin/index.phtml:64
+#: module/Company/view/company/admin/edit-company.phtml:31
+#: module/Company/view/company/admin/edit-package.phtml:42
+#: module/Company/view/partial/company/company/list/company.phtml:25
+#: module/Application/view/layout/layout.phtml:79
+msgid "Jobs"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:47
+#: module/Company/view/company/company/job-list.phtml:74
+#: module/Company/view/company/company/jobs.phtml:43
+#, fuzzy
+msgid "at"
+msgstr "Datum"
+
+#: module/Company/view/company/company/job-list.phtml:57
+#: module/Decision/view/decision/decision/search.phtml:24
+#: module/Education/view/education/education/index.phtml:57
+#: module/Decision/src/Decision/Form/SearchDecision.php:29
+#: module/Decision/src/Decision/Form/SearchDecision.php:30
+msgid "Search"
+msgstr "Zoek"
+
+#: module/Company/view/company/company/job-list.phtml:58
+msgid "Filter results"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:80
+#: module/Company/view/company/company/jobs.phtml:49
+#: module/Company/view/partial/company/company/list/company.phtml:14
+#: module/Company/view/partial/company/company/grid/company.phtml:14
+#, fuzzy
+msgid "Logo of"
+msgstr "Uitloggen"
+
+#: module/Company/view/company/company/job-list.phtml:83
+#: module/Company/view/company/company/jobs.phtml:52
+#: module/Company/view/partial/company/company/list/company.phtml:17
+#: module/Application/view/layout/layout.phtml:71
+msgid "Contact"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:86
+#: module/Company/view/company/company/jobs.phtml:55
+msgid "Visit website"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:90
+#: module/Company/view/company/company/jobs.phtml:59
+#: module/Company/view/partial/company/company/list/company.phtml:49
+#: module/Activity/view/activity/activity/create.phtml:92
+#: module/Company/src/Company/Form/EditJob.php:100
+#: module/Company/src/Company/Form/EditCompany.php:162
+#: module/Company/src/Company/Form/EditCompany.php:172
+msgid "Description"
+msgstr "Beschrijving"
+
+#: module/Company/view/company/admin/delete-package.phtml:2
+#: module/Company/view/company/admin/index.phtml:55
+#: module/Company/view/company/admin/delete-company.phtml:10
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:68
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:127
+#, fuzzy
+msgid "Delete"
+msgstr "Verwijder foto"
+
+#: module/Company/view/company/admin/delete-package.phtml:3
+msgid ""
+"Do you really want to delete this package? This will delete all containing "
+"Jobs. Instead, you can also disable the 'published' option of this package "
+"to just hide it."
+msgstr ""
+
+#: module/Company/view/company/admin/add-company.phtml:4
+#: module/Company/view/company/admin/index.phtml:70
+#, fuzzy
+msgid "Add Company"
+msgstr "Bedrijven"
+
+#: module/Company/view/company/admin/index.phtml:36
+#: module/Company/view/company/admin/index.phtml:63
+#: module/Decision/view/decision/organ/index.phtml:8
+#: module/Decision/view/decision/admin/document.phtml:32
+#: module/Decision/view/decision/member/birthdays.phtml:5
+#: module/Activity/view/activity/admin/view.phtml:10
+#: module/Activity/view/activity/activity/view.phtml:11
+#: module/Activity/view/activity/activity/view.phtml:46
+#: module/Activity/view/activity/activity/create.phtml:36
+#: module/Activity/view/activity/activity/list.phtml:8
+#: module/User/view/user/api-admin/add.phtml:40
+#: module/User/view/user/api-admin/index.phtml:6
+#: module/Company/src/Company/Form/EditJob.php:46
+#: module/Company/src/Company/Form/EditCompany.php:53
+#: module/User/src/User/Form/ApiToken.php:21
+msgid "Name"
+msgstr "Naam"
+
+#: module/Company/view/company/admin/index.phtml:38
+msgid "Package expiry dates"
+msgstr ""
+
+#: module/Company/view/company/admin/index.phtml:39
+msgid "Package statuses"
+msgstr ""
+
+#: module/Company/view/company/admin/index.phtml:40
+#, fuzzy
+msgid "Actions"
+msgstr "Vereniging"
+
+#: module/Company/view/company/admin/index.phtml:65
+msgid "Package expiry date"
+msgstr ""
+
+#: module/Company/view/company/admin/index.phtml:66
+msgid "Package status"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:8
+msgid "Edit Company"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:17
+#: module/Company/view/company/admin/edit-company.phtml:18
+#, fuzzy
+msgid "Dutch logo"
+msgstr "Nederlandse titel"
+
+#: module/Company/view/company/admin/edit-company.phtml:19
+#: module/Company/view/company/admin/edit-company.phtml:20
+#, fuzzy
+msgid "English logo"
+msgstr "Engelse titel"
+
+#: module/Company/view/company/admin/edit-company.phtml:21
+#, fuzzy
+msgid "Packages"
+msgstr "Pagina's"
+
+#: module/Company/view/company/admin/edit-company.phtml:25
+msgid "Package"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:28
+#: module/Company/view/company/admin/edit-package.phtml:49
+#: module/Company/src/Company/Form/EditJob.php:62
+#: module/Company/src/Company/Form/EditJob.php:107
+#, fuzzy
+msgid "Active"
+msgstr "Activeer"
+
+#: module/Company/view/company/admin/edit-company.phtml:44
+#: module/Company/view/company/admin/edit-package.phtml:64
+msgid "edit"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:50
+msgid "delete"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:75
+msgid "Add Job package"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-company.phtml:82
+msgid "Add Banner package"
+msgstr ""
+
+#: module/Company/view/company/admin/delete-company.phtml:3
+msgid "Error: company not found"
+msgstr ""
+
+#: module/Company/view/company/admin/delete-company.phtml:11
+msgid "Do you really want to delete this company?"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-package.phtml:30
+msgid "Company Logo"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-package.phtml:46
+msgid "Job"
+msgstr ""
+
+#: module/Company/view/company/admin/edit-package.phtml:78
+msgid "Add job"
+msgstr ""
+
+#: module/Company/view/partial/company/company/grid/company.phtml:21
+msgid "job"
+msgstr ""
+
+#: module/Company/view/partial/company/company/grid/company.phtml:21
+msgid "jobs"
+msgstr ""
+
+#: module/Company/view/partial/company/admin/editors/company.phtml:43
+#: module/Activity/view/activity/activity/create.phtml:20
+#: module/Company/src/Company/Form/EditJob.php:36
+#: module/Company/src/Company/Form/EditCompany.php:63
+#, fuzzy
+msgid "English"
+msgstr "Engelse titel"
+
+#: module/Company/view/partial/company/admin/editors/company.phtml:73
+#: module/Activity/view/activity/activity/create.phtml:17
+#: module/Company/src/Company/Form/EditJob.php:35
+#: module/Company/src/Company/Form/EditCompany.php:64
+#, fuzzy
+msgid "Dutch"
+msgstr "Nederlandse titel"
+
 #: module/Decision/view/decision/organ/show.phtml:33
 msgid "Current members"
 msgstr "Huidige leden"
@@ -26,19 +254,13 @@ msgstr "Huidige leden"
 msgid "Old members"
 msgstr "Oud leden"
 
+#: module/Decision/view/decision/organ/show.phtml:49
+msgid "Organ mutations"
+msgstr ""
+
 #: module/Decision/view/decision/organ/index.phtml:7
 msgid "Abbreviation"
 msgstr "Afkoring"
-
-#: module/Decision/view/decision/organ/index.phtml:8
-#: module/Decision/view/decision/admin/document.phtml:32
-#: module/Decision/view/decision/member/birthdays.phtml:5
-#: module/Activity/view/activity/admin/view.phtml:10
-#: module/Activity/view/activity/activity/view.phtml:10
-#: module/Activity/view/activity/activity/create.phtml:10
-#: module/Activity/view/activity/activity/list.phtml:4
-msgid "Name"
-msgstr "Naam"
 
 #: module/Decision/view/decision/organ/index.phtml:9
 #: module/Decision/view/decision/decision/index.phtml:4
@@ -67,6 +289,7 @@ msgstr "Vergadernummer"
 
 #: module/Decision/view/decision/decision/index.phtml:6
 #: module/Decision/view/decision/member/birthdays.phtml:4
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:19
 msgid "Date"
 msgstr "Datum"
 
@@ -75,19 +298,10 @@ msgid "# Decisions"
 msgstr "# Besluiten"
 
 #: module/Decision/view/decision/decision/search.phtml:15
-#: module/Education/view/education/education/index.phtml:16
 #: module/Decision/src/Decision/Form/SearchDecision.php:21
 #: module/Education/src/Education/Form/SearchCourse.php:20
 msgid "Search query"
 msgstr "Zoek query"
-
-#: module/Decision/view/decision/decision/search.phtml:24
-#: module/Education/view/education/education/index.phtml:25
-#: module/Decision/src/Decision/Form/SearchDecision.php:29
-#: module/Decision/src/Decision/Form/SearchDecision.php:30
-#: module/Education/src/Education/Form/SearchCourse.php:28
-msgid "Search"
-msgstr "Zoek"
 
 #: module/Decision/view/decision/admin/document.phtml:2
 msgid "Meeting document uploaded"
@@ -104,7 +318,7 @@ msgid "Meeting"
 msgstr "Vergadering"
 
 #: module/Decision/view/decision/admin/notes.phtml:42
-#: module/Education/view/education/admin/upload.phtml:47
+#: module/Education/view/education/admin/summary.phtml:69
 msgid "Upload"
 msgstr "Upload"
 
@@ -117,141 +331,142 @@ msgid "years"
 msgstr "jaren"
 
 #: module/Decision/view/decision/member/view.phtml:10
-#: module/Decision/view/decision/member/index.phtml:30
+#: module/Decision/view/decision/member/index.phtml:34
 msgid "Gender"
 msgstr "Geslacht"
 
 #: module/Decision/view/decision/member/view.phtml:14
-#: module/Decision/view/decision/member/index.phtml:34
+#: module/Decision/view/decision/member/index.phtml:38
 msgid "Male"
 msgstr "Man"
 
 #: module/Decision/view/decision/member/view.phtml:17
-#: module/Decision/view/decision/member/index.phtml:37
+#: module/Decision/view/decision/member/index.phtml:41
 msgid "Female"
 msgstr "Vrouw"
 
 #: module/Decision/view/decision/member/view.phtml:20
-#: module/Decision/view/decision/member/index.phtml:40
+#: module/Decision/view/decision/member/index.phtml:44
 msgid "Other"
 msgstr "Anders"
 
 #: module/Decision/view/decision/member/view.phtml:26
-#: module/Decision/view/decision/member/index.phtml:46
+#: module/Decision/view/decision/member/index.phtml:50
+#: module/Company/src/Company/Form/EditJob.php:84
+#: module/Company/src/Company/Form/EditCompany.php:125
 msgid "Email"
 msgstr "Email"
 
 #: module/Decision/view/decision/member/view.phtml:30
-#: module/Decision/view/decision/member/index.phtml:50
+#: module/Decision/view/decision/member/index.phtml:54
 msgid "Birth date"
 msgstr "Geboortedatum"
 
 #: module/Decision/view/decision/member/view.phtml:34
-#: module/Decision/view/decision/member/index.phtml:54
+#: module/Decision/view/decision/member/index.phtml:58
 msgid "Generation"
 msgstr "Generatie"
 
 #: module/Decision/view/decision/member/view.phtml:39
-#: module/Decision/view/decision/member/index.phtml:88
+#: module/Decision/view/decision/member/index.phtml:92
 msgid "Membership of committees and fraternities"
 msgstr "Lidmaatschap van commissies en disputen"
 
 #: module/Decision/view/decision/member/view.phtml:50
-#: module/Decision/view/decision/member/index.phtml:99
+#: module/Decision/view/decision/member/index.phtml:103
 msgid "Adresses"
 msgstr "Adressen"
 
 #: module/Decision/view/decision/member/view.phtml:55
-#: module/Decision/view/decision/member/index.phtml:104
+#: module/Decision/view/decision/member/index.phtml:108
 msgid "Home address (parents)"
 msgstr "Thuisadres (ouders)"
 
 #: module/Decision/view/decision/member/view.phtml:58
-#: module/Decision/view/decision/member/index.phtml:107
+#: module/Decision/view/decision/member/index.phtml:111
 msgid "Student address"
 msgstr "Studentadres"
 
 #: module/Decision/view/decision/member/view.phtml:61
-#: module/Decision/view/decision/member/index.phtml:110
+#: module/Decision/view/decision/member/index.phtml:114
 msgid "Mail address"
 msgstr "E-mail adres"
 
 #: module/Decision/view/decision/member/view.phtml:67
-#: module/Decision/view/decision/member/index.phtml:116
+#: module/Decision/view/decision/member/index.phtml:120
 msgid "Country"
 msgstr "Land"
 
 #: module/Decision/view/decision/member/view.phtml:71
-#: module/Decision/view/decision/member/index.phtml:120
+#: module/Decision/view/decision/member/index.phtml:124
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
 #: module/Decision/view/decision/member/view.phtml:75
-#: module/Decision/view/decision/member/index.phtml:124
+#: module/Decision/view/decision/member/index.phtml:128
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
-#: module/Decision/view/decision/member/index.phtml:10
-#: module/User/view/user/user/register.phtml:19
+#: module/Decision/view/decision/member/index.phtml:14
 #: module/User/src/User/Form/Register.php:27
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
-#: module/Decision/view/decision/member/index.phtml:14
+#: module/Decision/view/decision/member/index.phtml:18
 msgid "Initials"
 msgstr "Initialen"
 
-#: module/Decision/view/decision/member/index.phtml:18
+#: module/Decision/view/decision/member/index.phtml:22
 msgid "First name"
 msgstr "Voornaam"
 
-#: module/Decision/view/decision/member/index.phtml:22
+#: module/Decision/view/decision/member/index.phtml:26
 msgid "Middle name"
 msgstr "Tussenvoegsels"
 
-#: module/Decision/view/decision/member/index.phtml:26
+#: module/Decision/view/decision/member/index.phtml:30
 msgid "Last name"
 msgstr "Achternaam"
 
-#: module/Decision/view/decision/member/index.phtml:58
+#: module/Decision/view/decision/member/index.phtml:62
 msgid "Membership type"
 msgstr "Type lidmaatschap"
 
-#: module/Decision/view/decision/member/index.phtml:62
+#: module/Decision/view/decision/member/index.phtml:66
 msgid "Ordinary"
 msgstr "Gewoon"
 
-#: module/Decision/view/decision/member/index.phtml:65
+#: module/Decision/view/decision/member/index.phtml:69
 msgid "Prolonged"
 msgstr "Geprolongeerd"
 
-#: module/Decision/view/decision/member/index.phtml:68
+#: module/Decision/view/decision/member/index.phtml:72
 msgid "External"
 msgstr "Extern"
 
-#: module/Decision/view/decision/member/index.phtml:71
+#: module/Decision/view/decision/member/index.phtml:75
 msgid "Extraordinary"
 msgstr "Buitengewoon"
 
-#: module/Decision/view/decision/member/index.phtml:74
+#: module/Decision/view/decision/member/index.phtml:78
 msgid "Honorary"
 msgstr "Erelidmaatschap"
 
-#: module/Decision/view/decision/member/index.phtml:80
+#: module/Decision/view/decision/member/index.phtml:84
 msgid "Last membership change"
 msgstr "Laatste wijziging lidmaatschap"
 
-#: module/Decision/view/decision/member/index.phtml:84
+#: module/Decision/view/decision/member/index.phtml:88
 msgid "End date of membership"
 msgstr "Einddatum van lidmaatschap"
 
-#: module/Decision/view/decision/member/index.phtml:128
+#: module/Decision/view/decision/member/index.phtml:132
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
 #: module/Decision/view/partial/photos.phtml:1
-#: module/Application/view/layout/layout.phtml:67
-#: module/Application/view/layout/layout.phtml:76
+#: module/Application/view/layout/layout.phtml:84
+#: module/Application/view/partial/admin-nav.phtml:57
 msgid "Photos"
 msgstr "Foto's"
 
@@ -259,138 +474,270 @@ msgstr "Foto's"
 msgid "GEWIS Website"
 msgstr "GEWIS Website"
 
-#: module/Application/view/layout/layout.phtml:58
-msgid "Home"
-msgstr "Home"
+#: module/Application/view/layout/layout.phtml:55
+#, fuzzy
+msgid "GEWIS Logo"
+msgstr "GEWIS"
 
-#: module/Application/view/layout/layout.phtml:59
 #: module/Application/view/layout/layout.phtml:62
-#: module/Application/view/layout/layout.phtml:65
 msgid "Association"
 msgstr "Vereniging"
 
+#: module/Application/view/layout/layout.phtml:65
+#, fuzzy
+msgid "General Meeting"
+msgstr "Generatie"
+
 #: module/Application/view/layout/layout.phtml:66
-#: module/Application/view/layout/layout.phtml:75
-msgid "Activities"
-msgstr "Activiteiten"
+msgid "Board 2015/2016"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:67
+#, fuzzy
+msgid "Commissions"
+msgstr "Rechten"
+
+#: module/Application/view/layout/layout.phtml:68
+#, fuzzy
+msgid "Fraternities"
+msgstr "Dispuut"
 
 #: module/Application/view/layout/layout.phtml:69
-#: module/Application/view/layout/layout.phtml:81
-msgid "Members"
-msgstr "Leden"
+#, fuzzy
+msgid "GEWIS song"
+msgstr "GEWIS"
 
-#: module/Application/view/layout/layout.phtml:73
-msgid "Companies"
-msgstr "Bedrijven"
+#: module/Application/view/layout/layout.phtml:70
+#, fuzzy
+msgid "Regulations"
+msgstr "Onderwijs"
 
-#: module/Application/view/layout/layout.phtml:74
+#: module/Application/view/layout/layout.phtml:82
+#: module/Application/view/partial/admin-nav.phtml:41
+#: module/Education/view/education/education/index.phtml:5
 msgid "Education"
 msgstr "Onderwijs"
 
-#: module/Application/view/layout/layout.phtml:79
+#: module/Application/view/layout/layout.phtml:83
+#: module/Application/view/partial/admin-nav.phtml:15
+#: module/Activity/view/activity/activity/list.phtml:2
+msgid "Activities"
+msgstr "Activiteiten"
+
+#: module/Application/view/layout/layout.phtml:88
+#: module/Application/view/layout/layout.phtml:90
+#: module/Application/view/layout/layout.phtml:99
+#: module/Activity/view/activity/activity/touch.phtml:75
+#: module/Activity/view/activity/activity/touch.phtml:120
+#: module/Activity/view/activity/activity/touch.phtml:248
+#: module/User/view/user/user/index.phtml:2
+#: module/User/view/user/user/index.phtml:24
 #: module/User/src/User/Form/Login.php:40
 msgid "Login"
 msgstr "Login"
 
-#: module/Application/view/layout/layout.phtml:85
+#: module/Application/view/layout/layout.phtml:94
+#: module/User/src/User/Form/Login.php:24
+msgid "Membership number or email address"
+msgstr "Lidnummer of email adres"
+
+#: module/Application/view/layout/layout.phtml:97
+#: module/User/view/user/user/activate.phtml:37
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: module/Application/view/layout/layout.phtml:100
+msgid "Or go to the"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:100
+msgid "registration page"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:107
+msgid "Members"
+msgstr "Leden"
+
+#: module/Application/view/layout/layout.phtml:111
 msgid "Signed in as"
 msgstr "Ingelogd als"
 
-#: module/Application/view/layout/layout.phtml:89
+#: module/Application/view/layout/layout.phtml:115
 msgid "My information"
 msgstr "Mijn informatie"
 
-#: module/Application/view/layout/layout.phtml:93
+#: module/Application/view/layout/layout.phtml:116
+msgid "SuSOS"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:122
+#: module/Activity/view/activity/activity/touch.phtml:54
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: module/Application/view/layout/layout.phtml:128
+#: module/Application/view/layout/layout.phtml:150
+msgid "Infima"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:155
 msgid "by WebCommissie GEWIS."
 msgstr "door de WebCommissie van GEWIS."
 
-#: module/Application/view/layout/layout.phtml:128
+#: module/Application/view/layout/layout.phtml:155
 msgid "All rights reserved."
 msgstr "Alle rechten voorbehouden."
 
-#: module/Application/view/error/404.phtml:1
+#: module/Application/view/layout/layout.phtml:160
+#, fuzzy
+msgid "Visiting address"
+msgstr "Studentadres"
+
+#: module/Application/view/layout/layout.phtml:162
+#: module/Application/view/layout/layout.phtml:172
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:12
+msgid "Study association GEWIS"
+msgstr "Studievereniging GEWIS"
+
+#: module/Application/view/layout/layout.phtml:166
+#: module/Application/view/layout/layout.phtml:176
+msgid "Netherlands"
+msgstr ""
+
+#: module/Application/view/layout/layout.phtml:170
+#, fuzzy
+msgid "Postal address"
+msgstr "E-mail adres"
+
+#: module/Application/view/error/404.phtml:3
 msgid "A 404 error occurred"
 msgstr "404: De pagina kon niet worden gevonden."
 
-#: module/Application/view/error/404.phtml:10
+#: module/Application/view/error/404.phtml:12
 msgid "The requested controller was unable to dispatch the request."
 msgstr "De opgevraagde controller kon deze aanvraag niet verwerken."
 
-#: module/Application/view/error/404.phtml:13
+#: module/Application/view/error/404.phtml:15
 msgid ""
 "The requested controller could not be mapped to an existing controller class."
 msgstr "Er is geen mapping beschikbaar voor de opgevraagde controller."
 
-#: module/Application/view/error/404.phtml:16
+#: module/Application/view/error/404.phtml:18
 msgid "The requested controller was not dispatchable."
 msgstr "De opgevraagde controller is niet bruikbaar."
 
-#: module/Application/view/error/404.phtml:19
+#: module/Application/view/error/404.phtml:21
 msgid "The requested URL could not be matched by routing."
 msgstr "Er is geen route gevonden die overeenkomt met de opgevraagde URL."
 
-#: module/Application/view/error/404.phtml:22
+#: module/Application/view/error/404.phtml:24
 msgid "We cannot determine at this time why a 404 was generated."
 msgstr ""
 "We kunnen op dit moment niet achterhalen waarom de pagina niet kon worden "
 "gevonden."
 
-#: module/Application/view/error/404.phtml:34
+#: module/Application/view/error/404.phtml:36
 msgid "Controller"
 msgstr "Controller"
 
-#: module/Application/view/error/404.phtml:41
+#: module/Application/view/error/404.phtml:43
 #, php-format
 msgid "resolves to %s"
 msgstr "verwijst naar %s"
 
-#: module/Application/view/error/404.phtml:53
-#: module/Application/view/error/index.phtml:8
+#: module/Application/view/error/404.phtml:55
+#: module/Application/view/error/index.phtml:10
 msgid "Additional information"
 msgstr "Meer informatie"
 
-#: module/Application/view/error/404.phtml:56
-#: module/Application/view/error/404.phtml:80
-#: module/Application/view/error/index.phtml:11
-#: module/Application/view/error/index.phtml:35
+#: module/Application/view/error/404.phtml:58
+#: module/Application/view/error/404.phtml:83
+#: module/Application/view/error/index.phtml:13
+#: module/Application/view/error/index.phtml:40
 msgid "File"
 msgstr "Bestand"
 
-#: module/Application/view/error/404.phtml:60
-#: module/Application/view/error/404.phtml:84
-#: module/Application/view/error/index.phtml:15
-#: module/Application/view/error/index.phtml:39
+#: module/Application/view/error/404.phtml:63
+#: module/Application/view/error/404.phtml:88
+#: module/Application/view/error/index.phtml:18
+#: module/Application/view/error/index.phtml:45
 msgid "Message"
 msgstr "Bericht"
 
-#: module/Application/view/error/404.phtml:64
-#: module/Application/view/error/404.phtml:88
-#: module/Application/view/error/index.phtml:19
-#: module/Application/view/error/index.phtml:43
+#: module/Application/view/error/404.phtml:67
+#: module/Application/view/error/404.phtml:92
+#: module/Application/view/error/index.phtml:23
+#: module/Application/view/error/index.phtml:50
 msgid "Stack trace"
 msgstr "Stack trace"
 
-#: module/Application/view/error/404.phtml:74
-#: module/Application/view/error/index.phtml:29
+#: module/Application/view/error/404.phtml:77
+#: module/Application/view/error/index.phtml:34
 msgid "Previous exceptions"
 msgstr "Vorige excepties"
 
-#: module/Application/view/error/404.phtml:103
-#: module/Application/view/error/index.phtml:58
+#: module/Application/view/error/404.phtml:107
+#: module/Application/view/error/index.phtml:66
 msgid "No Exception available"
 msgstr "Geen exceptie beschikbaar"
 
-#: module/Application/view/error/index.phtml:1
+#: module/Application/view/error/index.phtml:3
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
-#: module/Application/view/error/403.phtml:1
+#: module/Application/view/error/403.phtml:3
 msgid "403 Forbidden"
 msgstr "403 Verboden Toegang"
+
+#: module/Application/view/partial/admin-nav.phtml:19
+msgid "Career"
+msgstr ""
+
+#: module/Application/view/partial/admin-nav.phtml:25
+#, fuzzy
+msgid "Meetings"
+msgstr "Vergadering"
+
+#: module/Application/view/partial/admin-nav.phtml:29
+msgid "Notes"
+msgstr ""
+
+#: module/Application/view/partial/admin-nav.phtml:32
+#, fuzzy
+msgid "Documents"
+msgstr "Naam document"
+
+#: module/Application/view/partial/admin-nav.phtml:45
+#: module/Education/view/education/admin/bulk.phtml:8
+#, fuzzy
+msgid "Upload exams"
+msgstr "Upload"
+
+#: module/Application/view/partial/admin-nav.phtml:51
+msgid "Polls"
+msgstr ""
+
+#: module/Application/view/partial/admin-nav.phtml:54
+#: module/Frontpage/view/frontpage/page-admin/index.phtml:5
+msgid "Pages"
+msgstr "Pagina's"
+
+#: module/Application/view/partial/admin-nav.phtml:63
+msgid "Users"
+msgstr ""
+
+#: module/Application/view/partial/admin-nav.phtml:67
+msgid "API Users"
+msgstr ""
+
+#: module/Application/view/partial/paginator.phtml:9
+#: module/Photo/view/photo/photo/view.phtml:42
+msgid "Previous"
+msgstr "Vorige"
+
+#: module/Application/view/partial/paginator.phtml:23
+#: module/Photo/view/photo/photo/view.phtml:51
+msgid "Next"
+msgstr "Volgende"
 
 #: module/Activity/view/activity/admin/queue.phtml:1
 msgid "Unapproved Activities"
@@ -405,79 +752,83 @@ msgid "Disapproved Activities"
 msgstr "Afgekeurde activiteiten"
 
 #: module/Activity/view/activity/admin/view.phtml:6
-#: module/Activity/view/activity/activity/view.phtml:6
-#: module/Activity/view/activity/activity/list.phtml:3
+#: module/Activity/view/activity/activity/view.phtml:7
+#: module/Activity/view/activity/activity/list.phtml:7
 msgid "Id"
 msgstr "Id"
 
-#: module/Activity/view/activity/admin/view.phtml:14
-#: module/Activity/view/activity/activity/view.phtml:14
-#: module/Activity/view/activity/activity/create.phtml:18
-#: module/Activity/view/activity/activity/list.phtml:5
+#: module/Activity/view/activity/admin/view.phtml:15
+#: module/Activity/view/activity/activity/view.phtml:15
+#: module/Activity/view/activity/activity/create.phtml:47
+#: module/Activity/view/activity/activity/list.phtml:9
 msgid "Start time"
 msgstr "Starttijd"
 
-#: module/Activity/view/activity/admin/view.phtml:18
-#: module/Activity/view/activity/activity/view.phtml:18
-#: module/Activity/view/activity/activity/create.phtml:26
-#: module/Activity/view/activity/activity/list.phtml:6
+#: module/Activity/view/activity/admin/view.phtml:19
+#: module/Activity/view/activity/activity/view.phtml:19
+#: module/Activity/view/activity/activity/create.phtml:55
+#: module/Activity/view/activity/activity/list.phtml:10
 msgid "End time"
 msgstr "Eindtijd"
 
-#: module/Activity/view/activity/admin/view.phtml:22
-#: module/Activity/view/activity/activity/view.phtml:22
-#: module/Activity/view/activity/activity/create.phtml:34
-#: module/Activity/view/activity/activity/list.phtml:7
+#: module/Activity/view/activity/admin/view.phtml:23
+#: module/Activity/view/activity/activity/touch.phtml:215
+#: module/Activity/view/activity/activity/view.phtml:23
+#: module/Activity/view/activity/activity/create.phtml:63
+#: module/Activity/view/activity/activity/list.phtml:11
+#: module/Company/src/Company/Form/EditCompany.php:76
 msgid "Location"
 msgstr "Locatie"
 
-#: module/Activity/view/activity/admin/view.phtml:26
-#: module/Activity/view/activity/activity/view.phtml:26
-#: module/Activity/view/activity/activity/create.phtml:42
-#: module/Activity/view/activity/activity/list.phtml:8
+#: module/Activity/view/activity/admin/view.phtml:28
+#: module/Activity/view/activity/activity/touch.phtml:219
+#: module/Activity/view/activity/activity/view.phtml:27
+#: module/Activity/view/activity/activity/create.phtml:74
+#: module/Activity/view/activity/activity/list.phtml:12
 msgid "Costs"
 msgstr "Kosten"
 
-#: module/Activity/view/activity/admin/view.phtml:30
-#: module/Activity/view/activity/activity/view.phtml:30
-#: module/Activity/view/activity/activity/view.phtml:46
+#: module/Activity/view/activity/admin/view.phtml:33
+#: module/Activity/view/activity/activity/touch.phtml:229
+#: module/Activity/view/activity/activity/view.phtml:31
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: module/Activity/view/activity/admin/view.phtml:31
-#: module/Activity/view/activity/admin/view.phtml:35
-#: module/Activity/view/activity/activity/view.phtml:31
-#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Activity/view/activity/admin/view.phtml:34
+#: module/Activity/view/activity/admin/view.phtml:38
+#: module/Activity/view/activity/activity/view.phtml:32
+#: module/Activity/view/activity/activity/view.phtml:36
 #: module/Photo/view/partial/metadata.phtml:18
 msgid "Yes"
 msgstr "Ja"
 
-#: module/Activity/view/activity/admin/view.phtml:31
-#: module/Activity/view/activity/admin/view.phtml:35
-#: module/Activity/view/activity/activity/view.phtml:31
-#: module/Activity/view/activity/activity/view.phtml:35
+#: module/Activity/view/activity/admin/view.phtml:34
+#: module/Activity/view/activity/admin/view.phtml:38
+#: module/Activity/view/activity/activity/view.phtml:32
+#: module/Activity/view/activity/activity/view.phtml:36
 #: module/Photo/view/partial/metadata.phtml:18
 msgid "No"
 msgstr "Nee"
 
-#: module/Activity/view/activity/admin/view.phtml:34
-#: module/Activity/view/activity/activity/view.phtml:34
+#: module/Activity/view/activity/admin/view.phtml:37
+#: module/Activity/view/activity/activity/view.phtml:35
 msgid "Only GEWIS"
 msgstr "Alleen GEWIS"
 
-#: module/Activity/view/activity/admin/view.phtml:42
+#: module/Activity/view/activity/admin/view.phtml:45
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
 msgid "Approve"
 msgstr "Goedkeuren"
 
-#: module/Activity/view/activity/admin/view.phtml:47
+#: module/Activity/view/activity/admin/view.phtml:50
 msgid "Disapprove"
 msgstr "Afkeuren"
 
-#: module/Activity/view/activity/admin/view.phtml:58
+#: module/Activity/view/activity/admin/view.phtml:61
 msgid "Revoke approval"
 msgstr "Goedkeuring terugtrekken"
 
-#: module/Activity/view/activity/admin/view.phtml:69
+#: module/Activity/view/activity/admin/view.phtml:72
 msgid "Revoke disapproval"
 msgstr "Afkeuring terugtrekken"
 
@@ -489,23 +840,93 @@ msgstr "Succesvol uitgeschreven"
 msgid "Successfully subscribed"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/view/activity/activity/view.phtml:40
-msgid "You have already signed up for this activity!"
-msgstr "Je bent al ingeschreven voor deze activiteit!"
+#: module/Activity/view/activity/activity/touch.phtml:51
+msgid "Signup for GEWIS activities"
+msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:42
+#: module/Activity/view/activity/activity/touch.phtml:67
+msgid "Log in"
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:71
+#: module/Activity/view/activity/activity/touch.phtml:245
+msgid ""
+"To sign up for an activity you must login using an RFID pass or your SuSOS "
+"pincode."
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:83
+msgid "Welcome"
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:87
+#, php-format
+msgid "Welcome %s. Tap an activity to view it."
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:93
+#, fuzzy
+msgid "Upcoming activities"
+msgstr "Niet goedgekeurde activiteiten"
+
+#: module/Activity/view/activity/activity/touch.phtml:124
+msgid "Login failed"
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:125
+#, fuzzy
+msgid "Incorrect membership number or pin"
+msgstr "Lidmaatschapsnummer"
+
+#: module/Activity/view/activity/activity/touch.phtml:130
+#, fuzzy
+msgid "GEWIS #"
+msgstr "GEWIS"
+
+#: module/Activity/view/activity/activity/touch.phtml:138
+msgid "Pin"
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:210
+#, fuzzy
+msgid "Date / time"
+msgstr "Datum/tijd"
+
+#: module/Activity/view/activity/activity/touch.phtml:223
+msgid "Attendees"
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:233
+#: module/Activity/view/activity/activity/view.phtml:69
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:49
-msgid "Login to subscribe"
-msgstr "Login om in te schrijven"
+#: module/Activity/view/activity/activity/touch.phtml:237
+msgid "Activity subscription failed"
+msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:56
+#: module/Activity/view/activity/activity/touch.phtml:238
+#: module/Activity/view/activity/activity/touch.phtml:242
+msgid "please try again later or use the website."
+msgstr ""
+
+#: module/Activity/view/activity/activity/touch.phtml:241
+msgid "Failed to unsubscribe from this activity"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:41
 msgid "Already subscribed"
 msgstr "Je bent al ingeschreven"
 
-#: module/Activity/view/activity/activity/view.phtml:69
+#: module/Activity/view/activity/activity/view.phtml:67
+msgid "You have already signed up for this activity!"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/view/activity/activity/view.phtml:73
+msgid "Login to subscribe"
+msgstr "Login om in te schrijven"
+
+#: module/Activity/view/activity/activity/view.phtml:97
 msgid "Back"
 msgstr "Terug"
 
@@ -513,31 +934,37 @@ msgstr "Terug"
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
 
-#: module/Activity/view/activity/activity/create.phtml:46
-#: module/Photo/view/partial/metadata.phtml:6
-#: module/Photo/view/partial/metadata.phtml:10
-#: module/Photo/view/partial/metadata.phtml:22
-#: module/Photo/view/partial/metadata.phtml:26
-#: module/Photo/view/partial/metadata.phtml:30
-#: module/Photo/view/partial/metadata.phtml:34
-#: module/Photo/view/partial/metadata.phtml:38
-msgid "Unknown"
-msgstr "Onbekend"
+#: module/Activity/view/activity/activity/create.phtml:2
+#, fuzzy
+msgid "Create activity"
+msgstr "Maak nieuwe activiteit"
 
-#: module/Activity/view/activity/activity/create.phtml:51
+#: module/Activity/view/activity/activity/create.phtml:25
+msgid "Language"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:85
 msgid "Can Sign up?"
 msgstr "Kan ingeschreven worden?"
 
-#: module/Activity/view/activity/activity/create.phtml:59
-msgid "Description"
-msgstr "Beschrijving"
+#: module/Activity/view/activity/activity/create.phtml:107
+msgid "Extra fields"
+msgstr ""
 
-#: module/Activity/view/activity/activity/list.phtml:20
+#: module/Activity/view/activity/activity/create.phtml:110
+msgid "Add a field"
+msgstr ""
+
+#: module/Activity/view/activity/activity/create.phtml:111
+msgid "Remove the last field"
+msgstr ""
+
+#: module/Activity/view/activity/activity/list.phtml:24
 msgid "View"
 msgstr "Laat zien"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:16
-#: module/Photo/view/photo/album-admin/index.phtml:29
+#: module/Photo/view/photo/album-admin/index.phtml:30
 msgid "Photo admin"
 msgstr "Foto admin"
 
@@ -555,7 +982,7 @@ msgid "Move the photo to another album"
 msgstr "Verplaats de foto naar een ander album"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:78
-#: module/Photo/view/photo/album-admin/index.phtml:249
+#: module/Photo/view/photo/album-admin/index.phtml:250
 msgid "Select a new parent album"
 msgstr "Selecteer een nieuwe bovenliggende album"
 
@@ -564,14 +991,15 @@ msgid "The photo has been moved"
 msgstr "De foto is verplaatst"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:87
-#: module/Photo/view/photo/album-admin/index.phtml:167
-#: module/Photo/view/photo/album-admin/index.phtml:258
+#: module/Photo/view/photo/album-admin/index.phtml:168
+#: module/Photo/view/photo/album-admin/index.phtml:259
 msgid "Move"
 msgstr "Verplaats"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:100
-#: module/Photo/view/photo/album-admin/index.phtml:180
-#: module/Photo/view/photo/album-admin/index.phtml:212
+#: module/Photo/view/photo/album-admin/index.phtml:181
+#: module/Photo/view/photo/album-admin/index.phtml:213
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:143
 msgid "Delete confirmation"
 msgstr "Bevestig verwijderen"
 
@@ -592,116 +1020,106 @@ msgid "The photo has been deleted"
 msgstr "De foto is verwijderd"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:119
-#: module/Photo/view/photo/album-admin/index.phtml:199
-#: module/Photo/view/photo/album-admin/index.phtml:231
+#: module/Photo/view/photo/album-admin/index.phtml:200
+#: module/Photo/view/photo/album-admin/index.phtml:232
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:154
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:200
 msgid "Cancel"
 msgstr "Annuleer"
+
+#: module/Photo/view/photo/photo/weekly.phtml:1
+msgid "Picture of the week"
+msgstr ""
+
+#: module/Photo/view/photo/photo/weekly.phtml:2
+msgid "Current picture of the week"
+msgstr ""
+
+#: module/Photo/view/photo/photo/weekly.phtml:12
+msgid "Old pictures of the week"
+msgstr ""
+
+#: module/Photo/view/photo/photo/weekly.phtml:20
+msgid "Week"
+msgstr ""
 
 #: module/Photo/view/photo/photo/view.phtml:12
 msgid "Return to album"
 msgstr "Terug naar album"
 
-#: module/Photo/view/photo/photo/view.phtml:33
+#: module/Photo/view/photo/photo/view.phtml:35
 msgid "Full resolution"
 msgstr "Volledige resolutie"
-
-#: module/Photo/view/photo/photo/view.phtml:40
-#: module/Photo/view/partial/paginator.phtml:9
-msgid "Previous"
-msgstr "Vorige"
-
-#: module/Photo/view/photo/photo/view.phtml:49
-#: module/Photo/view/partial/paginator.phtml:23
-msgid "Next"
-msgstr "Volgende"
 
 #: module/Photo/view/photo/album-admin/add.phtml:10
 msgid "Upload photos"
 msgstr "Upload foto's"
 
-#: module/Photo/view/photo/album-admin/add.phtml:21
-msgid "Import photos"
-msgstr "Importeer foto's"
-
-#: module/Photo/view/photo/album-admin/add.phtml:24
-msgid "The photos have been imported succesfully"
-msgstr "De foto's zijn succesvol geimporteerd."
-
-#: module/Photo/view/photo/album-admin/add.phtml:34
-msgid ""
-"Make sure that the folder permissions on your import folder are set such "
-"that the webserver user can read the files inside of it. Please note that "
-"importing a large amount of photos may take a while."
-msgstr ""
-"Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de "
-"bestanden in de map kan bereiken. Het importeren van een grote hoeveelheid "
-"foto's kan een lange tijd duren."
-
-#: module/Photo/view/photo/album-admin/index.phtml:75
+#: module/Photo/view/photo/album-admin/index.phtml:76
 msgid "Other albums"
 msgstr "Andere albums"
 
-#: module/Photo/view/photo/album-admin/index.phtml:88
+#: module/Photo/view/photo/album-admin/index.phtml:89
 msgid "Create new album"
 msgstr "Maak nieuw album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:92
+#: module/Photo/view/photo/album-admin/index.phtml:93
 msgid "Edit album"
 msgstr "Wijzig album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:95
+#: module/Photo/view/photo/album-admin/index.phtml:96
 msgid "Add photos"
 msgstr "Voeg foto's toe"
 
-#: module/Photo/view/photo/album-admin/index.phtml:97
+#: module/Photo/view/photo/album-admin/index.phtml:98
 msgid "Move album"
 msgstr "Verplaats album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:100
+#: module/Photo/view/photo/album-admin/index.phtml:101
 msgid "Move %i photos"
 msgstr "Verplaats %i foto's"
 
-#: module/Photo/view/photo/album-admin/index.phtml:103
+#: module/Photo/view/photo/album-admin/index.phtml:104
 msgid "Regenerate album cover"
 msgstr "Genereer album cover opnieuw"
 
-#: module/Photo/view/photo/album-admin/index.phtml:107
-#: module/Photo/view/photo/album-admin/index.phtml:198
+#: module/Photo/view/photo/album-admin/index.phtml:108
+#: module/Photo/view/photo/album-admin/index.phtml:199
 msgid "Delete album"
 msgstr "Verwijder album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:110
+#: module/Photo/view/photo/album-admin/index.phtml:111
 msgid "Delete %i photos"
 msgstr "Verwijder %i foto's"
 
-#: module/Photo/view/photo/album-admin/index.phtml:128
+#: module/Photo/view/photo/album-admin/index.phtml:129
 msgid "Generate a new cover photo"
 msgstr "Genereer nieuwe cover foto"
 
-#: module/Photo/view/photo/album-admin/index.phtml:138
+#: module/Photo/view/photo/album-admin/index.phtml:139
 msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
-#: module/Photo/view/photo/album-admin/index.phtml:140
+#: module/Photo/view/photo/album-admin/index.phtml:141
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:108
 #: module/Photo/src/Photo/Form/EditAlbum.php:44
 #: module/Frontpage/src/Frontpage/Form/Page.php:77
 msgid "Save"
 msgstr "Opslaan"
 
-#: module/Photo/view/photo/album-admin/index.phtml:153
+#: module/Photo/view/photo/album-admin/index.phtml:154
 msgid "Move the album"
 msgstr "Verplaats het album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:158
+#: module/Photo/view/photo/album-admin/index.phtml:159
 msgid "Select a new parent for the album"
 msgstr "Selecteer een nieuwe bovenliggende album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:162
+#: module/Photo/view/photo/album-admin/index.phtml:163
 msgid "The album has been moved"
 msgstr "Het album is verplaatst"
 
-#: module/Photo/view/photo/album-admin/index.phtml:184
+#: module/Photo/view/photo/album-admin/index.phtml:185
 msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <b>This action can not be reverted.</b>"
@@ -709,15 +1127,15 @@ msgstr ""
 "Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze "
 "actie kan niet ongedaan gemaakt worden</strong>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:187
+#: module/Photo/view/photo/album-admin/index.phtml:188
 msgid "Please wait while the album is being deleted."
 msgstr "Wacht terwijl dit album verwijderd wordt."
 
-#: module/Photo/view/photo/album-admin/index.phtml:193
+#: module/Photo/view/photo/album-admin/index.phtml:194
 msgid "The album has been deleted"
 msgstr "Dit album kan verwijderd worden."
 
-#: module/Photo/view/photo/album-admin/index.phtml:216
+#: module/Photo/view/photo/album-admin/index.phtml:217
 msgid ""
 "Are you sure you want to delete the selected items? <b>This action can not "
 "be reverted.</b>"
@@ -725,23 +1143,23 @@ msgstr ""
 "Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze "
 "actie kan niet ongedaan gemaakt worden</strong>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:219
+#: module/Photo/view/photo/album-admin/index.phtml:220
 msgid "Please wait while the photos are being deleted."
 msgstr "Wacht a.u.b. terwijl de foto's verwijderd worden."
 
-#: module/Photo/view/photo/album-admin/index.phtml:225
+#: module/Photo/view/photo/album-admin/index.phtml:226
 msgid "The photos have been been deleted"
 msgstr "De foto's zijn verwijderd"
 
-#: module/Photo/view/photo/album-admin/index.phtml:230
+#: module/Photo/view/photo/album-admin/index.phtml:231
 msgid "Delete photos"
 msgstr "Verwijder foto's"
 
-#: module/Photo/view/photo/album-admin/index.phtml:244
+#: module/Photo/view/photo/album-admin/index.phtml:245
 msgid "Move the photos to another album"
 msgstr "Verplaats de foto's naar een ander album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:253
+#: module/Photo/view/photo/album-admin/index.phtml:254
 msgid "The photos have been moved"
 msgstr "De foto's zijn verplaatst"
 
@@ -758,6 +1176,16 @@ msgstr "Nieuw album"
 #: module/Photo/view/partial/metadata.phtml:5
 msgid "Artist"
 msgstr "Artiest"
+
+#: module/Photo/view/partial/metadata.phtml:6
+#: module/Photo/view/partial/metadata.phtml:10
+#: module/Photo/view/partial/metadata.phtml:22
+#: module/Photo/view/partial/metadata.phtml:26
+#: module/Photo/view/partial/metadata.phtml:30
+#: module/Photo/view/partial/metadata.phtml:34
+#: module/Photo/view/partial/metadata.phtml:38
+msgid "Unknown"
+msgstr "Onbekend"
 
 #: module/Photo/view/partial/metadata.phtml:9
 msgid "Camera"
@@ -791,13 +1219,43 @@ msgstr "Aperture"
 msgid "ISO"
 msgstr "ISO"
 
-#: module/Photo/view/partial/tags.phtml:3
+#: module/Photo/view/partial/tags.phtml:4
 msgid "People in this photo"
 msgstr "Mensen in deze foto"
 
-#: module/Photo/view/partial/tags.phtml:23
+#: module/Photo/view/partial/tags.phtml:24
 msgid "Tag someone"
 msgstr "Tag iemand"
+
+#: module/User/view/user/api-admin/add.phtml:1
+msgid "Add a token"
+msgstr ""
+
+#: module/User/view/user/api-admin/add.phtml:28
+#: module/User/src/User/Form/ApiToken.php:29
+msgid "Create API token"
+msgstr ""
+
+#: module/User/view/user/api-admin/add.phtml:36
+msgid "Token was succesfully generated"
+msgstr ""
+
+#: module/User/view/user/api-admin/add.phtml:44
+#: module/User/view/user/api-admin/index.phtml:7
+msgid "Token"
+msgstr ""
+
+#: module/User/view/user/api-admin/index.phtml:1
+msgid "API Tokens"
+msgstr ""
+
+#: module/User/view/user/api-admin/index.phtml:19
+msgid "Remove"
+msgstr ""
+
+#: module/User/view/user/api-admin/index.phtml:26
+msgid "Add new Token"
+msgstr ""
 
 #: module/User/view/user/email/register.phtml:1
 #, php-format
@@ -841,54 +1299,143 @@ msgid "You are logged out."
 msgstr "Je bent uitgelogd."
 
 #: module/User/view/user/user/register.phtml:2
+#: module/User/view/user/user/register.phtml:23
+#: module/User/src/User/Form/Register.php:43
+msgid "Register"
+msgstr "Registreer"
+
+#: module/User/view/user/user/register.phtml:7
 #, php-format
 msgid "You have been registered. An email has been sent to %s for activation."
 msgstr ""
 "Je hebt je account geregistreerd. Een email is naar %s toegestuurd voor "
 "activatie."
 
-#: module/User/view/user/user/register.phtml:29
-#: module/User/src/User/Form/Register.php:35
-msgid "E-mail address"
-msgstr "E-mail adres"
-
-#: module/User/view/user/user/register.phtml:38
-#: module/User/src/User/Form/Register.php:43
-msgid "Register"
-msgstr "Registreer"
-
-#: module/User/view/user/user/index.phtml:2
+#: module/User/view/user/user/index.phtml:7
 msgid "You are logged in."
 msgstr "Je bent ingelogd."
 
-#: module/User/view/user/user/index.phtml:38
+#: module/User/view/user/user/index.phtml:60
 #, php-format
 msgid "If you don't have an account yet, go to the %sRegistration page%s"
 msgstr "Als je nog geen account hebt, ga naar de %sRegistratie pagina%s"
 
 #: module/User/view/user/user/activate.phtml:2
+#: module/User/view/user/user/activate.phtml:23
+#: module/User/src/User/Form/Activate.php:37
+msgid "Activate"
+msgstr "Activeer"
+
+#: module/User/view/user/user/activate.phtml:7
 msgid "Your account has been activated. You are now able to login."
 msgstr "Je account is geactiveerd. Je kunt nu inloggen."
 
-#: module/User/view/user/user/activate.phtml:20
+#: module/User/view/user/user/activate.phtml:32
 #, php-format
 msgid ""
 "Welcome %s. Create your password for the website and activate your account."
 msgstr ""
 "Welkom %s. Maak hier je wachtwoord voor de website en activeer je account."
 
-#: module/User/view/user/user/activate.phtml:26
-msgid "Password"
-msgstr "Wachtwoord"
-
-#: module/User/view/user/user/activate.phtml:36
+#: module/User/view/user/user/activate.phtml:49
 msgid "Verify password"
 msgstr "Verifier wachtwoord"
 
-#: module/User/view/user/user/activate.phtml:45
-#: module/User/src/User/Form/Activate.php:37
-msgid "Activate"
-msgstr "Activeer"
+#: module/Frontpage/view/frontpage/admin/index.phtml:1
+msgid ""
+"Welcome to the admin interface of the GEWIS website. If you are experiencing "
+"any issues or have a question, please contact the web committee"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:12
+msgid "Polls awaiting approval"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:17
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:29
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:93
+#: module/Frontpage/src/Frontpage/Form/Poll.php:21
+#, fuzzy
+msgid "Dutch question"
+msgstr "Nederlandse titel"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:18
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:32
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:96
+#: module/Frontpage/src/Frontpage/Form/Poll.php:29
+#, fuzzy
+msgid "English question"
+msgstr "Engelse titel"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:20
+#, fuzzy
+msgid "Submitter"
+msgstr "Verzend"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:21
+#, fuzzy
+msgid "Approver"
+msgstr "Goedkeuren"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:38
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:102
+#, fuzzy
+msgid "Dutch option"
+msgstr "Nederlandse inhoud"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:39
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:103
+#, fuzzy
+msgid "English option"
+msgstr "Engelse inhoud"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:75
+#, fuzzy
+msgid "Approved polls"
+msgstr "Goedkeuren"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:146
+#, fuzzy
+msgid "Are you sure you want to delete this poll?"
+msgstr "Weet je zeker dat je wilt uitloggen?"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:152
+#, fuzzy
+msgid "Delete poll"
+msgstr "Verwijder foto"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:169
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:196
+#: module/Frontpage/src/Frontpage/Form/PollApproval.php:28
+#, fuzzy
+msgid "Approve poll"
+msgstr "Goedkeuren"
+
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:172
+#, fuzzy
+msgid "Are you sure that you want to approve this poll?"
+msgstr "Weet je zeker dat je wilt uitloggen?"
+
+#: module/Frontpage/view/frontpage/poll/index.phtml:3
+msgid "Current poll"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll/index.phtml:15
+msgid "Unfortunately there currently is no poll :("
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll/index.phtml:28
+msgid "Old polls"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll/request.phtml:4
+msgid "Your poll request has been received and will be reviewed shortly."
+msgstr ""
+
+#: module/Frontpage/view/frontpage/poll/request.phtml:17
+#, fuzzy
+msgid "Add option"
+msgstr "Voeg foto's toe"
 
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:13
 msgid "URL options"
@@ -920,10 +1467,6 @@ msgstr "Rechten"
 msgid "Delete this page"
 msgstr "Verwijder deze pagina"
 
-#: module/Frontpage/view/frontpage/page-admin/index.phtml:5
-msgid "Pages"
-msgstr "Pagina's"
-
 #: module/Frontpage/view/frontpage/page-admin/index.phtml:9
 msgid "Create a new page"
 msgstr "Maak een nieuwe pagina"
@@ -932,62 +1475,145 @@ msgstr "Maak een nieuwe pagina"
 msgid "Or select a page to edit below."
 msgstr "Of selecteer hieronder een pagina om te wijzigen."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:3
-msgid "Study association GEWIS"
-msgstr "Studievereniging GEWIS"
+#: module/Frontpage/view/frontpage/page/page.phtml:5
+msgid "Home"
+msgstr "Home"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:4
-#, php-format
-msgid ""
-"Welcome to the website of Study association %sGEWIS%s. This is just a "
-"bootstrap thingy for now, until the design is implemented."
-msgstr ""
-"Welkom op de website van Studievereniging %sGEWIS%s. Dit is slechts een "
-"bootstrap dingetje op het moment, totdat het design geimplementeerd is."
-
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:5
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:15
 msgid "Fork the GEWIS website on GitHub"
 msgstr "Fork de GEWIS website op GitHub"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:9
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:20
 msgid "Agenda"
 msgstr "Agenda"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:26
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:39
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:37
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:48
+msgid "Complete agenda"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:61
+msgid "News"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:95
 msgid "Birthdays today!"
 msgstr "Verjaardagen vandaag!"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:48
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:106
 #, php-format
 msgid "%s wil be %s years old today!"
 msgstr "%s wordt vandaag %s jaar oud!"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:53
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:111
 msgid "Nobody seems to have a birthday today, be the first one!"
 msgstr "Niemand heeft een verjaardag vandaag!"
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:118
+msgid "Photo of the week"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:134
+msgid "Poll"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:146
+msgid "View the results"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:149
+msgid "There currently is no poll."
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:150
+msgid "Request a poll"
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:151
+msgid "view old polls"
+msgstr ""
+
+#: module/Frontpage/view/partial/poll.phtml:57
+msgid "1 vote"
+msgstr ""
+
+#: module/Education/view/education/admin/edit.phtml:2
+msgid "Upload of all exams was finished."
+msgstr ""
 
 #: module/Education/view/education/admin/index.phtml:1
 msgid "Education admin"
 msgstr "Onderwijs admin"
 
-#: module/Education/view/education/admin/upload.phtml:2
-msgid "Exam successfully uploaded!"
+#: module/Education/view/education/admin/summary.phtml:2
+#, fuzzy
+msgid "Summary successfully uploaded!"
 msgstr "Tentamen geupload!"
 
-#: module/Education/view/education/admin/upload.phtml:19
-#: module/Education/view/education/education/index.phtml:36
-#: module/Education/src/Education/Form/Upload.php:20
+#: module/Education/view/education/education/index.phtml:11
+msgid "Books"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:17
+#: module/Education/view/education/education/index.phtml:34
+#, fuzzy
+msgid "Exams"
+msgstr "Tentamen van %s"
+
+#: module/Education/view/education/education/index.phtml:23
+msgid "Dreamspark"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:29
+#, fuzzy
+msgid "Complaints"
+msgstr "Bedrijven"
+
+#: module/Education/view/education/education/index.phtml:38
+msgid "Zoeken naar oude tentamens en eventuele uitwerkingen"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:54
+msgid "Vakcode/vaknaam"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:72
+#: module/Education/src/Education/Form/Fieldset/Exam.php:28
+#: module/Education/src/Education/Form/SummaryUpload.php:24
 msgid "Course code"
 msgstr "Vakcode"
 
-#: module/Education/view/education/education/index.phtml:37
+#: module/Education/view/education/education/index.phtml:73
 msgid "Course description"
 msgstr "Vakomschrijving"
+
+#: module/Education/view/education/education/index.phtml:90
+msgid "Voor oude tentamens van minor vakken kun je ook kijken bij:"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:92
+msgid "Technische Natuurkunde"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:93
+msgid "Biomedische Technologie"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:94
+msgid "Elektrotechniek"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:95
+msgid "Scheikundige Technologie"
+msgstr ""
+
+#: module/Education/view/education/education/index.phtml:96
+msgid "Technische Innovatiewetenschappen"
+msgstr ""
 
 #: module/Education/view/education/education/course.phtml:11
 msgid "Course parts"
@@ -997,11 +1623,126 @@ msgstr "Vakonderdelen"
 msgid "Exams and summaries"
 msgstr "Tentamens en samenvattingen"
 
-#: module/Education/view/education/education/course.phtml:26
+#: module/Education/view/education/education/course.phtml:30
+#: module/Education/view/education/education/course.phtml:43
+#, php-format
+msgid "Summary by %s of %s"
+msgstr ""
+
 #: module/Education/view/education/education/course.phtml:32
+#: module/Education/view/education/education/course.phtml:45
 #, php-format
 msgid "Exam of %s"
 msgstr "Tentamen van %s"
+
+#: module/Company/src/Company/Service/Company.php:18
+#: module/Company/src/Company/Service/Company.php:32
+#, fuzzy
+msgid "You are not allowed list the companies"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:47
+#, fuzzy
+msgid "You are not allowed to acces the admin interface"
+msgstr "Je hebt niet de rechten om nieuw pagina's te maken."
+
+#: module/Company/src/Company/Service/Company.php:174
+#, fuzzy
+msgid "You are not allowed to insert a company"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:213
+#, fuzzy
+msgid "You are not allowed to insert a package"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:251
+#, fuzzy
+msgid "You are not allowed to insert a job"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:270
+#, fuzzy
+msgid "You are not allowed to delete packages"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:287
+#, fuzzy
+msgid "You are not allowed to delete companies"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:313
+#, fuzzy
+msgid "You are not allowed to edit packages"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:338
+#, fuzzy
+msgid "You are not allowed to edit companies"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Service/Company.php:356
+#, fuzzy
+msgid "You are not allowed to edit jobs"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Company/src/Company/Form/EditJob.php:55
+#: module/Company/src/Company/Form/EditCompany.php:42
+#, fuzzy
+msgid "Permalink"
+msgstr "Rechten"
+
+#: module/Company/src/Company/Form/EditJob.php:74
+#: module/Company/src/Company/Form/EditCompany.php:87
+#: module/Company/src/Company/Form/EditCompany.php:97
+#, fuzzy
+msgid "Website"
+msgstr "GEWIS Website"
+
+#: module/Company/src/Company/Form/EditJob.php:93
+#: module/Company/src/Company/Form/EditCompany.php:135
+msgid "Phone"
+msgstr ""
+
+#: module/Company/src/Company/Form/EditJob.php:114
+#: module/Company/src/Company/Form/EditPackage.php:74
+#: module/Company/src/Company/Form/EditCompany.php:183
+#, fuzzy
+msgid "Submit changes"
+msgstr "Verzend"
+
+#: module/Company/src/Company/Form/EditPackage.php:29
+#: module/Photo/src/Photo/Form/EditAlbum.php:28
+msgid "Start date"
+msgstr "Startdatum"
+
+#: module/Company/src/Company/Form/EditPackage.php:40
+#, fuzzy
+msgid "Expiration date"
+msgstr "Datum tentamen"
+
+#: module/Company/src/Company/Form/EditPackage.php:50
+msgid "Published"
+msgstr ""
+
+#: module/Company/src/Company/Form/EditPackage.php:65
+msgid "Banner"
+msgstr ""
+
+#: module/Company/src/Company/Form/EditCompany.php:61
+msgid "Languages"
+msgstr ""
+
+#: module/Company/src/Company/Form/EditCompany.php:106
+#: module/Company/src/Company/Form/EditCompany.php:115
+msgid "Slogan"
+msgstr ""
+
+#: module/Company/src/Company/Form/EditCompany.php:145
+#: module/Company/src/Company/Form/EditCompany.php:155
+#, fuzzy
+msgid "Logo"
+msgstr "Uitloggen"
 
 #: module/Decision/src/Decision/Service/Member.php:29
 msgid "You are not allowed to view membership info."
@@ -1097,7 +1838,8 @@ msgid "Notes to upload"
 msgstr "Te uploaden notulen"
 
 #: module/Decision/src/Decision/Form/Notes.php:57
-#: module/Education/src/Education/Form/Upload.php:45
+#: module/Frontpage/src/Frontpage/Form/Poll.php:50
+#: module/Education/src/Education/Form/SummaryUpload.php:57
 msgid "Submit"
 msgstr "Verzend"
 
@@ -1108,6 +1850,96 @@ msgstr "Er zijn al notulen voor deze vergadering"
 #: module/Application/src/Application/Service/FileStorage.php:52
 msgid "An unknown error occurred during uploading (%i)"
 msgstr "Een onbekende fout vond plaats tijdens het uploaden van (%i)"
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:109
+#, fuzzy
+msgid "Use the form to subscribe"
+msgstr "Login om in te schrijven"
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:115
+msgid "You can not subscribe to this activity at this moment"
+msgstr ""
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:120
+#, fuzzy
+msgid "You need to log in to subscribe"
+msgstr "Login om in te schrijven"
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:129
+msgid "Wrong form"
+msgstr ""
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:137
+#, fuzzy
+msgid "You have already been subscribed for this activity"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:161
+#, fuzzy
+msgid "You have to be logged in to subscribe for this activity"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/src/Activity/Controller/ActivityController.php:170
+#, fuzzy
+msgid "You are not subscribed for this activity!"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/src/Activity/Service/Activity.php:46
+#: module/Activity/src/Activity/Service/Activity.php:169
+#, fuzzy
+msgid "You are not allowed to create an activity"
+msgstr "Je hebt niet de rechten om nieuw pagina's te maken."
+
+#: module/Activity/src/Activity/Service/Activity.php:65
+#: module/Activity/src/Activity/Service/Activity.php:85
+#: module/Activity/src/Activity/Service/Activity.php:105
+#: module/Activity/src/Activity/Service/Signup.php:119
+#, fuzzy
+msgid "You are not allowed to view the activities"
+msgstr "Je hebt niet de rechten om deze pagina te bekijken."
+
+#: module/Activity/src/Activity/Service/Activity.php:125
+#, fuzzy
+msgid "You are not allowed to view approved the activities"
+msgstr "Het is niet toegestaan om notulen te zien."
+
+#: module/Activity/src/Activity/Service/Activity.php:146
+#, fuzzy
+msgid "You are not allowed to view the disapproved activities"
+msgstr "Je hebt niet de rechten om de lijst met pagina's te bekijken."
+
+#: module/Activity/src/Activity/Service/Activity.php:313
+#: module/Activity/src/Activity/Service/Activity.php:333
+#: module/Activity/src/Activity/Service/Activity.php:353
+#, fuzzy
+msgid "You are not allowed to change the status of the activity"
+msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
+
+#: module/Activity/src/Activity/Service/Signup.php:47
+#: module/Activity/src/Activity/Service/Signup.php:163
+#, fuzzy
+msgid "You need to be logged in to sign up for this activity"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/src/Activity/Service/Signup.php:67
+#, fuzzy
+msgid "You are not allowed to view who is signed up for this activity"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
+
+#: module/Activity/src/Activity/Service/Signup.php:85
+#, fuzzy
+msgid "You are not allowed to view the sign up data"
+msgstr "Je hebt niet de rechten om deze pagina te bekijken."
+
+#: module/Activity/src/Activity/Service/Signup.php:138
+#, fuzzy
+msgid "You are not allowed to view activities which you signed up for"
+msgstr "Het is niet toegestaan om lidinformatie in te zien."
+
+#: module/Activity/src/Activity/Service/Signup.php:214
+#, fuzzy
+msgid "You need to be logged in to sign off for this activity"
+msgstr "Je bent al ingeschreven voor deze activiteit!"
 
 #: module/Photo/src/Photo/Service/Photo.php:25
 #: module/Photo/src/Photo/Service/Photo.php:43
@@ -1129,16 +1961,16 @@ msgstr "Het is niet toegestaan om foto's te verwijderen."
 msgid "Not allowed to move photos"
 msgstr "Het is niet toegestaan om foto's te verplaatsen"
 
-#: module/Photo/src/Photo/Service/Photo.php:343
-#: module/Photo/src/Photo/Service/Photo.php:420
+#: module/Photo/src/Photo/Service/Photo.php:357
+#: module/Photo/src/Photo/Service/Photo.php:434
 msgid "Not allowed to view tags."
 msgstr "Het is niet toegestaan om tags te zien"
 
-#: module/Photo/src/Photo/Service/Photo.php:362
+#: module/Photo/src/Photo/Service/Photo.php:376
 msgid "Not allowed to add tags."
 msgstr "Het is niet toegestaan om tags toe te voegen"
 
-#: module/Photo/src/Photo/Service/Photo.php:394
+#: module/Photo/src/Photo/Service/Photo.php:408
 msgid "Not allowed to remove tags."
 msgstr "Het is niet toegestaan om tags te verwijderen"
 
@@ -1192,27 +2024,23 @@ msgstr "Het is niet toegestaan om foto's te importeren."
 msgid "The specified path is not valid"
 msgstr "Het gespecificeerde pad is niet valide"
 
-#: module/Photo/src/Photo/Service/Admin.php:150
-msgid "Not allowed to upload photos."
-msgstr "Het is niet toegestaan om foto's te uploaden."
-
-#: module/Photo/src/Photo/Service/Admin.php:164
+#: module/Photo/src/Photo/Service/Admin.php:160
 msgid "An unknown error occurred during uploading ("
 msgstr "Een onbekende error vond plaats tijdens het uploaden van ("
 
-#: module/Photo/src/Photo/Service/Admin.php:180
-#: module/Frontpage/src/Frontpage/Service/Page.php:182
+#: module/Photo/src/Photo/Service/Admin.php:176
+#: module/Frontpage/src/Frontpage/Service/Page.php:204
 msgid "The uploaded file does not have a valid extension"
 msgstr "Het geuploade bestand heeft geen valide extensie"
 
-#: module/Photo/src/Photo/Service/Admin.php:185
-#: module/Frontpage/src/Frontpage/Service/Page.php:187
+#: module/Photo/src/Photo/Service/Admin.php:181
+#: module/Frontpage/src/Frontpage/Service/Page.php:209
 msgid "The uploaded file is not a valid image"
 msgstr "Het geuploade bestand is geen valide plaatje"
 
-#: module/Photo/src/Photo/Form/EditAlbum.php:28
-msgid "Start date"
-msgstr "Startdatum"
+#: module/Photo/src/Photo/Service/Admin.php:193
+msgid "Not allowed to upload photos."
+msgstr "Het is niet toegestaan om foto's te uploaden."
 
 #: module/Photo/src/Photo/Form/EditAlbum.php:36
 msgid "End date"
@@ -1222,9 +2050,29 @@ msgstr "Einddatum"
 msgid "Create"
 msgstr "Maak"
 
+#: module/User/src/User/Service/ApiUser.php:35
+#: module/User/src/User/Service/ApiUser.php:69
+#, fuzzy
+msgid "You are not allowed to view API tokens"
+msgstr "Het is niet toegestaan om vergaderingen te zien."
+
+#: module/User/src/User/Service/ApiUser.php:51
+#, fuzzy
+msgid "You are not allowed to remove API tokens"
+msgstr "Het is niet toegestaan om vergaderingen te zien."
+
+#: module/User/src/User/Service/ApiUser.php:142
+#, fuzzy
+msgid "You are not allowed to add API tokens"
+msgstr "Het is niet toegestaan om notulen te uploaden."
+
 #: module/User/src/User/Service/Email.php:38
 msgid "Account activation code for the GEWIS Website"
 msgstr "Activatiecode voor je account op de GEWIS Website"
+
+#: module/User/src/User/Form/Register.php:35
+msgid "E-mail address"
+msgstr "E-mail adres"
 
 #: module/User/src/User/Form/Register.php:61
 msgid "This email address does not be long to the given member."
@@ -1237,10 +2085,6 @@ msgstr "Er is geen lid met dit lidmaatschapsnummer."
 #: module/User/src/User/Form/Register.php:75
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
-
-#: module/User/src/User/Form/Login.php:24
-msgid "Membership number or email address"
-msgstr "Lidnummer of email adres"
 
 #: module/User/src/User/Form/Login.php:32
 #: module/User/src/User/Form/Activate.php:21
@@ -1263,17 +2107,37 @@ msgstr "Verifieer je wachtwoord"
 msgid "You are not allowed to view this page."
 msgstr "Je hebt niet de rechten om deze pagina te bekijken."
 
-#: module/Frontpage/src/Frontpage/Service/Page.php:72
+#: module/Frontpage/src/Frontpage/Service/Page.php:94
 msgid "You are not allowed to view the list of pages."
 msgstr "Je hebt niet de rechten om de lijst met pagina's te bekijken."
 
-#: module/Frontpage/src/Frontpage/Service/Page.php:130
+#: module/Frontpage/src/Frontpage/Service/Page.php:152
 msgid "You are not allowed to edit pages."
 msgstr "Je hebt niet de rechten om pagina's te wijzigen."
 
-#: module/Frontpage/src/Frontpage/Service/Page.php:203
+#: module/Frontpage/src/Frontpage/Service/Page.php:225
 msgid "You are not allowed to create new pages."
 msgstr "Je hebt niet de rechten om nieuw pagina's te maken."
+
+#: module/Frontpage/src/Frontpage/Service/Poll.php:137
+#, fuzzy
+msgid "You are not allowed to vote on this poll."
+msgstr "Je hebt niet de rechten om deze pagina te bekijken."
+
+#: module/Frontpage/src/Frontpage/Service/Poll.php:185
+#, fuzzy
+msgid "You are not allowed to request polls"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Frontpage/src/Frontpage/Service/Poll.php:202
+#, fuzzy
+msgid "You are not allowed to delete polls"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+
+#: module/Frontpage/src/Frontpage/Service/Poll.php:241
+#, fuzzy
+msgid "You are not allowed to approve polls"
+msgstr "Het is niet toegestaan om notulen te uploaden."
 
 #: module/Frontpage/src/Frontpage/Form/Page.php:36
 msgid "Dutch title"
@@ -1287,27 +2151,72 @@ msgstr "Engelse titel"
 msgid "Required role"
 msgstr "Verplichte rol"
 
-#: module/Education/src/Education/Service/Exam.php:179
+#: module/Frontpage/src/Frontpage/Form/PollApproval.php:20
+msgid "Expiration date for the poll (YYYY-MM-DD)"
+msgstr ""
+
+#: module/Education/src/Education/Service/Exam.php:266
+#, fuzzy
+msgid "You are not allowed to upload summaries"
+msgstr "Het is niet toegestaan om tentamens te uploaden"
+
+#: module/Education/src/Education/Service/Exam.php:284
+#: module/Education/src/Education/Service/Exam.php:324
 msgid "You are not allowed to upload exams"
 msgstr "Het is niet toegestaan om tentamens te uploaden"
 
-#: module/Education/src/Education/Form/Upload.php:28
+#: module/Education/src/Education/Form/Fieldset/Exam.php:36
 msgid "Exam date"
 msgstr "Datum tentamen"
 
-#: module/Education/src/Education/Form/Upload.php:36
-#: module/Education/src/Education/Form/Upload.php:39
+#: module/Education/src/Education/Form/Bulk.php:33
+msgid "Finalize exam uploads"
+msgstr ""
+
+#: module/Education/src/Education/Form/SummaryUpload.php:32
+#, fuzzy
+msgid "Summary date"
+msgstr "Startdatum"
+
+#: module/Education/src/Education/Form/SummaryUpload.php:40
+msgid "Author"
+msgstr ""
+
+#: module/Education/src/Education/Form/SummaryUpload.php:48
+#: module/Education/src/Education/Form/SummaryUpload.php:51
+#, fuzzy
+msgid "Summary to upload"
+msgstr "Tentamen"
+
+#: module/Education/src/Education/Form/TempUpload.php:21
+#: module/Education/src/Education/Form/TempUpload.php:24
 msgid "Exam to upload"
 msgstr "Tentamen"
 
+#~ msgid "Import photos"
+#~ msgstr "Importeer foto's"
+
+#~ msgid "The photos have been imported succesfully"
+#~ msgstr "De foto's zijn succesvol geimporteerd."
+
+#~ msgid ""
+#~ "Make sure that the folder permissions on your import folder are set such "
+#~ "that the webserver user can read the files inside of it. Please note that "
+#~ "importing a large amount of photos may take a while."
+#~ msgstr ""
+#~ "Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de "
+#~ "bestanden in de map kan bereiken. Het importeren van een grote "
+#~ "hoeveelheid foto's kan een lange tijd duren."
+
+#~ msgid ""
+#~ "Welcome to the website of Study association %sGEWIS%s. This is just a "
+#~ "bootstrap thingy for now, until the design is implemented."
+#~ msgstr ""
+#~ "Welkom op de website van Studievereniging %sGEWIS%s. Dit is slechts een "
+#~ "bootstrap dingetje op het moment, totdat het design geimplementeerd is."
+
 #~ msgid "Welcome to %sGEWIS%s"
 #~ msgstr "Welkom op de %sGEWIS%s website"
-
-#~ msgid "GEWIS"
-#~ msgstr "GEWIS"
-
-#~ msgid "Are you sure you want to logout?"
-#~ msgstr "Weet je zeker dat je wilt uitloggen?"
 
 #~ msgid "Sex"
 #~ msgstr "Geslacht"
