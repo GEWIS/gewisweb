@@ -52,6 +52,18 @@ class EditPackage extends Form
                 ],
             ],
         ]);
+        if ($type === "featured") {
+            $this->add([
+                'name' => 'description',
+                'type' => 'Zend\Form\Element\Textarea',
+                'options' => [
+                    'label' => $translate->translate('Description'),
+                ],
+                'attributes' => [
+                    'type' => 'textarea',
+                ],
+            ]);
+        }
         if ($type === "banner") {
             $this->add([
                 'name' => 'banner',
@@ -63,6 +75,17 @@ class EditPackage extends Form
                     'label' => $translate->translate('Banner'),
                 ],
 
+            ]);
+            $this->add([
+                'type' => 'Zend\Form\Element\Radio',
+                'name' => 'language',
+                'options' => [
+                    'label' => 'Language',
+                    'value_options' => [
+                        'nl' => $translate->translate('Dutch'),
+                        'en' => $translate->translate('English'),
+                    ],
+                ],
             ]);
         }
         $this->add([
