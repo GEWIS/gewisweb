@@ -24,28 +24,30 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
         // todo
     }
 
-    public function publish()
+    /**
+     * The featured package content article.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $article;
+
+    /**
+     * Get the featured package's article text
+     *
+     * @return string
+     */
+    public function getArticle()
     {
-        // todo
+        return $this->article;
     }
 
-    public function unpublish()
+    /**
+     * Set the featured package's article text
+     *
+     * @param string $image
+     */
+    public function setArticle($article)
     {
-        // todo
-    }
-
-    public function create()
-    {
-        // todo
-    }
-
-    public function save()
-    {
-        // todo   
-    }
-
-    public function delete()
-    {
-        // todo
+        $this->article = $article;
     }
 }
