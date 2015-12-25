@@ -50,4 +50,31 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     {
         $this->article = $article;
     }
+
+    /**
+     * The packet's language.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $language;
+
+    /**
+     * Get the packet's language.
+     * 
+     * @return string language of the packet
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set the packet's language.
+     * 
+     * @param string $language language of the packet
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
 }
