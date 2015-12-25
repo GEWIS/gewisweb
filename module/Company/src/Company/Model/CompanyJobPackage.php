@@ -56,7 +56,7 @@ class CompanyJobPackage extends CompanyPackage
     public function getNumberOfActiveJobs()
     {
         if ($this->isActive()) {
-            return count(array_filter($this->jobs, function($job) {
+            return count(array_filter($this->jobs, function ($job) {
                 return $job->isActive();
             }
         }
