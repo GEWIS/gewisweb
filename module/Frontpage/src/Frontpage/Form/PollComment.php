@@ -67,7 +67,7 @@ class PollComment extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 16
+                            'min' => 8
                         ]
                     ]
                 ]
