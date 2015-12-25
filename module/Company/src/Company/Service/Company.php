@@ -107,7 +107,7 @@ class Company extends AbstractACLService
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
-                    if ($oldPath != '' && oldPath != newPath) {
+                    if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 }

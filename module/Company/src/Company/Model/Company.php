@@ -435,6 +435,8 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the translation identified by $language
      *
+     * Note, does not set $logo, the user should set this property himself
+     *
      * @param mixed $data
      * @param mixed $language
      */
@@ -453,7 +455,8 @@ class Company // implements ArrayHydrator (for zend2 form)
             $translation->setWebsite($this->updateIfSet($data[($language).'website'], ''));
             $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
             $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
-            $translation->setLogo($this->updateIfSet($data[$language.'logo'], ''));
+
+            // Do not set logo, because most likely, $data[logo] is bogus. instead, the user should set this property himself later.
             return $translation;
         }
     }
