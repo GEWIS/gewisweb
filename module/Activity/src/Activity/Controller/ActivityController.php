@@ -7,6 +7,7 @@ use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ActivitySignup as SignupForm;
+use Activity\Form\ModifyRequest as RequestForm;
 use Zend\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
@@ -59,6 +60,7 @@ class ActivityController extends AbstractActionController
             'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $session->lang),
             'form' => $form,
+            'signoffForm' => new RequestForm('activitysignoff','Unsubscribe'),
             'fields' => $fields
         ];
     }
@@ -105,7 +107,6 @@ class ActivityController extends AbstractActionController
 
         $translator = $activityService->getTranslator();
 
-//        $params = $this->viewAction();
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params = $this->viewAction();
@@ -168,6 +169,23 @@ class ActivityController extends AbstractActionController
 
         $activity = $activityService->getActivity($id);
         $translator = $activityService->getTranslator();
+
+        //Assure a form is used
+        if (!$this->getRequest()->isPost()){
+            $params = $this->viewAction();
+            $params['error'] = $translator->translate('Use the form to unsubscribe');
+            return $params;
+        }
+
+        $form = new RequestForm('activitysignoff');
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $params = $this->viewAction();
+            $params['error'] = $translator->translate('Wrong form');
+            return $params;
+        }
 
         if (!$signupService->isAllowedToSubscribe()) {
             $params = $this->viewAction();
