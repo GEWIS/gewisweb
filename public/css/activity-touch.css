@@ -34,17 +34,7 @@ body {
     text-size-adjust: none;
 }
 
-.navbar-inverse {
-    color: #fff;
-    background-color: #D40026;
-}
-
-.jumbotron-header > .container {
-    height: 150px;
-}
-
 .panel-primary > .panel-heading {
-    background-color: #D40026;
     font-size: 20px;
 }
 
@@ -69,15 +59,17 @@ body {
     width: 100%;
     z-index: 100;
     position: fixed;
-    padding-top: 20px;
 }
 
+.jumbotron-mini {
+    height: 150px;
+}
 .container-fluid {
     padding-top: 20px;
 }
 
 .modal-dialog {
-    position: absolute;
+    position: absolute !important;
     top: 50% !important;
     transform: translate(0, -50%) !important;
     -ms-transform: translate(0, -50%) !important;
@@ -93,7 +85,7 @@ body {
 #loginModal > .modal-dialog {
     margin-left: 35%;
     width: 30%;
-    height: 58%;
+    height: 62%;
 }
 
 #logoutModal > .modal-dialog {
@@ -113,7 +105,7 @@ body {
 
 .modal-body {
     position: absolute;
-    top: 45px;
+    top: 15px;
     bottom: 45px;
     left: 0;
     right: 0;
@@ -130,7 +122,6 @@ body {
 
 .modal-title {
     text-align: center;
-
 }
 
 .logged-in {
@@ -140,11 +131,10 @@ body {
 .btn-keypad {
     width: 100%;
     /* Hack to make height equal to width */
-    height: 0;
-    padding-bottom: 20%;
-    padding-top: 15%;
-
-    line-height: 100%;
+    height: 0 !important;
+    padding-bottom: 20% !important;
+    padding-top: 15% !important;
+    line-height: 100% !important;
 }
 
 .digit-input {
