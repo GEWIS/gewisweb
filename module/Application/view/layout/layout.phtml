@@ -115,7 +115,7 @@ function getIsActiveClass($view, array $condition)
                                     <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
                                     <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                                     <?php if ($member->getOrganInstallations()->count() > 0): ?>
-                                        <li><a href="<?= $this->url('Admin') ?>">Admin</a></li>
+                                        <li><a href="<?= $this->url('admin') ?>">Admin</a></li>
                                     <?php endif; ?>
                                     <li><a href="<?= $this->url('user/default', [
                                         'action' => 'logout'
