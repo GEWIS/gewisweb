@@ -6,7 +6,6 @@ use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
-use Activity\Form\ActivitySignup as SignupForm;
 use Activity\Form\ModifyRequest as RequestForm;
 use Zend\View\Model\ViewModel;
 
