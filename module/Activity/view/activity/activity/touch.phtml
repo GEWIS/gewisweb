@@ -20,8 +20,8 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
     <!-- Le styles -->
     <?php echo $this->headLink()
         ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css')
         ->prependStylesheet($this->basePath() . '/css/activity-touch.css')
+        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css')
     ?>
     <!-- Scripts -->
     <?php echo $this->headScript()
@@ -52,7 +52,13 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                 <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
             </a>
         </div>
-        <h3><?= $this->translate('Signup for GEWIS activities'); ?></h3>
+
+        <ul class="nav navbar-nav">
+            <li>
+                <h3><?= $this->translate('Signup for GEWIS activities'); ?></h3>
+            </li>
+        </ul>
+
         <ul class="nav navbar-nav navbar-right logged-in">
             <li onclick="Activity.Touch.logout()"><h3><?= $this->translate('Logout') ?></h3></a></li>
         </ul>
