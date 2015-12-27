@@ -105,9 +105,10 @@ class ActivityController extends AbstractActionController
 
         $translator = $activityService->getTranslator();
 
-        $params = $this->viewAction();
+//        $params = $this->viewAction();
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('Use the form to subscribe');
             return $params;
         }
@@ -116,11 +117,13 @@ class ActivityController extends AbstractActionController
 
         // Assure you can sign up for this activity
         if (!$activity->getCanSignup() || $subscriptionDeadLinePassed) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
             return $params;
         }
 
         if (!$signupService->isAllowedToSubscribe()) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You need to log in to subscribe');
             return $params;
         }
@@ -130,6 +133,7 @@ class ActivityController extends AbstractActionController
 
         //Assure the form is valid
         if (!$form->isValid()){
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('Wrong form');
             return $params;
         }
@@ -137,12 +141,16 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         $user = $identity->getMember();
 
+        //Assure the user is not subscribed yet
         if ($signupService->isSignedUp($activity, $user)) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You have already been subscribed for this activity');
-        } else {
-            $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
-            $params['success'] = true;
+            return $params;
         }
+
+        $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+        $params = $this->viewAction();
+        $params['success'] = true;
 
         return $params;
     }
@@ -162,8 +170,8 @@ class ActivityController extends AbstractActionController
         $translator = $activityService->getTranslator();
 
         if (!$signupService->isAllowedToSubscribe()) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You have to be logged in to subscribe for this activity');
-
             return $params;
         }
 
@@ -171,12 +179,14 @@ class ActivityController extends AbstractActionController
         $user = $identity->getMember();
 
         if (!$signupService->isSignedUp($activity, $user)) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You are not subscribed for this activity!');
-        } else {
-            $signupService->signOff($activity, $user);
-            $params['success'] = true;
+            return $params;
         }
+
+        $signupService->signOff($activity, $user);
         $params = $this->viewAction();
+        $params['success'] = true;
 
         return $params;
     }
