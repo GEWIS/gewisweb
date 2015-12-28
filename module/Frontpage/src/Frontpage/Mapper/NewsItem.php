@@ -40,6 +40,23 @@ class NewsItem
     {
         return $this->getRepository()->find($newsItemId);
     }
+
+    /**
+     * Retrieves a certain number of news items sorted descending by their date.
+     *
+     * @param integer $count
+     *
+     * @return array
+     */
+    public function getLatestNewsItems($count)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('newsItem');
+        $qb->orderBy('newsItem.date', 'DESC')
+            ->setMaxResults($count);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Returns a paginator adapter for paging through all news items.
      *

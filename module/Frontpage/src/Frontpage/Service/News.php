@@ -38,6 +38,18 @@ class News extends AbstractAclService
     }
 
     /**
+     * Retrieves a certain number of news items sorted descending by their date.
+     *
+     * @param integer $count
+     *
+     * @return array
+     */
+    public function getLatestNewsItems($count)
+    {
+        return $this->getNewsItemMapper()->getLatestNewsItems($count);
+    }
+
+    /**
      * Creates a news item.
      *
      * @param array $data form post data
