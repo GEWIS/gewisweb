@@ -29,6 +29,11 @@ class News extends AbstractAclService
      */
     public function getPaginatorAdapter()
     {
+        if (!$this->isAllowed('list')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to list all news items.')
+            );
+        }
         return $this->getNewsItemMapper()->getPaginatorAdapter();
     }
 
