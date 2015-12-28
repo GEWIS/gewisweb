@@ -16,7 +16,7 @@ class ActivityController extends AbstractActionController
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $activities = $activityService->getApprovedActivities();
- 
+
         return ['activities' => $activities];
     }
 
@@ -43,9 +43,10 @@ class ActivityController extends AbstractActionController
             $form = null;
         }
 
+        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         return [
             'activity' => $activity,
-            'canSignUp' => $activity->getCanSignUp(),
+            'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed,
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($activity),
@@ -103,15 +104,18 @@ class ActivityController extends AbstractActionController
 
         $translator = $activityService->getTranslator();
         
-        $params = $this->viewAction();        
+        $params = $this->viewAction();
+
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = $translator->translate('Use the form to subscribe');
             return $params;
         }
-        
+
+        $subscriptionDeadLinePassed = ($activity->getSubscriptionDeadline() < new \DateTime());
+
         // Assure you can sign up for this activity
-        if (!$activity->getCanSignup()) {
+        if (!$activity->getCanSignup() || $subscriptionDeadLinePassed) {
             $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
             return $params;
         }
