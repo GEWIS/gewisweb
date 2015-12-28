@@ -15,16 +15,35 @@ class PollController extends AbstractActionController
     public function indexAction()
     {
         $pollService = $this->getPollService();
-        $poll = $pollService->getNewestPoll();
+
+        $poll = $this->obtainPoll();
+
         if (!is_null($poll)) {
             $details = $pollService->getPollDetails($poll);
 
             return new ViewModel(array_merge($details, [
                 'poll' => $poll,
+                'commentForm' => $pollService->getCommentForm()
             ]));
         }
 
         return new ViewModel();
+    }
+
+    /**
+     * Get the right from the route.
+     *
+     * @param int $pollId
+     */
+    public function obtainPoll()
+    {
+        $pollService = $this->getPollService();
+        $pollId = $this->params()->fromRoute('poll_id');
+
+        if (is_null($pollId)) {
+            return $pollService->getNewestPoll();
+        }
+        return $pollService->getPoll($pollId);
     }
 
     /**
@@ -39,6 +58,25 @@ class PollController extends AbstractActionController
             $pollService->submitVote($pollService->getPollOption($optionId));
             $this->redirect()->toRoute('poll');
         }
+    }
+
+    /**
+     * Submits a comment.
+     */
+    public function commentAction()
+    {
+        $request = $this->getRequest();
+        $service = $this->getPollService();
+
+        if ($request->isPost()) {
+            $pollId = $this->params()->fromRoute('poll_id');
+            $service->createComment($pollId, $request->getPost());
+        }
+
+        // execute the index action and show the poll
+        $vm = $this->indexAction();
+        $vm->setTemplate('frontpage/poll/index');
+        return $vm;
     }
 
     /**

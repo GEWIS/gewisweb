@@ -49,7 +49,7 @@ class Module
                     $form = new \Frontpage\Form\Page(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator_page'));
+                    $form->setHydrator($sm->get('frontpage_hydrator'));
 
                     return $form;
                 },
@@ -57,28 +57,28 @@ class Module
                     $form = new \Frontpage\Form\Poll(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator_poll'));
+                    $form->setHydrator($sm->get('frontpage_hydrator'));
 
+                    return $form;
+                },
+                'frontpage_form_poll_comment' => function ($sm) {
+                    $form = new \Frontpage\Form\PollComment(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('frontpage_hydrator'));
                     return $form;
                 },
                 'frontpage_form_poll_approval' => function ($sm) {
                     $form = new \Frontpage\Form\PollApproval(
                         $sm->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator_poll'));
+                    $form->setHydrator($sm->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_hydrator_page' => function ($sm) {
+                'frontpage_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('frontpage_doctrine_em'),
-                        'Frontpage\Model\Page'
-                    );
-                },
-                'frontpage_hydrator_poll' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('frontpage_doctrine_em'),
-                        'Frontpage\Model\Poll'
+                        $sm->get('frontpage_doctrine_em')
                     );
                 },
                 'frontpage_mapper_page' => function ($sm) {
@@ -96,9 +96,10 @@ class Module
 
                     $acl->addResource('page');
                     $acl->addResource('poll');
+                    $acl->addResource('poll_comment');
 
-                    $acl->allow('user', 'poll', 'vote');
-                    $acl->allow('user', 'poll', 'request');
+                    $acl->allow('user', 'poll', ['vote', 'request']);
+                    $acl->allow('user', 'poll_comment', ['view', 'create']);
 
                     return $acl;
                 },

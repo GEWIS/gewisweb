@@ -7,6 +7,7 @@ return [
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
             'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
             'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
+            'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',
         ],
     ],
     'router' => [
@@ -156,6 +157,18 @@ return [
                             ],
                         ],
                     ],
+                    'comment' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:poll_id]/comment',
+                            'constraints' => [
+                                'poll_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'comment',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
@@ -208,6 +221,19 @@ return [
                         ],
                     ],
                 ],
+                'priority' => 100
+            ],
+            'admin' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/admin[/]',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'Admin',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
                 'priority' => 100
             ],
         ],
