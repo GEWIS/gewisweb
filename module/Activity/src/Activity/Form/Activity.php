@@ -152,6 +152,13 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'subscriptionDeadline',
+            'attributes' => [
+                'type' => 'text'
+            ]
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -267,9 +274,13 @@ class Activity extends Form implements InputFilterProviderInterface
             'endTime' => [
                 'required' => true,
             ],
+
             'canSignUp' => [
                 'required' => true
             ],
+            'subscriptionDeadline' => [
+                'required' => true
+            ]
         ];
 
 

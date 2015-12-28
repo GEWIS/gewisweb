@@ -182,6 +182,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
+        $activity->setSubscriptionDeadline(new \DateTime($params['subscriptionDeadline']));
 
         if ($dutch ) {
             $activity->setName($params['name']);
