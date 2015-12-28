@@ -88,8 +88,8 @@ class News extends AbstractAclService
     public function deleteNewsItem($newsItemId)
     {
         $newsItem = $this->getNewsItemById($newsItemId);
-        $this->getPageMapper()->remove($newsItem);
-        $this->getPageMapper()->flush();
+        $this->getNewsItemMapper()->remove($newsItem);
+        $this->getNewsItemMapper()->flush();
     }
 
     /**
