@@ -5,9 +5,7 @@ namespace Activity\Controller;
 use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Activity\Form\ActivitySignup as SignupForm;
-use Zend\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {
@@ -17,14 +15,9 @@ class ActivityController extends AbstractActionController
     public function indexAction()
     {
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $session = new SessionContainer('lang');
         $activities = $activityService->getApprovedActivities();
-        $translatedActivities = [];
-        foreach ($activities as $activity){
-            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $session->lang);
-        }
-        return ['activities' => $translatedActivities];
+ 
+        return ['activities' => $activities];
     }
 
     /**
@@ -34,28 +27,29 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $session = new SessionContainer('lang');
 
         /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
 
-        $translatedActivity = $translatorService->getTranslatedActivity($activity, $session->lang);
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
-        $fields = $translatedActivity->getFields();
         if ($signupService->isAllowedToSubscribe()) {
+            $fields = $activity->getFields();
             $form = $signupService->getForm($fields);
+        } else {
+            $fields = null;
+            $form = null;
         }
+
         return [
-            'activity' => $translatedActivity,
+            'activity' => $activity,
             'canSignUp' => $activity->getCanSignUp(),
             'isLoggedIn' => $identity !== 'guest',
-            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
-            'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
-            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $session->lang),
+            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($activity, $identity->getMember()),
+            'signedUp' => $signupService->getSignedUpUsers($activity),
+            'signupData' => $signupService->getSignedUpData($activity),
             'form' => $form,
             'fields' => $fields
         ];
@@ -108,14 +102,14 @@ class ActivityController extends AbstractActionController
         $activity = $activityService->getActivity($id);
 
         $translator = $activityService->getTranslator();
-
-        $params = $this->viewAction();
+        
+        $params = $this->viewAction();        
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
             $params['error'] = $translator->translate('Use the form to subscribe');
             return $params;
         }
-
+        
         // Assure you can sign up for this activity
         if (!$activity->getCanSignup()) {
             $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
@@ -127,7 +121,7 @@ class ActivityController extends AbstractActionController
             return $params;
         }
 
-        $form = $signupService->getForm($activity->getFields());
+        $form = new SignupForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
@@ -181,14 +175,5 @@ class ActivityController extends AbstractActionController
         $params = $this->viewAction();
 
         return $params;
-    }
-
-    public function touchAction()
-    {
-        $viewModel = new ViewModel();
-        $viewModel->setVariables(array('key' => 'value'))
-            ->setTerminal(true);
-
-        return $viewModel;
     }
 }

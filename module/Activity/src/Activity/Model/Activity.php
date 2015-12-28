@@ -234,7 +234,7 @@ class Activity
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getSubscriptionDeadline()
     {

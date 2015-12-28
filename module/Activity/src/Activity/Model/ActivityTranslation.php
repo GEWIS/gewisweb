@@ -40,6 +40,11 @@ class ActivityTranslation
     protected $endTime;
 
     /**
+     * The end time for subscription
+     */
+    protected $subscriptionDeadline;
+
+    /**
      * The location the activity is held at.
      */
     protected $location;
@@ -155,6 +160,22 @@ class ActivityTranslation
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getSubscriptionDeadline()
+    {
+        return $this->subscriptionDeadline;
+    }
+
+    /**
+     * @param mixed $subscriptionDeadline
+     */
+    public function setSubscriptionDeadline($subscriptionDeadline)
+    {
+        $this->subscriptionDeadline = $subscriptionDeadline;
+    }
+
+    /**
      * @return string
      */
     public function getLocation()
@@ -167,7 +188,7 @@ class ActivityTranslation
      */
     public function setLocation($location)
     {
-            $this->location = $location;
+        $this->location = $location;
     }
 
     /**
