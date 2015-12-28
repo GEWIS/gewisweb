@@ -49,6 +49,7 @@ class News extends AbstractAclService
             return false;
         }
 
+        $newsItem->setDate(new \DateTime());
         $this->getNewsItemMapper()->persist($newsItem);
         $this->getNewsItemMapper()->flush();
 

@@ -61,7 +61,7 @@ class NewsAdminController extends AbstractActionController
     public function editAction()
     {
         $newsService = $this->getNewsService();
-        $newsItemId = $this->params()->fromRoute('page_id');
+        $newsItemId = $this->params()->fromRoute('item_id');
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($newsService->updateNewsItem($newsItemId, $request->getPost())) {
