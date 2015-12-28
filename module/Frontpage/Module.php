@@ -100,6 +100,11 @@ class Module
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
+                'frontpage_mapper_news_item' => function ($sm) {
+                    return new Mapper\NewsItem(
+                        $sm->get('frontpage_doctrine_em')
+                    );
+                },
                 'frontpage_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
