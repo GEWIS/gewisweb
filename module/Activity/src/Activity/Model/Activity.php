@@ -58,6 +58,13 @@ class Activity
     protected $endTime;
 
     /**
+     * The end time for subscription
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $subscriptionDeadline;
+
+    /**
      * The location the activity is held at.
      *
      * @ORM\Column(type="string", nullable=true)
@@ -224,6 +231,22 @@ class Activity
     public function setEndTime($endTime)
     {
         $this->endTime = $endTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubscriptionDeadline()
+    {
+        return $this->subscriptionDeadline;
+    }
+
+    /**
+     * @param mixed $subscriptionDeadline
+     */
+    public function setSubscriptionDeadline($subscriptionDeadline)
+    {
+        $this->subscriptionDeadline = $subscriptionDeadline;
     }
 
     /**

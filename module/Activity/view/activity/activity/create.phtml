@@ -58,6 +58,14 @@ echo $this->form()->openTag($form);
 				<?php echo $this->formRow($form->get('endTime')); ?>
 			</div>
 		</div>
+        <div class="row">
+            <div class = "col-md-4">
+                <?php echo $this->translate('Subscription Deadline');?>:
+            </div>
+            <div class = "col-md-8">
+                <?php echo $this->formRow($form->get('subscriptionDeadline')); ?>
+            </div>
+        </div>
 		<div class="row">
 			<div class = "col-md-4">
                 <?php echo $this->translate('Location');?>:
