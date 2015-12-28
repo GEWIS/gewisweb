@@ -13,13 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Poll implements ResourceInterface
 {
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Poll ID.
@@ -52,9 +45,18 @@ class Poll implements ResourceInterface
     protected $englishQuestion;
 
     /**
+     * Poll options.
+     *
      * @ORM\OneToMany(targetEntity="PollOption", mappedBy="poll", cascade={"persist", "remove"})
      */
     protected $options;
+
+    /**
+     * Poll comments.
+     *
+     * @ORM\OneToMany(targetEntity="PollComment", mappedBy="poll", cascade={"persist", "remove"})
+     */
+    protected $comments;
 
     /**
      * Who approved this poll. If null then nobody approved it.
@@ -71,6 +73,15 @@ class Poll implements ResourceInterface
      * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
      */
     protected $approver;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return int
@@ -110,6 +121,14 @@ class Poll implements ResourceInterface
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**
@@ -191,6 +210,29 @@ class Poll implements ResourceInterface
         foreach ($options as $option) {
             $option->setPoll(null);
             $this->options->removeElement($option);
+        }
+    }
+
+    /**
+     * Add a comment to the poll.
+     *
+     * @param PollComment $comment
+     */
+    public function addComment(PollComment $comment)
+    {
+        $comment->setPoll($this);
+        $this->comments[] = $comment;
+    }
+
+    /**
+     * Add comments to the poll.
+     *
+     * @param array $comments
+     */
+    public function addComments($comments)
+    {
+        foreach ($comments as $comment) {
+            $this->addComment($comment);
         }
     }
 

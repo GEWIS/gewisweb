@@ -16,7 +16,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <h4>
     <?php if (isset($viewLink) && $viewLink): ?>
-    <a href="<?= $this->url('poll/view', ['id' => $poll->getId()]) ?>">
+    <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>">
     <?php endif ?>
         <?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?>
     <?php if (isset($viewLink) && $viewLink): ?>
