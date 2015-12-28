@@ -305,6 +305,7 @@ return [
         ],
         'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
+            'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
         ],
     ],
     'doctrine' => [
