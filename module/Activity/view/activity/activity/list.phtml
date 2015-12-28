@@ -8,6 +8,7 @@ $this->headTitle($this->translate('Activities'));
     <div class="col-md-2"><?php echo $this->translate('Name');?>:</div>
     <div class="col-md-2"><?php echo $this->translate('Start time');?>:</div>
     <div class="col-md-2"><?php echo $this->translate('End time');?>:</div>
+    <div class="col-md-2"><?php echo $this->translate('Subscription Deadline');?></div>
     <div class="col-md-1"><?php echo $this->translate('Location');?>:</div>
     <div class="col-md-1"><?php echo $this->translate('Costs');?>:</div>
 </div>
@@ -18,6 +19,7 @@ $this->headTitle($this->translate('Activities'));
         <div class="col-md-2"><?php echo $activity->getName();?></div>
         <div class="col-md-2"><?php echo $activity->getBeginTime()->format('Y-m-d H:i:s');?></div>
         <div class="col-md-2"><?php echo $activity->getEndTime()->format('Y-m-d H:i:s');?></div>
+        <div class="col-md-2"><?php echo $activity->getSubscriptionDeadline()->format('Y-m-d H:i:s');?></div>
         <div class="col-md-1"><?php echo $activity->getLocation();?></div>
         <div class="col-md-1"><?php echo $this->translate((string)$activity->getCosts());?></div>
         <div class="col-md-1"><a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
