@@ -22,19 +22,19 @@
                 <div class="col-md-4">
                     <dl>
                         <dt><?= $this->translate('Start') ?></dt>
-                        <dd><?= $activity->getBeginTime()->format('l d M Y H:i'); ?></dd>
+                        <dd><?= $activity->getBeginTime()->format('l d M Y H:i') ?></dd>
 
                         <dt><?= $this->translate('End') ?></dt>
-                        <dd><?= $activity->getEndTime()->format('l d M Y H:i'); ?></dd>
+                        <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
 
                         <dt><?= $this->translate('Location') ?></dt>
                         <dd><?= $activity->getLocation(); ?></dd>
 
                         <dt><?= $this->translate('Subscribe before') ?></dt>
-                        <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s');?></dd>
+                        <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s') ?></dd>
 
                         <dt><?= $this->translate('Costs') ?></dt>
-                        <dd><?= $this->translate((string)$activity->getCosts()); ?></dd>
+                        <dd><?= $this->translate((string)$activity->getCosts()) ?></dd>
                     </dl>
                 </div>
             </div>

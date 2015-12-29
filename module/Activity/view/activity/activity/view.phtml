@@ -40,19 +40,19 @@ $this->headTitle($this->translate('Activities'));
                     <div class="col-md-4">
                         <dl>
                             <dt><?= $this->translate('Start') ?></dt>
-                            <dd><?= $activity->getBeginTime()->format('l d M Y H:i'); ?></dd>
+                            <dd><?= $activity->getBeginTime()->format('l d M Y H:i') ?></dd>
 
                             <dt><?= $this->translate('End') ?></dt>
-                            <dd><?= $activity->getEndTime()->format('l d M Y H:i'); ?></dd>
+                            <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
 
                             <dt><?= $this->translate('Location') ?></dt>
                             <dd><?= $activity->getLocation(); ?></dd>
 
                             <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s');?></dd>
+                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s') ?></dd>
 
                             <dt><?= $this->translate('Costs') ?></dt>
-                            <dd><?= $this->translate((string)$activity->getCosts()); ?></dd>
+                            <dd><?= $this->translate((string)$activity->getCosts()) ?></dd>
                         </dl>
                     </div>
                 </div>
@@ -112,14 +112,14 @@ $this->headTitle($this->translate('Activities'));
     <?php endif; ?>
 
     <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>
-        <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
+        <?php $form->setAttribute('action', $this->url('activity/signup', ['id' => $activity->getId()]));
         $form->prepare();
         echo $this->form()->openTag($form); ?>
             <table>
                 <?php foreach($fields as $field):?>
                 <tr>
-                    <td><?= $field->getName();?>:</td>
-                    <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
+                    <td><?= $field->getName() ?>:</td>
+                    <td><?= $this->formRow($form->get($field->getId())) ?></td>
                 </tr>
                 <?php endforeach;?>
             </table>
