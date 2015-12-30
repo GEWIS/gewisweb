@@ -97,7 +97,10 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] === 0) {
+                if ($file['error'] !== 4) {
+                    if ($file['error'] !== 0) {
+                        return false;
+                    }
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
@@ -107,6 +110,7 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
+            return true;
         }
     }
 
@@ -172,7 +176,10 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] === 0){
+                if ($file['error'] !== 4){
+                    if ($file['error'] !== 0){
+                        return false;
+                    }
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                 }
