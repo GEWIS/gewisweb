@@ -82,6 +82,13 @@ if (is_null($company)){
 </a>
 <br/>
 <a href="<?= $this->url("admin_company/editCompany/addPackage", 
+                        ["type"          =>"featured",
+                         "slugCompanyName" => $company->getSlugName()]
+                       ); ?>">
+    <?= $this->translate('Add featured package'); ?>
+</a>
+<br/>
+<a href="<?= $this->url("admin_company/editCompany/addPackage",
                         ["type"          =>"banner",
                          "slugCompanyName" => $company->getSlugName()]
                        ); ?>">
