@@ -61,8 +61,8 @@ class Company extends AbstractACLService
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()){
+            $package->exchangeArray($data);
             if ($package->getType() == 'banner'){
-                $package->exchangeArray($data);
                 $file = $files['banner'];
                 if ($file['error'] !== 4) {
                     if ($file['error'] !== 0) {
@@ -107,7 +107,7 @@ class Company extends AbstractACLService
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
-                    if ($oldPath != '' && oldPath != newPath) {
+                    if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 }

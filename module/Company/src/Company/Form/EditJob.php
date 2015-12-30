@@ -139,7 +139,6 @@ class EditJob extends Form
 
         $filter->add([
             'name' => 'website',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'uri',
@@ -149,7 +148,6 @@ class EditJob extends Form
 
         $filter->add([
             'name' => 'description',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'string_length',
@@ -163,7 +161,6 @@ class EditJob extends Form
 
         $filter->add([
             'name' => 'email',
-            'required' => true,
             'validators' => [
                 ['name' => 'email_address'],
             ],

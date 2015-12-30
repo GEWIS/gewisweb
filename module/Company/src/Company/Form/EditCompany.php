@@ -69,12 +69,10 @@ class EditCompany extends Form
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => [
-                'required' => 'required',
                 'type' => 'textarea',
             ],
             'options' => [
                 'label' => $translate->translate('Location'),
-                'required' => 'required',
             ],
         ]);
         // English version
@@ -119,11 +117,9 @@ class EditCompany extends Form
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
-                'required' => 'required',
             ],
             'options' => [
                 'label' => $translate->translate('Email'),
-                'required' => 'required',
             ],
         ]);
         $this->add([
@@ -210,9 +206,9 @@ class EditCompany extends Form
             ],
         ]);
 
-        /*$filter->add(array(
-            'name' => 'en.website',
-            'required' => true,
+        $filter->add(array(
+            'name' => 'en_website',
+            'required' => false,
             'filters' => array(
                 array('name' => 'StripTags'),
                 array('name' => 'StringTrim')
@@ -222,8 +218,8 @@ class EditCompany extends Form
         ));
         
         $filter->add(array(
-            'name' => 'nl.website',
-            'required' => true,
+            'name' => 'nl_website',
+            'required' => false,
             'filters' => array(
                 array('name' => 'StripTags'),
                 array('name' => 'StringTrim')
@@ -232,8 +228,8 @@ class EditCompany extends Form
             )
         ));
         $filter->add(array(
-            'name' => 'en.description',
-            'required' => true,
+            'name' => 'en_description',
+            'required' => false,
             'validators' => array(
                 array(
                     'name' => 'string_length',
@@ -245,8 +241,8 @@ class EditCompany extends Form
             )
         ));
         $filter->add(array(
-            'name' => 'nl.description',
-            'required' => true,
+            'name' => 'nl_description',
+            'required' => false,
             'validators' => array(
                 array(
                     'name' => 'string_length',
@@ -256,11 +252,10 @@ class EditCompany extends Form
                     )
                 )
             )
-        ));*/
+        ));
 
         $filter->add([
             'name' => 'email',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'EmailAddress',
@@ -278,7 +273,7 @@ class EditCompany extends Form
         ]);
 
         $filter->add([
-            'name' => 'en.logo',
+            'name' => 'en_logo',
             'required' => false,
             'validators' => [
                 [

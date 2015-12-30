@@ -283,44 +283,59 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the number of jobs that is contained in all packages of this 
+     * Returns the number of jobs that are contained in all packages of this
      * company.
      *
      */
     public function getNumberOfJobs()
     {
-        $jobcount = 0;
-        if (is_null($this->getPackages())) {
-            return $jobcount;
-        }
-        foreach ($this->getPackages() as $package) {
-            if ($package->getType() === 'job') {
-                $jobcount +=  $package->getJobs()->count();
+        $jobCount = function ($package) {
+            if ($package->getType() == 'job') {
+                return $package->getJobs()->count();
             }
-        }
+            return 0;
+        };
 
-        return $jobcount;
+        return array_sum(array_map($jobCount, $this->getPackages()));
     }
 
     /**
-     * Add a package to the company.
+     * Returns the number of jobs that are contained in all active packages of this
+     * company.
      *
-     * @param CompanyPackages $package
      */
-    public function addPackage(CompanyPackage $package)
+    public function getNumberOfActiveJobs()
     {
-        $this->packages->add($package);
+        $jobCount = function ($package) {
+            return $package->getNumberOfActiveJobs();
+        };
+
+        return array_sum(array_map($jobCount, $this->getPackages()));
     }
 
     /**
-     * Remove a package from the company.
-     * 
-     * @param CompanyPackage $package package to remove
+     * Returns the number of expired packages
+     *
      */
-    public function removePackage(CompanyPackage $package)
+    public function getNumberOfExpiredPackages()
     {
-        $this->packages->removeElement($package);
+        return count(array_filter($this->getPackages(), function ($package) {
+            return $package->isExpired();
+        }));
     }
+
+    /**
+     * Returns true if a banner is active, and false when there is no banner active
+     *
+     */
+    public function isBannerActive()
+    {
+        return !empty(array_filter($this->getPackages(), function ($package) {
+            return $package->getType() === 'banner' && $package->isActive();
+
+        }));
+    }
+
 
     /**
      * Get the company's language.
@@ -378,6 +393,8 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the translation identified by $language
      *
+     * Note, does not set $logo, the user should set this property himself
+     *
      * @param mixed $data
      * @param mixed $language
      */
@@ -396,7 +413,9 @@ class Company // implements ArrayHydrator (for zend2 form)
             $translation->setWebsite($this->updateIfSet($data[($language).'website'], ''));
             $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
             $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
-            $translation->setLogo($this->updateIfSet($data[$language.'logo'], ''));
+
+            // Do not set logo, because most likely, $data[logo] is bogus.
+            // Instead, the user should set this property himself later.
             return $translation;
         }
     }
