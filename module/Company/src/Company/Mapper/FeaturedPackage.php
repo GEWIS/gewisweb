@@ -30,7 +30,7 @@ class FeaturedPackage extends Package
 
     /**
      *
-     * Returns an random featured package from the active featured packages, 
+     * Returns an random featured package from the active featured packages,
      * and null when there is no featured package in the current language
      *
      */
@@ -50,7 +50,6 @@ class FeaturedPackage extends Package
      */
     public function findVisiblePackagesByLocale($locale)
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $this->getVisiblePackagesQueryBuilder();
         $qb->andWhere('p.language>=?1')
             ->setParameter(1, $locale);
