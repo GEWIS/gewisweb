@@ -15,10 +15,24 @@
  * the use of composer completely optional. This setup should work fine for
  * most users, however, feel free to configure autoloading however you'd like.
  */
+$env = getenv('APP_ENV') ?: 'production';
+if ($env === 'production') {
+    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php';
+    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php';
+    if (!file_exists('vendor/composer/autoload_classmap.php')) {
+        throw new RuntimeException('Unable to load vendor classmap. Run `php composer.phar install -o`.');
+    }
 
-// Composer autoloading
-if (file_exists('vendor/autoload.php')) {
-    $loader = include 'vendor/autoload.php';
+    Zend\Loader\AutoloaderFactory::factory([
+        'Zend\Loader\ClassMapAutoloader' => [
+            'Composer' => 'vendor/composer/autoload_classmap.php',
+        ]
+    ]);
+} else {
+    // Composer autoloading
+    if (file_exists('vendor/autoload.php')) {
+        $loader = include 'vendor/autoload.php';
+    }
 }
 
 if (!class_exists('Zend\Loader\AutoloaderFactory')) {
