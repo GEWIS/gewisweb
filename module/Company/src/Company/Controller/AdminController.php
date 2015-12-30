@@ -98,10 +98,6 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            if (!isset($files['banner']) && $type === 'banner') {
-                $this->getResponse()->setStatusCode(500);
-                // todo: better error handling
-            }
 
             if ($companyService->insertPackageForCompanySlugNameByData(
                 $companyName,
@@ -226,7 +222,11 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->saveCompanyByData($company, $request->getPost());
+            $companyService->saveCompanyByData(
+                $company,
+                $request->getPost(),
+                $request->getFiles()
+            );
         }
 
         // Initialize form
@@ -275,8 +275,9 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->savePackageByData($package,$request->getPost());
-            // TODO: possibly redirect to company
+            if ($companyService->savePackageByData($package,$request->getPost())) {
+                // TODO: possibly redirect to company
+            }
         }
         // TODO: display error page when package is not found
 

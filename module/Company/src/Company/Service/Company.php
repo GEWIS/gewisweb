@@ -56,13 +56,29 @@ class Company extends AbstractACLService
      * @param mixed $package
      * @param mixed $data
      */
-    public function savePackageByData($package,$data)
+    public function savePackageByData($package, $data, $files)
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
         if ($packageForm->isValid()){
-            $package->exchangeArray($data);
+            if ($package->getType() == 'banner'){
+                $package->exchangeArray($data);
+                $file = $files['banner'];
+                if ($file['error'] !== 4) {
+                    if ($file['error'] !== 0) {
+                        return false;
+                    }
+                    $oldPath = $package->getImage();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $package->setImage($newPath);
+                    if ($oldPath != '' && oldPath != newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                }
+
+            }
             $this->savePackage();
+            return true;
         }
     }
 
@@ -72,13 +88,32 @@ class Company extends AbstractACLService
      * @param mixed $company
      * @param mixed $data
      */
-    public function saveCompanyByData($company,$data)
+    public function saveCompanyByData($company, $data, $files)
     {
         $companyForm = $this->getCompanyForm();
-        $companyForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
         if ($companyForm->isValid()){
             $company->exchangeArray($data);
+            foreach ($company->getTranslations() as $translation) {
+                $file = $files[$translation->getLanguage() . '_logo'];
+                if ($file['error'] !== 4) {
+                    if ($file['error'] !== 0) {
+                        return false;
+                    }
+                    $oldPath = $translation->getLogo();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $translation->setLogo($newPath);
+                    if ($oldPath != '' && oldPath != newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                }
+            }
             $this->saveCompany();
+            return true;
         }
     }
 
@@ -134,26 +169,23 @@ class Company extends AbstractACLService
     public function insertCompanyByData($data,$files)
     {
         $companyForm = $this->getCompanyForm();
-        $companyForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
         if ($companyForm->isValid()) {
-            //echo "hoi";
-            //var_dump($files);
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
-            //echo "hoi";
-            //var_dump($files);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                //var_dump($file);
-                try {
+                if ($file['error'] !== 4){
+                    if ($file['error'] !== 0){
+                        return false;
+                    }
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    echo $newPath;
                     $translation->setLogo($newPath);
-                } catch (\Exception $exception) {
-                    var_dump($exception);
-
                 }
-                var_dump($translation->getLogo());
             }
             $this->saveCompany();
             return true;
@@ -287,7 +319,12 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        return $this->getCompanyMapper()->deleteBySlug($slug);
+        $companies = $this->getCompaniesBySlugName($slug);
+        if (count($companies == 1)) {
+            $this->getFileStorageService()->deleteFile($companies[0]->getLogo());
+            $this->getCompanyMapper()->deleteBySlug($slug);
+        }
+
     }
 
     /**
