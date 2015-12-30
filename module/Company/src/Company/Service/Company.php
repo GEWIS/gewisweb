@@ -72,12 +72,24 @@ class Company extends AbstractACLService
      * @param mixed $company
      * @param mixed $data
      */
-    public function saveCompanyByData($company,$data)
+    public function saveCompanyByData($company, $data, $files)
     {
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
         if ($companyForm->isValid()){
             $company->exchangeArray($data);
+            foreach ($company->getTranslations() as $translation) {
+                $file = $files[$translation->getLanguage() . '_logo'];
+                try {
+                    $oldPath = $translation->getLogo();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $translation->setLogo($newPath);
+                    if ($oldPath != '' && oldPath != newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                } catch (\Exception $exception) {
+                }
+            }
             $this->saveCompany();
         }
     }
@@ -136,24 +148,15 @@ class Company extends AbstractACLService
         $companyForm = $this->getCompanyForm();
         $companyForm->setData($data);
         if ($companyForm->isValid()) {
-            //echo "hoi";
-            //var_dump($files);
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
-            //echo "hoi";
-            //var_dump($files);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                //var_dump($file);
                 try {
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    echo $newPath;
                     $translation->setLogo($newPath);
                 } catch (\Exception $exception) {
-                    var_dump($exception);
-
                 }
-                var_dump($translation->getLogo());
             }
             $this->saveCompany();
             return true;
@@ -287,7 +290,12 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        return $this->getCompanyMapper()->deleteBySlug($slug);
+        $companies = $this->getCompaniesBySlugName($slug);
+        if (count($companies == 1)) {
+            $this->getFileStorageService()->deleteFile($companies[0]->getLogo());
+            $this->getCompanyMapper()->deleteBySlug($slug);
+        }
+
     }
 
     /**
