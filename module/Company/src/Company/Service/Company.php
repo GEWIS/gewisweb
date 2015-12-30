@@ -88,19 +88,22 @@ class Company extends AbstractACLService
     public function saveCompanyByData($company, $data, $files)
     {
         $companyForm = $this->getCompanyForm();
-        $companyForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
         if ($companyForm->isValid()){
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                try {
+                if ($file['error'] === 0) {
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                     if ($oldPath != '' && oldPath != newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                } catch (\Exception $exception) {
                 }
             }
             $this->saveCompany();
@@ -159,16 +162,19 @@ class Company extends AbstractACLService
     public function insertCompanyByData($data,$files)
     {
         $companyForm = $this->getCompanyForm();
-        $companyForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
         if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                try {
+                if ($file['error'] === 0){
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $translation->setLogo($newPath);
-                } catch (\Exception $exception) {
                 }
             }
             $this->saveCompany();
