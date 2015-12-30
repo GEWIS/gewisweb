@@ -5,7 +5,7 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/dropzone.js');
 $this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css')
 ?>
-<h1><?= $this->translate('Upload photos') ?></h1>
+<h1><?= sprintf($this->translate('Uploading photos to %s'), $album->getName()) ?></h1>
 <hr>
 <div class="panel panel-default">
     <form action="upload" class="dropzone panel-body"></form>
