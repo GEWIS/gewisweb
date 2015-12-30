@@ -36,7 +36,8 @@ class CompanyJobPackage extends CompanyPackage
     {
         return $this->jobs;
     }
-
+    
+    /**
      * Get the number of jobs in the package.
      *
      * @return number of jobs in the package
