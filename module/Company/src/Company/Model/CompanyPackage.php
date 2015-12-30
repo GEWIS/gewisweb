@@ -123,16 +123,6 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get number of active jobs.
-     *
-     * @return returns 0
-     */
-    public function getNumberOfActiveJobs()
-    {
-        return 0;
-    }
-
-    /**
      * Get the number of jobs in the package.
      *
      * @return returns 0
