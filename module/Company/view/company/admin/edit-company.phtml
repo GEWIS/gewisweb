@@ -60,10 +60,12 @@ if (is_null($company)){
                     <?php echo $package->isActive() ? 'true' : 'false'?>
                 </td>
                 <td>
-                    <?php if (get_class($package) === 'CompanyJobPackage') {
-                              count($package->getJobs()) ;
+                    <?php if ($package->getType() === 'banner') {
+                              echo $this->translate('Banner');
+                          } else if ($package->getType() == 'featured'){
+                              echo $this->translate('Featured Package');
                           } else {
-                              echo 'Banner';
+                              echo count($package->getJobs()) ;
                           } ?>
                 <td>
                 </td>

@@ -30,6 +30,19 @@ return [
                             ],
                         ],
                     ],
+                    'spotlight' => [
+                        'priority' => 3,
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/spotlight',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Company\Controller',
+                                'controller' => 'Company',
+                                'action' => 'spotlight',
+                                'actionArgument' => '',
+                            ],
+                        ],
+                    ],
                     'list' => [
                         'priority' => 3,
                         'type' => 'literal',

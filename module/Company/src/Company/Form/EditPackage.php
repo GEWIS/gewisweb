@@ -54,13 +54,24 @@ class EditPackage extends Form
         ]);
         if ($type === "featured") {
             $this->add([
-                'name' => 'description',
+                'name' => 'article',
                 'type' => 'Zend\Form\Element\Textarea',
                 'options' => [
-                    'label' => $translate->translate('Description'),
+                    'label' => $translate->translate('Article'),
                 ],
                 'attributes' => [
                     'type' => 'textarea',
+                ],
+            ]);
+            $this->add([
+                'type' => 'Zend\Form\Element\Radio',
+                'name' => 'language',
+                'options' => [
+                    'label' => 'Language',
+                    'value_options' => [
+                        'nl' => $translate->translate('Dutch'),
+                        'en' => $translate->translate('English'),
+                    ],
                 ],
             ]);
         }
@@ -75,17 +86,6 @@ class EditPackage extends Form
                     'label' => $translate->translate('Banner'),
                 ],
 
-            ]);
-            $this->add([
-                'type' => 'Zend\Form\Element\Radio',
-                'name' => 'language',
-                'options' => [
-                    'label' => 'Language',
-                    'value_options' => [
-                        'nl' => $translate->translate('Dutch'),
-                        'en' => $translate->translate('English'),
-                    ],
-                ],
             ]);
         }
         $this->add([

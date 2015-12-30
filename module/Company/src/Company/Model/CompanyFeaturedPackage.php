@@ -80,15 +80,15 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     // For zend2 forms
     public function getArrayCopy()
     {
-        $array = parent->getArrayCopy();
-        $array[] = 'language' => $this->getLanguage();
-        $array[] = 'article' => $this->getArticle();
+        $array = parent::getArrayCopy();
+        $array['language'] = $this->getLanguage();
+        $array['article'] = $this->getArticle();
         return $array;
     }
 
     public function exchangeArray($data)
     {
-        parent->exchangeArray($data);
+        parent::exchangeArray($data);
         $this->setLanguage((isset($data['language'])) ? $data['language'] : $this->getLanguage());
         $this->setArticle((isset($data['article'])) ? $data['article'] : $this->getArticle());
     }

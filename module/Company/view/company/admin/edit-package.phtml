@@ -35,13 +35,13 @@ $form = $packageEditForm;
     </dd>
 <?php endif;?>
 <?php if ($type === 'featured'):?>
-    <?php$element = $form->get('language')?>
+    <?php $element = $form->get('language')?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-    <?php$element = $form->get('article')?>
+    <?php $element = $form->get('article')?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>
         <?= $this->formElement($element) ?>

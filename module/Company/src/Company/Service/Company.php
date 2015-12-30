@@ -10,15 +10,30 @@ use Application\Service\AbstractAclService;
  */
 class Company extends AbstractACLService
 {
+    /**
+     * Returns a random banner for display on the frontpage
+     *
+     */
     public function getCurrentBanner()
     {
         $translator = $this->getTranslator();
         if (!$this->isAllowed('showBanner')) {
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed list the companies')
+                $translator->translate('You are not allowed to view the banner')
             );
         } 
         return $this->getBannerPackageMapper()->getBannerPackage();
+    }
+
+    public function getFeaturedPackage()
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('viewFeaturedCompany')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the featured company')
+            );
+        }
+        return $this->getFeaturedPackageMapper()->getFeaturedPackage($translator->getLocale());
     }
     /**
      * Returns an list of all companies (excluding hidden companies
@@ -356,7 +371,9 @@ class Company extends AbstractACLService
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
         if (is_null($package)) {
             $package = $this->getBannerPackageMapper()->findEditablePackage($packageID);
-
+        }
+        if (is_null($package)) {
+            $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageID);
         }
 
         return $package;
@@ -447,6 +464,10 @@ class Company extends AbstractACLService
         if ($type === 'banner') {
             return $this->sm->get('company_admin_edit_bannerpackage_form');
         }
+        if ($type === 'featured') {
+            return $this->sm->get('company_admin_edit_featuredpackage_form');
+
+        }
         return $this->sm->get('company_admin_edit_package_form');
     }
 
@@ -501,6 +522,15 @@ class Company extends AbstractACLService
     public function getBannerPackageMapper()
     {
         return $this->sm->get('company_mapper_bannerpackage');
+    }
+
+    /**
+     * Returns the packageMapper
+     *
+     */
+    public function getFeaturedPackageMapper()
+    {
+        return $this->sm->get('company_mapper_featuredpackage');
     }
 
     /**
