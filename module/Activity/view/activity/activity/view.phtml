@@ -68,10 +68,14 @@
     <div class="col-md-12">
 
 <?php if ($isSignedUp) :?>
-    <?php echo $this->translate('You are signed up for this activity!'); ?>!<br/>
-		<a href="<?php echo $this->url('activity/signoff', ['id' => $activity->getId()]);?>">
-		    <?php echo $this->translate('Unsubscribe');?>
-		</a>
+        <?php echo $this->translate('You are signed up for this activity!'); ?><br/>
+        <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
+        $signoffForm->prepare();
+        echo $this->form()->openTag($signoffForm);
+        echo $this->formElement($signoffForm->get('security'));
+        echo $this->formSubmit($signoffForm->get('submit'));
+        echo $this->form()->closeTag();
+        ?>
 <?php endif; ?>
 <?php if ($signupOpen && !$isLoggedIn):?>
     <?php echo $this->translate('Login to subscribe');?>

@@ -90,7 +90,8 @@ class Signup extends AbstractAclService
         $result = [];
         foreach($activity->getSignUps() as $signup){
             $entry = [];
-            $entry['member'] = $signup->getUser()->getMember()->getFullName();
+            $member = $signup->getUser()->getMember();
+            $entry['member'] = $member->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
                 //If there is an option type, get the option object as a 'value'.

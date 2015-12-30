@@ -149,6 +149,7 @@ class Activity
      * all the people who signed up for this activity
      *
      * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $signUps;
 

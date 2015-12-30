@@ -6,7 +6,7 @@ use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
-use Activity\Form\ActivitySignup as SignupForm;
+use Activity\Form\ModifyRequest as RequestForm;
 use Zend\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
@@ -46,6 +46,7 @@ class ActivityController extends AbstractActionController
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         $fields = $translatedActivity->getFields();
+        $form = null;
         if ($signupService->isAllowedToSubscribe()) {
             $form = $signupService->getForm($fields);
         }
@@ -58,6 +59,7 @@ class ActivityController extends AbstractActionController
             'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $session->lang),
             'form' => $form,
+            'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields
         ];
     }
@@ -104,9 +106,9 @@ class ActivityController extends AbstractActionController
 
         $translator = $activityService->getTranslator();
 
-        $params = $this->viewAction();
         //Assure the form is used
         if (!$this->getRequest()->isPost()){
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('Use the form to subscribe');
             return $params;
         }
@@ -115,11 +117,13 @@ class ActivityController extends AbstractActionController
 
         // Assure you can sign up for this activity
         if (!$activity->getCanSignup() || $subscriptionDeadLinePassed) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You can not subscribe to this activity at this moment');
             return $params;
         }
 
         if (!$signupService->isAllowedToSubscribe()) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You need to log in to subscribe');
             return $params;
         }
@@ -129,6 +133,7 @@ class ActivityController extends AbstractActionController
 
         //Assure the form is valid
         if (!$form->isValid()){
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('Wrong form');
             return $params;
         }
@@ -136,12 +141,16 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         $user = $identity->getMember();
 
+        //Assure the user is not subscribed yet
         if ($signupService->isSignedUp($activity, $user)) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You have already been subscribed for this activity');
-        } else {
-            $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
-            $params['success'] = true;
+            return $params;
         }
+
+        $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+        $params = $this->viewAction();
+        $params['success'] = true;
 
         return $params;
     }
@@ -160,9 +169,26 @@ class ActivityController extends AbstractActionController
         $activity = $activityService->getActivity($id);
         $translator = $activityService->getTranslator();
 
-        if (!$signupService->isAllowedToSubscribe()) {
-            $params['error'] = $translator->translate('You have to be logged in to subscribe for this activity');
+        //Assure a form is used
+        if (!$this->getRequest()->isPost()){
+            $params = $this->viewAction();
+            $params['error'] = $translator->translate('Use the form to unsubscribe');
+            return $params;
+        }
 
+        $form = new RequestForm('activitysignoff');
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $params = $this->viewAction();
+            $params['error'] = $translator->translate('Wrong form');
+            return $params;
+        }
+
+        if (!$signupService->isAllowedToSubscribe()) {
+            $params = $this->viewAction();
+            $params['error'] = $translator->translate('You have to be logged in to subscribe for this activity');
             return $params;
         }
 
@@ -170,12 +196,14 @@ class ActivityController extends AbstractActionController
         $user = $identity->getMember();
 
         if (!$signupService->isSignedUp($activity, $user)) {
+            $params = $this->viewAction();
             $params['error'] = $translator->translate('You are not subscribed for this activity!');
-        } else {
-            $signupService->signOff($activity, $user);
-            $params['success'] = true;
+            return $params;
         }
+
+        $signupService->signOff($activity, $user);
         $params = $this->viewAction();
+        $params['success'] = true;
 
         return $params;
     }
