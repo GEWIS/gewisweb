@@ -188,9 +188,9 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
-            return true;
+            return $company;
         }
-        return false;
+        return null;
     }
 
     /**
