@@ -64,18 +64,21 @@ class Company extends AbstractACLService
             if ($package->getType() == 'banner'){
                 $package->exchangeArray($data);
                 $file = $files['banner'];
-                try {
+                if ($file['error'] !== 4) {
+                    if ($file['error'] !== 0) {
+                        return false;
+                    }
                     $oldPath = $package->getImage();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $package->setImage($newPath);
                     if ($oldPath != '' && oldPath != newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                } catch (\Exception $exception) {
                 }
 
             }
             $this->savePackage();
+            return true;
         }
     }
 
