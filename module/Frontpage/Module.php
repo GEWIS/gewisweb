@@ -41,7 +41,6 @@ class Module
             'invokables' => [
                 'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
                 'frontpage_service_page' => 'Frontpage\Service\Page',
-                'frontpage_service_page' => 'Frontpage\Service\Page',
                 'frontpage_service_poll' => 'Frontpage\Service\Poll',
                 'frontpage_service_news' => 'Frontpage\Service\News'
             ],

@@ -34,6 +34,7 @@ class News extends AbstractAclService
                 $this->getTranslator()->translate('You are not allowed to list all news items.')
             );
         }
+
         return $this->getNewsItemMapper()->getPaginatorAdapter();
     }
 
@@ -125,7 +126,7 @@ class News extends AbstractAclService
         }
         $form = $this->sm->get('frontpage_form_news_item');
 
-        if(!is_null($newsItemId)) {
+        if (!is_null($newsItemId)) {
             $newsItem = $this->getNewsItemById($newsItemId);
             $form->bind($newsItem);
         }

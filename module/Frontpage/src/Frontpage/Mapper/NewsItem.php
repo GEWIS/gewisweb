@@ -108,5 +108,4 @@ class NewsItem
     {
         return $this->em->getRepository('Frontpage\Model\NewsItem');
     }
-
 }
