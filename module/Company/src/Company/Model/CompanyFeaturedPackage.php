@@ -24,28 +24,72 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
         // todo
     }
 
-    public function publish()
+    /**
+     * The featured package content article.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $article;
+
+    /**
+     * Get the featured package's article text
+     *
+     * @return string
+     */
+    public function getArticle()
     {
-        // todo
+        return $this->article;
     }
 
-    public function unpublish()
+    /**
+     * Set the featured package's article text
+     *
+     * @param string $image
+     */
+    public function setArticle($article)
     {
-        // todo
+        $this->article = $article;
     }
 
-    public function create()
+    /**
+     * The package's language.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $language;
+
+    /**
+     * Get the package's language.
+     * 
+     * @return string language of the package
+     */
+    public function getLanguage()
     {
-        // todo
+        return $this->language;
     }
 
-    public function save()
+    /**
+     * Set the package's language.
+     * 
+     * @param string $language language of the package
+     */
+    public function setLanguage($language)
     {
-        // todo   
+        $this->language = $language;
+    }
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        $array = parent::getArrayCopy();
+        $array['language'] = $this->getLanguage();
+        $array['article'] = $this->getArticle();
+        return $array;
     }
 
-    public function delete()
+    public function exchangeArray($data)
     {
-        // todo
+        parent::exchangeArray($data);
+        $this->setLanguage((isset($data['language'])) ? $data['language'] : $this->getLanguage());
+        $this->setArticle((isset($data['article'])) ? $data['article'] : $this->getArticle());
     }
 }

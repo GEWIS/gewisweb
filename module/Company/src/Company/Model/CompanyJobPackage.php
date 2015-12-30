@@ -37,21 +37,15 @@ class CompanyJobPackage extends CompanyPackage
         return $this->jobs;
     }
 
-    /**
-     * Get number of active jobs.
+     * Get the number of jobs in the package.
      *
-     * @return number of active jobs if package is active,
-     * or 0 if package is inactive
+     * @return number of jobs in the package
      */
     public function getNumberOfActiveJobs()
     {
-        if ($this->isActive()) {
-            return count(array_filter($this->jobs, function ($job) {
-                return $job->isActive();
-            }));
-        }
-        return 0;
+        return count($this->jobs);
     }
+
 
     /**
      * Adds a job to the package.

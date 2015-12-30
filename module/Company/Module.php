@@ -57,6 +57,11 @@ class Module
                         $sm->get('company_doctrine_em')
                     );
                 },
+                'company_mapper_featuredpackage' => function ($sm) {
+                    return new \Company\Mapper\FeaturedPackage(
+                        $sm->get('company_doctrine_em')
+                    );
+                },
                 'company_mapper_bannerpackage' => function ($sm) {
                     return new \Company\Mapper\BannerPackage(
                         $sm->get('company_doctrine_em')
@@ -69,6 +74,12 @@ class Module
                     return new \Company\Form\EditPackage(
                         $sm->get('translator'),
                         "job"
+                    );
+                },
+                'company_admin_edit_featuredpackage_form' => function ($sm) {
+                    return new \Company\Form\EditPackage(
+                        $sm->get('translator'),
+                        "featured"
                     );
                 },
                 'company_admin_edit_bannerpackage_form' => function ($sm) {
@@ -99,6 +110,7 @@ class Module
                     // users (logged in GEWIS members) are allowed to view exams
                     // TODO: besides users, also people on the TU/e network
                     // are allowed to view exams
+                    $acl->allow('guest', 'company', 'viewFeaturedCompany');
                     $acl->allow('guest', 'company', 'list');
                     $acl->allow('guest', 'company', 'view');
                     $acl->allow('guest', 'company', 'showBanner');

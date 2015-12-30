@@ -38,6 +38,30 @@ class CompanyController extends AbstractActionController
 
     /**
      *
+     * Action that shows the 'company in the spotlight' and the article written by the company in the current language
+     *
+     */
+    public function spotlightAction()
+    {
+        $companyService = $this->getCompanyService();
+        $translator = $companyService->getTranslator();
+
+        $featuredPackage = $companyService->getFeaturedPackage();
+        if (!is_null($featuredPackage)) {
+            // jobs for a single company
+            return new ViewModel([
+                'company' => $featuredPackage->getCompany(),
+                'featuredPackage' => $featuredPackage,
+                'translator' => $translator,
+            ]);
+        }
+
+        // There is no company is the spotlight, so throw a 404
+        $this->getResponse()->setStatusCode(404);
+    }
+
+    /**
+     *
      * Action that displays a list of all jobs (facaturebank)
      *
      */

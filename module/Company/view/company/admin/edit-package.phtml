@@ -25,7 +25,7 @@ $form = $packageEditForm;
         <?= $this->formElementErrors($element); ?>
     </dd>
 
-<?php if ($type === 'banner') {
+<?php if ($type === 'banner'):
     $element = $form->get('banner')?>
         <img src=<?= $this->fileUrl($package->getImage()) ?>><?= $this->translate('Company Logo') ?></img>
     <dt><?= $element->getOption('label') ?></dt>
@@ -33,7 +33,21 @@ $form = $packageEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
-<?php }?>
+<?php endif;?>
+<?php if ($type === 'featured'):?>
+    <?php $element = $form->get('language')?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+    <?php $element = $form->get('article')?>
+    <dt><?= $element->getOption('label') ?></dt>
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+<?php endif;?>
 
 <?= $this->formRow($form->get('submit')); ?>
 <?= $this->form()->closeTag(); ?>

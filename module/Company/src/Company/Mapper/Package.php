@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\CompanyJobPackage as PackageModel;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
+use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -65,6 +66,18 @@ class Package
         return $this->getRepository()->findAll();
     }
 
+    protected function getVisiblePackagesQueryBuilder()
+    {
+
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.published=1')
+            ->andWhere('p.starts<=CURRENT_DATE()')
+            ->andWhere('p.expires>=CURRENT_DATE()');
+        return $qb;
+    }
+
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
@@ -72,12 +85,7 @@ class Package
      */
     public function findVisiblePackages()
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')
-            ->where('p.published=1')
-            ->andWhere('p.starts<=CURRENT_DATE()')
-            ->andWhere('p.expires>=CURRENT_DATE()');
+        $qb = $this->getVisiblePackagesQueryBuilder();
         $packages = $qb->getQuery()->getResult();
 
         return $packages;
@@ -108,6 +116,10 @@ class Package
     {
         if ($type === "job") {
             return new PackageModel($this->em);
+        }
+        if ($type === "featured") {
+            return new FeaturedPackageModel($this->em);
+
         }
         return new BannerPackageModel($this->em);
     }

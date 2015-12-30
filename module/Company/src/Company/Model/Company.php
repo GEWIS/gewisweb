@@ -296,7 +296,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return 0;
         };
 
-        return array_sum(array_map($jobCount, $this->getPackages()));
+        return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
     }
 
     /**
@@ -310,7 +310,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $package->getNumberOfActiveJobs();
         };
 
-        return array_sum(array_map($jobCount, $this->getPackages()));
+        return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
     }
 
     /**
@@ -319,9 +319,26 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfExpiredPackages()
     {
-        return count(array_filter($this->getPackages(), function ($package) {
-            return $package->isExpired();
+        return count(array_filter($this->getPackages()->toArray(), function ($package) {
+            return $package->isExpired(new \DateTime);
         }));
+    }
+
+    /**
+     * Returns true if a banner is active, and false when there is no banner active
+     *
+     */
+    public function getFeaturedLanguages()
+    {
+        return array_map(
+            function ($package) {
+                return $package->getLanguage();
+            },
+            array_filter($this->getPackages()->toArray(), function ($package) {
+                return $package->getType() === 'featured' && $package->isActive();
+
+            })
+        );
     }
 
     /**
@@ -330,7 +347,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function isBannerActive()
     {
-        return !empty(array_filter($this->getPackages(), function ($package) {
+        return !empty(array_filter($this->getPackages()->toArray(), function ($package) {
             return $package->getType() === 'banner' && $package->isActive();
 
         }));

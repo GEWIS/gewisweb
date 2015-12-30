@@ -52,6 +52,29 @@ class EditPackage extends Form
                 ],
             ],
         ]);
+        if ($type === "featured") {
+            $this->add([
+                'name' => 'article',
+                'type' => 'Zend\Form\Element\Textarea',
+                'options' => [
+                    'label' => $translate->translate('Article'),
+                ],
+                'attributes' => [
+                    'type' => 'textarea',
+                ],
+            ]);
+            $this->add([
+                'type' => 'Zend\Form\Element\Radio',
+                'name' => 'language',
+                'options' => [
+                    'label' => 'Language',
+                    'value_options' => [
+                        'nl' => $translate->translate('Dutch'),
+                        'en' => $translate->translate('English'),
+                    ],
+                ],
+            ]);
+        }
         if ($type === "banner") {
             $this->add([
                 'name' => 'banner',
