@@ -92,6 +92,13 @@ class AlbumAdminController extends AbstractActionController
     public function addAction()
     {
         $this->getAdminService()->checkUploadAllowed();
+
+        $albumId = $this->params()->fromRoute('album_id');
+        $album = $this->getAlbumService()->getAlbum($albumId);
+
+        return new ViewModel([
+            'album' => $album
+        ]);
     }
 
     /**
