@@ -178,7 +178,10 @@ class Admin extends AbstractAclService
             }
         } else {
             throw new \Exception(
-                $translator->translate('The uploaded file is not a valid image')
+                sprintf(
+                    $translator->translate("The uploaded file is not a valid image \nError: %s"),
+                    implode(',', array_values($imageValidator->getMessages()))
+                )
             );
         }
     }
