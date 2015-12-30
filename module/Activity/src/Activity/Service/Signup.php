@@ -87,13 +87,10 @@ class Signup extends AbstractAclService
         }
 
         $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
-        $memberMapper = $this->getServiceManager()->get('decision_mapper_member');
         $result = [];
         foreach($activity->getSignUps() as $signup){
             $entry = [];
-            //$signup->getUser()->getMember() yields an empty result if the signup is new.
-            //(i.e. a signup has taken place in the same request)
-            $member = $memberMapper->findByLidnr($signup->getUser()->getLidnr());
+            $member = $signup->getUser()->getMember();
             $entry['member'] = $member->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){

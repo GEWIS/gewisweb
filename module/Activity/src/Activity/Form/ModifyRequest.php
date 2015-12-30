@@ -30,8 +30,8 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         ]);
     }
 
-    public function getInputFilterSpecification() {
+    public function getInputFilterSpecification()
+    {
         return [];
     }
-
 }
