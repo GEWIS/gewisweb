@@ -275,7 +275,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if($companyService->savePackageByData($package,$request->getPost())) {
+            if ($companyService->savePackageByData($package,$request->getPost())) {
                 // TODO: possibly redirect to company
             }
         }
