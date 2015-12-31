@@ -31,6 +31,15 @@
                         <?= $this->translate('Companies') ?>
                     </a>
                     <ul class="dropdown-menu">
+                        <?php if (!is_null($this->featuredCompanyPackage())): ?>
+                            <li>
+                                <a href="<?= $this->url('company/spotlight') ?>">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <?= $this->translate('Featured') ?>:
+                                    <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
                     </ul>
                 </li>
