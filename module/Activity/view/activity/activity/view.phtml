@@ -96,14 +96,20 @@ $this->headTitle($this->translate('Activities'));
     <?php endif; ?>
 
     <?php if ($isSignedUp) :?>
-            <?php echo $this->translate('You have already signed up for this activity!'); ?>!<br/>
+        <div>
+            <?= $this->translate('You have already signed up for this activity!') ?>
+        </div>
+        <div>
             <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
             $signoffForm->prepare();
             echo $this->form()->openTag($signoffForm);
             echo $this->formElement($signoffForm->get('security'));
-            echo $this->formSubmit($signoffForm->get('submit'));
+            $submit = $signoffForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
             echo $this->form()->closeTag();
             ?>
+        </div>
     <?php endif; ?>
     <?php if ($signupOpen && !$isLoggedIn):?>
         <a href="<?= $this->url('user') ?>">
