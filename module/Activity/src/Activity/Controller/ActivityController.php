@@ -19,7 +19,7 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-        
+
         $activities = $activityService->getApprovedActivities();
         $translatedActivities = [];
         foreach ($activities as $activity){
@@ -37,7 +37,8 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-        
+        $activityRequestSession = new SessionContainer('activityRequest');
+
         /** @var $activity Activity*/
         $activity = $activityService->getActivity($id);
 
@@ -52,7 +53,7 @@ class ActivityController extends AbstractActionController
             $form = $signupService->getForm($fields);
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
-        return [
+        $result = [
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed,
             'isLoggedIn' => $identity !== 'guest',
@@ -61,8 +62,18 @@ class ActivityController extends AbstractActionController
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
-            'fields' => $fields
+            'fields' => $fields,
         ];
+
+        //Retrieve and clear the request status from the session, if it exists.
+        if (isset($activityRequestSession->success)){
+            $result['success'] = $activityRequestSession->success;
+            unset($activityRequestSession->success);
+            $result['message'] = $activityRequestSession->message;
+            unset($activityRequestSession->message);
+        }
+
+        return $result;
     }
 
     /**
@@ -150,7 +161,8 @@ class ActivityController extends AbstractActionController
         }
 
         $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
-        $this->redirectActivityRequest($id, true);
+        $message = $translator->translate('Successfully subscribed');
+        $this->redirectActivityRequest($id, true, $message);
     }
 
     /**
@@ -169,8 +181,8 @@ class ActivityController extends AbstractActionController
 
         //Assure a form is used
         if (!$this->getRequest()->isPost()){
-            $error = $translator->translate('Use the form to unsubscribe');
-            $this->redirectActivityRequest($id, false, $error);
+            $message = $translator->translate('Use the form to unsubscribe');
+            $this->redirectActivityRequest($id, false, $message);
             return;
         }
 
@@ -179,14 +191,14 @@ class ActivityController extends AbstractActionController
 
         //Assure the form is valid
         if (!$form->isValid()){
-            $error = $translator->translate('Wrong form');
-            $this->redirectActivityRequest($id, false, $error);
+            $message = $translator->translate('Wrong form');
+            $this->redirectActivityRequest($id, false, $message);
             return;
         }
 
         if (!$signupService->isAllowedToSubscribe()) {
-            $error = $translator->translate('You have to be logged in to subscribe for this activity');
-            $this->redirectActivityRequest($id, false, $error);
+            $message = $translator->translate('You have to be logged in to subscribe for this activity');
+            $this->redirectActivityRequest($id, false, $message);
             return;
         }
 
@@ -194,31 +206,30 @@ class ActivityController extends AbstractActionController
         $user = $identity->getMember();
 
         if (!$signupService->isSignedUp($activity, $user)) {
-            $error = $translator->translate('You are not subscribed for this activity!');
-            $this->redirectActivityRequest($id, false, $error);
+            $message = $translator->translate('You are not subscribed for this activity!');
+            $this->redirectActivityRequest($id, false, $message);
             return;
         }
 
         $signupService->signOff($activity, $user);
-        $this->redirectActivityRequest($id, true);
+        $message = $translator->translate('Successfully unsubscribed');
+        $this->redirectActivityRequest($id, true, $message);
     }
-    
+
     /**
-     * Redirects to the view of the activity with the given $id, where the 
-     * $error message can be displayed if the request was unsuccesful (i.e. 
+     * Redirects to the view of the activity with the given $id, where the
+     * $error message can be displayed if the request was unsuccesful (i.e.
      * $success was false)
-     * 
+     *
      * @param int $id
      * @param boolean $success Whether the request was successful
-     * @param string $error
+     * @param string $message
      */
-    protected function redirectActivityRequest($id, $success, $error = '')
+    protected function redirectActivityRequest($id, $success, $message)
     {
         $activityRequestSession = new SessionContainer('activityRequest');
         $activityRequestSession->success = $success;
-        if (!$success){
-            $activityRequestSession->error = $error;
-        }
+        $activityRequestSession->message = $message;
         $this->redirect()->toRoute('activity/view', [
             'id' => $id,
         ]);
