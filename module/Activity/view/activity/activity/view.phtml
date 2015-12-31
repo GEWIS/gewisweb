@@ -2,10 +2,9 @@
 
 // set title
 $this->headTitle($activity->getName());
-$this->headTitle($this->translate('Activities'));
+$this->headTitle($this->translate('Activities')); ?>
 
 
-?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -22,6 +21,15 @@ $this->headTitle($this->translate('Activities'));
     </div>
 </section>
 <?php endif; ?>
+
+<?php if (isset($success)): // Display the signup/signoff message. ?>
+    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+        <div class="container">
+            <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+        </div>
+    </div>
+<?php endif;?>
+
 <div class="container">
     <h1><?= $activity->getName() ?></h1>
     <ul class="list-group">
