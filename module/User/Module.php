@@ -41,7 +41,8 @@ class Module
             if (($e->getError() == 'error-exception') &&
                     ($e->getParam('exception', null) != null) &&
                     ($e->getParam('exception') instanceof NotAllowedException)) {
-                $e->getResult()->setTemplate('error/403');
+                $env = getenv('APP_ENV') ?: 'production';
+                $e->getResult()->setTemplate(($env === 'production' ? 'error/403' : 'error/debug/403'));
                 $e->getResponse()->setStatusCode(403);
             }
         }, -100);
