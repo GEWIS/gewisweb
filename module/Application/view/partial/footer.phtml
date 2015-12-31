@@ -1,0 +1,47 @@
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 col-md-1">
+                <img src="<?= $this->basePath() ?>/img/logo-footer.png"/>
+            </div>
+            <div class="col-sm-10 col-md-7">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3><?= $this->translate('Infima') ?></h3>
+                        <p>
+                            <?= $this->infima() ?>
+                        </p>
+                        <p>&copy; 2013
+                            - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h3><?= $this->translate('Visiting address') ?></h3>
+                        <address>
+                            <?= $this->translate('Study association GEWIS') ?><br>
+                            MF 3.155<br>
+                            De Groene Loper 5<br>
+                            5612 AZ Eindhoven<br>
+                            <?= $this->translate('Netherlands') ?>
+                        </address>
+                    </div>
+                    <div class="col-sm-4">
+                        <h3><?= $this->translate('Postal address') ?></h3>
+                        <address>
+                            <?= $this->translate('Study association GEWIS') ?><br>
+                            MF 3.155<br>
+                            Postbus 513<br>
+                            5600 MB Eindhoven<br>
+                            <?= $this->translate('Netherlands') ?>
+                        </address>
+                    </div>
+                    <div class="col-sm-4">
+                        <i class="glyphicon glyphicon-earphone"></i> <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
+                        <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
