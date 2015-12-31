@@ -21,5 +21,4 @@ class FeaturedCompanyPackage extends AbstractHelper implements ServiceLocatorAwa
         $featuredPackage = $companyService->getFeaturedPackage();
         return $featuredPackage;
     }
-
 }
