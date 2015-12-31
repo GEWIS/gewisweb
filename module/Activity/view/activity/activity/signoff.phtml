@@ -1,12 +1,31 @@
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('activity') ?>">
+                    <?= $this->translate('Activities') ?>
+                </a>
+            </li>
+            <li class="active">
+                <?= $activity->getName() ?>
+            </li>
+        </ol>
+    </div>
+</section>
+
 <?php if(isset($error)):?>
-<div class="alert alert-danger" role="alert"><?php echo $error;?></div>
+    <div class="alert alert-danger" role="alert">
+        <div class="container">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;<?= $error ?>
+        </div>
+    </div>
 <?php endif;?>
 <?php if(isset($success)):?>
-	<div class="row">
-		<div class="col-md-4">
-			<div class="alert alert-success" role="alert"><?php echo $this->translate('Successfully unsubscribed');?>:</div>
-		</div>
-	</div>
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;<?= $this->translate('Successfully unsubscribed') ?>
+        </div>
+    </div>
 <?php endif;?>
 
 <?php echo $this->partial('activity/activity/view.phtml', [
@@ -18,5 +37,6 @@
         'signupData' => $signupData,
         'form' => $form,
         'signoffForm' => $signoffForm,
-        'fields' => $fields
+        'fields' => $fields,
+        'breadcrumb' => true
 ]);

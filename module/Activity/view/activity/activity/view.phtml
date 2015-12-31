@@ -1,110 +1,138 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
-<div class="row">
-<div class="col-md-4">
-<!-- wrapping applied -->
-<?php $i=0; ?>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Id'); ?></div>
-    <div class="col-md-4"><?php echo $activity->getId();?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Name'); ?></div>
-    <div class="col-md-4"><?php echo $activity->getName();?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Start time'); ?></div>
-    <div class="col-md-8"><?php echo $activity->getBeginTime()->format('Y-m-d H:i:s')?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('End time'); ?></div>
-    <div class="col-md-8"><?php echo $activity->getEndTime()->format('Y-m-d H:i:s')?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Subscription Deadline'); ?></div>
-    <div class="col-md-8"><?php echo $activity->getSubscriptionDeadline()->format('Y-m-d H:i:s')?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Location'); ?></div>
-    <div class="col-md-4"><?php echo $activity->getLocation(); ?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Costs'); ?></div>
-    <div class="col-md-4"><?php echo $activity->getCosts(); ?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Subscribe'); ?></div>
-    <div class="col-md-8"><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></div>
-</div>
-<div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
-    <div class="col-md-4"><?php echo $this->translate('Only GEWIS'); ?></div>
-    <div class="col-md-8"><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></div>
-</div>
-<div style="margin-top:10px;margin-bottom:10px;text-align:center" class="row">
-<?php if ($signupOpen): ?>
-    <h2>
-        <div class="row"><div class="col-md-12"><?php echo $this->translate('Already subscribed');?>:</div></div>
-    </h2>
-    <table>
-        <thead>
-            <tr>
-                <th><?php echo $this->translate('Name');?> </th>
-                <?php foreach($fields as $field):?>
-                <th><?= $field->getName();?></th>
-                <?php endforeach;?>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach($signupData as $signup):?>
-            <tr>
-                <td><?php echo $signup['member'];?></td>
-                <?php foreach($signup['values'] as $value):?>
-                <td><?= $value;?></td>
-                <?php endforeach;?>
-            </tr>
-        <?php endforeach;?>
-        </tbody>
-    </table>
-<?php endif;?>
-    <div class="col-md-12">
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
-<?php if ($isSignedUp) :?>
-        <?php echo $this->translate('You are signed up for this activity!'); ?><br/>
-        <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
-        $signoffForm->prepare();
-        echo $this->form()->openTag($signoffForm);
-        echo $this->formElement($signoffForm->get('security'));
-        echo $this->formSubmit($signoffForm->get('submit'));
-        echo $this->form()->closeTag();
-        ?>
-<?php endif; ?>
-<?php if ($signupOpen && !$isLoggedIn):?>
-    <?php echo $this->translate('Login to subscribe');?>
-<?php endif; ?>
+// set title
+$this->headTitle($activity->getName());
+$this->headTitle($this->translate('Activities'));
 
-<?php if (!is_null($form)  && $signupOpen && !$isSignedUp): //display the form ?>
-    <?php $form->setAttribute('action', $this->url('activity/signup', array( 'id' => $activity->getId())));
-    $form->prepare();
-    echo $this->form()->openTag($form); ?>
+
+?>
+<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('activity') ?>">
+                    <?= $this->translate('Activities') ?>
+                </a>
+            </li>
+            <li class="active">
+                <?= $activity->getName() ?>
+            </li>
+        </ol>
+    </div>
+</section>
+<?php endif; ?>
+<div class="container">
+    <h1><?= $activity->getName() ?></h1>
+    <ul class="list-group">
+        <li class="list-group-item agenda-item row">
+            <div class="agenda-item-heading col-md-2">
+        <span class="badge badge-large">
+            <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
+            <?= $activity->getBeginTime()->format('d') ?>
+        </span>
+            </div>
+            <div class="agenda-item-body col-md-10">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><?= nl2br($activity->getDescription()) ?></p>
+                    </div>
+                    <div class="col-md-4">
+                        <dl>
+                            <dt><?= $this->translate('Start') ?></dt>
+                            <dd><?= $activity->getBeginTime()->format('l d M Y H:i') ?></dd>
+
+                            <dt><?= $this->translate('End') ?></dt>
+                            <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
+
+                            <dt><?= $this->translate('Location') ?></dt>
+                            <dd><?= $activity->getLocation(); ?></dd>
+
+                            <dt><?= $this->translate('Subscribe before') ?></dt>
+                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s') ?></dd>
+
+                            <dt><?= $this->translate('Costs') ?></dt>
+                            <dd><?= $this->translate((string)$activity->getCosts()) ?></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <!--<div class="col-md-4"><?php /*echo $activity->getId();*/?></div>
+        <div class="col-md-8"><?php /*echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); */?></div>
+        <div class="col-md-8"><?php /*echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); */?></div>-->
+
+    <?php if ($signupOpen): ?>
+        <h2>
+            <?= $this->translate('Current subscriptions') ?>
+        </h2>
+        <div class="table-responsive agenda-subscriptions">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><?= $this->translate('Name') ?> </th>
+                        <?php foreach($fields as $field):?>
+                        <th><?= $field->getName() ?></th>
+                        <?php endforeach;?>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $i = 1; ?>
+                <?php foreach($signupData as $signup): ?>
+                    <tr>
+                        <td><?php echo $i; $i = $i + 1; ?></td>
+                        <td><?= $signup['member'] ?></td>
+                        <?php foreach($signup['values'] as $value):?>
+                        <td><?= $value ?></td>
+                        <?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($isSignedUp) :?>
+        <div>
+            <?= $this->translate('You have already signed up for this activity!') ?>
+        </div>
+        <div>
+            <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
+            $signoffForm->prepare();
+            echo $this->form()->openTag($signoffForm);
+            echo $this->formElement($signoffForm->get('security'));
+            $submit = $signoffForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($signupOpen && !$isLoggedIn):?>
+        <a href="<?= $this->url('user') ?>">
+            <?= $this->translate('Login to subscribe') ?>
+        </a>
+    <?php endif; ?>
+
+    <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>
+        <?php $form->setAttribute('action', $this->url('activity/signup', ['id' => $activity->getId()]));
+        $form->prepare();
+        echo $this->form()->openTag($form); ?>
             <table>
                 <?php foreach($fields as $field):?>
                 <tr>
-                    <td><?= $field->getName();?>:</td>
-                    <td><?php echo $this->formRow($form->get($field->getId())); ?></td>
+                    <td><?= $field->getName() ?>:</td>
+                    <td><?= $this->formRow($form->get($field->getId())) ?></td>
                 </tr>
                 <?php endforeach;?>
             </table>
-    <?php echo $this->formSubmit($form->get('submit'));
-          echo $this->form()->closeTag();?>
-<?php endif; ?>
-        </div>
-    </div>
-
-
-<div class="row">
-	<div class="col-md-12">
-		<button style="width: 100%" class="btn btn-primary" onclick="window.location.href='../../activity'"><?php echo $this->translate('Back'); ?></button>
-	</div>
-</div>
-<!-- wrappers -->
-</div>
+        <?php
+        $submit = $form->get('submit');
+        $submit->setAttribute('class', 'btn btn-primary');
+        echo $this->formSubmit($submit);
+        echo $this->form()->closeTag();?>
+    <?php endif; ?>
 </div>
