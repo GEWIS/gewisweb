@@ -73,5 +73,10 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
-    ]
+    ],
+    'view_helpers' => [
+        'invokables' => [
+            'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage'
+        ],
+    ],
 ];
