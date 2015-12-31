@@ -1,34 +1,5 @@
-<?php echo $this->doctype(); ?>
-
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle($this->translate('GEWIS Website'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
-
-        <!-- Le styles -->
-        <?php echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-                        ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
-                        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9',])
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', ['conditional' => 'lt IE 9',])
-            ->prependFile($this->basePath() . '/js/url-helper.js')
-        ; ?>
-
-    </head>
-    <body>
 <?php
-function isActive($view, array $condition)
-{
+function moduleIsActive($view, array $condition) {
     $viewModel = current($view->viewModel()->getCurrent()->getChildren());
     $script = explode('/', $viewModel->getTemplate());
     foreach ($condition as $key => $cond) {
@@ -38,95 +9,40 @@ function isActive($view, array $condition)
     }
     return true;
 }
-function getIsActiveClass($view, array $condition)
-{
-    return isActive($view, $condition) ? 'active' : '';
+
+function getIsActiveClass($view, array $condition) {
+    return moduleIsActive($view, $condition) ? 'active' : '';
 }
 ?>
-        <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="<?= $this->url('home') ?>" class="navbar-brand">
-                        <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['frontpage', 'page']) ?> <?= isActive($this, ['frontpage', 'page']) ? 'default' : '' ?>">
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button" aria-haspopup="true" aria-expanded="false">
-                                <?= $this->translate('Association') ?>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'av']) ?>"><?= $this->translate('General Meeting') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'commissies']) ?>"><?= $this->translate('Commissions') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'disputen']) ?>"><?= $this->translate('Fraternities') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a></li>
-                                <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['company']) ?> <?= isActive($this, ['company']) ? 'default' : '' ?>">
-                            <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
-                                <?= $this->translate('Companies') ?>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
-                            </ul>
-                        </li>
-                        <li class="<?= getIsActiveClass($this, ['education']) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
-                        <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
-                        <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <?php if (null === $this->identity()): ?>
-                            <li class="visible-xs"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
-                            <li class="dropdown hidden-xs">
-                                <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->translate('Login') ?></a>
-                                <div class="dropdown-menu dropdown-login">
-                                    <form action="<?= $this->url('user') ?>" method="post">
-                                        <div class="form-group">
-                                            <input type="text" name="login" class="form-control" placeholder="<?= $this->translate('Membership number or email address') ?>" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
-                                        <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
+<?= $this->doctype(); ?>
 
-                                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                                    </form>
-                                </div>
-                            </li>
-                        <?php else: ?>
-                            <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
-                            <?php $member = $this->identity()->getMember() ?>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="visible-lg-inline"><?= $this->translate('Signed in as') ?> </span><?= $member->getFirstName() ?>
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
-                                    <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
-                                    <?php if ($member->getOrganInstallations()->count() > 0): ?>
-                                        <li><a href="<?= $this->url('admin') ?>">Admin</a></li>
-                                    <?php endif; ?>
-                                    <li><a href="<?= $this->url('user/default', [
-                                        'action' => 'logout'
-                                        ]) ?>"><?= $this->translate('Logout') ?></a></li>
-                                </ul>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle($this->translate('GEWIS Website'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+                        ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
+                        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9',])
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', ['conditional' => 'lt IE 9',])
+            ->prependFile($this->basePath() . '/js/url-helper.js')
+        ; ?>
+
+    </head>
+    <body>
+        <?= $this->partial('partial/main-nav.phtml') ?>
 
         <div class="content-container">
             <?php $viewModel = current($this->viewModel()->getCurrent()->getChildren());
@@ -138,54 +54,9 @@ function getIsActiveClass($view, array $condition)
              ?>
         </div>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2 col-md-1">
-                        <img src="<?= $this->basePath() ?>/img/logo-footer.png"/>
-                    </div>
-                    <div class="col-sm-10 col-md-7">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h3><?= $this->translate('Infima') ?></h3>
-                                <p>
-                                    <?= $this->infima() ?>
-                                </p>
-                                <p>&copy; 2013
-                                    - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h3><?= $this->translate('Visiting address') ?></h3>
-                                <address>
-                                    <?= $this->translate('Study association GEWIS') ?><br>
-                                    MF 3.155<br>
-                                    De Groene Loper 5<br>
-                                    5612 AZ Eindhoven<br>
-                                    <?= $this->translate('Netherlands') ?>
-                                </address>
-                            </div>
-                            <div class="col-sm-4">
-                                <h3><?= $this->translate('Postal address') ?></h3>
-                                <address>
-                                    <?= $this->translate('Study association GEWIS') ?><br>
-                                    MF 3.155<br>
-                                    Postbus 513<br>
-                                    5600 MB Eindhoven<br>
-                                    <?= $this->translate('Netherlands') ?>
-                                </address>
-                            </div>
-                            <div class="col-sm-4">
-                                <i class="glyphicon glyphicon-earphone"></i> <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
-                                <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <?php echo $this->inlineScript() ?>
+        <?= $this->partial('partial/footer.phtml') ?>
+
+        <?= $this->inlineScript() ?>
         <script>
             <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
             URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
