@@ -88,7 +88,7 @@ $this->headTitle($this->translate('Jobs'));
                         </div>
                         <div class="col-md-9">
                             <h4><?= $this->translate('Description') ?></h4>
-                            <div class="job-description text-justify"><?= nl2br($this->markdown($job->getDescription())) ?></div>
+                            <div class="job-description text-justify markdown"><?= $this->markdown($job->getDescription()) ?></div>
                         </div>
                     </div>
                 </div>
