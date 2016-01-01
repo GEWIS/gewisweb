@@ -1,0 +1,33 @@
+div.markdown {
+
+    /*
+     * Headings
+     */
+    $hx-scaling: 0.8;
+
+    h1 {
+        font-size: $hx-scaling * 36px;
+    }
+
+    h2 {
+        font-size: $hx-scaling * 30px;
+    }
+
+    h3 {
+        font-size: $hx-scaling * 24px;
+    }
+
+    h4 {
+        font-size: $hx-scaling * 18px;
+    }
+
+    h5 {
+        font-size: 1em;
+        font-style: italic;
+    }
+
+    h6 {
+        font-size: 1em;
+        font-style: italic;
+    }
+}
