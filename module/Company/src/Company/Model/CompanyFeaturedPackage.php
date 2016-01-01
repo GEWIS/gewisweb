@@ -27,7 +27,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     /**
      * The featured package content article.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $article;
 
@@ -60,7 +60,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
 
     /**
      * Get the package's language.
-     * 
+     *
      * @return string language of the package
      */
     public function getLanguage()
@@ -70,7 +70,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
 
     /**
      * Set the package's language.
-     * 
+     *
      * @param string $language language of the package
      */
     public function setLanguage($language)
