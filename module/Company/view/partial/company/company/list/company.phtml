@@ -47,7 +47,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
         </div>
         <div class="col-md-9">
             <h4><?= $this->translate('Description') ?></h4>
-            <div class="company-description text-justify"><?= nl2br($this->markdown($company->getTranslationFromLocale($locale)->getDescription())) ?></div>
+            <div class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
         </div>
     </div>
 </div>
