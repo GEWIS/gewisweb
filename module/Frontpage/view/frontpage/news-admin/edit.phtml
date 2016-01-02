@@ -1,0 +1,88 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js');
+$this->scriptUrl()->requireUrl('admin_page/upload');
+?>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+$form->setAttribute('role', 'form');
+?>
+<?= $this->form()->openTag($form); ?>
+<h3><?= $this->translate('English content') ?></h3>
+<div class="form-group">
+    <?php
+    $element = $form->get('englishTitle');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('englishContent');
+    $element->setAttribute('id', 'englishContent');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextarea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<hr>
+<h3><?= $this->translate('Dutch content') ?></h3>
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchTitle');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchContent');
+    $element->setAttribute('id', 'dutchContent');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextarea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<hr>
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary');
+?>
+<?= $this->formButton($submit) ?>
+
+<?php if($canDelete): ?>
+    <a href="<?= $this->url('admin_news/delete', ['item_id' => $newsItemId]) ?>" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span>&nbsp;
+        <?= $this->translate('Delete this news item') ?>
+    </a>
+<?php endif ?>
+
+<?= $this->form()->closeTag(); ?>
+<script>
+    CKEDITOR.replace('englishContent', {
+        // Spelling checker language
+        'scayt_sLang': 'en_US',
+        'height': 500
+    });
+
+    CKEDITOR.replace('dutchContent', {
+        // Spelling checker language
+        'scayt_sLang': 'nl_NL',
+        'height': 500
+    });
+</script>

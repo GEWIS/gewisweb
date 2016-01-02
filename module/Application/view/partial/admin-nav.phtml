@@ -53,6 +53,9 @@
                     <?php if ($this->acl('frontpage_acl')->isAllowed('page', 'create')): ?>
                         <li><a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a></li>
                     <?php endif; ?>
+                    <?php if ($this->acl('frontpage_acl')->isAllowed('news_item', 'create')): ?>
+                        <li><a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a></li>
+                    <?php endif; ?>
                     <?php if ($this->acl('photo_acl')->isAllowed('album', 'nodate')): ?>
                         <li><a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a></li>
                     <?php endif; ?>

@@ -101,7 +101,8 @@ return [
     ],
 
     'frontpage' => [
-        'activity_count' => 3 // Number of activities to display
+        'activity_count' => 3, // Number of activities to display
+        'news_count' => 3, // Number of news items to display
     ],
 
     /**

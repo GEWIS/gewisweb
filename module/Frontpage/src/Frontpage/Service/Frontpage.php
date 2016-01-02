@@ -3,6 +3,7 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 
 /**
  * Frontpage service.
@@ -22,13 +23,15 @@ class Frontpage extends AbstractAclService
         $poll = $pollService->getNewestPoll();
         $pollDetails = $pollService->getPollDetails($poll);
         $pollDetails['poll'] = $poll;
+        $news = $this->getNewsItems();
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
             'birthdayTag' => $birthdayInfo['tag'],
             'activities' => $activities,
             'weeklyPhoto' => $weeklyPhoto,
-            'poll' => $pollDetails
+            'poll' => $pollDetails,
+            'news' => $news
         ];
     }
 
@@ -49,7 +52,6 @@ class Frontpage extends AbstractAclService
             $members[] = $member;
             //TODO: check member's privacy settings
             $birthdays[] = ['member' => $member, 'age' => $age];
-
         }
 
         try {
@@ -62,6 +64,45 @@ class Frontpage extends AbstractAclService
             'birthdays' => $birthdays,
             'tag' => $tag
         ];
+    }
+
+    /**
+     * Returns a mixed array of news items and activities to display in the
+     * news section.
+     *
+     * @return array
+     */
+    public function getNewsItems()
+    {
+        $count = $this->getConfig()['news_count'];
+        $activities = $this->getUpcomingActivities();
+        $newsItems = $this->getNewsService()->getLatestNewsItems($count);
+        $news = array_merge($activities, $newsItems);
+        usort($news, function ($a, $b) {
+            return ($this->getItemTimestamp($a) < $this->getItemTimestamp($b));
+        });
+
+        return array_slice($news, 0, $count);
+    }
+
+    /**
+     * Get a time stamp of a news item or activity for sorting
+     *
+     * @param $item
+     * @return integer
+     */
+    public function getItemTimestamp($item)
+    {
+        $now = (new \DateTime())->getTimestamp();
+        if ($item instanceof \Activity\Model\Activity) {
+            return abs($item->getBeginTime()->getTimestamp() - $now);
+        }
+
+        if ($item instanceof \Frontpage\Model\NewsItem) {
+            return abs($item->getDate()->getTimeStamp() - $now);
+        }
+
+        throw new InvalidArgumentException('The given item is neither an Activity or a NewsItem');
     }
 
     public function getUpcomingActivities()
@@ -133,6 +174,16 @@ class Frontpage extends AbstractAclService
     public function getPollService()
     {
         return $this->sm->get('frontpage_service_poll');
+    }
+
+    /**
+     * Get the news service.
+     *
+     * @return \Frontpage\Service\News
+     */
+    public function getNewsService()
+    {
+        return $this->sm->get('frontpage_service_news');
     }
 
     /**

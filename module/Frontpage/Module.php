@@ -41,8 +41,8 @@ class Module
             'invokables' => [
                 'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
                 'frontpage_service_page' => 'Frontpage\Service\Page',
-                'frontpage_service_page' => 'Frontpage\Service\Page',
-                'frontpage_service_poll' => 'Frontpage\Service\Poll'
+                'frontpage_service_poll' => 'Frontpage\Service\Poll',
+                'frontpage_service_news' => 'Frontpage\Service\News'
             ],
             'factories' => [
                 'frontpage_form_page' => function ($sm) {
@@ -76,6 +76,14 @@ class Module
 
                     return $form;
                 },
+                'frontpage_form_news_item' => function ($sm) {
+                    $form = new \Frontpage\Form\NewsItem(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('frontpage_hydrator'));
+
+                    return $form;
+                },
                 'frontpage_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('frontpage_doctrine_em')
@@ -91,12 +99,18 @@ class Module
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
+                'frontpage_mapper_news_item' => function ($sm) {
+                    return new Mapper\NewsItem(
+                        $sm->get('frontpage_doctrine_em')
+                    );
+                },
                 'frontpage_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
                     $acl->addResource('page');
                     $acl->addResource('poll');
                     $acl->addResource('poll_comment');
+                    $acl->addResource('news_item');
 
                     $acl->allow('user', 'poll', ['vote', 'request']);
                     $acl->allow('user', 'poll_comment', ['view', 'create']);

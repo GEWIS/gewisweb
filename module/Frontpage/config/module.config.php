@@ -7,6 +7,7 @@ return [
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
             'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
             'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
+            'Frontpage\Controller\NewsAdmin' => 'Frontpage\Controller\NewsAdminController',
             'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',
         ],
     ],
@@ -223,6 +224,66 @@ return [
                 ],
                 'priority' => 100
             ],
+            'admin_news' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/admin/news',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Frontpage\Controller',
+                        'controller' => 'NewsAdmin',
+                        'action' => 'list',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/list[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'list',
+                            ],
+                        ],
+                    ],
+                    'create' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/create',
+                            'defaults' => [
+                                'action' => 'create',
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:item_id]/edit',
+                            'constraints' => [
+                                'item_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:item_id]/delete',
+                            'constraints' => [
+                                'item_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
             'admin' => [
                 'type' => 'Segment',
                 'options' => [
@@ -244,6 +305,7 @@ return [
         ],
         'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
+            'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
         ],
     ],
     'doctrine' => [

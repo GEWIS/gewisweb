@@ -1,0 +1,26 @@
+<h1><?= $this->translate('News items') ?></h1>
+<a class="btn btn-primary" href="<?= $this->url('admin_news/create') ?>"><?= $this->translate('Create news item') ?></a>
+<?= $this->paginationControl(
+    $paginator,
+    // the scrolling style
+    'elastic',
+    'paginator/default',
+    [
+        'path' => $this->url('admin_news/list')
+    ]
+)
+?>
+<?php if (!empty($paginator)): ?>
+
+    <table class="table table-hover">
+        <tbody>
+        <?php foreach ($paginator as $newsItem): ?>
+            <tr onclick="window.document.location='<?= $this->url('admin_news/edit', ['item_id' => $newsItem->getId()])?>'">
+                <td><?= $newsItem->getDutchTitle() ?></td>
+                <td><?= $newsItem->getEnglishTitle() ?></td>
+                <td><?= $newsItem->getDate()->format('d-m-Y') ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
