@@ -33,6 +33,7 @@ Activity.Touch.init = function () {
     $('#loginModal').on('hidden.bs.modal', function () {
         $('#lidnrInput').val('');
         $('#pinInput').val('');
+        $("#loginFailed").hide();
     });
     $('#logoutModal').on('hidden.bs.modal', function () {
         clearTimeout(Activity.Touch.logoutTickTimeout);
