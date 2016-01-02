@@ -1,11 +1,16 @@
-<?php $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr']) ?>
+<?php
+$this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
+                  ->requireUrl('member/view', ['lidnr']);
+?>
 <?php if($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
 <div>
     <h4><?= $this->translate('People in this photo') ?></h4>
     <ul id="tagList">
         <?php foreach ($this->photo->getTags() as $tag): ?>
             <li>
-                <a href="#"><?= $tag->getMember()->getFullName() ?></a>&nbsp;
+                <a href="<?= $this->url('member/view', ['lidnr' => $tag->getMember()->getLidnr()]) ?>">
+                    <?= $tag->getMember()->getFullName() ?>
+                </a>&nbsp;
                 <a href="<?= $this->url('photo/photo/tag/remove',
                     ['photo_id' => $this->photo->getId(), 'lidnr' => $tag->getMember()->getLidnr()]); ?>"
                    class="remove-tag">

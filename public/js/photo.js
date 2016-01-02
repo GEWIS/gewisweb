@@ -51,8 +51,12 @@ Photo = {
                                 'lidnr': data.tag.member_id
                             });
 
+                            var memberURL = URLHelper.url('member/view', {
+                                'lidnr': data.tag.member_id
+                            });
+
                             var id = 'removeTag' + data.tag.id;
-                            $('#tagList').append('<li><a href="#">' + suggestion.value + '</a>' +
+                            $('#tagList').append('<li><a href="' + memberURL + '">' + suggestion.value + '</a>' +
                                 '<a href="' + removeURL + '" id="' + id + '">' +
                                 '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
                                 '</span></a></li>'
