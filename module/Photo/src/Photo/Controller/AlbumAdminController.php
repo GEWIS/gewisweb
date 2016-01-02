@@ -61,8 +61,6 @@ class AlbumAdminController extends AbstractActionController
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
-        // Add some urls
-        $albumPage['urls'] = $this->getURLs();
 
         return new JsonModel($albumPage);
     }
@@ -189,53 +187,6 @@ class AlbumAdminController extends AbstractActionController
         }
 
         return new JsonModel([]);
-    }
-
-
-    /**
-     * Retrieves an associative array of URLs to be used by client side code.
-     *
-     * @return array
-     */
-    public function getURLs()
-    {
-        return [
-            'album_edit' => $this->url()->fromRoute(
-                'admin_photo/album_edit', ['album_id' => '{0}']
-            ),
-            'album_create' => $this->url()->fromRoute(
-                'admin_photo/album_delete', ['album_id' => '{0}']
-            ),
-            'album_add' => $this->url()->fromRoute(
-                'admin_photo/album_add', ['album_id' => '{0}']
-            ),
-            'album_move' => $this->url()->fromRoute(
-                'admin_photo/album_move', ['album_id' => '{0}']
-            ),
-            'album_delete' => $this->url()->fromRoute(
-                'admin_photo/album_delete', ['album_id' => '{0}']
-            ),
-            'album_cover' => $this->url()->fromRoute(
-                'admin_photo/album_cover', ['album_id' => '{0}']
-            ),
-            'album_page' => $this->url()->fromRoute(
-                'admin_photo/album_page', ['album_id' => '{0}', 'page' => '{1}']
-            ),
-            'album_index' => $this->url()->fromRoute(
-                'admin_photo/album_index', ['album_id' => '{0}']
-            ),
-            'photo_index' => $this->url()->fromRoute(
-                'admin_photo/photo_index', ['photo_id' => '{0}']
-            ),
-            'photo_delete' => $this->url()->fromRoute(
-                'admin_photo/photo_delete', ['photo_id' => '{0}']
-            ),
-            'photo_move' => $this->url()->fromRoute(
-                'admin_photo/photo_move', ['photo_id' => '{0}']
-            ),
-
-
-        ];
     }
 
     /**
