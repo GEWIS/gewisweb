@@ -197,14 +197,18 @@ Styleguide: navbar
     padding: 30px 18px;
 
     span.glyphicon {
-        font-size: 1.3em;
+        font-size: 20px;
+        margin-top: -5px;
     }
+
+
 }
 
 .navbar-nav.no-collapse {
     margin-top: 0;
     margin-bottom: 0;
     margin-right: 15px;
+    margin-left: 15px;
 
     .dropdown-menu {
         display: block;

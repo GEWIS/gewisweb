@@ -12,7 +12,7 @@ $lang = $session->lang; ?>
         </div>
         <div class="navbar-header navbar-right pull-right">
             <ul class="nav navbar-nav pull-left no-collapse">
-                <li class="dropdown pull-left">
+                <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="glyphicon glyphicon-globe"></span>
                         <span class="sr-only"><?= $this->translate('Language settings') ?></span>
@@ -32,13 +32,13 @@ $lang = $session->lang; ?>
                     </ul>
                 </li>
                 <?php if (null === $this->identity()): ?>
-                    <li class="visible-xs pull-right">
+                    <li class="visible-xs pull-left">
                         <a href="<?= $this->url('user') ?>">
                             <span class="glyphicon glyphicon-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
                         </a>
                     </li>
-                    <li class="dropdown pull-right hidden-xs">
+                    <li class="dropdown pull-left hidden-xs">
                         <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
@@ -60,14 +60,14 @@ $lang = $session->lang; ?>
                         </div>
                     </li>
                 <?php else: ?>
-                    <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
                     <?php $member = $this->identity()->getMember() ?>
-                    <li class="dropdown">
+                    <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="visible-lg-inline"><?= $this->translate('Signed in as') ?> </span><?= $member->getFirstName() ?>
+                            <?= $member->getFirstName() ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <li class="visible-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
                             <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
                             <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                             <?php if ($member->getOrganInstallations()->count() > 0): ?>
@@ -125,6 +125,11 @@ $lang = $session->lang; ?>
                 <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
                 <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
             </ul>
+            <?php if (null != $this->identity()): ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
+            </ul>
+            <?php endif; ?>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
