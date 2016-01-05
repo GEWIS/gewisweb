@@ -25,6 +25,11 @@ Styleguide: navbar
     font-family: $font-family-alt;
     font-weight: 300;
     font-size: 15px;
+
+    a.disabled {
+        background-color: #eee !important;
+        color: #999 !important;
+    }
 }
 
 .navbar-brand {

@@ -1,3 +1,8 @@
+<?php
+use Zend\Session\Container as SessionContainer;
+
+$session = new SessionContainer('lang');
+$lang = $session->lang; ?>
 <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
@@ -13,14 +18,14 @@
                         <span class="sr-only"><?= $this->translate('Language settings') ?></span>
                         <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu language <?= ($lang == 'en') ? 'reverse' : ''?> ">
                         <li>
-                            <a href="#">
+                            <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>" href="<?= $this->url('lang', ['lang' => 'en']) ?>">
                                 <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>" href="<?= $this->url('lang', ['lang' => 'nl']) ?>">
                                 <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
                             </a>
                         </li>
@@ -66,7 +71,7 @@
                             <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
                             <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                             <?php if ($member->getOrganInstallations()->count() > 0): ?>
-                                <li><a href="<?= $this->url('admin') ?>">Admin</a></li>
+                                <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
                             <?php endif; ?>
                             <li><a href="<?= $this->url('user/default', [
                                     'action' => 'logout'

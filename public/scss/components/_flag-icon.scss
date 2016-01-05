@@ -25,3 +25,12 @@
     }
 
 }
+
+ul.dropdown-menu.language {
+    display: flex !important;
+    flex-direction: column;
+
+    &.reverse {
+        flex-direction: column-reverse;
+    }
+}
