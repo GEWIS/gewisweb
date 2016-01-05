@@ -186,6 +186,34 @@ Styleguide: navbar
     }
 }
 
+/* Non collapsing items */
+
+.navbar-nav.no-collapse > li > a {
+    padding: 30px 18px;
+
+    span.glyphicon {
+        font-size: 1.3em;
+    }
+}
+
+.navbar-nav.no-collapse {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 15px;
+
+    .dropdown-menu {
+        display: block;
+        position: absolute;
+    }
+
+    &.navbar-right .dropdown-menu {
+        right: 0;
+        left: auto;
+    }
+}
+
+/* /Non collapsing items */
+
 .navbar-nav > li > a {
     @include transition(
         background $transition-duration ease,
@@ -249,6 +277,8 @@ Styleguide: navbar
 
 
 .nav {
+
+    /* Disable hover in hamburger menu */
 
     li.dropdown.dropdown-hover.default > .dropdown-menu {
         visibility: visible;
