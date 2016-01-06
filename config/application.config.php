@@ -19,6 +19,7 @@ $modules = [
 
 if ($env == 'development') {
     $modules[] = 'ZendDeveloperTools';
+    $modules[] = 'TestData';
 }
 
 return [

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8d4298c0cc3f00cecab2dd2bfa13f1c8",
-    "content-hash": "b30429b6e5d095bd04550ca58a54d8e3",
+    "hash": "52dc400699b795e67c7ee539ebd737f1",
+    "content-hash": "90fa3da4db21322d48daf35dcc3bbe3e",
     "packages": [
         {
             "name": "GEWIS/gewisweb-migrate",
@@ -876,6 +876,89 @@
             "time": "2015-11-01 10:19:22"
         },
         {
+            "name": "fzaninotto/faker",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2015-05-29 06:29:14"
+        },
+        {
+            "name": "jszanto/gewisweb-test-data",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jszanto/gewisweb-test-data",
+                "reference": "e78f25deb03db7af37638efead8ad443e4f61380"
+            },
+            "require": {
+                "fzaninotto/faker": "^1.5",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TestData": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Module for migration scripts to the new website",
+            "homepage": "https://github.com/jszanto/gewisweb-test-data",
+            "keywords": [
+                "gewis"
+            ],
+            "time": "2016-01-05 23:31:06"
+        },
+        {
             "name": "league/commonmark",
             "version": "0.12.0",
             "source": {
@@ -1465,7 +1548,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "zendframework/zend-developer-tools": 20,
-        "gewis/gewisweb-migrate": 20
+        "gewis/gewisweb-migrate": 20,
+        "jszanto/gewisweb-test-data": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

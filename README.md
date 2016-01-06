@@ -45,6 +45,11 @@ Additional steps required in production
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
 - run `./web orm:generate-proxies`
 
+Testing
+============
+To generate test data ensure that the application is running with the development configuration. Test data can
+then be generated using `./web testdata <module_name>`. For example `./web testdata photo`.
+
 Configuration for emails
 ------------------------
 
