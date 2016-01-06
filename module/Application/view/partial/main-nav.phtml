@@ -67,7 +67,7 @@ $lang = $session->lang; ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="visible-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
+                            <li><a href="#"><?= $this->translate('Members') ?></a></li>
                             <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
                             <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                             <?php if ($member->getOrganInstallations()->count() > 0): ?>
@@ -127,7 +127,7 @@ $lang = $session->lang; ?>
             </ul>
             <?php if (null != $this->identity()): ?>
             <ul class="nav navbar-nav navbar-right">
-                <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
+                <li class="<?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
             </ul>
             <?php endif; ?>
         </div><!--/.nav-collapse -->
