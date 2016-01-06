@@ -74,3 +74,6 @@ $btn-warning-border: $btn-warning-bg;
 $btn-danger-color: $brand-danger;
 $btn-danger-bg: transparent;
 $btn-danger-border: $brand-danger;
+
+/* Collapse navbar on medium */
+$grid-float-breakpoint: $screen-md-min;

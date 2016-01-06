@@ -1,8 +1,8 @@
 @import 'https://fonts.googleapis.com/css?family=Raleway:400,600&subset=all';
 
+@import 'variables';
 @import 'bootstrap-variables';
 @import 'bootstrap';
-@import 'variables';
 
 // Mixins
 @import 'mixins/buttons';
@@ -15,6 +15,7 @@
 @import 'components/breadcrumbs';
 @import 'components/button-groups';
 @import 'components/buttons';
+@import 'components/flag-icon';
 @import 'components/footer';
 @import 'components/forms';
 @import 'components/jumbotron';

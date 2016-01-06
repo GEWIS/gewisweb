@@ -1,17 +1,93 @@
+<?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
 <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <div class="navbar-header navbar-left pull-left">
             <a href="<?= $this->url('home') ?>" class="navbar-brand">
                 <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
             </a>
         </div>
+        <div class="navbar-header navbar-right pull-right">
+            <ul class="nav navbar-nav pull-left no-collapse">
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-globe"></span>
+                        <span class="sr-only"><?= $this->translate('Language settings') ?></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu language <?= ($lang == 'en') ? 'reverse' : ''?> ">
+                        <li>
+                            <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>" href="<?= $this->url('lang', ['lang' => 'en']) ?>">
+                                <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
+                            </a>
+                        </li>
+                        <li>
+                            <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>" href="<?= $this->url('lang', ['lang' => 'nl']) ?>">
+                                <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <?php if (null === $this->identity()): ?>
+                    <li class="visible-xs pull-left">
+                        <a href="<?= $this->url('user') ?>">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="sr-only"><?= $this->translate('Login') ?></span>
+                        </a>
+                    </li>
+                    <li class="dropdown pull-left hidden-xs">
+                        <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="sr-only"><?= $this->translate('Login') ?></span>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-login">
+                            <form action="<?= $this->url('user') ?>" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="login" class="form-control" placeholder="<?= $this->translate('Membership number or email address') ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
+                                <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
+
+                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            </form>
+                        </div>
+                    </li>
+                <?php else: ?>
+                    <?php $member = $this->identity()->getMember() ?>
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <?= $member->getFirstName() ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><?= $this->translate('Members') ?></a></li>
+                            <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
+                            <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
+                            <?php if ($member->getOrganInstallations()->count() > 0): ?>
+                                <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
+                            <?php endif; ?>
+                            <li><a href="<?= $this->url('user/default', [
+                                    'action' => 'logout'
+                                ]) ?>"><?= $this->translate('Logout') ?></a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+            </ul>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only"><?= $this->translate('Toggle navigation') ?></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="visible-xs-block clearfix"></div>
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-left">
                 <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['frontpage', 'page']) ?> <?= moduleIsActive($this, ['frontpage', 'page']) ? 'default' : '' ?>">
                     <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button" aria-haspopup="true" aria-expanded="false">
                         <?= $this->translate('Association') ?>
@@ -47,47 +123,11 @@
                 <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
                 <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
             </ul>
+            <?php if (null != $this->identity()): ?>
             <ul class="nav navbar-nav navbar-right">
-                <?php if (null === $this->identity()): ?>
-                    <li class="visible-xs"><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
-                    <li class="dropdown hidden-xs">
-                        <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->translate('Login') ?></a>
-                        <div class="dropdown-menu dropdown-login">
-                            <form action="<?= $this->url('user') ?>" method="post">
-                                <div class="form-group">
-                                    <input type="text" name="login" class="form-control" placeholder="<?= $this->translate('Membership number or email address') ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
-                                <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
-
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            </form>
-                        </div>
-                    </li>
-                <?php else: ?>
-                    <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
-                    <?php $member = $this->identity()->getMember() ?>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="visible-lg-inline"><?= $this->translate('Signed in as') ?> </span><?= $member->getFirstName() ?>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
-                            <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
-                            <?php if ($member->getOrganInstallations()->count() > 0): ?>
-                                <li><a href="<?= $this->url('admin') ?>">Admin</a></li>
-                            <?php endif; ?>
-                            <li><a href="<?= $this->url('user/default', [
-                                    'action' => 'logout'
-                                ]) ?>"><?= $this->translate('Logout') ?></a></li>
-                        </ul>
-                    </li>
-                <?php endif; ?>
+                <li class="<?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
             </ul>
+            <?php endif; ?>
         </div><!--/.nav-collapse -->
     </div>
 </nav>

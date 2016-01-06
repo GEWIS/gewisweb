@@ -25,6 +25,11 @@ Styleguide: navbar
     font-family: $font-family-alt;
     font-weight: 300;
     font-size: 15px;
+
+    a.disabled {
+        background-color: #eee !important;
+        color: #999 !important;
+    }
 }
 
 .navbar-brand {
@@ -180,11 +185,43 @@ Styleguide: navbar
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $grid-float-breakpoint) {
     .navbar-nav > li > a {
         padding: 30px 18px;
     }
 }
+
+/* Non collapsing items */
+
+.navbar-nav.no-collapse > li > a {
+    padding: 30px 18px;
+
+    span.glyphicon {
+        font-size: 20px;
+        margin-top: -5px;
+    }
+
+
+}
+
+.navbar-nav.no-collapse {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 15px;
+    margin-left: 15px;
+
+    .dropdown-menu {
+        display: block;
+        position: absolute;
+    }
+
+    &.navbar-right .dropdown-menu {
+        right: 0;
+        left: auto;
+    }
+}
+
+/* /Non collapsing items */
 
 .navbar-nav > li > a {
     @include transition(
@@ -201,7 +238,7 @@ Styleguide: navbar
     visibility: hidden;
     opacity: 0;
 
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $grid-float-breakpoint) {
         display: block;
     }
 
@@ -250,6 +287,8 @@ Styleguide: navbar
 
 .nav {
 
+    /* Disable hover in hamburger menu */
+
     li.dropdown.dropdown-hover.default > .dropdown-menu {
         visibility: visible;
         opacity: 1;
@@ -259,7 +298,7 @@ Styleguide: navbar
         display: block;
     }
 
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $grid-float-breakpoint) {
         li.dropdown.dropdown-hover.default:not(:hover) > .dropdown-menu {
             visibility: hidden;
             opacity: 0;
@@ -278,5 +317,12 @@ Styleguide: navbar
             display: block;
             position: absolute;
         }
+
+    }
+}
+
+@media (max-width: $grid-float-breakpoint - 1px) {
+    .navbar-collapse {
+        clear: both;
     }
 }

@@ -1,0 +1,36 @@
+.flag-icon-background {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.33333333em;
+    line-height: 1em;
+}
+
+.flag-icon:before {
+    content: "\00a0";
+}
+
+.dropdown-menu {
+
+    .flag-icon {
+        margin-right: 1em;
+    }
+
+}
+
+ul.dropdown-menu.language {
+    display: flex !important;
+    flex-direction: column;
+
+    &.reverse {
+        flex-direction: column-reverse;
+    }
+}
