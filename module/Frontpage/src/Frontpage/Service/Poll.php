@@ -183,7 +183,7 @@ class Poll extends AbstractAclService
         $this->getPollMapper()->flush();
 
         // reset the form
-        $form->setData([]);
+        $form->setData(['author' => '', 'content' => '']);
     }
 
     /**
