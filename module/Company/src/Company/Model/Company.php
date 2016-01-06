@@ -347,10 +347,12 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function isBannerActive()
     {
-        return !empty(array_filter($this->getPackages()->toArray(), function ($package) {
+        $banners = array_filter($this->getPackages()->toArray(), function ($package) {
             return $package->getType() === 'banner' && $package->isActive();
 
-        }));
+        });
+
+        return !empty($banners);
     }
 
 
