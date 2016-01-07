@@ -56,7 +56,7 @@ class PollComment implements ResourceInterface
     /**
      * Comment date.
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $createdOn;
 
