@@ -18,7 +18,7 @@ class Bulk extends Form implements InputFilterProviderInterface
             'name' => 'exams',
             'type' => 'Collection',
             'options' => [
-                'count' => 2,
+                'count' => 0,
                 'allow_add' => true,
                 'allow_remove' => true,
                 'target_element' => $exam
