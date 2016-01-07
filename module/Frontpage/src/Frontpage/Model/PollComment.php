@@ -53,6 +53,13 @@ class PollComment implements ResourceInterface
      */
     protected $content;
 
+    /**
+     * Comment date.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $createdOn;
+
 
     /**
      * Get the comment ID.
@@ -142,6 +149,26 @@ class PollComment implements ResourceInterface
     public function setContent($content)
     {
         return $this->content = $content;
+    }
+
+    /**
+     * Get the creation date.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * Set the creation date.
+     *
+     * @param string $createdOn
+     */
+    public function setCreatedOn(\DateTime $createdOn)
+    {
+        $this->createdOn = $createdOn;
     }
 
     /**
