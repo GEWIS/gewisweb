@@ -52,6 +52,19 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'organ',
+            'type' => 'select',
+            'options' => [
+                'style' => 'width:100%',
+                'value_options' => [
+                    'a',
+                    'b',
+                    'c',
+                ]
+            ]
+        ]);
+
+        $this->add([
            // 'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [

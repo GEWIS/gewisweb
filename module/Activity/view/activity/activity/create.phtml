@@ -106,6 +106,14 @@ echo $this->form()->openTag($form);
             </div>
         </div>
         <div class="row">
+            <div class = "col-md-4">
+                <?php echo $this->translate('Organ:');?>:
+            </div>
+            <div class = "col-md-8">
+                <?php echo $this->formRow($form->get('organ')); ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-8"><?php echo $this->formSubmit($form->get('submit'));?></div>
         </div>
