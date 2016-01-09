@@ -60,7 +60,7 @@ class ActivityController extends AbstractActionController
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
             'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
-            'form' => $form,
+            'form' => $form ? $form : null,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
         ];
