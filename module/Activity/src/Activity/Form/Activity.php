@@ -65,24 +65,16 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-           // 'type' => 'Zend\Form\Element\DateTime',
             'name' => 'beginTime',
             'attributes' => [
                 'type' => 'text',
-           //     'min' => '2010-01-01T00:00:00Z',
-           //     'step' => '1', // minutes; default step interval is 1 min
-           //     'style' => 'width:100%',
             ],
         ]);
 
         $this->add([
-          //  'type' => 'Zend\Form\Element\DateTime',
             'name' => 'endTime',
             'attributes' => [
                 'type' => 'text',
-            //    'min' => '2010-01-01T00:00:00Z',
-              //  'step' => '1', // minutes; default step interval is 1 min
-               // 'style' => 'width:100%',
             ],
         ]);
 
@@ -117,15 +109,6 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ]);
 
-        /*$this->add([
-            'name' => 'approved',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);*/
         $this->add([
             'name' => 'description',
             'attributes' => [
