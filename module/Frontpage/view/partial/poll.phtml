@@ -26,7 +26,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
         <div class="form-group">
-            <div class="col-md-6">
+            <div class="<?= ($showResults || !$canVote) ? 'col-md-6 col-lg-4' : 'col-md-12' ?>">
                 <?php if ($canVote): ?>
                 <div class="radio">
                     <label>
@@ -39,11 +39,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if ($canVote): ?>
                     </label>
                 </div>
-                <?php endif; ?>
+                <?php endif ?>
             </div>
 
             <?php if($showResults || !$canVote): ?>
-            <div class="col-md-5">
+            <div class="col-md-5 col-lg-7">
                 <div class="progress">
                     <div class="progress-bar poll-bar" role="progressbar"
                          aria-valuenow="<?= $percentages[$option->getId()] ?>"
@@ -53,17 +53,17 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </div>
                 </div>
             </div>
-            <div class="col-md-1 text-right">
+            <div class="col-md-1 col-lg-1 text-right">
                 <?= sprintf($this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'), $option->getVotesCount()) ?>
             </div>
-            <?php endif; ?>
+            <?php endif ?>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     <div class="form-group">
         <div class="col-md-12">
             <?php if ($canVote): ?>
                 <button type="submit" class="btn btn-large btn-primary">Vote</button>
-            <?php endif; ?>
+            <?php endif ?>
         </div>
     </div>
 </form>
