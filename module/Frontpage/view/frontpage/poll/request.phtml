@@ -41,37 +41,70 @@ $element->setAttribute('placeholder', $element->getLabel());
         </div>
     </div>
 
-<?php foreach ($form->get('options')->getIterator() as $fs): ?>
 <?php
-$element = $fs->get('dutchText');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
+/* render template for options */
+$fs = $form->get('options')->getTemplateElement();
+ob_start();
 ?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-        <div class="col-sm-4">
-            <?= $this->formInput($element) ?>
-            <?= $this->formElementErrors($element) ?>
-        </div>
+    <?php
+    $element = $fs->get('dutchText');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
+        <div class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-4">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
 
-<?php
-$element = $fs->get('englishText');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-        <div class="col-sm-4">
-            <?= $this->formInput($element) ?>
-            <?= $this->formElementErrors($element) ?>
+    <?php
+    $element = $fs->get('englishText');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-4">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+<?php $tpl = trim(ob_get_clean()) ?>
+
+<fieldset id="poll-options">
+    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+    <?php foreach ($form->get('options')->getIterator() as $fs): ?>
+        <?php
+        $element = $fs->get('dutchText');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+            <div class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+                <div class="col-sm-4">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+
+        <?php
+        $element = $fs->get('englishText');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+                <div class="col-sm-4">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+    <?php endforeach ?>
+
+    <div class="form-group add-option">
+        <div class="col-sm-offset-8 col-sm-4">
+            <button class="btn btn-success" type="button" onclick="return addOption()"><span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?></button>
         </div>
     </div>
-<?php endforeach ?>
-
-<div class="form-group">
-    <div class="col-sm-offset-8 col-sm-4">
-        <button class="btn btn-success" type="button" onclick="return addOption()"><span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?></button>
-    </div>
-</div>
+</fieldset>
 
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
