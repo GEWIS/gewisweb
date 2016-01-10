@@ -176,6 +176,7 @@ class Poll extends AbstractAclService
 
         $comment = $form->getData();
         $comment->setUser($this->getUser());
+        $comment->setCreatedOn(new \DateTime());
 
         $poll->addComment($comment);
 

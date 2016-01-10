@@ -30,25 +30,27 @@
     </div>
 
     <?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
-    <div class="row">
         <h2><?= $this->translate('Comments') ?></h2>
         <?php if (count($poll->getComments()) == 0): ?>
             <?= $this->translate('This poll has no comments') ?>
         <?php else: ?>
         <?php foreach ($poll->getComments() as $comment): ?>
+    <div class="row">
         <div class="col-sm-2">
             <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
             <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
                 (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
+                <br>
+                <?= $comment->getCreatedOn()->format('Y-m-d H:M:s') ?>
             <?php endif ?>
         </div>
         <div class="col-sm-10">
             <?= $this->escapeHtml($comment->getContent()) ?>
         </div>
+    </div>
         <?php endforeach ?>
         <?php endif ?>
-    </div>
     <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
     <div class="row">
         <h3><?= $this->translate('Comment on this poll') ?></h3>
