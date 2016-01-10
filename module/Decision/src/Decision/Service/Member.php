@@ -19,7 +19,7 @@ class Member extends AbstractAclService
     /**
      * Obtain information about the current user.
      *
-     * @return Decision\Model\Member
+     * @return \Decision\Model\Member
      */
     public function getMembershipInfo($lidnr = null)
     {

@@ -2,8 +2,13 @@
 
 namespace Activity\Form;
 
+use Decision\Model\Member;
+use Decision\Model\Organ;
+use Decision\Model\OrganMember;
+use User\Model\User;
 use Zend\Form\Form;
 //input filter
+use Zend\Mvc\I18n\Translator;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -16,12 +21,21 @@ class Activity extends Form implements InputFilterProviderInterface
     protected $inputFilter;
     protected $organs;
 
-    public function __construct()
+    public function __construct(Member $user, Translator $translator)
     {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\Activity());
+
+        // all the organs that the user belongs to in organId => name pairs
+        $organs = [0 => $translator->translate('No organ')];
+
+        // Find user that wants to create an activity
+        $user->getCurrentOrganInstallations()->forAll(function ($index, OrganMember $organMember) use (&$organs) {
+            $organ = $organMember->getOrgan();
+            $organs[$organ->getId()] = $organ->getName();
+        });
 
         $this->add([
             'name' => 'language_dutch',
@@ -56,11 +70,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'type' => 'select',
             'options' => [
                 'style' => 'width:100%',
-                'value_options' => [
-                    'a',
-                    'b',
-                    'c',
-                ]
+                'value_options' => $organs
             ]
         ]);
 
@@ -276,7 +286,10 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
             'subscriptionDeadline' => [
                 'required' => true
-            ]
+            ],
+            'organ' => [
+                'required' => true
+            ],
         ];
 
 

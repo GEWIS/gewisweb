@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
+use Decision\Model\OrganMember;
+use Decision\Service\Organ;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -163,6 +165,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function createActivity(array $params, $dutch, $english)
     {
+        assert($dutch || $english, "Activities should have either be in dutch or english");
+
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
@@ -170,14 +174,44 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        assert($dutch || $english, "Activities should have either be in dutch or english");
-
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         // Find the creator
+        /** @var \User\Model\User $user */
         $user = $em->merge(
             $this->getServiceManager()->get('user_role')
         );
+
+
+        // Find the organ the activity belongs to, and see if the user has permission to create an activity
+        // for this organ
+        $organId = intval($params['organ']);
+
+        if ($organId === 0) {
+            $organ = null;
+        } else {
+            /** @var \Decision\Service\Member $memberService */
+            $memberService = $this->getServiceManager()->get('decision_service_member');
+            $member = $memberService->findMemberByLidNr($user->getLidnr());
+
+            // The organs that the user belongs to with the correct organId (either 0 or 1)
+            $organ = $member->getOrganInstallations()->filter(function (OrganMember $organMember) use ($organId) {
+                return $organMember->getOrgan()->getId() === $organId;
+            })->map(function (OrganMember $organMember) {
+                return $organMember->getOrgan();
+            })->first();
+
+            if (is_null($organ)) {
+                throw new \User\Permissions\NotAllowedException(
+                    $this->getTranslator()->translate('You are not allowed to create an activity for this organ')
+                );
+            }
+        }
+
+
+
+
+
 
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
@@ -202,6 +236,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         // Not user provided input
         $activity->setCreator($user);
+        $activity->setOrgan($organ);
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $activity->setOnlyGEWIS(true); // Not yet implemented
 
