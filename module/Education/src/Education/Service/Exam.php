@@ -66,6 +66,13 @@ class Exam extends AbstractAclService
      */
     public function getExamDownload($id)
     {
+        if (!$this->isAllowed('download')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to download exams')
+            );
+        }
+
         $exam = $this->getExamMapper()->find($id);
 
         return $this->getFileStorageService()

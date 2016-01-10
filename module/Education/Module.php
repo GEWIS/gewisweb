@@ -150,10 +150,11 @@ class Module
                     // add resource
                     $acl->addResource('exam');
 
-                    // users (logged in GEWIS members) are allowed to view exams
-                    // besides users, also people on the TU/e network are
-                    // allowed to view exams (users inherit from tueguest)
-                    $acl->allow('tueguest', 'exam', 'view');
+                    // users (logged in GEWIS members) are allowed to view
+                    // exams besides users, also people on the TU/e network are
+                    // allowed to view and download exams (users inherit from
+                    // tueguest)
+                    $acl->allow('tueguest', 'exam', ['view', 'download']);
 
                     return $acl;
                 },
