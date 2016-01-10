@@ -101,6 +101,13 @@ class Organ
     protected $subdecisions;
 
     /**
+     * All organInformation for this organ.
+     *
+     * @ORM\OneToMany(targetEntity="OrganInformation", mappedBy="organ", cascade={"persist", "remove"})
+     */
+    protected $organInformation;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -292,4 +299,34 @@ class Organ
     {
         return $this->subdecisions;
     }
+
+    /**
+     * Returns all organ information
+     *
+     * @return array
+     */
+    public function getOrganInformation()
+    {
+        return $this->organInformation;
+    }
+
+    /**
+     * Returns the approved information for an organ
+     *
+     * @return \Decision\Model\OrganInformation
+     */
+    public function getApprovedOrganInformation()
+    {
+        foreach($this->organInformation as $information)
+        {
+            if(!is_null($information->getApprover()))
+            {
+                return $information;
+            }
+        }
+
+        return null;
+    }
+
+
 }
