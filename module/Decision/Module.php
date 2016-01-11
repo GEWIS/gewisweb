@@ -91,8 +91,15 @@ class Module
                     );
                 },
                 'decision_form_organ_information' => function ($sm) {
-                    return new \Decision\Form\OrganInformation(
+                    $form = new \Decision\Form\OrganInformation (
                         $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('decision_hydrator'));
+                    return $form;
+                },
+                'decision_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_acl' => function ($sm) {
