@@ -85,7 +85,7 @@ class Organ extends AbstractAclService
             );
         }
         $form = $this->sm->get('decision_form_organ_information');
-        $organ = $this->getOrgan($organId);
+        $organ = $this->getOrgan($organId); //TODO: catch exception
         if (is_null($organ)) {
             return false;
         }
@@ -109,6 +109,7 @@ class Organ extends AbstractAclService
 
         if (is_null($organInformation)) {
             $organInformation = new OrganInformation();
+            $organInformation->setOrgan($organ);
             $em->persist($organInformation);
             return $organInformation;
         }

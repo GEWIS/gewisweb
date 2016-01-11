@@ -23,7 +23,7 @@ class OrganInformation
 
     /**
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ", inversedBy="organInformation")
-     * @ORM\JoinColumn(name="organ_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="organ_id",referencedColumnName="id", nullable=false)
      */
     protected $organ;
 
@@ -51,7 +51,7 @@ class OrganInformation
     /**
      * A description of the organ in dutch.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $dutchDescription;
 
@@ -65,7 +65,7 @@ class OrganInformation
     /**
      * A description of the organ in english.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $englishDescription;
 
