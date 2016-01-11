@@ -1,0 +1,82 @@
+<?php
+$this->scriptUrl()->requireUrl('admin_page/upload');
+?>
+    <?php
+    $form = $this->form;
+    $form->prepare();
+
+    $form->setAttribute('method', 'post');
+    $form->setAttribute('role', 'form');
+    ?>
+    <?= $this->form()->openTag($form); ?>
+<h3><?= $this->translate('Edit something') ?></h3>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('website');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('email');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('shortDutchDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('shortEnglishDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('englishDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<hr>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Save'));
+    $submit->setAttribute('class', 'btn btn-primary');
+    ?>
+    <?= $this->formButton($submit) ?>
+
+    <?= $this->form()->closeTag(); ?>

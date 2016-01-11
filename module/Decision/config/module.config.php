@@ -108,19 +108,19 @@ return [
             'organ' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route'    => '/organ',
+                    'route' => '/organ',
                     'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller'    => 'Organ',
-                        'action'        => 'index'
+                        'controller' => 'Organ',
+                        'action' => 'index'
                     ]
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'show' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/show/:organ',
+                            'route' => '/show/:organ',
                             'constraints' => [
                                 'organ' => '[0-9]+',
                             ],
@@ -186,6 +186,42 @@ return [
                 ],
                 'priority' => 100
             ],
+            'admin_organ' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/admin/organ',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller' => 'OrganAdmin',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'default' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:organ_id]/edit',
+                            'constraints' => [
+                                'organ_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'edit'
+                            ]
+                        ]
+                    ],
+                ],
+                'priority' => 100
+            ],
         ],
     ],
     'controllers' => [
@@ -193,6 +229,7 @@ return [
             'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
             'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
             'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
+            'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController'
         ]
     ],
