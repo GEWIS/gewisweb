@@ -220,6 +220,23 @@ class OrganInformation
         $this->approver = $approver;
     }
 
+    /**
+     * @return string
+     */
+    public function getCoverPath()
+    {
+        return $this->coverPath;
+    }
+
+    /**
+     * @param string $coverPath
+     */
+    public function setCoverPath($coverPath)
+    {
+        $this->coverPath = $coverPath;
+    }
+
+
     public function __clone() {
         $this->id = null;
     }

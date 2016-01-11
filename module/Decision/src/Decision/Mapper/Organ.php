@@ -76,6 +76,27 @@ class Organ
     }
 
     /**
+     * Find an organ by its abbreviation
+     *
+     * @param string $abbr
+     *
+     * @return \Decision\Model\Organ
+     */
+    public function findByAbbr($abbr)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o, om, m')
+            ->leftJoin('o.members', 'om')
+            ->leftJoin('om.member', 'm')
+            ->where('o.abbr LIKE :abbr');
+
+        $qb->setParameter('abbr', $abbr);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

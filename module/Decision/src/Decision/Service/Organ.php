@@ -49,6 +49,18 @@ class Organ extends AbstractAclService
     }
 
     /**
+     * Finds an organ by its abbreviation
+     *
+     * @param $abbr
+     *
+     * @return OrganModel
+     */
+    public function findOrganByAbbr($abbr)
+    {
+        return $this->getOrganMapper()->findByAbbr($abbr);
+    }
+
+    /**
      * @param integer $organId
      * @param array $data form post data
      * @return bool
