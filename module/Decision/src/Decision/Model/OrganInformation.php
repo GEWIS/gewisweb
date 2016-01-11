@@ -2,7 +2,14 @@
 
 namespace Decision\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Organ information.
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="OrganInformation")
+ */
 class OrganInformation
 {
     /**
