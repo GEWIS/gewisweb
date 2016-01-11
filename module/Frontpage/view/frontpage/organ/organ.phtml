@@ -1,7 +1,9 @@
 <?php $organInformation = $organ->getApprovedOrganInformation() ?>
 <div class="container">
+    <?php if (!is_null($organInformation)): ?>
     <div class="col-md-12 organ-banner" style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
     </div>
+    <?php endif ?>
     <div class="row">
         <div class="col-md-9">
             <h1><?= $organ->getName() ?></h1>
