@@ -213,6 +213,8 @@ class OrganInformation
         $this->approver = $approver;
     }
 
-
+    public function __clone() {
+        $this->id = null;
+    }
 
 }
