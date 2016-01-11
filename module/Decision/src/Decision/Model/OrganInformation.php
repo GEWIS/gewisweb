@@ -63,6 +63,13 @@ class OrganInformation
     protected $englishDescription;
 
     /**
+     * The cover photo to display for this organ.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $coverPath;
+
+    /**
      * Who was the last one to approve this information. If null then nobody approved it.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
