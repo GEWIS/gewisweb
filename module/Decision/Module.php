@@ -90,6 +90,11 @@ class Module
                         $sm->get('decision_mapper_meeting')
                     );
                 },
+                'decision_form_organ_information' => function ($sm) {
+                    return new \Decision\Form\OrganInformation(
+                        $sm->get('translator')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
