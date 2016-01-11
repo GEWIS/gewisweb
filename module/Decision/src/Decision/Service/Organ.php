@@ -49,6 +49,16 @@ class Organ extends AbstractAclService
     }
 
     /**
+     * @param string $type either committee, avc or fraternity
+     *
+     * @return array
+     */
+    public function findOrgansByType($type)
+    {
+        return $this->getOrganMapper()->findActive($type);
+    }
+
+    /**
      * Finds an organ by its abbreviation
      *
      * @param $abbr

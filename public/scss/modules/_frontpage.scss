@@ -4,7 +4,7 @@ Frontpage
 */
 @import '../_variables.scss';
 .organ-banner {
-    height: 20em;
+    @include aspect-ratio(16, 3);
     background-size: cover;
     background-position: center;
 }

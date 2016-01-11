@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+
+            <?php foreach ($organs as $organ) {
+                echo $this->partial('partial/organ-card.phtml', [
+                    'organ' => $organ
+                ]);
+            }
+
+            ?>
+    </div>
+</div>
+

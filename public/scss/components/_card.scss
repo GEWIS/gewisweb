@@ -1,0 +1,31 @@
+@import '../_variables.scss';
+
+.card .card-image {
+  @include aspect-ratio(16, 9);
+  overflow: hidden;
+  background-color: $brand-primary;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.card {
+  margin-top: 10px;
+  position: relative;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card .card-content {
+  padding: 10px;
+}
+
+.card .card-content .card-title{
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.card .card-bottom {
+  padding: 20px;
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+}

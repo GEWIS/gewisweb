@@ -5,6 +5,7 @@
 @import 'bootstrap';
 
 // Mixins
+@import 'mixins/aspect-ratio';
 @import 'mixins/buttons';
 @import 'mixins/vendor-prefixes';
 @import 'mixins/actions';
@@ -15,6 +16,7 @@
 @import 'components/breadcrumbs';
 @import 'components/button-groups';
 @import 'components/buttons';
+@import 'components/card';
 @import 'components/flag-icon';
 @import 'components/footer';
 @import 'components/forms';

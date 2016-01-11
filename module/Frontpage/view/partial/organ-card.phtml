@@ -1,0 +1,24 @@
+<?php $organInformation = $organ->getApprovedOrganInformation() ?>
+<div class="col-md-4">
+    <div class="card">
+        <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
+        <div class="card-image" style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
+        <?php else: ?>
+            <div class="card-image">
+            <?php endif ?>
+
+        </div><!-- card image -->
+
+        <div class="card-content">
+            <span class="card-title"><?= $organ->getName() ?></span>
+            <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
+            <a href="<?= $organInformation->getWebsite() ?>" class="pull-right">
+                <span class="glyphicon glyphicon-link"></span>
+            </a>
+            <?php endif; ?>
+        </div><!-- card content -->
+        <div class="card-bottom">
+            Short organ description here in dutch or english.
+        </div><!-- card actions -->
+    </div>
+</div>

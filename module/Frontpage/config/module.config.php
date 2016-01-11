@@ -43,15 +43,30 @@ return [
                         ],
                         'priority' => -1
                     ],
-                    'committee' => [
+                    'organ' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => 'association/committee/:abbr',
+                            'route' => 'association/:type/:abbr',
                             'constraints' => [
+                                'type' => 'committee|fraternity',
                                 'abbr' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                             'defaults' => [
                                 'action' => 'organ',
+                                'controller' => 'Organ'
+                            ]
+                        ],
+                        'priority' => 100
+                    ],
+                    'organ_list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => 'association/:type',
+                            'constraints' => [
+                                'type' => 'committees|fraternities',
+                            ],
+                            'defaults' => [
+                                'action' => 'list',
                                 'controller' => 'Organ'
                             ]
                         ],
@@ -321,6 +336,8 @@ return [
         'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
             'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
+            'organ/committee-list' => __DIR__ . '/../view/frontpage/organ/committee-list.phtml',
+            'organ/fraternity-list' => __DIR__ . '/../view/frontpage/organ/fraternity-list.phtml',
         ],
     ],
     'doctrine' => [

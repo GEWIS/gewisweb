@@ -35,13 +35,19 @@ class Organ
     /**
      * Find all active organs.
      *
+     * @param string $type
+     *
      * @return array
      */
-    public function findActive()
+    public function findActive($type = null)
     {
-        return $this->getRepository()->findBy([
+        $criteria = [
             'abrogationDate' => null
-        ]);
+        ];
+        if (!is_null($type)) {
+            $criteria['type'] = $type;
+        }
+        return $this->getRepository()->findBy($criteria);
     }
 
     /**
