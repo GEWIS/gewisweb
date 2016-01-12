@@ -21,7 +21,11 @@ class Activity extends Form implements InputFilterProviderInterface
     protected $inputFilter;
     protected $organs;
 
-    public function __construct(Member $user, Translator $translator)
+    /**
+     * @param Organ[] $organs
+     * @param Translator $translator
+     */
+    public function __construct(array $organs, Translator $translator)
     {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
@@ -29,13 +33,13 @@ class Activity extends Form implements InputFilterProviderInterface
             ->setObject(new \Activity\Model\Activity());
 
         // all the organs that the user belongs to in organId => name pairs
-        $organs = [0 => $translator->translate('No organ')];
+        $organOptions = [0 => $translator->translate('No organ')];
+
+        foreach ($organs as $organ) {
+            $organOptions[$organ->getId()] = $organ->getName();
+        }
 
         // Find user that wants to create an activity
-        $user->getCurrentOrganInstallations()->forAll(function ($index, OrganMember $organMember) use (&$organs) {
-            $organ = $organMember->getOrgan();
-            $organs[$organ->getId()] = $organ->getName();
-        });
 
         $this->add([
             'name' => 'language_dutch',
@@ -70,7 +74,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'type' => 'select',
             'options' => [
                 'style' => 'width:100%',
-                'value_options' => $organs
+                'value_options' => $organOptions
             ]
         ]);
 

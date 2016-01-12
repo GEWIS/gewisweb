@@ -6,8 +6,7 @@ use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
-use Decision\Model\OrganMember;
-use Decision\Service\Organ;
+use Decision\Model\Organ;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -187,31 +186,31 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // for this organ
         $organId = intval($params['organ']);
 
+        $organ = null;
+
         if ($organId === 0) {
-            $organ = null;
-        } else {
             /** @var \Decision\Service\Member $memberService */
             $memberService = $this->getServiceManager()->get('decision_service_member');
             $member = $memberService->findMemberByLidNr($user->getLidnr());
 
             // The organs that the user belongs to with the correct organId (either 0 or 1)
-            $organ = $member->getOrganInstallations()->filter(function (OrganMember $organMember) use ($organId) {
-                return $organMember->getOrgan()->getId() === $organId;
-            })->map(function (OrganMember $organMember) {
-                return $organMember->getOrgan();
-            })->first();
+            $organs = $memberService->getOrgans($member);
 
-            if (is_null($organ)) {
+            // An array only containing the organ that this member belongs to and with the correct id
+            $correctOrgan = array_filter($organs, function (Organ $organ) {
+                return $organ->getId();
+            });
+
+            // Check if the member belongs to the organ
+            if (count($organ) === 0) {
+                $translator = $this->getTranslator();
                 throw new \User\Permissions\NotAllowedException(
-                    $this->getTranslator()->translate('You are not allowed to create an activity for this organ')
+                    $translator->translate('You are not allowed to create an activity for this organ')
                 );
             }
+
+            $organ = $correctOrgan[0];
         }
-
-
-
-
-
 
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));

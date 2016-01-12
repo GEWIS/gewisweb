@@ -55,18 +55,14 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'activity_form_activity' => function ($sm) {
-                    /** @var \Decision\Service\Member $userService */
+                    /** @var \Decision\Service\Member $memberService */
                     $memberService = $sm->get('decision_service_member');
                     /** @var \User\Model\User $identity */
                     $identity = $sm->get('user_role');
-
-                    // This is a necessary hack, since the user and corresponding member model is cached
-                    // I could not get the organ from the Member, because this resulted in all kinds of exceptions
-                    // This forces doctrine to fetch a clean object from the database
-                    $user = $memberService->findMemberByLidNr($identity->getLidnr());
+                    $organs = $memberService->getOrgans($identity->getMember());
 
                     $translator = $sm->get('translator');
-                    return new \Activity\Form\Activity($user, $translator);
+                    return new \Activity\Form\Activity($organs, $translator);
 
                 },
                 'activity_service_signup' => function ($sm) {
