@@ -109,6 +109,11 @@ class Poll extends AbstractAclService
             return false;
         }
 
+        // check if poll is approved
+        if (null === $poll->getApprover()) {
+            return false;
+        }
+
         return is_null($this->getVote($poll));
     }
 
