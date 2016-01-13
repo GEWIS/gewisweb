@@ -234,15 +234,28 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Photo\Controller',
                         'controller' => 'AlbumAdmin',
-                        'action' => 'page'
+                        'action' => 'list'
                     ]
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
+                    'album_list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/album/:album_id',
+                            'defaults' => [
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'list'
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+'
+                            ],
+                        ],
+                    ],
                     'album_page' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/album[/:album_id][/:page]',
+                            'route' => '/album/:album_id/:page',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
                                 'action' => 'page'

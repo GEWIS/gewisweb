@@ -16,6 +16,40 @@ class AlbumPlugin extends AbstractPlugin
      * Gets an album page, but returns all objects as assoc arrays
      *
      * @param int $albumId the id of the album
+     *
+     * @return array|null Array with data or null if the page does not exist
+     */
+    public function getAlbumAsArray($albumId)
+    {
+        $albumService = $this->getAlbumService();
+        $album = $albumService->getAlbum($albumId);
+
+        if (is_null($album)) {
+            return null;
+        }
+
+        $albumArray = $album->toArrayWithChildren();
+
+        $photos = $albumArray['photos'];
+        $albums = $albumArray['children'];
+
+        $albumArray['photos'] = [];
+        $albumArray['children'] = [];
+
+        $photoService = $this->getPhotoService();
+
+        return [
+            'album' => $albumArray,
+            'basedir' => $photoService->getBaseDirectory(),
+            'photos' => $photos,
+            'albums' => $albums
+        ];
+    }
+
+    /**
+     * Gets an album page, but returns all objects as assoc arrays
+     *
+     * @param int $albumId the id of the album
      * @param int $activePage the page of the album
      *
      * @return array|null Array with data or null if the page does not exist

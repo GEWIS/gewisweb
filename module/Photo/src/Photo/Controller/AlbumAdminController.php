@@ -51,6 +51,23 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
+     * Retrieve a list of all photo's in an album.
+     *
+     * This API call is mainly inteded for external scripts. Like the AViCo TV
+     * screen that needs a list of all photo's.
+     */
+    public function listAction()
+    {
+        $albumId = $this->params()->fromRoute('album_id');
+        $album = $this->AlbumPlugin()->getAlbumAsArray($albumId);
+        if (is_null($album)) {
+            return $this->notFoundAction();
+        }
+
+        return new JsonModel($album);
+    }
+
+    /**
      * Retrieves photos on a certain page
      */
     public function pageAction()
