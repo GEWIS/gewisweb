@@ -253,7 +253,7 @@ return [
                             ],
                         ],
                     ],
-                    'album_import' => [ // API
+                    'album_import' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/album[/:album_id]/import',
@@ -266,7 +266,7 @@ return [
                             ],
                         ],
                     ],
-                    'album_upload' => [ // API
+                    'album_upload' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/album[/:album_id]/upload',
@@ -279,7 +279,7 @@ return [
                             ],
                         ],
                     ],
-                    'album_delete' => [ // API
+                    'album_delete' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/album[/:album_id]/delete',
@@ -292,7 +292,7 @@ return [
                             ],
                         ],
                     ],
-                    'album_cover' => [ // API
+                    'album_cover' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/album[/:album_id]/cover',
@@ -305,7 +305,7 @@ return [
                             ],
                         ],
                     ],
-                    'photo_move' => [ // API
+                    'photo_move' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/photo[/:photo_id]/move',
@@ -318,7 +318,7 @@ return [
                             ],
                         ],
                     ],
-                    'photo_delete' => [ // API
+                    'photo_delete' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/photo[/:photo_id]/delete',
