@@ -1,14 +1,14 @@
 <?php
 $this->scriptUrl()->requireUrl('admin_page/upload');
 ?>
-    <?php
-    $form = $this->form;
-    $form->prepare();
+<?php
+$form = $this->form;
+$form->prepare();
 
-    $form->setAttribute('method', 'post');
-    $form->setAttribute('role', 'form');
-    ?>
-    <?= $this->form()->openTag($form); ?>
+$form->setAttribute('method', 'post');
+$form->setAttribute('role', 'form');
+?>
+<?= $this->form()->openTag($form); ?>
 <h3><?= $this->translate('Edit something') ?></h3>
 
 <div class="form-group">
@@ -25,6 +25,7 @@ $this->scriptUrl()->requireUrl('admin_page/upload');
     <?php
     $element = $form->get('email');
     $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
     ?>
     <?= $this->formLabel($element); ?>
     <?= $this->formInput($element); ?>
@@ -70,13 +71,21 @@ $this->scriptUrl()->requireUrl('admin_page/upload');
     <?= $this->formInput($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
-
-<hr>
+<div class="form-group">
     <?php
-    $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Save'));
-    $submit->setAttribute('class', 'btn btn-primary');
+    $element = $form->get('upload');
+    $element->setAttribute('class', 'form-control');
     ?>
-    <?= $this->formButton($submit) ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formFile($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<hr>
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary');
+?>
+<?= $this->formButton($submit) ?>
 
-    <?= $this->form()->closeTag(); ?>
+<?= $this->form()->closeTag(); ?>

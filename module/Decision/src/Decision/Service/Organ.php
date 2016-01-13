@@ -75,7 +75,7 @@ class Organ extends AbstractAclService
      * @param array $data form post data
      * @return bool
      */
-    public function updateOrganInformation($organId, $data)
+    public function updateOrganInformation($organId, $data, $files)
     {
         $form = $this->getOrganInformationForm($organId);
         if (!$form) {
@@ -88,6 +88,10 @@ class Organ extends AbstractAclService
         }
 
         $this->getEntityManager()->flush();
+
+        if ($files['upload']['size'] > 0) {
+            return $this->updateOrganCover($organId, $files);
+        }
 
         return true;
     }
@@ -133,6 +137,7 @@ class Organ extends AbstractAclService
             $organInformation = new OrganInformation();
             $organInformation->setOrgan($organ);
             $em->persist($organInformation);
+            $organ->getOrganInformation()->add($organInformation);
             return $organInformation;
         }
 
@@ -143,10 +148,50 @@ class Organ extends AbstractAclService
         $organInformation->setApprover(null);
         $em->detach($organInformation);
         $em->persist($organInformation);
-
+        $organ->getOrganInformation()->add($organInformation);
         return $organInformation;
     }
 
+    /**
+     * Updates the cover photo of an organ
+     *
+     * @param array $files
+     *
+     * @throws \Exception
+     * @return array
+     */
+    public function updateOrganCover($organId, $files)
+    {
+        $organ = $this->getOrgan($organId);
+        $organInformation = $this->getEditableOrganInformation($organ);
+        // TODO: move validation to form
+        $imageValidator = new \Zend\Validator\File\IsImage(
+            ['magicFile' => false]
+        );
+
+        $extensionValidator = new \Zend\Validator\File\Extension(
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
+        );
+
+        if ($imageValidator->isValid($files['upload']['tmp_name'])) {
+            if ($extensionValidator->isValid($files['upload'])) {
+                $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+                $organInformation->setCoverPath($coverPath);
+                $this->getEntityManager()->flush();
+                return true;
+            } else {
+                return false;
+                throw new \Exception(
+                    $this->getTranslator()->translate('The uploaded file does not have a valid extension')
+                );
+            }
+        } else {
+            return false;
+            throw new \Exception(
+                $this->getTranslator()->translate('The uploaded file is not a valid image')
+            );
+        }
+    }
     /**
      * Get the organ mapper.
      *
@@ -155,6 +200,16 @@ class Organ extends AbstractAclService
     public function getOrganMapper()
     {
         return $this->sm->get('decision_mapper_organ');
+    }
+
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

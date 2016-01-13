@@ -27,8 +27,8 @@ class OrganAdminController extends AbstractActionController
         $organId = $this->params()->fromRoute('organ_id');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($organService->updateOrganInformation($organId, $request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
+            if ($organService->updateOrganInformation($organId, $request->getPost(), $request->getFiles())) {
+                //$this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
             }
         }
 

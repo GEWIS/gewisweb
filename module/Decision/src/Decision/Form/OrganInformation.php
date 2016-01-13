@@ -62,6 +62,15 @@ class OrganInformation extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'upload',
+            'type' => 'file',
+            'option' => [
+                'label' => $translator->translate('Cover photo to upload')
+            ]
+        ]);
+        $this->get('upload')->setLabel($translator->translate('Cover photo to upload'));
+
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
