@@ -42,7 +42,7 @@ Photo.Admin.loadPage = function (resource) {
         $("#paging").html('');
 
         $.each(data.pages.pagesInRange, function (key, page) {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': page});
+            href = URLHelper.url('api_photo/album_page', {'album_id': data.album.id, 'page': page});
             if (page === data.pages.current)
             {
                 $("#paging").append('<li class="active"><a href="' + href + '">' + (page) + '</a></li>');
@@ -52,14 +52,14 @@ Photo.Admin.loadPage = function (resource) {
         });
         if (data.pages.previous)
         {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': data.pages.previous});
+            href = URLHelper.url('api_photo/album_page', {'album_id': data.album.id, 'page': data.pages.previous});
             $("#paging").prepend('<li><a id="previous" href="' + href + '">'
                     + '<span aria-hidden="true">«</span>'
                     + '<span class="sr-only">Previous</span>'
                     + '</a></li>');
         }
         if (data.pages.next) {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': data.pages.next});
+            href = URLHelper.url('api_photo/album_page', {'album_id': data.album.id, 'page': data.pages.next});
             $("#paging").append('<li><a id="next" href="' + href + '">'
                     + '<span aria-hidden="true">»</span>'
                     + '<span class="sr-only">Next</span>'
@@ -84,7 +84,7 @@ Photo.Admin.loadPage = function (resource) {
 Photo.Admin.regenerateCover = function () {
     $("#coverPreview").hide();
     $("#coverSpinner").show();
-    $.post(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
+    $.post(URLHelper.url('api_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
         $.getJSON(Photo.Admin.activePage, function (data) {
             $("#coverPreview").attr('src', URLHelper.url('home') + 'data/' + data.album.coverPath);
             $("#coverPreview").show();
@@ -96,7 +96,7 @@ Photo.Admin.regenerateCover = function () {
 Photo.Admin.deleteAlbum = function () {
     $("#deleteConfirm").hide();
     $("#deleteProgress").show();
-    $.post(URLHelper.url('admin_photo/album_delete', {'album_id': Photo.Admin.activeData.album.id})).done(function( data ) {
+    $.post(URLHelper.url('api_photo/album_delete', {'album_id': Photo.Admin.activeData.album.id})).done(function( data ) {
         location.reload(); //reload to update album tree (TODO: update album tree dynamically)
     });
     $("#deleteProgress").hide();
