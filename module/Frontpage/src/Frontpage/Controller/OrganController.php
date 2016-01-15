@@ -7,15 +7,23 @@ use Zend\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
-    public function listAction()
+    public function committeeListAction()
     {
-        $type = $this->params()->fromRoute('type');
-        $type = $type === 'committees' ? 'committee' : 'fraternity';
-        $organs = $this->getOrganService()->findOrgansByType($type);
+        $committees = $this->getOrganService()->findActiveOrgansByType('committee');
         $vm = new ViewModel([
-            'organs' => $organs
+            'committees' => $committees
         ]);
-        $vm->setTemplate('organ/' . $type . '-list');
+        return $vm;
+    }
+
+    public function fraternityListAction()
+    {
+        $activeFraternities = $this->getOrganService()->findActiveOrgansByType('fraternity');
+        $abrogatedFraternities = $this->getOrganService()->findAbrogatedOrgansByType('fraternity');
+        $vm = new ViewModel([
+            'activeFraternities' => $activeFraternities,
+            'abrogatedFraternities' => $abrogatedFraternities
+        ]);
         return $vm;
     }
 

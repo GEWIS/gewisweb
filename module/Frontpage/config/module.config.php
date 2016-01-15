@@ -49,7 +49,7 @@ return [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
                                 'type' => 'committee|fraternity',
-                                'abbr' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'abbr' => '[a-zA-Z][a-zA-Z0-9\._-]*',
                             ],
                             'defaults' => [
                                 'action' => 'organ',
@@ -58,15 +58,23 @@ return [
                         ],
                         'priority' => 100
                     ],
-                    'organ_list' => [
-                        'type' => 'Segment',
+                    'committee_list' => [
+                        'type' => 'Literal',
                         'options' => [
-                            'route' => 'association/:type',
-                            'constraints' => [
-                                'type' => 'committees|fraternities',
-                            ],
+                            'route' => 'association/committees',
                             'defaults' => [
-                                'action' => 'list',
+                                'action' => 'committeeList',
+                                'controller' => 'Organ'
+                            ]
+                        ],
+                        'priority' => 100
+                    ],
+                    'fraternity_list' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'association/fraternities',
+                            'defaults' => [
+                                'action' => 'fraternityList',
                                 'controller' => 'Organ'
                             ]
                         ],

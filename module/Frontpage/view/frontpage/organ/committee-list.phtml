@@ -3,9 +3,9 @@
     <?= $this->translate('GEWIS has many different committees, learn more about them below!') ?>
     <div class="row">
 
-            <?php foreach ($organs as $organ) {
+            <?php foreach ($committees as $committee) {
                 echo $this->partial('partial/organ-card.phtml', [
-                    'organ' => $organ
+                    'organ' => $committee
                 ]);
             }
 

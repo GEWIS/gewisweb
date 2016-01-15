@@ -51,6 +51,26 @@ class Organ
     }
 
     /**
+     * Find all abrogated organs.
+     *
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findAbrogated($type = null)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o')
+            ->where('o.abrogationDate IS NOT NULL');
+        if (!is_null($type)) {
+            $qb->andWhere('o.type = :type')
+                ->setParameter('type', $type);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Find all organs.
      *
      * @return array
