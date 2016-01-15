@@ -45,7 +45,7 @@ function getOrganDescription($organInformation, $lang)
             <table class="table">
                 <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
                     <tr>
-                        <td><span class="glyphicon glyphicon-envelope"></span>&nbsp;Email</td>
+                        <td><span class="glyphicon glyphicon-envelope"></span>&nbsp;<?= $this->translate('Email') ?></td>
                         <td>
                             <a href="mailto:<?= $organInformation->getEmail() ?>">
                                 <?= $organInformation->getEmail() ?>
@@ -55,7 +55,7 @@ function getOrganDescription($organInformation, $lang)
                 <?php endif; ?>
                 <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
                     <tr>
-                        <td><span class="glyphicon glyphicon-link"></span>&nbsp;Website</td>
+                        <td><span class="glyphicon glyphicon-link"></span>&nbsp;<?= $this->translate('Website') ?></td>
                         <td>
                             <a href="<?= $organInformation->getWebsite() ?>">
                                 <?= $organInformation->getWebsite() ?>
@@ -66,7 +66,7 @@ function getOrganDescription($organInformation, $lang)
             </table>
             <div class="panel panel-default agenda">
                 <div class="panel-heading">
-                    <h4><?= sprintf($this->translate('%s\'s activities'), $organ->getName()) ?></h4>
+                    <h4><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h4>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">

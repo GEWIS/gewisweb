@@ -37,6 +37,9 @@
   z-index: 2;
   padding: 16px;
 }
+.card .card-image:hover > .card-details {
+  opacity: 0.9;
+}
 .card .card-content {
   padding: 16px;
   border-radius: 0 0 2px 2px;
@@ -48,17 +51,34 @@
   margin: 0;
   color: inherit;
 }
-.card .card-action {
-  border-top: 1px solid rgba(160, 160, 160, 0.2);
-  padding: 16px;
+.card .card-details {
+  position: absolute;
+  background-color: #fff;
+  background-clip: padding-box;
+  box-sizing: border-box;
+  padding: 8px;
+  /*border-top: 1px solid rgba(160, 160, 160, 0.2);*/
+  top: 0;
+  left: 0;
+  z-index: 3;
+
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all .4s ease;
+  -moz-transition: all .4s ease;
+  -ms-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
 }
-.card .card-action a {
+/*.card .card-details a {
   color: #ffab40;
   margin-right: 16px;
   transition: color 0.3s ease;
   text-transform: uppercase;
 }
-.card .card-action a:hover {
+.card .card-details a:hover {
   color: #ffd8a6;
   text-decoration: none;
-}
+}*/

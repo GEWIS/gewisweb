@@ -7,7 +7,8 @@
         shuffle($activeFraternities);
         foreach ($activeFraternities as $fraternity) {
             echo $this->partial('partial/organ-card.phtml', [
-                'organ' => $fraternity
+                'organ' => $fraternity,
+                'lang' => $this->plugin('translate')->getTranslator()->getLocale()
             ]);
         }
         ?>
