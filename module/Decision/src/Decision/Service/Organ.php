@@ -202,6 +202,60 @@ class Organ extends AbstractAclService
             );
         }
     }
+
+    /**
+     * Returns a list of an organ's current and previous members including their function.
+     *
+     * @param OrganModel $organ
+     *
+     * @return array
+     */
+    public function getOrganMemberInformation($organ)
+    {
+        $oldMembers = [];
+        $currentMembers = [];
+        foreach ($organ->getMembers() as $install) {
+            if (null === $install->getDischargeDate()) {
+                // current member
+                if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
+                    $currentMembers[$install->getMember()->getLidnr()] = [
+                        'member' => $install->getMember(),
+                        'functions' => []
+                    ];
+                }
+                if ($install->getFunction() != 'Lid') {
+                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                }
+            } else {
+                // old member
+                if (!isset($oldMembers[$install->getMember()->getLidnr()])) {
+                    $oldMembers[$install->getMember()->getLidnr()] = $install->getMember();
+                }
+            }
+        }
+        $oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) {
+            return !isset($currentMembers[$member->getLidnr()]);
+        });
+
+        // Sort members by function
+        usort($currentMembers, function ($a, $b) {
+            if ($a['functions'] == $b['functions']) {
+                return 0;
+            }
+
+            if (count($a['functions']) > count($b['functions'])) {
+                return -1;
+            }
+
+            return in_array('Voorzitter', $a['functions']) ? -1 : 1;
+        });
+
+        return [
+            'oldMembers' => $oldMembers,
+            'currentMembers' => $currentMembers
+        ];
+    }
+
     /**
      * Get the organ mapper.
      *

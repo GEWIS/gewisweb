@@ -30,10 +30,16 @@ class OrganController extends AbstractActionController
     public function organAction()
     {
         $abbr = $this->params()->fromRoute('abbr');
-        $organ = $this->getOrganService()->findOrganByAbbr($abbr);
-        return new ViewModel([
-            'organ' => $organ
-        ]);
+        $organService = $this->getOrganService();
+        try {
+            $organ = $organService->findOrganByAbbr($abbr);
+            $organMemberInformation = $organService->getOrganMemberInformation($organ);
+            return new ViewModel(array_merge([
+                'organ' => $organ
+            ], $organMemberInformation));
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return $this->notFoundAction();
+        }
     }
 
     /**
