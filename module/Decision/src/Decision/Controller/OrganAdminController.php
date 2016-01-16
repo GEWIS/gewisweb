@@ -14,7 +14,7 @@ class OrganAdminController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel([
-            'organs' => $this->getOrganService()->getOrgans()
+            'organs' => $this->getOrganService()->getEditableOrgans()
         ]);
     }
 
@@ -28,7 +28,7 @@ class OrganAdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($organService->updateOrganInformation($organId, $request->getPost(), $request->getFiles())) {
-                //$this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
             }
         }
 

@@ -1,0 +1,34 @@
+<div id="container">
+    <?= $this->translate('Select an organ to edit its information. Changes will not be displayed until they have been approved.') ?>
+    <hr>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th><?= $this->translate('Abbreviation') ?></th>
+            <th><?= $this->translate('Name') ?></th>
+            <th><?= $this->translate('Approval status') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($organs as $organ): ?>
+            <?php $url = $this->url('admin_organ/edit', ['organ_id' => $organ->getId()]) ?>
+            <tr>
+                <td><a href="<?= $url ?>"><?= $organ->getAbbr() ?></a></td>
+                <td><a href="<?= $url ?>"><?= $organ->getName() ?></a></td>
+                <td>
+                    <?php
+                    foreach ($organ->getOrganInformation() as $information) {
+                        if (is_null($information->getApprover())) {
+                            echo '<span class="glyphicon glyphicon-question-sign"></span>&nbsp;';
+                        } else {
+                            echo '<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;';
+                        }
+                    }
+                    ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+</div>

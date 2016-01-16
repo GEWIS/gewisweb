@@ -49,6 +49,37 @@ class Organ extends AbstractAclService
     }
 
     /**
+     * Retrieves all organs which the current user is allowed to edit.
+     *
+     * @return array
+     */
+    public function getEditableOrgans()
+    {
+        if ($this->isAllowed('editall')) {
+            return array_merge(
+                $this->findActiveOrgansByType('committee'),
+                $this->findActiveOrgansByType('fraternity')
+            );
+        }
+
+        //TODO: Get organs which user is part of
+    }
+
+    /**
+     * Checks if the current user is allowed to edit the given organ.
+     *
+     * @return bool
+     */
+    public function canEditOrgan($organ)
+    {
+        if ($this->isAllowed('edit')) {
+            return true;
+        }
+
+        //TODO: check if user is in organ
+    }
+
+    /**
      * @param string $type either committee, avc or fraternity
      *
      * @return array
@@ -120,16 +151,19 @@ class Organ extends AbstractAclService
      */
     public function getOrganInformationForm($organId)
     {
-        if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to edit organ information.')
-            );
-        }
         $form = $this->sm->get('decision_form_organ_information');
         $organ = $this->getOrgan($organId); //TODO: catch exception
+
+        if (!$this->canEditOrgan($organ)) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit this organ\'s information')
+            );
+        }
+
         if (is_null($organ)) {
             return false;
         }
+
         $organInformation = $this->getEditableOrganInformation($organ);
 
         $form->bind($organInformation);
