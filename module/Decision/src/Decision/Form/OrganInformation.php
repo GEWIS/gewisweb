@@ -88,6 +88,9 @@ class OrganInformation extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         return [
+            'website' => [
+                'required' => false
+            ],
             'shortDutchDescription' => [
                 'required' => false,
                 'validators' => [
@@ -128,6 +131,23 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                         'name' => 'string_length',
                         'options' => [
                             'max' => 10000
+                        ]
+                    ],
+                ],
+            ],
+            'upload' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'File\MimeType',
+                        'options' => [
+                            'mimeType' => 'image/png'
+                        ]
+                    ],
+                    [
+                        'name' => 'File\Extension',
+                        'options' => [
+                            'extension' => 'png'
                         ]
                     ],
                 ],

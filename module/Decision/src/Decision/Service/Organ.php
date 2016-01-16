@@ -82,15 +82,20 @@ class Organ extends AbstractAclService
 
     /**
      * @param integer $organId
-     * @param array $data form post data
+     *
+     * @param array $post POST Data
+     * @param array $files FILES Data
+     *
      * @return bool
      */
-    public function updateOrganInformation($organId, $data, $files)
+    public function updateOrganInformation($organId, $post, $files)
     {
         $form = $this->getOrganInformationForm($organId);
         if (!$form) {
             return false;
         }
+
+        $data = array_merge_recursive($post->toArray(), $files->toArray());
 
         $form->setData($data);
         if (!$form->isValid()) {
@@ -100,7 +105,7 @@ class Organ extends AbstractAclService
         $this->getEntityManager()->flush();
 
         if ($files['upload']['size'] > 0) {
-            return $this->updateOrganCover($organId, $files);
+            $this->updateOrganCover($organId, $files);
         }
 
         return true;
@@ -174,33 +179,10 @@ class Organ extends AbstractAclService
     {
         $organ = $this->getOrgan($organId);
         $organInformation = $this->getEditableOrganInformation($organ);
-        // TODO: move validation to form
-        $imageValidator = new \Zend\Validator\File\IsImage(
-            ['magicFile' => false]
-        );
 
-        $extensionValidator = new \Zend\Validator\File\Extension(
-            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
-        );
-
-        if ($imageValidator->isValid($files['upload']['tmp_name'])) {
-            if ($extensionValidator->isValid($files['upload'])) {
-                $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
-                $organInformation->setCoverPath($coverPath);
-                $this->getEntityManager()->flush();
-                return true;
-            } else {
-                return false;
-                throw new \Exception(
-                    $this->getTranslator()->translate('The uploaded file does not have a valid extension')
-                );
-            }
-        } else {
-            return false;
-            throw new \Exception(
-                $this->getTranslator()->translate('The uploaded file is not a valid image')
-            );
-        }
+        $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+        $organInformation->setCoverPath($coverPath);
+        $this->getEntityManager()->flush();
     }
 
     /**
