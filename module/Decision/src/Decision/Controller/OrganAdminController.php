@@ -32,7 +32,8 @@ class OrganAdminController extends AbstractActionController
             }
         }
 
-        $form = $organService->getOrganInformationForm($organId);
+        $organInformation = $organService->getEditableOrganInformation($organId);
+        $form = $organService->getOrganInformationForm($organInformation);
 
         return new ViewModel([
             'form' => $form

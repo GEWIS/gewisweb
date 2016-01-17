@@ -83,7 +83,8 @@ $form->setAttribute('role', 'form');
 <hr>
 <?php
 $submit = $form->get('submit');
-$submit->setLabel($this->translate('Save'));
+$approve = $this->acl('decision_acl')->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
+$submit->setLabel($this->translate('Save') . $approve);
 $submit->setAttribute('class', 'btn btn-primary');
 ?>
 <?= $this->formButton($submit) ?>

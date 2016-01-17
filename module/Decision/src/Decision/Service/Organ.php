@@ -121,10 +121,8 @@ class Organ extends AbstractAclService
      */
     public function updateOrganInformation($organId, $post, $files)
     {
-        $form = $this->getOrganInformationForm($organId);
-        if (!$form) {
-            return false;
-        }
+        $organInformation = $this->getEditableOrganInformation($organId);
+        $form = $this->getOrganInformationForm($organInformation);
 
         $data = array_merge_recursive($post->toArray(), $files->toArray());
 
@@ -133,51 +131,59 @@ class Organ extends AbstractAclService
             return false;
         }
 
-        $this->getEntityManager()->flush();
-
         if ($files['upload']['size'] > 0) {
-            $this->updateOrganCover($organId, $files);
+            $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+            $organInformation->setCoverPath($coverPath);
         }
 
-        //TODO: approve
-       /* if ($this->isAllowed('approve')) {
-            $user = $em->merge($this->sm->get('user_role'));
-            $organInformation->setApprover($user);
-        }*/
+        $this->getEntityManager()->flush();
+
+        if ($this->isAllowed('approve')) {
+            $this->approveOrganInformation($organInformation);
+        }
+
         return true;
+    }
+
+    public function approveOrganInformation($organInformation)
+    {
+        $em = $this->getEntityManager();
+        $oldInformation = $organInformation->getOrgan()->getApprovedOrganInformation();
+        if (!is_null($oldInformation)) {
+            $em->remove($organInformation);
+        }
+        $user = $em->merge($this->sm->get('user_role'));
+        $organInformation->setApprover($user);
+        $em->flush();
     }
 
     /**
      * Get the OrganInformation form.
      *
-     * @param integer $organId
+     * @param \Decision\Model\OrganInformation $organInformation
      *
-     * @return \Organ\Form\OrganInformation|bool
+     * @return \Decision\Form\OrganInformation|bool
      */
-    public function getOrganInformationForm($organId)
+    public function getOrganInformationForm($organInformation)
     {
-        $form = $this->sm->get('decision_form_organ_information');
-        $organ = $this->getOrgan($organId); //TODO: catch exception
-
-        if (!$this->canEditOrgan($organ)) {
+        if (!$this->canEditOrgan($organInformation->getOrgan())) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit this organ\'s information')
             );
         }
 
-        if (is_null($organ)) {
-            return false;
-        }
-
-        $organInformation = $this->getEditableOrganInformation($organ);
-
+        $form = $this->sm->get('decision_form_organ_information');
         $form->bind($organInformation);
 
         return $form;
     }
 
-    public function getEditableOrganInformation($organ)
+    public function getEditableOrganInformation($organId)
     {
+        $organ = $this->getOrgan($organId); //TODO: catch exception
+        if (is_null($organ)) {
+            return false;
+        }
         $em = $this->getEntityManager();
         $organInformation = null;
         foreach ($organ->getOrganInformation() as $information) {
@@ -205,24 +211,6 @@ class Organ extends AbstractAclService
         $organ->getOrganInformation()->add($organInformation);
 
         return $organInformation;
-    }
-
-    /**
-     * Updates the cover photo of an organ
-     *
-     * @param array $files
-     *
-     * @throws \Exception
-     * @return array
-     */
-    public function updateOrganCover($organId, $files)
-    {
-        $organ = $this->getOrgan($organId);
-        $organInformation = $this->getEditableOrganInformation($organ);
-
-        $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
-        $organInformation->setCoverPath($coverPath);
-        $this->getEntityManager()->flush();
     }
 
     /**
