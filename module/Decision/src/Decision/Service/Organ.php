@@ -57,8 +57,8 @@ class Organ extends AbstractAclService
     {
         if ($this->isAllowed('editall')) {
             return array_merge(
-                $this->findActiveOrgansByType('committee'),
-                $this->findActiveOrgansByType('fraternity')
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY)
             );
         }
 
@@ -139,6 +139,11 @@ class Organ extends AbstractAclService
             $this->updateOrganCover($organId, $files);
         }
 
+        //TODO: approve
+       /* if ($this->isAllowed('approve')) {
+            $user = $em->merge($this->sm->get('user_role'));
+            $organInformation->setApprover($user);
+        }*/
         return true;
     }
 
@@ -198,6 +203,7 @@ class Organ extends AbstractAclService
         $em->detach($organInformation);
         $em->persist($organInformation);
         $organ->getOrganInformation()->add($organInformation);
+
         return $organInformation;
     }
 

@@ -3,13 +3,14 @@
 namespace Frontpage\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Decision\Model\Organ;
 use Zend\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
     public function committeeListAction()
     {
-        $committees = $this->getOrganService()->findActiveOrgansByType('committee');
+        $committees = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
         $vm = new ViewModel([
             'committees' => $committees
         ]);
@@ -18,8 +19,8 @@ class OrganController extends AbstractActionController
 
     public function fraternityListAction()
     {
-        $activeFraternities = $this->getOrganService()->findActiveOrgansByType('fraternity');
-        $abrogatedFraternities = $this->getOrganService()->findAbrogatedOrgansByType('fraternity');
+        $activeFraternities = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
+        $abrogatedFraternities = $this->getOrganService()->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
         $vm = new ViewModel([
             'activeFraternities' => $activeFraternities,
             'abrogatedFraternities' => $abrogatedFraternities
@@ -34,9 +35,11 @@ class OrganController extends AbstractActionController
         try {
             $organ = $organService->findOrganByAbbr($abbr);
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
+
             return new ViewModel(array_merge([
                 'organ' => $organ
             ], $organMemberInformation));
+
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
