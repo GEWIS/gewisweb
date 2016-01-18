@@ -118,6 +118,7 @@ class Exam extends AbstractAclService
                 $exam->setDate(new \DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
                 $exam->setExamType($examData['examType']);
+                $exam->setLanguage($examData['language']);
 
                 $localFile = $config['upload_dir'] . '/' . $examData['file'];
 
@@ -337,9 +338,12 @@ class Exam extends AbstractAclService
         $filename = str_replace($month, '', $filename);
         $day = preg_match_all('/[0123]\d/', $filename, $matches) ? $matches[0][0] : $today->format('d');
 
+        $language = strstr($filename, 'nl') ? 'nl' : 'en';
+
         return [
             'course' => $course,
-            'date' => $year . '-' . $month . '-' . $day
+            'date' => $year . '-' . $month . '-' . $day,
+            'language' => $language
         ];
     }
 

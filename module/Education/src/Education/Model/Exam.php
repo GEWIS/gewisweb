@@ -23,6 +23,9 @@ class Exam implements ResourceInterface
     const EXAM_TYPE_ANSWERS = 'answers';
     const EXAM_TYPE_SUMMARY = 'summary';
 
+    const EXAM_LANGUAGE_ENGLISH = 'en';
+    const EXAM_LANGUAGE_DUTCH = 'nl';
+
     /**
      * Study ID.
      *
@@ -52,6 +55,13 @@ class Exam implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $examType;
+
+    /**
+     * The language of the exam.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $language;
 
     /**
      * Course belonging to this exam.
@@ -112,6 +122,16 @@ class Exam implements ResourceInterface
     }
 
     /**
+     * Get the language.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
      * Set the date.
      *
      * @param \DateTime $date
@@ -139,6 +159,16 @@ class Exam implements ResourceInterface
     public function setFilename($filename)
     {
         $this->filename = $filename;
+    }
+
+    /**
+     * Set the language.
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
     }
 
     /**

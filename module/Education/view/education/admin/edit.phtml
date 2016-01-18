@@ -63,6 +63,17 @@ $element->setAttribute('class', 'form-control');
                 <?= $this->formElementErrors($element) ?>
             </div>
         </div>
+<?php
+$element = $fs->get('language');
+$element->setAttribute('class', 'form-control');
+?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formSelect($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
 <?php endforeach ?>
 
 <div class="form-group">

@@ -50,6 +50,18 @@ class Exam extends Fieldset
                 ],
             ]
         ]);
+
+        $this->add([
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'language',
+            'options' => [
+                'label' => $translator->translate('Language'),
+                'value_options' => [
+                    ExamModel::EXAM_LANGUAGE_ENGLISH => $translator->translate('English'),
+                    ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
+                ],
+            ],
+        ]);
     }
 
     /**
