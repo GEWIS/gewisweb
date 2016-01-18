@@ -1,29 +1,20 @@
 <?php
-$env = getenv('APP_ENV') ?: 'production';
-
-// This should be an array of module namespaces used in the application.
-$modules = [
-    'DoctrineModule',
-    'DoctrineORMModule',
-    'User',
-    'Application',
-    'Company',
-    'Decision',
-    'Frontpage',
-    'Activity',
-    'Photo',
-    'Education',
-    'Migration',
-    'MaglMarkdown'
-];
-
-if ($env == 'development') {
-    $modules[] = 'ZendDeveloperTools';
-    $modules[] = 'TestData';
-}
-
 return [
-    'modules' => $modules,
+    // This should be an array of module namespaces used in the application.
+    'modules' => [
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'User',
+        'Application',
+        'Company',
+        'Decision',
+        'Frontpage',
+        'Activity',
+        'Photo',
+        'Education',
+        'Migration',
+        'MaglMarkdown'
+    ],
     // These are various options for the listeners attached to the ModuleManager
     'module_listener_options' => [
         // This should be an array of paths in which modules reside.
@@ -58,11 +49,6 @@ return [
 
         // The path in which to cache merged configuration.
         'cache_dir' => 'data/cache',
-
-        // Whether or not to enable modules dependency checking.
-        // Enabled by default, prevents usage of modules that depend on other modules
-        // that weren't loaded.
-        'check_dependencies' => ($env === 'development'),
     ],
     // Used to create an own service manager. May contain one or more child arrays.
     //'service_listener_options' => array(

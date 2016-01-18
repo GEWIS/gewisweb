@@ -15,7 +15,7 @@
  * the use of composer completely optional. This setup should work fine for
  * most users, however, feel free to configure autoloading however you'd like.
  */
-$env = getenv('APP_ENV') ?: 'production';
+
 if ($env === 'production') {
     require_once 'vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php';
     require_once 'vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php';

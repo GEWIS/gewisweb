@@ -1,5 +1,4 @@
 <?php
-$env = getenv('APP_ENV') ?: 'production';
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -41,18 +40,18 @@ return [
             'orm_default' => [
                 // metadata cache instance to use. The retrieved service name will
                 // be `doctrine.cache.$thisSetting`
-                'metadata_cache'    => ($env === 'production' ? 'apc' : 'array'),
+                'metadata_cache'    => 'array',
                 // DQL queries parsing cache instance to use. The retrieved service
                 // name will be `doctrine.cache.$thisSetting`
-                'query_cache'       => ($env === 'production' ? 'apc' : 'array'),
+                'query_cache'       => 'array',
                 // ResultSet cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'result_cache'      => ($env === 'production' ? 'apc' : 'array'),
+                'result_cache'      => 'array',
                 // Hydration cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'hydration_cache'   => ($env === 'production' ? 'apc' : 'array'),
+                'hydration_cache'   => 'array',
                 // Generate proxies automatically (turn off for production)
-                'generate_proxies'  => ($env === 'development'),
+                'generate_proxies'  => true,
                 // directory where proxies will be stored. By default, this is in
                 // the `data` directory of your application
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
