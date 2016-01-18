@@ -201,6 +201,7 @@ class Exam extends AbstractAclService
          */
         $this->getExamMapper()->transactional(function ($mapper) use ($summary, $data, $storageService) {
             $summary->setFilename($storageService->storeUploadedFile($data['upload']));
+            $summary->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
 
             $mapper->persist($summary);
         });

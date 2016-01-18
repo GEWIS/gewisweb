@@ -29,22 +29,22 @@
                     ]) ?>">
                         <strong>(<?= $child->getCode() ?>)</strong>
                         <?php if ($exam instanceof \Education\Model\Summary): ?>
-                            <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+                            <?= sprintf($this->translate('Summary by %s on %s (%s)'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d'), $exam->getLanguage()) ?>
                         <?php else: ?>
                             <?php
                             switch ($exam->getExamType()) {
                                 case Exam::EXAM_TYPE_FINAL:
-                                    $name = $this->translate('Examination from %s');
+                                    $name = $this->translate('Examination from %s (%s)');
                                     break;
                                 case Exam::EXAM_TYPE_INTERMEDIATE_TEST:
-                                    $name = $this->translate('Intermediate test from %s');
+                                    $name = $this->translate('Intermediate test from %s (%s)');
                                     break;
                                 case Exam::EXAM_TYPE_ANSWERS:
-                                    $name = $this->translate('Answers from %s');
+                                    $name = $this->translate('Answers from %s (%s)');
                                     break;
                             }
                             ?>
-                            <?= sprintf($name, $exam->getDate()->format('Y-m-d')) . ' (' . $exam->getLanguage() . ')'?>
+                            <?= sprintf($name, $exam->getDate()->format('Y-m-d'), $exam->getLanguage())?>
                         <?php endif ?>
                     </a></li>
             <?php endforeach; ?>
@@ -55,22 +55,22 @@
                     'id' => $exam->getId()
                 ]) ?>">
                     <?php if ($exam instanceof \Education\Model\Summary): ?>
-                        <?= sprintf($this->translate('Summary by %s of %s'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d')) ?>
+                        <?= sprintf($this->translate('Summary by %s on %s (%s)'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d'), $exam->getLanguage()) ?>
                     <?php else: ?>
                         <?php
                         switch ($exam->getExamType()) {
                             case Exam::EXAM_TYPE_FINAL:
-                                $name = $this->translate('Examination from %s');
+                                $name = $this->translate('Examination from %s (%s)');
                                 break;
                             case Exam::EXAM_TYPE_INTERMEDIATE_TEST:
-                                $name = $this->translate('Intermediate test from %s');
+                                $name = $this->translate('Intermediate test from %s (%s)');
                                 break;
                             case Exam::EXAM_TYPE_ANSWERS:
-                                $name = $this->translate('Answers from %s');
+                                $name = $this->translate('Answers from %s (%s)');
                                 break;
                         }
                         ?>
-                        <?= sprintf($name, $exam->getDate()->format('Y-m-d')) . ' (' . $exam->getLanguage() . ')'?>
+                        <?= sprintf($name, $exam->getDate()->format('Y-m-d'), $exam->getLanguage())?>
                     <?php endif ?>
                 </a></li>
         <?php endforeach; ?>

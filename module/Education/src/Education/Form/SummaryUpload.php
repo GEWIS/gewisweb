@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Education\Model\Exam as ExamModel;
 
 /**
  * Upload a summary
@@ -39,6 +40,18 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Author')
             ]
+        ]);
+
+        $this->add([
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'language',
+            'options' => [
+                'label' => $translator->translate('Language'),
+                'value_options' => [
+                    ExamModel::EXAM_LANGUAGE_ENGLISH => $translator->translate('English'),
+                    ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
+                ],
+            ],
         ]);
 
         $this->add([
