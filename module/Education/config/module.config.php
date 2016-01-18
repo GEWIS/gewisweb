@@ -83,6 +83,15 @@ return [
                             ]
                         ]
                     ],
+                    'summary' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/summary',
+                            'defaults' => [
+                                'action' => 'summary'
+                            ]
+                        ]
+                    ],
                 ],
                 'priority' => 100
             ]
