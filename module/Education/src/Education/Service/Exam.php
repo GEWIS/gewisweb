@@ -306,15 +306,41 @@ class Exam extends AbstractAclService
 
         foreach ($dir as $file) {
             if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
-                $data[] = [
-                    'file' => $file->getFilename()
-                ];
+                $examData = $this->guessExamData($file->getFilename());
+                $examData['file'] = $file->getFilename();
+                $data[] = $examData;
             }
         }
 
         $this->bulkForm->get('exams')->populateValues($data);
 
         return $this->bulkForm;
+    }
+
+    /**
+     * Guesses the course code and date based on an exam's filename.
+     *
+     * @param string $filename
+     *
+     * @return array
+     */
+    public function guessExamData($filename)
+    {
+        $matches = [];
+        $course = preg_match('/\d[a-zA-Z][0-9a-zA-Z]{3,4}/', $filename, $matches) ? $matches[0] : '';
+        $filename = str_replace($course, '', $filename);
+
+        $today = new \DateTime();
+        $year = preg_match('/20\d{2}/', $filename, $matches) ? $matches[0] : $today->format('Y');
+        $filename = str_replace($year, '', $filename);
+        $month = preg_match_all('/[01]\d/', $filename, $matches) ? $matches[0][0] : $today->format('m');
+        $filename = str_replace($month, '', $filename);
+        $day = preg_match_all('/[0123]\d/', $filename, $matches) ? $matches[0][0] : $today->format('d');
+
+        return [
+            'course' => $course,
+            'date' => $year . '-' . $month . '-' . $day
+        ];
     }
 
     /**
