@@ -44,7 +44,7 @@
                                     break;
                             }
                             ?>
-                            <?= sprintf($name, $exam->getDate()->format('Y-m-d')) ?>
+                            <?= sprintf($name, $exam->getDate()->format('Y-m-d')) . ' (' . $exam->getLanguage() . ')'?>
                         <?php endif ?>
                     </a></li>
             <?php endforeach; ?>
@@ -70,7 +70,7 @@
                                 break;
                         }
                         ?>
-                        <?= sprintf($this->translate($name), $exam->getDate()->format('Y-m-d')) ?>
+                        <?= sprintf($name, $exam->getDate()->format('Y-m-d')) . ' (' . $exam->getLanguage() . ')'?>
                     <?php endif ?>
                 </a></li>
         <?php endforeach; ?>
