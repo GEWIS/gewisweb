@@ -18,6 +18,11 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
 class Exam implements ResourceInterface
 {
 
+    const EXAM_TYPE_FINAL = 'exam';
+    const EXAM_TYPE_INTERMEDIATE_TEST = 'intermediate';
+    const EXAM_TYPE_ANSWERS = 'answers';
+    const EXAM_TYPE_SUMMARY = 'summary';
+
     /**
      * Study ID.
      *
@@ -40,6 +45,13 @@ class Exam implements ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $filename;
+
+    /**
+     * Type of exam. One of {exam, intermediate, answers, summary}
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $examType;
 
     /**
      * Course belonging to this exam.
@@ -80,6 +92,16 @@ class Exam implements ResourceInterface
     }
 
     /**
+     * Get the type.
+     *
+     * @return string
+     */
+    public function getExamType()
+    {
+        return $this->examType;
+    }
+
+    /**
      * Get the course.
      *
      * @return Course
@@ -97,6 +119,16 @@ class Exam implements ResourceInterface
     public function setDate(\DateTime $date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * Set the type.
+     *
+     * @param string $examType
+     */
+    public function setExamType($examType)
+    {
+        $this->examType = $examType;
     }
 
     /**

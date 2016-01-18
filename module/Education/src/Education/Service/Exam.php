@@ -91,8 +91,9 @@ class Exam extends AbstractAclService
         $form = $this->getBulkForm();
 
         $form->setData($data);
-
+        var_dump($data['exams'][0]);
         if (!$form->isValid()) {
+            var_dump(false);
             return false;
         }
 
@@ -117,6 +118,7 @@ class Exam extends AbstractAclService
                 $exam = new ExamModel();
                 $exam->setDate(new \DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
+                $exam->setExamType($examData['examType']);
 
                 $localFile = $config['upload_dir'] . '/' . $examData['file'];
 
