@@ -2,8 +2,13 @@
 
 namespace Activity\Form;
 
+use Decision\Model\Member;
+use Decision\Model\Organ;
+use Decision\Model\OrganMember;
+use User\Model\User;
 use Zend\Form\Form;
 //input filter
+use Zend\Mvc\I18n\Translator;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -16,12 +21,25 @@ class Activity extends Form implements InputFilterProviderInterface
     protected $inputFilter;
     protected $organs;
 
-    public function __construct()
+    /**
+     * @param Organ[] $organs
+     * @param Translator $translator
+     */
+    public function __construct(array $organs, Translator $translator)
     {
         parent::__construct('activity');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\Activity());
+
+        // all the organs that the user belongs to in organId => name pairs
+        $organOptions = [0 => $translator->translate('No organ')];
+
+        foreach ($organs as $organ) {
+            $organOptions[$organ->getId()] = $organ->getName();
+        }
+
+        // Find user that wants to create an activity
 
         $this->add([
             'name' => 'language_dutch',
@@ -52,24 +70,25 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-           // 'type' => 'Zend\Form\Element\DateTime',
+            'name' => 'organ',
+            'type' => 'select',
+            'options' => [
+                'style' => 'width:100%',
+                'value_options' => $organOptions
+            ]
+        ]);
+
+        $this->add([
             'name' => 'beginTime',
             'attributes' => [
                 'type' => 'text',
-           //     'min' => '2010-01-01T00:00:00Z',
-           //     'step' => '1', // minutes; default step interval is 1 min
-           //     'style' => 'width:100%',
             ],
         ]);
 
         $this->add([
-          //  'type' => 'Zend\Form\Element\DateTime',
             'name' => 'endTime',
             'attributes' => [
                 'type' => 'text',
-            //    'min' => '2010-01-01T00:00:00Z',
-              //  'step' => '1', // minutes; default step interval is 1 min
-               // 'style' => 'width:100%',
             ],
         ]);
 
@@ -104,15 +123,6 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ]);
 
-        /*$this->add([
-            'name' => 'approved',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);*/
         $this->add([
             'name' => 'description',
             'attributes' => [
@@ -280,7 +290,10 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
             'subscriptionDeadline' => [
                 'required' => true
-            ]
+            ],
+            'organ' => [
+                'required' => true
+            ],
         ];
 
 

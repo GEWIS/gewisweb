@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Decision\Model\SubDecision\Installation;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -527,6 +528,22 @@ class Member
     public function getOrganInstallations()
     {
         return $this->organInstallations;
+    }
+
+    /**
+     * Get the organ installations of organs that the member is currently part of
+     *
+     * @return ArrayCollection
+     */
+    public function getCurrentOrganInstallations()
+    {
+        if (is_null($this->getOrganInstallations())) {
+            return new ArrayCollection();
+        }
+
+        return $this->getOrganInstallations()->filter(function (OrganMember $organ) {
+            return is_null($organ->getDischargeDate());
+        });
     }
 
     /**

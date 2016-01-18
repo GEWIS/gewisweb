@@ -119,7 +119,7 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the member information of this user.
      *
-     * @return Decision\Model\Member
+     * @return \Decision\Model\Member
      */
     public function getMember()
     {

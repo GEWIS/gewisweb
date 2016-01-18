@@ -2,6 +2,8 @@
 namespace Activity;
 
 
+use User\Service\User;
+
 class Module
 {
 
@@ -42,9 +44,8 @@ class Module
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_form_activity' => 'Activity\Form\Activity',
-                'activity_form_activity_signup' => 'Activity\Form\ActivitySignup',
-                'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet'
+                'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
+                'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
             'factories' => [
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
@@ -52,12 +53,23 @@ class Module
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
+                'activity_form_activity' => function ($sm) {
+                    /** @var \Decision\Service\Member $memberService */
+                    $memberService = $sm->get('decision_service_member');
+                    /** @var \User\Model\User $identity */
+                    $identity = $sm->get('user_role');
+                    $organs = $memberService->getOrgans($identity->getMember());
+
+                    $translator = $sm->get('translator');
+                    return new \Activity\Form\Activity($organs, $translator);
+
+                },
                 'activity_service_signup' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;
                 },
-		'activity_service_signoff' => function ($sm) {
+		        'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
                     return $ac;

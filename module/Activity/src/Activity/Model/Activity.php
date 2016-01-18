@@ -168,7 +168,12 @@ class Activity
      */
     protected $fields;
 
-    // TODO -> where can i find member organ?
+    /**
+     * Who created this activity.
+     *
+     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
+     */
     protected $organ;
 
     /**
@@ -445,6 +450,23 @@ class Activity
     {
         $this->signUps = $signUps;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrgan()
+    {
+        return $this->organ;
+    }
+
+    /**
+     * @param mixed $organ
+     */
+    public function setOrgan($organ)
+    {
+        $this->organ = $organ;
+    }
+    
 
     /**
      * @return array
