@@ -91,9 +91,8 @@ class Exam extends AbstractAclService
         $form = $this->getBulkForm();
 
         $form->setData($data);
-        var_dump($data['exams'][0]);
+
         if (!$form->isValid()) {
-            var_dump(false);
             return false;
         }
 
