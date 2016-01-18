@@ -73,7 +73,7 @@ $this->headTitle($this->translate('Activities')); ?>
         <div class="col-md-8"><?php /*echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); */?></div>
         <div class="col-md-8"><?php /*echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); */?></div>-->
 
-    <?php if ($signupOpen): ?>
+    <?php if ($activity->getCanSignUp()): ?>
         <h2>
             <?= $this->translate('Current subscriptions') ?>
         </h2>
