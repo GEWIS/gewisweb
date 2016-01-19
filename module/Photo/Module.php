@@ -24,10 +24,15 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return [
-            'Zend\Loader\ClassMapAutoloader' => [
+        if (APP_ENV === 'production') {
+            return [
+                'Zend\Loader\ClassMapAutoloader' => [
                 __DIR__ . '/autoload_classmap.php',
-            ],
+                ]
+            ];
+        }
+
+        return [
             'Zend\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
