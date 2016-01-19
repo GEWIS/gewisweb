@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-$env = getenv('APP_ENV') ?: 'production';
+
 return [
     'router' => [
         'routes' => [
@@ -60,8 +60,8 @@ return [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-        'not_found_template'       => ($env === 'production' ? 'error/404' : 'error/debug/404'),
-        'exception_template'       => ($env === 'production' ? 'error/500' : 'error/debug/500'),
+        'not_found_template'       => (APP_ENV === 'production' ? 'error/404' : 'error/debug/404'),
+        'exception_template'       => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',

@@ -41,8 +41,7 @@ class Module
             if (($e->getError() == 'error-exception') &&
                     ($e->getParam('exception', null) != null) &&
                     ($e->getParam('exception') instanceof NotAllowedException)) {
-                $env = getenv('APP_ENV') ?: 'production';
-                $e->getResult()->setTemplate(($env === 'production' ? 'error/403' : 'error/debug/403'));
+                $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
                 $e->getResponse()->setStatusCode(403);
             }
         }, -100);
@@ -56,8 +55,7 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        global $env;
-        if ($env === 'production') {
+        if (APP_ENV === 'production') {
             return [
                 'Zend\Loader\ClassMapAutoloader' => [
                     __DIR__ . '/autoload_classmap.php',

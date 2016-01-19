@@ -16,7 +16,7 @@
  * most users, however, feel free to configure autoloading however you'd like.
  */
 
-if ($env === 'production') {
+if (APP_ENV === 'production') {
     require_once 'vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php';
     require_once 'vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php';
     if (!file_exists('vendor/composer/autoload_classmap.php')) {

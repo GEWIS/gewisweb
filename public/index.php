@@ -1,5 +1,5 @@
 <?php
-$env = getenv('APP_ENV') ?: 'production';
+define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative
@@ -11,4 +11,4 @@ chdir(dirname(__DIR__));
 require 'init_autoloader.php';
 
 // Run the application!
-Zend\Mvc\Application::init(require 'config/application.config.' . $env .'.php')->run();
+Zend\Mvc\Application::init(require 'config/application.config.' . APP_ENV .'.php')->run();
