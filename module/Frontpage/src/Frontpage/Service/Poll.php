@@ -31,7 +31,7 @@ class Poll extends AbstractAclService
     public function getPoll($pollId)
     {
         $poll = $this->getPollMapper()->findPollById($pollId);
-        if ((null === $poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
+        if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view unnapproved polls')
