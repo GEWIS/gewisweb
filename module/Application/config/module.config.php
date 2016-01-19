@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
+$env = getenv('APP_ENV') ?: 'production';
 return [
     'router' => [
         'routes' => [
@@ -60,14 +60,17 @@ return [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'not_found_template'       => ($env === 'production' ? 'error/404' : 'error/debug/404'),
+        'exception_template'       => ($env === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/403'               => __DIR__ . '/../view/error/403.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'error/500'             => __DIR__ . '/../view/error/500.phtml',
+            'error/debug/404'               => __DIR__ . '/../view/error/debug/404.phtml',
+            'error/debug/403'               => __DIR__ . '/../view/error/debug/403.phtml',
+            'error/debug/500'             => __DIR__ . '/../view/error/debug/500.phtml',
             'paginator/default'       => __DIR__ . '/../view/partial/paginator.phtml',
         ],
         'template_path_stack' => [

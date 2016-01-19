@@ -15,6 +15,9 @@ class Module
     public function getAutoloaderConfig()
     {
         return [
+            'Zend\Loader\ClassMapAutoloader' => [
+                __DIR__ . '/autoload_classmap.php',
+            ],
             'Zend\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
@@ -67,11 +70,13 @@ class Module
                 'activity_service_signup' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
+
                     return $ac;
                 },
 		        'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
+
                     return $ac;
                 },
                 'activity_mapper_activity' => function ($sm) {
@@ -88,7 +93,7 @@ class Module
                     return new \Activity\Mapper\ActivityOption(
                         $sm->get('activity_doctrine_em')
                     );
-                },        
+                },
                 'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
                         $sm->get('activity_doctrine_em')

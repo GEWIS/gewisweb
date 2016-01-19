@@ -18,8 +18,8 @@ Installation
   `public/data/` directories.
 - Run `./vendor/bin/doctrine-module orm:schema-tool:create` to populate the
   database.
-- Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
 - Copy `config/autoload/local.php.dist` to `config/autoload/local.php`
+- Set the environment variable `APP_ENV` to `development` in your webserver configuration
 
 Configuration for scss editing
 ------------------------------
@@ -35,6 +35,20 @@ locally. For that, follow the next steps:
 To compile scss files, simply run `grunt css`. While working on the
 stylesheets, it may be nice to let grunt watch the stylesheet and
 automatically recomple. For this, you can run `grunt watch`.
+
+Production installation
+============
+Additional steps required in production
+- Run `php composer.phar install -o` to generate a composer classmap
+- Run `genclassmap.sh` to generate module class maps
+- Set the environment variable `APP_ENV` to `production` in your webserver configuration
+- Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
+- run `./web orm:generate-proxies`
+
+Testing
+============
+To generate test data ensure that the application is running with the development configuration. Test data can
+then be generated using `./web testdata <module_name>`. For example `./web testdata photo`.
 
 Configuration for emails
 ------------------------
