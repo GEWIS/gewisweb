@@ -36,8 +36,11 @@ class OrganController extends AbstractActionController
             $organ = $organService->findOrganByAbbr($abbr);
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
+            $activities = $this->getActivityService()->getOrganActivities($organ, 3);
+
             return new ViewModel(array_merge([
-                'organ' => $organ
+                'organ' => $organ,
+                'activities' => $activities
             ], $organMemberInformation));
 
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -51,5 +54,13 @@ class OrganController extends AbstractActionController
     public function getOrganService()
     {
         return $this->getServiceLocator()->get('decision_service_organ');
+    }
+
+    /**
+     * Get the activity service.
+     */
+    public function getActivityService()
+    {
+        return $this->getServiceLocator()->get('activity_service_activity');
     }
 }

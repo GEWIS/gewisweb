@@ -70,10 +70,16 @@ function getOrganDescription($organInformation, $lang)
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-
+                        <?php foreach($activities as $activity): ?>
+                            <a class="list-group-item agenda-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                <span class="badge">
+                                    <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>&nbsp;</span>
+                                    <span><?= $activity->getBeginTime()->format('d') ?></span>
+                                </span>
+                                <?= $activity->getName(); ?>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
-
-
                 </div>
                 <div class="panel-footer">
                     <a href="<?= $this->url('activity') ?>">

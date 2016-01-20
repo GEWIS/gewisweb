@@ -59,10 +59,11 @@ class Activity
      * Get upcoming activities sorted by date
      *
      * @param integer $count Optional number of activities to retrieve.
+     * @param \Organ\Model\Organ $organ Option organ by whom the activities are organized.
      *
      * @return array
      */
-    public function getUpcomingActivities($count = null)
+    public function getUpcomingActivities($count = null, $organ = null)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
@@ -73,6 +74,11 @@ class Activity
 
         if(!is_null($count)) {
             $qb->setMaxResults($count);
+        }
+
+        if(!is_null($organ)) {
+            $qb->andWhere('a.organ = :organ')
+                ->setParameter('organ', $organ);
         }
 
         $qb->setParameter('now', new \DateTime());
