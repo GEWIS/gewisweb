@@ -78,10 +78,30 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
 
         return [
             'name' => [
-                'required' => true
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
+                    ],
+                ],
             ],
             'nameEn' => [
-                'required' => true
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
+                    ],
+                ],
             ],
             'type' => [
                 'required' => true,
@@ -103,9 +123,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                             ],
                             'callback' => function($value, $context=null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
-                                       $this->fieldDependantRequired($value, $context, 'max. value', '2') &&
-                                       ($this->fieldDependantRequired($value, $context, 'options', '3') ||
-                                        $this->fieldDependantRequired($value, $context, 'optionsEn', '3'));
+                                       $this->fieldDependantRequired($value, $context, 'max. value', '2');
                             }
                         ]
                     ]

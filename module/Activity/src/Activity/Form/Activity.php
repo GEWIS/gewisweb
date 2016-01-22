@@ -2,16 +2,13 @@
 
 namespace Activity\Form;
 
-use Decision\Model\Member;
 use Decision\Model\Organ;
-use Decision\Model\OrganMember;
-use User\Model\User;
 use Zend\Form\Form;
-//input filter
 use Zend\Mvc\I18n\Translator;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\NotEmpty;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
@@ -151,14 +148,12 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
-            'options' => array(
+            'options' => [
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => [
-                    'type' => 'Activity\Form\ActivityFieldFieldset'
-                ]
-            )
+                'target_element' => new ActivityFieldFieldset()
+            ]
         ]);
 
         $this->add([
@@ -177,6 +172,51 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    /**
+     * Validate the form
+     *
+     * @return bool
+     * @throws Exception\DomainException
+     */
+    public function isValid()
+    {
+        $valid = parent::isValid();
+
+        /*
+         * This might seem like a bit of a hack, but this is probably the only way zend framework
+         * allows us to do this.
+         */
+        foreach ($this->get('fields')->getFieldSets() as $fieldset)
+        {
+            if ($this->data['language_english']) {
+                if (!(new NotEmpty())->isValid($fieldset->get('nameEn')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+
+                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('optionsEn')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+            }
+
+
+            if ($this->data['language_dutch']) {
+                if (!(new NotEmpty())->isValid($fieldset->get('name')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+
+                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('options')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+            }
+        }
+
+        $this->isValid = $valid;
+        return $valid;
+    }
 
     /***
      * Add  the input filter for the English language
