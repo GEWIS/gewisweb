@@ -62,7 +62,9 @@ class Organ extends AbstractAclService
             );
         }
 
-        //TODO: Get organs which user is part of
+        $user = $this->sm->get('user_role');
+        //TODO: filter out avc's
+        return $this->getMemberMapper()->findOrgans($user->getMember());
     }
 
     /**
@@ -76,7 +78,16 @@ class Organ extends AbstractAclService
             return true;
         }
 
-        //TODO: check if user is in organ
+        $user = $this->sm->get('user_role');
+        //TODO: filter out avc's
+        foreach ($user->getMember()->getCurrentOrganInstallations() as $installation) {
+            //TODO: FIX
+            if ($installation->getOrgan()->getId() === $organ ->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -274,6 +285,16 @@ class Organ extends AbstractAclService
     public function getOrganMapper()
     {
         return $this->sm->get('decision_mapper_organ');
+    }
+
+    /**
+     * Get the member mapper.
+     *
+     * @return \Decision\Mapper\Member
+     */
+    public function getMemberMapper()
+    {
+        return $this->sm->get('decision_mapper_member');
     }
 
     /**
