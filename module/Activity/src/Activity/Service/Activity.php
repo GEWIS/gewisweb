@@ -291,8 +291,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->createActivityOptions(
                 $field,
                 $params,
-                $params['options'] !== '' && $dutch,
-                $params['optionsEn'] != '' && $english
+                $params['optionsEn'] != '' && $english,
+                $params['options'] !== '' && $dutch
             );
         }
         return $field;
@@ -323,7 +323,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $numOptions = count($optionsEn);
         }
         for ($i=0; $i<$numOptions; $i++){
-
             $option = new ActivityOptionModel();
             if ($createDutchOptions){
                 $option->setValue($options[$i]);
