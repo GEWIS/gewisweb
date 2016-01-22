@@ -54,7 +54,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -62,7 +61,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -70,7 +68,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'organ',
             'type' => 'select',
             'options' => [
-                'style' => 'width:100%',
                 'value_options' => $organOptions
             ]
         ]);
@@ -93,7 +90,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'location',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -101,7 +97,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'locationEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -109,14 +104,12 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'costs',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
         $this->add([
             'name' => 'costsEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -124,7 +117,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'description',
             'attributes' => [
                 'type' => 'textarea',
-                'style' => 'width:100%; height:10em; resize:none',
             ],
         ]);
 
@@ -132,7 +124,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'descriptionEn',
             'attributes' => [
                 'type' => 'textarea',
-                'style' => 'width:100%; height:10em; resize:none',
             ],
         ]);
 
