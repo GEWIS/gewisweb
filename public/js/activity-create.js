@@ -7,15 +7,10 @@ Activity = {
      * Adds an optional field to the activity form, at the end of the list.
      */
     addField: function () {
-        var currentCount = $('#extraFields > fieldset').length;
-        var template = $('form > div > div > fieldset > span').data('template');
+        var currentCount = $('#additionalFields > div.field').length;
+        var template = $('#additionalFields span.template').data('template');
         template = template.replace(/__index__/g, currentCount);
-        //Add an id to the field.
-        template = template.replace(/<fieldset/g, '<fieldset id="'+'fieldset'+ currentCount + '"');
-        //Add a some dynamic stuff to the combobox
-        template = template.replace(/[type]"/g, '[type]"'+ ' onchange="disable_field(' + currentCount + ')"');
-        $('#extraFields').append(template);
-
+        $(template).insertBefore('#additionalFields div.add-field');
         return false;
     },
 
@@ -23,14 +18,15 @@ Activity = {
      * Removes the last field from the list.
      */
     removeField: function () {
-        var currentCount = $('form > fieldset > fieldset').length - 1;
+        var currentCount = $('#additionalFields > div.field').length - 1;
         if (currentCount >= 0){
-            $('#fieldset'+currentCount).remove();
+            $('#additionalField' + currentCount).remove();
         }
         return false;
     },
 
     updateForm: function () {
+        console.log('blah');
         if ($('[name="language_dutch"]').is(':checked')) {
             $('.form-control-dutch').removeAttr('disabled');
         } else {
@@ -42,5 +38,12 @@ Activity = {
         } else {
             $('.form-control-english').attr('disabled', 'disabled');
         }
+    },
+
+    updateFieldset: function (index) {
+        $('#additionalField' + index + ' .field-dependant').hide();
+        var type = $('[name="fields[' + index + '][type]"]').val();
+        $('#additionalField' + index + ' .type-' + type).show();
+        Activity.updateForm();
     }
 };
