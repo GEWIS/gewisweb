@@ -1,9 +1,10 @@
 <?php
 $this->headTitle($this->translate('Create activity'));
-
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/activity-create.js');
-$form->setAttribute('action', '');
+    ->prependFile($this->basePath() . '/js/activity-create.js')
+    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $form->prepare();
 ?>
 <div class="container">
@@ -247,6 +248,9 @@ $form->prepare();
 </div>
 
 <script>
+    $('[name="beginTime"]').datetimepicker();
+    $('[name="endTime"]').datetimepicker();
+    $('[name="subscriptionDeadline"]').datetimepicker();
     Activity.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
         Activity.updateFieldset(i);

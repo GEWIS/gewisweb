@@ -26,7 +26,6 @@ Activity = {
     },
 
     updateForm: function () {
-        console.log('blah');
         if ($('[name="language_dutch"]').is(':checked')) {
             $('.form-control-dutch').removeAttr('disabled');
         } else {
