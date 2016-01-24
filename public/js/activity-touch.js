@@ -119,7 +119,10 @@ Activity.Touch.fetchActivities = function () {
         Activity.Touch.activities = data;
         $('#activityList').html('');
         $.each(data, function (index, activity) {
-            if (activity.fields == 0) {
+            var now = new Date();
+            var subscriptionDeadline = new Date(activity.subscriptionDeadline.date.replace(' ', 'T'));
+            var deadlinePassed = now.getTime() > subscriptionDeadline.getTime();
+            if (activity.canSignUp && !deadlinePassed) {
                 $('#activityList').append(
                     '<tr id="activity' + activity.id + '" data-activity-index="' + index + '">'
                     + '<td>' + activity.beginTime.date.replace(':00.000000', '') + '</td>'
