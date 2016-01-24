@@ -20,7 +20,7 @@ class ActivityController extends AbstractActionController
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
-        $activities = $activityService->getApprovedActivities();
+        $activities = $activityService->getUpcomingActivities();
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
