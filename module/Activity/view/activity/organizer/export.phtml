@@ -1,0 +1,49 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+// set title
+$this->headTitle($activity->getName());
+$this->headTitle($this->translate('Activities')); ?>
+
+
+<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
+    <section class="section section-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<?= $this->url('activity') ?>">
+                        <?= $this->translate('Activities') ?>
+                    </a>
+                </li>
+                <li class="active">
+                    <?= $activity->getName() ?>
+                </li>
+            </ol>
+        </div>
+    </section>
+<?php endif; ?>
+
+<div class="container">
+    <h1><?= $this->translate('Details for activity ') . ' ' . $activity->getName() ?></h1>
+
+    <table class="table">
+        <thead>
+            <th></th>
+            <th><?= $this->translate('Name') ?></th>
+            <?php foreach ($activity->getFields() as $field): ?>
+                <th><?= $field->getName() ?></th>
+            <?php endforeach; ?>
+        </thead>
+        <tbody>
+                <?php $i = 1; ?>
+                <?php foreach($signupData as $signup): ?>
+                    <tr>
+                        <td><?php echo $i; $i = $i + 1; ?></td>
+                        <td><?= $signup['member'] ?></td>
+                        <?php foreach($signup['values'] as $value):?>
+                            <td><?= $value ?></td>
+                        <?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>
+        </tbody>
+    </table>
+</div>

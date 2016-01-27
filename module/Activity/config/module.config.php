@@ -91,6 +91,16 @@ return [
                                 'action' => 'email',
                             ]
                         ]
+                    ],
+                    'export' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'export',
+                            ]
+                        ]
                     ]
                 ]
 
