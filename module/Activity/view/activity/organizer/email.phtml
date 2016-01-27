@@ -1,0 +1,42 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+// set title
+$this->headTitle($activity->getName());
+$this->headTitle($this->translate('Activities')); ?>
+
+
+<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
+    <section class="section section-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<?= $this->url('activity') ?>">
+                        <?= $this->translate('Activities') ?>
+                    </a>
+                </li>
+                <li class="active">
+                    <?= $activity->getName() ?>
+                </li>
+            </ol>
+        </div>
+    </section>
+<?php endif; ?>
+
+<div class="container">
+    <h1><?= $this->translate('Subscription email adresses for activity ') . ' ' . $activity->getName() ?></h1>
+
+    <table class="table">
+        <thead>
+            <th><?= $this->translate('Name') ?></th>
+            <th><?= $this->translate('Email') ?></th>
+        </thead>
+        <tbody>
+            <?php foreach ($activity->getSignUps() as $signUp): ?>
+                <tr>
+                    <td><?= $signUp->getUser()->getMember()->getFullName() ?></td>
+                    <td><?= $signUp->getUser()->getMember()->getEmail() ?></td>
+                </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+</div>

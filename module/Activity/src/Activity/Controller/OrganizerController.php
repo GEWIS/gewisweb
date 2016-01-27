@@ -20,6 +20,18 @@ class OrganizerController extends AbstractActionController
      */
     public function emailAction()
     {
-        die('yay');
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+
+        /** @var $activity Activity*/
+        $activity = $activityService->getActivity($id);
+
+        if (is_null($activity)) {
+            return $this->notFoundAction();
+        }
+
+        return [
+            'activity' => $activity,
+        ];
     }
 }
