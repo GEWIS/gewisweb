@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use User\Model\User;
@@ -11,7 +12,7 @@ use User\Model\User;
  *
  * @ORM\Entity
  */
-class Activity
+class Activity implements  \User\Permissions\Resource\OrganResourceInterface
 {
     /**
      * Status codes for the activity
@@ -505,5 +506,26 @@ class Activity
             'attendees' => $attendees,
             'fields' => $fields,
         ];
+    }
+
+    // Permission to link the resource to an organ
+    /**
+     * Get the organ of this resource.
+     *
+     * @return Organ
+     */
+    public function getResourceOrgan()
+    {
+        return $this->getOrgan();
+    }
+
+    /**
+     * Returns the string identifier of the Resource
+     *
+     * @return string
+     */
+    public function getResourceId()
+    {
+        return $this->getId();
     }
 }

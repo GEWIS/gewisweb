@@ -24,7 +24,7 @@ class OrganizerController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivity($id);
+        $activity = $activityService->getActivityWithDetails($id);
 
         if (is_null($activity)) {
             return $this->notFoundAction();
