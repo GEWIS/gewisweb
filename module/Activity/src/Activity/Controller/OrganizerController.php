@@ -23,17 +23,19 @@ class OrganizerController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
 
         /** @var $activity Activity*/
         $activity = $activityService->getActivityWithDetails($id);
-
+        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
         if (is_null($activity)) {
             return $this->notFoundAction();
         }
 
         return [
-            'activity' => $activity,
+            'activity' => $translatedActivity,
         ];
     }
 
