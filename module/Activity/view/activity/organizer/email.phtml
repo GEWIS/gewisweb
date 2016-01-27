@@ -31,12 +31,29 @@ $this->headTitle($this->translate('Activities')); ?>
             <th><?= $this->translate('Email') ?></th>
         </thead>
         <tbody>
-            <?php foreach ($activity->getSignUps() as $signUp): ?>
+            <?php
+                $mailAllString = '';
+                foreach ($activity->getSignUps() as $signUp):
+                    $email = $signUp->getUser()->getMember()->getEmail();
+                    $mailAllString .= ',' . $email;
+                ?>
                 <tr>
                     <td><?= $signUp->getUser()->getMember()->getFullName() ?></td>
-                    <td><?= $signUp->getUser()->getMember()->getEmail() ?></td>
+                    <td>
+                        <a href="mailto:<?= $email ?>">
+                            <?= $email ?>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach;?>
         </tbody>
+        <tfoot>
+            <td></td>
+            <td>
+                <a href="mailto:<?= $mailAllString ?>">
+                    <?= $this->translate('Mail everybody') ?>
+                </a>
+            </td>
+        </tfoot>
     </table>
 </div>
