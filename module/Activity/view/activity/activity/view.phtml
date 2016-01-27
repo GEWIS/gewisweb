@@ -144,4 +144,9 @@ $this->headTitle($this->translate('Activities')); ?>
         echo $this->formSubmit($submit);
         echo $this->form()->closeTag();?>
     <?php endif; ?>
+
+    <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+        <a href="<?= $this->url('organizer_activity/email', ['id' => $activity->getId()])?>"><?= $this->Translate('View email Adresses') ?></a> |
+        <a href="<?= $this->url('organizer_activity/export', ['id' => $activity->getId()])?>"><?= $this->translate('Export subscriptions') ?></a>
+    <?php endif; ?>
 </div>
