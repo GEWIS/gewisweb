@@ -8,6 +8,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
 use Zend\View\Model\ViewModel;
+use DOMPDFModule\View\Model\PdfModel;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -61,5 +62,12 @@ class OrganizerController extends AbstractActionController
             'activity' => $translatedActivity,
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
         ];
+    }
+
+    public function exportPdfAction()
+    {
+        $pdf = new PdfModel();
+        $pdf->setVariables($this->exportAction());
+        return $pdf;
     }
 }

@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th><?= $this->translate('Name') ?></th>
+            <?php foreach ($activity->getFields() as $field): ?>
+                <th><?= $field->getName() ?></th>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+    <?php $i = 1; ?>
+    <?php foreach($signupData as $signup): ?>
+        <tr>
+            <td><?php echo $i; $i = $i + 1; ?></td>
+            <td><?= $signup['member'] ?></td>
+            <?php foreach($signup['values'] as $value):?>
+                <td><?= $value ?></td>
+            <?php endforeach;?>
+        </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>

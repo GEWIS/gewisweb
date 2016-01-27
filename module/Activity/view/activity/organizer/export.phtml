@@ -23,27 +23,10 @@ $this->headTitle($this->translate('Activities')); ?>
 <?php endif; ?>
 
 <div class="container">
-    <h1><?= $this->translate('Details for activity ') . ' ' . $activity->getName() ?></h1>
+    <?= $this->partial('activity/organizer/exportTable.phtml', [
+            'activity' => $activity,
+            'signupData' => $signupData
+    ]);?>
 
-    <table class="table">
-        <thead>
-            <th></th>
-            <th><?= $this->translate('Name') ?></th>
-            <?php foreach ($activity->getFields() as $field): ?>
-                <th><?= $field->getName() ?></th>
-            <?php endforeach; ?>
-        </thead>
-        <tbody>
-                <?php $i = 1; ?>
-                <?php foreach($signupData as $signup): ?>
-                    <tr>
-                        <td><?php echo $i; $i = $i + 1; ?></td>
-                        <td><?= $signup['member'] ?></td>
-                        <?php foreach($signup['values'] as $value):?>
-                            <td><?= $value ?></td>
-                        <?php endforeach;?>
-                    </tr>
-                <?php endforeach;?>
-        </tbody>
-    </table>
+    <a href="<?php echo $this->url('organizer_activity/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
 </div>

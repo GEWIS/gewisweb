@@ -101,6 +101,16 @@ return [
                                 'action' => 'export',
                             ]
                         ]
+                    ],
+                    'exportpdf' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export/pdf',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'exportpdf',
+                            ]
+                        ]
                     ]
                 ]
 

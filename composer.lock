@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52dc400699b795e67c7ee539ebd737f1",
-    "content-hash": "90fa3da4db21322d48daf35dcc3bbe3e",
+    "hash": "d7e9cb47f43a960610c1bb736e369759",
+    "content-hash": "bb701756fa53e9394ed279c2d32881b9",
     "packages": [
         {
             "name": "GEWIS/gewisweb-migrate",
@@ -13,7 +13,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GEWIS/gewisweb-migrate",
-                "reference": "a862e2990af4317a5c3bdf65b5676ce5a2fb2333"
+                "reference": "154d5cc5bb342e6a2eef234ec017be224be1f0e4"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -35,7 +35,49 @@
             "keywords": [
                 "gewis"
             ],
-            "time": "2015-12-28 14:28:57"
+            "time": "2016-01-24 20:55:29"
+        },
+        {
+            "name": "dino/dompdf-module",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raykolbe/DOMPDFModule.git",
+                "reference": "e234ac3c7c2af3ccd916a4079e529c1820eff60b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raykolbe/DOMPDFModule/zipball/e234ac3c7c2af3ccd916a4079e529c1820eff60b",
+                "reference": "e234ac3c7c2af3ccd916a4079e529c1820eff60b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "DOMPDFModule": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raymond Kolbe",
+                    "email": "raymond.kolbe@maine.edu"
+                }
+            ],
+            "description": "A Zend Framework 2 module for incorporating DOMPDF support.",
+            "homepage": "http://raymondkolbe.com",
+            "keywords": [
+                "dompdf",
+                "pdf",
+                "zf2"
+            ],
+            "time": "2013-04-25 10:31:36"
         },
         {
             "name": "doctrine/annotations",
@@ -960,16 +1002,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.12.0",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "3eb64850ee688623db494398a5284a7a4cdf7b47"
+                "reference": "a4e93bc4fd1a8ff8f534040c4a07371ea5f4b484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3eb64850ee688623db494398a5284a7a4cdf7b47",
-                "reference": "3eb64850ee688623db494398a5284a7a4cdf7b47",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/a4e93bc4fd1a8ff8f534040c4a07371ea5f4b484",
+                "reference": "a4e93bc4fd1a8ff8f534040c4a07371ea5f4b484",
                 "shasum": ""
             },
             "require": {
@@ -981,13 +1023,15 @@
             },
             "require-dev": {
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.22",
-                "jgm/smartpunct": "0.22",
+                "jgm/commonmark": "0.24",
                 "michelf/php-markdown": "~1.4",
                 "mikehaertl/php-shellcommand": "~1.1.0",
                 "phpunit/phpunit": "~4.3|~5.0",
                 "scrutinizer/ocular": "^1.1",
                 "symfony/finder": "~2.3"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
             },
             "bin": [
                 "bin/commonmark"
@@ -995,7 +1039,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.13-dev"
+                    "dev-master": "0.14-dev"
                 }
             },
             "autoload": {
@@ -1003,7 +1047,7 @@
                     "League\\CommonMark\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1022,7 +1066,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-11-04 14:24:41"
+            "time": "2016-01-14 04:29:54"
         },
         {
             "name": "maglnet/magl-markdown",
@@ -1202,16 +1246,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "49ff736bd5d41f45240cec77b44967d76e0c3d25"
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/49ff736bd5d41f45240cec77b44967d76e0c3d25",
-                "reference": "49ff736bd5d41f45240cec77b44967d76e0c3d25",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
                 "shasum": ""
             },
             "require": {
@@ -1223,7 +1267,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -1257,7 +1301,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2015-11-20 09:19:13"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "twbs/bootstrap-sass",

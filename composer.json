@@ -28,6 +28,7 @@
         "ext-exif": "^0.0.0",
         "ext-imagick": "^3.1",
         "twbs/bootstrap-sass": "^3.3",
-        "maglnet/magl-markdown":"^1.4"
+        "maglnet/magl-markdown":"^1.4",
+        "dino/dompdf-module": "0.2.0"
     }
 }
