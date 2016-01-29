@@ -42,6 +42,9 @@
                                 case Exam::EXAM_TYPE_ANSWERS:
                                     $name = $this->translate('Answers from %s (%s)');
                                     break;
+                                case Exam::EXAM_TYPE_OTHER:
+                                    $name = $this->translate('Other exam material from %s (%s)');
+                                    break;
                             }
                             ?>
                             <?= sprintf($name, $exam->getDate()->format('Y-m-d'), $exam->getLanguage())?>
@@ -67,6 +70,9 @@
                                 break;
                             case Exam::EXAM_TYPE_ANSWERS:
                                 $name = $this->translate('Answers from %s (%s)');
+                                break;
+                            case Exam::EXAM_TYPE_OTHER:
+                                $name = $this->translate('Other exam material from %s (%s)');
                                 break;
                         }
                         ?>

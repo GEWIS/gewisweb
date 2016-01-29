@@ -21,6 +21,7 @@ class Exam implements ResourceInterface
     const EXAM_TYPE_FINAL = 'exam';
     const EXAM_TYPE_INTERMEDIATE_TEST = 'intermediate';
     const EXAM_TYPE_ANSWERS = 'answers';
+    const EXAM_TYPE_OTHER = 'other';
     const EXAM_TYPE_SUMMARY = 'summary';
 
     const EXAM_LANGUAGE_ENGLISH = 'en';

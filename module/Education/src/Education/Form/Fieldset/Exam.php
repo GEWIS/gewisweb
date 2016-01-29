@@ -47,6 +47,7 @@ class Exam extends Fieldset
                     ExamModel::EXAM_TYPE_FINAL => $translator->translate('Final examination'),
                     ExamModel::EXAM_TYPE_INTERMEDIATE_TEST => $translator->translate('Intermediate test'),
                     ExamModel::EXAM_TYPE_ANSWERS => $translator->translate('Exam answers'),
+                    ExamModel::EXAM_TYPE_OTHER => $translator->translate('Other'),
                 ],
             ]
         ]);
