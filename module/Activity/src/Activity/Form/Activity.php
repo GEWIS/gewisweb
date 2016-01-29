@@ -177,8 +177,7 @@ class Activity extends Form implements InputFilterProviderInterface
          * This might seem like a bit of a hack, but this is probably the only way zend framework
          * allows us to do this.
          */
-        foreach ($this->get('fields')->getFieldSets() as $fieldset)
-        {
+        foreach ($this->get('fields')->getFieldSets() as $fieldset) {
             if ($this->data['language_english']) {
                 if (!(new NotEmpty())->isValid($fieldset->get('nameEn')->getValue())) {
                     //TODO: Return error messages
@@ -206,6 +205,7 @@ class Activity extends Form implements InputFilterProviderInterface
         }
 
         $this->isValid = $valid;
+
         return $valid;
     }
 
@@ -228,7 +228,6 @@ class Activity extends Form implements InputFilterProviderInterface
     {
         return $this->inputFilterGeneric('');
     }
-
 
 
     /**
@@ -254,7 +253,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location'. $languagePostFix => [
+            'location' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -267,7 +266,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'costs'. $languagePostFix => [
+            'costs' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -280,7 +279,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description'. $languagePostFix => [
+            'description' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -304,7 +303,7 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set
-     * @return InputFilter0
+     * @return InputFilter
      */
     public function getInputFilterSpecification()
     {
@@ -326,7 +325,6 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true
             ],
         ];
-
 
 
         if ($this->data['language_english']) {
@@ -352,6 +350,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 ],
             ];
         }
+
         return $filter;
     }
 }

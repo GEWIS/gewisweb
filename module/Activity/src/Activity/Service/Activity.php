@@ -262,7 +262,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @pre $params is valid data of Activity\Form\ActivityFieldFieldset
      *
      * @param array $params Parameters for the new field.
-     * @param AcitivityModel $activity The activity the field belongs to.
+     * @param ActivityModel $activity The activity the field belongs to.
      * @param bool $dutch
      * @param bool $english
      * @return \Activity\Model\ActivityField The new field.
@@ -291,7 +291,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->createActivityOptions(
                 $field,
                 $params,
-                $params['optionsEn'] != '' && $english,
+                $params['optionsEn'] !== '' && $english,
                 $params['options'] !== '' && $dutch
             );
         }
