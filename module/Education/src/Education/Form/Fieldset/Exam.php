@@ -5,6 +5,7 @@ namespace Education\Form\Fieldset;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use zend\I18n\Translator\TranslatorInterface as Translator;
+use Education\Model\Exam as ExamModel;
 
 class Exam extends Fieldset
     implements InputFilterProviderInterface
@@ -35,6 +36,32 @@ class Exam extends Fieldset
             'options' => [
                 'label' => $translator->translate('Exam date')
             ]
+        ]);
+
+        $this->add([
+            'name' => 'examType',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => [
+                'label' => $translator->translate('Type'),
+                'value_options' => [
+                    ExamModel::EXAM_TYPE_FINAL => $translator->translate('Final examination'),
+                    ExamModel::EXAM_TYPE_INTERMEDIATE_TEST => $translator->translate('Intermediate test'),
+                    ExamModel::EXAM_TYPE_ANSWERS => $translator->translate('Exam answers'),
+                    ExamModel::EXAM_TYPE_OTHER => $translator->translate('Other'),
+                ],
+            ]
+        ]);
+
+        $this->add([
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'language',
+            'options' => [
+                'label' => $translator->translate('Language'),
+                'value_options' => [
+                    ExamModel::EXAM_LANGUAGE_ENGLISH => $translator->translate('English'),
+                    ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
+                ],
+            ],
         ]);
     }
 
