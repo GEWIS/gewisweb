@@ -34,6 +34,11 @@
                             </ul>
                         </li>
                     <?php endif; ?>
+                    <li>
+                        <a href="<?= $this->url('admin_organ') ?>">
+                            <?= $this->translate('Organs') ?>
+                        </a>
+                    </li>
                     <?php if ($this->acl('education_acl')->isAllowed('exam', 'upload')): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"

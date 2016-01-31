@@ -95,8 +95,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <ul class="dropdown-menu">
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'av']) ?>"><?= $this->translate('General Meeting') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a></li>
-                        <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'commissies']) ?>"><?= $this->translate('Commissions') ?></a></li>
-                        <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'disputen']) ?>"><?= $this->translate('Fraternities') ?></a></li>
+                        <li><a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a></li>
+                        <li><a href="<?= $this->url('home/fraternity_list') ?>"><?= $this->translate('Fraternities') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
