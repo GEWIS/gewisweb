@@ -161,7 +161,7 @@ class Organ extends AbstractAclService
         $em = $this->getEntityManager();
         $oldInformation = $organInformation->getOrgan()->getApprovedOrganInformation();
         if (!is_null($oldInformation)) {
-            $em->remove($organInformation);
+            $em->remove($oldInformation);
         }
         $user = $em->merge($this->sm->get('user_role'));
         $organInformation->setApprover($user);
