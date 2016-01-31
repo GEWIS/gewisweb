@@ -88,4 +88,18 @@ class ActivityOption
     {
         return $this->valueEn;
     }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'value' => $this->getValue(),
+            'valueEn' => $this->getValueEn()
+        ];
+    }
 }

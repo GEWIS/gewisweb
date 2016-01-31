@@ -139,4 +139,27 @@ class ActivityField
     {
         return $this->activity;
     }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $options = [];
+        foreach ($this->getOptions() as $option) {
+            $options[] = $option->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'nameEn' => $this->getNameEn(),
+            'type' => $this->getType(),
+            'minimumValue' => $this->getMinimumValue(),
+            'maximumValue' => $this->getMaximumValue(),
+            'options' => $options
+        ];
+    }
 }
