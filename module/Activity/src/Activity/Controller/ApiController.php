@@ -41,8 +41,11 @@ class ApiController extends AbstractActionController
         //Assure the form is used
         if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
             $activity = $activityService->getActivity($id);
-            if ($activity->getFields()->count() == 0 && $activity->getCanSignup()) {
-                $signupService->signUp($activity, []);
+            $form = $signupService->getForm($activity->getFields());
+            $form->setData($this->getRequest()->getPost());
+
+            if ($activity->getCanSignup() && $form->isValid()) {
+                $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
                 $params['success'] = true;
             }
         }

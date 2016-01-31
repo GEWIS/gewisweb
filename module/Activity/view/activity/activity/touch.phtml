@@ -231,6 +231,75 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                                 <td id="activityAttendeeCount"></td>
                             </tr>
                         </table>
+                        <?php ob_start(); ?>
+                        <div class="form-group form-group-lg">
+                            <label for="__id__" class="control-label col-sm-2">
+                                __name__
+                            </label>
+                            <input class="form-control" type="text" id="__id__" name="__id__">
+                        </div>
+                        <?php $textTemplate = ob_get_clean() ?>
+
+                        <?php ob_start(); ?>
+                        <div class="input-group form-group-lg">
+                            <label for="__id__" class="control-label col-sm-2">
+                                __name__
+                            </label>
+
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" disabled="disabled"
+                                        data-type="minus" data-field="__id__">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input class="form-control input-number" type="number" id="__id__" min="__min__" max="__max__" step="1"
+                                   name="__id__" value="__min__">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number"
+                                        data-type="plus" data-field="__id__">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                             </span>
+                        </div>
+                        <?php $numberTemplate = ob_get_clean() ?>
+
+                        <?php ob_start(); ?>
+                        <div class="form-group form-group-lg">
+                            <label for="__id__" class="control-label col-sm-2">
+                                __name__
+                            </label>
+                            <div class="col-sm-10">
+                                <label>
+                                    <input type="radio" class="form-control" name="__id__" value="1">
+                                    <?= $this->translate('Yes') ?>
+                                </label>
+                                <label>
+                                    <input type="radio" class="form-control" name="__id__" value="0">
+                                    <?= $this->translate('No') ?>
+                                </label>
+                            </div>
+                        </div>
+
+                        <?php $booleanTemplate = ob_get_clean() ?>
+
+                        <?php ob_start(); ?>
+                        <div class="form-group form-group-lg">
+                            <label for="__id__" class="control-label col-sm-2">
+                                __name__
+                            </label>
+                            <select class="form-control" id="__id__" name="__id__">__options__</select>
+                        </div>
+
+                        <?php $selectTemplate = ob_get_clean() ?>
+
+                        <form name="activitySignup" id="activitySignup"
+                              data-template-text="<?= $this->escapeHtmlAttr($textTemplate) ?>"
+                              data-template-number="<?= $this->escapeHtmlAttr($numberTemplate) ?>"
+                              data-template-boolean="<?= $this->escapeHtmlAttr($booleanTemplate) ?>"
+                              data-template-select="<?= $this->escapeHtmlAttr($selectTemplate) ?>">
+
+                        </form>
+                        <br>
                         <div id="activitySubscribe" class="logged-in">
                             <button
                                 class="btn btn-primary btn-lg btn-block"><?= $this->translate('Subscribe') ?></button>
@@ -239,7 +308,6 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                             <button
                                 class="btn btn-danger btn-lg btn-block"><?= $this->translate('Unsubscribe') ?></button>
                         </div>
-
                         <div id="subscribeFailed" class="alert alert-danger" style="display: none" role="alert">
                             <strong><?= $this->translate('Activity subscription failed') ?>,</strong>
                             <?= $this->translate('please try again later or use the website.') ?>
