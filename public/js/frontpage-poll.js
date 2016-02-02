@@ -7,3 +7,10 @@ function addOption() {
 
     return false;
 }
+
+function removeOption() {
+    var currentCount = $("#poll-options > .option").length - 1;
+    if (currentCount >= 0){
+        $('#option'+currentCount).remove();
+    }
+}
