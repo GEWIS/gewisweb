@@ -1,0 +1,34 @@
+/*
+Photo
+
+*/
+
+@import '../_variables.scss';
+
+.photo-grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.gutter-sizer {
+  width: 0.5%;
+}
+.grid-sizer, .photo-grid-item {
+  width: 24.5%;
+  margin-bottom: 0.5%;
+}
+
+.photo-grid-item {
+  float: left;
+}
+
+.photo-grid-item img {
+  display: block;
+  max-width: 100%;
+}
+
+.potw-thumb {
+  width: 49%;
+  margin-bottom: 1%;
+}
