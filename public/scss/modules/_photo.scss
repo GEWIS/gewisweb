@@ -32,3 +32,31 @@ Photo
   width: 49%;
   margin-bottom: 1%;
 }
+
+/* Weekly photo ribbon */
+.ribbon-container {
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.corner-ribbon {
+  width: 200px;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  background-color: #d40026;
+}
+
+.corner-ribbon.shadow {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
