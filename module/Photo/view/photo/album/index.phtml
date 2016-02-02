@@ -44,15 +44,8 @@
 
 
 <script>
-    var $grid = $('.photo-grid').masonry({
-        itemSelector: '.photo-grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true,
-        gutter: '.gutter-sizer'
-    });
-    // layout Masonry after each image loads
-    $grid.imagesLoaded().progress( function() {
-        $grid.masonry('layout');
+    $(document).ready(function () {
+        Photo.initGrid();
     });
 </script>
 

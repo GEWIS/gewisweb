@@ -70,6 +70,19 @@ Photo = {
 
     },
 
+    initGrid: function () {
+        var $grid = $('.photo-grid').masonry({
+            itemSelector: '.photo-grid-item',
+            columnWidth: '.grid-sizer',
+            percentPosition: true,
+            gutter: '.gutter-sizer'
+        });
+
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress( function() {
+            $('.photo-grid').masonry('layout');
+        });
+    },
     removeTag: function (e) {
         e.preventDefault()
         parent = $(this).parent();
