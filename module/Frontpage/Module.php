@@ -121,7 +121,7 @@ class Module
                     $acl->addResource('news_item');
 
                     $acl->allow('user', 'poll', ['vote', 'request']);
-                    $acl->allow('user', 'poll_comment', ['view', 'create']);
+                    $acl->allow('user', 'poll_comment', ['view', 'create', 'list']);
 
                     return $acl;
                 },
