@@ -149,11 +149,13 @@ class Album implements ResourceInterface
      *
      * @return integer
      */
-    public function getPhotoCount()
+    public function getPhotoCount($includeSubAlbums = true)
     {
         $count = $this->photos->count();
-        foreach($this->children as $album) {
-            $count += $album->getPhotoCount();
+        if ($includeSubAlbums) {
+            foreach($this->children as $album) {
+                $count += $album->getPhotoCount();
+            }
         }
         return $count;
     }
