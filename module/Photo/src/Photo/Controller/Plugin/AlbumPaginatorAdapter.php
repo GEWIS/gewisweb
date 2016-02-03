@@ -37,7 +37,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     public function __construct($album, $sm)
     {
         $this->album = $album;
-        $this->count = $album->getAlbumCount() + $album->getPhotoCount();
+        $this->count = $album->getAlbumCount() + $album->getPhotoCount(false);
         $this->sm = $sm;
     }
 
