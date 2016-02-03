@@ -121,7 +121,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 </li>
                 <li class="<?= getIsActiveClass($this, ['education']) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
                 <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
-                <li class="<?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a></li>
+                <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
+
+                    </ul>
+                </li>
             </ul>
             <?php if (null != $this->identity()): ?>
             <ul class="nav navbar-nav navbar-right">

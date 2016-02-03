@@ -1,8 +1,11 @@
-<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+        ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
+        ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+?>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?></h1>
+            <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?><small> <?= $album->getStartDateTime()->format('d-m-Y') ?></small></h1>
         </div>
     </div>
     <?= $this->paginationControl(
@@ -15,22 +18,23 @@
         ]
     )
     ?>
-    <div class="row photos">
+    <div class="photo-grid">
+        <div class="grid-sizer"></div>
+        <div class="gutter-sizer"></div>
         <?php foreach ($paginator as $item): ?>
             <?php if ($item instanceof \Photo\Model\Album): ?>
-                <div class="thumb">
+                <div class="photo-grid-item">
                     <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
-                        <img class="img-responsive" src="<?= $this->fileUrl($item->getCoverPath()) ?>" alt="">
-
+                        <img src="<?= $this->fileUrl($item->getCoverPath()) ?>">
                         <div class="caption">
                             <?= $this->escapeHtml($item->getName()); ?>
                         </div>
                     </a>
                 </div>
             <?php else: ?>
-                <div class="thumb">
-                    <a class="thumbnail <?= is_null($item->getWeeklyPhoto()) ? '' : 'potw-thumb' ?>" href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
-                        <img class="img-responsive" src="<?= $this->fileUrl($item->getSmallThumbPath()) ?>" alt="">
+                <div class="photo-grid-item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
+                        <img src="<?= $this->fileUrl($item->getSmallThumbPath()) ?>">
                     </a>
                 </div>
             <?php endif; ?>
@@ -39,7 +43,11 @@
 </div>
 
 
-
+<script>
+    $(document).ready(function () {
+        Photo.initGrid();
+    });
+</script>
 
 
 

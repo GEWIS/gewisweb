@@ -75,9 +75,7 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             if ($albumService->updateAlbum($albumId, $request->getPost())) {
-                return new ViewModel([
-                    'success' => true
-                ]);
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
             }
         }
         $form = $albumService->getEditAlbumForm($albumId);
