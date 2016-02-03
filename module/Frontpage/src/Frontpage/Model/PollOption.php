@@ -137,7 +137,7 @@ class PollOption implements ResourceInterface
      */
     public function getVotesCount()
     {
-        return $this->anonymousVotes + (is_null($this->votes) ? null : $this->votes->count());
+        return $this->anonymousVotes + (is_null($this->votes) ? 0 : $this->votes->count());
     }
 
     /**
