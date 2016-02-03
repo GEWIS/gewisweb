@@ -49,6 +49,13 @@ class PollOption implements ResourceInterface
     protected $votes;
 
     /**
+     * Number of votes not bound to a specific user.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $anonymousVotes = 0;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -116,13 +123,21 @@ class PollOption implements ResourceInterface
     }
 
     /**
+     * @param integer $votes
+     */
+    public function setAnonymousVotes($votes)
+    {
+        $this->anonymousVotes = $votes;
+    }
+
+    /**
      * Get the number of votes for this poll option.
      *
      * @return integer
      */
     public function getVotesCount()
     {
-        return is_null($this->votes) ? null : $this->votes->count();
+        return $this->anonymousVotes + (is_null($this->votes) ? 0 : $this->votes->count());
     }
 
     /**
