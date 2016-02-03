@@ -25,10 +25,19 @@ class Poll extends AbstractAclService
      * Retrieves a poll by its id
      * @param int $pollId the id of the poll to retrieve
      * @return PollModel|null
+     *
+     * @throws \User\Permissions\NotAllowedException if the user isn't allowed to see unapproved polls
      */
     public function getPoll($pollId)
     {
-        return $this->getPollMapper()->findPollById($pollId);
+        $poll = $this->getPollMapper()->findPollById($pollId);
+        if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view unnapproved polls')
+            );
+        }
+        return $poll;
     }
 
     /**
@@ -97,6 +106,11 @@ class Poll extends AbstractAclService
 
         // Check if poll expires after today
         if ($poll->getExpiryDate() <= (new \DateTime())) {
+            return false;
+        }
+
+        // check if poll is approved
+        if (is_null($poll->getApprover())) {
             return false;
         }
 
