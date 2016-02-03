@@ -110,7 +110,7 @@ class Poll extends AbstractAclService
         }
 
         // check if poll is approved
-        if (null === $poll->getApprover()) {
+        if (is_null($poll->getApprover())) {
             return false;
         }
 
