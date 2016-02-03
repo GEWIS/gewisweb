@@ -1,0 +1,93 @@
+<div class="field" id="additionalField<?= $this->index ?>">
+    <div class="form-group form-inline">
+        <?php
+        $element = $this->fs->get('name');
+        $element->setAttribute('class', 'form-control form-control-dutch');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-4"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+        <?php
+        $element = $this->fs->get('nameEn');
+        $element->setAttribute('class', 'form-control form-control-english');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-4"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+        <?php
+        $element = $this->fs->get('type');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index. ')');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-4"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formSelect($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-inline field-dependant type-2" style="display:none;">
+        <?php
+        $element = $this->fs->get('min. value');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-4"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+        <?php
+        $element = $this->fs->get('max. value');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-4"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-inline field-dependant type-3" style="display:none;">
+        <?php
+        $element = $this->fs->get('options');
+        $element->setAttribute('class', 'form-control form-control-dutch');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+        <?php
+        $element = $this->fs->get('optionsEn');
+        $element->setAttribute('class', 'form-control form-control-english');
+        $element->setAttribute('placeholder', $element->getLabel());
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+    </div>
+</div>

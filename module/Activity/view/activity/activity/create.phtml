@@ -1,130 +1,259 @@
 <?php
 $this->headTitle($this->translate('Create activity'));
-
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/activity-create.js');
-$form->setAttribute('action', '');
+    ->prependFile($this->basePath() . '/js/activity-create.js')
+    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $form->prepare();
-echo $this->form()->openTag($form);
 ?>
-<div class = "row">
-	<div class="col-md-12">
-        <div class="row">
-            <div class="col-md-4">
+<div class="container">
+    <?= $this->form()->openTag($form) ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Create an activity</h1>
+            <hr>
+            <h3><?= $this->translate('Display languages') ?></h3>
+            <?php
+            $dutchElement = $form->get('language_dutch');
+            $dutchElement->setAttribute('onchange', 'Activity.updateForm()');
+            $dutchElement->setAttribute('class', 'form-control');
+            $englishElement = $form->get('language_english');
+            $englishElement->setAttribute('onchange', 'Activity.updateForm()');
+            $englishElement->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group form-inline">
+                <div class="form-group<?= count($dutchElement->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $dutchElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Dutch') ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formCheckbox($dutchElement) ?>
+                        <?= $this->formElementErrors($dutchElement) ?>
+                    </div>
+                </div>
+                <div class="form-group<?= count($englishElement->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $englishElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('English') ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formCheckbox($englishElement) ?>
+                        <?= $this->formElementErrors($englishElement) ?>
+                    </div>
+                </div>
+            </div>
+            <h3><?= $this->translate('Time and date') ?></h3>
+            <div class="form-group form-inline">
+                <?php
+                $beginTime = $form->get('beginTime');
+                $beginTime->setAttribute('class', 'form-control');
+                $endTime = $form->get('endTime');
+                $endTime->setAttribute('class', 'form-control');
+                ?>
+                <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $beginTime->getName() ?>" class="control-label col-sm-2"><?= $this->translate('From') ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formInput($beginTime) ?>
+                        <?= $this->formElementErrors($beginTime) ?>
+                    </div>
+                </div>
 
+                <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $endTime->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Until') ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formInput($endTime) ?>
+                        <?= $this->formElementErrors($endTime) ?>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h2><?php echo $this->translate('Dutch')?></h2>
-            </div>
-            <div class="col-md-4">
-                <h2><?php echo $this->translate('English')?></h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class = "col-md-4">
-                <?php echo $this->translate('Language');?>:
-            </div>
-            <div class = "col-md-4">
-                <?php echo $this->formRow($form->get('language_dutch')); ?>
-            </div>
-            <div class = "col-md-4">
-                <?php echo $this->formRow($form->get('language_english')); ?>
-            </div>
-        </div>
-		<div class="row">
-			<div class = "col-md-4">
-				<?php echo $this->translate('Name');?>:
-			</div>
-			<div class = "col-md-4">
-				<?php echo $this->formRow($form->get('name')); ?>
-			</div>
-            <div class = "col-md-4">
-                <?php echo $this->formRow($form->get('nameEn')); ?>
-            </div>
-		</div>
-		<div class="row">
-			<div class = "col-md-4">
-				<?php echo $this->translate('Start time');?>:
-			</div>
-			<div class = "col-md-8">
-				<?php echo $this->formRow($form->get('beginTime')); ?>
-			</div>
-		</div>
-		<div class="row">
-			<div class = "col-md-4">
-                <?php echo $this->translate('End time');?>:
-			</div>
-			<div class = "col-md-8">
-				<?php echo $this->formRow($form->get('endTime')); ?>
-			</div>
-		</div>
-        <div class="row">
-            <div class = "col-md-4">
-                <?php echo $this->translate('Subscription Deadline');?>:
-            </div>
-            <div class = "col-md-8">
-                <?php echo $this->formRow($form->get('subscriptionDeadline')); ?>
+            <?php
+            $subscriptionDeadline = $form->get('subscriptionDeadline');
+            $subscriptionDeadline->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($subscriptionDeadline->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $subscriptionDeadline->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Subscription deadline') ?></label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($subscriptionDeadline) ?>
+                    <?= $this->formElementErrors($subscriptionDeadline) ?>
+                </div>
             </div>
         </div>
-		<div class="row">
-			<div class = "col-md-4">
-                <?php echo $this->translate('Location');?>:
-			</div>
-			<div class = "col-md-4">
-				<?php echo $this->formRow($form->get('location')); ?>
-			</div>
-            <div class = "col-md-4">
-                <?php echo $this->formRow($form->get('locationEn')); ?>
+        <div class="col-md-6">
+            <h3>Dutch</h3>
+            <?php
+            $name = $form->get('name');
+            $name->setAttribute('disabled', 'disabled');
+            $name->setAttribute('class', 'form-control form-control-dutch');
+            ?>
+            <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $name->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Name') ?>
+                </label>
+                <?= $this->formInput($name) ?>
+                <?= $this->formElementErrors($name) ?>
             </div>
-		</div>
-		<div class="row">
-			<div class = "col-md-4">
-                <?php echo $this->translate('Costs');?>:
-			</div>
-			<div class = "col-md-4">
-				<?php echo $this->formRow($form->get('costs')); ?>
-			</div>
-            <div class="col-md-4">
-                <?php echo $this->formRow($form->get('costsEn')); ?>
+            <?php
+            $location = $form->get('location');
+            $location->setAttribute('disabled', 'disabled');
+            $location->setAttribute('class', 'form-control form-control-dutch');
+            ?>
+            <div class="form-group<?= count($location->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $location->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Location') ?>
+                </label>
+                <?= $this->formInput($location) ?>
+                <?= $this->formElementErrors($location) ?>
             </div>
-		</div>
-        <div class="row">
-            <div class = "col-md-4">
-                <?php echo $this->translate('Can Sign up?');?>:
+            <?php
+            $costs = $form->get('costs');
+            $costs->setAttribute('disabled', 'disabled');
+            $costs->setAttribute('class', 'form-control form-control-dutch');
+            ?>
+            <div class="form-group<?= count($costs->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $costs->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Costs') ?>
+                </label>
+                <?= $this->formInput($costs) ?>
+                <?= $this->formElementErrors($costs) ?>
             </div>
-            <div class = "col-md-8">
-                <?php echo $this->formRow($form->get('canSignUp')); ?>
+            <?php
+            $description = $form->get('description');
+            $description->setAttribute('disabled', 'disabled');
+            $description->setAttribute('class', 'form-control form-control-dutch');
+            $description->setAttribute('style', 'width:100%; height:10em; resize:none');
+            ?>
+            <div class="form-group<?= count($description->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $description->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Description') ?>
+                </label>
+                <?= $this->formRow($description) ?>
+                <?= $this->formElementErrors($description) ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4"><?php echo $this->translate('Description');?>: <br /></div>
-            <div class="col-md-4">
-                <?php echo $this->formRow($form->get('description')); ?>
+        <div class="col-md-6">
+            <h3>English</h3>
+            <?php
+            $nameEn = $form->get('nameEn');
+            $nameEn->setAttribute('disabled', 'disabled');
+            $nameEn->setAttribute('class', 'form-control form-control-english');
+            ?>
+            <div class="form-group<?= count($nameEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $nameEn->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Name') ?>
+                </label>
+                <?= $this->formInput($nameEn) ?>
+                <?= $this->formElementErrors($nameEn) ?>
             </div>
-            <div class="col-md-4">
-                <?php echo $this->formRow($form->get('descriptionEn')); ?>
+            <?php
+            $locationEn = $form->get('locationEn');
+            $locationEn->setAttribute('disabled', 'disabled');
+            $locationEn->setAttribute('class', 'form-control form-control-english');
+            ?>
+            <div class="form-group<?= count($locationEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $locationEn->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Location') ?>
+                </label>
+                <?= $this->formInput($locationEn) ?>
+                <?= $this->formElementErrors($locationEn) ?>
+            </div>
+            <?php
+            $costsEn = $form->get('costsEn');
+            $costsEn->setAttribute('disabled', 'disabled');
+            $costsEn->setAttribute('class', 'form-control form-control-english');
+            ?>
+            <div class="form-group<?= count($costsEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $costsEn->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Costs') ?>
+                </label>
+                <?= $this->formInput($costsEn) ?>
+                <?= $this->formElementErrors($costsEn) ?>
+            </div>
+            <?php
+            $descriptionEn = $form->get('descriptionEn');
+            $descriptionEn->setAttribute('disabled', 'disabled');
+            $descriptionEn->setAttribute('class', 'form-control form-control-english');
+            $descriptionEn->setAttribute('style', 'width:100%; height:10em; resize:none');
+            ?>
+            <div class="form-group<?= count($descriptionEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $descriptionEn->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Description') ?>
+                </label>
+                <?= $this->formRow($descriptionEn) ?>
+                <?= $this->formElementErrors($descriptionEn) ?>
             </div>
         </div>
-        <div class="row">
-            <div class = "col-md-4">
-                <?php echo $this->translate('Organ:');?>:
+        <div class="col-md-12">
+            <?php
+            $canSignUp = $form->get('canSignUp');
+            ?>
+            <div class="form-group<?= count($canSignUp->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label>
+                    <?= $this->translate('Enable subscriptions') ?>
+                    <?= $this->formCheckbox($canSignUp) ?>
+                    <?= $this->formElementErrors($canSignUp) ?>
+                </label>
             </div>
-            <div class = "col-md-8">
-                <?php echo $this->formRow($form->get('organ')); ?>
+            <?php
+            $organ = $form->get('organ');
+            $organ->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $organ->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Organizing committee / fraternity') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-8"><?php echo $this->formSubmit($form->get('submit'));?></div>
+        <div class="col-md-12">
+            <?php
+            /* render template for fields */
+            $fs = $form->get('fields')->getTemplateElement();
+            ob_start();
+            echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
+            $tpl = trim(ob_get_clean())
+            ?>
+            <h3><?= $this->translate('Additional signup fields') ?></h3>
+            <fieldset id="additionalFields">
+                <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                <?php
+                $index = 0;
+                foreach ($form->get('fields')->getIterator() as $fs){
+                    echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
+                    $index++;
+                }
+                ?>
+                <div class="form-group add-field">
+                    <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        <?= $this->translate('Remove the last field') ?>
+                    </button>
+                    <button class="btn btn-success" type="button" onclick="return Activity.addField()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <?= $this->translate('Add a field') ?>
+                    </button>
+                </div>
+            </fieldset>
         </div>
-	</div>
-
+        <div class="col-md-12">
+            <?php
+            $submit = $form->get('submit');
+            $submit->setLabel($this->translate('Create activity'));
+            $submit->setAttribute('class', 'btn btn-primary');
+            ?>
+            <div class="form-group">
+                <?= $this->formButton($submit) ?>
+            </div>
+        </div>
+        <?= $this->form()->closeTag(); ?>
+    </div>
 </div>
-    <?php echo $this->translate('Extra fields');
-          echo $this->formCollection($form->get('fields'));
-    ?>
-    <button onclick="return add_field()"><?= $this->translate('Add a field') ?></button>
-    <button onclick="return remove_field()"><?= $this->translate('Remove the last field') ?></button>
-<?php
 
-echo $this->form()->closeTag();
+<script>
+    $('[name="beginTime"]').datetimepicker();
+    $('[name="endTime"]').datetimepicker();
+    $('[name="subscriptionDeadline"]').datetimepicker();
+    Activity.updateForm();
+    for (var i = 0; i < <?= $index ?>; i++) {
+        Activity.updateFieldset(i);
+    }
+</script>
+

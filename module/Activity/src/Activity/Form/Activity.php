@@ -2,16 +2,13 @@
 
 namespace Activity\Form;
 
-use Decision\Model\Member;
 use Decision\Model\Organ;
-use Decision\Model\OrganMember;
-use User\Model\User;
 use Zend\Form\Form;
-//input filter
 use Zend\Mvc\I18n\Translator;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\NotEmpty;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
@@ -57,7 +54,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -65,7 +61,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -73,7 +68,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'organ',
             'type' => 'select',
             'options' => [
-                'style' => 'width:100%',
                 'value_options' => $organOptions
             ]
         ]);
@@ -96,7 +90,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'location',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -104,7 +97,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'locationEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -112,14 +104,12 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'costs',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
         $this->add([
             'name' => 'costsEn',
             'attributes' => [
                 'type' => 'text',
-                'style' => 'width:100%',
             ],
         ]);
 
@@ -127,7 +117,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'description',
             'attributes' => [
                 'type' => 'textarea',
-                'style' => 'width:100%; height:10em; resize:none',
             ],
         ]);
 
@@ -135,7 +124,6 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'descriptionEn',
             'attributes' => [
                 'type' => 'textarea',
-                'style' => 'width:100%; height:10em; resize:none',
             ],
         ]);
 
@@ -151,14 +139,12 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
-            'options' => array(
+            'options' => [
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => [
-                    'type' => 'Activity\Form\ActivityFieldFieldset'
-                ]
-            )
+                'target_element' => new ActivityFieldFieldset()
+            ]
         ]);
 
         $this->add([
@@ -177,6 +163,51 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    /**
+     * Validate the form
+     *
+     * @return bool
+     * @throws Exception\DomainException
+     */
+    public function isValid()
+    {
+        $valid = parent::isValid();
+
+        /*
+         * This might seem like a bit of a hack, but this is probably the only way zend framework
+         * allows us to do this.
+         */
+        foreach ($this->get('fields')->getFieldSets() as $fieldset) {
+            if ($this->data['language_english']) {
+                if (!(new NotEmpty())->isValid($fieldset->get('nameEn')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+
+                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('optionsEn')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+            }
+
+
+            if ($this->data['language_dutch']) {
+                if (!(new NotEmpty())->isValid($fieldset->get('name')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+
+                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('options')->getValue())) {
+                    //TODO: Return error messages
+                    $valid = false;
+                }
+            }
+        }
+
+        $this->isValid = $valid;
+
+        return $valid;
+    }
 
     /***
      * Add  the input filter for the English language
@@ -197,7 +228,6 @@ class Activity extends Form implements InputFilterProviderInterface
     {
         return $this->inputFilterGeneric('');
     }
-
 
 
     /**
@@ -223,7 +253,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location'. $languagePostFix => [
+            'location' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -236,7 +266,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'costs'. $languagePostFix => [
+            'costs' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -249,7 +279,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description'. $languagePostFix => [
+            'description' . $languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -273,7 +303,7 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set
-     * @return InputFilter0
+     * @return InputFilter
      */
     public function getInputFilterSpecification()
     {
@@ -295,7 +325,6 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true
             ],
         ];
-
 
 
         if ($this->data['language_english']) {
@@ -321,6 +350,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 ],
             ];
         }
+
         return $filter;
     }
 }
