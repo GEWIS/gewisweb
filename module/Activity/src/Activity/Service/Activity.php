@@ -155,6 +155,26 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
+     * Get all activities that are approved by the board and which occur in the future
+     *
+     * @return array Array of activities
+     */
+    public function getUpcomingActivities()
+    {
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view upcoming the activities')
+            );
+        }
+
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getUpcomingActivities();
+
+        return $activity;
+    }
+
+    /**
      * Create an activity from parameters.
      * @pre $params is valid data of Activity\Form\Activity
      *

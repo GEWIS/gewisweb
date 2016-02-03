@@ -483,7 +483,10 @@ class Activity
      */
     public function toArray()
     {
-        $fields = $this->getFields()->count();
+        $fields = [];
+        foreach ($this->getFields() as $field) {
+            $fields[] = $field->toArray();
+        }
 
         $attendees = [];
         foreach ($this->getSignUps() as $signup) {
@@ -496,12 +499,14 @@ class Activity
             'nameEn' => $this->getNameEn(),
             'beginTime' => $this->getBeginTime(),
             'endTime' => $this->getEndTime(),
+            'subscriptionDeadline' => $this->getSubscriptionDeadline(),
             'location' => $this->getLocation(),
             'LocationEn' => $this->getLocationEn(),
             'costs' => $this->getCosts(),
             'costsEn' => $this->getCostsEn(),
             'description' => $this->getDescription(),
             'descriptionEn' => $this->getDescriptionEn(),
+            'canSignUp' => $this->getCanSignUp(),
             'attendees' => $attendees,
             'fields' => $fields,
         ];
