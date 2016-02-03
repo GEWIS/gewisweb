@@ -51,7 +51,7 @@ ob_start();
     $element->setAttribute('class', 'form-control');
     $element->setAttribute('placeholder', $element->getLabel());
     ?>
-        <div class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <div id="option__index__" class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
             <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
             <div class="col-sm-4">
                 <?= $this->formInput($element) ?>
@@ -100,7 +100,10 @@ ob_start();
     <?php endforeach ?>
 
     <div class="form-group add-option">
-        <div class="col-sm-offset-8 col-sm-4">
+        <div class="col-sm-offset-8 col-sm-2">
+            <button class="btn btn-danger" type="button" onclick="return removeOption()"><span class="glyphicon glyphicon-minus"></span> <?= $this->translate('Remove option') ?></button>
+        </div>
+        <div class="col-sm-2">
             <button class="btn btn-success" type="button" onclick="return addOption()"><span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?></button>
         </div>
     </div>
