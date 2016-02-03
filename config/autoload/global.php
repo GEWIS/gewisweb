@@ -82,16 +82,23 @@ return [
         'max_photos_page' => 20,
         'dir_mode' => 0777, // rwx by default
         'small_thumb_size' => [
-            'width' => 370,
-            'height' => 550
+            /*
+             * Max. width and height which a thumbnail may have. Height param must be greater than width, for
+             * landscape images.
+             */
+            'width' => 320,
+            'height' => 640
         ],
         'large_thumb_size' => [
-            'width' => 825,
-            'height' => 550
+            /*
+             * Max. width and height which a thumbnail may have.
+             */
+            'width' => 960,
+            'height' => 1920
         ],
         'album_cover' => [
-            'width' => 370,
-            'height' => 550,
+            'width' => 320,
+            'height' => 180,
             'inner_border' => 2,
             'outer_border' => 0,
             'cols' => 2,
