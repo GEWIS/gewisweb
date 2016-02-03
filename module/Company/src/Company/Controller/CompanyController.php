@@ -102,7 +102,7 @@ class CompanyController extends AbstractActionController
                     'translator' => $companyService->getTranslator(),
                 ]);
             }
-            return new ViewModel();
+            return $this->notFoundAction();
         }
         return new ViewModel([
             'activeJobList' => $companyService->getActiveJobList(),

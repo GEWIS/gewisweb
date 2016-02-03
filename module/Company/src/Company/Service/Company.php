@@ -86,7 +86,7 @@ class Company extends AbstractACLService
                     $oldPath = $package->getImage();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
                     $package->setImage($newPath);
-                    if ($oldPath != '' && oldPath != newPath) {
+                    if ($oldPath != '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 }
