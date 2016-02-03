@@ -118,7 +118,7 @@ class Photo
             ->where('a.dateTime < ?1 AND a.album = ?2')
             ->setParameter(1, $photo->getDateTime())
             ->setParameter(2, $photo->getAlbum())
-            ->orderBy('a.dateTime', 'ASC')
+            ->orderBy('a.dateTime', 'DESC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 
