@@ -1,22 +1,3 @@
-<?php
-if (!function_exists('moduleIsActive')) {
-    function moduleIsActive($view, array $condition) {
-        $viewModel = current($view->viewModel()->getCurrent()->getChildren());
-        $script = explode('/', $viewModel->getTemplate());
-        foreach ($condition as $key => $cond) {
-            if (null !== $cond && $script[$key] != $cond) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function getIsActiveClass($view, array $condition) {
-        return moduleIsActive($view, $condition) ? 'active' : '';
-    }
-}
-
-?>
 <?= $this->doctype(); ?>
 
 <html lang="en">
