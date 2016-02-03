@@ -64,7 +64,7 @@ $this->headTitle($this->translate('Jobs'));
 
 
         foreach ($jobList as $job):
-            if ($job->isActive() && $job->getLanguage() === $locale):
+            if ($job->isActive()):
                 $company = $job->getPackage()->getCompany(); ?>
 
                 <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()) ?>">
