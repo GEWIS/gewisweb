@@ -71,6 +71,50 @@ return [
                 ],
                 'priority' => 100
             ],
+            'organizer_activity' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/activity/organizer/',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Activity\Controller',
+                        'controller' => 'organizer',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'email' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/email',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'email',
+                            ]
+                        ]
+                    ],
+                    'export' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'export',
+                            ]
+                        ]
+                    ],
+                    'exportpdf' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export/pdf',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'exportpdf',
+                            ]
+                        ]
+                    ]
+                ]
+
+            ],
             'admin_activity' => [
                 'type' => 'Literal',
                 'options' => [
@@ -210,7 +254,8 @@ return [
         'invokables' => [
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
             'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
-            'Activity\Controller\Api' => 'Activity\Controller\ApiController'
+            'Activity\Controller\Api' => 'Activity\Controller\ApiController',
+            'Activity\Controller\Organizer' => 'Activity\Controller\OrganizerController',
         ],
         'factories' => [
             'Activity\Controller\Activity' => function ($sm) {

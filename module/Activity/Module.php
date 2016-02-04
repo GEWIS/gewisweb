@@ -1,8 +1,7 @@
 <?php
 namespace Activity;
 
-
-use User\Service\User;
+use User\Permissions\Assertion\IsOrganMember;;
 
 class Module
 {
@@ -115,6 +114,7 @@ class Module
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
+                    $acl->allow('user', 'activity', 'viewDetails', new IsOrganMember());
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 

@@ -74,6 +74,23 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
+     * Get the activity with additional details
+     *
+     * @param $id
+     * @return ActivityModel
+     */
+    public function getActivityWithDetails($id)
+    {
+        if (! $this->isAllowed('viewDetails', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+        return $this->getActivity($id   );
+    }
+
+    /**
      * Returns an array of all activities.
      *
      * @return array Array of activities
