@@ -7,7 +7,7 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
 $this->scriptUrl()->requireUrls(
-    ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
+    ['admin_photo/photo_index', 'api_photo/photo_delete', 'api_photo/photo_move'],
     ['photo_id']
 );
 ?>

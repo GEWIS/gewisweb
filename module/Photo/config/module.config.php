@@ -159,20 +159,6 @@ return [
                             ],
                         ],
                     ],
-                    'album_page' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/album[/:album_id][/:page]',
-                            'defaults' => [
-                                'controller' => 'AlbumAdmin',
-                                'action' => 'page'
-                            ],
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                                'page' => '[0-9]+',
-                            ],
-                        ],
-                    ],
                     'album_edit' => [
                         'type' => 'Segment',
                         'options' => [
@@ -212,6 +198,74 @@ return [
                             ],
                         ],
                     ],
+                    'album_move' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/album[/:album_id]/move',
+                            'defaults' => [
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'move'
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                    'photo_index' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/photo[/:photo_id]',
+                            'defaults' => [
+                                'controller' => 'PhotoAdmin',
+                                'action' => 'index'
+                            ],
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
+            'api_photo' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/api/photo',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Photo\Controller',
+                        'controller' => 'AlbumAdmin',
+                        'action' => 'list'
+                    ]
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'album_list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/album/:album_id',
+                            'defaults' => [
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'list'
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+'
+                            ],
+                        ],
+                    ],
+                    'album_page' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/album/:album_id/:page',
+                            'defaults' => [
+                                'controller' => 'AlbumAdmin',
+                                'action' => 'page'
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                                'page' => '[0-9]+',
+                            ],
+                        ],
+                    ],
                     'album_import' => [
                         'type' => 'Segment',
                         'options' => [
@@ -232,19 +286,6 @@ return [
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
                                 'action' => 'upload'
-                            ],
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
-                    'album_move' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/album[/:album_id]/move',
-                            'defaults' => [
-                                'controller' => 'AlbumAdmin',
-                                'action' => 'move'
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -277,19 +318,6 @@ return [
                             ],
                         ],
                     ],
-                    'photo_index' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/photo[/:photo_id]',
-                            'defaults' => [
-                                'controller' => 'PhotoAdmin',
-                                'action' => 'index'
-                            ],
-                            'constraints' => [
-                                'photo_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
                     'photo_move' => [
                         'type' => 'Segment',
                         'options' => [
@@ -316,8 +344,7 @@ return [
                             ],
                         ],
                     ],
-                ],
-                'priority' => 100
+                ]
             ]
         ],
     ],

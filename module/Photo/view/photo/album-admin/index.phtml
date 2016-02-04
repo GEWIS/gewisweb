@@ -6,22 +6,21 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/tree.css')
     ->prependStylesheet($this->basePath() . '/css/photo-admin.css');
 
-$this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
+$this->scriptUrl()->requireUrl('api_photo/album_page', ['album_id', 'page'])
     ->requireUrls(
         [
             'admin_photo/album_edit',
-            'admin_photo/album_delete',
+            'api_photo/album_delete',
             'admin_photo/album_add',
             'admin_photo/album_create',
             'admin_photo/album_move',
-            'admin_photo/album_delete',
-            'admin_photo/album_cover',
+            'api_photo/album_cover',
             'admin_photo/album_index'
         ],
         ['album_id']
     )
     ->requireUrls(
-        ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
+        ['admin_photo/photo_index', 'api_photo/photo_delete', 'api_photo/photo_move'],
         ['photo_id']
     )
     ->requireUrl('home');
