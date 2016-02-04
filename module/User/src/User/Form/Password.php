@@ -45,7 +45,6 @@ class Password extends Form implements InputFilterProviderInterface
                 'value' => $translate->translate('Change password')
             ]
         ]);
-        $this->get('submit')->setLabel($translate->translate('Change password'));
     }
 
     public function getInputFilterSpecification()
