@@ -88,7 +88,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <div class="visible-xs-block clearfix"></div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['frontpage', 'page']) ?> <?= moduleIsActive($this, ['frontpage', 'page']) ? 'default' : '' ?>">
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['frontpage', 'page']) ? 'active default' : '' ?>">
                     <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button" aria-haspopup="true" aria-expanded="false">
                         <?= $this->translate('Association') ?>
                     </a>
@@ -102,7 +102,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
                     </ul>
                 </li>
-                <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['company']) ?> <?= moduleIsActive($this, ['company']) ? 'default' : '' ?>">
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
                     <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
                         <?= $this->translate('Companies') ?>
                     </a>
@@ -119,9 +119,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
                     </ul>
                 </li>
-                <li class="<?= getIsActiveClass($this, ['education']) ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
-                <li class="<?= getIsActiveClass($this, ['activity']) ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
-                <li class="dropdown dropdown-hover <?= getIsActiveClass($this, ['photo']) ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>
+                <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
+                <li class="<?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
 
@@ -130,7 +130,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </ul>
             <?php if (null != $this->identity()): ?>
             <ul class="nav navbar-nav navbar-right">
-                <li class="<?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
+                <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
             </ul>
             <?php endif; ?>
         </div><!--/.nav-collapse -->

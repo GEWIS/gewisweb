@@ -93,6 +93,12 @@ class Module
                     $helper = new \Application\View\Helper\ScriptUrl();
                     return $helper;
                 },
+                'moduleIsActive' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\ModuleIsActive();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();
