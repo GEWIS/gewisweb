@@ -62,7 +62,7 @@ class User
     {
         // create query for user
         $qb = $this->em->createQueryBuilder();
-        $qb->select('u, r, m, b, oi')
+        $qb->select('u, r, m, b, oi, o')
             ->from('User\Model\User', 'u')
             ->leftJoin('u.roles', 'r')
             ->join('u.member', 'm')
@@ -84,6 +84,16 @@ class User
 
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Detach a user from the entity manager.
+     *
+     * @param UserModel $user
+     */
+    public function detach(UserModel $user)
+    {
+        $this->em->detach($user);
     }
 
     /**

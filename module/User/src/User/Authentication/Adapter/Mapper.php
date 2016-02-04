@@ -60,6 +60,7 @@ class Mapper implements AdapterInterface
         $mapper = $this->getMapper();
 
         $user = $mapper->findByLogin($this->login);
+        $mapper->detach($user);
 
         if (null === $user) {
             return new Result(
