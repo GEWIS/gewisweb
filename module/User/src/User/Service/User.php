@@ -100,6 +100,53 @@ class User extends AbstractService
     }
 
     /**
+     * Change the password of a user.
+     *
+     * @param array $data Passworc change date
+     *
+     * @return boolean
+     */
+    public function changePassword($data)
+    {
+        $form = $this->getPasswordForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        // check the password
+        $auth = $this->getServiceManager()->get('user_auth_service');
+        $adapter = $auth->getAdapter();
+
+        $user = $auth->getIdentity();
+
+        if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
+            $form->setMessages([
+                'old_password' => [
+                    $this->getTranslator()->translate("Password incorrect")
+                ]
+            ]);
+            return false;
+        }
+
+        $mapper = $this->getUserMapper();
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // get the actual user and save
+        $actUser = $mapper->findByLidnr($user->getLidnr());
+
+        $actUser->setPassword($bcrypt->create($data['password']));
+
+        $mapper->persist($actUser);
+
+        return true;
+    }
+
+    /**
      * Log the user in.
      *
      * @param array $data Login data

@@ -78,7 +78,7 @@ class Mapper implements AdapterInterface
             );
         }
 
-        if (!$this->verifyPassword($user)) {
+        if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
@@ -90,19 +90,21 @@ class Mapper implements AdapterInterface
     }
 
     /**
-     * Verify the password.
+     * Verify a password.
      *
+     * @param string $password
+     * @param string $hash
      * @param UserModel $user
      *
      * @return boolean
      */
-    protected function verifyPassword(UserModel $user)
+    public function verifyPassword($password, $hash, $user = null)
     {
         if (strlen($user->getPassword()) === 0) {
             return $this->legacyService->checkPassword($user, $this->password, $this->bcrypt);
         }
 
-        if ($this->bcrypt->verify($this->password, $user->getPassword())) {
+        if ($this->bcrypt->verify($password, $hash)) {
             return true;
         }
 
