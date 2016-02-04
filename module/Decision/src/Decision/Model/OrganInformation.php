@@ -237,8 +237,8 @@ class OrganInformation
     }
 
 
-    public function __clone() {
+    public function __clone()
+    {
         $this->id = null;
     }
-
 }

@@ -14,6 +14,7 @@ class OrganController extends AbstractActionController
         $vm = new ViewModel([
             'committees' => $committees
         ]);
+
         return $vm;
     }
 
@@ -25,6 +26,7 @@ class OrganController extends AbstractActionController
             'activeFraternities' => $activeFraternities,
             'abrogatedFraternities' => $abrogatedFraternities
         ]);
+
         return $vm;
     }
 
