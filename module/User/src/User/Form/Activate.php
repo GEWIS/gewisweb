@@ -3,11 +3,11 @@
 namespace User\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Zend\Authentication\Result;
 
-class Activate extends Form
+class Activate extends Form implements InputFilterProviderInterface
 {
 
     public function __construct(Translator $translate)
@@ -37,49 +37,41 @@ class Activate extends Form
                 'value' => $translate->translate('Activate')
             ]
         ]);
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    public function getInputFilterSpecification()
     {
-        $filter = new InputFilter();
-
-        $filter->add([
-            'name' => 'password',
-            'required' => true,
-            'validators' => [
-                ['name' => 'not_empty'],
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'min' => 8
+        return [
+            'password' => [
+                'required' => true,
+                'validators' => [
+                    ['name' => 'not_empty'],
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 8
+                        ]
+                    ]
+                ]
+            ],
+            'password_verify' => [
+                'required' => true,
+                'validators' => [
+                    ['name' => 'not_empty'],
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 8
+                        ]
+                    ],
+                    [
+                        'name' => 'identical',
+                        'options' => [
+                            'token' => 'password'
+                        ]
                     ]
                 ]
             ]
-        ]);
-
-        $filter->add([
-            'name' => 'password_verify',
-            'required' => true,
-            'validators' => [
-                ['name' => 'not_empty'],
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'min' => 8
-                    ]
-                ],
-                [
-                    'name' => 'identical',
-                    'options' => [
-                        'token' => 'password'
-                    ]
-                ]
-
-            ]
-        ]);
-
-        $this->setInputFilter($filter);
+        ];
     }
 }
