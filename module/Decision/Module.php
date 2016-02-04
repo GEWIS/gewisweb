@@ -116,6 +116,9 @@ class Module
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
 
+                    // Organ members are allowed to edit organ information
+                    $acl->allow('user', 'organ', 'edit');
+
                     // guests are allowed to view birthdays on the homepage
                     $acl->allow('guest', 'member', 'birthdays_today');
 

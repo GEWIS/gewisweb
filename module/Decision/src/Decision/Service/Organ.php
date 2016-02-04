@@ -55,6 +55,12 @@ class Organ extends AbstractAclService
      */
     public function getEditableOrgans()
     {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit organ information')
+            );
+        }
+
         if ($this->isAllowed('editall')) {
             return array_merge(
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
@@ -74,14 +80,17 @@ class Organ extends AbstractAclService
      */
     public function canEditOrgan($organ)
     {
-        if ($this->isAllowed('edit')) {
+        if (!$this->isAllowed('edit')) {
+            return false;
+        }
+
+        if ($this->isAllowed('editall')) {
             return true;
         }
 
         $user = $this->sm->get('user_role');
-        //TODO: filter out avc's
+
         foreach ($user->getMember()->getCurrentOrganInstallations() as $installation) {
-            //TODO: FIX
             if ($installation->getOrgan()->getId() === $organ ->getId()) {
                 return true;
             }
