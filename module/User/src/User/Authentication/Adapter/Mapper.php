@@ -7,7 +7,7 @@ use Zend\Authentication\Adapter\AdapterInterface,
     User\Mapper\User as UserMapper,
     User\Model\User as UserModel;
 use Zend\Crypt\Password\Bcrypt;
-
+use Application\Service\Legacy as LegacyService;
 class Mapper implements AdapterInterface
 {
 
@@ -39,15 +39,23 @@ class Mapper implements AdapterInterface
      */
     protected $bcrypt;
 
+    /**
+     * Legacy Service
+     * (for checking logins against the old database)
+     *
+     * @var LegacyService
+     */
+     protected $legacyService;
 
     /**
      * Constructor.
      *
      * @param Bcrypt $bcrypt
      */
-    public function __construct(Bcrypt $bcrypt)
+    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService)
     {
         $this->bcrypt = $bcrypt;
+        $this->legacyService = $legacyService;
     }
 
     /**
@@ -90,7 +98,15 @@ class Mapper implements AdapterInterface
      */
     protected function verifyPassword(UserModel $user)
     {
-        return $this->bcrypt->verify($this->password, $user->getPassword());
+        if (strlen($user->getPassword()) === 0) {
+            return $this->legacyService->checkPassword($user, $this->password, $this->bcrypt);
+        }
+
+        if ($this->bcrypt->verify($this->password, $user->getPassword())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
