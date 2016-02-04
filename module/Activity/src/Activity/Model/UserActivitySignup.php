@@ -47,7 +47,7 @@ class UserActivitySignup extends ActivitySignup
      */
     public function getFullName()
     {
-        return $this->getUser()->getMember()->getFullName();
+        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
     }
 
     /**
@@ -57,6 +57,6 @@ class UserActivitySignup extends ActivitySignup
      */
     public function getEmail()
     {
-        return $this->getUser()->getMember()->getEmail();
+        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getEmail();
     }
 }
