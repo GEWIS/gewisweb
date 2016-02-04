@@ -91,7 +91,7 @@ class Module
                     );
                 },
                 'decision_form_organ_information' => function ($sm) {
-                    $form = new \Decision\Form\OrganInformation (
+                    $form = new \Decision\Form\OrganInformation(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('decision_hydrator'));

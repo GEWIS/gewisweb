@@ -317,16 +317,12 @@ class Organ
      */
     public function getApprovedOrganInformation()
     {
-        foreach($this->organInformation as $information)
-        {
-            if(!is_null($information->getApprover()))
-            {
+        foreach ($this->organInformation as $information) {
+            if (!is_null($information->getApprover())) {
                 return $information;
             }
         }
 
         return null;
     }
-
-
 }
