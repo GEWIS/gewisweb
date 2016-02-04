@@ -108,6 +108,15 @@ class UserController extends AbstractActionController
      */
     public function passwordAction()
     {
+        $userService = $this->getUserService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $userService->changePassword($request->getPost())) {
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
         return new ViewModel([
             'form' => $this->getUserService()->getPasswordForm()
         ]);
