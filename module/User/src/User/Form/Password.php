@@ -4,7 +4,7 @@ namespace User\Form;
 
 use Zend\Form\Form;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\InputFilter\InputFilterProviderInterface
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Authentication\Result;
 
 class Password extends Form implements InputFilterProviderInterface
@@ -16,7 +16,7 @@ class Password extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'old_password',
-            'type' => 'old_password',
+            'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Old password')
             ]

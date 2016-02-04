@@ -219,6 +219,16 @@ class User extends AbstractService
     }
 
     /**
+     * Get the password form.
+     *
+     * @return User\Form\Password Password change form
+     */
+    public function getPasswordForm()
+    {
+        return $this->sm->get('user_form_password');
+    }
+
+    /**
      * Get the login form.
      *
      * @return LoginForm Login form
