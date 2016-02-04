@@ -4,7 +4,7 @@
             <th></th>
             <th><?= $this->translate('Name') ?></th>
             <?php foreach ($activity->getFields() as $field): ?>
-                <th><?= $field->getName() ?></th>
+                <th><?= $this->escapeHtml($field->getName()) ?></th>
             <?php endforeach; ?>
         </tr>
     </thead>

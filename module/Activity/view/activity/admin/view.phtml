@@ -4,12 +4,12 @@
         <?php $i=0; ?>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Id'); ?></div>
-            <div class="col-md-4"><?php echo $activity->getId();?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getId());?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Name'); ?></div>
-            <div class="col-md-4"><?php echo $activity->getName();?></div>
-            <div class="col-md-4"><?php echo $activity->getNameEn();?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getName());?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getNameEn());?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Start time'); ?></div>
@@ -21,13 +21,13 @@
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Location'); ?></div>
-            <div class="col-md-4"><?php echo $activity->getLocation(); ?></div>
-            <div class="col-md-4"><?php echo $activity->getLocationEn(); ?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getLocation()); ?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getLocationEn()); ?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Costs'); ?></div>
-            <div class="col-md-4"><?php echo $activity->getCosts(); ?></div>
-            <div class="col-md-4"><?php echo $activity->getCostsEn(); ?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getCosts()); ?></div>
+            <div class="col-md-4"><?php echo $this->escapeHtml($activity->getCostsEn()); ?></div>
         </div>
         <div style="<?php if($i%2==0){echo("background:#CCCCCC");}$i++; ?>" class="row">
             <div class="col-md-4"><?php echo $this->translate('Subscribe'); ?></div>

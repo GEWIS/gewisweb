@@ -12,12 +12,12 @@
                 <div class="col-md-12">
                     <h4>
                         <a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
-                            <?= $activity->getName() ?>
+                            <?= $this->escapeHtml($activity->getName()) ?>
                         </a>
                     </h4>
                 </div>
                 <div class="col-md-8">
-                    <p><?= $activity->getDescription() ?></p>
+                    <p><?= $this->escapeHtml($activity->getDescription()) ?></p>
                 </div>
                 <div class="col-md-4">
                     <dl>
@@ -28,13 +28,13 @@
                         <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
 
                         <dt><?= $this->translate('Location') ?></dt>
-                        <dd><?= $activity->getLocation(); ?></dd>
+                        <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
 
                         <dt><?= $this->translate('Subscribe before') ?></dt>
                         <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s') ?></dd>
 
                         <dt><?= $this->translate('Costs') ?></dt>
-                        <dd><?= $this->translate((string)$activity->getCosts()) ?></dd>
+                        <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
                     </dl>
                 </div>
             </div>
