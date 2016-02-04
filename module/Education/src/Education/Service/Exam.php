@@ -101,6 +101,23 @@ class Exam extends AbstractAclService
         $storageService = $this->getFileStorageService();
         $config = $this->getConfig('education_temp');
 
+        $messages = [];
+
+        // check if all courses exist
+        foreach ($data['exams'] as $key => $examData) {
+            if (is_null($this->getCourse($examData['course']))) {
+                // course doesn't exist
+                $messages['exams'][$key] = [
+                    'course' => [$this->getTranslator()->translate("Course doesn't exist")]
+                ];
+            }
+        }
+
+        if (!empty($messages)) {
+            $form->setMessages($messages);
+            return false;
+        }
+
         /**
          * Persist the exams and save the uploaded files.
          *
