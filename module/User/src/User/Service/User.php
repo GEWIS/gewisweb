@@ -276,6 +276,22 @@ class User extends AbstractService
     }
 
     /**
+     * Get the password reset form.
+     */
+    public function getPasswordResetForm()
+    {
+        return $this->sm->get('user_form_passwordreset');
+    }
+
+    /**
+     * Get the password activate form.
+     */
+    public function getPasswordActivateForm()
+    {
+        return $this->sm->get('user_form_passwordactivate');
+    }
+
+    /**
      * Get the login form.
      *
      * @return LoginForm Login form

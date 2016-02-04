@@ -123,6 +123,24 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * Action to reset password.
+     */
+    public function resetAction()
+    {
+        $userService = $this->getUserService();
+        return new ViewModel([
+            'form' => $userService->getPasswordResetForm()
+        ]);
+    }
+
+    /**
+     * Action to activate reset password.
+     */
+    public function activateResetAction()
+    {
+    }
+
+    /**
      * User activation action.
      */
     public function activateAction()

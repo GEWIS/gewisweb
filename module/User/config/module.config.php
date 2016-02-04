@@ -47,6 +47,19 @@ return [
                             ],
                         ],
                     ],
+                    'activate_reset' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/reset/:code',
+                            'constraints' => [
+                                'code' => '[a-zA-Z0-9]*'
+                            ],
+                            'defaults' => [
+                                'code'   => '',
+                                'action' => 'activateReset'
+                            ]
+                        ]
+                    ],
                     'activate' => [
                         'type' => 'Segment',
                         'options' => [
