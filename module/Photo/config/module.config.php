@@ -318,6 +318,33 @@ return [
                     ],
                 ],
                 'priority' => 100
+            ],
+            'api_photo' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/api/photo',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Photo\Controller',
+                        'controller' => 'Api',
+                        'action' => 'index'
+                    ]
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'album_list' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/album/:album_id',
+                            'defaults' => [
+                                'action' => 'list'
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
             ]
         ],
     ],
@@ -327,7 +354,8 @@ return [
             'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
             'Photo\Controller\AlbumAdmin' => 'Photo\Controller\AlbumAdminController',
             'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController',
-            'Photo\Controller\Tag' => 'Photo\Controller\TagController'
+            'Photo\Controller\Tag' => 'Photo\Controller\TagController',
+            'Photo\Controller\Api' => 'Photo\Controller\ApiController',
         ]
     ],
     'controller_plugins' => [
