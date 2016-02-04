@@ -81,44 +81,4 @@ class Signup
 
         return $result;
     }
-
-    /**
-     * Get all the users that are signed up for an activity.
-     *
-     * @param $activityId
-     *
-     * @return array
-     */
-    public function getSignedUp($activityId)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        //get all users that have signed up for the activity
-        $qb->select('ac, a, u, m')
-            ->from('Activity\Model\Activity', 'ac')
-            ->leftJoin('ac.signUps', 'a')
-            ->join('a.user', 'u')
-            ->join('u.member', 'm')
-            ->where('ac.id = ?1')
-            ->setParameters([
-                1 => $activityId,
-            ]);
-        $activityArray = $qb->getQuery()->getResult();
-
-        // If we do not get any result, there were no members signed up
-        if (!isset($activityArray[0])) {
-            return [];
-        }
-
-        /* @var $activity \Activity\Model\Activity */
-        $activity = $activityArray[0];
-
-        $members = [];
-        /* @var $signUp \Activity\Model\ActivitySignUp*/
-        foreach ($activity->getSignUps() as $signUp) {
-            $members[] = $signUp->getUser()->getMember();
-        }
-
-        return $members;
-    }
 }
