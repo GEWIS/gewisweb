@@ -94,8 +94,16 @@ $this->headTitle($this->translate('Activities')); ?>
                     <tr>
                         <td><?php echo $i; $i = $i + 1; ?></td>
                         <td><?= $signup->getFullName() ?></td>
-                        <?php foreach($signup['values'] as $value):?>
-                        <td><?= $value ?></td>
+                        <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                            <td>
+                                <?php if (is_null($fieldValue->getValue())): ?>
+                                    <?= $lang === 'nl' ?
+                                        $fieldValue->getOption()->getValue()
+                                        : $fieldValue->getOption()->getValueEn() ?>
+                                <?php else: ?>
+                                    <?= $fieldValue->getValue() ?>
+                                <?php endif; ?>
+                            </td>
                         <?php endforeach;?>
                     </tr>
                 <?php endforeach;?>

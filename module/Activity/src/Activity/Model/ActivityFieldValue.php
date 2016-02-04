@@ -31,7 +31,7 @@ class ActivityFieldValue
     /**
      * Signup which the value belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivitySignup")
+     * @ORM\ManyToOne(targetEntity="ActivitySignup", inversedBy="fieldValues")
      * @ORM\JoinColumn(name="signup_id", referencedColumnName="id")
      */
     protected $signup;

@@ -32,7 +32,11 @@ abstract class ActivitySignup
      */
     protected $activity;
 
-
+    /**
+     * All the extra field values
+     * @ORM\OneToMany(targetEntity="ActivityFieldValue", mappedBy="signup", cascade={"persist", "remove"})
+     */
+    protected $fieldValues;
 
     /**
      * Set the activity that the user signed up for.
@@ -43,8 +47,6 @@ abstract class ActivitySignup
     {
         $this->activity = $activity;
     }
-
-
 
     /**
      * Get the signup id.
@@ -64,6 +66,16 @@ abstract class ActivitySignup
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * Get all the extra field values.
+     *
+     * @return array
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
     }
 
     /**
