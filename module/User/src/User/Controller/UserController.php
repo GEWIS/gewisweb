@@ -104,6 +104,14 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * Action to change password.
+     */
+    public function passwordAction()
+    {
+        return new ViewModel([]);
+    }
+
+    /**
      * User activation action.
      */
     public function activateAction()
