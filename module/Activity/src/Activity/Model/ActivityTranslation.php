@@ -343,7 +343,7 @@ class ActivityTranslation
 
         $attendees = [];
         foreach ($this->getSignUps() as $signup) {
-            $attendees[] = $signup->getUser()->getMember()->toArray();
+            $attendees[] = $signup->getFullName();
         }
 
         return [

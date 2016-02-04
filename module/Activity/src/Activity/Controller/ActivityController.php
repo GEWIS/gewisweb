@@ -58,7 +58,7 @@ class ActivityController extends AbstractActionController
             'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed,
             'isLoggedIn' => $identity !== 'guest',
             'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
-            'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
+            //'signedUp' => $signupService->getSignedUpUsers($translatedActivity),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),

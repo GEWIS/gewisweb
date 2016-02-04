@@ -34,11 +34,11 @@ $this->headTitle($this->translate('Activities')); ?>
             <?php
                 $mailAllString = '';
                 foreach ($activity->getSignUps() as $signUp):
-                    $email = $signUp->getUser()->getMember()->getEmail();
+                    $email = $signUp->getEmail();
                     $mailAllString .= ',' . $email;
                 ?>
                 <tr>
-                    <td><?= $signUp->getUser()->getMember()->getFullName() ?></td>
+                    <td><?= $signUp->getFullName() ?></td>
                     <td>
                         <a href="mailto:<?= $email ?>">
                             <?= $email ?>
