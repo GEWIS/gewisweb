@@ -164,7 +164,8 @@ class Module
                 },
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(
-                        $sm->get('user_bcrypt')
+                        $sm->get('user_bcrypt'),
+                        $sm->get('application_service_legacy')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;

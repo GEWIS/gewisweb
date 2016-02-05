@@ -26,6 +26,23 @@ class Legacy extends AbstractService
     }
 
     /**
+     * Checks a password against the old website's database and saves it in the new database if corrrect
+     *
+     * @throws \Exception
+     *
+     * @param \User\Model\User $user
+     * @param string $password
+     * @param \Zend\Crypt\Password\Bcrypt $bcrypt
+     *
+     * @return bool indicating if password was correct
+     */
+    public function checkPassword($user, $password, $bcrypt)
+    {
+        return false;
+
+    }
+
+    /**
      * Gets the infima.
      *
      * @return string

@@ -42,13 +42,13 @@ class User
     /**
      * Find a user by its membership number.
      *
-     * @param int $number Membership number
+     * @param int $lidnr Membership number
      *
      * @return UserModel
      */
-    public function findByLidnr($email)
+    public function findByLidnr($lidnr)
     {
-        return $this->getRepository()->findOneBy(['lidnr' => $email]);
+        return $this->getRepository()->findOneBy(['lidnr' => $lidnr]);
     }
 
     /**
@@ -56,7 +56,7 @@ class User
      *
      * @param string $login
      *
-     * @return void
+     * @return UserModel
      */
     public function findByLogin($login)
     {
@@ -125,7 +125,7 @@ class User
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {
