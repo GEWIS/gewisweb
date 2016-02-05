@@ -120,7 +120,17 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
-                <li class="<?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>"><a href="<?= $this->url('activity') ?>"><?= $this->translate('Activities') ?></a></li>
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['activity']) ? 'active default' : '' ?>">
+                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                        <?= $this->translate('Activities') ?>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+                            <li><a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a></li>
+                        <?php endif; ?>
+
+                    </ul>
+                </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
