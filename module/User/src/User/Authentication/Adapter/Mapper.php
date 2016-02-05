@@ -100,8 +100,8 @@ class Mapper implements AdapterInterface
      */
     public function verifyPassword($password, $hash, $user = null)
     {
-        if (strlen($user->getPassword()) === 0) {
-            return $this->legacyService->checkPassword($user, $this->password, $this->bcrypt);
+        if (strlen($hash) === 0) {
+            return $this->legacyService->checkPassword($user, $password, $this->bcrypt);
         }
 
         if ($this->bcrypt->verify($password, $hash)) {
