@@ -146,13 +146,6 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * Action to activate reset password.
-     */
-    public function activateResetAction()
-    {
-    }
-
-    /**
      * User activation action.
      */
     public function activateAction()
