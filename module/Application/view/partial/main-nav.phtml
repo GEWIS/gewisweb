@@ -122,7 +122,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 </li>
                 <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['activity']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" aria-expanded="false">
                         <?= $this->translate('Activities') ?>
                     </a>
                     <ul class="dropdown-menu">
