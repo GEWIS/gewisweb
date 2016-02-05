@@ -65,8 +65,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><?= $this->translate('Members') ?></a></li>
-                            <li><a href="<?= $this->url('member') ?>"><?= $this->translate('My information') ?></a></li>
+                            <li><a href="<?= $this->url('member') ?>"><?= $this->translate('Members') ?></a></li>
+                            <li><a href="<?= $this->url('member/self') ?>"><?= $this->translate('My information') ?></a></li>
                             <li><a href="#"><?= $this->translate('SuSOS') ?></a></li>
                             <?php if ($member->getOrganInstallations()->count() > 0): ?>
                                 <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
@@ -130,7 +130,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </ul>
             <?php if (null != $this->identity()): ?>
             <ul class="nav navbar-nav navbar-right">
-                <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
+                <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>"><a href="<?= $this->url('member') ?>"><?= $this->translate('Members') ?></a></li>
             </ul>
             <?php endif; ?>
         </div><!--/.nav-collapse -->

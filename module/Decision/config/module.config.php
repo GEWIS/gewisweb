@@ -182,7 +182,17 @@ return [
                                 'action' => 'view'
                             ]
                         ]
+                    ],
+                    'self' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/self',
+                            'defaults' => [
+                                'action' => 'self'
+                            ]
+                        ]
                     ]
+
                 ],
                 'priority' => 100
             ],

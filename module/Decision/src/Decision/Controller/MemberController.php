@@ -9,10 +9,15 @@ use Zend\View\Model\JsonModel;
 class MemberController extends AbstractActionController
 {
 
-    /**
-     * Index action, shows all organs.
-     */
     public function indexAction()
+    {
+
+    }
+
+    /**
+     * Shown own information.
+     */
+    public function selfAction()
     {
         return new ViewModel($this->getMemberService()->getMembershipInfo());
     }
