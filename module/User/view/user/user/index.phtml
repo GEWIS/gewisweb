@@ -58,6 +58,9 @@ $this->headTitle($this->translate('Login'));
                         <div class="panel-footer">
                             <?php $url = $this->url('user/default', ['action' => 'register']); ?>
                             <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
+                                <br>
+                            <?php $url = $this->url('user/default', ['action' => 'reset']); ?>
+                            <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
                         </div>
                     </div>
                 </div>
