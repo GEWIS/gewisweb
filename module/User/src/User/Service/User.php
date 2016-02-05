@@ -40,10 +40,16 @@ class User extends AbstractService
 
         $bcrypt = $this->sm->get('user_bcrypt');
 
-        // create a new user from this data, and insert it into the database
-        $user = new UserModel($newUser);
+        // first try to obtain the user
+        $user = $this->getUserMapper()->findByLidnr($newUser->getLidnr());
+        if (null === $user) {
+            // create a new user from this data, and insert it into the database
+            $user = new UserModel($newUser);
+        }
+
         $user->setPassword($bcrypt->create($data['password']));
 
+        // this will also save a user with a lost password
         $this->getUserMapper()->createUser($user, $newUser);
 
         return true;
@@ -97,6 +103,92 @@ class User extends AbstractService
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
         return $newUser;
+    }
+
+    /**
+     * Request a password reset.
+     *
+     * Will also send an email to the user.
+     *
+     * @param array $data Reset data
+     *
+     * @return UserModel User. Null when the password could not be reset.
+     */
+    public function reset($data)
+    {
+        $form = $this->getPasswordResetForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        // get the member
+        $data = $form->getData();
+        $member = $this->getMemberMapper()->findByLidnr($data['lidnr']);
+
+        // check if the member has a corresponding user.
+        $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
+        if (null === $user) {
+            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+            return null;
+        }
+
+        // create new activation
+        $newUser = new NewUserModel($member);
+        $newUser->setCode($this->generateCode());
+
+        $this->getNewUserMapper()->persist($newUser);
+
+        $this->getEmailService()->sendPasswordLostMail($newUser, $member);
+        return $user;
+    }
+
+    /**
+     * Change the password of a user.
+     *
+     * @param array $data Passworc change date
+     *
+     * @return boolean
+     */
+    public function changePassword($data)
+    {
+        $form = $this->getPasswordForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        // check the password
+        $auth = $this->getServiceManager()->get('user_auth_service');
+        $adapter = $auth->getAdapter();
+
+        $user = $auth->getIdentity();
+
+        if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
+            $form->setMessages([
+                'old_password' => [
+                    $this->getTranslator()->translate("Password incorrect")
+                ]
+            ]);
+            return false;
+        }
+
+        $mapper = $this->getUserMapper();
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // get the actual user and save
+        $actUser = $mapper->findByLidnr($user->getLidnr());
+
+        $actUser->setPassword($bcrypt->create($data['password']));
+
+        $mapper->persist($actUser);
+
+        return true;
     }
 
     /**
@@ -216,6 +308,32 @@ class User extends AbstractService
     public function getRegisterForm()
     {
         return $this->sm->get('user_form_register');
+    }
+
+    /**
+     * Get the password form.
+     *
+     * @return User\Form\Password Password change form
+     */
+    public function getPasswordForm()
+    {
+        return $this->sm->get('user_form_password');
+    }
+
+    /**
+     * Get the password reset form.
+     */
+    public function getPasswordResetForm()
+    {
+        return $this->sm->get('user_form_passwordreset');
+    }
+
+    /**
+     * Get the password activate form.
+     */
+    public function getPasswordActivateForm()
+    {
+        return $this->sm->get('user_form_passwordactivate');
     }
 
     /**

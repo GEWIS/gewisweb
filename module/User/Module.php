@@ -129,6 +129,21 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_password' => function ($sm) {
+                    return new \User\Form\Password(
+                        $sm->get('translator')
+                    );
+                },
+                'user_form_passwordreset' => function($sm) {
+                    return new \User\Form\Register(
+                        $sm->get('translator')
+                    );
+                },
+                'user_form_passwordactivate' => function($sm) {
+                    return new \User\Form\Activate(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_apitoken' => function ($sm) {
                     $form = new \User\Form\ApiToken(
                         $sm->get('translator')
