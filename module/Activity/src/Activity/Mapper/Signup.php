@@ -73,7 +73,7 @@ class Signup
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivitySignup', 'a')
+            ->from('Activity\Model\UserActivitySignup', 'a')
             ->join('a.user', 'u')
             ->where('u.lidnr = ?1')
             ->setParameter(1, $userId);
