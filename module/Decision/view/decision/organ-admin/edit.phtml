@@ -1,0 +1,106 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js');
+$this->scriptUrl()->requireUrl('admin_page/upload');
+?>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+$form->setAttribute('role', 'form');
+?>
+<?= $this->form()->openTag($form); ?>
+<h3><?= $this->translate('Edit something') ?></h3>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('website');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('email');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('required', 'required');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('shortDutchDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('shortEnglishDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formInput($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('dutchDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextArea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+
+<div class="form-group">
+    <?php
+    $element = $form->get('englishDescription');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formTextArea($element); ?>
+    <?= $this->formElementErrors($element); ?>
+</div>
+<div class="form-group">
+    <?php
+    $element = $form->get('upload');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formFile($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<hr>
+<?php
+$submit = $form->get('submit');
+$approve = $this->acl('decision_acl')->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
+$submit->setLabel($this->translate('Save') . $approve);
+$submit->setAttribute('class', 'btn btn-primary');
+?>
+<?= $this->formButton($submit) ?>
+
+<?= $this->form()->closeTag(); ?>
+<script>
+    CKEDITOR.replace('englishDescription', {
+        // Spelling checker language
+        'scayt_sLang': 'en_US',
+        'height': 500
+    });
+
+    CKEDITOR.replace('dutchDescription', {
+        // Spelling checker language
+        'scayt_sLang': 'nl_NL',
+        'height': 500
+    });
+</script>

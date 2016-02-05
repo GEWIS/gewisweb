@@ -150,6 +150,18 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $activity;
     }
 
+    /**
+     * Get upcoming activities organized by the given organ.
+     *
+     * @param \Organ\Model\Organ $organ
+     * @param integer $count
+     *
+     * @return array
+     */
+    public function getOrganActivities($organ, $count = null)
+    {
+        return $this->getActivityMapper()->getUpcomingActivities($count, $organ);
+    }
 
     /**
      * Get all activities that are disapproved by the board
@@ -431,5 +443,16 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
+    }
+
+
+    /**
+     * Get the activity mapper.
+     *
+     * @return \Activity\Mapper\Activity
+     */
+    public function getActivityMapper()
+    {
+        return $this->sm->get('activity_mapper_activity');
     }
 }

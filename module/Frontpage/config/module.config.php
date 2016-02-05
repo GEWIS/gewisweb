@@ -3,6 +3,7 @@ return [
     'controllers' => [
         'invokables' => [
             'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
+            'Frontpage\Controller\Organ' => 'Frontpage\Controller\OrganController',
             'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
             'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
             'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
@@ -41,6 +42,43 @@ return [
                             ],
                         ],
                         'priority' => -1
+                    ],
+                    'organ' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => 'association/:type/:abbr',
+                            'constraints' => [
+                                'type' => 'committee|fraternity',
+                                'abbr' => '[a-zA-Z][a-zA-Z0-9\._-]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'organ',
+                                'controller' => 'Organ'
+                            ]
+                        ],
+                        'priority' => 100
+                    ],
+                    'committee_list' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'association/committees',
+                            'defaults' => [
+                                'action' => 'committeeList',
+                                'controller' => 'Organ'
+                            ]
+                        ],
+                        'priority' => 100
+                    ],
+                    'fraternity_list' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'association/fraternities',
+                            'defaults' => [
+                                'action' => 'fraternityList',
+                                'controller' => 'Organ'
+                            ]
+                        ],
+                        'priority' => 100
                     ],
                 ],
             ],
@@ -306,6 +344,8 @@ return [
         'template_map' => [
             'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
             'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
+            'organ/committee-list' => __DIR__ . '/../view/frontpage/organ/committee-list.phtml',
+            'organ/fraternity-list' => __DIR__ . '/../view/frontpage/organ/fraternity-list.phtml',
         ],
     ],
     'doctrine' => [

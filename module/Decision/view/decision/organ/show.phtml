@@ -1,34 +1,5 @@
 <div class="row">
     <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
-
-<?php
-// prepare memberships
-$oldMembers = [];
-$currentMembers = [];
-foreach ($organ->getMembers() as $install) {
-    if (null === $install->getDischargeDate()) {
-        // current member
-        if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
-            $currentMembers[$install->getMember()->getLidnr()] = [
-                'member' => $install->getMember(),
-                'functions' => []
-            ];
-        }
-        if ($install->getFunction() != 'Lid') {
-            $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
-        }
-    } else {
-        // old member
-        if (!isset($oldMembers[$install->getMember()->getLidnr()])) {
-            $oldMembers[$install->getMember()->getLidnr()] = $install->getMember();
-        }
-    }
-}
-$oldMembers = array_filter($oldMembers, function($member) use ($currentMembers) {
-    return !isset($currentMembers[$member->getLidnr()]);
-});
-?>
-
     <div class="col-md-4">
         <h2><?= $this->translate('Current members') ?></h2>
         <ul>

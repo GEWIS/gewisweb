@@ -90,6 +90,18 @@ class Module
                         $sm->get('decision_mapper_meeting')
                     );
                 },
+                'decision_form_organ_information' => function ($sm) {
+                    $form = new \Decision\Form\OrganInformation(
+                        $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('decision_hydrator'));
+                    return $form;
+                },
+                'decision_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
@@ -103,6 +115,9 @@ class Module
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
+
+                    // Organ members are allowed to edit organ information
+                    $acl->allow('user', 'organ', 'edit');
 
                     // guests are allowed to view birthdays on the homepage
                     $acl->allow('guest', 'member', 'birthdays_today');

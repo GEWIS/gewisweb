@@ -35,13 +35,39 @@ class Organ
     /**
      * Find all active organs.
      *
+     * @param string $type
+     *
      * @return array
      */
-    public function findActive()
+    public function findActive($type = null)
     {
-        return $this->getRepository()->findBy([
+        $criteria = [
             'abrogationDate' => null
-        ]);
+        ];
+        if (!is_null($type)) {
+            $criteria['type'] = $type;
+        }
+        return $this->getRepository()->findBy($criteria);
+    }
+
+    /**
+     * Find all abrogated organs.
+     *
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findAbrogated($type = null)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o')
+            ->where('o.abrogationDate IS NOT NULL');
+        if (!is_null($type)) {
+            $qb->andWhere('o.type = :type')
+                ->setParameter('type', $type);
+        }
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -71,6 +97,27 @@ class Organ
             ->where('o.id = :id');
 
         $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Find an organ by its abbreviation
+     *
+     * @param string $abbr
+     *
+     * @return \Decision\Model\Organ
+     */
+    public function findByAbbr($abbr)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+
+        $qb->select('o, om, m')
+            ->leftJoin('o.members', 'om')
+            ->leftJoin('om.member', 'm')
+            ->where('o.abbr LIKE :abbr');
+
+        $qb->setParameter('abbr', $abbr);
 
         return $qb->getQuery()->getSingleResult();
     }

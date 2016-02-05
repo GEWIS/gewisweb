@@ -1,0 +1,72 @@
+@import '../_variables.scss';
+
+.card {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card {
+  margin-top: 10px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-clip: padding-box;
+}
+.card span.card-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.card .card-image {
+  @include aspect-ratio(16, 9);
+  background-color: $brand-primary;
+  position: relative;
+  overflow: hidden;
+}
+.card .card-image img {
+  border-radius: 2px 2px 0 0;
+  background-clip: padding-box;
+  top: 0;
+  position: absolute;
+  z-index: 1;
+}
+.card .card-image span.card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 16px;
+}
+.card .card-image:hover > .card-details {
+  opacity: 0.9;
+}
+.card .card-content {
+  padding: 16px;
+  border-radius: 0 0 2px 2px;
+  background-clip: padding-box;
+  box-sizing: border-box;
+  height: 6em;
+}
+.card .card-content p {
+  margin: 0;
+  color: inherit;
+}
+.card .card-details {
+  position: absolute;
+  background-color: #fff;
+  background-clip: padding-box;
+  box-sizing: border-box;
+  padding: 8px;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all .4s ease;
+  -moz-transition: all .4s ease;
+  -ms-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
