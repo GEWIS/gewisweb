@@ -14,6 +14,7 @@ foreach ($poll->getOptions() as $option) {
 }
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
+<div class="row">
 <h4>
     <?php if (isset($viewLink) && $viewLink): ?>
     <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>">
@@ -67,3 +68,4 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         </div>
     </div>
 </form>
+</div>
