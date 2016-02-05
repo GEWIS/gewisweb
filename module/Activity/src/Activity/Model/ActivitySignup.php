@@ -9,8 +9,11 @@ use User\Model\User;
  * ActivitySignup model.
  *
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"user"="UserActivitySignup","external"="ExternalActivitySignup"})
  */
-class ActivitySignup
+abstract class ActivitySignup
 {
     /**
      * ID for the signup.
@@ -30,12 +33,10 @@ class ActivitySignup
     protected $activity;
 
     /**
-     * Who is subscribed.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
+     * All the extra field values
+     * @ORM\OneToMany(targetEntity="ActivityFieldValue", mappedBy="signup", cascade={"persist", "remove"})
      */
-    protected $user;
+    protected $fieldValues;
 
     /**
      * Set the activity that the user signed up for.
@@ -45,16 +46,6 @@ class ActivitySignup
     public function setActivity(Activity $activity)
     {
         $this->activity = $activity;
-    }
-
-    /**
-     * Set the user for the activity signup.
-     *
-     * @param User $user
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
     }
 
     /**
@@ -68,16 +59,6 @@ class ActivitySignup
     }
 
     /**
-     * Get the user that is signed up.
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Get the activity which the user is signed up for.
      *
      * @return Activity
@@ -86,4 +67,28 @@ class ActivitySignup
     {
         return $this->activity;
     }
+
+    /**
+     * Get all the extra field values.
+     *
+     * @return array
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
+    }
+
+    /**
+     * Get the full name of the user whom signed up for the activity.
+     *
+     * @return string
+     */
+    abstract public function getFullName();
+
+    /**
+     * Get the email address of the user whom signed up for the activity.
+     *
+     * @return string
+     */
+    abstract public function getEmail();
 }

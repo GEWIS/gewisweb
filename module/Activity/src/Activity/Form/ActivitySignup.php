@@ -16,7 +16,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new \Activity\Model\ActivitySignup());
+            ->setObject(new \Activity\Model\UserActivitySignup());
 
         $this->add([
             'name' => 'submit',

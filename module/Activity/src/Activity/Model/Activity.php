@@ -491,7 +491,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
 
         $attendees = [];
         foreach ($this->getSignUps() as $signup) {
-            $attendees[] = $signup->getUser()->getMember()->toArray();
+            $attendees[] = $signup->getFullName();
         }
 
         return [

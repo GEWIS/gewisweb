@@ -3,7 +3,7 @@
 namespace Activity\Service;
 
 use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivitySignup;
+use Activity\Model\UserActivitySignup;
 use Application\Service\AbstractAclService;
 use Decision\Model\Member;
 
@@ -90,8 +90,7 @@ class Signup extends AbstractAclService
         $result = [];
         foreach($activity->getSignUps() as $signup){
             $entry = [];
-            $member = $signup->getUser()->getMember();
-            $entry['member'] = $member->getFullName();
+            $entry['member'] = $signup->getFullName();
             $entry['values'] = [];
             foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
                 //If there is an option type, get the option object as a 'value'.
@@ -172,7 +171,7 @@ class Signup extends AbstractAclService
             $this->getServiceManager()->get('user_role')
         );
 
-        $signup = new ActivitySignup();
+        $signup = new UserActivitySignup();
         $signup->setActivity($activity);
         $signup->setUser($user);
         $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');

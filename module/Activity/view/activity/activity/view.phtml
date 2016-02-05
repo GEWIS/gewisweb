@@ -86,12 +86,20 @@ $this->headTitle($this->translate('Activities')); ?>
                 </thead>
                 <tbody>
                 <?php $i = 1; ?>
-                <?php foreach($signupData as $signup): ?>
+                <?php foreach($activity->getSignUps() as $signup): ?>
                     <tr>
                         <td><?php echo $i; $i = $i + 1; ?></td>
-                        <td><?= $signup['member'] ?></td>
-                        <?php foreach($signup['values'] as $value):?>
-                        <td><?= $value ?></td>
+                        <td><?= $signup->getFullName() ?></td>
+                        <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                            <td>
+                                <?php if (is_null($fieldValue->getOption())): ?>
+                                    <?= $fieldValue->getValue() ?>
+                                <?php else: ?>
+                                    <?= $lang === 'nl' ?
+                                        $fieldValue->getOption()->getValue()
+                                        : $fieldValue->getOption()->getValueEn() ?>
+                                <?php endif; ?>
+                            </td>
                         <?php endforeach;?>
                     </tr>
                 <?php endforeach;?>
