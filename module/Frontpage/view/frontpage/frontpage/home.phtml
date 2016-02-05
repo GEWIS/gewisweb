@@ -65,7 +65,7 @@
 </section>
 <section class="section alt">
     <div class="container panel-group panel-group-horizontal">
-        <div class="panel panel-emphasize" style="display: flex; flex-direction: column-reverse">
+        <div class="panel panel-emphasize">
             <div class="panel-heading">
                 <h3><?= $this->translate('News') ?></h3>
             </div>
@@ -124,24 +124,6 @@
                         <?= $this->translate('Nobody seems to have a birthday today, be the first one!') ?>
                     <?php endif; ?>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3><?= $this->translate('Photo of the week') ?></h3>
-                    </div>
-                    <div class="panel-body">
-                        <?php if(!is_null($weeklyPhoto)): ?>
-                            <div class="thumb">
-                                <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>">
-                                    <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3><?= $this->translate('Poll') ?></h3>
@@ -159,14 +141,31 @@
                             <a href="<?= $this->url('poll') ?>"><?=$this->translate('View the results') ?></a>
                         </div>
                     <?php else: ?>
-                        <?= $this->translate('There currently is no poll.'); ?>
-                        <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> or
-                        <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+                        <div class="panel-footer">
+                            <?= $this->translate('There currently is no poll.'); ?>
+                            <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> <?= $this->translate('or') ?>
+                            <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+                        </div>
                     <?php endif; ?>
 
                 </div>
             </div>
-
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Photo of the week') ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <?php if(!is_null($weeklyPhoto)): ?>
+                            <div class="thumb">
+                                <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>">
+                                    <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" alt="">
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
