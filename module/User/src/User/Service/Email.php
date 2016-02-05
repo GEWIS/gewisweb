@@ -42,6 +42,17 @@ class Email extends AbstractService
     }
 
     /**
+     * Send password lost email.
+     *
+     * @param NewUserModel $activation
+     * @param MemberModel $member
+     */
+    public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
+    {
+        var_dump($newUser);
+    }
+
+    /**
      * Render a template with given variables.
      *
      * @param string $template
