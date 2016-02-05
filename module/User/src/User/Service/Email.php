@@ -49,7 +49,23 @@ class Email extends AbstractService
      */
     public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {
-        var_dump($newUser);
+        $body = $this->render('user/email/reset', [
+            'user' => $newUser,
+            'member' => $member
+        ]);
+
+        $translator = $this->getServiceManager()->get('translator');
+
+        $message = new Message();
+
+        $config = $this->getConfig();
+
+        $message->addFrom($config['from']);
+        $message->addTo($newUser->getEmail());
+        $message->setSubject($translator->translate('Password reset code for the GEWIS Website'));
+        $message->setBody($body);
+
+        $this->getTransport()->send($message);
     }
 
     /**
