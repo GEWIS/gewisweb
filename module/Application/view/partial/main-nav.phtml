@@ -67,7 +67,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <ul class="dropdown-menu">
                             <li><a href="<?= $this->url('member') ?>"><?= $this->translate('Members') ?></a></li>
                             <li><a href="<?= $this->url('member/self') ?>"><?= $this->translate('My information') ?></a></li>
-                            <li><a href="https://gewis.nl/susos/"><?= $this->translate('SuSOS') ?></a></li>
+                            <li><a href="https://gewis.nl/susos/account/websitelogin.php"><?= $this->translate('SuSOS') ?></a></li>
                             <li><a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a></li>
                             <?php if ($member->getOrganInstallations()->count() > 0): ?>
                                 <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
