@@ -3,9 +3,6 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-// randomize ordering of jobs
-shuffle($jobList);
-
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
@@ -83,7 +80,7 @@ $this->headTitle($this->translate('Jobs'));
                                 <h4><?= $this->translate('Contact') ?></h4>
                                 <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
                                 <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
-                                <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('Visit website') ?></a></p>
+                                <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('View vacancy') ?></a></p>
                             </div>
                         </div>
                         <div class="col-md-9">

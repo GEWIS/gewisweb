@@ -3,6 +3,9 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
+// Randomize the order of companies
+shuffle($companyList);
+
 $this->headTitle($this->translate('Companies'));
 
 ?>
