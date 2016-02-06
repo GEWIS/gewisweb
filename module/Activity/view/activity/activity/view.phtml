@@ -57,7 +57,7 @@ $this->headTitle($this->translate('Activities')); ?>
                             <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
 
                             <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i:s') ?></dd>
+                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i') ?></dd>
 
                             <dt><?= $this->translate('Costs') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
@@ -90,17 +90,38 @@ $this->headTitle($this->translate('Activities')); ?>
                     <tr>
                         <td><?php echo $i; $i = $i + 1; ?></td>
                         <td><?= $signup->getFullName() ?></td>
-                        <?php foreach($signup->getFieldValues() as $fieldValue):?>
-                            <td>
-                                <?php if (is_null($fieldValue->getOption())): ?>
-                                    <?= $fieldValue->getValue() ?>
-                                <?php else: ?>
-                                    <?= $lang === 'nl' ?
-                                        $fieldValue->getOption()->getValue()
-                                        : $fieldValue->getOption()->getValueEn() ?>
+                        <?php foreach ($fields as $field): ?>
+                            <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                                <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                <td>
+                                    <?php
+                                    switch ($field->getType()) {
+                                        case 0:
+                                            echo $this->escapeHtml($fieldValue->getValue());
+                                            break;
+                                        case 1:
+                                            if ($fieldValue->getValue()) {
+                                                echo $this->translate('Yes');
+                                            } else {
+                                                echo $this->translate('No');
+                                            }
+                                            break;
+                                        case 2:
+                                            echo $fieldValue->getValue();
+                                            break;
+                                        case 3:
+                                            if ($lang === 'nl') {
+                                                echo $fieldValue->getOption()->getValue();
+                                            } else {
+                                                echo $fieldValue->getOption()->getValueEn();
+                                            }
+                                            break;
+                                    }
+                                    ?>
+                                </td>
                                 <?php endif; ?>
-                            </td>
-                        <?php endforeach;?>
+                            <?php endforeach;?>
+                        <?php endforeach; ?>
                     </tr>
                 <?php endforeach;?>
                 </tbody>
