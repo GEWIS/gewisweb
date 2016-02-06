@@ -3,9 +3,6 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-// randomize ordering of jobs
-shuffle($jobList);
-
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
