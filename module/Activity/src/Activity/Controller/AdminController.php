@@ -21,15 +21,19 @@ class AdminController extends AbstractActionController
      */
     public function queueAction()
     {
+        $perPage = 5;
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $unapprovedActivities = $activityService->getUnapprovedActivities();
         $approvedActivities = $activityService->getApprovedActivities();
         $disapprovedActivities = $activityService->getDisapprovedActivities();
 
         return [
-            'unapprovedActivities' => $unapprovedActivities,
-            'approvedActivities' => $approvedActivities,
-            'disapprovedActivities' => $disapprovedActivities
+            'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
+            'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
+            'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
+            'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
+            'moreApprovedActivites' => count($approvedActivities) > $perPage,
+            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
         ];
     }
 
