@@ -55,9 +55,10 @@ $this->headTitle($this->translate('Activities')); ?>
 
                             <dt><?= $this->translate('Location') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
-                            <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
-
+                            <?php if ($activity->getCanSignup()) : ?>
+                                <dt><?= $this->translate('Subscribe before') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                            <?php endif; ?>
                             <dt><?= $this->translate('Costs') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
 
