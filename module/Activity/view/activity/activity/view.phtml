@@ -48,16 +48,15 @@ $this->headTitle($this->translate('Activities')); ?>
                     <div class="col-md-4">
                         <dl>
                             <dt><?= $this->translate('Start') ?></dt>
-                            <dd><?= $activity->getBeginTime()->format('l d M Y H:i') ?></dd>
+                            <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                             <dt><?= $this->translate('End') ?></dt>
-                            <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
+                            <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                             <dt><?= $this->translate('Location') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
-
                             <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i') ?></dd>
+                            <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                             <dt><?= $this->translate('Costs') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
