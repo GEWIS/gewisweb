@@ -1,4 +1,11 @@
 <ul class="list-group">
+<?php if ($activities instanceof \Zend\Paginator\Paginator):?>
+    <li class="list-group-item agenda-item row">
+        <?=$this->paginationControl($activities,
+                'Elastic',
+                'activity/activity/paginator.phtml', array('route' => $route)); ?>
+    </li>
+<?php endif; ?>
 <?php foreach($activities as $activity):?>
     <li class="list-group-item agenda-item row">
         <div class="agenda-item-heading col-md-2">
@@ -46,4 +53,12 @@
         <h4><a href="<?= $moreLink;?>"><?=$this->translate('More');?></a></h4>
     </li>
     <?php endif;?>
+
+    <?php if ($activities instanceof \Zend\Paginator\Paginator):?>
+    <li class="list-group-item agenda-item row">
+        <?=$this->paginationControl($activities,
+                'Elastic',
+                'activity/activity/paginator.phtml', array('route' => $route)); ?>
+    </li>
+    <?php endif; ?>
 </ul>

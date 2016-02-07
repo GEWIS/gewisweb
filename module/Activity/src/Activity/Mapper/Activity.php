@@ -102,6 +102,7 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.status = :status')
+            ->orderBy('a.beginTime', 'desc')
             ->setParameters([
                 'status' => $status
             ]);
