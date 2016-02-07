@@ -5,9 +5,10 @@ $this->headLink()
 $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
-$form->prepare();
+if (!$success) {$form->prepare();}
 ?>
 <div class="container">
+    <?php if (!$success): ?>
     <?= $this->form()->openTag($form) ?>
     <div class="row">
         <div class="col-md-12">
@@ -245,6 +246,15 @@ $form->prepare();
         </div>
         <?= $this->form()->closeTag(); ?>
     </div>
+    <?php else: ?> 
+    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+        <div class="container">
+            <span class="glyphicon glyphicon-ok"></span>            
+            <?= $this->translate("The activity has been successfully created."); ?> 
+            <?= $this->translate("It will become visible after it has been approved by the board."); ?>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 
 <script>
@@ -256,4 +266,3 @@ $form->prepare();
         Activity.updateFieldset(i);
     }
 </script>
-

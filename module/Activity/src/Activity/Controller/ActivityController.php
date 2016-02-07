@@ -92,14 +92,18 @@ class ActivityController extends AbstractActionController
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
-
-                $this->redirect()->toRoute('activity/view', [
-                    'id' => $activity->getId(),
-                ]);
+                
+                return [
+                    'form' => null,
+                    'success' => true
+                    ];
             }
         }
 
-        return ['form' => $form];
+        return [
+            'form' => $form, 
+            'success' => false
+            ];
     }
 
     /**
