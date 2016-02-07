@@ -68,7 +68,6 @@ class Mapper implements AdapterInterface
         $mapper = $this->getMapper();
 
         $user = $mapper->findByLogin($this->login);
-        $mapper->detach($user);
 
         if (null === $user) {
             return new Result(
@@ -77,6 +76,7 @@ class Mapper implements AdapterInterface
                 []
             );
         }
+        $mapper->detach($user);
 
         if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
             return new Result(
