@@ -256,7 +256,8 @@ class Organ extends AbstractAclService
                     ];
                 }
                 if ($install->getFunction() != 'Lid') {
-                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                    $function = $this->getTranslator()->translate($install->getFunction());
+                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $function;
                 }
             } else {
                 // old member

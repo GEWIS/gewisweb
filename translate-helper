@@ -22,6 +22,16 @@ find ./module -iname "*.php" | xargs xgettext \
     --copyright-holder=GEWIS \
     --join-existing \
 
+xgettext module/Application/language/additional-strings \
+    --output=./module/Application/language/gewisweb.pot \
+    --force-po \
+    --package-name=GEWISweb \
+    --package-version=0.1.0-dev \
+    --copyright-holder=GEWIS \
+    --join-existing \
+    --language=C \
+    --extract-all \
+
 cd ./module/Application/language/
 
 # merge translation files

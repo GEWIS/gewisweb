@@ -54,7 +54,8 @@ class Member extends AbstractAclService
                 $memberships[$install->getOrgan()->getAbbr()] = [];
             }
             if ($install->getFunction() != 'Lid') {
-                $memberships[$install->getOrgan()->getAbbr()][] = $install->getFunction();
+                $function = $this->getTranslator()->translate($install->getFunction());
+                $memberships[$install->getOrgan()->getAbbr()][] = $function;
             }
         }
 

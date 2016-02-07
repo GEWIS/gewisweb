@@ -23,6 +23,15 @@ return [
                             ],
                         ],
                     ],
+                    'search' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/search',
+                            'defaults' => [
+                                'action' => 'search',
+                            ],
+                        ],
+                    ],
                     'meeting' => [
                         'type' => 'Segment',
                         'options' => [

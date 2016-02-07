@@ -1,8 +1,8 @@
 <div class="container">
     <form role="form">
         <div class="form-group">
-            <label for="">Zoeken op lid</label>
-            <input type="text" class="form-control" placeholder="Zoek" id="member-search" autofocus>
+            <label for=""><?= $this->translate('Zoeken op lid') ?></label>
+            <input type="text" class="form-control" placeholder="<?= $this->translate('Zoek') ?>" id="member-search" autofocus>
         </div>
     </form>
 
@@ -10,15 +10,15 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Naam</th>
-            <th>Generatie</th>
+            <th><?= $this->translate('Naam') ?></th>
+            <th><?= $this->translate('Generatie') ?></th>
         </tr>
         </thead>
         <tbody>
         </tbody>
         <tfoot style="display: none">
         <tr>
-            <td colspan="4"> Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten te zien.</td>
+            <td colspan="4"> <?= $this->translate('Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten te zien.') ?></td>
         </tr>
         </tfoot>
     </table>
