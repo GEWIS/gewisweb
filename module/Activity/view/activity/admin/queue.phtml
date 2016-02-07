@@ -3,7 +3,7 @@
 echo $this->partial('activity/activity/list.phtml', [
     'activities' => $unapprovedActivities,
     'admin' => true,
-    'moreLink' => $moreUnapprovedActivities ? 'test' : null,
+    'moreLink' => $moreUnapprovedActivities ? $this->url('admin_activity/queue_unapproved', ['page' => 1]) : null,
 ]);
 ?>
 
@@ -11,7 +11,8 @@ echo $this->partial('activity/activity/list.phtml', [
 <?php
 echo $this->partial('activity/activity/list.phtml', [
     'activities' => $approvedActivities,
-    'admin' => true
+    'admin' => true,
+    'moreLink' => $moreUnapprovedActivities ? $this->url('admin_activity/queue_approved', ['page' => 1]) : null,
 ]);
 ?>
 
@@ -19,6 +20,7 @@ echo $this->partial('activity/activity/list.phtml', [
 <?php
 echo $this->partial('activity/activity/list.phtml', [
     'activities' => $disapprovedActivities,
-    'admin' => true
+    'admin' => true,
+    'moreLink' => $moreUnapprovedActivities ? $this->url('admin_activity/queue_dissapproved', ['page' => 1]) : null,
 ]);
 ?>

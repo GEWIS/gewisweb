@@ -137,6 +137,36 @@ return [
                             ]
                         ]
                     ],
+                    'queue_unapproved' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/queue/unapproved/[:page]',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'queueUnapproved'
+                            ]
+                        ]
+                    ],
+                    'queue_approved' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/queue/approved/[:page]',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'queueUnapproved'
+                            ]
+                        ]
+                    ],
+                    'queue_disapproved' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/queue/disapproved/[:page]',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'queueUnapproved'
+                            ]
+                        ]
+                    ],
                     'view' => [
                         'type' => 'Segment',
                         'options' => [
