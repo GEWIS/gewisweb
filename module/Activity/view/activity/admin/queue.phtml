@@ -21,6 +21,6 @@ echo $this->partial('activity/activity/list.phtml', [
 echo $this->partial('activity/activity/list.phtml', [
     'activities' => $disapprovedActivities,
     'admin' => true,
-    'moreLink' => $moreUnapprovedActivities ? $this->url('admin_activity/queue_dissapproved', ['page' => 1]) : null,
+    'moreLink' => $moreUnapprovedActivities ? $this->url('admin_activity/queue_disapproved', ['page' => 1]) : null,
 ]);
 ?>

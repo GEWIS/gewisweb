@@ -1,0 +1,7 @@
+<h1><?php echo $this->translate('Unapproved Activities');?> </h1>
+<?php
+echo $this->partial('activity/activity/list.phtml', [
+    'activities' => $activities,
+    'admin' => true,
+]);
+

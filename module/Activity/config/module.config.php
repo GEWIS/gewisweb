@@ -153,7 +153,7 @@ return [
                             'route' => '/queue/approved/[:page]',
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'queueUnapproved'
+                                'action' => 'queueApproved'
                             ]
                         ]
                     ],
@@ -163,7 +163,7 @@ return [
                             'route' => '/queue/disapproved/[:page]',
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'queueUnapproved'
+                                'action' => 'queueDisapproved'
                             ]
                         ]
                     ],

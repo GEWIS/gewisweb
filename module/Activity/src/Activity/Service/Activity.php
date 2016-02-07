@@ -7,6 +7,7 @@ use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
 use Decision\Model\Organ;
+use Zend\Paginator\Paginator;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -55,7 +56,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * Get the information of one activity from the database.
      *
      * @param int $id The activity id to be searched for
-     *
+     *f
      * @return \Activity\Model\Activity Activity or null if the activity does not exist
      */
     public function getActivity($id)
@@ -106,6 +107,32 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getAllActivities();
+
+        return $activity;
+    }
+
+
+    /**
+     * Get an activity paginator by the status of the activity
+     * @param $status
+     * @param $page
+     * @return Paginator
+     */
+    public function getActivityPaginatorByStatus($status, $page = 1)
+    {
+        if (
+            !$this->isAllowed('viewUnapproved', 'activity') ||
+            !$this->isAllowed('viewDisapproved', 'activity') ||
+            !$this->isAllowed('view', 'activity')
+        ) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getActivityPaginatorByStatus($status, $page);
 
         return $activity;
     }
