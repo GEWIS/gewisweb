@@ -78,8 +78,8 @@ Photo = {
             gutter: '.gutter-sizer'
         });
 
-        // layout Masonry after each image loads
-        $grid.imagesLoaded().progress( function() {
+        // layout Masonry after all images are loaded
+        $grid.imagesLoaded().always( function() {
             $('.photo-grid').masonry('layout');
         });
     },
