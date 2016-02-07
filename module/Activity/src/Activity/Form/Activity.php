@@ -18,6 +18,9 @@ class Activity extends Form implements InputFilterProviderInterface
     protected $inputFilter;
     protected $organs;
 
+    protected $translator;
+
+
     /**
      * @param Organ[] $organs
      * @param Translator $translator
@@ -25,6 +28,8 @@ class Activity extends Form implements InputFilterProviderInterface
     public function __construct(array $organs, Translator $translator)
     {
         parent::__construct('activity');
+        $this->translator = $translator;
+
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\Activity());
@@ -307,19 +312,61 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
+        // Settings for date validation
+        $dateValidator = [
+            'name' => 'callback',
+            'options' => [
+                'messages' => [
+                    \Zend\Validator\Callback::INVALID_VALUE =>
+                        $this->translator->translate('This is not a correct date'),
+                ],
+                'callback' => ['Activity\Form\Activity', 'correctDate']
+            ],
+        ];
+
+
         $filter = [
             'beginTime' => [
                 'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity must start before it ends'),
+                            ],
+                            'callback' => ['Activity\Form\Activity', 'beforeEndTime']
+                        ],
+                    ],
+                    $dateValidator
+                ]
             ],
             'endTime' => [
                 'required' => true,
+                'validators' => [
+                    $dateValidator
+                ]
             ],
 
             'canSignUp' => [
                 'required' => true
             ],
             'subscriptionDeadline' => [
-                'required' => true
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The subscription must stop before the activity ends'),
+                            ],
+                            'callback' => ['Activity\Form\Activity', 'beforeEndTime']
+                        ],
+                    ],
+                    $dateValidator
+                ]
             ],
             'organ' => [
                 'required' => true
@@ -352,5 +399,44 @@ class Activity extends Form implements InputFilterProviderInterface
         }
 
         return $filter;
+    }
+
+    /**
+     * Try to validate a date. The default validator of ZF needs a format. This one tries to parse it
+     *
+     * + Stefan This certainly would not be the correct for doing it, were it not that PHP \DateTime gives no validation
+     * possibilities whatsoever
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public function correctDate($value, $context = [])
+    {
+        try {
+            new \DateTime($value);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if a certain date is before the end date of the activity.
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public function beforeEndTime($value, $context = [])
+    {
+        try {
+            $thisTime = new \DateTime($value);
+            $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
+            return $thisTime <= $endTime;
+        } catch (\Exception $e) {
+            // An exception is an indication that one of the times was not valid
+            return false;
+        }
     }
 }
