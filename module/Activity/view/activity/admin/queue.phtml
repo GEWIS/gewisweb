@@ -2,7 +2,8 @@
 <?php
 echo $this->partial('activity/activity/list.phtml', [
     'activities' => $unapprovedActivities,
-    'admin' => true
+    'admin' => true,
+    'moreLink' => $moreUnapprovedActivities ? 'test' : null,
 ]);
 ?>
 

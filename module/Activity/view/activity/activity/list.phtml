@@ -41,4 +41,9 @@
         </div>
     </li>
 <?php endforeach;?>
+    <?php if (isset($moreLink)): ?>
+    <li class="list-group-item agenda-item row">
+        <h4><a href="<?= $moreLink;?>"><?=$this->translate('More');?></a></h4>
+    </li>
+    <?php endif;?>
 </ul>
