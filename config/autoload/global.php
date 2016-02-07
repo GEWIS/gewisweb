@@ -103,7 +103,7 @@ return [
             'outer_border' => 0,
             'cols' => 2,
             'rows' => 2,
-            'background' => '#000000'
+            'background' => '#ffffff'
         ]
     ],
 
