@@ -268,10 +268,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setEndTime(new \DateTime($params['endTime']));
         //Default to the endtime if no deadline was set (so there is no deadline effectively)
         $activity->setSubscriptionDeadline(
-                empty($params['subscriptionDeadline']) ? 
-                $activity->getEndTime() : 
-                new \DateTime($params['subscriptionDeadline'])
-            );
+            empty($params['subscriptionDeadline']) ?
+            $activity->getEndTime() :
+            new \DateTime($params['subscriptionDeadline'])
+        );
         
         if ($dutch ) {
             $activity->setName($params['name']);
