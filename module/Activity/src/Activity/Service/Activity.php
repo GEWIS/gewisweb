@@ -140,10 +140,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         return $organ;
     }
-    
+
     /**
      * Set the language specific (dutch and english) parameters of an activity
-     * 
+     *
      * @param type $activity
      * @param type $params
      * @param type $dutch
