@@ -87,7 +87,7 @@ class ActivityController extends AbstractActionController
             $form->setData($postData);
 
             if ($form->isValid()) {
-                $activity = $activityService->createActivity(
+                $activityService->createActivity(
                     $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
                     $postData['language_english']
