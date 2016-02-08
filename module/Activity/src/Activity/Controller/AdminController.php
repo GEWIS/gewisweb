@@ -21,10 +21,10 @@ class AdminController extends AbstractActionController
      */
     public function queueAction()
     {
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $unapprovedActivities = $activityService->getUnapprovedActivities();
-        $approvedActivities = $activityService->getApprovedActivities();
-        $disapprovedActivities = $activityService->getDisapprovedActivities();
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $unapprovedActivities = $queryService->getUnapprovedActivities();
+        $approvedActivities = $queryService->getApprovedActivities();
+        $disapprovedActivities = $queryService->getDisapprovedActivities();
 
         return [
             'unapprovedActivities' => $unapprovedActivities,
@@ -39,10 +39,10 @@ class AdminController extends AbstractActionController
     public function viewAction()
     {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivity($id);
+        $activity = $queryService->getActivity($id);
 
         if (is_null($activity)) {
             return $this->notFoundAction();
@@ -87,9 +87,10 @@ class AdminController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivity($id);
+        $activity = $queryService->getActivity($id);
 
         if (is_null($activity)) {
             return $this->notFoundAction();

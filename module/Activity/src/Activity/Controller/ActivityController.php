@@ -16,11 +16,11 @@ class ActivityController extends AbstractActionController
      */
     public function indexAction()
     {
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
-        $activities = $activityService->getUpcomingActivities();
+        $activities = $queryService->getUpcomingActivities();
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
@@ -34,13 +34,13 @@ class ActivityController extends AbstractActionController
     public function viewAction()
     {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
         $activityRequestSession = new SessionContainer('activityRequest');
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivity($id);
+        $activity = $queryService->getActivity($id);
 
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         $identity = $this->getServiceLocator()->get('user_role');
@@ -108,11 +108,12 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         /** @var \Activity\Service\Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         /** @var  $activity Activity */
-        $activity = $activityService->getActivity($id);
+        $activity = $queryService->getActivity($id);
 
         $translator = $activityService->getTranslator();
 
@@ -173,8 +174,9 @@ class ActivityController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         /** @var \Activity\Service\SignUp $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
-        $activity = $activityService->getActivity($id);
+        $activity = $queryService->getActivity($id);
         $translator = $activityService->getTranslator();
 
         //Assure a form is used

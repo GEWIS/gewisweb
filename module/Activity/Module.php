@@ -50,6 +50,7 @@ class Module
         return [
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
+                'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
@@ -77,7 +78,7 @@ class Module
 
                     return $ac;
                 },
-		        'activity_service_signoff' => function ($sm) {
+		'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
 

@@ -38,7 +38,7 @@ class OrganController extends AbstractActionController
             $organ = $organService->findOrganByAbbr($abbr);
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
-            $activities = $this->getActivityService()->getOrganActivities($organ, 3);
+            $activities = $this->getActivityQueryService()->getOrganActivities($organ, 3);
 
             return new ViewModel(array_merge([
                 'organ' => $organ,
@@ -61,8 +61,8 @@ class OrganController extends AbstractActionController
     /**
      * Get the activity service.
      */
-    public function getActivityService()
+    public function getActivityQueryService()
     {
-        return $this->getServiceLocator()->get('activity_service_activity');
+        return $this->getServiceLocator()->get('activity_service_activityQuery');
     }
 }
