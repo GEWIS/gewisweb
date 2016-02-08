@@ -92,18 +92,13 @@ class ActivityController extends AbstractActionController
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
-                
-                return [
-                    'form' => null,
-                    'success' => true
-                    ];
+                $view = new ViewModel();
+                $view->setTemplate('activity/activity/createSuccess.phtml');
+                return $view;
             }
         }
 
-        return [
-            'form' => $form, 
-            'success' => false
-            ];
+        return ['form' => $form];
     }
 
     /**
