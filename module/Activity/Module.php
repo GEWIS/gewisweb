@@ -114,7 +114,7 @@ class Module
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
-                    $acl->allow('user', 'activity', 'viewDetails', new IsOrganMember());
+                    $acl->allow('active_member', 'activity', 'viewDetails');
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
