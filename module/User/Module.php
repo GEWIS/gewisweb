@@ -254,7 +254,7 @@ class Module
                             $roles = ['user'];
                         }
 
-                        if (!empty($user->getMember()->getCurrentOrganInstallations())) {
+                        if (count($user->getMember()->getCurrentOrganInstallations()) > 0) {
                             $roles[] = 'active_member';
                         }
 
