@@ -241,6 +241,7 @@ class Module
                     $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
                     $acl->addrole(new Role('sosuser'), 'apiuser');
+                    $acl->addrole(new Role('active_member'), 'user');
                     $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
@@ -252,6 +253,11 @@ class Module
                         if (empty($roles)) {
                             $roles = ['user'];
                         }
+
+                        if (!empty($user->getMember()->getCurrentOrganInstallations())) {
+                            $roles[] = 'active_member';
+                        }
+
                         $acl->addRole($user, $roles);
                     }
 
