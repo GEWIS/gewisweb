@@ -68,7 +68,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <li><a href="<?= $this->url('member/self') ?>"><?= $this->translate('My information') ?></a></li>
                             <li><a href="https://gewis.nl/susos/account/websitelogin.php"><?= $this->translate('SuSOS') ?></a></li>
                             <li><a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a></li>
-                            <?php if ($member->getOrganInstallations()->count() > 0): ?>
+                            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
                                 <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
                             <?php endif; ?>
                             <li><a href="<?= $this->url('user/default', [
