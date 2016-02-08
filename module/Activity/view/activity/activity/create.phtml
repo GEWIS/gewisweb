@@ -11,7 +11,7 @@ $form->prepare();
     <?= $this->form()->openTag($form) ?>
     <div class="row">
         <div class="col-md-12">
-            <h1>Create an activity</h1>
+            <h1><?= $this->translate('Create an activity') ?></h1>
             <hr>
             <h3><?= $this->translate('Display languages') ?></h3>
             <?php
@@ -256,4 +256,3 @@ $form->prepare();
         Activity.updateFieldset(i);
     }
 </script>
-

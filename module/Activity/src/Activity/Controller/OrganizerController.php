@@ -22,12 +22,12 @@ class OrganizerController extends AbstractActionController
     public function emailAction()
     {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivityWithDetails($id);
+        $activity = $queryService->getActivityWithDetails($id);
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
         if (is_null($activity)) {
@@ -47,13 +47,13 @@ class OrganizerController extends AbstractActionController
     public function exportAction()
     {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
 
         /** @var $activity Activity*/
-        $activity = $activityService->getActivityWithDetails($id);
+        $activity = $queryService->getActivityWithDetails($id);
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
         if (is_null($activity)) {

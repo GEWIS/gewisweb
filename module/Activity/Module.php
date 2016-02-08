@@ -50,6 +50,7 @@ class Module
         return [
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
+                'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
@@ -61,12 +62,8 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'activity_form_activity' => function ($sm) {
-                    /** @var \Decision\Service\Member $memberService */
-                    $memberService = $sm->get('decision_service_member');
-                    /** @var \User\Model\User $identity */
-                    $identity = $sm->get('user_role');
-                    $organs = $memberService->getOrgans($identity->getMember());
-
+                    $organService = $sm->get('decision_service_organ');
+                    $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
                     return new \Activity\Form\Activity($organs, $translator);
 
@@ -77,7 +74,7 @@ class Module
 
                     return $ac;
                 },
-		        'activity_service_signoff' => function ($sm) {
+                'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
 

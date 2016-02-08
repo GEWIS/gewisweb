@@ -353,7 +353,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true
             ],
             'subscriptionDeadline' => [
-                'required' => true,
+                'required' => false,
                 'validators' => [
                     [
                         'name' => 'callback',
