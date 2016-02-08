@@ -98,7 +98,7 @@ class ApiController extends AbstractActionController
      */
     private function getActivityService()
     {
-        return $this->getServiceLocator()->get('activity_service_activity');
+        return $this->getServiceLocator()->get('activity_service_activityQuery');
     }
 
     /**
