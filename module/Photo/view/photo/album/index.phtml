@@ -34,7 +34,11 @@
             <?php else: ?>
                 <div class="photo-grid-item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                     <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
-                        <img src="<?= $this->fileUrl($item->getSmallThumbPath()) ?>">
+                        <img src="<?= $this->fileUrl(
+                            is_null($item->getWeeklyPhoto()) ?
+                                $item->getSmallThumbPath()
+                                : $item->getLargeThumbPath()
+                        ) ?>">
                     </a>
                 </div>
             <?php endif; ?>
