@@ -63,11 +63,9 @@ class Module
                 },
                 'activity_form_activity' => function ($sm) {
                     /** @var \Decision\Service\Member $memberService */
-                    $memberService = $sm->get('decision_service_member');
+                    $organService = $sm->get('decision_service_organ');
                     /** @var \User\Model\User $identity */
-                    $identity = $sm->get('user_role');
-                    $organs = $memberService->getOrgans($identity->getMember());
-
+                    $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
                     return new \Activity\Form\Activity($organs, $translator);
 
