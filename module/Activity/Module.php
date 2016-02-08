@@ -62,9 +62,7 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'activity_form_activity' => function ($sm) {
-                    /** @var \Decision\Service\Member $memberService */
                     $organService = $sm->get('decision_service_organ');
-                    /** @var \User\Model\User $identity */
                     $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
                     return new \Activity\Form\Activity($organs, $translator);
