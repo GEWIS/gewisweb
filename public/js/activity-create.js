@@ -11,6 +11,7 @@ Activity = {
         var template = $('#additionalFields span.template').data('template');
         template = template.replace(/__index__/g, currentCount);
         $(template).insertBefore('#additionalFields div.add-field');
+        Activity.updateForm();
         return false;
     },
 
