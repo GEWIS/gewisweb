@@ -230,38 +230,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->getServiceManager()->get('user_role')
         );
 
-
-
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ
         $organId = intval($params['organ']);
-
-        $organ = null;
-
-        // If the organ is 0 then the activity does not belong to an organ
-        if ($organId !== 0) {
-            /** @var \Decision\Service\Member $memberService */
-            $memberService = $this->getServiceManager()->get('decision_service_member');
-            $member = $memberService->findMemberByLidNr($user->getLidnr());
-
-            // The organs that the user belongs to with the correct organId (either 0 or 1)
-            $organs = $memberService->getOrgans($member);
-
-            // An array only containing the organ that this member belongs to and with the correct id
-            $correctOrgan = array_filter($organs, function (Organ $organ) use ($organId) {
-                return $organ->getId() === $organId;
-            });
-
-            // Check if the member belongs to the organ
-            if (count($correctOrgan) === 0) {
-                $translator = $this->getTranslator();
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to create an activity for this organ')
-                );
-            }
-
-            $organ = $correctOrgan[0];
-        }
+        $organ = $this->findOrgan($user, $organId);
 
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
@@ -272,7 +244,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $activity->getEndTime() :
             new \DateTime($params['subscriptionDeadline'])
         );
-        
+
         if ($dutch ) {
             $activity->setName($params['name']);
             $activity->setLocation($params['location']);
@@ -308,6 +280,43 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->flush();
 
         return $activity;
+    }
+
+    /**
+     * Find the organ the activity belongs to, and see if the user has permission to create an activity
+     * for this organ.
+     *
+     * @param \User\model\User $user The user creating the activity
+     * @param int $organId The id of the organ associated with the activity
+     * @return Organ The organ associated with the activity, if the user is a member of that organ
+     * @throws \User\Permissions\NotAllowedException if the user is not a member of the organ specified
+     */
+    protected function findOrgan(\User\model\User $user, $organId)
+    {
+        // If the organ is 0 then the activity does not belong to an organ
+        if ($organId === 0){
+            return null;
+        }
+        /** @var \Decision\Service\Member $memberService */
+        $memberService = $this->getServiceManager()->get('decision_service_member');
+        $member = $memberService->findMemberByLidNr($user->getLidnr());
+
+        // The organs that the user belongs to with the correct organId (either 0 or 1)
+        $organs = $memberService->getOrgans($member);
+
+        // An array only containing the organ that this member belongs to and with the correct id
+        $correctOrgan = array_filter($organs, function (Organ $organ) use ($organId) {
+            return $organ->getId() === $organId;
+        });
+
+        // Check if the member belongs to the organ
+        if (count($correctOrgan) === 0) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create an activity for this organ')
+            );
+        }
+        return $correctOrgan[0];
     }
 
     /**
