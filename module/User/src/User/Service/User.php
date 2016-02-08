@@ -2,7 +2,7 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractService;
+use Application\Service\AbstractAclService;
 
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
@@ -15,7 +15,7 @@ use Decision\Model\Member as MemberModel;
 /**
  * User service.
  */
-class User extends AbstractService
+class User extends AbstractAclService
 {
 
     /**
@@ -317,6 +317,12 @@ class User extends AbstractService
      */
     public function getPasswordForm()
     {
+        if (!$this->isAllowed('password_change')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate("You are not allowed to change your password")
+            );
+        }
+
         return $this->sm->get('user_form_password');
     }
 
@@ -384,5 +390,27 @@ class User extends AbstractService
     public function getEmailService()
     {
         return $this->sm->get('user_service_email');
+    }
+
+    /**
+     * Get the ACL.
+     *
+     * @return \Zend\Permissions\Acl\Acl
+     */
+    public function getAcl()
+    {
+        return $this->sm->get('acl');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * This is used by {@link isAllowed()} when no resource is specified.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'user';
     }
 }
