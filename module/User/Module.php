@@ -269,6 +269,9 @@ class Module
 
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
+                    $acl->addResource(new Resource('user'));
+
+                    $acl->allow('user', 'user', ['password_change']);
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');
