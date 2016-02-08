@@ -79,7 +79,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         );
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
-        // for this organ
+        // for this organ. If the id is 0, the activity belongs to no organ.
         $organId = intval($params['organ']);
         $organ = null;
         if ($organId !== 0){
@@ -95,20 +95,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             new \DateTime($params['subscriptionDeadline'])
         );
 
-        if ($dutch ) {
-            $activity->setName($params['name']);
-            $activity->setLocation($params['location']);
-            $activity->setCosts($params['costs']);
-            $activity->setDescription($params['description']);
-        }
-        if ($english) {
-            $activity->setNameEn($params['nameEn']);
-            $activity->setLocationEn($params['locationEn']);
-            $activity->setCostsEn($params['costsEn']);
-            $activity->setDescriptionEn($params['descriptionEn']);
-        }
-
-
+        $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
         $activity->setCanSignUp($params['canSignUp']);
 
         // Not user provided input
@@ -153,7 +140,30 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         return $organ;
     }
-
+    
+    /**
+     * Set the language specific (dutch and english) parameters of an activity
+     * 
+     * @param type $activity
+     * @param type $params
+     * @param type $dutch
+     * @param type $english
+     */
+    protected function setLanguageSpecificParameters($activity, $params, $dutch, $english)
+    {
+        if ($dutch ) {
+            $activity->setName($params['name']);
+            $activity->setLocation($params['location']);
+            $activity->setCosts($params['costs']);
+            $activity->setDescription($params['description']);
+        }
+        if ($english) {
+            $activity->setNameEn($params['nameEn']);
+            $activity->setLocationEn($params['locationEn']);
+            $activity->setCostsEn($params['costsEn']);
+            $activity->setDescriptionEn($params['descriptionEn']);
+        }
+    }
     /**
      * Create a new field
      *
