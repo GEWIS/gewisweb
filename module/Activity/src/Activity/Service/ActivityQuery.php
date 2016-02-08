@@ -6,7 +6,7 @@ use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface 
+class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
      * Get the ACL.
@@ -29,7 +29,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         return 'activity';
     }
-    
+
 
     /**
      * Get the information of one activity from the database.
@@ -67,7 +67,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
                 $translator->translate('You are not allowed to view the activities')
             );
         }
-        return $this->getActivity($id   );
+        return $this->getActivity($id);
     }
 
     /**
@@ -182,7 +182,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         return $activity;
     }
-    
+
     /**
      * Get the activity mapper.
      *
