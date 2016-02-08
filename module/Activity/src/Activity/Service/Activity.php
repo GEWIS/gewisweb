@@ -81,8 +81,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ
         $organId = intval($params['organ']);
-        $organ = $this->findOrgan($user, $organId);
-
+        $organ = null;
+        if ($organId !== 0){
+            $organ = $this->findOrgan($organId);
+        }
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
@@ -134,37 +136,22 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * Find the organ the activity belongs to, and see if the user has permission to create an activity
      * for this organ.
      *
-     * @param \User\model\User $user The user creating the activity
      * @param int $organId The id of the organ associated with the activity
      * @return Organ The organ associated with the activity, if the user is a member of that organ
      * @throws \User\Permissions\NotAllowedException if the user is not a member of the organ specified
      */
-    protected function findOrgan(\User\model\User $user, $organId)
+    protected function findOrgan($organId)
     {
-        // If the organ is 0 then the activity does not belong to an organ
-        if ($organId === 0){
-            return null;
-        }
-        /** @var \Decision\Service\Member $memberService */
-        $memberService = $this->getServiceManager()->get('decision_service_member');
-        $member = $memberService->findMemberByLidNr($user->getLidnr());
+        $organService = $this->getServiceManager()->get('decision_service_organ');
+        $organ = $organService->getOrgan($organId);
 
-        // The organs that the user belongs to with the correct organId (either 0 or 1)
-        $organs = $memberService->getOrgans($member);
-
-        // An array only containing the organ that this member belongs to and with the correct id
-        $correctOrgan = array_filter($organs, function (Organ $organ) use ($organId) {
-            return $organ->getId() === $organId;
-        });
-
-        // Check if the member belongs to the organ
-        if (count($correctOrgan) === 0) {
+        if (!$organService->canEditOrgan($organ)){
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to create an activity for this organ')
             );
         }
-        return $correctOrgan[0];
+        return $organ;
     }
 
     /**
