@@ -78,7 +78,7 @@ class Module
 
                     return $ac;
                 },
-		'activity_service_signoff' => function ($sm) {
+                'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
                     $ac->setServiceManager($sm);
 
