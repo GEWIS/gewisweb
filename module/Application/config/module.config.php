@@ -22,6 +22,18 @@ return [
                     ]
                 ],
                 'priority' => 100
+            ],
+            'external' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/external/',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'external',
+                    ]
+                ],
+                'priority' => 100
             ]
         ],
     ],
