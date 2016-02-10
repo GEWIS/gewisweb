@@ -46,18 +46,19 @@ class ActivityController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $isAllowedToSubscribe = $signupService->isAllowedToSubscribe();
 
         $fields = $translatedActivity->getFields();
         $form = null;
-        if ($signupService->isAllowedToSubscribe()) {
+        if ($isAllowedToSubscribe) {
             $form = $signupService->getForm($fields);
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         $result = [
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed,
-            'isLoggedIn' => $identity !== 'guest',
-            'isSignedUp' => $identity !== 'guest' && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
+            'isAllowedToSubscribe' => $isAllowedToSubscribe,
+            'isSignedUp' => $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
