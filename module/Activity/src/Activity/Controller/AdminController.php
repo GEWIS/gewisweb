@@ -79,6 +79,18 @@ class AdminController extends AbstractActionController
         return $this->viewStatus(Activity::STATUS_APPROVED, $page);
     }
 
+    /**
+     * View all the approved activities with paginator
+     *
+     * @return array
+     */
+    public function queueDisapprovedAction()
+    {
+        $page = (int) $this->params('page', 1);
+        return $this->viewStatus(Activity::STATUS_DISAPPROVED, $page);
+    }
+
+
 
     /**
      * View activities with a certain status
