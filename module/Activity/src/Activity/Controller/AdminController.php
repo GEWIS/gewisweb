@@ -27,12 +27,13 @@ class AdminController extends AbstractActionController
         $approvedActivities = $activityService->getApprovedActivities();
         $disapprovedActivities = $activityService->getDisapprovedActivities();
 
+
         return [
             'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
             'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
             'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
             'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
-            'moreApprovedActivites' => count($approvedActivities) > $perPage,
+            'moreApprovedActivities' => count($approvedActivities) > $perPage,
             'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
         ];
     }
@@ -67,6 +68,11 @@ class AdminController extends AbstractActionController
         return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
     }
 
+    /**
+     * View all the approved activities with paginator
+     *
+     * @return array
+     */
     public function queueApprovedAction()
     {
         $page = (int) $this->params('page', 1);
