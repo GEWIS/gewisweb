@@ -91,8 +91,8 @@ class Organ extends AbstractAclService
 
         $user = $this->sm->get('user_role');
 
-        foreach ($user->getMember()->getCurrentOrganInstallations() as $installation) {
-            if ($installation->getOrgan()->getId() === $organ->getId()) {
+        foreach ($this->getMemberMapper()->findOrgans($user->getMember()) as $memberOrgan) {
+            if ($memberOrgan->getId() === $organ->getId()) {
                 return true;
             }
         }

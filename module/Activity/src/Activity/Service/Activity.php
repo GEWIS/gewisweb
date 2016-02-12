@@ -36,7 +36,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Return the form for this activity
+     * Return activity creation form
      *
      * @return ActivityForm
      */
@@ -50,184 +50,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         return $this->getServiceManager()->get('activity_form_activity');
-    }
-
-    /**
-     * Get the information of one activity from the database.
-     *
-     * @param int $id The activity id to be searched for
-     *f
-     * @return \Activity\Model\Activity Activity or null if the activity does not exist
-     */
-    public function getActivity($id)
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityById($id);
-
-        return $activity;
-    }
-
-    /**
-     * Get the activity with additional details
-     *
-     * @param $id
-     * @return ActivityModel
-     */
-    public function getActivityWithDetails($id)
-    {
-        if (! $this->isAllowed('viewDetails', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-        return $this->getActivity($id   );
-    }
-
-    /**
-     * Returns an array of all activities.
-     *
-     * @return array Array of activities
-     */
-    public function getAllActivities()
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getAllActivities();
-
-        return $activity;
-    }
-
-
-    /**
-     * Get an activity paginator by the status of the activity
-     * @param $status
-     * @param $page
-     * @return Paginator
-     */
-    public function getActivityPaginatorByStatus($status, $page = 1)
-    {
-        if (
-            !$this->isAllowed('viewUnapproved', 'activity') ||
-            !$this->isAllowed('viewDisapproved', 'activity') ||
-            !$this->isAllowed('view', 'activity')
-        ) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityPaginatorByStatus($status, $page);
-
-        return $activity;
-    }
-
-    /**
-     * Get all the activities that are yet to be approved
-     *
-     * @return array Array of activities
-     */
-    public function getUnapprovedActivities()
-    {
-        if (!$this->isAllowed('viewUnapproved', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUnapprovedActivities();
-
-        return $activity;
-    }
-
-    /**
-     * Get all activities that are approved by the board
-     *
-     * @return array Array of activities
-     */
-    public function getApprovedActivities()
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view approved the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getApprovedActivities();
-
-        return $activity;
-    }
-
-    /**
-     * Get upcoming activities organized by the given organ.
-     *
-     * @param \Organ\Model\Organ $organ
-     * @param integer $count
-     *
-     * @return array
-     */
-    public function getOrganActivities($organ, $count = null)
-    {
-        return $this->getActivityMapper()->getUpcomingActivities($count, $organ);
-    }
-
-    /**
-     * Get all activities that are disapproved by the board
-     *
-     * @return array Array of activities
-     */
-    public function getDisapprovedActivities()
-    {
-        if (!$this->isAllowed('viewDisapproved', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the disapproved activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getDisapprovedActivities();
-
-        return $activity;
-    }
-
-    /**
-     * Get all activities that are approved by the board and which occur in the future
-     *
-     * @return array Array of activities
-     */
-    public function getUpcomingActivities()
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view upcoming the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUpcomingActivities();
-
-        return $activity;
     }
 
     /**
@@ -257,58 +79,24 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->getServiceManager()->get('user_role')
         );
 
-
-
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
-        // for this organ
+        // for this organ. If the id is 0, the activity belongs to no organ.
         $organId = intval($params['organ']);
-
         $organ = null;
-
-        // If the organ is 0 then the activity does not belong to an organ
-        if ($organId !== 0) {
-            /** @var \Decision\Service\Member $memberService */
-            $memberService = $this->getServiceManager()->get('decision_service_member');
-            $member = $memberService->findMemberByLidNr($user->getLidnr());
-
-            // The organs that the user belongs to with the correct organId (either 0 or 1)
-            $organs = $memberService->getOrgans($member);
-
-            // An array only containing the organ that this member belongs to and with the correct id
-            $correctOrgan = array_filter($organs, function (Organ $organ) use ($organId) {
-                return $organ->getId() === $organId;
-            });
-
-            // Check if the member belongs to the organ
-            if (count($correctOrgan) === 0) {
-                $translator = $this->getTranslator();
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to create an activity for this organ')
-                );
-            }
-
-            $organ = $correctOrgan[0];
+        if ($organId !== 0){
+            $organ = $this->findOrgan($organId);
         }
-
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
-        $activity->setSubscriptionDeadline(new \DateTime($params['subscriptionDeadline']));
+        //Default to the endtime if no deadline was set (so there is no deadline effectively)
+        $activity->setSubscriptionDeadline(
+            empty($params['subscriptionDeadline']) ?
+            $activity->getEndTime() :
+            new \DateTime($params['subscriptionDeadline'])
+        );
 
-        if ($dutch ) {
-            $activity->setName($params['name']);
-            $activity->setLocation($params['location']);
-            $activity->setCosts($params['costs']);
-            $activity->setDescription($params['description']);
-        }
-        if ($english) {
-            $activity->setNameEn($params['nameEn']);
-            $activity->setLocationEn($params['locationEn']);
-            $activity->setCostsEn($params['costsEn']);
-            $activity->setDescriptionEn($params['descriptionEn']);
-        }
-
-
+        $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
         $activity->setCanSignUp($params['canSignUp']);
 
         // Not user provided input
@@ -332,6 +120,51 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $activity;
     }
 
+    /**
+     * Find the organ the activity belongs to, and see if the user has permission to create an activity
+     * for this organ.
+     *
+     * @param int $organId The id of the organ associated with the activity
+     * @return Organ The organ associated with the activity, if the user is a member of that organ
+     * @throws \User\Permissions\NotAllowedException if the user is not a member of the organ specified
+     */
+    protected function findOrgan($organId)
+    {
+        $organService = $this->getServiceManager()->get('decision_service_organ');
+        $organ = $organService->getOrgan($organId);
+
+        if (!$organService->canEditOrgan($organ)){
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create an activity for this organ')
+            );
+        }
+        return $organ;
+    }
+
+    /**
+     * Set the language specific (dutch and english) parameters of an activity
+     *
+     * @param type $activity
+     * @param type $params
+     * @param type $dutch
+     * @param type $english
+     */
+    protected function setLanguageSpecificParameters($activity, $params, $dutch, $english)
+    {
+        if ($dutch ) {
+            $activity->setName($params['name']);
+            $activity->setLocation($params['location']);
+            $activity->setCosts($params['costs']);
+            $activity->setDescription($params['description']);
+        }
+        if ($english) {
+            $activity->setNameEn($params['nameEn']);
+            $activity->setLocationEn($params['locationEn']);
+            $activity->setCostsEn($params['costsEn']);
+            $activity->setDescriptionEn($params['descriptionEn']);
+        }
+    }
     /**
      * Create a new field
      *

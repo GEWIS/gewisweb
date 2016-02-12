@@ -48,17 +48,17 @@ $this->headTitle($this->translate('Activities')); ?>
                     <div class="col-md-4">
                         <dl>
                             <dt><?= $this->translate('Start') ?></dt>
-                            <dd><?= $activity->getBeginTime()->format('l d M Y H:i') ?></dd>
+                            <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                             <dt><?= $this->translate('End') ?></dt>
-                            <dd><?= $activity->getEndTime()->format('l d M Y H:i') ?></dd>
+                            <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                             <dt><?= $this->translate('Location') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
-
-                            <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $activity->getSubscriptionDeadline()->format('l d M Y H:i') ?></dd>
-
+                            <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
+                                <dt><?= $this->translate('Subscribe before') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                            <?php endif; ?>
                             <dt><?= $this->translate('Costs') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
 
@@ -145,7 +145,7 @@ $this->headTitle($this->translate('Activities')); ?>
             ?>
         </div>
     <?php endif; ?>
-    <?php if ($signupOpen && !$isLoggedIn):?>
+    <?php if ($signupOpen && !$isAllowedToSubscribe):?>
         <a href="<?= $this->url('user') ?>">
             <?= $this->translate('Login to subscribe') ?>
         </a>
@@ -170,7 +170,7 @@ $this->headTitle($this->translate('Activities')); ?>
         echo $this->form()->closeTag();?>
     <?php endif; ?>
 
-    <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+    <?php if ($this->acl('activity_acl')->isAllowed('activity', 'viewDetails') && $activity->getCanSignUp()): ?>
         <a href="<?= $this->url('organizer_activity/email', ['id' => $activity->getId()])?>"><?= $this->Translate('View email Adresses') ?></a> |
         <a href="<?= $this->url('organizer_activity/export', ['id' => $activity->getId()])?>"><?= $this->translate('Export subscriptions') ?></a>
     <?php endif; ?>

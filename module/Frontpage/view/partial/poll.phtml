@@ -55,7 +55,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 </div>
             </div>
             <div class="col-md-1 col-lg-1 text-right">
-                <?= sprintf($this->translate($option->getVotesCount() === 1 ? '1 vote' :'%d votes'), $option->getVotesCount()) ?>
+                <?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?>
             </div>
             <?php endif ?>
         </div>

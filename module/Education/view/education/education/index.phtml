@@ -17,12 +17,14 @@
                 <h4><?= $this->translate('Exams') ?></h4>
             </div>
         </a>
+        <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
         <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image col-md-3">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-cd"></div>
                 <h4><?= $this->translate('Dreamspark') ?></h4>
             </div>
         </a>
+        <?php endif ?>
         <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-sunglasses"></div>

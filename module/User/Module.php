@@ -241,6 +241,7 @@ class Module
                     $acl->addRole(new Role('user'), 'tueguest');
                     $acl->addrole(new Role('apiuser'), 'guest');
                     $acl->addrole(new Role('sosuser'), 'apiuser');
+                    $acl->addrole(new Role('active_member'), 'user');
                     $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
@@ -252,6 +253,12 @@ class Module
                         if (empty($roles)) {
                             $roles = ['user'];
                         }
+
+                        // TODO: change this to getActiveOrganInstalltions() once 529 is fixed
+                        if (count($user->getMember()->getOrganInstallations()) > 0) {
+                            $roles[] = 'active_member';
+                        }
+
                         $acl->addRole($user, $roles);
                     }
 
@@ -263,6 +270,9 @@ class Module
 
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));
+                    $acl->addResource(new Resource('user'));
+
+                    $acl->allow('user', 'user', ['password_change']);
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');
