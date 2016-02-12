@@ -67,6 +67,12 @@ class AdminController extends AbstractActionController
         return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
     }
 
+    public function queueApprovedAction()
+    {
+        $page = (int) $this->params('page', 1);
+        return $this->viewStatus(Activity::STATUS_APPROVED, $page);
+    }
+
 
     /**
      * View activities with a certain status
