@@ -53,10 +53,21 @@
                         </p>
                     </div>
                     <div class="panel-footer">
-                        <a href="<?= $this->url('activity') ?>">
-                            <?= $this->translate('Complete agenda') ?>
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                        </a>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <a href="<?= $this->url('activity') ?>">
+                                    <?= $this->translate('Complete agenda') ?>
+                                    <span class="glyphicon glyphicon-arrow-right"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <a href="https://www.google.com/calendar/embed?src=v23gq10ij44fhdsfdof1s613ak%40group.calendar.google.com&gsessionid=OK"
+                                   title="<?= $this->translate('Google Calendar') ?>">
+                                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;iCal
+                                </a>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
