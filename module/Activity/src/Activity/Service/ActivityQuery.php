@@ -192,11 +192,9 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getActivityPaginatorByStatus($status, $page = 1)
     {
-        if (
-            !$this->isAllowed('viewUnapproved', 'activity') ||
+        if (!$this->isAllowed('viewUnapproved', 'activity') ||
             !$this->isAllowed('viewDisapproved', 'activity') ||
-            !$this->isAllowed('view', 'activity')
-        ) {
+            !$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
