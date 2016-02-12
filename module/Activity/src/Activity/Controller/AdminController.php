@@ -101,7 +101,7 @@ class AdminController extends AbstractActionController
      */
     protected function viewStatus($status, $page = 1)
     {
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $activityService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activities = $activityService->getActivityPaginatorByStatus($status, $page);
 
         return [

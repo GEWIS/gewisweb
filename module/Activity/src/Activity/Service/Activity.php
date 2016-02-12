@@ -7,7 +7,6 @@ use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
 use Decision\Model\Organ;
-use Zend\Paginator\Paginator;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
