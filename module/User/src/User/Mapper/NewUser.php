@@ -2,6 +2,7 @@
 
 namespace User\Mapper;
 
+use Decision\Model\Member;
 use User\Model\NewUser as NewUserModel;
 use Doctrine\ORM\EntityManager;
 
@@ -48,6 +49,21 @@ class NewUser
     }
 
     /**
+     * Delete the existing activation code for a member
+     *
+     * @param Member $member
+     * @return array
+     */
+    public function deleteByMember(Member $member)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete('User\Model\NewUser', 'u');
+        $qb->where('u.member = :member');
+        $qb->setParameter('member', $member);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist a user model.
      *
      * @param NewUserModel $user User to persist.
@@ -61,7 +77,7 @@ class NewUser
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {

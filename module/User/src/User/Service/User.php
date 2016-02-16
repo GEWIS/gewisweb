@@ -134,6 +134,10 @@ class User extends AbstractAclService
             return null;
         }
 
+        // Invalidate all previous password reset codes
+        // Makes sure that no double password reset codes are present in the database
+        $this->getNewUserMapper()->deleteByMember($member);
+
         // create new activation
         $newUser = new NewUserModel($member);
         $newUser->setCode($this->generateCode());
