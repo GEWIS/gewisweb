@@ -1,17 +1,15 @@
 <?php
-$escaper = new Zend\Escaper\Escaper('utf-8');
-
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
 $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 
 ?>
-<div class="company-list-item list-item" id="company-<?= $escaper->escapeHtmlAttr($company->getId()); ?>">
+<div class="company-list-item list-item" id="company-<?= $company->getId(); ?>">
 <h2 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h2>
     <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
     <div class="row">
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="company-logo img-responsive center-block" src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())) ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>" />
+                <img class="company-logo img-responsive center-block" src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>" alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>" />
             </a>
             <div class="">
                 <h4><?= $this->translate('Contact') ?></h4>

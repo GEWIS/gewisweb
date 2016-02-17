@@ -1,4 +1,5 @@
-<table class="table">
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+<table class="table table-bordered" style="width: 100%" border="1">
     <thead>
         <tr>
             <th></th>
@@ -8,15 +9,43 @@
             <?php endforeach; ?>
         </tr>
     </thead>
-    <tbody>
     <?php $i = 1; ?>
-    <?php foreach($signupData as $signup): ?>
+    <?php foreach($activity->getSignUps() as $signup): ?>
         <tr>
             <td><?php echo $i; $i = $i + 1; ?></td>
-            <td><?= $signup['member'] ?></td>
-            <?php foreach($signup['values'] as $value):?>
-                <td><?= $value ?></td>
-            <?php endforeach;?>
+            <td><?= $signup->getFullName() ?></td>
+            <?php foreach ($activity->getFields() as $field): ?>
+                <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                    <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                        <td>
+                            <?php
+                            switch ($field->getType()) {
+                                case 0:
+                                    echo $this->escapeHtml($fieldValue->getValue());
+                                    break;
+                                case 1:
+                                    if ($fieldValue->getValue()) {
+                                        echo $this->translate('Yes');
+                                    } else {
+                                        echo $this->translate('No');
+                                    }
+                                    break;
+                                case 2:
+                                    echo $fieldValue->getValue();
+                                    break;
+                                case 3:
+                                    if ($lang === 'nl') {
+                                        echo $fieldValue->getOption()->getValue();
+                                    } else {
+                                        echo $fieldValue->getOption()->getValueEn();
+                                    }
+                                    break;
+                            }
+                            ?>
+                        </td>
+                    <?php endif; ?>
+                <?php endforeach;?>
+            <?php endforeach; ?>
         </tr>
     <?php endforeach;?>
     </tbody>
