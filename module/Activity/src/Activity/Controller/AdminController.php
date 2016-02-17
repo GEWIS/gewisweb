@@ -21,15 +21,20 @@ class AdminController extends AbstractActionController
      */
     public function queueAction()
     {
+        $perPage = 5;
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $unapprovedActivities = $queryService->getUnapprovedActivities();
         $approvedActivities = $queryService->getApprovedActivities();
         $disapprovedActivities = $queryService->getDisapprovedActivities();
 
+
         return [
-            'unapprovedActivities' => $unapprovedActivities,
-            'approvedActivities' => $approvedActivities,
-            'disapprovedActivities' => $disapprovedActivities
+            'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
+            'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
+            'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
+            'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
+            'moreApprovedActivities' => count($approvedActivities) > $perPage,
+            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
         ];
     }
 
@@ -50,6 +55,57 @@ class AdminController extends AbstractActionController
 
         return [
             'activity' => $activity,
+        ];
+    }
+
+    /**
+     * View all the unapproved activities with paginator
+     * @return array
+     */
+    public function queueUnapprovedAction()
+    {
+        $page = (int) $this->params('page', 1);
+        return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
+    }
+
+    /**
+     * View all the approved activities with paginator
+     *
+     * @return array
+     */
+    public function queueApprovedAction()
+    {
+        $page = (int) $this->params('page', 1);
+        return $this->viewStatus(Activity::STATUS_APPROVED, $page);
+    }
+
+    /**
+     * View all the approved activities with paginator
+     *
+     * @return array
+     */
+    public function queueDisapprovedAction()
+    {
+        $page = (int) $this->params('page', 1);
+        return $this->viewStatus(Activity::STATUS_DISAPPROVED, $page);
+    }
+
+
+
+    /**
+     * View activities with a certain status
+     *
+     * @param integer $status
+     * @param integer $page
+     * @return array
+     */
+    protected function viewStatus($status, $page = 1)
+    {
+        $activityService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $activities = $activityService->getActivityPaginatorByStatus($status, $page);
+
+        return [
+            'activities' => $activities,
         ];
     }
 

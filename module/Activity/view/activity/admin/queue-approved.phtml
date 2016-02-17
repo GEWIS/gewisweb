@@ -1,0 +1,8 @@
+<h1><?php echo $this->translate('Approved Activities');?> </h1>
+<?php
+echo $this->partial('activity/activity/list.phtml', [
+    'activities' => $activities,
+    'admin' => true,
+    'route' => 'admin_activity/queue_approved',
+]);
+

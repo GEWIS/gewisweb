@@ -5,6 +5,7 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
+use DoctrineModule\Paginator;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -180,6 +181,27 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         $activity = $activityMapper->getUpcomingActivities();
 
+        return $activity;
+    }
+
+    /**
+     * Get an activity paginator by the status of the activity
+     * @param $status
+     * @param $page
+     * @return Paginator
+     */
+    public function getActivityPaginatorByStatus($status, $page = 1)
+    {
+        if (!$this->isAllowed('viewUnapproved', 'activity') ||
+            !$this->isAllowed('viewDisapproved', 'activity') ||
+            !$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getActivityPaginatorByStatus($status, $page);
         return $activity;
     }
 

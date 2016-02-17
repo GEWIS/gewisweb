@@ -4,6 +4,8 @@ namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Zend\Paginator\Paginator;
 
 class Activity
 {
@@ -86,6 +88,32 @@ class Activity
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Get an activity paginator by the status of the activity
+     * @param integer $status
+     * @param integer $page
+     * @param integer $perPage
+     * @return Paginator
+     */
+    public function getActivityPaginatorByStatus($status, $page = 1, $perPage = 5)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.status = :status')
+            ->orderBy('a.beginTime', 'desc')
+            ->setParameters([
+                'status' => $status
+            ]);
+
+        $resultArray = $qb->getQuery()->getResult();
+        $paginator = new Paginator(new ArrayAdapter($resultArray));
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setItemCountPerPage($perPage);
+        return $paginator;
+    }
+
 
     /**
      * get all activities including options.
