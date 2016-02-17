@@ -34,11 +34,13 @@
             <?php else: ?>
                 <div class="photo-grid-item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                     <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
-                        <img src="<?= $this->fileUrl(
-                            is_null($item->getWeeklyPhoto()) ?
-                                $item->getSmallThumbPath()
-                                : $item->getLargeThumbPath()
-                        ) ?>">
+                        <?php
+                            $image = is_null($item->getWeeklyPhoto()) ?
+                                    $item->getSmallThumbPath()
+                                    : $item->getLargeThumbPath();
+                            $size = getimagesize('public/data/' . $image);
+                        ?>
+                        <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
                     </a>
                 </div>
             <?php endif; ?>
@@ -49,6 +51,7 @@
 
 <script>
     $(document).ready(function () {
+
         Photo.initGrid();
     });
 </script>
