@@ -151,7 +151,6 @@ class AdminController extends AbstractActionController
         // Get parameters
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageID');
-        echo($packageId);
 
         // Handle incoming form results
         $request = $this->getRequest();
