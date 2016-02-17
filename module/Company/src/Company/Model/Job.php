@@ -49,6 +49,13 @@ class Job
     protected $website;
 
     /**
+     * The location(url) of an attachment describing the job.
+     * 
+     * @ORM\Column(type="string") 
+     */
+    protected $attachment;
+    
+    /**
      * The job's phone.
      *
      * @ORM\Column(type="string")
@@ -82,7 +89,7 @@ class Job
      * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyJobPackage", inversedBy="jobs")
      */
     protected $package;
-
+    
     /**
      * Constructor.
      */
@@ -184,6 +191,26 @@ class Job
     public function setWebsite($website)
     {
         $this->website = $website;
+    }
+
+    /**
+     * Get the job's attachment.
+     *
+     * @return string
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * Set the job's attachment.
+     *
+     * @param string $attachment
+     */
+    public function setAttachment($attachment)
+    {
+        $this->attachment = $attachment;
     }
 
     /**
@@ -297,12 +324,13 @@ class Job
         $array['name'] = $this->getName();
         $array['slugName'] = $this->getSlugName();
         $array['active'] = ($this->getActive()) ? '1' : '0';
+        $array['attachment'] = $this->getAttachment();
         $array['language'] = $this->getLanguage();
         $array['website'] = $this->getWebsite();
         $array['email'] = $this->getEmail();
         $array['phone'] = $this->getPhone();
         $array['description'] = $this->getDescription();
-
+        
         return $array;
     }
     
@@ -332,6 +360,7 @@ class Job
         $this->setSlugName($this->updateIfSet($data['slugName'],''));
         $this->setLanguage($this->updateIfSet($data['language'],''));
         $this->setWebsite($this->updateIfSet($data['website'],''));
+        $this->setAttachment($this->updateIfSet($data['attachment'], ''));
         $this->setEmail($this->updateIfSet($data['email'],''));
         $this->setPhone($this->updateIfSet($data['phone'],''));
         $this->setDescription($this->updateIfSet($data['description'],''));
