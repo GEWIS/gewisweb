@@ -75,6 +75,16 @@ class EditJob extends Form
             ],
         ]);
         $this->add([
+            'name' => 'attachment',
+            'type' => '\Zend\Form\Element\File',
+            'attributes' => [
+                'type' => 'file',
+            ],
+            'options' => [
+                'label' => $translate->translate('Attachment'),
+            ],
+        ]);
+        $this->add([
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
@@ -169,6 +179,25 @@ class EditJob extends Form
             ],
         ]);
 
+        $filter->add([
+            'name' => 'attachment',
+            'required' => false,
+            'validators' => [
+                [
+                    'name' => 'File\Extension',
+                    'options' => [
+                        'extension' => 'pdf',
+                    ],
+                ],
+                /*[
+                    'name' => 'File\MimeType',
+                    'options' => [
+                        'mimeType' => 'application/pdf',
+                    ],
+                ],*/
+            ],
+        ]);
+
         // Cannot upload logo yet
         /*$filter->add(array(
             'name' => 'logo',
@@ -191,7 +220,7 @@ class EditJob extends Form
 
         /*
          * TODO: Add more filters
-         * 
+         *
          * Email filter: http://stackoverflow.com/questions/20946210/zend2-limiting-e-mail-validation-to-only-one-error-message
          */
 
