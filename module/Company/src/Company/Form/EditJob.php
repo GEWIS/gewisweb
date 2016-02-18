@@ -189,12 +189,12 @@ class EditJob extends Form
                         'extension' => 'pdf',
                     ],
                 ],
-                /*[
+                [
                     'name' => 'File\MimeType',
                     'options' => [
                         'mimeType' => 'application/pdf',
                     ],
-                ],*/
+                ],
             ],
         ]);
 

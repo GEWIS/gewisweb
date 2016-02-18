@@ -50,11 +50,11 @@ class Job
 
     /**
      * The location(url) of an attachment describing the job.
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      */
     protected $attachment;
-    
+
     /**
      * The job's phone.
      *
@@ -89,7 +89,7 @@ class Job
      * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyJobPackage", inversedBy="jobs")
      */
     protected $package;
-    
+
     /**
      * Constructor.
      */
@@ -130,7 +130,7 @@ class Job
 
     /**
      * Get the job's slug name.
-     * 
+     *
      * @return string the Jobs slug name
      */
     public function getSlugName()
@@ -275,7 +275,7 @@ class Job
 
     /**
      * Get the job's language.
-     * 
+     *
      * @return string language of the job
      */
     public function getLanguage()
@@ -285,7 +285,7 @@ class Job
 
     /**
      * Set the job's language.
-     * 
+     *
      * @param string $language language of the job
      */
     public function setLanguage($language)
@@ -305,7 +305,7 @@ class Job
 
     /**
      * Set the job's package.
-     * 
+     *
      * @param CompanyPackage $package the job's package
      */
     public function setPackage(CompanyPackage $package)
@@ -330,12 +330,12 @@ class Job
         $array['email'] = $this->getEmail();
         $array['phone'] = $this->getPhone();
         $array['description'] = $this->getDescription();
-        
+
         return $array;
     }
-    
+
     /**
-     * Returns the first argument if it is nonnul, otherwise, returns the second 
+     * Returns the first argument if it is nonnul, otherwise, returns the second
      * argument
      *
      * @param mixed $object
@@ -349,7 +349,7 @@ class Job
         return $default;
     }
     /**
-     * Sets all instance variables of this object to the values of the entries 
+     * Sets all instance variables of this object to the values of the entries
      * in $data
      *
      * @param mixed $data
@@ -360,7 +360,6 @@ class Job
         $this->setSlugName($this->updateIfSet($data['slugName'],''));
         $this->setLanguage($this->updateIfSet($data['language'],''));
         $this->setWebsite($this->updateIfSet($data['website'],''));
-        $this->setAttachment($this->updateIfSet($data['attachment'], ''));
         $this->setEmail($this->updateIfSet($data['email'],''));
         $this->setPhone($this->updateIfSet($data['phone'],''));
         $this->setDescription($this->updateIfSet($data['description'],''));

@@ -162,6 +162,7 @@ class Company extends AbstractACLService
             }
             $this->saveJob();
         }
+        return $job;
     }
 
     /**

@@ -343,7 +343,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            $companyService->saveJobByData($job, $request->getPost(), $files);
+            $job = $companyService->saveJobByData($job, $request->getPost(), $files);
             // TODO: possibly redirect to package
         }
 
@@ -364,6 +364,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         $vm = new ViewModel([
             'jobEditForm' => $jobForm,
+            'job' => $job
         ]);
 
         return $vm;
