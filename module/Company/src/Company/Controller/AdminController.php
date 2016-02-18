@@ -161,7 +161,7 @@ class AdminController extends AbstractActionController
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
-                );
+            );
             if (!is_null($job)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
