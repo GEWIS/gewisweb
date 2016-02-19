@@ -38,7 +38,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $organOptions = [0 => $translator->translate('No organ')];
 
         foreach ($organs as $organ) {
-            $organOptions[$organ->getId()] = $organ->getName();
+            $organOptions[$organ->getId()] = $organ->getAbbr();
         }
 
         // Find user that wants to create an activity
