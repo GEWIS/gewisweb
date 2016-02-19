@@ -194,7 +194,7 @@ $form->prepare();
             $organ->setAttribute('class', 'form-control');
             ?>
             <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $organ->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $organ->getAbbr(); ?>" class="control-label col-sm-2">
                     <?= $this->translate('Organizing committee / fraternity') ?>
                 </label>
                 <div class="col-sm-10">
