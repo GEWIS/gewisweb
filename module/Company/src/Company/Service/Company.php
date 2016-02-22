@@ -21,7 +21,7 @@ class Company extends AbstractACLService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the banner')
             );
-        } 
+        }
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
@@ -79,8 +79,8 @@ class Company extends AbstractACLService
             $package->exchangeArray($data);
             if ($package->getType() == 'banner'){
                 $file = $files['banner'];
-                if ($file['error'] !== 4) {
-                    if ($file['error'] !== 0) {
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $oldPath = $package->getImage();
@@ -115,8 +115,8 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== 4) {
-                    if ($file['error'] !== 0) {
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $oldPath = $translation->getLogo();
@@ -138,14 +138,31 @@ class Company extends AbstractACLService
      * @param mixed $job
      * @param mixed $data
      */
-    public function saveJobByData($job,$data)
+    public function saveJobByData($job,$data, $files)
     {
         $jobForm = $this->getJobForm();
-        $jobForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $jobForm->setData($mergedData);
         if ($jobForm->isValid()){
             $job->exchangeArray($data);
+            $file = $files['attachment'];
+            if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                if ($file['error'] !== UPLOAD_ERR_OK) {
+                    return false;
+                }
+                $oldPath = $job->getAttachment();
+                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                $job->setAttachment($newPath);
+                if ($oldPath !== '' && $oldPath != $newPath) {
+                    $this->getFileStorageService()->removeFile($oldPath);
+                }
+            }
             $this->saveJob();
         }
+        return $job;
     }
 
     /**
@@ -194,8 +211,8 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== 4){
-                    if ($file['error'] !== 0){
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE){
+                    if ($file['error'] !== UPLOAD_ERR_OK){
                         return false;
                     }
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
@@ -272,12 +289,24 @@ class Company extends AbstractACLService
      * @param mixed $packageID
      * @param mixed $data
      */
-    public function insertJobIntoPackageIDByData($packageID,$data)
+    public function insertJobIntoPackageIDByData($packageID, $data, $files)
     {
         $jobForm = $this->getJobForm();
-        $jobForm->setData($data);
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $jobForm->setData($mergedData);
         if ($jobForm->isValid()) {
             $job = $this->insertJobIntoPackageID($packageID);
+            $file = $files['attachment'];
+            if ($file['error'] !== UPLOAD_ERR_NO_FILE){
+                if ($file['error'] !== UPLOAD_ERR_OK){
+                    return false;
+                }
+                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                $job->setAttachment($newPath);
+            }
             $job->exchangeArray($data);
             $this->saveCompany();
             return $job;
@@ -316,7 +345,7 @@ class Company extends AbstractACLService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to delete packages')
             );
-        } 
+        }
         $this->getPackageMapper()->delete($packageID);
         $this->getBannerPackageMapper()->delete($packageID);
     }

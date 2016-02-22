@@ -49,6 +49,13 @@ class Job
     protected $website;
 
     /**
+     * The location(url) of an attachment describing the job.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $attachment;
+
+    /**
      * The job's phone.
      *
      * @ORM\Column(type="string")
@@ -123,7 +130,7 @@ class Job
 
     /**
      * Get the job's slug name.
-     * 
+     *
      * @return string the Jobs slug name
      */
     public function getSlugName()
@@ -184,6 +191,26 @@ class Job
     public function setWebsite($website)
     {
         $this->website = $website;
+    }
+
+    /**
+     * Get the job's attachment.
+     *
+     * @return string
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * Set the job's attachment.
+     *
+     * @param string $attachment
+     */
+    public function setAttachment($attachment)
+    {
+        $this->attachment = $attachment;
     }
 
     /**
@@ -248,7 +275,7 @@ class Job
 
     /**
      * Get the job's language.
-     * 
+     *
      * @return string language of the job
      */
     public function getLanguage()
@@ -258,7 +285,7 @@ class Job
 
     /**
      * Set the job's language.
-     * 
+     *
      * @param string $language language of the job
      */
     public function setLanguage($language)
@@ -278,7 +305,7 @@ class Job
 
     /**
      * Set the job's package.
-     * 
+     *
      * @param CompanyPackage $package the job's package
      */
     public function setPackage(CompanyPackage $package)
@@ -297,6 +324,7 @@ class Job
         $array['name'] = $this->getName();
         $array['slugName'] = $this->getSlugName();
         $array['active'] = ($this->getActive()) ? '1' : '0';
+        $array['attachment'] = $this->getAttachment();
         $array['language'] = $this->getLanguage();
         $array['website'] = $this->getWebsite();
         $array['email'] = $this->getEmail();
@@ -305,9 +333,9 @@ class Job
 
         return $array;
     }
-    
+
     /**
-     * Returns the first argument if it is nonnul, otherwise, returns the second 
+     * Returns the first argument if it is nonnul, otherwise, returns the second
      * argument
      *
      * @param mixed $object
@@ -321,7 +349,7 @@ class Job
         return $default;
     }
     /**
-     * Sets all instance variables of this object to the values of the entries 
+     * Sets all instance variables of this object to the values of the entries
      * in $data
      *
      * @param mixed $data

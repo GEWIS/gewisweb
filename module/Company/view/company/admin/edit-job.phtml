@@ -1,5 +1,6 @@
-<?php 
+<?php
 $form=$jobEditForm;
+$form->prepare();
 ?>
 
 <?= $this->form()->openTag($form) ?>
@@ -52,6 +53,22 @@ $form=$jobEditForm;
         <?= $this->formElement($element) ?>
         <?= $this->formElementErrors($element); ?>
     </dd>
+<?php $element = $form->get('attachment') ?>
+    <dt><?= $element->getOption('label') ?></dt>    
+    <dd>
+        <?= $this->formElement($element) ?>
+        <?= $this->formElementErrors($element); ?>
+    </dd>
+    <dt> Current attachment</dt>
+    <dd>
+<?php if ($job->getAttachment()!=''): ?>
+        <a href="<?= $this->fileUrl($job->getAttachment()); ?>" >
+            <?= $this->translate("View attachment"); ?>
+        </a>
+<?php else: ?>
+        <?= $this->translate("No attachment uploaded"); ?>
+    </dd>
+<?php endif;?>
 </dl>
 
 <?= $this->formRow($form->get('submit')); ?>

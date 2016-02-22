@@ -48,9 +48,9 @@ class AdminController extends AbstractActionController
             if (!is_null($company)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/default', 
+                    'admin_company/default',
                     [
-                        'action' => 'edit', 
+                        'action' => 'edit',
                         'slugCompanyName' => $company->getSlugName(),
                     ],
                     [],
@@ -108,7 +108,7 @@ class AdminController extends AbstractActionController
             )){
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/editCompany', 
+                    'admin_company/editCompany',
                     ['slugCompanyName' => $companyName],
                     [],
                     false
@@ -151,14 +151,17 @@ class AdminController extends AbstractActionController
         // Get parameters
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageID');
-        echo($packageId);
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            $job = $companyService->insertJobIntoPackageIDByData($packageId, $request->getPost());
+            $job = $companyService->insertJobIntoPackageIDByData(
+                $packageId,
+                $request->getPost(),
+                $request->getFiles()
+            );
             if (!is_null($job)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
@@ -180,7 +183,7 @@ class AdminController extends AbstractActionController
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage/addJob',
                 [
-                    'slugCompanyName' => $companyName, 
+                    'slugCompanyName' => $companyName,
                     'packageID' => $packageId
                 ]
             )
@@ -215,7 +218,7 @@ class AdminController extends AbstractActionController
         if (empty($companyList)) {
             $company = null;
             $this->getResponse()->setStatusCode(404);
-            return; 
+            return;
         }
 
         $company = $companyList[0];
@@ -289,7 +292,7 @@ class AdminController extends AbstractActionController
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage',
                 [
-                    'packageID' => $packageID, 
+                    'packageID' => $packageID,
                     'slugCompanyName' => $companyName,
                     'type' => $type,
                 ]
@@ -317,7 +320,7 @@ class AdminController extends AbstractActionController
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobForm();
-        
+
         // Get the parameters
         $packageID = $this->params('packageID');
         $companyName = $this->params('slugCompanyName');
@@ -331,7 +334,7 @@ class AdminController extends AbstractActionController
         if (empty($jobList)) {
             $company = null;
             $this->getResponse()->setStatusCode(404);
-            return; 
+            return;
         }
 
         $job = $jobList[0];
@@ -339,7 +342,8 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->saveJobByData($job, $request->getPost());
+            $files = $request->getFiles();
+            $job = $companyService->saveJobByData($job, $request->getPost(), $files);
             // TODO: possibly redirect to package
         }
 
@@ -350,7 +354,7 @@ class AdminController extends AbstractActionController
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage/editJob',
                 [
-                    'slugCompanyName' => $companyName, 
+                    'slugCompanyName' => $companyName,
                     'jobName' => $jobName,
                     'packageID' => $packageID,
                 ]
@@ -360,6 +364,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         $vm = new ViewModel([
             'jobEditForm' => $jobForm,
+            'job' => $job
         ]);
 
         return $vm;
@@ -437,7 +442,7 @@ class AdminController extends AbstractActionController
                 $companyService->deletePackage($packageID);
             }
             return $this->redirect()->toRoute(
-                'admin_company/editCompany', 
+                'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]
             );
         }
