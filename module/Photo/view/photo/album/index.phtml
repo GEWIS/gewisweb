@@ -44,6 +44,18 @@
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
+    <div class="pull-right">
+        <?= $this->paginationControl(
+        $this->paginator,
+        // the scrolling style
+        'elastic',
+        'paginator/default',
+        [
+            'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+        ]
+    )
+    ?>
+    </div>
 </div>
 
 
