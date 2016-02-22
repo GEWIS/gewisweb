@@ -15,16 +15,18 @@ Photo
   width: 0.5%;
 }
 .grid-sizer, .photo-grid-item {
-  background-color: #d40026;
   width: 24.5%;
   margin-bottom: 0.5%;
 }
 
+.photo-grid-item-photo {
+  background-color: #d40026;
+}
 .photo-grid-item {
   float: left;
 }
 
-.photo-grid-item img {
+.photo-grid-item-photo img {
   display: block;
   max-width: 100%;
 }
