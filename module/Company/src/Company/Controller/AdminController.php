@@ -165,11 +165,10 @@ class AdminController extends AbstractActionController
             if (!is_null($job)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/editCompany/editPackage/editJob',
+                    'admin_company/editCompany/editPackage',
                     [
                         'slugCompanyName' => $companyName,
-                        'packageID' => $packageId,
-                        'jobName' => $job->getName(),
+                        'packageID' => $packageId
                     ]
                 );
             }
