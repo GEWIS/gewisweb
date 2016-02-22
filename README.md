@@ -45,6 +45,14 @@ Additional steps required in production
 - Set a cronjob for generating the photo of the week `0 0 * * 1 ./web photo weeklyphoto >/dev/null 2>&1`
 - run `./web orm:generate-proxies`
 
+Upgrading
+============
+After upgrading to a new version complete the following steps (not all steps may be required)
+- Run `php composer.phar install -o` to generate a composer classmap
+- Run `genclassmap.sh` to generate module class maps
+- Run `./web orm:generate-proxies`
+- Clear PHP's APC cache when upgrading in a production environment.
+
 Testing
 ============
 To generate test data ensure that the application is running with the development configuration. Test data can
