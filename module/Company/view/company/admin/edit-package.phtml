@@ -64,7 +64,7 @@ $form = $packageEditForm;
             </th>
         </tr>
 
-    <?php if (!empty($package->getJobs())) { 
+    <?php if (count($package->getJobs()) > 0) { 
         foreach($package->getJobs() as $job) { ?>
             <tr>
                 <td>
