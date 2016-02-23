@@ -15,3 +15,4 @@ node_modules/
 public/css/gewis-theme.css
 public/css/gewis-theme.css.map
 public/styleguide/
+autoload_classmap.php
