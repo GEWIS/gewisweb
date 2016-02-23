@@ -4,7 +4,7 @@
     <li class="list-group-item agenda-item row">
         <?=$this->paginationControl($activities,
                 'Elastic',
-                'paginator/default', array('route' => $route)); ?>
+                'paginator/default', ['path' => $this->url($route)]); ?>
     </li>
 <?php endif; ?>
 <?php foreach($activities as $activity):?>
@@ -58,7 +58,7 @@
     <li class="list-group-item agenda-item row">
         <?=$this->paginationControl($activities,
                 'Elastic',
-                'paginator/default', array('route' => $route)); ?>
+                'paginator/default', ['path' => $this->url($route)]); ?>
     </li>
     <?php endif; ?>
 </ul>
