@@ -8,7 +8,7 @@ use Zend\Mvc\I18n\Translator;
 
 class EditCompany extends Form
 {
-    public function __construct($mapper,Translator $translate)
+    public function __construct($mapper, Translator $translate)
     {
         // we want to ignore the name passed
         parent::__construct();
@@ -213,10 +213,10 @@ class EditCompany extends Form
                     'object_repository' => $mapper->getRepository(''),
                     'fields' => 'slugName',
                 ]),
-                new \Zend\Validator\Regex(
-                [
-                    'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
-                ]),
+                new \Zend\Validator\Regex([
+                        'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
+                    ]
+                ),
             ],
             'filters' => [
                 ['name' => 'StripTags'],
