@@ -239,7 +239,7 @@ class EditCompany extends Form
             'filters' => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim']
-            ),
+            ],
             'validators' => [
             ]
         ]);
