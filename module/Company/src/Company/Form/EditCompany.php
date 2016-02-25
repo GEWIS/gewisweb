@@ -8,7 +8,7 @@ use Zend\Mvc\I18n\Translator;
 
 class EditCompany extends Form
 {
-    public function __construct(Translator $translate)
+    public function __construct($mapper, Translator $translate)
     {
         // we want to ignore the name passed
         parent::__construct();
@@ -181,10 +181,10 @@ class EditCompany extends Form
             ],
         ]);
 
-        $this->initFilters();
+        $this->initFilters($mapper);
     }
 
-    protected function initFilters()
+    protected function initFilters($mapper)
     {
         $filter = new InputFilter();
 
@@ -205,54 +205,70 @@ class EditCompany extends Form
                 ['name' => 'StringTrim'],
             ],
         ]);
+        $filter->add([
+            'name' => 'slugName',
+            'required' => true,
+            'validators' => [
+                new \DoctrineModule\Validator\NoObjectExists([
+                    'object_repository' => $mapper->getRepository(''),
+                    'fields' => 'slugName',
+                ]),
+                new \Zend\Validator\Regex([
+                        'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
+                    ]
+                ),
+            ],
+            'filters' => [
+            ],
+        ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'en_website',
             'required' => false,
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
-            ),
-            'validators' => array(
-            )
-        ));
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+            ]
+        ]);
         
-        $filter->add(array(
+        $filter->add([
             'name' => 'nl_website',
             'required' => false,
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
-            ),
-            'validators' => array(
-            )
-        ));
-        $filter->add(array(
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+            ]
+        ]);
+        $filter->add([
             'name' => 'en_description',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 10000
-                    )
-                )
-            )
-        ));
-        $filter->add(array(
+                    ]
+                ]
+            ]
+        ]);
+        $filter->add([
             'name' => 'nl_description',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 10000
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
         $filter->add([
             'name' => 'email',

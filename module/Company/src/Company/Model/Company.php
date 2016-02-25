@@ -282,6 +282,16 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $this->packages;
     }
 
+    
+    /**
+     * Get the number of packages.
+     *
+     * @return the number of packages
+     */
+    public function getNumberOfPackages()
+    {
+        return count($this->packages);
+    }
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.

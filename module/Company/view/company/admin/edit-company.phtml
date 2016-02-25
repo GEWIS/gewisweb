@@ -37,7 +37,7 @@ if (is_null($company)){
                         <?= $this->translate('Jobs'); ?>
             </th>
         </tr>
-    <?php if (count($company->getPackages()) > 0) { 
+    <?php if ($company->getNumberOfPackages() > 0) { 
         foreach($company->getPackages() as $package) { ?>
             <tr>
                 <td>
