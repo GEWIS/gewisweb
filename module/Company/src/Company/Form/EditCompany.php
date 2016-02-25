@@ -219,58 +219,56 @@ class EditCompany extends Form
                 ),
             ],
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
             ],
         ]);
 
-        $filter->add(array(
+        $filter->add([
             'name' => 'en_website',
             'required' => false,
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
-            ),
-            'validators' => array(
-            )
-        ));
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+            ]
+        ]);
         
-        $filter->add(array(
+        $filter->add([
             'name' => 'nl_website',
             'required' => false,
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim')
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim']
             ),
-            'validators' => array(
-            )
-        ));
-        $filter->add(array(
+            'validators' => [
+            ]
+        ]);
+        $filter->add([
             'name' => 'en_description',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 10000
-                    )
-                )
-            )
-        ));
-        $filter->add(array(
+                    ]
+                ]
+            ]
+        ]);
+        $filter->add([
             'name' => 'nl_description',
             'required' => false,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 2,
                         'max' => 10000
-                    )
-                )
-            )
-        ));
+                    ]
+                ]
+            ]
+        ]);
 
         $filter->add([
             'name' => 'email',
