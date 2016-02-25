@@ -214,9 +214,8 @@ class EditCompany extends Form
                     'fields' => 'slugName',
                 ]),
                 new \Zend\Validator\Regex([
-                        'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
-                    ]
-                ),
+                    'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
+                ]),
             ],
             'filters' => [
             ],
