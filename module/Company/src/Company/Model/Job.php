@@ -76,15 +76,9 @@ class Job
      */
     protected $description;
 
-    /**
-     * The job's description.
-     *
-     * @ORM\Column(type="text")
-     */
-    protected $description;
 
     /**
-     * The job's description.
+     * The job's timestamp.
      *
      * @ORM\Column(type="date")
      */
