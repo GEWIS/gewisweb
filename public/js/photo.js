@@ -71,16 +71,31 @@ Photo = {
     },
 
     initGrid: function () {
-        var $grid = $('.photo-grid').masonry({
+
+        /*
+         * Pre size items such that we can do the layouting while the images are loading
+         */
+        var sizer = $('.grid-sizer').width();
+        var gutter = $('.gutter-sizer').width();
+        $('.photo-grid-item > a > img').each(function (index) {
+            var item = $(this);
+            var ratio = sizer / item.data('width');
+            var height = Math.round(ratio * item.data('height'));
+            if (item.parent().parent().hasClass('potw-thumb')) {
+                item.attr('width', 2 * sizer + gutter);
+                item.attr('height', 2 * height + gutter);
+            } else {
+                item.attr('width', sizer);
+                item.attr('height', height);
+            }
+        });
+
+        $('.photo-grid').masonry({
             itemSelector: '.photo-grid-item',
             columnWidth: '.grid-sizer',
             percentPosition: true,
-            gutter: '.gutter-sizer'
-        });
-
-        // layout Masonry after all images are loaded
-        $grid.imagesLoaded().always( function() {
-            $('.photo-grid').masonry('layout');
+            gutter: '.gutter-sizer',
+            transitionDuration: 0
         });
     },
     removeTag: function (e) {

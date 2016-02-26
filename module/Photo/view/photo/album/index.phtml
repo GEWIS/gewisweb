@@ -23,22 +23,24 @@
         <div class="gutter-sizer"></div>
         <?php foreach ($paginator as $item): ?>
             <?php if ($item instanceof \Photo\Model\Album): ?>
-                <div class="photo-grid-item">
+                <div class="photo-grid-item photo-grid-item-album">
                     <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
-                        <img src="<?= $this->fileUrl($item->getCoverPath()) ?>">
+                        <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
                         <div class="caption">
                             <?= $this->escapeHtml($item->getName()); ?>
                         </div>
                     </a>
                 </div>
             <?php else: ?>
-                <div class="photo-grid-item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                     <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
-                        <img src="<?= $this->fileUrl(
-                            is_null($item->getWeeklyPhoto()) ?
-                                $item->getSmallThumbPath()
-                                : $item->getLargeThumbPath()
-                        ) ?>">
+                        <?php
+                            $image = is_null($item->getWeeklyPhoto()) ?
+                                    $item->getSmallThumbPath()
+                                    : $item->getLargeThumbPath();
+                            $size = getimagesize('public/data/' . $image);
+                        ?>
+                        <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
                     </a>
                 </div>
             <?php endif; ?>
