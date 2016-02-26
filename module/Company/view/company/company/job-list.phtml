@@ -60,7 +60,9 @@ $this->headTitle($this->translate('Jobs'));
 
 
         // Randomize the order of companies
-        shuffle($jobList);
+        if ($randomize):
+            shuffle($jobList);
+        endif
         foreach ($jobList as $job):
             if ($job->isActive()):
                 $company = $job->getPackage()->getCompany(); ?>

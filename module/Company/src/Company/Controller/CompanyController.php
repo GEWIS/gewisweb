@@ -75,12 +75,14 @@ class CompanyController extends AbstractActionController
                 'company' => $companyService->getCompaniesBySlugName($companyName)[0],
                 'jobList' => $companyService->getJobsByCompanyName($companyName),
                 'translator' => $companyService->getTranslator(),
+                'randomize' => false,
             ]);
         }
         // all jobs
         return new ViewModel([
             'jobList' => $companyService->getJobList(),
             'translator' => $companyService->getTranslator(),
+            'randomize' => true,
         ]);
     }
 
