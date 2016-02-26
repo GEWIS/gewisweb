@@ -26,14 +26,15 @@ class CompanyController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
-        $companies = $companyService->getCompaniesBySlugName($companyName);
-        if (count($companies) == 1) {
+        $company = $companyService->getCompanyBySlugName($companyName);
+        if (!is_null($company)) {
             return new ViewModel([
-                'company' => $companies[0],
+                'company' => $company,
                 'translator' => $companyService->getTranslator(),
             ]);
         }
-        $this->getResponse()->setStatusCode(404);
+
+        return $this->notFoundAction();
     }
 
     /**
