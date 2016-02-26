@@ -1079,7 +1079,7 @@ msgstr "Bedrijven"
 #: module/Company/view/partial/company/company/list/company.phtml:25
 #: module/Application/view/partial/main-nav.phtml:119
 msgid "Jobs"
-msgstr "Banen"
+msgstr "Vacatures"
 
 #: module/Company/view/company/company/job-list.phtml:44
 #: module/Company/view/company/company/job-list.phtml:71
@@ -1128,7 +1128,7 @@ msgstr "Artikel"
 #: module/Company/view/company/admin/index.phtml:38
 #: module/Company/view/company/admin/index.phtml:69
 msgid "Active jobs"
-msgstr "Actieve banen"
+msgstr "Actieve vacatures"
 
 #: module/Company/view/company/admin/index.phtml:39
 #: module/Company/view/company/admin/index.phtml:70
@@ -1177,7 +1177,7 @@ msgstr "Bedrijfslogo"
 
 #: module/Company/view/company/admin/edit-package.phtml:60
 msgid "Job"
-msgstr "Baan"
+msgstr "Vacature"
 
 #: module/Company/view/company/admin/edit-package.phtml:63
 #: module/Company/view/company/admin/edit-company.phtml:34
@@ -1193,7 +1193,7 @@ msgstr "wijzig"
 
 #: module/Company/view/company/admin/edit-package.phtml:92
 msgid "Add job"
-msgstr "Voeg baan toe"
+msgstr "Voeg vacatures toe"
 
 #: module/Company/view/company/admin/delete-company.phtml:3
 msgid "Error: company not found"
@@ -1255,16 +1255,16 @@ msgid ""
 "to just hide it."
 msgstr ""
 "Weet je zeker dat je dit pakket wilt verwijderen? Dit verwijderd ook alle "
-"banen. In plaats van verwijderen kun je ook the 'publiceer' optie uitzetten "
+"vacatures. In plaats van verwijderen kun je ook the 'publiceer' optie uitzetten "
 "om hem niet op de website te tonen."
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "job"
-msgstr "baan"
+msgstr "vacature"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "jobs"
-msgstr "banen"
+msgstr "vacatures"
 
 #: module/Education/view/education/education/index.phtml:5
 #: module/Application/view/partial/main-nav.phtml:122
@@ -2374,7 +2374,7 @@ msgstr "Je hebt niet de rechten om een pakket toe te voegen"
 
 #: module/Company/src/Company/Service/Company.php:298
 msgid "You are not allowed to insert a job"
-msgstr "Je hebt niet de rechten om een baan toe te voegen"
+msgstr "Je hebt niet de rechten om een vacature toe te voegen"
 
 #: module/Company/src/Company/Service/Company.php:317
 msgid "You are not allowed to delete packages"
@@ -2394,7 +2394,7 @@ msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
 #: module/Company/src/Company/Service/Company.php:410
 msgid "You are not allowed to edit jobs"
-msgstr "Je hebt niet de rechten om banen te wijzigen"
+msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
 #: module/Company/src/Company/Form/EditJob.php:55
 #: module/Company/src/Company/Form/EditCompany.php:42

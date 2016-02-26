@@ -1079,7 +1079,7 @@ msgstr "Companies"
 #: module/Company/view/partial/company/company/list/company.phtml:25
 #: module/Application/view/partial/main-nav.phtml:119
 msgid "Jobs"
-msgstr "Jobs"
+msgstr "Vacancies"
 
 #: module/Company/view/company/company/job-list.phtml:44
 #: module/Company/view/company/company/job-list.phtml:71
@@ -1128,7 +1128,7 @@ msgstr "Article"
 #: module/Company/view/company/admin/index.phtml:38
 #: module/Company/view/company/admin/index.phtml:69
 msgid "Active jobs"
-msgstr "Active jobs"
+msgstr "Active vacancies"
 
 #: module/Company/view/company/admin/index.phtml:39
 #: module/Company/view/company/admin/index.phtml:70
@@ -1177,7 +1177,7 @@ msgstr "Company Logo"
 
 #: module/Company/view/company/admin/edit-package.phtml:60
 msgid "Job"
-msgstr "Job"
+msgstr "Vacancy"
 
 #: module/Company/view/company/admin/edit-package.phtml:63
 #: module/Company/view/company/admin/edit-company.phtml:34
@@ -1193,7 +1193,7 @@ msgstr "edit"
 
 #: module/Company/view/company/admin/edit-package.phtml:92
 msgid "Add job"
-msgstr "Add job"
+msgstr "Add vacancy"
 
 #: module/Company/view/company/admin/delete-company.phtml:3
 msgid "Error: company not found"
@@ -1238,7 +1238,7 @@ msgstr "Featured Package"
 
 #: module/Company/view/company/admin/edit-company.phtml:83
 msgid "Add Job package"
-msgstr "Add Job package"
+msgstr "Add Vacancy package"
 
 #: module/Company/view/company/admin/edit-company.phtml:90
 msgid "Add featured package"
@@ -1251,20 +1251,20 @@ msgstr "Add Banner package"
 #: module/Company/view/company/admin/delete-package.phtml:3
 msgid ""
 "Do you really want to delete this package? This will delete all containing "
-"Jobs. Instead, you can also disable the 'published' option of this package "
+"Vacancies. Instead, you can also disable the 'published' option of this package "
 "to just hide it."
 msgstr ""
 "Do you really want to delete this package? This will delete all containing "
-"Jobs. Instead, you can also disable the 'published' option of this package "
+"Vacancies. Instead, you can also disable the 'published' option of this package "
 "to just hide it."
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "job"
-msgstr "job"
+msgstr "vacancy"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "jobs"
-msgstr "jobs"
+msgstr "vacancies"
 
 #: module/Education/view/education/education/index.phtml:5
 #: module/Application/view/partial/main-nav.phtml:122
@@ -2362,7 +2362,7 @@ msgstr "You are not allowed to insert a package"
 
 #: module/Company/src/Company/Service/Company.php:298
 msgid "You are not allowed to insert a job"
-msgstr "You are not allowed to insert a job"
+msgstr "You are not allowed to insert a vacancy"
 
 #: module/Company/src/Company/Service/Company.php:317
 msgid "You are not allowed to delete packages"
@@ -2382,7 +2382,7 @@ msgstr "You are not allowed to edit companies"
 
 #: module/Company/src/Company/Service/Company.php:410
 msgid "You are not allowed to edit jobs"
-msgstr "You are not allowed to edit jobs"
+msgstr "You are not allowed to edit vacancy"
 
 #: module/Company/src/Company/Form/EditJob.php:55
 #: module/Company/src/Company/Form/EditCompany.php:42
