@@ -296,13 +296,7 @@ class EditCompany extends Form
                 [
                     'name' => 'File\Extension',
                     'options' => [
-                        'extension' => 'png',
-                    ],
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'image/png',
+                        'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],
                 ],
             ],
@@ -314,13 +308,7 @@ class EditCompany extends Form
                 [
                     'name' => 'File\Extension',
                     'options' => [
-                        'extension' => 'png',
-                    ],
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'image/png',
+                        'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],
                 ],
             ],
