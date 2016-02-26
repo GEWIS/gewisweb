@@ -382,22 +382,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Extracted part of delete actions that checks if confirmation is given
-     *
-     *
-     */
-
-    private function checkConfirmation($request)
-    {
-        $del = $request->getPost('del', 'No');
-        if ($del === 'Yes') {
-            return true;
-        }
-        return false;
-
-    }
-
-    /**
      * Action that first asks for confirmation, and when given, deletes the company
      *
      *
@@ -413,23 +397,11 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-
-            // Check for confirmation
-            if ($this->checkConfirmation($request)) {
-                $companyService->deleteCompaniesBySlug($slugName);
-            }
-
+            $companyService->deleteCompaniesBySlug($slugName);
             return $this->redirect()->toRoute('admin_company');
         }
 
-        // No data returned, so instead, ask for confirmation
-
-        // Initialize the view
-        $vm = new ViewModel([
-            'companies' => $companyService->getEditableCompaniesBySlugName($slugName),
-            'translator' => $companyService->getTranslator(),
-        ]);
-        return $vm;
+        return $this->notFoundAction();
     }
 
     /**

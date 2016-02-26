@@ -1,12 +1,12 @@
 <?php
 $this->headScript()
     ->prependFile($this->basePath() . '/js/company-admin.js');
-/*$this->scriptUrl()->requireUrls(
+$this->scriptUrl()->requireUrls(
     [
-        'admin_company/delete'
+        'admin_company/deleteCompany'
     ],
-    ['company_id']
-);*/
+    ['slugCompanyName']
+);
 ?>
 <div class="row">
     <div class="col-md-10">
@@ -71,12 +71,8 @@ $this->headScript()
                 <td><?php $languages = $company->getFeaturedLanguages(); echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
                 <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                 <td>
-                    <button type="button" class="btn btn-xs"
-                        onclick="Company.Admin.hideCompany(<?php $company->getId() ?>)">
-                    <?= $this->translate('Hide') ?>
-                    </button>
                     <button type="button" class="btn btn-danger btn-xs"
-                        onclick="Company.Admin.deleteCompany(<?php $company->getId() ?>)" data-toggle="modal"
+                        onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')" data-toggle="modal"
                         data-target="#deleteModal">
                     <?= $this->translate('Delete') ?>
                     </button>
@@ -122,21 +118,5 @@ $this->headScript()
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-
-        /* SORTING */
-
-
-
-        $("#sort-column, #sort-order").change(function() {
-            if ($("#sort-column").val()=="company-name") {
-                sort_name($("#sort-order").val());
-            } else  if ($("#sort-column").val()=="jobs-amount") {
-                sort_jobs_amount($("#sort-order").val());
-            }
-        });
-    </script>
-
 </div>
 

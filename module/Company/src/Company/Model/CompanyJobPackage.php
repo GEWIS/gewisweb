@@ -23,7 +23,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * The package's jobs.
      *
-     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package")
+     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package", cascade={"persist", "remove"})
      */
     protected $jobs;
 

@@ -363,22 +363,18 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        $companies = $this->getCompaniesBySlugName($slug);
-        if (count($companies == 1)) {
-            $this->getFileStorageService()->deleteFile($companies[0]->getLogo());
-            $this->getCompanyMapper()->deleteBySlug($slug);
-        }
-
+        $company = $this->getCompanyBySlugName($slug);
+        $this->getCompanyMapper()->remove($company);
     }
 
     /**
-     * Returns all companies identified with $slugName
+     * Return the company identified by $slugName
      *
-     * @param mixed $slugName
+     * @param \Company\Model\Company|null $slugName
      */
-    public function getCompaniesBySlugName($slugName)
+    public function getCompanyBySlugName($slugName)
     {
-        return $this->getCompanyMapper()->findCompaniesBySlugName($slugName);
+        return $this->getCompanyMapper()->findCompanyBySlugName($slugName);
     }
 
     /**
