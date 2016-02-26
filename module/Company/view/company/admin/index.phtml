@@ -15,7 +15,9 @@ $this->scriptUrl()->requireUrls(
         </div>
     </div>
     <div class="col-md-2">
-        <a class="btn btn-success" href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>><?=$this->translate('Add Company');?></a>
+        <a class="btn btn-success" href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>>
+            <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Company');?>
+        </a>
     </div>
 </div>
     <hr>

@@ -216,8 +216,7 @@ class AdminController extends AbstractActionController
         // If the company is not found, throw 404
         if (empty($companyList)) {
             $company = null;
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return $this->notFoundAction();
         }
 
         $company = $companyList[0];
@@ -259,7 +258,7 @@ class AdminController extends AbstractActionController
         );
         $vm = new ViewModel([
             'company' => $company,
-            'companyEditForm' => $companyForm,
+            'form' => $companyForm,
         ]);
 
         return $vm;
@@ -421,25 +420,14 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($this->checkConfirmation($request)) {
-                $companyService->deletePackage($packageID);
-            }
+            $companyService->deletePackage($packageID);
             return $this->redirect()->toRoute(
                 'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]
             );
         }
 
-        // No data returned, so instead, ask for confirmation
-
-        // Initialize the view
-        $vm =  new ViewModel([
-            'package' => $companyService->getEditablePackage($packageID),
-            'slugName' => $companyName,
-            'translator' => $companyService->getTranslator(),
-        ]);
-
-        return $vm;
+        return $this->notFoundAction();
     }
 
     /**

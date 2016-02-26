@@ -48,5 +48,12 @@ Company.Admin = {
 
     deleteCompany: function (slugCompanyName) {
         $("#deleteForm").attr('action', URLHelper.url('admin_company/deleteCompany', {'slugCompanyName': slugCompanyName}));
+    },
+
+    deletePackage: function (slugCompanyName, packageID) {
+        $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deletePackage', {
+            'slugCompanyName': slugCompanyName,
+            'packageID': packageID
+        }));
     }
 };
