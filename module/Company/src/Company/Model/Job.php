@@ -76,6 +76,14 @@ class Job
      */
     protected $description;
 
+
+    /**
+     * The job's timestamp.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $timestamp;
+
     /**
      * The job's language.
      *
@@ -254,6 +262,25 @@ class Job
     }
 
     /**
+     * Get the job's timestamp.
+     *
+     * @return date
+     */
+    public function getTimestamp()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the job's timestamp.
+     *
+     * @param string $timestamp
+     */
+    public function setTimeStamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
+    /**
      * Get the job's description.
      *
      * @return string
@@ -330,6 +357,7 @@ class Job
         $array['email'] = $this->getEmail();
         $array['phone'] = $this->getPhone();
         $array['description'] = $this->getDescription();
+        $array['timestamp'] = $this->getTimestamp();
 
         return $array;
     }
@@ -364,5 +392,6 @@ class Job
         $this->setPhone($this->updateIfSet($data['phone'],''));
         $this->setDescription($this->updateIfSet($data['description'],''));
         $this->setActive($data['active'] === '1');
+        $this->setTimestamp($this->updateIfSet($data['timestamp'],''));
     }
 }

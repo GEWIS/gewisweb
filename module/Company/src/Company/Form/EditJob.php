@@ -56,6 +56,17 @@ class EditJob extends Form
             ],
         ]);
         $this->add([
+            'name' => 'timestamp',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => [
+                'required' => 'required',
+                'step' => '1',
+            ],
+            'options' => [
+                'label' => $translate->translate('Last updated'),
+            ],
+        ]);
+        $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
