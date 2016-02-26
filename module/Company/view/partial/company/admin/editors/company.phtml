@@ -1,102 +1,172 @@
-<dl><!-- common elements -->
 <?php $element = $this->form->get('id') ?>
 <?= $this->formElement($element) ?>
 <?= $this->formElementErrors($element); ?>
-<?php $element = $this->form->get('name') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-<?php $element = $this->form->get('slugName') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('address') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('phone') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('email') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>    
-</dl>
-<?php $element = $this->form->get('languages') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formMultiCheckbox($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>    
-</dl>
-<dl><!-- english elements -->
-<?php $element = $this->form->get('en_website') ?>
-<h2> <?= $this->translate('English')?> </h2>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('en_description') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('en_logo') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-<?php $element = $this->form->get('en_slogan') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-</dl>
-
-<dl><!-- dutch elements -->
-<?php $element = $this->form->get('nl_website') ?>
-<h2> <?= $this->translate('Dutch')?> </h2>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('nl_description') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $this->form->get('nl_logo') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-<?php $element = $this->form->get('nl_slogan') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-</dl>
+<?php
+$element = $form->get('languages');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group form-inline">
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-6">
+            <?= $element->getOption('label') ?>
+        </label>
+        <div class="col-sm-6">
+            <?= $this->formMultiCheckbox($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+</div>
+<?php
+$element = $form->get('name');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('slugName');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('phone');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('email');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('address');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('style', 'width:100%; height:10em; resize:none');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formTextarea($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3><?= $this->translate('Dutch') ?></h3>
+        <?php
+        $element = $form->get('nl_slogan');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('nl_website');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('nl_description');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('style', 'width:100%; height:10em; resize:none');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formTextarea($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('nl_logo');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formElement($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3><?= $this->translate('English') ?></h3>
+        <?php
+        $element = $form->get('en_slogan');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('en_website');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('en_description');
+        $element->setAttribute('class', 'form-control');
+        $element->setAttribute('style', 'width:100%; height:10em; resize:none');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formTextarea($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+        <?php
+        $element = $form->get('en_logo');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <?= $this->formElement($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+</div>

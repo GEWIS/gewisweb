@@ -6,24 +6,38 @@ if (is_null($company)){
 }
 ?>
 <h1> <?= $this->translate('Edit Company'); ?> </h1>
-
+<div class="row">
+    <div class="col-md-6">
+        <h2><?= $this->translate('Dutch logo') ?></h2>
+        <?php $translation = $company->getTranslationFromLocale('nl'); ?>
+        <?php if (!is_null($translation)): ?>
+            <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-6">
+        <h2><?= $this->translate('English logo') ?></h2>
+        <?php $translation = $company->getTranslationFromLocale('en'); ?>
+        <?php if (!is_null($translation)): ?>
+            <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
+        <?php endif; ?>
+    </div>
+</div>
 <?php $form->prepare() ?>
 <?= $this->form()->openTag($form) ?>
 <?= $this->partial('partial/company/admin/editors/company.phtml', 
         ['form' => $form]
     ); ?>
-<?= $this->formRow($form->get('submit')); ?>
+<br>
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary pull-right');
+?>
+<div class="form-group">
+    <?= $this->formButton($submit) ?>
+</div>
 <?= $this->form()->closeTag(); ?>
-<h2> <?= $this->translate('Dutch logo') ?></h2>
-    <img src='<?php $translation = $company->getTranslationFromLocale('nl');
-        if (!is_null($translation)):
-            echo $this->fileUrl($translation->getLogo());
-        endif; ?>'/>
-<h2> <?= $this->translate('English logo') ?></h2>
-    <img src='<?php $translation = $company->getTranslationFromLocale('en');
-        if (!is_null($translation)):
-            echo $this->fileUrl($translation->getLogo());
-        endif; ?>'/>
+
 <h2> <?= $this->translate('Packages') ?> </h2>
 <table class="packagelist">
         <tr>
