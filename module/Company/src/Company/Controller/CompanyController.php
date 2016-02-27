@@ -73,7 +73,7 @@ class CompanyController extends AbstractActionController
         if (isset($companyName)) {
             // jobs for a single company
             return new ViewModel([
-                'company' => $companyService->getCompaniesBySlugName($companyName)[0],
+                'company' => $companyService->getCompanyBySlugName($companyName),
                 'jobList' => $companyService->getJobsByCompanyName($companyName),
                 'translator' => $companyService->getTranslator(),
             ]);
