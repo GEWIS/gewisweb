@@ -5,17 +5,34 @@
 $element = $form->get('languages');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group form-inline">
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-6">
-            <?= $element->getOption('label') ?>
-        </label>
-        <div class="col-sm-6">
-            <?= $this->formMultiCheckbox($element) ?>
-            <?= $this->formElementErrors($element) ?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group form-inline">
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-6">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-6">
+                    <?= $this->formMultiCheckbox($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $element = $form->get('hidden');
+        ?>
+        <div class="checkbox">
+            <label>
+                <?= $this->formCheckbox($element) ?>
+                <?= $element->getOption('label') ?>
+                <?= $this->formElementErrors($element) ?>
+            </label>
         </div>
     </div>
 </div>
+
 <?php
 $element = $form->get('name');
 $element->setAttribute('class', 'form-control');

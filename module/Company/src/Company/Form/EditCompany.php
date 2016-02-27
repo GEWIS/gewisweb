@@ -173,6 +173,16 @@ class EditCompany extends Form
         ]);
 
         $this->add([
+            'name' => 'hidden',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Hide this company'),
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -212,10 +222,10 @@ class EditCompany extends Form
             'validators' => [
                 new \Zend\Validator\Callback([
                     'callback' => [$this,'slugNameUnique'],
-                    'message' => $translate->translate('This slug is already taken'),
+                    'message' => ('This slug is already taken'),
                 ]),
                 new \Zend\Validator\Regex([
-                    'message' => $translate->translate('This slug contains invalid characters') ,
+                    'message' => ('This slug contains invalid characters') ,
                     'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                 ]),
             ],

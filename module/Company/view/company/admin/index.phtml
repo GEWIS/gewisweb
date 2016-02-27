@@ -65,7 +65,9 @@ $this->scriptUrl()->requireUrls(
                     $editUrl = $this->url('admin_company/editCompany', 
                                           ['slugCompanyName' => $company->getSlugName()]);
             ?>
-            <tr class="company-list-item">
+            <tr class="company-list-item
+            <?= $company->getHidden() ? ' danger' : '' ?>
+            <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
                 <td class="company-name"><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
                 <td><?= $company->getNumberOfJobs(); ?></td>
                 <td><?= $company->getNumberOfActiveJobs(); ?></td>

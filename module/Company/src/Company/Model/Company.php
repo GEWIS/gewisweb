@@ -475,6 +475,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setAddress($this->updateIfSet($data['address'],  ''));
         $this->setEmail($this->updateIfSet($data['email'],''));
         $this->setPhone($this->updateIfSet($data['phone'],''));
+        $this->setHidden($this->updateIfSet($data['hidden'],''));
         $this->translations = $newTranslations;
     }
 
@@ -495,6 +496,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
         $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['hidden'] = $this->getHidden();
 
         // Languages
         $arraycopy['languages'] = [];
