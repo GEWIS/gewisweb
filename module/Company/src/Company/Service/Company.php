@@ -276,14 +276,13 @@ class Company extends AbstractACLService
      *
      * @return JobModel|bool
      */
-    protected function saveJobData($job, $data, $files)
+    public function saveJobData($job, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
-
         $jobForm->bind($job);
         $jobForm->setData($mergedData);
 
@@ -291,22 +290,23 @@ class Company extends AbstractACLService
             return false;
         }
 
-        $file = $files['attachment'];
-        if ($file['error'] !== UPLOAD_ERR_NO_FILE){
+        $file = $files['attachment_file'];
+        if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+            $oldPath = $job->getAttachment();
             try {
                 $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                $job->setAttachment($newPath);
             } catch (\Exception $e) {
                 return false;
             }
-            $oldPath = $job->getAttachment();
-            $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-            $job->setAttachment($newPath);
-            if ($oldPath !== '' && $oldPath != $newPath) {
+
+            if (!is_null($oldPath) && $oldPath != $newPath) {
                 $this->getFileStorageService()->removeFile($oldPath);
             }
+
+            $job->setAttachment($newPath);
         }
 
+        $job->setTimeStamp(new \DateTime());
         $this->getJobMapper()->persist($job);
         return $job;
     }

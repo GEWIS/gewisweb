@@ -51,7 +51,7 @@ class Job
     /**
      * The location(url) of an attachment describing the job.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $attachment;
 

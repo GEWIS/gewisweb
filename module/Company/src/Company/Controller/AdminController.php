@@ -353,7 +353,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            $job = $companyService->saveJobData($job, $request->getPost(), $files);
+            $companyService->saveJobData($job, $request->getPost(), $files);
             // TODO: possibly redirect to package
         }
 
