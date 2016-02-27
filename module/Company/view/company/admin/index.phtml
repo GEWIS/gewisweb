@@ -105,7 +105,8 @@ $this->scriptUrl()->requireUrls(
                     <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
                 </div>
                 <div class="modal-body">
-                    <p><?= $this->translate('Are you sure you want to delete this company?') ?> </p>
+                    <p><?= sprintf($this->translate('Are you sure you want to delete %s?'),
+                        '<strong id="deleteCompanyName"></strong>') ?> </p>
                     <p class="options">
                     </p>
                 </div>
