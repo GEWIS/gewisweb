@@ -499,6 +499,12 @@ class Company extends AbstractACLService
      */
     public function getJobForm()
     {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit jobs')
+            );
+        }
         return $this->sm->get('company_admin_edit_job_form');
     }
 
