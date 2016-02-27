@@ -12,24 +12,19 @@ class AdminController extends AbstractActionController
      * Action that displays the main page
      *
      */
-
     public function indexAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
         ]);
-
-        return $vm;
     }
 
     /**
      * Action that allows adding a company
-     *
-     *
      */
     public function addCompanyAction()
     {
@@ -52,9 +47,7 @@ class AdminController extends AbstractActionController
                     [
                         'action' => 'edit',
                         'slugCompanyName' => $company->getSlugName(),
-                    ],
-                    [],
-                    false
+                    ]
                 );
             }
         }
@@ -71,11 +64,9 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
-            'companyEditForm' => $companyForm,
+        return new ViewModel([
+            'form' => $companyForm,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -105,7 +96,7 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $files['banner'],
                 $type
-            )){
+            )) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany',

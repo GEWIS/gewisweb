@@ -19,15 +19,18 @@ $form->prepare()
 <?= $this->form()->closeTag(); ?>
 
 <?php if ($type === 'job'): ?>
-    <h2><?= $this->translate('Jobs') ?><a class="btn btn-success pull-right"
-                                          href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
-                                              [
-                                                  "slugCompanyName" => $companyName,
-                                                  'packageID' => $package->getId()
-                                              ]); ?>">
+    <h2>
+        <?= $this->translate('Jobs') ?>
+        <a class="btn btn-success pull-right"
+           href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
+               [
+                   "slugCompanyName" => $companyName,
+                   'packageID' => $package->getId()
+               ]); ?>">
             <span class="glyphicon glyphicon-plus"></span>
             <?= $this->translate('Add job'); ?>
-        </a></h2>
+        </a>
+    </h2>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -60,7 +63,8 @@ $form->prepare()
                                "jobName" => $job->getSlugName(),
                            ]
                        ); ?>">
-                        <?= $this->translate('edit'); ?></a>
+                        <?= $this->translate('edit'); ?>
+                    </a>
                 </td>
             </tr>
         <?php endforeach ?>

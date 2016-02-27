@@ -186,32 +186,6 @@ class EditJob extends Form
             ],
         ]);
 
-        // Cannot upload logo yet
-        /*$filter->add(array(
-            'name' => 'logo',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'File\Extension',
-                    'options' => array(
-                        'extension' => 'png'
-                    )
-                ),
-                array(
-                    'name' => 'File\MimeType',
-                    'options' => array(
-                        'mimeType' => 'image/png'
-                    )
-                )
-            )
-        ));*/
-
-        /*
-         * TODO: Add more filters
-         *
-         * Email filter: http://stackoverflow.com/questions/20946210/zend2-limiting-e-mail-validation-to-only-one-error-message
-         */
-
         $this->setInputFilter($filter);
     }
 }
