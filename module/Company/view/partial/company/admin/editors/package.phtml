@@ -1,0 +1,32 @@
+<?php
+$element = $form->get('startDate');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('expirationDate');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('published');
+?>
+<div class="checkbox">
+    <label>
+        <?= $this->formCheckbox($element) ?>
+        <?= $element->getOption('label') ?>
+        <?= $this->formElementErrors($element) ?>
+    </label>
+</div>

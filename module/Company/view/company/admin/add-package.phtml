@@ -5,24 +5,7 @@ $form->prepare();
 
 <?= $this->form()->openTag($form) ?>
 <dl>
-<?php $element = $form->get('startDate') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('expirationDate');?>
-    <dt><?= $element->getOption('label'); ?></dt>
-    <dd>
-        <?= $this->formElement($element); ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('published') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
+    <?= $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form]); ?>
 <?php if ($type === 'banner'):
     $element = $form->get('banner')?>
     <dt><?= $element->getOption('label') ?></dt>
@@ -45,6 +28,12 @@ $form->prepare();
         <?= $this->formElementErrors($element); ?>
     </dd>
 <?php endif;?>
-
-<?= $this->formRow($form->get('submit')); ?>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Save'));
+    $submit->setAttribute('class', 'btn btn-primary pull-right');
+    ?>
+    <div class="form-group">
+        <?= $this->formButton($submit) ?>
+    </div>
 <?= $this->form()->closeTag(); ?>
