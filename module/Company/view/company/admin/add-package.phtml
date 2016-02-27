@@ -1,39 +1,9 @@
-<?php 
-$form=$companyEditForm;
+<?php
+$form->setAttribute('class', 'form-horizontal');
 $form->prepare();
-?>
+echo $this->form()->openTag($form);
+echo $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]);
+echo $this->form()->closeTag($form);
 
-<?= $this->form()->openTag($form) ?>
-<dl>
-    <?= $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form]); ?>
-<?php if ($type === 'banner'):
-    $element = $form->get('banner')?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif; ?>
-<?php if ($type === 'featured'):?>
-    <?php $element = $form->get('language') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-    <?php $element = $form->get('article') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif;?>
-    <?php
-    $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Save'));
-    $submit->setAttribute('class', 'btn btn-primary pull-right');
-    ?>
-    <div class="form-group">
-        <?= $this->formButton($submit) ?>
-    </div>
-<?= $this->form()->closeTag(); ?>
+
+

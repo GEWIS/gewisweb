@@ -130,7 +130,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel([
-            'companyEditForm' => $packageForm,
+            'form' => $packageForm,
             'type' => $type,
         ]);
 
@@ -289,7 +289,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->savePackageByData($package,$request->getPost())) {
+            if ($companyService->savePackageByData($package,$request->getPost(), $request->getFiles())) {
                 // TODO: possibly redirect to company
             }
         }
@@ -313,7 +313,7 @@ class AdminController extends AbstractActionController
         $vm = new ViewModel([
             'package' => $package,
             'companyName' => $companyName,
-            'packageEditForm' => $packageForm,
+            'form' => $packageForm,
             'type' => $type,
         ]);
 
