@@ -225,15 +225,27 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->saveCompanyByData(
+            if($companyService->saveCompanyByData(
                 $company,
                 $request->getPost(),
                 $request->getFiles()
-            );
+            )){
+                $companyName = $request->getPost()['slugName'];
+                return $this->redirect()->toRoute(
+                    'admin_company/default',
+                    [
+                        'action' => 'edit',
+                        'slugCompanyName' => $companyName,
+                    ],
+                    [],
+                    false
+                );
+
+            }
         }
 
         // Initialize form
-        $companyForm->bind($company);
+        $companyForm->setData($company->getArrayCopy());
         $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
         $companyForm->setAttribute(
             'action',

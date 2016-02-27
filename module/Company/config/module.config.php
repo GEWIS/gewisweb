@@ -73,7 +73,7 @@ return [
                             // company/index should give the frontpage
                             'route' => '/:slugCompanyName',
                             'constraints' => [
-                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
                         ],
                         'may_terminate' => true,
@@ -131,7 +131,7 @@ return [
                                 'action' => 'deleteCompany',
                             ],
                             'constraints' => [
-                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
 
                         ],
@@ -146,7 +146,7 @@ return [
                                 'action' => 'editCompany',
                             ],
                             'constraints' => [
-                                'slugCompanyName' => '[a-zA-Z0-9_-]*',
+                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
 
                         ],
