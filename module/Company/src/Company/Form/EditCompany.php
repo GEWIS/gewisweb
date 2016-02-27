@@ -185,7 +185,7 @@ class EditCompany extends Form
         $this->initFilters($mapper, $translate);
     }
 
-    protected function initFilters($mapper, $translate)
+    protected function initFilters($translate)
     {
         $filter = new InputFilter();
 
@@ -328,12 +328,12 @@ class EditCompany extends Form
 
         $this->setInputFilter($filter);
     }
-    public function slugNameUnique($slugName,$context)
+    public function slugNameUnique($slugName, $context)
     {
-        $objects = $this->mapper->findEditableCompaniesBySlugName($slugName,true);
+        $objects = $this->mapper->findEditableCompaniesBySlugName($slugName, true);
         $cid = $context['id'] ;
-        foreach($objects as $company){
-            if($company->getID() != $cid){
+        foreach ($objects as $company) {
+            if ($company->getID() != $cid) {
                 echo $cid;
                 echo $company->getID();
 
