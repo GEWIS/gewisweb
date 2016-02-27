@@ -6,24 +6,38 @@ $form = $packageEditForm;
 <dl>
 <?php $element = $form->get('id') ?>
     <?= $this->formElement($element) ?>
-<?php $element = $form->get('startDate') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('expirationDate');?>
-    <dt><?= $element->getOption('label'); ?></dt>
-    <dd>
-        <?= $this->formElement($element); ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('published') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
+    <?php
+    $element = $form->get('startDate');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+    <?php
+    $element = $form->get('expirationDate');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+    <?php
+    $element = $form->get('published');
+    ?>
+    <div class="checkbox">
+        <label>
+            <?= $this->formCheckbox($element) ?>
+            <?= $element->getOption('label') ?>
+            <?= $this->formElementErrors($element) ?>
+        </label>
+    </div>
 
 <?php if ($type === 'banner'):
     $element = $form->get('banner')?>
@@ -49,46 +63,56 @@ $form = $packageEditForm;
     </dd>
 <?php endif;?>
 
-<?= $this->formRow($form->get('submit')); ?>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Save'));
+    $submit->setAttribute('class', 'btn btn-primary');
+    ?>
+    <div class="form-group">
+        <?= $this->formButton($submit) ?>
+    </div>
 <?= $this->form()->closeTag(); ?>
 
-<?php if ($type === 'job') { ?>
-<h2> <?= $this->translate('Jobs') ?> </h2>
-<table class="packagelist">
+    <?php if ($type === 'job'): ?>
+        <h2><?= $this->translate('Jobs') ?><a class="btn btn-success pull-right" href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
+            ["slugCompanyName" => $companyName, 'packageID' => $package->getId()]); ?>">
+                <span class="glyphicon glyphicon-plus"></span>
+                <?= $this->translate('Add job'); ?>
+        </a></h2>
+<table class="table table-striped">
+    <thead>
         <tr>
             <th>
-                        <?= $this->translate('Job'); ?>
+                <?= $this->translate('Name'); ?>
             </th>
             <th>
-                        <?= $this->translate('Active'); ?>
+                <?= $this->translate('Active'); ?>
+            </th>
+            <th>
+                <?= $this->translate('Action'); ?>
             </th>
         </tr>
+    </thead>
 
-    <?php if (count($package->getJobs()) > 0) { 
-        foreach($package->getJobs() as $job) { ?>
+    <?php foreach($package->getJobs() as $job): ?>
             <tr>
                 <td>
-                    <a href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
-                                            [
-                                                  "slugCompanyName" => $companyName,
-                                                  "packageID" => $package->getId(),
-                                                  "jobName" => $job->getSlugName(),
-                                            ]
-                                           ); ?>">
-                        <?= $this->translate('edit'); ?></a>
-                </td> 
+                    <?= $job->getName() ?>
+                </td>
                 <td>
-                    <?php echo $job->isActive() ? 'true' : 'false'?>
+                    <?php echo $job->isActive() ? 'Yes' : 'No'?>
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
+                        [
+                            "slugCompanyName" => $companyName,
+                            "packageID" => $package->getId(),
+                            "jobName" => $job->getSlugName(),
+                        ]
+                    ); ?>">
+                        <?= $this->translate('edit'); ?></a>
                 </td>
             </tr>
-    <?php 
-        } 
-    } else { print("Empty"); }
-    ?>
+    <?php endforeach ?>
 </table>
-<br/>
-<a href="<?= $this->url("admin_company/editCompany/editPackage/addJob", 
-    ["slugCompanyName" => $companyName, 'packageID' => $package->getId()]); ?>">
-    <?= $this->translate('Add job'); ?>
-</a>
-<?php }?>
+<?php endif ?>
