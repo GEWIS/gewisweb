@@ -1,4 +1,7 @@
 <dl><!-- common elements -->
+<?php $element = $this->form->get('id') ?>
+<?= $this->formElement($element) ?>
+<?= $this->formElementErrors($element); ?>
 <?php $element = $this->form->get('name') ?>
     <dt><?= $element->getOption('label') ?></dt>
     <dd>

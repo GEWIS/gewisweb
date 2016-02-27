@@ -180,11 +180,12 @@ class EditCompany extends Form
                 'id' => 'submitbutton',
             ],
         ]);
+        $this->mapper = $mapper;
 
-        $this->initFilters($mapper);
+        $this->initFilters($mapper, $translate);
     }
 
-    protected function initFilters($mapper)
+    protected function initFilters($translate)
     {
         $filter = new InputFilter();
 
@@ -209,12 +210,13 @@ class EditCompany extends Form
             'name' => 'slugName',
             'required' => true,
             'validators' => [
-                new \DoctrineModule\Validator\NoObjectExists([
-                    'object_repository' => $mapper->getRepository(''),
-                    'fields' => 'slugName',
+                new \Zend\Validator\Callback([
+                    'callback' => [$this,'slugNameUnique'],
+                    'message' => $translate->translate('This slug is already taken'),
                 ]),
                 new \Zend\Validator\Regex([
-                    'pattern' => '/^[0-9a-zA-Z_\.\-]*$/',
+                    'message' => $translate->translate('This slug contains invalid characters') ,
+                    'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                 ]),
             ],
             'filters' => [
@@ -325,5 +327,17 @@ class EditCompany extends Form
         ]);
 
         $this->setInputFilter($filter);
+    }
+    public function slugNameUnique($slugName, $context)
+    {
+        $objects = $this->mapper->findEditableCompaniesBySlugName($slugName, true);
+        $cid = $context['id'] ;
+        foreach ($objects as $company) {
+            if ($company->getID() != $cid) {
+                return false;
+            }
+        }
+        return true;
+
     }
 }
