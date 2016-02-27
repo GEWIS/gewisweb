@@ -15,18 +15,6 @@ class EditJob extends Form
 
         $this->setAttribute('method', 'post');
         $this->add([
-            'name' => 'job-id',
-            'attributes' => [
-                'type' => 'hidden',
-            ],
-        ]);
-        $this->add([
-            'name' => 'company-id',
-            'attributes' => [
-                'type' => 'hidden',
-            ],
-        ]);
-        $this->add([
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'language',
             'options' => [

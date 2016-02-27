@@ -157,12 +157,12 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            $job = $companyService->insertJobIntoPackageIDByData(
+            $job = $companyService->createJob(
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
             );
-            if (!is_null($job)) {
+            if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage',
@@ -190,8 +190,10 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel([
-            'companyEditForm' => $companyForm,
+            'form' => $companyForm,
         ]);
+
+        $vm->setTemplate('company/admin/edit-job');
 
         return $vm;
     }
@@ -332,7 +334,6 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobForm();
 
         // Get the parameters
-        $packageID = $this->params('packageID');
         $companyName = $this->params('slugCompanyName');
         $jobName = $this->params('jobName');
 
@@ -343,8 +344,7 @@ class AdminController extends AbstractActionController
         // Check the job is found. If not, throw 404
         if (empty($jobList)) {
             $company = null;
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return $this->notFoundAction();
         }
 
         $job = $jobList[0];
@@ -353,31 +353,18 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            $job = $companyService->saveJobByData($job, $request->getPost(), $files);
+            $job = $companyService->saveJobData($job, $request->getPost(), $files);
             // TODO: possibly redirect to package
         }
 
         // Initialize the form
         $jobForm->bind($job);
-        $jobForm->setAttribute(
-            'action',
-            $this->url()->fromRoute(
-                'admin_company/editCompany/editPackage/editJob',
-                [
-                    'slugCompanyName' => $companyName,
-                    'jobName' => $jobName,
-                    'packageID' => $packageID,
-                ]
-            )
-        );
 
         // Initialize the view
-        $vm = new ViewModel([
-            'jobEditForm' => $jobForm,
+        return new ViewModel([
+            'form' => $jobForm,
             'job' => $job
         ]);
-
-        return $vm;
     }
 
     /**

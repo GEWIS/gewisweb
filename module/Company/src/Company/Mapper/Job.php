@@ -97,6 +97,12 @@ class Job
     }
 
 
+    public function persist($job)
+    {
+        $this->em->persist($job);
+        $this->em->flush();
+    }
+
     /**
      * Get the repository for this mapper.
      *
