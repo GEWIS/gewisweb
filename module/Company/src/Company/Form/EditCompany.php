@@ -334,9 +334,6 @@ class EditCompany extends Form
         $cid = $context['id'] ;
         foreach ($objects as $company) {
             if ($company->getID() != $cid) {
-                echo $cid;
-                echo $company->getID();
-
                 return false;
             }
         }
