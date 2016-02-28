@@ -1,14 +1,23 @@
 <div class="container">
     <br>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Admin</a>
+                <a class="navbar-brand" href="<?= $this->url('admin') ?>">Admin</a>
+            </div>
+            <div class="visible-xs-block clearfix"></div>
+            <div class="navbar-header navbar-right pull-right">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-2">
+                    <span class="sr-only"><?= $this->translate('Toggle navigation') ?></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="navbar-collapse-2">
                 <ul class="nav navbar-nav">
                     <?php if ($this->acl('activity_acl')->isAllowed('activity', 'approve')): ?>
                         <li><a href="<?= $this->url('admin_activity') ?>">
