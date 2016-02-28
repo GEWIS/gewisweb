@@ -111,6 +111,7 @@ class Module
                     $acl->addResource('dreamspark');
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
+                    $acl->addResource('authorization');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
