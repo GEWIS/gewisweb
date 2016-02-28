@@ -50,6 +50,22 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    public function authorizationsAction()
+    {
+        $number = $this->params()->fromRoute('number');
+        $authorizations = [];
+        if (!is_null($number)) {
+            $authorizations = $this->getDecisionService()->getAllAuthorizations($number);
+        }
+        $meetings = $this->getDecisionService()->getMeetingsByType('AV');
+
+        return new ViewModel([
+            'meetings' => $meetings,
+            'authorizations' => $authorizations,
+            'number' => $number
+        ]);
+    }
+
     /**
      * Get the decision service.
      */

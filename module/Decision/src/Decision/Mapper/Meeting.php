@@ -29,6 +29,7 @@ class Meeting
     /**
      * Find all meetings.
      *
+     *
      * @return array Of all meetings
      */
     public function findAll()
@@ -40,6 +41,26 @@ class Meeting
             ->leftJoin('m.decisions', 'd')
             ->groupBy('m')
             ->orderBy('m.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all meetings which have the given type
+     *
+     * @param AV|BV|VV|Virt $type
+     *
+     * @return array
+     */
+    public function findByType($type)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('m')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.type = :type')
+            ->orderBy('m.date', 'DESC')
+            ->setParameter(':type', $type);
 
         return $qb->getQuery()->getResult();
     }

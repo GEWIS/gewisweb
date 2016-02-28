@@ -25,25 +25,22 @@ class Authorization
     /**
      * Member submitting this authorization.
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Member"))
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="authorizer")
+     * @ORM\JoinColumn(name="authorizer", referencedColumnName="lidnr")
      */
     protected $authorizer;
 
     /**
      * Member receiving this authorization..
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Member"))
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="recipient")
+     * @ORM\JoinColumn(name="recipient", referencedColumnName="lidnr")
      */
     protected $recipient;
 
     /**
      * Meeting number
      *
-     * @ORM\Id
      * @ORM\Column(type="integer")
      */
     protected $meetingNumber;

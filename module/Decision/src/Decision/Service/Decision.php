@@ -32,6 +32,18 @@ class Decision extends AbstractAclService
         return $this->getMeetingMapper()->findAll();
     }
 
+    public function getMeetingsByType($type)
+    {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
+        }
+
+        return $this->getMeetingMapper()->findByType($type);
+    }
+
     /**
      * Get information about one meeting.
      *
@@ -221,6 +233,42 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Retrieves all authorizations for the given meeting number.
+     *
+     * @param integer $meetingNumber
+     */
+    public function getAllAuthorizations($meetingNumber)
+    {
+        if (!$this->isAllowed('view_all', 'authorization')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view all authorizations.')
+            );
+        }
+
+        return $this->getAuthorizationMapper()->find($meetingNumber);
+    }
+
+    /**
+     * Retrieves all authorizations for the given meeting number for the current user.
+     *
+     * @param integer $meetingNumber
+     */
+    public function getUserAuthorizations($meetingNumber)
+    {
+        if (!$this->isAllowed('view_own', 'authorization')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view authorizations.')
+            );
+        }
+
+        $lidnr = $this->sm->get('user_auth')->getLidnr();
+
+        return $this->getAuthorizationMapper()->find($meetingNumber, $lidnr);
+    }
+
+    /**
      * Get the Notes form.
      *
      * @return Decision\Form\Notes
@@ -282,6 +330,16 @@ class Decision extends AbstractAclService
     public function getDecisionMapper()
     {
         return $this->sm->get('decision_mapper_decision');
+    }
+
+    /**
+     * Get the authorization mapper.
+     *
+     * @return \Decision\Mapper\Authorization
+     */
+    public function getAuthorizationMapper()
+    {
+        return $this->sm->get('decision_mapper_authorization');
     }
 
     /**
