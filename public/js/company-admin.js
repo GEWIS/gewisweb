@@ -10,7 +10,7 @@ Company.Admin = {
     filterCompanies: function () {
         var term = $('#filterCompanies').val();
         $('.company-list-item').each(function() {
-            if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
+            if ($(this).text().toLowerCase().indexOf(term.toLowerCase()) === -1) {
                 $(this).css({display: 'none'});
             } else {
                 $(this).css({display: 'table-row'});

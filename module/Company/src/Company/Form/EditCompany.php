@@ -192,7 +192,7 @@ class EditCompany extends Form
         ]);
         $this->mapper = $mapper;
 
-        $this->initFilters($mapper, $translate);
+        $this->initFilters($translate);
     }
 
     protected function initFilters($translate)
@@ -222,10 +222,10 @@ class EditCompany extends Form
             'validators' => [
                 new \Zend\Validator\Callback([
                     'callback' => [$this,'slugNameUnique'],
-                    'message' => 'This slug is already taken',
+                    'message' => $translate->translate('This slug is already taken'),
                 ]),
                 new \Zend\Validator\Regex([
-                    'message' => 'This slug contains invalid characters',
+                    'message' => $translate->translate('This slug contains invalid characters'),
                     'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                 ]),
             ],
