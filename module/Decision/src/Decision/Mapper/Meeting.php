@@ -66,6 +66,26 @@ class Meeting
     }
 
     /**
+     * Returns the latest upcoming AV or null if there is none.
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function findLatestAV()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('m')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.type = AV')
+            ->where('m.date > :date')
+            ->orderBy('m.date', 'DESC')
+            ->setParameter('date', new \DateTime())
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * Find a meeting with all decisions.
      *
      * @param string $type

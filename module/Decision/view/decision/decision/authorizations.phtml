@@ -1,0 +1,106 @@
+<?php $this->headScript()->prependFile($this->basePath() . '/js/jquery.autocomplete.js'); ?>
+<br>
+<div class="container">
+<?php if (is_null($meeting)): ?>
+<?= $this->translate('There are no upcoming meetings for which you can authorize someone.') ?>
+    <?php else: if (isset($form)): ?>
+    <h3>
+        <?= sprintf(
+            $this->translate('Authorize someone for GM %s (%s)'),
+            $meeting->getNumber(),
+            $meeting->getDate()->format('Y-m-d')
+        ) ?>
+    </h3>
+    <?php
+    $form->setAttribute('class', 'form-horizontal');
+    $form->prepare();
+    ?>
+    <?= $this->form()->openTag($form) ?>
+    <?php
+    $element = $form->get('recipient');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $this->translate('Member') ?>
+        </label>
+        <div class="col-sm-10">
+            <input id="memberSearch" type="text" class="form-control"/>
+            <?= $this->formElementErrors($element) ?>
+            <?= $this->formElement($element) ?>
+        </div>
+    </div>
+    <?php
+    $element = $form->get('agree');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $this->translate('Terms') ?>
+        </label>
+        <div class="col-sm-10">
+            <?= $this->formCheckbox($element) ?>
+            <?= sprintf(
+                $this->translate('I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS'),
+                $this->identity()->getMember()->getFullName(),
+                $meeting->getNumber()
+            ) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+    <?php
+    $submit = $form->get('submit');
+    $submit->setLabel($this->translate('Authorize'));
+    $submit->setAttribute('class', 'btn btn-primary pull-right');
+    ?>
+    <div class="form-group">
+        <?= $this->formButton($submit) ?>
+    </div>
+    <?= $this->form()->closeTag($form) ?>
+    <?php endif; ?>
+        <h3><?= sprintf($this->translate('Your authorizations for AV %s (%s)'), $meeting->getNumber(), $meeting->getDate()->format('Y-m-d')) ?></h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td><?= $this->translate('Authorizer') ?></td>
+                <td><?= $this->translate('Recipient') ?></td>
+                <td><?= $this->translate('Valid') ?></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($authorizations as $authorization): ?>
+                    <tr>
+                        <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
+                        <td><?= $authorization->getRecipient()->getFullName() ?></td>
+                        <td><span class="glyphicon glyphicon-<?= $authorization->getRevoked() ? 'remove' : 'ok' ?>"</td>
+                        <td><a href="" class="btn btn-danger btn-xs"><?= $this->translate('Revoke') ?></a></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+<?php endif; ?>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#memberSearch').autocomplete({
+            lookup: function (query, done) {
+                if (query.length >= 2) {
+                    $.getJSON('<?= $this->url('member/search') ?>' + '?q=' + query, function (data) {
+                        var result = {suggestions: []};
+
+                        $.each(data.members, function (i, member) {
+                            result.suggestions.push({
+                                'value': member.fullName, 'data': member.lidnr
+                            })
+                        });
+
+                        done(result);
+                    });
+                }
+            },
+            onSelect: function (suggestion) {
+                $('[name="recipient"]').val(suggestion.data);
+            }
+        });
+
+    });
+</script>

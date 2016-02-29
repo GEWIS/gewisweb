@@ -5,6 +5,8 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 
 use Decision\Form\Notes;
+use Decision\Mapper\Authorization;
+use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
@@ -62,6 +64,16 @@ class Decision extends AbstractAclService
         }
 
         return $this->getMeetingMapper()->find($type, $number);
+    }
+
+    /**
+     * Returns the latest upcoming AV or null if there is none.
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function getLatestAV()
+    {
+        return $this->getMeetingMapper()->findLatestAV();
     }
 
     /**
@@ -236,6 +248,8 @@ class Decision extends AbstractAclService
      * Retrieves all authorizations for the given meeting number.
      *
      * @param integer $meetingNumber
+     *
+     * @return array
      */
     public function getAllAuthorizations($meetingNumber)
     {
@@ -253,6 +267,8 @@ class Decision extends AbstractAclService
      * Retrieves all authorizations for the given meeting number for the current user.
      *
      * @param integer $meetingNumber
+     *
+     * @return array
      */
     public function getUserAuthorizations($meetingNumber)
     {
@@ -263,9 +279,39 @@ class Decision extends AbstractAclService
             );
         }
 
-        $lidnr = $this->sm->get('user_auth')->getLidnr();
+        $lidnr = $this->sm->get('user_role')->getLidnr();
 
         return $this->getAuthorizationMapper()->find($meetingNumber, $lidnr);
+    }
+
+    public function createAuthorization($data)
+    {
+        $form = $this->getAuthorizationForm();
+        $authorization = new AuthorizationModel();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+        $user = $this->sm->get('decision_doctrine_em')->merge($this->sm->get('user_role'));
+        $authorizer = $user->getMember();
+        $recipient = $this->getMemberMapper()->findByLidnr($data['recipient']);
+        if (is_null($recipient) || $recipient->getLidnr() === $authorizer->getLidnr()) {
+            return false;
+        }
+
+        $meeting = $this->getLatestAV();
+        if (is_null($meeting)) {
+            return false;
+        }
+
+        $authorization->setAuthorizer($authorizer);
+        $authorization->setRecipient($recipient);
+        $authorization->setMeetingNumber($meeting->getNumber());
+        $this->getAuthorizationMapper()->persist($authorization);
+
+        return $authorization;
+
     }
 
     /**
@@ -313,6 +359,23 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the Authorization form.
+     *
+     * @return \Decision\Form\Authorization
+     */
+    public function getAuthorizationForm()
+    {
+        if (!$this->isAllowed('create', 'authorization')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not authorize people.')
+            );
+        }
+
+        return $this->sm->get('decision_form_authorization');
+    }
+
+    /**
      * Get the meeting mapper.
      *
      * @return \Decision\Mapper\Meeting
@@ -350,6 +413,16 @@ class Decision extends AbstractAclService
     public function getFileStorageService()
     {
         return $this->sm->get('application_service_storage');
+    }
+
+    /**
+     * Get the member mapper.
+     *
+     * @return \Decision\Mapper\Member
+     */
+    public function getMemberMapper()
+    {
+        return $this->sm->get('decision_mapper_member');
     }
 
     /**

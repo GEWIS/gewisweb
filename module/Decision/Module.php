@@ -95,6 +95,11 @@ class Module
                         $sm->get('decision_mapper_meeting')
                     );
                 },
+                'decision_form_authorization' => function ($sm) {
+                    return new \Decision\Form\Authorization(
+                        $sm->get('translator')
+                    );
+                },
                 'decision_form_organ_information' => function ($sm) {
                     $form = new \Decision\Form\OrganInformation(
                         $sm->get('translator')
@@ -136,6 +141,8 @@ class Module
                     $acl->allow('user', 'meeting', ['view', 'view_notes', 'view_documents']);
 
                     $acl->allow('user', 'dreamspark', ['login', 'students']);
+
+                    $acl->allow('user', 'authorization', ['create', 'view_own']);
 
                     return $acl;
                 },

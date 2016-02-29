@@ -69,6 +69,18 @@ return [
                             ],
                         ],
                     ],
+                    'authorizations' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/authorizations[/:number]',
+                            'constraints' => [
+                                'number' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                'action' => 'authorizations',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
