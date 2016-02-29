@@ -57,15 +57,14 @@ $this->headTitle($this->translate('Jobs'));
         </div>
 
         <?php
-
-
-        // Randomize the order of companies
-        if ($randomize):
-            shuffle($jobList);
-        endif
-        foreach ($jobList as $job):
-            if ($job->isActive()):
-                $company = $job->getPackage()->getCompany(); ?>
+            // Randomize the order of companies
+            if ($randomize){
+                shuffle($jobList);
+            }
+        ?>
+        <?php foreach ($jobList as $job):?>
+            <?php if ($job->isActive()):?>
+                <?php $company = $job->getPackage()->getCompany(); ?>
 
                 <div class="job-list-item list-item" id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
                 <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
@@ -96,10 +95,8 @@ $this->headTitle($this->translate('Jobs'));
                     </div>
                     <hr>
                 </div>
-                <?php
-            endif;
-        endforeach;
-        ?>
+                <?php endif?>
+        <?php endforeach ?>
 
         <script type="text/javascript">
             /* FILTERING */
