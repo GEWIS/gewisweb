@@ -1,9 +1,18 @@
 <?php $this->headScript()->prependFile($this->basePath() . '/js/jquery.autocomplete.js'); ?>
 <br>
 <div class="container">
+    <h1><?= $this->translate('Authorizations') ?></h1>
 <?php if (is_null($meeting)): ?>
 <?= $this->translate('There are no upcoming meetings for which you can authorize someone.') ?>
-    <?php else: if (isset($form)): ?>
+    <?php elseif (!is_null($authorization)): ?>
+    <?= sprintf(
+        $this->translate('You have authorized %s for AV %s (%s)'),
+        $authorization->getRecipient()->getFullName(),
+        $meeting->getNumber(),
+        $meeting->getDate()->format('Y-m-d')
+    ) ?>
+
+    <?php else: ?>
     <h3>
         <?= sprintf(
             $this->translate('Authorize someone for GM %s (%s)'),
@@ -56,28 +65,6 @@
     </div>
     <?= $this->form()->closeTag($form) ?>
     <?php endif; ?>
-        <h3><?= sprintf($this->translate('Your authorizations for AV %s (%s)'), $meeting->getNumber(), $meeting->getDate()->format('Y-m-d')) ?></h3>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <td><?= $this->translate('Authorizer') ?></td>
-                <td><?= $this->translate('Recipient') ?></td>
-                <td><?= $this->translate('Valid') ?></td>
-                <td></td>
-            </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($authorizations as $authorization): ?>
-                    <tr>
-                        <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
-                        <td><?= $authorization->getRecipient()->getFullName() ?></td>
-                        <td><span class="glyphicon glyphicon-<?= $authorization->getRevoked() ? 'remove' : 'ok' ?>"</td>
-                        <td><a href="" class="btn btn-danger btn-xs"><?= $this->translate('Revoke') ?></a></td>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
-<?php endif; ?>
 </div>
 <script>
     $(document).ready(function () {

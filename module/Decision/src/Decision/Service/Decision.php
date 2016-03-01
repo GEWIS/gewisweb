@@ -264,13 +264,13 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Retrieves all authorizations for the given meeting number for the current user.
+     * Gets the authorization of the current user for the given meeting
      *
      * @param integer $meetingNumber
      *
-     * @return array
+     * @return \Decision\Model\Authorization|null
      */
-    public function getUserAuthorizations($meetingNumber)
+    public function getUserAuthorization($meetingNumber)
     {
         if (!$this->isAllowed('view_own', 'authorization')) {
             $translator = $this->getTranslator();
@@ -281,7 +281,7 @@ class Decision extends AbstractAclService
 
         $lidnr = $this->sm->get('user_role')->getLidnr();
 
-        return $this->getAuthorizationMapper()->find($meetingNumber, $lidnr);
+        return $this->getAuthorizationMapper()->findUserAuthorization($meetingNumber, $lidnr);
     }
 
     public function createAuthorization($data)

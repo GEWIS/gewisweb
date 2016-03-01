@@ -36,14 +36,33 @@ class Authorization
      *
      * @return array
      */
-    public function find($meetingNumber, $authorizer = null)
+    public function find($meetingNumber)
     {
-        $criteria = ['meetingNumber' => $meetingNumber];
-        if (!is_null($authorizer)) {
-            $criteria['authorizer'] = $authorizer;
-        }
+        return $this->getRepository()->findBy(['meetingNumber' => $meetingNumber]);
+    }
 
-        return $this->getRepository()->findBy($criteria);
+    /**
+     * Find non-revoked authorizations for a meeting for a user
+     *
+     * @param integer $meetingNumber
+     * @param integer $authorizer
+     *
+     * @return array
+     */
+    public function findUserAuthorization($meetingNumber, $authorizer)
+    {
+
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Decision\Model\Authorization', 'a')
+            ->where('a.meetingNumber = :meetingNumber')
+            ->andWhere('a.authorizer = :authorizer')
+            ->andWhere('a.revoked = 0')
+            ->setParameter('meetingNumber', $meetingNumber)
+            ->setParameter('authorizer', $authorizer);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function persist($authorization)
