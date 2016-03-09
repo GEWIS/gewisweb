@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-08 20:59+0100\n"
-"PO-Revision-Date: 2016-02-08 21:03+0100\n"
+"PO-Revision-Date: 2016-02-26 19:10+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -394,8 +394,7 @@ msgstr "URL opties"
 
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:14
 msgid ""
-"Make this page available at the following URL. Providing a category is "
-"required."
+"Make this page available at the following URL. Providing a category is required."
 msgstr ""
 "Maak deze pagina beschikbaar op de volgende URL. Het is verplicht om een "
 "categorie te specificeren."
@@ -511,8 +510,7 @@ msgstr "Commissies"
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 msgid "GEWIS has many different committees, learn more about them below!"
 msgstr ""
-"GEWIS heeft veel verschillende commissies, zie hieronder voor meer "
-"informatie!"
+"GEWIS heeft veel verschillende commissies, zie hieronder voor meer informatie!"
 
 #: module/Frontpage/view/frontpage/organ/organ.phtml:58
 #: module/Decision/src/Decision/Form/OrganInformation.php:28
@@ -543,9 +541,9 @@ msgstr "Disputen"
 
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 msgid ""
-"Study association GEWIS obviously has several fraternities which contribute "
-"to the atmosphere at GEWIS and organize fun activities. Some fraternities "
-"have retired, but luckily new fraternities continue to be founded."
+"Study association GEWIS obviously has several fraternities which contribute to "
+"the atmosphere at GEWIS and organize fun activities. Some fraternities have "
+"retired, but luckily new fraternities continue to be founded."
 msgstr ""
 "Studievereniging GEWIS heeft natuurlijk verschillende disputen die bijdragen "
 "aan de goede atmosfeer bij GEWIS en leuke activiteiten organiseren. Sommige "
@@ -961,8 +959,8 @@ msgid ""
 "To sign up for an activity you must login using an RFID pass or your SuSOS "
 "pincode."
 msgstr ""
-"Om in te schrijven voor een activiteit moet je inloggen met een RFID-pas of "
-"je SuSOS pincode."
+"Om in te schrijven voor een activiteit moet je inloggen met een RFID-pas of je "
+"SuSOS pincode."
 
 #: module/Activity/view/activity/activity/touch.phtml:82
 #: module/Activity/view/activity/activity/touch.phtml:125
@@ -1079,7 +1077,7 @@ msgstr "Bedrijven"
 #: module/Company/view/partial/company/company/list/company.phtml:25
 #: module/Application/view/partial/main-nav.phtml:119
 msgid "Jobs"
-msgstr "Banen"
+msgstr "Vacatures"
 
 #: module/Company/view/company/company/job-list.phtml:44
 #: module/Company/view/company/company/job-list.phtml:71
@@ -1128,7 +1126,7 @@ msgstr "Artikel"
 #: module/Company/view/company/admin/index.phtml:38
 #: module/Company/view/company/admin/index.phtml:69
 msgid "Active jobs"
-msgstr "Actieve banen"
+msgstr "Actieve vacatures"
 
 #: module/Company/view/company/admin/index.phtml:39
 #: module/Company/view/company/admin/index.phtml:70
@@ -1177,7 +1175,7 @@ msgstr "Bedrijfslogo"
 
 #: module/Company/view/company/admin/edit-package.phtml:60
 msgid "Job"
-msgstr "Baan"
+msgstr "Vacature"
 
 #: module/Company/view/company/admin/edit-package.phtml:63
 #: module/Company/view/company/admin/edit-company.phtml:34
@@ -1193,7 +1191,7 @@ msgstr "wijzig"
 
 #: module/Company/view/company/admin/edit-package.phtml:92
 msgid "Add job"
-msgstr "Voeg baan toe"
+msgstr "Voeg vacatures toe"
 
 #: module/Company/view/company/admin/delete-company.phtml:3
 msgid "Error: company not found"
@@ -1251,20 +1249,20 @@ msgstr "Voeg banner pakket toe"
 #: module/Company/view/company/admin/delete-package.phtml:3
 msgid ""
 "Do you really want to delete this package? This will delete all containing "
-"Jobs. Instead, you can also disable the 'published' option of this package "
-"to just hide it."
+"Jobs. Instead, you can also disable the 'published' option of this package to "
+"just hide it."
 msgstr ""
 "Weet je zeker dat je dit pakket wilt verwijderen? Dit verwijderd ook alle "
-"banen. In plaats van verwijderen kun je ook the 'publiceer' optie uitzetten "
+"vacatures. In plaats van verwijderen kun je ook the 'publiceer' optie uitzetten "
 "om hem niet op de website te tonen."
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "job"
-msgstr "baan"
+msgstr "vacature"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "jobs"
-msgstr "banen"
+msgstr "vacatures"
 
 #: module/Education/view/education/education/index.phtml:5
 #: module/Application/view/partial/main-nav.phtml:122
@@ -1381,8 +1379,8 @@ msgstr "Het uploaden van alle tentamens is klaar."
 #: module/Education/view/education/admin/edit.phtml:4
 msgid "There are no exams to be edited. Upload exams to edit them."
 msgstr ""
-"Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze "
-"correct in de Website te zetten."
+"Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze correct "
+"in de Website te zetten."
 
 #: module/Education/view/education/admin/summary.phtml:2
 msgid "Summary successfully uploaded!"
@@ -1477,8 +1475,8 @@ msgstr "Verplaats"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:104
 msgid ""
-"Are you sure you want to delete this photo? <b>This action can not be "
-"reverted.</b>"
+"Are you sure you want to delete this photo? <b>This action can not be reverted."
+"</b>"
 msgstr ""
 "Weet je zeker dat je deze foto wil verwijderen? <strong>Deze actie kan niet "
 "ongedaan gemaakt worden</strong>"
@@ -1550,8 +1548,8 @@ msgstr "Het album is verplaatst"
 
 #: module/Photo/view/photo/album-admin/index.phtml:182
 msgid ""
-"Are you sure you want to delete this album including all photos inside of "
-"it? <b>This action can not be reverted.</b>"
+"Are you sure you want to delete this album including all photos inside of it? "
+"<b>This action can not be reverted.</b>"
 msgstr ""
 "Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze "
 "actie kan niet ongedaan gemaakt worden</strong>"
@@ -1566,11 +1564,11 @@ msgstr "Dit album kan verwijderd worden."
 
 #: module/Photo/view/photo/album-admin/index.phtml:214
 msgid ""
-"Are you sure you want to delete the selected items? <b>This action can not "
-"be reverted.</b>"
+"Are you sure you want to delete the selected items? <b>This action can not be "
+"reverted.</b>"
 msgstr ""
-"Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze "
-"actie kan niet ongedaan gemaakt worden</strong>"
+"Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze actie "
+"kan niet ongedaan gemaakt worden</strong>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:217
 msgid "Please wait while the photos are being deleted."
@@ -1887,8 +1885,8 @@ msgid ""
 "You have been registered on the website of Study association GEWIS, with the "
 "following information:"
 msgstr ""
-"Je bent geregistreerd op de website van Studievereniging GEWIS, met de "
-"volgende informatie:"
+"Je bent geregistreerd op de website van Studievereniging GEWIS, met de volgende "
+"informatie:"
 
 #: module/User/view/user/email/register.phtml:5
 msgid "Membership number:"
@@ -2071,8 +2069,7 @@ msgstr ""
 
 #: module/Decision/src/Decision/Service/Member.php:147
 msgid "You are not allowed to view the list of today's birthdays."
-msgstr ""
-"Het is niet toegestaan om de lijst met verjaardagen van vandaag te zien."
+msgstr "Het is niet toegestaan om de lijst met verjaardagen van vandaag te zien."
 
 #: module/Decision/src/Decision/Service/Member.php:154
 msgid "You are not allowed to view the list of birthdays."
@@ -2284,8 +2281,7 @@ msgstr "Je hebt niet de rechten om ingeschreven leden te zien"
 #: module/Activity/src/Activity/Service/Signup.php:138
 msgid "You are not allowed to view activities which you signed up for"
 msgstr ""
-"Je hebt niet de rechten om te zien voor welke activiteiten je ingeschreven "
-"bent"
+"Je hebt niet de rechten om te zien voor welke activiteiten je ingeschreven bent"
 
 #: module/Activity/src/Activity/Service/Signup.php:214
 msgid "You need to be logged in to sign off for this activity"
@@ -2374,7 +2370,7 @@ msgstr "Je hebt niet de rechten om een pakket toe te voegen"
 
 #: module/Company/src/Company/Service/Company.php:298
 msgid "You are not allowed to insert a job"
-msgstr "Je hebt niet de rechten om een baan toe te voegen"
+msgstr "Je hebt niet de rechten om een vacature toe te voegen"
 
 #: module/Company/src/Company/Service/Company.php:317
 msgid "You are not allowed to delete packages"
@@ -2394,7 +2390,7 @@ msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
 #: module/Company/src/Company/Service/Company.php:410
 msgid "You are not allowed to edit jobs"
-msgstr "Je hebt niet de rechten om banen te wijzigen"
+msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
 #: module/Company/src/Company/Form/EditJob.php:55
 #: module/Company/src/Company/Form/EditCompany.php:42
@@ -2760,8 +2756,8 @@ msgstr "Inkoper"
 #~ "importing a large amount of photos may take a while."
 #~ msgstr ""
 #~ "Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de "
-#~ "bestanden in de map kan bereiken. Het importeren van een grote "
-#~ "hoeveelheid foto's kan een lange tijd duren."
+#~ "bestanden in de map kan bereiken. Het importeren van een grote hoeveelheid "
+#~ "foto's kan een lange tijd duren."
 
 #~ msgid ""
 #~ "Welcome to the website of Study association %sGEWIS%s. This is just a "
@@ -2785,12 +2781,12 @@ msgstr "Inkoper"
 #~ msgid ""
 #~ "Congratulations! You have successfully installed the %sZF2 Skeleton "
 #~ "Application%s. You are currently running Zend Framework version %s. This "
-#~ "skeleton can serve as a simple starting point for you to begin building "
-#~ "your application on ZF2."
+#~ "skeleton can serve as a simple starting point for you to begin building your "
+#~ "application on ZF2."
 #~ msgstr ""
 #~ "Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol "
-#~ "geinstalleerd. Je gebruikt Zend Framework versie %s. Deze fundering biedt "
-#~ "je een startpunt om je ZF2 applicatie op voort te bouwen."
+#~ "geinstalleerd. Je gebruikt Zend Framework versie %s. Deze fundering biedt je "
+#~ "een startpunt om je ZF2 applicatie op voort te bouwen."
 
 #~ msgid "Fork Zend Framework 2 on GitHub"
 #~ msgstr "Fork Zend Framework 2 op Github"
@@ -2802,8 +2798,8 @@ msgstr "Inkoper"
 #~ "Zend Framework 2 is under active development. If you are interested in "
 #~ "following the development of ZF2, there is a special ZF2 portal on the "
 #~ "official Zend Framework website which provides links to the ZF2 %swiki%s, "
-#~ "%sdev blog%s, %sissue tracker%s, and much more. This is a great resource "
-#~ "for staying up to date with the latest developments!"
+#~ "%sdev blog%s, %sissue tracker%s, and much more. This is a great resource for "
+#~ "staying up to date with the latest developments!"
 #~ msgstr ""
 #~ "Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het "
 #~ "volgen van deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de "
@@ -2819,9 +2815,9 @@ msgstr "Inkoper"
 
 #~ msgid ""
 #~ "The community is working on developing a community site to serve as a "
-#~ "repository and gallery for ZF2 modules. The project is available %son "
-#~ "GitHub%s. The site is currently live and currently contains a list of "
-#~ "some of the modules already available for ZF2."
+#~ "repository and gallery for ZF2 modules. The project is available %son GitHub"
+#~ "%s. The site is currently live and currently contains a list of some of the "
+#~ "modules already available for ZF2."
 #~ msgstr ""
 #~ "De community werkt aan een eigen community website die dient als een "
 #~ "bewaarplaats en galerij voor ZF2 modules. Het project is beschikbaar %sop "
@@ -2835,15 +2831,15 @@ msgstr "Inkoper"
 #~ msgstr "Hulp &amp; Support"
 
 #~ msgid ""
-#~ "If you need any help or support while developing with ZF2, you may reach "
-#~ "us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
+#~ "If you need any help or support while developing with ZF2, you may reach us "
+#~ "via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
 #~ "feedback you may have regarding the beta releases. Alternatively, you may "
 #~ "subscribe and post questions to the %smailing lists%s."
 #~ msgstr ""
 #~ "Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons "
-#~ "bereiken via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde "
-#~ "je vragen en zouden graag feedback krijgen betreffende de beta releases. "
-#~ "Je kunt je ook abonneren op de %smailing lists%s."
+#~ "bereiken via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde je "
+#~ "vragen en zouden graag feedback krijgen betreffende de beta releases. Je "
+#~ "kunt je ook abonneren op de %smailing lists%s."
 
 #~ msgid "Ping us on IRC"
 #~ msgstr "Ping ons via IRC"
