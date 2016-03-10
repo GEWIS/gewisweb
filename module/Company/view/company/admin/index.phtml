@@ -1,66 +1,88 @@
-
-<div class="company-edit-overview">
 <?php
-    $escaper = new Zend\Escaper\Escaper('utf-8');
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/company-admin.js');
+$this->scriptUrl()->requireUrls(
+    [
+        'admin_company/deleteCompany'
+    ],
+    ['slugCompanyName']
+);
 ?>
-    
-    
-    <fieldset> 
-        <legend>Filter</legend> 
-        <label>All <input type='text' id='filter-all'></label> 
-        <label>Name <input type='text' id='filter-name'></label> 
-        <label>Location <input type='text' id='filter-location'></label> 
-        <label>Description 
-            <input type='text' id='filter-description'></label> 
-    </fieldset>
-    <fieldset>
-        <legend>Sort</legend> 
-        <label>Column 
-            <select id='sort-column'>
-                <option value='company-name'>[Select column]</option>
-                <option value='company-name'>Company Name</option>
-                <option value='jobs-amount'>Amount of jobs available</option>
-            </select>
-        </label> 
-        <label>Order
-            <select id='sort-order'>
-                <option value='1'>Ascending</option>
-                <option value='-1'>Descending</option>
-            </select>
-        </label>
-    </fieldset>
-    
-    <table class="">
+<div class="row">
+    <div class="col-md-10">
+        <div class="form-group">
+            <input type="text" class="form-control" onkeyup="Company.Admin.filterCompanies()" id="filterCompanies" placeholder="Filter...">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-success" href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>>
+            <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Company');?>
+        </a>
+    </div>
+</div>
+    <hr>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th><?= $this->translate('Name') ?></th>
-                <th><?= $this->translate('Jobs') ?></th>
-                <th><?= $this->translate('Active jobs') ?></th>
-                <th><?= $this->translate('Banner active') ?></th>
-                <th><?= $this->translate('Featured in language') ?></th>
-                <th><?= $this->translate('Expired packages') ?></th>
-                <th><?= $this->translate('Actions') ?></th>
+                <th>
+                    <?= $this->translate('Name') ?>
+                    <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Jobs') ?>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Active jobs') ?>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Banner active') ?>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Featured in language') ?>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Expired packages') ?>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                    <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                </th>
+                <th>
+                    <?= $this->translate('Actions') ?>
+                </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="company-list">
             <?php
-                foreach ($companyList as $company) {
+                foreach ($companyList as $company):
                     $editUrl = $this->url('admin_company/editCompany', 
                                           ['slugCompanyName' => $company->getSlugName()]);
-                //echo $editUrl;
             ?>
-            <tr class="company-list-item">
-                <td><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
+            <tr class="company-list-item
+            <?= $company->getHidden() ? ' danger' : '' ?>
+            <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
+                <td class="company-name"><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
                 <td><?= $company->getNumberOfJobs(); ?></td>
                 <td><?= $company->getNumberOfActiveJobs(); ?></td>
-                <td><?= $company->isBannerActive() ? $this->translate('true') : $this->translate('false'); ?></td>
+                <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No'); ?></td>
                 <td><?php $languages = $company->getFeaturedLanguages(); echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
                 <td><?= $company->getNumberOfExpiredPackages(); ?></td>
-                <td><a href=<?= $this->url('admin_company/deleteCompany', ['slugCompanyName' => $company->getSlugName()])?>><?= $this->translate('Delete') ?></a></td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs"
+                        onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')" data-toggle="modal"
+                        data-target="#deleteModal">
+                    <?= $this->translate('Delete') ?>
+                    </button>
+                </td>
             </tr>
-            <?php
-                }
-            ?>
+            <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
@@ -74,124 +96,31 @@
             </tr>
         </tfoot>
     </table>
-    <a href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>><?=$this->translate('Add Company');?></a>
-    
 
-
-    <script type="text/javascript">
-        /* FILTERING */
-
-        function filter_name(name) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-name a").text().toLowerCase().indexOf(name.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        function filter_location(location) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-address").text().toLowerCase().indexOf(location.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        function filter_description(description) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-description").text().toLowerCase().indexOf(description.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        function filter_job(job) {
-            $(".company-list-item").each(function() {
-                if ($(this).find(".company-jobs-list").text().toLowerCase().indexOf(job.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        function filter_all(term) {
-            $(".company-list-item").each(function() {
-                if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
-                    $(this).css({display: "none"});
-                } else {
-                    $(this).css({display: "block"});
-                }
-            });
-        }
-
-        $("#filter-name").keyup(function() {
-            filter_name($(this).val());
-        });
-
-        $("#filter-location").keyup(function() {
-            filter_location($(this).val());
-        });
-
-        $("#filter-description").keyup(function() {
-            filter_description($(this).val());
-        });
-
-        $("#filter-job").keyup(function() {
-            filter_job($(this).val());
-        });
-
-        $("#filter-all").keyup(function() {
-            filter_all($(this).val());
-        });
-
-
-        /* SORTING */
-
-        function sort_name(order) {
-            var companies = $(".company-list-item");
-            companies.sort(function(a,b) {
-
-                if (a.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML > b.getElementsByClassName("company-name")[0].getElementsByTagName("a")[0].innerHTML) {
-                    return order;
-                } else {
-                    return -1 * order;
-                }
-
-            });
-
-            companies.detach().appendTo($(".company-list"));
-        }
-
-        function sort_jobs_amount(order) {
-            var companies = $(".company-list-item");
-            companies.sort(function(a,b) {
-
-                if (Number(a.getElementsByClassName("company-jobs")[0].getAttribute("data-amount")) > Number(b.getElementsByClassName("company-jobs")[0].getAttribute("data-amount"))) {
-                    return order;
-                } else {
-                    return -1 * order;
-                }
-
-            });
-
-            companies.detach().appendTo($(".company-list"));
-        }
-
-        $("#sort-column, #sort-order").change(function() {
-            if ($("#sort-column").val()=="company-name") {
-                sort_name($("#sort-order").val());
-            } else  if ($("#sort-column").val()=="jobs-amount") {
-                sort_jobs_amount($("#sort-order").val());
-            }
-        });
-    </script>
-
+    <!-- Delete company modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+                </div>
+                <div class="modal-body">
+                    <p><?= sprintf($this->translate('Are you sure you want to delete %s?'),
+                        '<strong id="deleteCompanyName"></strong>') ?> </p>
+                    <p class="options">
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" method="POST">
+                        <input type="submit" name="submit" value="<?= $this->translate('Delete company') ?>"
+                               class="btn btn-danger"/>
+                        <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

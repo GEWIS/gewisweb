@@ -42,23 +42,6 @@ class Company
     }
 
     /**
-     * Delete the company identified with $slug
-     *
-     * @param mixed $slug
-     */
-    public function deleteBySlug($slug)
-    {
-        foreach ($this->findEditableCompaniesBySlugName($slug, true) as $company) {
-            foreach ($company->getTranslations() as $translation) {
-                $this->em->remove($translation);
-            }
-            // TODO: delete jobs
-            $this->em->remove($company);
-        }
-        $this->em->flush();
-    }
-
-    /**
      * Inserts a company into the datebase, and initializes the given 
      * translations as empty translations for them
      *
@@ -137,20 +120,28 @@ class Company
     }
 
     /**
-     * Returns all companies in the database identified with $slugName
+     * Return the company with the given slug
      *
-     * @param mixed $slugName
+     * @param string $slugName the slugname to find
+     *
+     * @return \Company\Model\Company | null
      */
-    public function findCompaniesBySlugName($slugName)
+    public function findCompanyBySlugName($slugName)
     {
-        $result = $this->findEditableCompaniesBySlugName($slugName, true);
-        foreach ($result as $company) {
-            $this->em->detach($company);
-        }
-
-        return $result;
+        $result = $this->getRepository()->findBy(['slugName' => $slugName]);
+        return empty($result) ? null : $result[0];
     }
 
+    /**
+     * Removes a company.
+     *
+     * @param $company
+     */
+    public function remove($company)
+    {
+        $this->em->remove($company);
+        $this->em->flush();
+    }
     /**
      * Get the repository for this mapper.
      *

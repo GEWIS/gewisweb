@@ -42,6 +42,16 @@ class Package
     }
 
     /**
+     * Finds the package with the given id
+     *
+     * @param integer $packageID
+     */
+    public function findPackage($packageID)
+    {
+        return $this->getRepository()->findOneBy(['id' => $packageID]);
+    }
+
+    /**
      * Deletes the given package
      *
      */

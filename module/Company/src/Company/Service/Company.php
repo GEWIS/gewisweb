@@ -4,6 +4,8 @@ namespace Company\Service;
 
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
+use Company\Model\Job as JobModel;
+use Company\Model\Job;
 
 /**
  * Company service.
@@ -133,39 +135,6 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, saves the Job
-     *
-     * @param mixed $job
-     * @param mixed $data
-     */
-    public function saveJobByData($job,$data, $files)
-    {
-        $jobForm = $this->getJobForm();
-        $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
-        );
-        $jobForm->setData($mergedData);
-        if ($jobForm->isValid()){
-            $job->exchangeArray($data);
-            $file = $files['attachment'];
-            if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                if ($file['error'] !== UPLOAD_ERR_OK) {
-                    return false;
-                }
-                $oldPath = $job->getAttachment();
-                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                $job->setAttachment($newPath);
-                if ($oldPath !== '' && $oldPath != $newPath) {
-                    $this->getFileStorageService()->removeFile($oldPath);
-                }
-            }
-            $this->saveJob();
-        }
-        return $job;
-    }
-
-    /**
      * Saves all modified jobs
      *
      */
@@ -283,35 +252,63 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, assigns a job, and bind it to
-     * the given package
+     * Creates a new job and adds it to the specified package.
      *
-     * @param mixed $packageID
-     * @param mixed $data
+     * @param integer $packageID
+     * @param array $data
+     * @param array $files
+     * @return bool|JobModel
      */
-    public function insertJobIntoPackageIDByData($packageID, $data, $files)
+    public function createJob($packageID, $data, $files)
+    {
+        $package = $this->getPackageMapper()->findPackage($packageID);
+        $job = new JobModel();
+        $job->setPackage($package);
+        return $this->saveJobData($job, $data, $files);
+    }
+
+    /**
+     * Checks if the data is valid, and if it is, saves the Job
+     *
+     * @param JobModel $job
+     * @param array $data
+     * @param array $files
+     *
+     * @return JobModel|bool
+     */
+    public function saveJobData($job, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
+        $jobForm->bind($job);
         $jobForm->setData($mergedData);
-        if ($jobForm->isValid()) {
-            $job = $this->insertJobIntoPackageID($packageID);
-            $file = $files['attachment'];
-            if ($file['error'] !== UPLOAD_ERR_NO_FILE){
-                if ($file['error'] !== UPLOAD_ERR_OK){
-                    return false;
-                }
-                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                $job->setAttachment($newPath);
-            }
-            $job->exchangeArray($data);
-            $this->saveCompany();
-            return $job;
+
+        if (!$jobForm->isValid()) {
+            return false;
         }
-        return null;
+
+        $file = $files['attachment_file'];
+        if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+            $oldPath = $job->getAttachment();
+            try {
+                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+            } catch (\Exception $e) {
+                return false;
+            }
+
+            if (!is_null($oldPath) && $oldPath != $newPath) {
+                $this->getFileStorageService()->removeFile($oldPath);
+            }
+
+            $job->setAttachment($newPath);
+        }
+
+        $job->setTimeStamp(new \DateTime());
+        $this->getJobMapper()->persist($job);
+        return $job;
     }
 
     /**
@@ -363,22 +360,18 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete companies')
             );
         }
-        $companies = $this->getCompaniesBySlugName($slug);
-        if (count($companies == 1)) {
-            $this->getFileStorageService()->deleteFile($companies[0]->getLogo());
-            $this->getCompanyMapper()->deleteBySlug($slug);
-        }
-
+        $company = $this->getCompanyBySlugName($slug);
+        $this->getCompanyMapper()->remove($company);
     }
 
     /**
-     * Returns all companies identified with $slugName
+     * Return the company identified by $slugName
      *
-     * @param mixed $slugName
+     * @param \Company\Model\Company|null $slugName
      */
-    public function getCompaniesBySlugName($slugName)
+    public function getCompanyBySlugName($slugName)
     {
-        return $this->getCompanyMapper()->findCompaniesBySlugName($slugName);
+        return $this->getCompanyMapper()->findCompanyBySlugName($slugName);
     }
 
     /**
@@ -506,6 +499,12 @@ class Company extends AbstractACLService
      */
     public function getJobForm()
     {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit jobs')
+            );
+        }
         return $this->sm->get('company_admin_edit_job_form');
     }
 

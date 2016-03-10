@@ -173,6 +173,16 @@ class EditCompany extends Form
         ]);
 
         $this->add([
+            'name' => 'hidden',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Hide this company'),
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -182,7 +192,7 @@ class EditCompany extends Form
         ]);
         $this->mapper = $mapper;
 
-        $this->initFilters($mapper, $translate);
+        $this->initFilters($translate);
     }
 
     protected function initFilters($translate)
@@ -215,7 +225,7 @@ class EditCompany extends Form
                     'message' => $translate->translate('This slug is already taken'),
                 ]),
                 new \Zend\Validator\Regex([
-                    'message' => $translate->translate('This slug contains invalid characters') ,
+                    'message' => $translate->translate('This slug contains invalid characters'),
                     'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                 ]),
             ],
@@ -296,13 +306,7 @@ class EditCompany extends Form
                 [
                     'name' => 'File\Extension',
                     'options' => [
-                        'extension' => 'png',
-                    ],
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'image/png',
+                        'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],
                 ],
             ],
@@ -314,13 +318,7 @@ class EditCompany extends Form
                 [
                     'name' => 'File\Extension',
                     'options' => [
-                        'extension' => 'png',
-                    ],
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'image/png',
+                        'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],
                 ],
             ],

@@ -12,24 +12,19 @@ class AdminController extends AbstractActionController
      * Action that displays the main page
      *
      */
-
     public function indexAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
         ]);
-
-        return $vm;
     }
 
     /**
      * Action that allows adding a company
-     *
-     *
      */
     public function addCompanyAction()
     {
@@ -52,9 +47,7 @@ class AdminController extends AbstractActionController
                     [
                         'action' => 'edit',
                         'slugCompanyName' => $company->getSlugName(),
-                    ],
-                    [],
-                    false
+                    ]
                 );
             }
         }
@@ -71,11 +64,9 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
-            'companyEditForm' => $companyForm,
+        return new ViewModel([
+            'form' => $companyForm,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -105,7 +96,7 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $files['banner'],
                 $type
-            )){
+            )) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany',
@@ -130,7 +121,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel([
-            'companyEditForm' => $packageForm,
+            'form' => $packageForm,
             'type' => $type,
         ]);
 
@@ -157,12 +148,12 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
 
             // Check if data is valid, and insert when it is
-            $job = $companyService->insertJobIntoPackageIDByData(
+            $job = $companyService->createJob(
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
             );
-            if (!is_null($job)) {
+            if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage',
@@ -190,8 +181,10 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         $vm = new ViewModel([
-            'companyEditForm' => $companyForm,
+            'form' => $companyForm,
         ]);
+
+        $vm->setTemplate('company/admin/edit-job');
 
         return $vm;
     }
@@ -216,8 +209,7 @@ class AdminController extends AbstractActionController
         // If the company is not found, throw 404
         if (empty($companyList)) {
             $company = null;
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return $this->notFoundAction();
         }
 
         $company = $companyList[0];
@@ -259,7 +251,7 @@ class AdminController extends AbstractActionController
         );
         $vm = new ViewModel([
             'company' => $company,
-            'companyEditForm' => $companyForm,
+            'form' => $companyForm,
         ]);
 
         return $vm;
@@ -290,7 +282,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->savePackageByData($package,$request->getPost())) {
+            if ($companyService->savePackageByData($package,$request->getPost(), $request->getFiles())) {
                 // TODO: possibly redirect to company
             }
         }
@@ -314,7 +306,7 @@ class AdminController extends AbstractActionController
         $vm = new ViewModel([
             'package' => $package,
             'companyName' => $companyName,
-            'packageEditForm' => $packageForm,
+            'form' => $packageForm,
             'type' => $type,
         ]);
 
@@ -333,7 +325,6 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobForm();
 
         // Get the parameters
-        $packageID = $this->params('packageID');
         $companyName = $this->params('slugCompanyName');
         $jobName = $this->params('jobName');
 
@@ -344,8 +335,7 @@ class AdminController extends AbstractActionController
         // Check the job is found. If not, throw 404
         if (empty($jobList)) {
             $company = null;
-            $this->getResponse()->setStatusCode(404);
-            return;
+            return $this->notFoundAction();
         }
 
         $job = $jobList[0];
@@ -354,47 +344,18 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            $job = $companyService->saveJobByData($job, $request->getPost(), $files);
+            $companyService->saveJobData($job, $request->getPost(), $files);
             // TODO: possibly redirect to package
         }
 
         // Initialize the form
         $jobForm->bind($job);
-        $jobForm->setAttribute(
-            'action',
-            $this->url()->fromRoute(
-                'admin_company/editCompany/editPackage/editJob',
-                [
-                    'slugCompanyName' => $companyName,
-                    'jobName' => $jobName,
-                    'packageID' => $packageID,
-                ]
-            )
-        );
 
         // Initialize the view
-        $vm = new ViewModel([
-            'jobEditForm' => $jobForm,
+        return new ViewModel([
+            'form' => $jobForm,
             'job' => $job
         ]);
-
-        return $vm;
-    }
-
-    /**
-     * Extracted part of delete actions that checks if confirmation is given
-     *
-     *
-     */
-
-    private function checkConfirmation($request)
-    {
-        $del = $request->getPost('del', 'No');
-        if ($del === 'Yes') {
-            return true;
-        }
-        return false;
-
     }
 
     /**
@@ -413,23 +374,11 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-
-            // Check for confirmation
-            if ($this->checkConfirmation($request)) {
-                $companyService->deleteCompaniesBySlug($slugName);
-            }
-
+            $companyService->deleteCompaniesBySlug($slugName);
             return $this->redirect()->toRoute('admin_company');
         }
 
-        // No data returned, so instead, ask for confirmation
-
-        // Initialize the view
-        $vm = new ViewModel([
-            'companies' => $companyService->getEditableCompaniesBySlugName($slugName),
-            'translator' => $companyService->getTranslator(),
-        ]);
-        return $vm;
+        return $this->notFoundAction();
     }
 
     /**
@@ -449,25 +398,14 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($this->checkConfirmation($request)) {
-                $companyService->deletePackage($packageID);
-            }
+            $companyService->deletePackage($packageID);
             return $this->redirect()->toRoute(
                 'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]
             );
         }
 
-        // No data returned, so instead, ask for confirmation
-
-        // Initialize the view
-        $vm =  new ViewModel([
-            'package' => $companyService->getEditablePackage($packageID),
-            'slugName' => $companyName,
-            'translator' => $companyService->getTranslator(),
-        ]);
-
-        return $vm;
+        return $this->notFoundAction();
     }
 
     /**

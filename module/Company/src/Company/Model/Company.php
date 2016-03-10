@@ -25,7 +25,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
      * 
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"})
      */
     protected $translations;
 
@@ -74,7 +74,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * The company's packages.
      * 
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company", cascade={"persist", "remove"})
      */
     protected $packages;
 
@@ -475,6 +475,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setAddress($this->updateIfSet($data['address'],  ''));
         $this->setEmail($this->updateIfSet($data['email'],''));
         $this->setPhone($this->updateIfSet($data['phone'],''));
+        $this->setHidden($this->updateIfSet($data['hidden'],''));
         $this->translations = $newTranslations;
     }
 
@@ -495,6 +496,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
         $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['hidden'] = $this->getHidden();
 
         // Languages
         $arraycopy['languages'] = [];

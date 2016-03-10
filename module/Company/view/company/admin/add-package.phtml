@@ -1,50 +1,9 @@
-<?php 
-$form=$companyEditForm;
+<?php
+$form->setAttribute('class', 'form-horizontal');
 $form->prepare();
-?>
+echo $this->form()->openTag($form);
+echo $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]);
+echo $this->form()->closeTag($form);
 
-<?= $this->form()->openTag($form) ?>
-<dl>
-<?php $element = $form->get('startDate') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('expirationDate');?>
-    <dt><?= $element->getOption('label'); ?></dt>
-    <dd>
-        <?= $this->formElement($element); ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('published') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php if ($type === 'banner'):
-    $element = $form->get('banner')?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif; ?>
-<?php if ($type === 'featured'):?>
-    <?php $element = $form->get('language') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-    <?php $element = $form->get('article') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif;?>
 
-<?= $this->formRow($form->get('submit')); ?>
-<?= $this->form()->closeTag(); ?>
+

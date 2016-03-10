@@ -1,10 +1,14 @@
-<?php 
-$form = $companyEditForm;
-?>
-<h1> <?= $this->translate('Add Company'); ?> </h1>
+<h1><?= $this->translate('Add Company'); ?></h1>
 <?php $form->prepare();?>
 <?= $this->form()->openTag($form) ?>
-<?php echo $this->partial('partial/company/admin/editors/company.phtml', [
-    'form' => $form]); ?>
-<?= $this->formRow($form->get('submit')); ?>
+<?= $this->partial('partial/company/admin/editors/company.phtml', ['form' => $form]) ?>
+<br>
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary pull-right');
+?>
+<div class="form-group">
+    <?= $this->formButton($submit) ?>
+</div>
 <?= $this->form()->closeTag(); ?>

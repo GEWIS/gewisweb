@@ -1,94 +1,72 @@
-<?php 
-$form = $packageEditForm;
+<?php if ($type === 'banner'): ?>
+    <h2><?= $this->translate('Banner') ?></h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3><?= $this->translate('Company Logo') ?></h3>
+            <img class="img-responsive" src="<?= $this->fileUrl($package->getImage()) ?>"/>
+        </div>
+    </div>
+    <hr>
+<?php endif; ?>
+<?php
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare()
 ?>
-<?php $form->prepare()?>
 <?= $this->form()->openTag($form) ?>
-<dl>
 <?php $element = $form->get('id') ?>
-    <?= $this->formElement($element) ?>
-<?php $element = $form->get('startDate') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('expirationDate');?>
-    <dt><?= $element->getOption('label'); ?></dt>
-    <dd>
-        <?= $this->formElement($element); ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php $element = $form->get('published') ?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-
-<?php if ($type === 'banner'):
-    $element = $form->get('banner')?>
-        <img src=<?= $this->fileUrl($package->getImage()) ?>><?= $this->translate('Company Logo') ?></img>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif;?>
-<?php if ($type === 'featured'):?>
-    <?php $element = $form->get('language')?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-    <?php $element = $form->get('article')?>
-    <dt><?= $element->getOption('label') ?></dt>
-    <dd>
-        <?= $this->formElement($element) ?>
-        <?= $this->formElementErrors($element); ?>
-    </dd>
-<?php endif;?>
-
-<?= $this->formRow($form->get('submit')); ?>
+<?= $this->formElement($element) ?>
+<?= $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]); ?>
 <?= $this->form()->closeTag(); ?>
 
-<?php if ($type === 'job') { ?>
-<h2> <?= $this->translate('Jobs') ?> </h2>
-<table class="packagelist">
+<?php if ($type === 'job'): ?>
+    <h2>
+        <?= $this->translate('Jobs') ?>
+        <a class="btn btn-success pull-right"
+           href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
+               [
+                   "slugCompanyName" => $companyName,
+                   'packageID' => $package->getId()
+               ]); ?>">
+            <span class="glyphicon glyphicon-plus"></span>
+            <?= $this->translate('Add job'); ?>
+        </a>
+    </h2>
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>
-                        <?= $this->translate('Job'); ?>
+                <?= $this->translate('Name'); ?>
             </th>
             <th>
-                        <?= $this->translate('Active'); ?>
+                <?= $this->translate('Active'); ?>
+            </th>
+            <th>
+                <?= $this->translate('Actions'); ?>
             </th>
         </tr>
+        </thead>
 
-    <?php if (count($package->getJobs()) > 0) { 
-        foreach($package->getJobs() as $job) { ?>
+        <?php foreach ($package->getJobs() as $job): ?>
             <tr>
                 <td>
-                    <a href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
-                                            [
-                                                  "slugCompanyName" => $companyName,
-                                                  "packageID" => $package->getId(),
-                                                  "jobName" => $job->getSlugName(),
-                                            ]
-                                           ); ?>">
-                        <?= $this->translate('edit'); ?></a>
-                </td> 
+                    <?= $job->getName() ?>
+                </td>
                 <td>
-                    <?php echo $job->isActive() ? 'true' : 'false'?>
+                    <?php echo $job->isActive() ? 'Yes' : 'No' ?>
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-primary"
+                       href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
+                           [
+                               "slugCompanyName" => $companyName,
+                               "packageID" => $package->getId(),
+                               "jobName" => $job->getSlugName(),
+                           ]
+                       ); ?>">
+                        <?= $this->translate('edit'); ?>
+                    </a>
                 </td>
             </tr>
-    <?php 
-        } 
-    } else { print("Empty"); }
-    ?>
-</table>
-<br/>
-<a href="<?= $this->url("admin_company/editCompany/editPackage/addJob", 
-    ["slugCompanyName" => $companyName, 'packageID' => $package->getId()]); ?>">
-    <?= $this->translate('Add job'); ?>
-</a>
-<?php }?>
+        <?php endforeach ?>
+    </table>
+<?php endif ?>

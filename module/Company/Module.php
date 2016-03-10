@@ -106,8 +106,15 @@ class Module
                     return $sm->get('translator');
                 },
                 'company_admin_edit_job_form' => function ($sm) {
-                    return new \Company\Form\EditJob(
+                    $form = new \Company\Form\EditJob(
                         $sm->get('translator')
+                    );
+                    $form->setHydrator($sm->get('company_hydrator'));
+                    return $form;
+                },
+                'company_hydrator' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('company_doctrine_em')
                     );
                 },
                 'company_acl' => function ($sm) {

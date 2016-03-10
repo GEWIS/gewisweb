@@ -15,18 +15,6 @@ class EditJob extends Form
 
         $this->setAttribute('method', 'post');
         $this->add([
-            'name' => 'job-id',
-            'attributes' => [
-                'type' => 'hidden',
-            ],
-        ]);
-        $this->add([
-            'name' => 'company-id',
-            'attributes' => [
-                'type' => 'hidden',
-            ],
-        ]);
-        $this->add([
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'language',
             'options' => [
@@ -56,17 +44,6 @@ class EditJob extends Form
             ],
         ]);
         $this->add([
-            'name' => 'timestamp',
-            'type' => 'Zend\Form\Element\Date',
-            'attributes' => [
-                'required' => 'required',
-                'step' => '1',
-            ],
-            'options' => [
-                'label' => $translate->translate('Last updated'),
-            ],
-        ]);
-        $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -86,7 +63,7 @@ class EditJob extends Form
             ],
         ]);
         $this->add([
-            'name' => 'attachment',
+            'name' => 'attachment_file',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
@@ -191,7 +168,7 @@ class EditJob extends Form
         ]);
 
         $filter->add([
-            'name' => 'attachment',
+            'name' => 'attachment_file',
             'required' => false,
             'validators' => [
                 [
@@ -208,32 +185,6 @@ class EditJob extends Form
                 ],
             ],
         ]);
-
-        // Cannot upload logo yet
-        /*$filter->add(array(
-            'name' => 'logo',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'File\Extension',
-                    'options' => array(
-                        'extension' => 'png'
-                    )
-                ),
-                array(
-                    'name' => 'File\MimeType',
-                    'options' => array(
-                        'mimeType' => 'image/png'
-                    )
-                )
-            )
-        ));*/
-
-        /*
-         * TODO: Add more filters
-         *
-         * Email filter: http://stackoverflow.com/questions/20946210/zend2-limiting-e-mail-validation-to-only-one-error-message
-         */
 
         $this->setInputFilter($filter);
     }
