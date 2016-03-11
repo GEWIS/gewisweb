@@ -315,6 +315,42 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Revoke an authorization.
+     *
+     * @param \Decision\Model\Member $authorizer
+     *
+     * @return bool
+     */
+    public function revokeAuthorization($authorizer = null)
+    {
+        if (!$this->isAllowed('view_own', 'authorization')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to revoke authorizations.')
+            );
+        }
+
+        $meeting = $this->getLatestAV();
+        if (is_null($meeting)) {
+            return false;
+        }
+
+        if (is_null($authorizer)) {
+            $authorizer = $this->sm->get('user_role')->getLidnr();
+        }
+
+        $authorization = $this->getAuthorizationMapper()->findUserAuthorization($meeting->getNumber(), $authorizer);
+
+        if (is_null($authorization)) {
+            return false;
+        }
+
+        $authorization->setRevoked(1);
+        $this->getAuthorizationMapper()->flush();
+
+        return true;
+    }
+    /**
      * Get the Notes form.
      *
      * @return Decision\Form\Notes

@@ -11,7 +11,12 @@
         $meeting->getNumber(),
         $meeting->getDate()->format('Y-m-d')
     ) ?>
-
+    <form action="<?= $this->url('decision/authorizations/revoke') ?>" method="POST">
+        <button class="btn btn-danger" type="submit" value="Revoke">
+            <span class="glyphicon glyphicon-trash"></span>
+            <?= $this->translate('Revoke authorization') ?>
+        </button>
+    </form>
     <?php else: ?>
     <h3>
         <?= sprintf(

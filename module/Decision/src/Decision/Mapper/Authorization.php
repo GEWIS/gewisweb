@@ -32,7 +32,6 @@ class Authorization
      * Find all authorizations for a meeting
      *
      * @param integer $meetingNumber
-     * @param integer $authorizer
      *
      * @return array
      */
@@ -68,6 +67,11 @@ class Authorization
     public function persist($authorization)
     {
         $this->em->persist($authorization);
+        $this->em->flush();
+    }
+
+    public function flush()
+    {
         $this->em->flush();
     }
 

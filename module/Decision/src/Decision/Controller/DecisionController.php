@@ -129,6 +129,16 @@ class DecisionController extends AbstractActionController
         ]);
     }
 
+    public function revokeAuthorizationAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $this->getDecisionService()->revokeAuthorization();
+        }
+
+        $this->redirect()->toRoute('decision/authorizations');
+    }
+
     /**
      * Get the decision service.
      */

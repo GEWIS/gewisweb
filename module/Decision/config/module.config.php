@@ -70,14 +70,23 @@ return [
                         ],
                     ],
                     'authorizations' => [
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => [
-                            'route' => '/authorizations[/:number]',
-                            'constraints' => [
-                                'number' => '[0-9]+'
-                            ],
+                            'route' => '/authorizations',
                             'defaults' => [
                                 'action' => 'authorizations',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'revoke' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/revoke',
+                                    'defaults' => [
+                                        'action' => 'revokeAuthorization',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
