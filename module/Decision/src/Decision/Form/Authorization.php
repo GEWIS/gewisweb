@@ -20,7 +20,10 @@ class Authorization extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'agree',
-            'type' => 'checkbox'
+            'type' => 'checkbox',
+            'options' => [
+                'use_hidden_element' => false
+            ]
         ]);
 
         $this->add([
