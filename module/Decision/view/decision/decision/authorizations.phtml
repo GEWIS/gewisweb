@@ -7,7 +7,7 @@
     <?php elseif ($authorization): ?>
     <?= sprintf(
         $this->translate('You have authorized %s for AV %s (%s)'),
-        $authorization->getRecipient()->getFullName(),
+        '<strong>' . $authorization->getRecipient()->getFullName() . '</strong>',
         $meeting->getNumber(),
         $meeting->getDate()->format('Y-m-d')
     ) ?>

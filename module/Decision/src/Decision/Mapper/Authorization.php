@@ -37,7 +37,7 @@ class Authorization
      */
     public function find($meetingNumber)
     {
-        return $this->getRepository()->findBy(['meetingNumber' => $meetingNumber]);
+        return $this->getRepository()->findBy(['meetingNumber' => $meetingNumber, 'revoked' => false]);
     }
 
     /**

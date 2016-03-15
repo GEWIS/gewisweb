@@ -52,12 +52,16 @@ class AdminController extends AbstractActionController
 
     public function authorizationsAction()
     {
+        $meetings = $this->getDecisionService()->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
+        if (is_null($number) && count($meetings) > 0) {
+            $number = $meetings[0]->getNumber();
+        }
+
         if (!is_null($number)) {
             $authorizations = $this->getDecisionService()->getAllAuthorizations($number);
         }
-        $meetings = $this->getDecisionService()->getMeetingsByType('AV');
 
         return new ViewModel([
             'meetings' => $meetings,
