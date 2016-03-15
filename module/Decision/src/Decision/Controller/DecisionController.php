@@ -101,6 +101,34 @@ class DecisionController extends AbstractActionController
         ]);
     }
 
+    public function authorizationsAction()
+    {
+        $meeting = $this->getDecisionService()->getLatestAV();
+        $authorization = null;
+        if (!is_null($meeting)) {
+            $authorization = $this->getDecisionService()->getUserAuthorization($meeting->getNumber());
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $authorization = $this->getDecisionService()->createAuthorization($request->getPost());
+            if ($authorization) {
+                return new ViewModel([
+                    'meeting' => $meeting,
+                    'authorization' => $authorization
+                ]);
+            }
+        }
+
+        $form = $this->getDecisionService()->getAuthorizationForm();
+
+        return new ViewModel([
+            'meeting' => $meeting,
+            'authorization' => $authorization,
+            'form' => $form
+        ]);
+    }
+
     /**
      * Get the decision service.
      */

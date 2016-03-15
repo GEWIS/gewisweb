@@ -69,6 +69,15 @@ return [
                             ],
                         ],
                     ],
+                    'authorizations' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/authorizations',
+                            'defaults' => [
+                                'action' => 'authorizations',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
@@ -110,6 +119,18 @@ return [
                                 'action' => 'document'
                             ]
                         ]
+                    ],
+                    'authorizations' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/authorizations[/:number]',
+                            'constraints' => [
+                                'number' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                'action' => 'authorizations',
+                            ],
+                        ],
                     ],
                 ],
                 'priority' => 100

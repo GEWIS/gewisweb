@@ -73,6 +73,11 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_mapper_authorization' => function ($sm) {
+                    return new \Decision\Mapper\Authorization(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_form_searchdecision' => function ($sm) {
                     return new \Decision\Form\SearchDecision(
                         $sm->get('translator')
@@ -88,6 +93,11 @@ class Module
                     return new \Decision\Form\Notes(
                         $sm->get('translator'),
                         $sm->get('decision_mapper_meeting')
+                    );
+                },
+                'decision_form_authorization' => function ($sm) {
+                    return new \Decision\Form\Authorization(
+                        $sm->get('translator')
                     );
                 },
                 'decision_form_organ_information' => function ($sm) {
@@ -111,6 +121,7 @@ class Module
                     $acl->addResource('dreamspark');
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
+                    $acl->addResource('authorization');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -130,6 +141,8 @@ class Module
                     $acl->allow('user', 'meeting', ['view', 'view_notes', 'view_documents']);
 
                     $acl->allow('user', 'dreamspark', ['login', 'students']);
+
+                    $acl->allow('user', 'authorization', ['create', 'view_own']);
 
                     return $acl;
                 },
