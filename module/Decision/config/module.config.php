@@ -77,18 +77,6 @@ return [
                                 'action' => 'authorizations',
                             ],
                         ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'revoke' => [
-                                'type' => 'Literal',
-                                'options' => [
-                                    'route' => '/revoke',
-                                    'defaults' => [
-                                        'action' => 'revokeAuthorization',
-                                    ],
-                                ],
-                            ],
-                        ],
                     ],
                 ],
                 'priority' => 100
