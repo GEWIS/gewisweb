@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-28 00:11+0100\n"
-"PO-Revision-Date: 2016-02-28 00:16+0100\n"
+"POT-Creation-Date: 2016-03-15 21:44+0100\n"
+"PO-Revision-Date: 2016-03-15 21:48+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -19,8 +19,10 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: module/Decision/view/partial/photos.phtml:1
-#: module/Application/view/partial/admin-nav.phtml:66
+#: module/Application/view/partial/admin-nav.phtml:78
 #: module/Application/view/partial/main-nav.phtml:134
+#: module/Photo/view/photo/album/index.phtml:10
+#: module/Photo/view/photo/photo/view.phtml:12
 msgid "Photos"
 msgstr "Photos"
 
@@ -99,26 +101,32 @@ msgid "Find a member"
 msgstr "Find a member"
 
 #: module/Decision/view/decision/member/index.phtml:26
-#: module/Application/view/partial/admin-nav.phtml:25
+#: module/Application/view/partial/admin-nav.phtml:34
 msgid "Meetings"
 msgstr "Meetings"
 
 #: module/Decision/view/decision/member/index.phtml:32
-#: module/Application/view/partial/admin-nav.phtml:39
+#: module/Decision/view/decision/decision/authorizations.phtml:4
+#: module/Application/view/partial/admin-nav.phtml:44
+msgid "Authorizations"
+msgstr "Authorizations"
+
+#: module/Decision/view/decision/member/index.phtml:38
+#: module/Application/view/partial/admin-nav.phtml:51
 msgid "Organs"
 msgstr "Organs"
 
-#: module/Decision/view/decision/member/index.phtml:38
+#: module/Decision/view/decision/member/index.phtml:44
 #: module/Education/view/education/education/index.phtml:24
 msgid "Dreamspark"
 msgstr "Dreamspark"
 
-#: module/Decision/view/decision/member/index.phtml:44
+#: module/Decision/view/decision/member/index.phtml:50
 #: module/Application/view/partial/main-nav.phtml:69
 msgid "SuSOS"
 msgstr "SuSOS"
 
-#: module/Decision/view/decision/member/index.phtml:50
+#: module/Decision/view/decision/member/index.phtml:56
 msgid "Decisions"
 msgstr "Decisions"
 
@@ -302,6 +310,23 @@ msgstr ""
 msgid "Meeting document uploaded"
 msgstr "Meeting document uploaded"
 
+#: module/Decision/view/decision/admin/authorizations.phtml:13
+#, php-format
+msgid "Authorizations for AV %s"
+msgstr "Authorizations for AV %s"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:17
+msgid "Authorizer"
+msgstr "Authorizer"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:18
+msgid "Recipient"
+msgstr "Recipient"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:19
+msgid "Valid"
+msgstr "Valid"
+
 #: module/Decision/view/decision/admin/notes.phtml:2
 msgid "Meeting notes uploaded"
 msgstr "Meeting notes uploaded"
@@ -365,6 +390,54 @@ msgstr "# Decisions"
 #: module/Decision/view/decision/decision/view.phtml:17
 msgid "Notes for this meeting"
 msgstr "Notes for this meeting"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:6
+msgid ""
+"There are no upcoming meetings for which you can authorize someone.\n"
+"You may still be able to authorize someone or revoke an authorization by "
+"contacting the board."
+msgstr ""
+"There are no upcoming meetings for which you can authorize someone.\n"
+"You may still be able to authorize someone or revoke an authorization by "
+"contacting the board."
+
+#: module/Decision/view/decision/decision/authorizations.phtml:10
+#, php-format
+msgid "You have authorized %s for AV %s (%s)"
+msgstr "You have authorized %s for AV %s (%s)"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:16
+msgid ""
+"If you want to revoke your authorization you have to communicate this to the "
+"board in writing (not by email)."
+msgstr ""
+
+#: module/Decision/view/decision/decision/authorizations.phtml:20
+#, php-format
+msgid "Authorize someone for GM %s (%s)"
+msgstr "Authorize someone for GM %s (%s)"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:35
+msgid "Member"
+msgstr "Member"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:48
+msgid "Terms"
+msgstr "Terms"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:53
+#, php-format
+msgid ""
+"I, %s am fully aware that by filling in this form I authorize the person in "
+"this form to represent me at General Meeting %s of s.v. GEWIS"
+msgstr ""
+"I, %s am fully aware that by filling in this form I authorize the person in "
+"this form to represent me at General Meeting %s of s.v. GEWIS"
+
+#: module/Decision/view/decision/decision/authorizations.phtml:62
+#: module/Decision/src/Decision/Form/Authorization.php:33
+msgid "Authorize"
+msgstr "Authorize"
 
 #: module/Decision/view/decision/decision/search.phtml:16
 #: module/Decision/src/Decision/Form/SearchDecision.php:21
@@ -557,7 +630,12 @@ msgstr ""
 msgid "GEWIS Website"
 msgstr "GEWIS Website"
 
-#: module/Application/view/partial/admin-nav.phtml:15
+#: module/Application/view/partial/admin-nav.phtml:12
+#: module/Application/view/partial/main-nav.phtml:82
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+#: module/Application/view/partial/admin-nav.phtml:24
 #: module/Application/view/partial/main-nav.phtml:125
 #: module/Activity/view/activity/organizer/export.phtml:5
 #: module/Activity/view/activity/organizer/export.phtml:14
@@ -570,52 +648,52 @@ msgstr "GEWIS Website"
 msgid "Activities"
 msgstr "Activities"
 
-#: module/Application/view/partial/admin-nav.phtml:19
+#: module/Application/view/partial/admin-nav.phtml:28
 msgid "Career"
 msgstr "Career"
 
-#: module/Application/view/partial/admin-nav.phtml:29
+#: module/Application/view/partial/admin-nav.phtml:38
 msgid "Notes"
 msgstr "Notes"
 
-#: module/Application/view/partial/admin-nav.phtml:32
+#: module/Application/view/partial/admin-nav.phtml:41
 msgid "Documents"
 msgstr "Documents"
 
-#: module/Application/view/partial/admin-nav.phtml:46
+#: module/Application/view/partial/admin-nav.phtml:58
 #: module/Application/view/partial/main-nav.phtml:122
 #: module/Education/view/education/education/index.phtml:5
 msgid "Education"
 msgstr "Education"
 
-#: module/Application/view/partial/admin-nav.phtml:50
+#: module/Application/view/partial/admin-nav.phtml:62
 #: module/Education/view/education/admin/bulk.phtml:8
 msgid "Upload exams"
 msgstr "Upload exams"
 
-#: module/Application/view/partial/admin-nav.phtml:51
+#: module/Application/view/partial/admin-nav.phtml:63
 msgid "Upload summary"
 msgstr "Upload summary"
 
-#: module/Application/view/partial/admin-nav.phtml:57
+#: module/Application/view/partial/admin-nav.phtml:69
 msgid "Polls"
 msgstr "Polls"
 
-#: module/Application/view/partial/admin-nav.phtml:60
+#: module/Application/view/partial/admin-nav.phtml:72
 #: module/Frontpage/view/frontpage/page-admin/index.phtml:5
 msgid "Pages"
 msgstr "Pages"
 
-#: module/Application/view/partial/admin-nav.phtml:63
+#: module/Application/view/partial/admin-nav.phtml:75
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:81
 msgid "News"
 msgstr "News"
 
-#: module/Application/view/partial/admin-nav.phtml:72
+#: module/Application/view/partial/admin-nav.phtml:84
 msgid "Users"
 msgstr "Users"
 
-#: module/Application/view/partial/admin-nav.phtml:76
+#: module/Application/view/partial/admin-nav.phtml:88
 msgid "API Users"
 msgstr "API Users"
 
@@ -654,10 +732,6 @@ msgstr "Admin"
 msgid "Logout"
 msgstr "Logout"
 
-#: module/Application/view/partial/main-nav.phtml:82
-msgid "Toggle navigation"
-msgstr "Toggle navigation"
-
 #: module/Application/view/partial/main-nav.phtml:93
 msgid "Association"
 msgstr "Association"
@@ -689,7 +763,7 @@ msgid "Regulations"
 msgstr "Regulations"
 
 #: module/Application/view/partial/main-nav.phtml:102
-#: module/Company/view/company/company/job-list.phtml:79
+#: module/Company/view/company/company/job-list.phtml:82
 #: module/Company/view/company/company/spotlight.phtml:39
 #: module/Company/view/company/company/jobs.phtml:52
 #: module/Company/view/partial/company/company/list/company.phtml:15
@@ -723,7 +797,7 @@ msgstr "Featured"
 #: module/Company/view/company/admin/edit-package.phtml:23
 #: module/Company/view/partial/company/company/list/company.phtml:23
 msgid "Jobs"
-msgstr "Jobs"
+msgstr "Vacancies"
 
 #: module/Application/view/partial/main-nav.phtml:129
 #: module/Activity/view/activity/activity/create.phtml:14
@@ -731,18 +805,18 @@ msgid "Create an activity"
 msgstr "Create an activity"
 
 #: module/Application/view/partial/main-nav.phtml:136
-#: module/Photo/view/photo/photo/view.phtml:29
+#: module/Photo/view/photo/photo/view.phtml:68
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:167
 msgid "Photo of the week"
 msgstr "Photo of the week"
 
 #: module/Application/view/partial/paginator.phtml:9
-#: module/Photo/view/photo/photo/view.phtml:39
+#: module/Photo/view/photo/photo/view.phtml:78
 msgid "Previous"
 msgstr "Previous"
 
 #: module/Application/view/partial/paginator.phtml:23
-#: module/Photo/view/photo/photo/view.phtml:47
+#: module/Photo/view/photo/photo/view.phtml:86
 msgid "Next"
 msgstr "Next"
 
@@ -1129,7 +1203,7 @@ msgstr "Subscription deadline"
 
 #: module/Activity/view/activity/activity/create.phtml:123
 #: module/Activity/view/activity/activity/create.phtml:175
-#: module/Company/view/company/company/job-list.phtml:89
+#: module/Company/view/company/company/job-list.phtml:92
 #: module/Company/view/company/company/jobs.phtml:61
 #: module/Company/view/partial/company/company/list/company.phtml:47
 #: module/Company/src/Company/Form/EditCompany.php:158
@@ -1167,7 +1241,7 @@ msgid "It will become visible after it has been approved by the board."
 msgstr "It will become visible after it has been approved by the board."
 
 #: module/Company/view/company/company/job-list.phtml:43
-#: module/Company/view/company/company/job-list.phtml:70
+#: module/Company/view/company/company/job-list.phtml:73
 msgid "at"
 msgstr "at"
 
@@ -1175,7 +1249,7 @@ msgstr "at"
 msgid "Filter results"
 msgstr "Filter results"
 
-#: module/Company/view/company/company/job-list.phtml:76
+#: module/Company/view/company/company/job-list.phtml:79
 #: module/Company/view/company/company/spotlight.phtml:36
 #: module/Company/view/company/company/jobs.phtml:49
 #: module/Company/view/partial/company/company/list/company.phtml:12
@@ -1183,12 +1257,12 @@ msgstr "Filter results"
 msgid "Logo of"
 msgstr "Logo of"
 
-#: module/Company/view/company/company/job-list.phtml:83
+#: module/Company/view/company/company/job-list.phtml:86
 #: module/Company/view/company/company/jobs.phtml:55
 msgid "View vacancy"
 msgstr "View vacancy"
 
-#: module/Company/view/company/company/job-list.phtml:85
+#: module/Company/view/company/company/job-list.phtml:88
 #: module/Company/view/company/company/jobs.phtml:57
 msgid "View website"
 msgstr "View website"
@@ -1218,7 +1292,7 @@ msgstr "Add Company"
 #: module/Company/view/company/admin/index.phtml:38
 #: module/Company/view/company/admin/index.phtml:91
 msgid "Active jobs"
-msgstr "Active jobs"
+msgstr "Active vacancies"
 
 #: module/Company/view/company/admin/index.phtml:43
 #: module/Company/view/company/admin/index.phtml:92
@@ -1299,7 +1373,7 @@ msgstr "Edit Company"
 
 #: module/Company/view/company/admin/edit-company.phtml:18
 msgid "Add Job package"
-msgstr "Add Job package"
+msgstr "Add vacancy package"
 
 #: module/Company/view/company/admin/edit-company.phtml:27
 msgid "Add spotlight package"
@@ -1341,7 +1415,7 @@ msgstr "Expiration date"
 
 #: module/Company/view/company/admin/edit-company.phtml:85
 msgid "Jobs / Type"
-msgstr "Jobs / Type"
+msgstr "Vacancies / Type"
 
 #: module/Company/view/company/admin/edit-company.phtml:106
 msgid "Banner package"
@@ -1375,15 +1449,15 @@ msgstr "Company Logo"
 
 #: module/Company/view/company/admin/edit-package.phtml:31
 msgid "Add job"
-msgstr "Add job"
+msgstr "Add vacancy"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "job"
-msgstr "job"
+msgstr "vacancy"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:21
 msgid "jobs"
-msgstr "jobs"
+msgstr "vacancies"
 
 #: module/Photo/view/photo/photo/index.phtml:7
 msgid "Older"
@@ -1405,11 +1479,15 @@ msgstr "Old pictures of the week"
 msgid "Week"
 msgstr "Week"
 
-#: module/Photo/view/photo/photo/view.phtml:13
+#: module/Photo/view/photo/photo/view.phtml:41
+msgid "Photo"
+msgstr "Photo"
+
+#: module/Photo/view/photo/photo/view.phtml:52
 msgid "Return to album"
 msgstr "Return to album"
 
-#: module/Photo/view/photo/photo/view.phtml:58
+#: module/Photo/view/photo/photo/view.phtml:97
 msgid "Full resolution"
 msgstr "Full resolution"
 
@@ -2077,33 +2155,50 @@ msgstr "Name must be at least "
 msgid "Not allowed to search for members."
 msgstr "Not allowed to search for members."
 
-#: module/Decision/src/Decision/Service/Decision.php:28
+#: module/Decision/src/Decision/Service/Decision.php:30
+#: module/Decision/src/Decision/Service/Decision.php:42
 msgid "You are not allowed to list meetings."
 msgstr "You are not allowed to list meetings."
 
-#: module/Decision/src/Decision/Service/Decision.php:48
+#: module/Decision/src/Decision/Service/Decision.php:62
 msgid "You are not allowed to view meetings."
 msgstr "You are not allowed to view meetings."
 
-#: module/Decision/src/Decision/Service/Decision.php:78
+#: module/Decision/src/Decision/Service/Decision.php:102
 msgid "You are not allowed to view meeting documents."
 msgstr "You are not allowed to view meeting documents."
 
-#: module/Decision/src/Decision/Service/Decision.php:105
+#: module/Decision/src/Decision/Service/Decision.php:129
 msgid "You are not allowed to view meeting notes."
 msgstr "You are not allowed to view meeting notes."
 
-#: module/Decision/src/Decision/Service/Decision.php:206
+#: module/Decision/src/Decision/Service/Decision.php:230
 msgid "You are not allowed to search decisions."
 msgstr "You are not allowed to search decisions."
 
-#: module/Decision/src/Decision/Service/Decision.php:233
+#: module/Decision/src/Decision/Service/Decision.php:259
+msgid "You are not allowed to view all authorizations."
+msgstr "You are not allowed to view all authorizations."
+
+#: module/Decision/src/Decision/Service/Decision.php:278
+msgid "You are not allowed to view authorizations."
+msgstr "You are not allowed to view authorizations."
+
+#: module/Decision/src/Decision/Service/Decision.php:329
+msgid "You are not allowed to revoke authorizations."
+msgstr "You are not allowed to revoke authorizations."
+
+#: module/Decision/src/Decision/Service/Decision.php:363
 msgid "You are not allowed to upload notes."
 msgstr "You are not allowed to upload notes."
 
-#: module/Decision/src/Decision/Service/Decision.php:250
+#: module/Decision/src/Decision/Service/Decision.php:380
 msgid "You are not allowed to upload meeting documents."
 msgstr "You are not allowed to upload meeting documents."
+
+#: module/Decision/src/Decision/Service/Decision.php:407
+msgid "You are not authorize people."
+msgstr "You are not authorize people."
 
 #: module/Decision/src/Decision/Service/Organ.php:26
 msgid "Not allowed to view the list of organs."
@@ -2392,7 +2487,7 @@ msgstr "You are not allowed to insert a package"
 
 #: module/Company/src/Company/Service/Company.php:324
 msgid "You are not allowed to insert a job"
-msgstr "You are not allowed to insert a job"
+msgstr "You are not allowed to insert a vacancy"
 
 #: module/Company/src/Company/Service/Company.php:343
 msgid "You are not allowed to delete packages"
@@ -2413,7 +2508,7 @@ msgstr "You are not allowed to edit companies"
 #: module/Company/src/Company/Service/Company.php:432
 #: module/Company/src/Company/Service/Company.php:505
 msgid "You are not allowed to edit jobs"
-msgstr "You are not allowed to edit jobs"
+msgstr "You are not allowed to edit vacancies"
 
 #: module/Company/src/Company/Form/EditCompany.php:42
 #: module/Company/src/Company/Form/EditJob.php:43
@@ -2448,6 +2543,14 @@ msgstr "Hide this company"
 #: module/Company/src/Company/Form/EditPackage.php:95
 msgid "Submit changes"
 msgstr "Submit changes"
+
+#: module/Company/src/Company/Form/EditCompany.php:225
+msgid "This slug is already taken"
+msgstr "This slug is already taken"
+
+#: module/Company/src/Company/Form/EditCompany.php:228
+msgid "This slug contains invalid characters"
+msgstr "This slug contains invalid characters"
 
 #: module/Company/src/Company/Form/EditJob.php:72
 msgid "Attachment"
@@ -2753,6 +2856,9 @@ msgstr "Table soccer coordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Purchaser"
+
+#~ msgid "Revoke authorization"
+#~ msgstr "Revoke authorization"
 
 #~ msgid "Id"
 #~ msgstr "Id"
