@@ -4,7 +4,7 @@
     <h1><?= $this->translate('Authorizations') ?></h1>
 <?php if (is_null($meeting)): ?>
 <?= $this->translate('There are no upcoming meetings for which you can authorize someone.') ?>
-    <?php elseif (!is_null($authorization)): ?>
+    <?php elseif ($authorization): ?>
     <?= sprintf(
         $this->translate('You have authorized %s for AV %s (%s)'),
         $authorization->getRecipient()->getFullName(),
