@@ -323,7 +323,7 @@ class Decision extends AbstractAclService
      */
     public function revokeAuthorization($authorizer = null)
     {
-        if (!$this->isAllowed('view_own', 'authorization')) {
+        if (!$this->isAllowed('revoke', 'authorization')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to revoke authorizations.')

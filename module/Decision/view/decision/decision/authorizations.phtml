@@ -12,12 +12,8 @@ You may still be able to authorize someone or revoke an authorization by contact
         $meeting->getNumber(),
         $meeting->getDate()->format('Y-m-d')
     ) ?>
-    <form action="<?= $this->url('decision/authorizations/revoke') ?>" method="POST">
-        <button class="btn btn-danger" type="submit" value="Revoke">
-            <span class="glyphicon glyphicon-trash"></span>
-            <?= $this->translate('Revoke authorization') ?>
-        </button>
-    </form>
+    <br>
+    <?= $this->translate('If you want to revoke your authorization you have to communicate this to the board in writing (not by email).') ?>
     <?php else: ?>
     <h3>
         <?= sprintf(
