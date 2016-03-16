@@ -36,6 +36,11 @@ Photo
   margin-bottom: 1%;
 }
 
+.thumbnail .caption {
+  padding: 9px 0 0;
+  min-height: 50px;
+}
+
 /* Weekly photo ribbon */
 .ribbon-container {
   position: absolute;
