@@ -12,6 +12,8 @@ class Truncate extends AbstractHelper
      * @param int    $length length at which to truncate
      * @param array  $options options
      * @return string truncated string
+     *
+     * @src http://www.codestance.com/tutorials-archive/zend-framework-truncate-view-helper-246
      */
     public function __invoke($text, $length = 100, $options = [])
     {
@@ -23,10 +25,11 @@ class Truncate extends AbstractHelper
         $exact = $options['exact'];
 
         if (mb_strlen($text) <= $length) {
+            // do not truncate
             return $text;
-        } else {
-            $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
         }
+
+        $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
 
         if (!$exact) {
             $spacepos = mb_strrpos($truncate, ' ');
