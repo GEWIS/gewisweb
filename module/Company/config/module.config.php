@@ -278,4 +278,9 @@ return [
             ],
         ],
     ],
+    'view_helpers' => [
+        'invokables' => [
+            'truncate' => 'Application\View\Helper\Truncate'
+        ],
+    ],
 ];
