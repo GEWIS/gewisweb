@@ -10,19 +10,20 @@ $companyURL = $this->url('company/companyItem', // Route url
 ?>
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="company-grid-item grid-item col-md-12" id="company-<?= $escaper->escapeHtmlAttr($company->getId()); ?>">
-        <a href="<?= $companyURL ?>">
-            <img class="company-logo img-responsive" src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
-        </a>
-        <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
-        <div class="">
-            <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
-            <p>
-                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                    <?= $company->getNumberOfActiveJobs() ?> <?= $company->getNumberOfActiveJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
-                </a>
-            </p>
+        <div class="company-grid-content">
+            <a href="<?= $companyURL ?>" class="company-grid-logo">
+                <img class="company-logo img-responsive" src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+            </a>
+            <div class="company-grid-text">
+                <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
+                <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+                <p>
+                    <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                        <?= $company->getNumberOfActiveJobs() ?> <?= $company->getNumberOfActiveJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
+                    </a>
+                </p>
+            </div>
         </div>
-        <hr class="visible-xs">
     </div>
 </div>
 
