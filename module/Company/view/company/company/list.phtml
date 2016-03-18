@@ -3,9 +3,6 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-// Randomize the order of companies
-shuffle($companyList);
-
 $this->headTitle($this->translate('Companies'));
 
 ?>
@@ -16,12 +13,7 @@ $this->headTitle($this->translate('Companies'));
         <div class="col-md-3 hidden-sm">
             <div class="list-group">
                 <?php
-                function sortCompanies(\Company\Model\Company $a , \Company\Model\Company $b) {
-                    return strcasecmp($a->getName(), $b->getName());
-                }
-                $sortedList = $companyList;
-                usort($sortedList, "sortCompanies");
-                foreach ($sortedList as $company) {
+                foreach ($companyList as $company) {
                     ?>
                     <a href="<?= $this->url('company/companyItem', // Route url
                         ['slugCompanyName' => $company->getSlugName()], // Url parameters
@@ -35,6 +27,8 @@ $this->headTitle($this->translate('Companies'));
         <div class="col-md-9">
             <div class="company-grid row">
                 <?php
+                // Randomize the order of companies
+                shuffle($companyList);
                 foreach ($companyList as $company) {
                     echo $this->partial('partial/company/company/grid/company.phtml',
                         ['company' => $company, 'locale' => $locale]);
