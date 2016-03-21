@@ -29,13 +29,30 @@ Company
 
 .company-grid {
     .company-grid-item {
-        //border: 1px solid darken(#fff, 20%);
-        height: 25em;
+        border: 1px solid darken(#fff, 20%);
+        border-radius: 5px;
+        height: 17em;
+        margin-bottom: 2em;
+    }
+
+    .company-grid-content {
+        max-width: 20em;
+        margin: 0 auto;
+        position: relative;
+        height: 15em;
     }
 
     img.company-logo {
         margin: 2em 0;
         max-height: 5em;
+    }
+
+    div.company-grid-text {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-left: 1em;
     }
 
     @media (min-width: $screen-sm-min) {

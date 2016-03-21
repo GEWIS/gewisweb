@@ -84,7 +84,8 @@ class Company
             ->join('c.translations', 't')
             ->where('c.hidden=0')
             ->andWhere('t.language = ?1')
-            ->setParameter(1, $locale);
+            ->setParameter(1, $locale)
+            ->orderBy('c.name', 'ASC');
         return $qb->getQuery()->getResult();
     }
 
