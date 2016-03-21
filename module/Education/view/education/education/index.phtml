@@ -3,9 +3,8 @@
 ?>
 <div class="container">
     <h1><?= $this->translate("Education") ?></h1>
-
     <div class="row">
-        <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image col-md-3">
+        <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image  col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-book"></div>
                 <h4><?= $this->translate('Books') ?></h4>
@@ -18,14 +17,14 @@
             </div>
         </a>
         <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
-        <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image col-md-3">
+        <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image  col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-cd"></div>
                 <h4><?= $this->translate('Dreamspark') ?></h4>
             </div>
         </a>
         <?php endif ?>
-        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-md-3">
+        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-sunglasses"></div>
                 <h4><?= $this->translate('Complaints') ?></h4>
