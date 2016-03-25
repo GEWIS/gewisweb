@@ -23,6 +23,9 @@ class ModuleIsActive extends AbstractHelper
     {
         $info = $this->getRouteInfo();
         foreach ($condition as $key => $cond) {
+            if (!isset($info[$key])) {
+                return false;
+            }
             if (null !== $cond && $info[$key] != $cond) {
                 return false;
             }
@@ -38,6 +41,9 @@ class ModuleIsActive extends AbstractHelper
         $match = $this->getServiceLocator()->get('application')
             ->getMvcEvent()->getRouteMatch();
 
+        if (is_null($match)) {
+            return [];
+        }
         $controller = str_replace('\\Controller', '', $match->getParam('controller'));
         return array_map('strtolower', explode('\\', $controller));
     }
