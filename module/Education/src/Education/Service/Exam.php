@@ -251,10 +251,6 @@ class Exam extends AbstractAclService
     /**
      * Get a filename from an exam (or summary).
      *
-     * We do this, since we have so many courses, that most filesystems get
-     * choked up on the directory size. By dividing it into subdirectories, we
-     * get a much better performance from the filesystem.
-     *
      * Exams will have a filename of the following format:
      *
      * <code>-exam-<year>-<month>-<day>.pdf
@@ -270,7 +266,6 @@ class Exam extends AbstractAclService
     public function examToFilename(ExamModel $exam)
     {
         $code = $exam->getCourse()->getCode();
-        $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';
 
         $filename = [];
 
@@ -286,7 +281,7 @@ class Exam extends AbstractAclService
         $filename[] = $exam->getDate()->format('Y-m-d');
 
 
-        return $dir . implode('-', $filename) . '.pdf';
+        return implode('-', $filename) . '.pdf';
     }
 
     /**
