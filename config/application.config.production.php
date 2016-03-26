@@ -12,7 +12,6 @@ return [
         'Activity',
         'Photo',
         'Education',
-        'Migration',
         'MaglMarkdown',
         'DOMPDFModule',
     ],
