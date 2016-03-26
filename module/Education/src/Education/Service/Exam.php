@@ -303,7 +303,7 @@ class Exam extends AbstractAclService
      *
      * @throws \User\Permissions\NotAllowedException When not allowed to upload
      */
-    public function getBulkForm()
+    protected function getBulkForm($type)
     {
         if (!$this->isAllowed('upload')) {
             $translator = $this->getTranslator();
@@ -316,7 +316,7 @@ class Exam extends AbstractAclService
         }
 
         // fully load the bulk form
-        $this->bulkForm = $this->sm->get('education_form_bulk');
+        $this->bulkForm = $this->sm->get('education_form_bulk_' . $type);
 
         $config = $this->getConfig('education_temp');
 
@@ -334,6 +334,24 @@ class Exam extends AbstractAclService
         $this->bulkForm->get('exams')->populateValues($data);
 
         return $this->bulkForm;
+    }
+
+    /**
+     * Get the bulk summary edit form
+     *
+     * @return \Education\Form\Bulk
+     */
+    public function getBulkSummaryForm()
+    {
+        return $this->getBulkForm('summary');
+    }
+
+    /**
+     * Get the bulk exam edit form.
+     */
+    public function getBulkExamForm()
+    {
+        return $this->getBulkForm('exam');
     }
 
     /**
@@ -363,6 +381,25 @@ class Exam extends AbstractAclService
             'date' => $year . '-' . $month . '-' . $day,
             'language' => $language
         ];
+    }
+
+    /**
+     * Guesses the summary author based on a summary's filename.
+     *
+     * @param string $filename
+     *
+     * @return array
+     */
+    public function guessSummaryAuthor($filename)
+    {
+        $parts = explode('.', $filename);
+        foreach ($parts as $part) {
+            if (strlen($part) > 3 && preg_match('/\\d/', $part) === -1) {
+                return $part;
+            }
+        }
+
+        return '';
     }
 
     /**

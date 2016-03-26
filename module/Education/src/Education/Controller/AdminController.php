@@ -38,7 +38,7 @@ class AdminController extends AbstractActionController {
     /**
      * Edit several exams in bulk.
      */
-    public function editAction()
+    public function editExamAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();
@@ -53,7 +53,30 @@ class AdminController extends AbstractActionController {
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form'   => $service->getBulkForm(),
+            'form'   => $service->getBulkExamForm(),
+            'config' => $config
+        ]);
+    }
+
+    /**
+     * Edit summaries in bulk.
+     */
+    public function editSummaryAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
+        $config = $this->getServiceLocator()->get('config');
+        $config = $config['education_temp'];
+
+        return new ViewModel([
+            'form'   => $service->getBulkSummaryForm(),
             'config' => $config
         ]);
     }

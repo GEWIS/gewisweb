@@ -83,6 +83,24 @@ return [
                             ]
                         ]
                     ],
+                    'bulk_edit_exam' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/edit/exam',
+                            'defaults' => [
+                                'action' => 'editExam'
+                            ]
+                        ]
+                    ],
+                    'bulk_edit_summary' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/edit/summary',
+                            'defaults' => [
+                                'action' => 'editSummary'
+                            ]
+                        ]
+                    ],
                     'summary' => [
                         'type' => 'Literal',
                         'options' => [

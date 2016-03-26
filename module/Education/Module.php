@@ -63,9 +63,14 @@ class Module
                     $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
                 },
-                'education_form_bulk' => function ($sm) {
+                'education_form_bulk_exam' => function ($sm) {
                     return new \Education\Form\Bulk(
                         $sm->get('translator'), $sm->get('education_form_fieldset_exam')
+                    );
+                },
+                'education_form_bulk_summary' => function ($sm) {
+                    return new \Education\Form\Bulk(
+                        $sm->get('translator'), $sm->get('education_form_fieldset_summary')
                     );
                 },
                 'education_form_searchcourse' => function ($sm) {
@@ -80,6 +85,15 @@ class Module
                     $fieldset->setConfig($sm->get('config'));
                     $fieldset->setObject(new \Education\Model\Exam());
                     $fieldset->setHydrator($sm->get('education_hydrator_exam'));
+                    return $fieldset;
+                },
+                'education_form_fieldset_summary' => function ($sm) {
+                    $fieldset = new \Education\Form\Fieldset\Summary(
+                        $sm->get('translator')
+                    );
+                    $fieldset->setConfig($sm->get('config'));
+                    $fieldset->setObject(new \Education\Model\Summary());
+                    $fieldset->setHydrator($sm->get('education_hydrator'));
                     return $fieldset;
                 },
                 'education_mapper_exam' => function ($sm) {
