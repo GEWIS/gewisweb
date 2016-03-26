@@ -71,7 +71,7 @@ class Summary extends Fieldset
 
     public function getInputFilterSpecification()
     {
-        $dir = $this->config['upload_dir'];
+        $dir = $this->config['upload_summary_dir'];
         return [
             'file' => [
                 'required' => true,

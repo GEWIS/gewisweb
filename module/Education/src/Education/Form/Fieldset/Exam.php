@@ -77,7 +77,7 @@ class Exam extends Fieldset
 
     public function getInputFilterSpecification()
     {
-        $dir = $this->config['upload_dir'];
+        $dir = $this->config['upload_exam_dir'];
         return [
             'file' => [
                 'required' => true,

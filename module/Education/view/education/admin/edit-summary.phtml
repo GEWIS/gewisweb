@@ -6,7 +6,7 @@
 <?php
 $form->prepare();
 
-$form->setAttribute('action', $this->url('admin_education/default', ['action' => 'edit']));
+$form->setAttribute('action', $this->url('admin_education/bulk_edit_summary'));
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('class', 'form-horizontal');
@@ -19,7 +19,7 @@ $exams = $form->get('exams');
 <?php foreach ($exams->getIterator() as $fs): ?>
     <div class="form-group">
         <h3 class="col-sm-offset-2 col-sm-10">
-            <a target="_blank" href="<?= $this->basePath() ?>/<?= $config['public_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
+            <a target="_blank" href="<?= $this->basePath() ?>/<?= $config['public_summary_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
                 <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
             </a>
         </h3>

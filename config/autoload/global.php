@@ -53,9 +53,10 @@ return [
      * Exam and Summary temporary upload directory configration.
      */
     'education_temp' => [
-        'upload_dir' => 'public/data/education_temp',
-        'public_dir' => 'data/education_temp',
-        'dir_mode' => 0777, // rwx by default
+        'upload_exam_dir' => 'public/data/education_temp_exams',
+        'upload_summary_dir' => 'public/data/education_temp_summaries',
+        'public_exam_dir' => 'public/data/education_temp_exams',
+        'public_summary_dir' => 'public/data/education_temp_summaries',
     ],
 
     /**

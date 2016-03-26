@@ -86,9 +86,9 @@ class Exam extends AbstractAclService
      *
      * @return boolean
      */
-    public function bulkEdit($data)
+    public function bulkEdit($data, $type)
     {
-        $form = $this->getBulkForm();
+        $form = $this->getBulkForm($type);
 
         $form->setData($data);
 
@@ -128,16 +128,27 @@ class Exam extends AbstractAclService
          * exam, which we need in the upload process.
          */
 
-        $this->getExamMapper()->transactional(function ($mapper) use ($data, $config, $storageService) {
+        $this->getExamMapper()->transactional(function ($mapper) use ($data, $type, $config, $storageService) {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
+                if ($type === 'summary') {
+                    $exam = new SummaryModel();
+                }
+
                 $exam->setDate(new \DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                $exam->setExamType($examData['examType']);
+                if ($type === 'summary') {
+                    $exam->setAuthor($examData['author']);
+                    $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
+                }
+
+                if ($type === 'exam') {
+                    $exam->setExamType($examData['examType']);
+                }
                 $exam->setLanguage($examData['language']);
 
-                $localFile = $config['upload_dir'] . '/' . $examData['file'];
+                $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];
 
                 $exam->setFilename($storageService->storeFile($localFile));
 
@@ -158,7 +169,7 @@ class Exam extends AbstractAclService
      *
      * @return boolean
      */
-    public function tempUpload($post, $files)
+    public function tempUpload($post, $files, $type)
     {
         $form = $this->getTempUploadForm();
 
@@ -173,7 +184,7 @@ class Exam extends AbstractAclService
         $config = $this->getConfig('education_temp');
 
         $filename = $data['file']['name'];
-        $path = $config['upload_dir'] . '/' . $filename;
+        $path = $config['upload_' . $type . '_dir'] . '/' . $filename;
 
         if (!file_exists($path)) {
             move_uploaded_file($data['file']['tmp_name'], $path);
@@ -320,7 +331,7 @@ class Exam extends AbstractAclService
 
         $config = $this->getConfig('education_temp');
 
-        $dir = new \DirectoryIterator($config['upload_dir']);
+        $dir = new \DirectoryIterator($config['upload_' . $type . '_dir']);
         $data = [];
 
         foreach ($dir as $file) {
