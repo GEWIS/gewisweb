@@ -43,7 +43,7 @@ class AdminController extends AbstractActionController {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+        if ($request->isPost() && $service->bulkExamEdit($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);
@@ -66,7 +66,7 @@ class AdminController extends AbstractActionController {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+        if ($request->isPost() && $service->bulkSummaryEdit($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);

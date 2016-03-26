@@ -86,7 +86,7 @@ class Exam extends AbstractAclService
      *
      * @return boolean
      */
-    public function bulkEdit($data, $type)
+    protected function bulkEdit($data, $type)
     {
         $form = $this->getBulkForm($type);
 
@@ -157,6 +157,17 @@ class Exam extends AbstractAclService
         });
 
         return true;
+    }
+
+    public function bulkExamEdit($data)
+    {
+        return $this->bulkEdit($data, 'exam');
+    }
+
+
+    public function bulkSummaryEdit($data)
+    {
+        return $this->bulkEdit($data, 'summary');
     }
 
     /**
