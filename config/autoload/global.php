@@ -55,8 +55,8 @@ return [
     'education_temp' => [
         'upload_exam_dir' => 'public/data/education_temp_exams',
         'upload_summary_dir' => 'public/data/education_temp_summaries',
-        'public_exam_dir' => 'public/data/education_temp_exams',
-        'public_summary_dir' => 'public/data/education_temp_summaries',
+        'public_exam_dir' => 'data/education_temp_exams',
+        'public_summary_dir' => 'data/education_temp_summaries',
     ],
 
     /**
