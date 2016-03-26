@@ -326,6 +326,9 @@ class Exam extends AbstractAclService
         foreach ($dir as $file) {
             if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
                 $examData = $this->guessExamData($file->getFilename());
+                if ($type === 'summary') {
+                    $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
+                }
                 $examData['file'] = $file->getFilename();
                 $data[] = $examData;
             }
@@ -394,7 +397,7 @@ class Exam extends AbstractAclService
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {
-            if (strlen($part) > 3 && preg_match('/\\d/', $part) === -1) {
+            if (strlen($part) > 3 && preg_match('/\\d/', $part) == 0) {
                 return $part;
             }
         }
