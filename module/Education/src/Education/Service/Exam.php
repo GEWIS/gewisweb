@@ -177,10 +177,11 @@ class Exam extends AbstractAclService
      *
      * @param array $post POST Data
      * @param array $files FILES Data
+     * @param string $uploadDirectory the directory to place the exam in
      *
      * @return boolean
      */
-    public function tempUpload($post, $files, $type)
+    protected function tempUpload($post, $files, $uploadDirectory)
     {
         $form = $this->getTempUploadForm();
 
@@ -192,10 +193,8 @@ class Exam extends AbstractAclService
             return false;
         }
 
-        $config = $this->getConfig('education_temp');
-
         $filename = $data['file']['name'];
-        $path = $config['upload_' . $type . '_dir'] . '/' . $filename;
+        $path = $uploadDirectory . '/' . $filename;
 
         if (!file_exists($path)) {
             move_uploaded_file($data['file']['tmp_name'], $path);
@@ -203,49 +202,16 @@ class Exam extends AbstractAclService
         return true;
     }
 
-    /**
-     * Upload a new summary.
-     *
-     * @param array $post POST Data
-     * @param array $files FILES Data
-     *
-     * @return boolean
-     */
-    public function uploadSummary($post, $files)
+    public function tempExamUpload($post, $files)
     {
-        $form = $this->getSummaryUploadForm();
-        $form->bind(new SummaryModel());
+        $config = $this->getConfig('education_temp');
+        return $this->tempUpload($post, $files, $config['upload_exam_dir']);
+    }
 
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
-
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $summary = $form->getData();
-        $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-
-        $storageService = $this->getFileStorageService();
-
-        /**
-         * Save the uploaded file and persist the summary.
-         *
-         * We do this in a transactional block, so if there is something
-         * wrong, we only have to throw an exception and Doctrine will roll
-         * back the transaction. This comes in handy if we are somehow unable
-         * to process the upload. This does allow us to get the ID of the
-         * exam, which we need in the upload process.
-         */
-        $this->getExamMapper()->transactional(function ($mapper) use ($summary, $data, $storageService) {
-            $summary->setFilename($storageService->storeUploadedFile($data['upload']));
-            $summary->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
-
-            $mapper->persist($summary);
-        });
-
-        return true;
+    public function tempSummaryUpload($post, $files)
+    {
+        $config = $this->getConfig('education_temp');
+        return $this->tempUpload($post, $files, $config['upload_summary_dir']);
     }
 
     /**
@@ -293,24 +259,6 @@ class Exam extends AbstractAclService
     {
         $config = $this->sm->get('config');
         return $config[$key];
-    }
-
-    /**
-     * Get the Upload form.
-     *
-     * @return \Education\Form\SummaryUpload
-     *
-     * @throws \User\Permissions\NotAllowedException When not allowed to upload
-     */
-    public function getSummaryUploadForm()
-    {
-        if (!$this->isAllowed('upload_summary')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload summaries')
-            );
-        }
-        return $this->sm->get('education_form_summaryupload');
     }
 
     /**
@@ -414,6 +362,7 @@ class Exam extends AbstractAclService
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {
+            // We assume names are more than 3 characters and don't contain numbers
             if (strlen($part) > 3 && preg_match('/\\d/', $part) == 0) {
                 return $part;
             }
