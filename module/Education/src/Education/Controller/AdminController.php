@@ -11,14 +11,38 @@ class AdminController extends AbstractActionController {
     {
     }
 
-    public function bulkAction()
+    public function bulkExamAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->tempUpload($request->getPost(), $request->getFiles())) {
+            if ($service->tempExamUpload($request->getPost(), $request->getFiles())) {
+                return new ViewModel([
+                    'success' => true
+                ]);
+            } else {
+                $this->getResponse()->setStatusCode(500);
+                return new ViewModel([
+                    'success' => false
+                ]);
+            }
+        }
+
+        return new ViewModel([
+            'form' => $service->getTempUploadForm()
+        ]);
+    }
+
+    public function bulkSummaryAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // try uploading
+            if ($service->tempSummaryUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);

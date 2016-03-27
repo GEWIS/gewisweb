@@ -74,12 +74,21 @@ return [
                             ],
                         ],
                     ],
-                    'bulk_upload' => [
+                    'bulk_upload_exam' => [
                         'type' => 'Literal',
                         'options' => [
-                            'route' => '/bulk',
+                            'route' => '/bulk/exam',
                             'defaults' => [
-                                'action' => 'bulk'
+                                'action' => 'bulkExam'
+                            ]
+                        ]
+                    ],
+                    'bulk_upload_summary' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/bulk/summary',
+                            'defaults' => [
+                                'action' => 'bulkSummary'
                             ]
                         ]
                     ],
@@ -98,15 +107,6 @@ return [
                             'route' => '/edit/summary',
                             'defaults' => [
                                 'action' => 'editSummary'
-                            ]
-                        ]
-                    ],
-                    'summary' => [
-                        'type' => 'Literal',
-                        'options' => [
-                            'route' => '/summary',
-                            'defaults' => [
-                                'action' => 'summary'
                             ]
                         ]
                     ],
