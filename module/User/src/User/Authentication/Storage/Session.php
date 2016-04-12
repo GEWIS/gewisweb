@@ -18,4 +18,9 @@ class Session extends Storage\Session
     {
         $this->session->getManager()->forgetMe();
     }
+
+    public function getId()
+    {
+        return $this->session->getManager()->getId();
+    }
 }

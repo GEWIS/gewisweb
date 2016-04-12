@@ -6,6 +6,7 @@ use Application\Service\AbstractAclService;
 
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
+use User\Model\Session as SessionModel;
 use User\Mapper\User as UserMapper;
 
 use User\Form\Register as RegisterForm;
@@ -227,8 +228,10 @@ class User extends AbstractAclService
         }
 
         $this->getAuthStorage()->setRememberMe($data['remember']);
-
-        return $auth->getIdentity();
+        $user = $auth->getIdentity();
+        // Log the session in the database
+        $this->saveSession($user);
+        return $user;
     }
 
     /**
@@ -263,7 +266,45 @@ class User extends AbstractAclService
         // clear the user identity
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
-        $this->getAuthStorage()->forgetMe();
+        $this->destroySession();
+        //TODO: check if we need this
+        //$this->getAuthStorage()->forgetMe();
+    }
+
+    /**
+     * Store the current session.
+     *
+     * @param \User\Model\User $user the logged in user
+     */
+    protected function saveSession($user)
+    {
+        $id = $this->getAuthStorage()->getId();
+        $sessionMapper = $this->getSessionMapper();
+        if (is_null($sessionMapper->findById($id))) {
+            $session = new SessionModel();
+            $session->setId($id);
+            $session->setIp($this->sm->get('user_remoteaddress'));
+
+            /*
+             * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
+             * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
+             */
+            $this->sm->get('user_doctrine_em')->clear();
+            $user = ($this->getUserMapper()->findByLidnr($user->getLidnr()));
+
+            $session->setUser($user);
+            $sessionMapper->persist($session);
+        }
+    }
+
+    /**
+     * Remove the current session from the database
+     */
+    protected function destroySession()
+    {
+        $id = $this->getAuthStorage()->getId();
+        $sessionMapper = $this->getSessionMapper();
+        $sessionMapper->removeById($id);
     }
 
     /**
@@ -387,6 +428,16 @@ class User extends AbstractAclService
     public function getUserMapper()
     {
         return $this->sm->get('user_mapper_user');
+    }
+
+    /**
+     * Get the session mapper.
+     *
+     * @return \User\Mapper\Session
+     */
+    public function getSessionMapper()
+    {
+        return $this->sm->get('user_mapper_session');
     }
 
     /**

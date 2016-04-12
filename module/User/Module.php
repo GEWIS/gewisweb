@@ -167,6 +167,11 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_session' => function($sm) {
+                    return new \User\Mapper\Session(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
 
                 'user_mail_transport' => function ($sm) {
                     $config = $sm->get('config');
