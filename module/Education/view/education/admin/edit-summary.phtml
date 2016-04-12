@@ -1,7 +1,7 @@
 <?php if (isset($success) && $success): ?>
-<?= $this->translate('Upload of all exams was finished.') ?>
+<?= $this->translate('Upload of all summaries was finished.') ?>
 <?php elseif (count($form->get('exams')->getIterator()) == 0): ?>
-<?= $this->translate('There are no exams to be edited. Upload exams to edit them.') ?>
+<?= $this->translate('There are no summaries to be edited. Upload exams to edit them.') ?>
 <?php else: ?>
 <?php
 $form->prepare();
