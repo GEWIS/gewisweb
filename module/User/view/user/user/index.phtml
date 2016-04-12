@@ -40,6 +40,19 @@ $this->headTitle($this->translate('Login'));
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                            <?php
+                            $element = $form->get('remember');
+                            $element->setAttribute('checked', 'checked');
+                            ?>
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-7">
+                                    <div class="checkbox">
+                                        <label>
+                                            <?= $this->formInput($element) ?><?= $element->getLabel() ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
                             <?= $this->formInput($form->get('redirect')) ?>
 
