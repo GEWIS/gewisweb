@@ -95,7 +95,7 @@ class Module
             ],
 
             'invokables' => [
-                'user_auth_storage' => 'Zend\Authentication\Storage\Session',
+                'user_auth_storage' => 'User\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',

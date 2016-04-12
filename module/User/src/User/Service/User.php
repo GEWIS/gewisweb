@@ -226,6 +226,8 @@ class User extends AbstractAclService
             return null;
         }
 
+        $this->getAuthStorage()->setRememberMe($data['remember']);
+
         return $auth->getIdentity();
     }
 
@@ -261,6 +263,7 @@ class User extends AbstractAclService
         // clear the user identity
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
+        $this->getAuthStorage()->forgetMe();
     }
 
     /**
@@ -394,6 +397,16 @@ class User extends AbstractAclService
     public function getEmailService()
     {
         return $this->sm->get('user_service_email');
+    }
+
+    /**
+     * Get the auth storage.
+     *
+     * @return User\Authentication\Storage
+     */
+    public function getAuthStorage()
+    {
+        return $this->sm->get('user_auth_storage');
     }
 
     /**
