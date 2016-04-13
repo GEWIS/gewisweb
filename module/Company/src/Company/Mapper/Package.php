@@ -75,7 +75,7 @@ class Package
 
     public function findFuturePackageExpirationsBeforeDate($date)
     {
-        $objectRepository = $this->getRepository(); 
+        $objectRepository = $this->getRepository();
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')
             ->where('p.published=1')
@@ -97,7 +97,7 @@ class Package
 
     public function findFuturePackageStartsBeforeDate($date)
     {
-        $objectRepository = $this->getRepository(); 
+        $objectRepository = $this->getRepository();
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')
             ->where('p.published=1')

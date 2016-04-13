@@ -20,7 +20,9 @@ class AdminController extends AbstractActionController
         // Initialize the view
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
-            'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(new \DateInterval("P1W"))),
+            'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
+                new \DateInterval("P1W")
+            )),
         ]);
     }
 

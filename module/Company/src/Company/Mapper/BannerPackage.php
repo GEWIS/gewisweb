@@ -15,20 +15,6 @@ class BannerPackage extends Package
 {
 
     /**
-     * Inserts a new package into the given company
-     *
-     */
-    public function insertPackageIntoCompany($company, $type)
-    {
-        $package = new PackageModel($this->em);
-
-        $package->setCompany($company);
-        $this->em->persist($package);
-
-        return $package;
-    }
-
-    /**
      *
      * Returns an random banner from the active banners
      *

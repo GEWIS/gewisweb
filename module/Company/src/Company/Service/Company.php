@@ -37,6 +37,41 @@ class Company extends AbstractACLService
         }
         return $this->getFeaturedPackageMapper()->getFeaturedPackage($translator->getLocale());
     }
+
+    private function getFuturePackageStartsBeforeDate($date)
+    {
+        $startPackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
+        );
+        usort($startPackages, function ($a, $b) {
+            $aStart = $a->getStartingDate();
+            $bStart = $b->getStartingDate();
+            if ($aStart == $bStart) {
+                return 0;
+            }
+            return $aStart < $bStart ? -1 : 1;
+        });
+    }
+
+    private function getFuturePackageExpiresBeforeDate($date)
+    {
+        $expirePackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
+            $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
+            $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
+        );
+        usort($expirePackages, function ($a, $b) {
+            $aEnd = $a->getExpirationDate();
+            $bEnd = $b->getExpirationDate();
+            if ($aEnd == $bEnd) {
+                return 0;
+            }
+            return $aEnd < $bEnd ? -1 : 1;
+        });
+    }
+
     /**
      * Searches for packages that change before $date
      *
@@ -51,32 +86,8 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed list the companies')
             );
         }
-        $expirePackages = array_merge(
-            $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
-            $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
-            $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
-        );
-        $startPackages = array_merge(
-            $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
-            $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
-            $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
-        );
-        usort($startPackages, function ($a, $b) {
-            $aStart = $a->getStartingDate();
-            $bStart = $b->getStartingDate();
-            if ($aStart == $bStart) {
-                return 0;
-            }
-            return $aStart < $bStart ? -1 : 1;
-        });
-        usort($expirePackages, function ($a, $b) {
-            $aEnd = $a->getExpirationDate();
-            $bEnd = $b->getExpirationDate();
-            if ($aEnd == $bEnd) {
-                return 0;
-            }
-            return $aEnd < $bEnd ? -1 : 1;
-        });
+        $startingPackages = $this->getFuturePackageStartsBeforeDate();
+        $expirePackages = $this->getFuturePackageExpiresBeforeDate();
         return [$startPackages, $expirePackages];
     }
     /**
