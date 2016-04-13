@@ -328,14 +328,7 @@ class EditCompany extends Form
     }
     public function slugNameUnique($slugName, $context)
     {
-        $objects = $this->mapper->findEditableCompaniesBySlugName($slugName, true);
-        $cid = $context['id'] ;
-        foreach ($objects as $company) {
-            if ($company->getID() != $cid) {
-                return false;
-            }
-        }
-        return true;
+        return $this->mapper->isSlugNameUnique($slugName,$cid);
 
     }
 }
