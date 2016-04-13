@@ -23,7 +23,6 @@ class Session
     /**
      * The user whom created this session.
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
      */

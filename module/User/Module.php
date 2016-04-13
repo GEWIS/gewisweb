@@ -172,6 +172,11 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_loginattempt' => function($sm) {
+                    return new \User\Mapper\LoginAttempt(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
 
                 'user_mail_transport' => function ($sm) {
                     $config = $sm->get('config');
@@ -185,7 +190,8 @@ class Module
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt'),
-                        $sm->get('application_service_legacy')
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_user')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;

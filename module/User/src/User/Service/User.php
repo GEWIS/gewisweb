@@ -7,6 +7,7 @@ use Application\Service\AbstractAclService;
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\Session as SessionModel;
+use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Mapper\User as UserMapper;
 
 use User\Form\Register as RegisterForm;
@@ -271,6 +272,17 @@ class User extends AbstractAclService
         //$this->getAuthStorage()->forgetMe();
     }
 
+    protected function detachUser($user)
+    {
+        /*
+         * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
+         * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
+         * This hack only is needed when we want to flush the entity manager during login.
+         */
+        $this->sm->get('user_doctrine_em')->clear();
+        return $this->getUserMapper()->findByLidnr($user->getLidnr());
+    }
+
     /**
      * Store the current session.
      *
@@ -284,14 +296,7 @@ class User extends AbstractAclService
             $session = new SessionModel();
             $session->setId($id);
             $session->setIp($this->sm->get('user_remoteaddress'));
-
-            /*
-             * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
-             * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
-             */
-            $this->sm->get('user_doctrine_em')->clear();
-            $user = ($this->getUserMapper()->findByLidnr($user->getLidnr()));
-
+            $user = $this->detachUser($user);
             $session->setUser($user);
             $sessionMapper->persist($session);
         }
@@ -305,6 +310,17 @@ class User extends AbstractAclService
         $id = $this->getAuthStorage()->getId();
         $sessionMapper = $this->getSessionMapper();
         $sessionMapper->removeById($id);
+    }
+
+    public function logFailedLogin($user, $type)
+    {
+        $attempt = new LoginAttemptModel();
+        $attempt->setIp($this->sm->get('user_remoteaddress'));
+        $attempt->setTime(new \DateTime());
+        $attempt->setType($type);
+        $user = $this->detachUser($user);
+        $attempt->setUser($user);
+        $this->getLoginAttemptMapper()->persist($attempt);
     }
 
     /**
@@ -438,6 +454,16 @@ class User extends AbstractAclService
     public function getSessionMapper()
     {
         return $this->sm->get('user_mapper_session');
+    }
+
+    /**
+     * Get the login attempt mapper.
+     *
+     * @return \User\Mapper\Session
+     */
+    public function getLoginAttemptMapper()
+    {
+        return $this->sm->get('user_mapper_loginattempt');
     }
 
     /**
