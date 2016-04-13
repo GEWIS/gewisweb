@@ -13,7 +13,10 @@ class EditCompany extends Form
         // we want to ignore the name passed
         parent::__construct();
 
+        $this->mapper = $mapper;
+
         $this->setAttribute('method', 'post');
+
         $this->add([
             'name' => 'id',
             'attributes' => [
@@ -190,12 +193,11 @@ class EditCompany extends Form
                 'id' => 'submitbutton',
             ],
         ]);
-        $this->mapper = $mapper;
 
         $this->initFilters($translate);
     }
 
-    protected function initFilters($translate)
+    protected function initFilters($mapper, $translate)
     {
         $filter = new InputFilter();
 
@@ -328,6 +330,7 @@ class EditCompany extends Form
     }
     public function slugNameUnique($slugName, $context)
     {
+        $cid = $context['id'];
         return $this->mapper->isSlugNameUnique($slugName,$cid);
 
     }

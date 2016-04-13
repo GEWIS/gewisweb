@@ -50,6 +50,25 @@ class Job
     }
 
     /**
+     *
+     * Checks if $slugName is only used by object identified with $cid
+     *
+     * @param string $slugName The slugName to be checked
+     * @param int $cid The id to ignore
+     *
+     */
+    public function isSlugNameUnique($slugName, $cid)
+    {
+        $objects = $this->findJobBySlugName($slugName, true);
+        foreach ($objects as $job) {
+            if ($job->getID() != $cid) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Inserts a job into a given package
      *
      * @param mixed $package

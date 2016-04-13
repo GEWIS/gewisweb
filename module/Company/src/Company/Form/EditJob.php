@@ -8,12 +8,15 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends Form
 {
-    public function __construct(Translator $translate)
+    public function __construct($mapper, Translator $translate)
     {
         // we want to ignore the name passed
         parent::__construct();
 
+        $this->mapper = $mapper;
+
         $this->setAttribute('method', 'post');
+
         $this->add([
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'language',
@@ -114,10 +117,10 @@ class EditJob extends Form
             ],
         ]);
 
-        $this->initFilters();
+        $this->initFilters($translate, $mapper);
     }
 
-    protected function initFilters()
+    protected function initFilters($translate, $mapper)
     {
         $filter = new InputFilter();
 
@@ -132,6 +135,23 @@ class EditJob extends Form
                         'max' => 127,
                     ],
                 ],
+            ],
+        ]);
+
+        $filter->add([
+            'name' => 'slugName',
+            'required' => true,
+            'validators' => [
+                new \Zend\Validator\Callback([
+                    'callback' => [$this,'slugNameUnique'],
+                    'message' => $translate->translate('This slug is already taken'),
+                ]),
+                new \Zend\Validator\Regex([
+                    'message' => $translate->translate('This slug contains invalid characters') ,
+                    'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                ]),
+            ],
+            'filters' => [
             ],
         ]);
 
@@ -187,5 +207,17 @@ class EditJob extends Form
         ]);
 
         $this->setInputFilter($filter);
+    }
+
+    /**
+     *
+     * Checks if a given slugName is unique. (Callback for validation)
+     *
+     */
+    public function slugNameUnique($slugName, $context)
+    {
+        $jid = $context['job-id'];
+        return $this->mapper->isSlugNameUnique($slugName,$jid);
+
     }
 }
