@@ -285,6 +285,7 @@ class EditCompany extends Form
 
         $filter->add([
             'name' => 'email',
+            'required' => false,
             'validators' => [
                 [
                     'name' => 'EmailAddress',
