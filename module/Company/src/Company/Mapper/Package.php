@@ -85,6 +85,7 @@ class Package
             ->orderBy('p.expires', 'ASC')
             ->setParameter('date', $date);
         $packages = $qb->getQuery()->getResult();
+        return $packages;
     }
 
     /**
@@ -106,6 +107,7 @@ class Package
             ->orderBy('p.starts', 'ASC')
             ->setParameter('date', $date);
         $packages = $qb->getQuery()->getResult();
+        return $packages;
     }
 
     /**

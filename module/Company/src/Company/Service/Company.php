@@ -51,10 +51,33 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed list the companies')
             );
         }
-        return [
-                $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
-                $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
-            ];
+        $expirePackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
+            $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
+            $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
+        );
+        $startPackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
+        );
+        usort($startPackages, function ($a, $b) {
+            $aStart = $a->getStartingDate();
+            $bStart = $b->getStartingDate();
+            if ($aStart == $bStart) {
+                return 0;
+            }
+            return $aStart < $bStart ? -1 : 1;
+        });
+        usort($expirePackages, function ($a, $b) {
+            $aEnd = $a->getExpirationDate();
+            $bEnd = $b->getExpirationDate();
+            if ($aEnd == $bEnd) {
+                return 0;
+            }
+            return $aEnd < $bEnd ? -1 : 1;
+        });
+        return [$startPackages, $expirePackages];
     }
     /**
      * Returns an list of all companies (excluding hidden companies)
