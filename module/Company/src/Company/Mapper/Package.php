@@ -67,6 +67,48 @@ class Package
     }
 
     /**
+     * Will return a list of published packages that will expire between now and $date
+     *
+     * @param date The date until where to search
+     *
+     */
+
+    public function findFuturePackageExpirationsBeforeDate($date)
+    {
+        $objectRepository = $this->getRepository(); 
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.published=1')
+            // All packages that will expire between today and then, ordered smallest first
+            ->andWhere('p.expires>CURRENT_DATE()')
+            ->andWhere('p.expires<=:date')
+            ->orderBy('p.expires', 'ASC')
+            ->setParameter('date', $date);
+        $packages = $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Will return a list of published packages that will expire between now and $date
+     *
+     * @param date The date until where to search
+     *
+     */
+
+    public function findFuturePackageStartsBeforeDate($date)
+    {
+        $objectRepository = $this->getRepository(); 
+        $qb = $objectRepository->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.published=1')
+            // All packages that will start between today and then, ordered smallest first
+            ->andWhere('p.starts>CURRENT_DATE()')
+            ->andWhere('p.starts<=:date')
+            ->orderBy('p.starts', 'ASC')
+            ->setParameter('date', $date);
+        $packages = $qb->getQuery()->getResult();
+    }
+
+    /**
      * Find all Packages.
      *
      * @return array

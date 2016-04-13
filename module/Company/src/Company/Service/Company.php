@@ -38,7 +38,26 @@ class Company extends AbstractACLService
         return $this->getFeaturedPackageMapper()->getFeaturedPackage($translator->getLocale());
     }
     /**
-     * Returns an list of all companies (excluding hidden companies
+     * Searches for packages that change before $date
+     *
+     * @param date The date until where to search
+     * @return Two sorted arrays, containing the packages that respectively start and expire between now and $date,
+     */
+    public function getPackageChangeEvents($date)
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('listall')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed list the companies')
+            );
+        }
+        return [
+                $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date), 
+                $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            ];
+    }
+    /**
+     * Returns an list of all companies (excluding hidden companies)
      *
      */
     public function getCompanyList()
