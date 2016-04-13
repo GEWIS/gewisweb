@@ -197,7 +197,7 @@ class EditCompany extends Form
         $this->initFilters($translate);
     }
 
-    protected function initFilters($mapper, $translate)
+    protected function initFilters($translate)
     {
         $filter = new InputFilter();
 
@@ -332,7 +332,7 @@ class EditCompany extends Form
     public function slugNameUnique($slugName, $context)
     {
         $cid = $context['id'];
-        return $this->mapper->isSlugNameUnique($slugName,$cid);
+        return $this->mapper->isSlugNameUnique($slugName, $cid);
 
     }
 }

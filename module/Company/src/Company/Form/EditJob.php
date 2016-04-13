@@ -117,10 +117,10 @@ class EditJob extends Form
             ],
         ]);
 
-        $this->initFilters($translate, $mapper);
+        $this->initFilters($translate);
     }
 
-    protected function initFilters($translate, $mapper)
+    protected function initFilters($translate)
     {
         $filter = new InputFilter();
 
@@ -217,7 +217,7 @@ class EditJob extends Form
     public function slugNameUnique($slugName, $context)
     {
         $jid = $context['job-id'];
-        return $this->mapper->isSlugNameUnique($slugName,$jid);
+        return $this->mapper->isSlugNameUnique($slugName, $jid);
 
     }
 }
