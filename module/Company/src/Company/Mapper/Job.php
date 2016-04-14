@@ -57,9 +57,9 @@ class Job
      * @param int $cid The id to ignore
      *
      */
-    public function isSlugNameUnique($slugName, $cid)
+    public function isSlugNameUnique($companySlug, $slugName, $cid)
     {
-        $objects = $this->findJobBySlugName($slugName, true);
+        $objects = $this->findJobBySlugName($companySlug, $slugName);
         foreach ($objects as $job) {
             if ($job->getID() != $cid) {
                 return false;

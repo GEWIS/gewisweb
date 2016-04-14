@@ -18,6 +18,13 @@ class EditJob extends Form
         $this->setAttribute('method', 'post');
 
         $this->add([
+            'name' => 'id',
+            'attributes' => [
+                'type' => 'hidden',
+            ],
+        ]);
+
+        $this->add([
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'language',
             'options' => [
@@ -209,15 +216,22 @@ class EditJob extends Form
         $this->setInputFilter($filter);
     }
 
+    private $companySlug;
+
+    public function setCompanySlug($companySlug)
+    {
+        $this->companySlug = $companySlug;
+    }
+
     /**
      *
-     * Checks if a given slugName is unique. (Callback for validation)
+     * Checks if a given slugName is unique. (Callback for validation).
      *
      */
     public function slugNameUnique($slugName, $context)
     {
-        $jid = $context['job-id'];
-        return $this->mapper->isSlugNameUnique($slugName, $jid);
+        $jid = $context['id'];
+        return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid);
 
     }
 }

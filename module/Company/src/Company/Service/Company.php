@@ -283,6 +283,7 @@ class Company extends AbstractACLService
             $data->toArray(),
             $files->toArray()
         );
+        $jobForm->setCompanySlug($job->getCompany()->getSlugName());
         $jobForm->bind($job);
         $jobForm->setData($mergedData);
 
