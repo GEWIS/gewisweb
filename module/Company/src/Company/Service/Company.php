@@ -86,8 +86,8 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed list the companies')
             );
         }
-        $startingPackages = $this->getFuturePackageStartsBeforeDate();
-        $expirePackages = $this->getFuturePackageExpiresBeforeDate();
+        $startPackages = $this->getFuturePackageStartsBeforeDate($date);
+        $expirePackages = $this->getFuturePackageExpiresBeforeDate($date);
         return [$startPackages, $expirePackages];
     }
     /**
