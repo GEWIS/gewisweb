@@ -81,7 +81,7 @@ class PinMapper implements AdapterInterface
             );
         }
 
-        if (!$this->userService->isAllowedToLogin(LoginAttempt::TYPE_PIN, $user)) {
+        if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_PIN, $user)) {
             return new Result(
                 Result::FAILURE,
                 null,

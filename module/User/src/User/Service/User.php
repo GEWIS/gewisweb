@@ -272,7 +272,7 @@ class User extends AbstractAclService
         // clear the user identity
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
-        $this->destroySession();
+        $this->destroyStoredSession();
         //TODO: check if we need this
         //$this->getAuthStorage()->forgetMe();
     }
@@ -310,7 +310,7 @@ class User extends AbstractAclService
     /**
      * Remove the current session from the database
      */
-    protected function destroySession()
+    protected function destroyStoredSession()
     {
         $id = $this->getAuthStorage()->getId();
         $sessionMapper = $this->getSessionMapper();
@@ -328,20 +328,20 @@ class User extends AbstractAclService
         $this->getLoginAttemptMapper()->persist($attempt);
     }
 
-    public function isAllowedToLogin($type, $user)
+    public function loginAttemptsExceeded($type, $user)
     {
         $config = $this->getRateLimitConfig();
         $ip = $this->sm->get('user_remoteaddress');
         $since = (new \DateTime())->sub(new \DateInterval('PT'.$config[$type]['lockout_time'].'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
         if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip) > $config[$type]['ip']) {
-            return false;
+            return true;
         }
         if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip, $user) > $config[$type]['user']) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**

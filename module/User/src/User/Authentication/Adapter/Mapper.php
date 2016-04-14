@@ -91,7 +91,7 @@ class Mapper implements AdapterInterface
 
         $mapper->detach($user);
 
-        if (!$this->userService->isAllowedToLogin(LoginAttempt::TYPE_NORMAL, $user)) {
+        if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
             return new Result(
                 Result::FAILURE,
                 null,
