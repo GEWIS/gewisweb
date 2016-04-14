@@ -53,6 +53,7 @@ class Company extends AbstractACLService
             }
             return $aStart < $bStart ? -1 : 1;
         });
+        return $startPackages;
     }
 
     private function getFuturePackageExpiresBeforeDate($date)
@@ -70,6 +71,7 @@ class Company extends AbstractACLService
             }
             return $aEnd < $bEnd ? -1 : 1;
         });
+        return $expirePackages;
     }
 
     /**
