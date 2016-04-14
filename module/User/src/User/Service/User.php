@@ -243,6 +243,11 @@ class User extends AbstractAclService
      */
     public function pinLogin($data)
     {
+        if (!$this->isAllowed('pin_login')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to login using pin codes')
+            );
+        }
         // try to authenticate
         $auth = $this->getServiceManager()->get('user_pin_auth_service');
         $authAdapter = $auth->getAdapter();

@@ -285,6 +285,7 @@ class Module
                     $acl->addResource(new Resource('user'));
 
                     $acl->allow('user', 'user', ['password_change']);
+                    $acl->allow('tueguest', 'user', 'pin_login');
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');
