@@ -107,6 +107,7 @@ class Module
                 },
                 'company_admin_edit_job_form' => function ($sm) {
                     $form = new \Company\Form\EditJob(
+                        $sm->get('company_mapper_job'),
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('company_hydrator'));

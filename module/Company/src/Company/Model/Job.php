@@ -331,6 +331,16 @@ class Job
     }
 
     /**
+     * Get the job's company
+     *
+     * @return company
+     */
+    public function getCompany()
+    {
+        return $this->getPackage()->getCompany();
+    }
+
+    /**
      * Set the job's package.
      *
      * @param CompanyPackage $package the job's package

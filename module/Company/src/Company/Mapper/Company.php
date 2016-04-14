@@ -42,6 +42,25 @@ class Company
     }
 
     /**
+     *
+     * Checks if $slugName is only used by object identified with $cid
+     *
+     * @param string $slugName The slugName to be checked
+     * @param int $cid The id to ignore
+     *
+     */
+    public function isSlugNameUnique($slugName, $cid)
+    {
+        $objects = $this->findEditableCompaniesBySlugName($slugName, true);
+        foreach ($objects as $company) {
+            if ($company->getID() != $cid) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Inserts a company into the datebase, and initializes the given 
      * translations as empty translations for them
      *
