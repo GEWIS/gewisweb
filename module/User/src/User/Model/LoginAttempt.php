@@ -25,7 +25,7 @@ class LoginAttempt
     protected $id;
 
     /**
-     * The user whom created this session.
+     * The user for which the login was attempted.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
@@ -124,7 +124,4 @@ class LoginAttempt
     {
         $this->time = $time;
     }
-
-
-
 }

@@ -81,12 +81,14 @@ class User extends AbstractAclService
 
         if (null === $member) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+
             return null;
         }
 
         // check if the email is the same
         if ($member->getEmail() != $data['email']) {
             $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+
             return null;
         }
 
@@ -94,6 +96,7 @@ class User extends AbstractAclService
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
         if (null !== $user) {
             $form->setError(RegisterForm::ERROR_USER_ALREADY_EXISTS);
+
             return null;
         }
 
@@ -104,6 +107,7 @@ class User extends AbstractAclService
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
+
         return $newUser;
     }
 
@@ -133,6 +137,7 @@ class User extends AbstractAclService
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
         if (null === $user) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+
             return null;
         }
 
@@ -147,6 +152,7 @@ class User extends AbstractAclService
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendPasswordLostMail($newUser, $member);
+
         return $user;
     }
 
@@ -181,6 +187,7 @@ class User extends AbstractAclService
                     $this->getTranslator()->translate("Password incorrect")
                 ]
             ]);
+
             return false;
         }
 
@@ -225,6 +232,7 @@ class User extends AbstractAclService
         // process the result
         if (!$result->isValid()) {
             $form->setResult($result);
+
             return null;
         }
 
@@ -232,6 +240,7 @@ class User extends AbstractAclService
         $user = $auth->getIdentity();
         // Log the session in the database
         $this->saveSession($user);
+
         return $user;
     }
 
@@ -273,8 +282,6 @@ class User extends AbstractAclService
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
         $this->destroyStoredSession();
-        //TODO: check if we need this
-        //$this->getAuthStorage()->forgetMe();
     }
 
     protected function detachUser($user)
@@ -285,6 +292,7 @@ class User extends AbstractAclService
          * This hack only is needed when we want to flush the entity manager during login.
          */
         $this->sm->get('user_doctrine_em')->clear();
+
         return $this->getUserMapper()->findByLidnr($user->getLidnr());
     }
 
@@ -332,12 +340,12 @@ class User extends AbstractAclService
     {
         $config = $this->getRateLimitConfig();
         $ip = $this->sm->get('user_remoteaddress');
-        $since = (new \DateTime())->sub(new \DateInterval('PT'.$config[$type]['lockout_time'].'M'));
+        $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
-        if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip) > $config[$type]['ip']) {
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
             return true;
         }
-        if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip, $user) > $config[$type]['user']) {
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
             return true;
         }
 

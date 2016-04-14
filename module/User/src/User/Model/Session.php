@@ -82,7 +82,4 @@ class Session
     {
         $this->ip = $ip;
     }
-
-
-
 }
