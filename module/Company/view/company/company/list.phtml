@@ -24,7 +24,7 @@ $this->headTitle($this->translate('Companies'));
                 ?>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-<?= isset($featuredPackage) ? 6 : 9?>">
             <div class="company-grid row">
                 <?php
                 // Randomize the order of companies
@@ -36,6 +36,26 @@ $this->headTitle($this->translate('Companies'));
                 ?>
             </div>
         </div>
-    </div>
+        <?php if (isset($featuredPackage)): ?>
+            <div class="col-md-3">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+            <h2 class="panel-title">
+                <a href="<?= $companyURL ?>"><?= $featuredCompany->getName() ?></a>
+                <small><?= $this->translate('in the spotlight') ?></small>
+            </h2>
+            </div>
+            <div class="panel-body">
+                <?=
+                    $this->partial('./companyStory.phtml', [
+                        'company' => $featuredCompany,
+                        'featuredPackage' => $featuredPackage,
+                        'translator' => $this->translator,
+                        'panels' => true,
+                    ]);
+                ?>
+            </div>
+            </div>
+        <?php endif ?>
 </div>
 
