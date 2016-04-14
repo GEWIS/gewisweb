@@ -88,7 +88,7 @@ class FileStorage extends AbstractService
             } else {
                 copy($source, $destination);
             }
-        } else if ($move) {
+        } elseif ($move) {
             unlink($source);
         }
 

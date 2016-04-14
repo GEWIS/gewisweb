@@ -7,8 +7,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use zend\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
 
-class Summary extends Fieldset
-    implements InputFilterProviderInterface
+class Summary extends Fieldset implements InputFilterProviderInterface
 {
 
     protected $config;
@@ -72,6 +71,7 @@ class Summary extends Fieldset
     public function getInputFilterSpecification()
     {
         $dir = $this->config['upload_summary_dir'];
+
         return [
             'file' => [
                 'required' => true,
@@ -89,6 +89,7 @@ class Summary extends Fieldset
                                 $validator = new \Zend\Validator\File\Exists([
                                     'directory' => $dir
                                 ]);
+
                                 return $validator->isValid($value);
                             }
                         ]
@@ -134,5 +135,4 @@ class Summary extends Fieldset
             ]
         ];
     }
-
 }
