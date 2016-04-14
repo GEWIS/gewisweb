@@ -81,6 +81,13 @@ class Login extends Form
                     ]
                 ]);
                 break;
+            case Result::FAILURE:
+                $this->setMessages([
+                    'password' => [
+                        $this->translate->translate('Too many login attempts, try again later.')
+                    ]
+                ]);
+                break;
             }
         }
     }

@@ -198,7 +198,8 @@ class Module
                 },
                 'user_pin_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\PinMapper(
-                        $sm->get('application_service_legacy')
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_user')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;

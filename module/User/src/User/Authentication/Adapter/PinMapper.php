@@ -6,7 +6,10 @@ use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     User\Mapper\User as UserMapper,
     User\Model\User as UserModel,
-    User\Model\UserRole as UserRoleModel;
+    User\Model\UserRole as UserRoleModel,
+    User\Model\LoginAttempt;
+use Application\Service\Legacy as LegacyService;
+use User\Service\User as UserService;
 
 class PinMapper implements AdapterInterface
 {
@@ -24,6 +27,14 @@ class PinMapper implements AdapterInterface
      * @var \Application\Service\Legacy
      */
     protected $legacyService;
+
+    /**
+     * User Service
+     * (for logging failed login attempts)
+     *
+     * @var UserService
+     */
+    protected $userService;
 
     /**
      * Lidnr.
@@ -45,9 +56,10 @@ class PinMapper implements AdapterInterface
      *
      * @param \Application\Service\Legacy
      */
-    public function __construct($legacyService)
+    public function __construct(LegacyService $legacyService, UserService $userService)
     {
         $this->legacyService = $legacyService;
+        $this->userService = $userService;
     }
 
     /**
@@ -69,7 +81,16 @@ class PinMapper implements AdapterInterface
             );
         }
 
+        if (!$this->userService->isAllowedToLogin(LoginAttempt::TYPE_PIN, $user)) {
+            return new Result(
+                Result::FAILURE,
+                null,
+                []
+            );
+        }
+
         if (!$this->verifyPincode($user)) {
+            $this->userService->logFailedLogin($user, LoginAttempt::TYPE_PIN);
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,

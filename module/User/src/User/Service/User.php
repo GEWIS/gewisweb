@@ -323,6 +323,22 @@ class User extends AbstractAclService
         $this->getLoginAttemptMapper()->persist($attempt);
     }
 
+    public function isAllowedToLogin($type, $user)
+    {
+        $config = $this->getRateLimitConfig();
+        $ip = $this->sm->get('user_remoteaddress');
+        $since = (new \DateTime())->sub(new \DateInterval('PT'.$config[$type]['lockout_time'].'M'));
+        $loginAttemptMapper = $this->getLoginAttemptMapper();
+        if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip) > $config[$type]['ip']) {
+            return false;
+        }
+        if ($loginAttemptMapper->getFailedAttemptCount($since,$type,$ip, $user) > $config[$type]['user']) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Get the new user.
      *
@@ -459,7 +475,7 @@ class User extends AbstractAclService
     /**
      * Get the login attempt mapper.
      *
-     * @return \User\Mapper\Session
+     * @return \User\Mapper\LoginAttempt
      */
     public function getLoginAttemptMapper()
     {
@@ -484,6 +500,18 @@ class User extends AbstractAclService
     public function getAuthStorage()
     {
         return $this->sm->get('user_auth_storage');
+    }
+
+    /**
+     * Get the rate limit config
+     *
+     * @return array containing the config
+     */
+    public function getRateLimitConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['login_rate_limits'];
     }
 
     /**

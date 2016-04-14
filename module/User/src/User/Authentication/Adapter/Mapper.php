@@ -88,7 +88,16 @@ class Mapper implements AdapterInterface
                 []
             );
         }
+
         $mapper->detach($user);
+
+        if (!$this->userService->isAllowedToLogin(LoginAttempt::TYPE_NORMAL, $user)) {
+            return new Result(
+                Result::FAILURE,
+                null,
+                []
+            );
+        }
 
         if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
             $this->userService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
