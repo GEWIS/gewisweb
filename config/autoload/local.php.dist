@@ -28,6 +28,9 @@ return [
         'options' => [
             'path' => 'data/mail/'
         ],
-        'from' => 'web@gewis.nl'
+        'from' => 'web@gewis.nl',
+        'to' => [
+            'activity_creation' => 'secr@gewis.nl'
+        ]
     ]
 ];
