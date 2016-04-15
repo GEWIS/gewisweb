@@ -315,19 +315,6 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        // Settings for date validation
-        $dateValidator = [
-            'name' => 'callback',
-            'options' => [
-                'messages' => [
-                    \Zend\Validator\Callback::INVALID_VALUE =>
-                        $this->translator->translate('This is not a correct date'),
-                ],
-                'callback' => ['Activity\Form\Activity', 'correctDate']
-            ],
-        ];
-
-
         $filter = [
             'beginTime' => [
                 'required' => true,
@@ -342,14 +329,10 @@ class Activity extends Form implements InputFilterProviderInterface
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
                         ],
                     ],
-                    $dateValidator
                 ]
             ],
             'endTime' => [
                 'required' => true,
-                'validators' => [
-                    $dateValidator
-                ]
             ],
 
             'canSignUp' => [
@@ -367,8 +350,7 @@ class Activity extends Form implements InputFilterProviderInterface
                             ],
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
                         ],
-                    ],
-                    $dateValidator
+                    ]
                 ]
             ],
             'organ' => [
@@ -402,26 +384,6 @@ class Activity extends Form implements InputFilterProviderInterface
         }
 
         return $filter;
-    }
-
-    /**
-     * Try to validate a date. The default validator of ZF needs a format. This one tries to parse it
-     *
-     * + Stefan This certainly would not be the correct for doing it, were it not that PHP \DateTime gives no validation
-     * possibilities whatsoever
-     *
-     * @param $value
-     * @param array $context
-     * @return bool
-     */
-    public function correctDate($value, $context = [])
-    {
-        try {
-            new \DateTime($value);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
     }
 
     /**
