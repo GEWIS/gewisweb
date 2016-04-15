@@ -63,8 +63,8 @@ $this->headTitle($this->translate('Jobs'));
             }
         ?>
         <?php foreach ($jobList as $job):?>
-            <?php if ($job->isActive()):?>
-                <?php $company = $job->getPackage()->getCompany(); ?>
+            <?php $company = $job->getPackage()->getCompany(); ?>
+            <?php if ($job->isActive() && $job->getLanguage() == $locale && $company->getTranslationFromLocale($locale) != null):?>
 
                 <div class="job-list-item list-item" id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
                 <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',

@@ -5,6 +5,9 @@ namespace Company\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+use Zend\Feed\Writer\Feed;
+use Zend\View\Model\FeedModel;
+
 class AdminController extends AbstractActionController
 {
     /**

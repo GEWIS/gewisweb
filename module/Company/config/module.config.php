@@ -29,6 +29,21 @@ return [
                                 'actionArgument' => '',
                             ],
                         ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'feed' => [
+                                'priority' => 3,
+                                'type' => 'literal',
+                                'options' => [
+                                    'route' => '/feed',
+                                    'defaults' => [
+                                        'controller' => 'Company',
+                                        'action' => 'jobFeed',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                            ],
+                        ],
                     ],
                     'spotlight' => [
                         'priority' => 3,
@@ -262,6 +277,9 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'company' => __DIR__.'/../view/',
+        ],
+        'strategies' => [
+            'ViewFeedStrategy',
         ],
     ],
     'doctrine' => [

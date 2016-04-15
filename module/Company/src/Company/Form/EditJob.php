@@ -230,7 +230,8 @@ class EditJob extends Form
      */
     public function slugNameUnique($slugName, $context)
     {
-        $jid = $context['id'];
+        $job = $this->getObject();
+        $jid = $job->getId();
         return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid);
 
     }

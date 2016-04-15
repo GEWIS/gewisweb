@@ -80,7 +80,7 @@ class Job
     /**
      * The job's timestamp.
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $timestamp;
 
@@ -268,7 +268,7 @@ class Job
      */
     public function getTimestamp()
     {
-        return $this->description;
+        return $this->timestamp;
     }
 
     /**
