@@ -116,6 +116,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
 
+        $this->getEmailService()->sendActivityCreationEmail($activity);
+
         return $activity;
     }
 
@@ -313,5 +315,15 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function getActivityMapper()
     {
         return $this->sm->get('activity_mapper_activity');
+    }
+
+        /**
+     * Get the email service.
+     *
+     * @return EmailService
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('activity_service_email');
     }
 }

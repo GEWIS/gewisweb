@@ -1,0 +1,37 @@
+<?php $lang = 'en'; ?>
+<?= $this->translate('Hello,')?><br /><br />
+
+<?= $this->translate('A new activity has been created on the GEWIS site. See below for the details:') ?><br /><br />
+
+<h1><?= $this->escapeHtml($activity->getName()) ?></h1>
+
+<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+
+<table>
+    <tr>
+        <td><b><?=$this->translate('Start time')?>:</b></td>
+        <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b><?=$this->translate('End Time')?>:</b></td>
+        <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b><?=$this->translate('Location')?>:</b></td>
+        <td><?= $this->escapeHtml($activity->getLocation()) ?></td>
+    </tr>
+    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
+    <tr>
+        <td><b><?= $this->translate('Subscribe before') ?>:</b></td>
+        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <?php endif; ?>
+     <tr>
+        <td><b><?= $this->translate('Cost') ?>:</b></td>
+        <td><?=$this->escapeHtml($activity->getCosts()) ?></td>
+    </tr>
+</table>
+<br/><br/>
+
+<?= $this->translate('Kind Regards,') ?><br />
+<?= $this->translate('The Web Committee') ?>
