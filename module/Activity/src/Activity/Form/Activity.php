@@ -79,15 +79,17 @@ class Activity extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'beginTime',
-            'attributes' => [
-                'type' => 'text',
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
             ],
         ]);
 
         $this->add([
             'name' => 'endTime',
-            'attributes' => [
-                'type' => 'text',
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
             ],
         ]);
 
@@ -154,9 +156,10 @@ class Activity extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'subscriptionDeadline',
-            'attributes' => [
-                'type' => 'text'
-            ]
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
+            ],
         ]);
 
         $this->add([

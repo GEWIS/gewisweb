@@ -203,36 +203,7 @@ $form->prepare();
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <?php
-            /* render template for fields */
-            $fs = $form->get('fields')->getTemplateElement();
-            ob_start();
-            echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
-            $tpl = trim(ob_get_clean())
-            ?>
-            <h3><?= $this->translate('Additional signup fields') ?></h3>
-            <fieldset id="additionalFields">
-                <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
-                <?php
-                $index = 0;
-                foreach ($form->get('fields')->getIterator() as $fs){
-                    echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
-                    $index++;
-                }
-                ?>
-                <div class="form-group add-field">
-                    <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
-                        <span class="glyphicon glyphicon-minus"></span>
-                        <?= $this->translate('Remove the last field') ?>
-                    </button>
-                    <button class="btn btn-success" type="button" onclick="return Activity.addField()">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        <?= $this->translate('Add a field') ?>
-                    </button>
-                </div>
-            </fieldset>
-        </div>
+
         <div class="col-md-12">
             <?php
             $submit = $form->get('submit');
@@ -252,7 +223,4 @@ $form->prepare();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
     Activity.updateForm();
-    for (var i = 0; i < <?= $index ?>; i++) {
-        Activity.updateFieldset(i);
-    }
 </script>
