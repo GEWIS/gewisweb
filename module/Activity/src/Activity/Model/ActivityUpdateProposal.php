@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Activity\Model\Activity;
 
 /**
- * Activity model.
+ * Update prop model.
  *
  * @ORM\Entity
  */
-class ActivityProposal 
+class ActivityUpdateProposal 
 {
 
     /**

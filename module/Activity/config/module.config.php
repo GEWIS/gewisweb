@@ -111,6 +111,16 @@ return [
                                 'action' => 'exportpdf',
                             ]
                         ]
+                    ],
+                    'update' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/update',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'update'
+                            ]
+                        ]
                     ]
                 ]
 

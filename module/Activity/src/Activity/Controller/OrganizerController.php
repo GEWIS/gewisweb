@@ -65,7 +65,37 @@ class OrganizerController extends AbstractActionController
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
         ];
     }
+    
+    public function updateAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
+        $activity = $queryService->getActivityWithDetails($id);
+
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $form = $activityService->getForm();
+        
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+                $activityService->createActivity(
+                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
+                $view = new ViewModel();
+                $view->setTemplate('activity/activity/createSuccess.phtml');
+                return $view;
+            }
+        }
+        $form->bind($activity);
+        return ['form' => $form];
+        
+    }
+    
     public function exportPdfAction()
     {
         $pdf = new PdfModel();
