@@ -228,7 +228,7 @@ class EditJob extends Form
      * Checks if a given slugName is unique. (Callback for validation).
      *
      */
-    public function slugNameUnique($slugName, $context)
+    public function slugNameUnique($slugName)
     {
         $job = $this->getObject();
         $jid = $job->getId();

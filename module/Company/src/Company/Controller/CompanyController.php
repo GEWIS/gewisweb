@@ -58,14 +58,14 @@ class CompanyController extends AbstractActionController
         #            'slugCompanyName' => $companyName,
         #        ]
         #    )
-        $feed->setFeedLink($this->url()->fromRoute('company/jobList/feed',[],['force_canonical' => true]), 'atom');
+        $feed->setFeedLink($this->url()->fromRoute('company/jobList/feed', [], ['force_canonical' => true]), 'atom');
         #$feed->addAuthor(array(
         #    'name'  => 'admin',
         #    'email' => 'contact@ourdomain.com',
         #    'uri'   => 'http://www.ourdomain.com',
         #     ));
         $feed->setDescription($translator->translate('Learn about job oppertunities by following this feed.'));
-        $feed->setLink($this->url()->fromRoute('company/jobList',[],['force_canonical' => true]));
+        $feed->setLink($this->url()->fromRoute('company/jobList', [], ['force_canonical' => true]));
         $feed->setDateModified(time());
  
         foreach ($jobList as $job) {
