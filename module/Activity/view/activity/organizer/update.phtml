@@ -11,7 +11,7 @@ $form->prepare();
     <?= $this->form()->openTag($form) ?>
     <div class="row">
         <div class="col-md-12">
-            <h1><?= $this->translate('Create an activity') ?></h1>
+            <h1><?= $this->translate('Update an activity') ?></h1>
             <hr>
             <h3><?= $this->translate('Display languages') ?></h3>
             <?php
@@ -26,6 +26,7 @@ $form->prepare();
                 <div class="form-group<?= count($dutchElement->getMessages()) > 0 ? ' has-error' : '' ?>">
                     <label for="<?= $dutchElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Dutch') ?></label>
                     <div class="col-sm-10">
+                        <?php $dutchElement->setChecked($languages['nl']); ?>
                         <?= $this->formCheckbox($dutchElement) ?>
                         <?= $this->formElementErrors($dutchElement) ?>
                     </div>
@@ -33,6 +34,7 @@ $form->prepare();
                 <div class="form-group<?= count($englishElement->getMessages()) > 0 ? ' has-error' : '' ?>">
                     <label for="<?= $englishElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('English') ?></label>
                     <div class="col-sm-10">
+                        <?php $englishElement->setChecked($languages['en']); ?>
                         <?= $this->formCheckbox($englishElement) ?>
                         <?= $this->formElementErrors($englishElement) ?>
                     </div>
@@ -189,25 +191,51 @@ $form->prepare();
                     <?= $this->formElementErrors($canSignUp) ?>
                 </label>
             </div>
-            <?php
-            $organ = $form->get('organ');
-            $organ->setAttribute('class', 'form-control');
-            ?>
-            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $organ->getName(); ?>" class="control-label col-sm-2">
+            <?php $organ = $activity->getOrgan(); ?>
+            <div class="form-group">
+                <label class="control-label col-sm-2">
                     <?= $this->translate('Organizing committee / fraternity') ?>
                 </label>
                 <div class="col-sm-10">
-                    <?= $this->formSelect($organ) ?>
-                    <?= $this->formElementErrors($organ) ?>
+                    <?= $organ==null ? $this->translate('No associated committee / fraternity'): $organ->getAbbr() . '.' ?>
+                    <?= $this->translate('(Associated committee / fraternity cannot be changed)') ?>
                 </div>
             </div>
         </div>
-
+         <div class="col-md-12">
+            <?php
+            /* render template for fields */
+            $fs = $form->get('fields')->getTemplateElement();
+            ob_start();
+            echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
+            $tpl = trim(ob_get_clean())
+            ?>
+            <h3><?= $this->translate('Additional signup fields') ?></h3>
+            <fieldset id="additionalFields">
+                <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                <?php
+                /*$index = 0;
+                foreach ($form->get('fields')->getIterator() as $fs){
+                    echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
+                    $index++;
+                }*/
+                ?>
+                <div class="form-group add-field">
+                    <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        <?= $this->translate('Remove the last field') ?>
+                    </button>
+                    <button class="btn btn-success" type="button" onclick="return Activity.addField()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <?= $this->translate('Add a field') ?>
+                    </button>
+                </div>
+            </fieldset>
+        </div>
         <div class="col-md-12">
             <?php
             $submit = $form->get('submit');
-            $submit->setLabel($this->translate('Create activity'));
+            $submit->setLabel($this->translate('Update activity'));
             $submit->setAttribute('class', 'btn btn-primary');
             ?>
             <div class="form-group">
@@ -223,4 +251,7 @@ $form->prepare();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
     Activity.updateForm();
+    for (var i = 0; i < <?= $index ?>; i++) {
+        Activity.updateFieldset(i);
+    }    
 </script>

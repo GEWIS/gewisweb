@@ -55,6 +55,19 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
+     * Get an array that states whether a language is available for 
+     * the provided $activity
+     * 
+     * @param ActivityModel $activity
+     * @return string
+     */
+    public function getAvailableLanguages($activity)
+    {
+        return ['nl' => !is_null($activity->getName()),
+                'en' => !is_null($activity->getNameEn())];
+    }        
+    
+    /**
      * Get the activity with additional details
      *
      * @param $id

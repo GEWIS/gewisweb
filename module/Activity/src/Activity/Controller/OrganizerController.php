@@ -92,8 +92,7 @@ class OrganizerController extends AbstractActionController
             }
         }
         $form->bind($activity);
-        return ['form' => $form];
-        
+        return ['form' => $form, 'activity' => $activity, 'languages' => $queryService->getAvailableLanguages($activity)];        
     }
     
     public function exportPdfAction()
