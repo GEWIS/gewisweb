@@ -10,7 +10,7 @@ use Activity\Model\Activity;
  *
  * @ORM\Entity
  */
-class ActivityUpdateProposal 
+class ActivityUpdateProposal
 {
 
     /**
@@ -24,7 +24,7 @@ class ActivityUpdateProposal
 
     /**
      * The previous activity version, if any.
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
@@ -47,11 +47,11 @@ class ActivityUpdateProposal
         return $this->new;
     }
 
-    public function setOld($old) {
+    public function setOld(Activity\Model\Activity $old) {
         $this->parent = $old;
     }
 
-    public function setNew($new) {
+    public function setNew(Activity\Model\Activity $new) {
         $this->new = $new;
     }
 

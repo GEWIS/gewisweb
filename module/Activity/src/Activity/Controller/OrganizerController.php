@@ -65,7 +65,7 @@ class OrganizerController extends AbstractActionController
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
         ];
     }
-    
+
     public function updateAction()
     {
         $id = (int) $this->params('id');
@@ -75,13 +75,14 @@ class OrganizerController extends AbstractActionController
 
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $form = $activityService->getForm();
-        
+
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $form->setData($postData);
 
             if ($form->isValid()) {
-                $activityService->createActivity(
+                $activityService->createUpdateProposal(
+                    $activity,
                     $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
                     $postData['language_english']
@@ -92,9 +93,9 @@ class OrganizerController extends AbstractActionController
             }
         }
         $form->bind($activity);
-        return ['form' => $form, 'activity' => $activity, 'languages' => $queryService->getAvailableLanguages($activity)];        
+        return ['form' => $form, 'activity' => $activity, 'languages' => $queryService->getAvailableLanguages($activity)];
     }
-    
+
     public function exportPdfAction()
     {
         $pdf = new PdfModel();

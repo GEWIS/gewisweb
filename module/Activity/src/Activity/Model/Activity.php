@@ -20,6 +20,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     const STATUS_TO_APPROVE = 1; // Activity needs to be approved
     const STATUS_APPROVED = 2;  // The activity is approved
     const STATUS_DISAPPROVED = 3; // The board disapproved the activity
+    const STATUS_UPDATE = 4; //This activity is an update for some activity
 
     /**
      * ID for the activity.
@@ -155,14 +156,6 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     protected $signUps;
 
     /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * All additional fields belonging to the activity.
      *
      * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
@@ -176,6 +169,22 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
      * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
      */
     protected $organ;
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string
@@ -467,7 +476,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         $this->organ = $organ;
     }
-    
+
 
     /**
      * @return array
