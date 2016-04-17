@@ -65,13 +65,13 @@ class Module
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $translator);
+                    $form = new \Activity\Form\Activity($organs, $translator, $sm->get('activity_doctrine_em'));
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
                 'activity_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('decision_doctrine_em')
+                        $sm->get('activity_doctrine_em')
                     );
                 },                        
                 'activity_service_signup' => function ($sm) {

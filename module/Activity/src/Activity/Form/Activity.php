@@ -5,6 +5,7 @@ namespace Activity\Form;
 use Decision\Model\Organ;
 use Zend\Form\Form;
 use Zend\Mvc\I18n\Translator;
+use Doctrine\Common\Persistence\ObjectManager;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -25,7 +26,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, Translator $translator)
+    public function __construct(array $organs, Translator $translator, ObjectManager $objectManager)
     {
         parent::__construct('activity');
         $this->translator = $translator;
@@ -150,7 +151,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => new ActivityFieldFieldset()
+                'target_element' => new ActivityFieldFieldset($objectManager)
             ]
         ]);
 

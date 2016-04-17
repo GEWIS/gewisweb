@@ -5,18 +5,20 @@ namespace Activity\Form;
 use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct() {
+    public function __construct(ObjectManager $objectManager) {
 
         parent::__construct('activityfield');
 
-        $this->setHydrator(new ClassMethodsHydrator(false));
+        $this->setHydrator(new DoctrineHydrator($objectManager));
              //->setObject(new ActivityField());
-
+             //I hope this doesn't break any validation code
         $this->add([
             'name' => 'name',
             'options' => ['label' => 'Name'],
