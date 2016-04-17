@@ -39,6 +39,10 @@ class ActivityUpdateProposal
     protected $new;
 
 
+    public function getId(){
+        return $this->id;
+    }
+    
     public function getOld() {
         return $this->old;
     }

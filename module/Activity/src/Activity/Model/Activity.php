@@ -177,15 +177,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         return $this->id;
     }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
+    
     /**
      * @return string
      */
@@ -476,7 +468,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         $this->organ = $organ;
     }
-
+    
 
     /**
      * @return array

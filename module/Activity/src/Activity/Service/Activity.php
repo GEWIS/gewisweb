@@ -125,13 +125,37 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         $old = $proposal->getOld();
         $new = $proposal->getNew();
-
-        $new->setId($old->getId());
+        $this->copyActivity($old, $new);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $em->remove($old);//This should work, if removing an activity does not cascade to remove its fields.
+        
         $em->remove($proposal);//Proposal is no longer needed.
+        $em->remove($new);
         $em->flush();
-        $this->approve($new);
+        $this->approve($old);
+    }
+    
+    /**
+     * Copies all relevant activity attributes from $new to $old
+     * 
+     * @param ActivityModel $old
+     * @param ActivityModel $new
+     */
+    protected function copyActivity(ActivityModel $old, ActivityModel $new)
+    {
+        $old->setName($new->getName());                
+        $old->setNameEn($new->getNameEn());                
+        $old->setBeginTime($new->getBeginTime());                
+        $old->setEndTime($new->getEndTime());
+        $old->setSubscriptionDeadline($new->getSubscriptionDeadline());
+        $old->setLocation($new->getLocation());
+        $old->setLocationEn($new->getLocationEn());
+        $old->setCosts($new->getCosts());
+        $old->setCostsEn($new->getCostsEn());
+        $old->setDescription($new->getDescription());
+        $old->setDescriptionEn($new->getDescriptionEn());
+        $old->setCreator($new->getCreator());
+        $old->setCanSignUp($new->getCanSignUp());
+        $old->setOnlyGEWIS($new->getOnlyGEWIS());
     }
 
     /**
@@ -144,8 +168,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     function revokeUpdateProposal(ActivityProposalModel $proposal)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $em->remove($proposal->getNew());
+        $new = $proposal->getNew();
         $em->remove($proposal);
+        $em->remove($new);
         $em->flush();
     }
 
@@ -338,7 +363,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
-
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);

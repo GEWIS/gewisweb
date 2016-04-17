@@ -55,6 +55,21 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
+     * Get the information of one proposal from the database.
+     *
+     * @param int $id The proposal id to be searched for
+     *
+     * @return \Activity\Model\ActivityUpdateProposal or null if the proposal does not exist
+     */
+    public function getProposal($id)
+    {
+        $proposalMapper = $this->getServiceManager()->get('activity_mapper_proposal');
+        $proposal = $proposalMapper->getProposalById($id);
+
+        return $proposal;                         
+    }
+    
+    /**
      * Get an array that states whether a language is available for 
      * the provided $activity
      * 

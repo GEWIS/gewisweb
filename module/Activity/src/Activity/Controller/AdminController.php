@@ -134,6 +134,53 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Display the proposed update
+     */
+    public function viewProposalAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+
+        $proposal = $queryService->getProposal($id);
+
+        if (is_null($proposal)) {
+            return $this->notFoundAction();
+        }
+
+        return ['proposal' => $proposal];
+    }
+    
+    /**
+     * Apply the proposed update
+     */
+    public function applyProposalAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        
+        $proposal = $queryService->getProposal($id);
+        $activityService->updateActivity($proposal);
+        
+        return $this->queueAction();
+    }
+
+    /**
+     * Revoke the proposed update
+     */
+    public function revokeProposalAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        
+        $proposal = $queryService->getProposal($id);
+        $activityService->revokeUpdateProposal($proposal);
+        
+        return $this->queueAction();
+    }
+
+    /**
      * Set the approval status of the activity requested
      *
      * @param $status
@@ -163,7 +210,7 @@ class AdminController extends AbstractActionController
                 $activityService->reset($activity);
                 break;
             default:
-                throw new \InvalidArgumentException('No sutch status ' . $status);
+                throw new \InvalidArgumentException('No such status ' . $status);
 
         }
 
