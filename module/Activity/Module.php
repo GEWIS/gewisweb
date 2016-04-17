@@ -119,11 +119,13 @@ class Module
 
                     $acl->allow('guest', 'activity', 'view');
                     $acl->allow('guest', 'activitySignup', 'view');
-
+                    
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
                     $acl->allow('active_member', 'activity', 'viewDetails');
-
+                    
+                    $acl-allow('admin', 'activity', 'update');
+                    
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
                     return $acl;

@@ -102,6 +102,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
+        if (!$this->isAllowed('update', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to update an activity')
+            );
+        }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         // Find the creator
         $user = $em->merge($this->getServiceManager()->get('user_role'));
@@ -122,29 +128,29 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param ActivityProposalModel $proposal
      */
     function updateActivity(ActivityProposalModel $proposal)
-    {        
+    {
         $old = $proposal->getOld();
         $new = $proposal->getNew();
         $this->copyActivity($old, $new);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        
+
         $em->remove($proposal);//Proposal is no longer needed.
         $em->remove($new);
         $em->flush();
         $this->approve($old);
     }
-    
+
     /**
      * Copies all relevant activity attributes from $new to $old
-     * 
+     *
      * @param ActivityModel $old
      * @param ActivityModel $new
      */
     protected function copyActivity(ActivityModel $old, ActivityModel $new)
     {
-        $old->setName($new->getName());                
-        $old->setNameEn($new->getNameEn());                
-        $old->setBeginTime($new->getBeginTime());                
+        $old->setName($new->getName());
+        $old->setNameEn($new->getNameEn());
+        $old->setBeginTime($new->getBeginTime());
         $old->setEndTime($new->getEndTime());
         $old->setSubscriptionDeadline($new->getSubscriptionDeadline());
         $old->setLocation($new->getLocation());
