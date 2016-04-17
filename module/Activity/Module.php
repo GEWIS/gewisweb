@@ -124,7 +124,7 @@ class Module
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
                     $acl->allow('active_member', 'activity', 'viewDetails');
                     
-                    $acl-allow('admin', 'activity', 'update');
+                    $acl->allow('admin', 'activity', 'update');
                     
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 

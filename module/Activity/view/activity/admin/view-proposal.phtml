@@ -113,3 +113,19 @@
     </tr>
     </tbody>
 </table>
+<div class="col-md-8">
+    <?= $this->translate('Original Dutch description') ?>
+    <p><?= nl2br($this->escapeHtml($old->getDescription())) ?></p>
+</div>
+<div class="col-md-8">
+    <?= $this->translate('Updated Dutch description') ?>
+    <p><?= nl2br($this->escapeHtml($new->getDescription())) ?></p>
+</div>
+<div class="col-md-8">
+    <?= $this->translate('Original English description') ?>
+    <p><?= nl2br($this->escapeHtml($old->getDescriptionEn())) ?></p>
+</div>
+<div class="col-md-8">
+    <?= $this->translate('Updated English description') ?>
+    <p><?= nl2br($this->escapeHtml($new->getDescriptionEn())) ?></p>
+</div>

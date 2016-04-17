@@ -98,3 +98,12 @@
     </tr>
     </tbody>
 </table>
+
+<div class="col-md-8">
+    <?= $this->translate('Dutch description') ?>
+    <p><?= nl2br($this->escapeHtml($activity->getDescription())) ?></p>
+</div>
+<div class="col-md-8">
+    <?= $this->translate('English description') ?>
+    <p><?= nl2br($this->escapeHtml($activity->getDescriptionEn())) ?></p>
+</div>
