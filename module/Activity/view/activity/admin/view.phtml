@@ -51,14 +51,26 @@
     <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
         <tr>
             <td>
-                <a href="<?php echo $this->url('admin_activity/approve', ['id' => $activity->getId()]) ?>">
-                    <?php echo $this->translate('Approve'); ?>
-                </a>
+                <?php $approvalForm->setAttribute('action', $this->url('admin_activity/approve', ['id' => $activity->getId()]));
+                $approvalForm->prepare();
+                echo $this->form()->openTag($approvalForm);
+                echo $this->formElement($approvalForm->get('security'));
+                $submit = $approvalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>
             </td>
             <td>
-                <a href="<?php echo $this->url('admin_activity/disapprove', ['id' => $activity->getId()]) ?>">
-                    <?php echo $this->translate('Disapprove'); ?>
-                </a>
+                <?php $disapprovalForm->setAttribute('action', $this->url('admin_activity/disapprove', ['id' => $activity->getId()]));
+                $disapprovalForm->prepare();
+                echo $this->form()->openTag($disapprovalForm);
+                echo $this->formElement($disapprovalForm->get('security'));
+                $submit = $disapprovalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                
             </td>
             <td></td>
         </tr>
@@ -68,9 +80,15 @@
             <td>
             </td>
             <td>
-                <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->getId()]) ?>">
-                    <?php echo $this->translate('Revoke approval'); ?>
-                </a>
+                <?php $resetForm->setAttribute('action', $this->url('admin_activity/reset', ['id' => $activity->getId()]));
+                $resetForm->prepare();
+                echo $this->form()->openTag($resetForm);
+                echo $this->formElement($resetForm->get('security'));
+                $submit = $resetForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                                
             </td>
             <td></td>
         </tr>
@@ -80,9 +98,15 @@
             <td>
             </td>
             <td>
-                <a href="<?php echo $this->url('admin_activity/reset', ['id' => $activity->getId()]) ?>">
-                    <?php echo $this->translate('Revoke disapproval'); ?>
-                </a>
+                <?php $resetForm->setAttribute('action', $this->url('admin_activity/reset', ['id' => $activity->getId()]));
+                $resetForm->prepare();
+                echo $this->form()->openTag($resetForm);
+                echo $this->formElement($resetForm->get('security'));
+                $submit = $resetForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                                
             </td>
             <td></td>
         </tr>

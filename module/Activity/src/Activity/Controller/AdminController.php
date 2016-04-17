@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stefan
- * Date: 19-7-15
- * Time: 11:39
- */
 
 namespace Activity\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Model\Activity;
+use Activity\Form\ModifyRequest as RequestForm;
 
 /**
  * Controller for all administrative activity actions
@@ -62,6 +57,9 @@ class AdminController extends AbstractActionController
 
         return [
             'activity' => $activity,
+            'approvalForm' => new RequestForm('updateApprovalStatus','Approve'),
+            'disapprovalForm' => new RequestForm('updateApprovalStatus','Disapprove'),
+            'resetForm' => new RequestForm('updateApprovalStatus','Reset')
         ];
     }
 
@@ -204,9 +202,22 @@ class AdminController extends AbstractActionController
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
+ 
         /** @var $activity Activity*/
         $activity = $queryService->getActivity($id);
+
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()){
+            return $this->notFoundAction();
+        }
+        $form = new RequestForm('updateApprovalStatus');
+        
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            return $this->notFoundAction();
+        }
 
         if (is_null($activity)) {
             return $this->notFoundAction();
