@@ -26,7 +26,7 @@ $form->prepare();
                 <div class="form-group<?= count($dutchElement->getMessages()) > 0 ? ' has-error' : '' ?>">
                     <label for="<?= $dutchElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Dutch') ?></label>
                     <div class="col-sm-10">
-                        <?php $dutchElement->setChecked($languages['en']); ?>
+                        <?php $dutchElement->setChecked($languages['nl']); ?>
                         <?= $this->formCheckbox($dutchElement) ?>
                         <?= $this->formElementErrors($dutchElement) ?>
                     </div>
@@ -190,15 +190,17 @@ $form->prepare();
                     <?= $this->formCheckbox($canSignUp) ?>
                     <?= $this->formElementErrors($canSignUp) ?>
                 </label>
-            </div>
-            <?php $organ = $activity->getOrgan(); ?>
-            <div class="form-group">
-                <label class="control-label col-sm-2">
+            <?php
+            $organ = $form->get('organ');
+            $organ->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $organ->getName(); ?>" class="control-label col-sm-2">
                     <?= $this->translate('Organizing committee / fraternity') ?>
                 </label>
                 <div class="col-sm-10">
-                    <?= $organ==null ? $this->translate('No associated committee / fraternity'): $organ->getAbbr() . '.' ?>
-                    <?= $this->translate('(Associated committee / fraternity cannot be changed)') ?>
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
                 </div>
             </div>
         </div>

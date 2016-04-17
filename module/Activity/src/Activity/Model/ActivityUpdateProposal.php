@@ -47,11 +47,11 @@ class ActivityUpdateProposal
         return $this->new;
     }
 
-    public function setOld(Activity\Model\Activity $old) {
-        $this->parent = $old;
+    public function setOld(Activity $old) {
+        $this->old = $old;
     }
 
-    public function setNew(Activity\Model\Activity $new) {
+    public function setNew(Activity $new) {
         $this->new = $new;
     }
 
