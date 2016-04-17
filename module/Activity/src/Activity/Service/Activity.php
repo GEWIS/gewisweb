@@ -100,7 +100,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param type $english
      * @return ActivityProposalModel
      */
-    function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
+    public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
         if (!$this->isAllowed('update', 'activity')) {
             $translator = $this->getTranslator();
@@ -112,7 +112,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the creator
         $user = $em->merge($this->getServiceManager()->get('user_role'));
 
-        $newActivity = $this->generateActivity($params, $user, $oldActivity->getOrgan(), $dutch, $english, ActivityModel::STATUS_UPDATE);
+        $newActivity = $this->generateActivity(
+            $params,
+            $user,
+            $oldActivity->getOrgan(),
+            $dutch,
+            $english,
+            ActivityModel::STATUS_UPDATE
+        );
         $proposal = new \Activity\Model\ActivityUpdateProposal();
         $proposal->setOld($oldActivity);
         $proposal->setNew($newActivity);
@@ -127,7 +134,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @param ActivityProposalModel $proposal
      */
-    function updateActivity(ActivityProposalModel $proposal)
+    public function updateActivity(ActivityProposalModel $proposal)
     {
         $old = $proposal->getOld();
         $new = $proposal->getNew();
@@ -171,7 +178,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @param ActivityProposalModel $proposal
      */
-    function revokeUpdateProposal(ActivityProposalModel $proposal)
+    public function revokeUpdateProposal(ActivityProposalModel $proposal)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $new = $proposal->getNew();

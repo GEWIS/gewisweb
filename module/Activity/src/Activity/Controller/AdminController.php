@@ -22,8 +22,8 @@ class AdminController extends AbstractActionController
         $approvedActivities = $queryService->getApprovedActivities();
         $disapprovedActivities = $queryService->getDisapprovedActivities();
         $updatedActivities = [];
-        $updateProposals = [];        
-        foreach ($queryService->getAllProposals() as $updateProposal){
+        $updateProposals = [];
+        foreach ($queryService->getAllProposals() as $updateProposal) {
             $updatedActivities[$updateProposal->getId()] = $updateProposal->getNew();
             $updateProposals[$updateProposal->getNew()->getId()] = $updateProposal;
         }
@@ -57,9 +57,9 @@ class AdminController extends AbstractActionController
 
         return [
             'activity' => $activity,
-            'approvalForm' => new RequestForm('updateApprovalStatus','Approve'),
-            'disapprovalForm' => new RequestForm('updateApprovalStatus','Disapprove'),
-            'resetForm' => new RequestForm('updateApprovalStatus','Reset')
+            'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
+            'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
+            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset')
         ];
     }
 
@@ -158,7 +158,7 @@ class AdminController extends AbstractActionController
             'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update')
             ];
     }
-    
+
     /**
      * Apply the proposed update
      */
@@ -167,27 +167,27 @@ class AdminController extends AbstractActionController
         $id = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        
+
         //Assure the form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             return $this->notFoundAction();
         }
         $form = new RequestForm('proposalApply');
-        
+
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             return $this->notFoundAction();
         }
-        
+
         $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)){
-            return $this->notFoundAction();            
-        }        
+        if (is_null($proposal)) {
+            return $this->notFoundAction();
+        }
         $oldId = $proposal->getOld()->getId();
         $activityService->updateActivity($proposal);
-        
+
         $this->redirect()->toRoute('admin_activity/view', [
             'id' => $oldId,
         ]);
@@ -202,26 +202,26 @@ class AdminController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         //Assure the form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             return $this->notFoundAction();
         }
         $form = new RequestForm('proposalRevoke');
-        
+
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             return $this->notFoundAction();
         }
-        
+
         $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)){
-            return $this->notFoundAction();            
-        }        
-        
+        if (is_null($proposal)) {
+            return $this->notFoundAction();
+        }
+
         $oldId = $proposal->getOld()->getId();
         $activityService->revokeUpdateProposal($proposal);
-        
+
         $this->redirect()->toRoute('admin_activity/view', [
             'id' => $oldId,
         ]);
@@ -238,20 +238,20 @@ class AdminController extends AbstractActionController
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
- 
+
         /** @var $activity Activity*/
         $activity = $queryService->getActivity($id);
 
         //Assure the form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             return $this->notFoundAction();
         }
         $form = new RequestForm('updateApprovalStatus');
-        
+
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             return $this->notFoundAction();
         }
 

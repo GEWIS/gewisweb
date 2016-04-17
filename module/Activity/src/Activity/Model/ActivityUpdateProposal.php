@@ -39,25 +39,28 @@ class ActivityUpdateProposal
     protected $new;
 
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
-    
-    public function getOld() {
+
+    public function getOld()
+    {
         return $this->old;
     }
 
-    public function getNew() {
+    public function getNew()
+    {
         return $this->new;
     }
 
-    public function setOld(Activity $old) {
+    public function setOld(Activity $old)
+    {
         $this->old = $old;
     }
 
-    public function setNew(Activity $new) {
+    public function setNew(Activity $new)
+    {
         $this->new = $new;
     }
-
-
 }

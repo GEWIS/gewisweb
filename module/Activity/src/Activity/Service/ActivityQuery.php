@@ -66,23 +66,23 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         $proposalMapper = $this->getServiceManager()->get('activity_mapper_proposal');
         $proposal = $proposalMapper->getProposalById($id);
 
-        return $proposal;                         
+        return $proposal;
     }
-    
+
     /**
      * Retrieve all update proposals from the database.
-     * 
+     *
      * @return a Collection of \Activity\Model\ActivityUpdateProposal
      */
     public function getAllProposals()
     {
         return $this->getServiceManager()->get('activity_mapper_proposal')->getAllProposals();
     }
-    
+
     /**
-     * Get an array that states whether a language is available for 
+     * Get an array that states whether a language is available for
      * the provided $activity
-     * 
+     *
      * @param ActivityModel $activity
      * @return string
      */
@@ -90,8 +90,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         return ['nl' => !is_null($activity->getName()),
                 'en' => !is_null($activity->getNameEn())];
-    }        
-    
+    }
+
     /**
      * Get the activity with additional details
      *
