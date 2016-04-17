@@ -193,7 +193,7 @@ $form->prepare();
             <?php
             $organ = $form->get('organ');
             $organ->setAttribute('class', 'form-control');
-            $organ->setAttribute('disabled', 'disabled');
+            //$organ->setAttribute('disabled', 'disabled');
             ?>
             <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
                 <label for="<?= $organ->getName(); ?>" class="control-label col-sm-2">

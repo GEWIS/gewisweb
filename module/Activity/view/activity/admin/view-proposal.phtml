@@ -84,14 +84,26 @@
 
     <tr>
         <td>
-            <a href="<?= $this->url('admin_activity/apply_proposal', ['id' => $proposal->getId()]) ?>">
-                <?= $this->translate('Apply update'); ?>
-            </a>
+            <?php $proposalApplyForm->setAttribute('action', $this->url('admin_activity/apply_proposal', ['id' => $proposal->getId()]));
+            $proposalApplyForm->prepare();
+            echo $this->form()->openTag($proposalApplyForm);
+            echo $this->formElement($proposalApplyForm->get('security'));
+            $submit = $proposalApplyForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>                                            
         </td>
         <td>
-            <a href="<?= $this->url('admin_activity/revoke_proposal', ['id' => $proposal->getId()]) ?>">
-                <?= $this->translate('Revoke update'); ?>
-            </a>
+            <?php $proposalRevokeForm->setAttribute('action', $this->url('admin_activity/revoke_proposal', ['id' => $proposal->getId()]));
+            $proposalRevokeForm->prepare();
+            echo $this->form()->openTag($proposalRevokeForm);
+            echo $this->formElement($proposalRevokeForm->get('security'));
+            $submit = $proposalRevokeForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>                                            
         </td>
         <td></td>
         <td></td>
