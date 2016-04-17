@@ -70,6 +70,16 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
     
     /**
+     * Retrieve all update proposals from the database.
+     * 
+     * @return a Collection of \Activity\Model\ActivityUpdateProposal
+     */
+    public function getAllProposals()
+    {
+        return $this->getServiceManager()->get('activity_mapper_proposal')->getAllProposals();
+    }
+    
+    /**
      * Get an array that states whether a language is available for 
      * the provided $activity
      * 
@@ -129,7 +139,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
+                $translator->translate('You are not allowed to view unapproved activities')
             );
         }
 
@@ -149,7 +159,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view approved the activities')
+                $translator->translate('You are not allowed to view activities')
             );
         }
 

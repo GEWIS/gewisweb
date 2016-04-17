@@ -26,15 +26,22 @@ class AdminController extends AbstractActionController
         $unapprovedActivities = $queryService->getUnapprovedActivities();
         $approvedActivities = $queryService->getApprovedActivities();
         $disapprovedActivities = $queryService->getDisapprovedActivities();
-
-
+        $updatedActivities = [];
+        $updateProposals = [];        
+        foreach ($queryService->getAllProposals() as $updateProposal){
+            $updatedActivities[$updateProposal->getId()] = $updateProposal->getNew();
+            $updateProposals[$updateProposal->getNew()->getId()] = $updateProposal;
+        }
         return [
             'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
             'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
             'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
+            'updatedActivities' => array_slice($updatedActivities, 0, $perPage),
+            'updateProposals' => $updateProposals,
             'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
             'moreApprovedActivities' => count($approvedActivities) > $perPage,
-            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
+            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage,
+            'moreUpdateProposals' => count($updatedActivities) > $perPage
         ];
     }
 
@@ -160,9 +167,12 @@ class AdminController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         
         $proposal = $queryService->getProposal($id);
+        $oldId = $proposal->getOld()->getId();
         $activityService->updateActivity($proposal);
         
-        return $this->queueAction();
+        $this->redirect()->toRoute('admin_activity/view', [
+            'id' => $oldId,
+        ]);
     }
 
     /**
@@ -175,9 +185,12 @@ class AdminController extends AbstractActionController
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         
         $proposal = $queryService->getProposal($id);
+        $oldId = $proposal->getOld()->getId();
         $activityService->revokeUpdateProposal($proposal);
         
-        return $this->queueAction();
+        $this->redirect()->toRoute('admin_activity/view', [
+            'id' => $oldId,
+        ]);
     }
 
     /**

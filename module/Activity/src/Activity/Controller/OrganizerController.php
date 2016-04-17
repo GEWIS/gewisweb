@@ -88,7 +88,7 @@ class OrganizerController extends AbstractActionController
                     $postData['language_english']
                 );
                 $view = new ViewModel();
-                $view->setTemplate('activity/activity/createSuccess.phtml');
+                $view->setTemplate('activity/activity/updateSuccess.phtml');
                 return $view;
             }
         }

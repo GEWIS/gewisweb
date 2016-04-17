@@ -1,3 +1,12 @@
+<h1><?= $this->translate('Update Proposals');?> </h1>
+<?= $this->partial('activity/activity/list.phtml', [
+    'activities' => $updatedActivities,
+    'proposals' => $updateProposals,
+    'admin' => true,
+    'MoreLink' => $moreUpdateProposals ? 'This won\'t happen. Really. If it does, just fix these proposals first.': null,
+])
+?>
+
 <h1><?php echo $this->translate('Unapproved Activities');?> </h1>
 <?php
 echo $this->partial('activity/activity/list.phtml', [

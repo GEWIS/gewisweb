@@ -122,7 +122,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param ActivityProposalModel $proposal
      */
     function updateActivity(ActivityProposalModel $proposal)
-    {
+    {        
         $old = $proposal->getOld();
         $new = $proposal->getNew();
         $this->copyActivity($old, $new);
