@@ -56,7 +56,7 @@ class ActivityController extends AbstractActionController
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         $result = [
             'activity' => $translatedActivity,
-            'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed,
+            'signupOpen' => $activity->getCanSignUp() && !$subscriptionDeadLinePassed && $activity->getStatus()!==Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
@@ -128,7 +128,7 @@ class ActivityController extends AbstractActionController
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
 
         // Assure you can sign up for this activity
-        if (!$activity->getCanSignup() || $subscriptionDeadLinePassed) {
+        if (!$activity->getCanSignup() || $subscriptionDeadLinePassed || $activity->getStatus()!==Activity::STATUS_APPROVED) {
             $error = $translator->translate('You can not subscribe to this activity at this moment');
             $this->redirectActivityRequest($id, false, $error);
             return;
