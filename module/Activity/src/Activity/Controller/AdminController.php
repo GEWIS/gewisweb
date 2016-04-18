@@ -35,8 +35,7 @@ class AdminController extends AbstractActionController
             'updateProposals' => $updateProposals,
             'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
             'moreApprovedActivities' => count($approvedActivities) > $perPage,
-            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage,
-            'moreUpdateProposals' => count($updatedActivities) > $perPage
+            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
         ];
     }
 
