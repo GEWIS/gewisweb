@@ -43,7 +43,7 @@ class Email extends AbstractService
 
         $message->addFrom($config['from']);
         $message->addTo($config['to']['activity_creation']);
-        $message->setSubject($translator->translate('New activity was created on the GEWIS website'));
+        $message->setSubject('Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website');
         $message->setBody($mimeMessage);
 
         $this->getTransport()->send($message);
