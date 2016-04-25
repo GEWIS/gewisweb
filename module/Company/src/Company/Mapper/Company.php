@@ -152,6 +152,7 @@ class Company
         return empty($result) ? null : $result[0];
     }
 
+
     /**
      * Removes a company.
      *

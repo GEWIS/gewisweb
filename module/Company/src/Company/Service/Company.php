@@ -37,8 +37,63 @@ class Company extends AbstractACLService
         }
         return $this->getFeaturedPackageMapper()->getFeaturedPackage($translator->getLocale());
     }
+
+    private function getFuturePackageStartsBeforeDate($date)
+    {
+        $startPackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
+            $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
+        );
+        usort($startPackages, function ($a, $b) {
+            $aStart = $a->getStartingDate();
+            $bStart = $b->getStartingDate();
+            if ($aStart == $bStart) {
+                return 0;
+            }
+            return $aStart < $bStart ? -1 : 1;
+        });
+        return $startPackages;
+    }
+
+    private function getFuturePackageExpiresBeforeDate($date)
+    {
+        $expirePackages = array_merge(
+            $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
+            $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
+            $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
+        );
+        usort($expirePackages, function ($a, $b) {
+            $aEnd = $a->getExpirationDate();
+            $bEnd = $b->getExpirationDate();
+            if ($aEnd == $bEnd) {
+                return 0;
+            }
+            return $aEnd < $bEnd ? -1 : 1;
+        });
+        return $expirePackages;
+    }
+
     /**
-     * Returns an list of all companies (excluding hidden companies
+     * Searches for packages that change before $date
+     *
+     * @param date The date until where to search
+     * @return Two sorted arrays, containing the packages that respectively start and expire between now and $date,
+     */
+    public function getPackageChangeEvents($date)
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('listall')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed list the companies')
+            );
+        }
+        $startPackages = $this->getFuturePackageStartsBeforeDate($date);
+        $expirePackages = $this->getFuturePackageExpiresBeforeDate($date);
+        return [$startPackages, $expirePackages];
+    }
+    /**
+     * Returns an list of all companies (excluding hidden companies)
      *
      */
     public function getCompanyList()

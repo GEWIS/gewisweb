@@ -42,6 +42,10 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
         $this->image = $image;
     }
 
+    public function getType()
+    {
+        return "banner";
+    }
     /**
      * Constructor.
      */
