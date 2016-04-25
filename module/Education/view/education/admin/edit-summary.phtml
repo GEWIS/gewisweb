@@ -1,0 +1,92 @@
+<?php if (isset($success) && $success): ?>
+<?= $this->translate('Upload of all summaries was finished.') ?>
+<?php elseif (count($form->get('exams')->getIterator()) == 0): ?>
+<?= $this->translate('There are no summaries to be edited. Upload exams to edit them.') ?>
+<?php else: ?>
+<?php
+$form->prepare();
+
+$form->setAttribute('action', $this->url('admin_education/bulk_edit_summary'));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('class', 'form-horizontal');
+?>
+<?= $this->form()->openTag($form) ?>
+
+<?php
+$exams = $form->get('exams');
+?>
+<?php foreach ($exams->getIterator() as $fs): ?>
+    <div class="form-group">
+        <h3 class="col-sm-offset-2 col-sm-10">
+            <a target="_blank" href="<?= $this->basePath() ?>/<?= $config['public_summary_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
+                <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
+            </a>
+        </h3>
+    </div>
+    <?= $this->formHidden($fs->get('file')) ?>
+
+<?php
+$element = $fs->get('course');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $fs->get('date');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $fs->get('author');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+    <div class="col-sm-10">
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+</div>
+
+<?php
+$element = $fs->get('language');
+$element->setAttribute('class', 'form-control');
+?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+            <div class="col-sm-10">
+                <?= $this->formSelect($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+<?php endforeach ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php
+        $submit = $form->get('submit');
+        $submit->setAttribute('class', 'btn btn-primary');
+        ?>
+        <?= $this->formButton($submit) ?>
+    </div>
+</div>
+
+<?= $this->form()->closeTag() ?>
+<?php endif ?>

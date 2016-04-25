@@ -11,14 +11,38 @@ class AdminController extends AbstractActionController {
     {
     }
 
-    public function bulkAction()
+    public function bulkExamAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->tempUpload($request->getPost(), $request->getFiles())) {
+            if ($service->tempExamUpload($request->getPost(), $request->getFiles())) {
+                return new ViewModel([
+                    'success' => true
+                ]);
+            } else {
+                $this->getResponse()->setStatusCode(500);
+                return new ViewModel([
+                    'success' => false
+                ]);
+            }
+        }
+
+        return new ViewModel([
+            'form' => $service->getTempUploadForm()
+        ]);
+    }
+
+    public function bulkSummaryAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // try uploading
+            if ($service->tempSummaryUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -38,12 +62,12 @@ class AdminController extends AbstractActionController {
     /**
      * Edit several exams in bulk.
      */
-    public function editAction()
+    public function editExamAction()
     {
         $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $service->bulkEdit($request->getPost())) {
+        if ($request->isPost() && $service->bulkExamEdit($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);
@@ -53,7 +77,30 @@ class AdminController extends AbstractActionController {
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form'   => $service->getBulkForm(),
+            'form'   => $service->getBulkExamForm(),
+            'config' => $config
+        ]);
+    }
+
+    /**
+     * Edit summaries in bulk.
+     */
+    public function editSummaryAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $service->bulkSummaryEdit($request->getPost())) {
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
+        $config = $this->getServiceLocator()->get('config');
+        $config = $config['education_temp'];
+
+        return new ViewModel([
+            'form'   => $service->getBulkSummaryForm(),
             'config' => $config
         ]);
     }

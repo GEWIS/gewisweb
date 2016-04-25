@@ -3,14 +3,14 @@
 namespace Education\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
+use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class Bulk extends Form implements InputFilterProviderInterface
 {
 
-    public function __construct(Translator $translator, Fieldset\Exam $exam)
+    public function __construct(Translator $translator, Fieldset $exam)
     {
         parent::__construct();
 
@@ -30,7 +30,7 @@ class Bulk extends Form implements InputFilterProviderInterface
             'type' => 'submit'
         ]);
 
-        $this->get('submit')->setLabel($translator->translate('Finalize exam uploads'));
+        $this->get('submit')->setLabel($translator->translate('Finalize uploads'));
     }
 
     public function getInputFilterSpecification()

@@ -60,6 +60,8 @@ class FileStorage extends AbstractService
         $destination = $config['storage_dir'] . '/' . $storagePath;
         if (!file_exists($destination)) {
             move_uploaded_file($file['tmp_name'], $destination);
+        } else {
+            unlink($file['tmp_name']);
         }
 
         return $storagePath;
@@ -86,6 +88,8 @@ class FileStorage extends AbstractService
             } else {
                 copy($source, $destination);
             }
+        } elseif ($move) {
+            unlink($source);
         }
 
         return $storagePath;

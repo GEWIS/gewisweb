@@ -7,8 +7,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use zend\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
 
-class Exam extends Fieldset
-    implements InputFilterProviderInterface
+class Summary extends Fieldset implements InputFilterProviderInterface
 {
 
     protected $config;
@@ -34,21 +33,15 @@ class Exam extends Fieldset
             'name' => 'date',
             'type' => 'date',
             'options' => [
-                'label' => $translator->translate('Exam date')
+                'label' => $translator->translate('Summary date')
             ]
         ]);
 
         $this->add([
-            'name' => 'examType',
-            'type' => 'Zend\Form\Element\Select',
+            'name' => 'author',
+            'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Type'),
-                'value_options' => [
-                    ExamModel::EXAM_TYPE_FINAL => $translator->translate('Final examination'),
-                    ExamModel::EXAM_TYPE_INTERMEDIATE_TEST => $translator->translate('Intermediate test'),
-                    ExamModel::EXAM_TYPE_ANSWERS => $translator->translate('Exam answers'),
-                    ExamModel::EXAM_TYPE_OTHER => $translator->translate('Other'),
-                ],
+                'label' => $translator->translate('Author')
             ]
         ]);
 
@@ -77,7 +70,8 @@ class Exam extends Fieldset
 
     public function getInputFilterSpecification()
     {
-        $dir = $this->config['upload_exam_dir'];
+        $dir = $this->config['upload_summary_dir'];
+
         return [
             'file' => [
                 'required' => true,
@@ -95,6 +89,7 @@ class Exam extends Fieldset
                                 $validator = new \Zend\Validator\File\Exists([
                                     'directory' => $dir
                                 ]);
+
                                 return $validator->isValid($value);
                             }
                         ]
@@ -119,6 +114,19 @@ class Exam extends Fieldset
                 ]
             ],
 
+            'author' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 3,
+                            'max' => 150
+                        ]
+                    ],
+                ],
+            ],
+
             'date' => [
                 'required' => true,
                 'validators' => [
@@ -127,5 +135,4 @@ class Exam extends Fieldset
             ]
         ];
     }
-
 }

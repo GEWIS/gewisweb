@@ -86,9 +86,9 @@ class Exam extends AbstractAclService
      *
      * @return boolean
      */
-    public function bulkEdit($data)
+    protected function bulkEdit($data, $type)
     {
-        $form = $this->getBulkForm();
+        $form = $this->getBulkForm($type);
 
         $form->setData($data);
 
@@ -128,16 +128,27 @@ class Exam extends AbstractAclService
          * exam, which we need in the upload process.
          */
 
-        $this->getExamMapper()->transactional(function ($mapper) use ($data, $config, $storageService) {
+        $this->getExamMapper()->transactional(function ($mapper) use ($data, $type, $config, $storageService) {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
+                if ($type === 'summary') {
+                    $exam = new SummaryModel();
+                }
+
                 $exam->setDate(new \DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                $exam->setExamType($examData['examType']);
+                if ($type === 'summary') {
+                    $exam->setAuthor($examData['author']);
+                    $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
+                }
+
+                if ($type === 'exam') {
+                    $exam->setExamType($examData['examType']);
+                }
                 $exam->setLanguage($examData['language']);
 
-                $localFile = $config['upload_dir'] . '/' . $examData['file'];
+                $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];
 
                 $exam->setFilename($storageService->storeFile($localFile));
 
@@ -148,6 +159,17 @@ class Exam extends AbstractAclService
         return true;
     }
 
+    public function bulkExamEdit($data)
+    {
+        return $this->bulkEdit($data, 'exam');
+    }
+
+
+    public function bulkSummaryEdit($data)
+    {
+        return $this->bulkEdit($data, 'summary');
+    }
+
     /**
      * Temporary exam upload.
      *
@@ -155,10 +177,11 @@ class Exam extends AbstractAclService
      *
      * @param array $post POST Data
      * @param array $files FILES Data
+     * @param string $uploadDirectory the directory to place the exam in
      *
      * @return boolean
      */
-    public function tempUpload($post, $files)
+    protected function tempUpload($post, $files, $uploadDirectory)
     {
         $form = $this->getTempUploadForm();
 
@@ -170,10 +193,8 @@ class Exam extends AbstractAclService
             return false;
         }
 
-        $config = $this->getConfig('education_temp');
-
         $filename = $data['file']['name'];
-        $path = $config['upload_dir'] . '/' . $filename;
+        $path = $uploadDirectory . '/' . $filename;
 
         if (!file_exists($path)) {
             move_uploaded_file($data['file']['tmp_name'], $path);
@@ -181,57 +202,20 @@ class Exam extends AbstractAclService
         return true;
     }
 
-    /**
-     * Upload a new summary.
-     *
-     * @param array $post POST Data
-     * @param array $files FILES Data
-     *
-     * @return boolean
-     */
-    public function uploadSummary($post, $files)
+    public function tempExamUpload($post, $files)
     {
-        $form = $this->getSummaryUploadForm();
-        $form->bind(new SummaryModel());
+        $config = $this->getConfig('education_temp');
+        return $this->tempUpload($post, $files, $config['upload_exam_dir']);
+    }
 
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
-
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $summary = $form->getData();
-        $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-
-        $storageService = $this->getFileStorageService();
-
-        /**
-         * Save the uploaded file and persist the summary.
-         *
-         * We do this in a transactional block, so if there is something
-         * wrong, we only have to throw an exception and Doctrine will roll
-         * back the transaction. This comes in handy if we are somehow unable
-         * to process the upload. This does allow us to get the ID of the
-         * exam, which we need in the upload process.
-         */
-        $this->getExamMapper()->transactional(function ($mapper) use ($summary, $data, $storageService) {
-            $summary->setFilename($storageService->storeUploadedFile($data['upload']));
-            $summary->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
-
-            $mapper->persist($summary);
-        });
-
-        return true;
+    public function tempSummaryUpload($post, $files)
+    {
+        $config = $this->getConfig('education_temp');
+        return $this->tempUpload($post, $files, $config['upload_summary_dir']);
     }
 
     /**
      * Get a filename from an exam (or summary).
-     *
-     * We do this, since we have so many courses, that most filesystems get
-     * choked up on the directory size. By dividing it into subdirectories, we
-     * get a much better performance from the filesystem.
      *
      * Exams will have a filename of the following format:
      *
@@ -248,7 +232,6 @@ class Exam extends AbstractAclService
     public function examToFilename(ExamModel $exam)
     {
         $code = $exam->getCourse()->getCode();
-        $dir = substr($code, 0, 2) . '/' . substr($code, 2) . '/';
 
         $filename = [];
 
@@ -264,7 +247,7 @@ class Exam extends AbstractAclService
         $filename[] = $exam->getDate()->format('Y-m-d');
 
 
-        return $dir . implode('-', $filename) . '.pdf';
+        return implode('-', $filename) . '.pdf';
     }
 
     /**
@@ -279,31 +262,13 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Get the Upload form.
-     *
-     * @return \Education\Form\SummaryUpload
-     *
-     * @throws \User\Permissions\NotAllowedException When not allowed to upload
-     */
-    public function getSummaryUploadForm()
-    {
-        if (!$this->isAllowed('upload_summary')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload summaries')
-            );
-        }
-        return $this->sm->get('education_form_summaryupload');
-    }
-
-    /**
      * Get the bulk edit form.
      *
      * @return \Education\Form\Bulk
      *
      * @throws \User\Permissions\NotAllowedException When not allowed to upload
      */
-    public function getBulkForm()
+    protected function getBulkForm($type)
     {
         if (!$this->isAllowed('upload')) {
             $translator = $this->getTranslator();
@@ -316,16 +281,19 @@ class Exam extends AbstractAclService
         }
 
         // fully load the bulk form
-        $this->bulkForm = $this->sm->get('education_form_bulk');
+        $this->bulkForm = $this->sm->get('education_form_bulk_' . $type);
 
         $config = $this->getConfig('education_temp');
 
-        $dir = new \DirectoryIterator($config['upload_dir']);
+        $dir = new \DirectoryIterator($config['upload_' . $type . '_dir']);
         $data = [];
 
         foreach ($dir as $file) {
             if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
                 $examData = $this->guessExamData($file->getFilename());
+                if ($type === 'summary') {
+                    $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
+                }
                 $examData['file'] = $file->getFilename();
                 $data[] = $examData;
             }
@@ -334,6 +302,24 @@ class Exam extends AbstractAclService
         $this->bulkForm->get('exams')->populateValues($data);
 
         return $this->bulkForm;
+    }
+
+    /**
+     * Get the bulk summary edit form
+     *
+     * @return \Education\Form\Bulk
+     */
+    public function getBulkSummaryForm()
+    {
+        return $this->getBulkForm('summary');
+    }
+
+    /**
+     * Get the bulk exam edit form.
+     */
+    public function getBulkExamForm()
+    {
+        return $this->getBulkForm('exam');
     }
 
     /**
@@ -363,6 +349,26 @@ class Exam extends AbstractAclService
             'date' => $year . '-' . $month . '-' . $day,
             'language' => $language
         ];
+    }
+
+    /**
+     * Guesses the summary author based on a summary's filename.
+     *
+     * @param string $filename
+     *
+     * @return array
+     */
+    public function guessSummaryAuthor($filename)
+    {
+        $parts = explode('.', $filename);
+        foreach ($parts as $part) {
+            // We assume names are more than 3 characters and don't contain numbers
+            if (strlen($part) > 3 && preg_match('/\\d/', $part) == 0) {
+                return $part;
+            }
+        }
+
+        return '';
     }
 
     /**
