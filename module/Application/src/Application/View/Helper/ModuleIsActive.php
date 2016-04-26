@@ -23,7 +23,7 @@ class ModuleIsActive extends AbstractHelper
     {
         $info = $this->getRouteInfo();
         foreach ($condition as $key => $cond) {
-            if (!isset($info[$key]) || (null !== $cond && $info[$key] != $cond)) {
+            if (!isset($info[$key]) || (!is_null($cond) && $info[$key] != $cond)) {
                 return false;
             }
         }
