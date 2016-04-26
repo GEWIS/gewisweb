@@ -5,6 +5,7 @@ namespace Activity\Form;
 use Decision\Model\Organ;
 use Zend\Form\Form;
 use Zend\Mvc\I18n\Translator;
+use Doctrine\Common\Persistence\ObjectManager;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -25,7 +26,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, Translator $translator)
+    public function __construct(array $organs, Translator $translator, ObjectManager $objectManager)
     {
         parent::__construct('activity');
         $this->translator = $translator;
@@ -79,15 +80,17 @@ class Activity extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'beginTime',
-            'attributes' => [
-                'type' => 'text',
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
             ],
         ]);
 
         $this->add([
             'name' => 'endTime',
-            'attributes' => [
-                'type' => 'text',
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
             ],
         ]);
 
@@ -148,15 +151,16 @@ class Activity extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => new ActivityFieldFieldset()
+                'target_element' => new ActivityFieldFieldset($objectManager)
             ]
         ]);
 
         $this->add([
             'name' => 'subscriptionDeadline',
-            'attributes' => [
-                'type' => 'text'
-            ]
+            'type' => 'datetime',
+            'options' => [
+                'format' => 'Y/m/d H:i'
+            ],
         ]);
 
         $this->add([
@@ -312,19 +316,6 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        // Settings for date validation
-        $dateValidator = [
-            'name' => 'callback',
-            'options' => [
-                'messages' => [
-                    \Zend\Validator\Callback::INVALID_VALUE =>
-                        $this->translator->translate('This is not a correct date'),
-                ],
-                'callback' => ['Activity\Form\Activity', 'correctDate']
-            ],
-        ];
-
-
         $filter = [
             'beginTime' => [
                 'required' => true,
@@ -339,14 +330,10 @@ class Activity extends Form implements InputFilterProviderInterface
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
                         ],
                     ],
-                    $dateValidator
                 ]
             ],
             'endTime' => [
                 'required' => true,
-                'validators' => [
-                    $dateValidator
-                ]
             ],
 
             'canSignUp' => [
@@ -364,8 +351,7 @@ class Activity extends Form implements InputFilterProviderInterface
                             ],
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
                         ],
-                    ],
-                    $dateValidator
+                    ]
                 ]
             ],
             'organ' => [
@@ -399,26 +385,6 @@ class Activity extends Form implements InputFilterProviderInterface
         }
 
         return $filter;
-    }
-
-    /**
-     * Try to validate a date. The default validator of ZF needs a format. This one tries to parse it
-     *
-     * + Stefan This certainly would not be the correct for doing it, were it not that PHP \DateTime gives no validation
-     * possibilities whatsoever
-     *
-     * @param $value
-     * @param array $context
-     * @return bool
-     */
-    public function correctDate($value, $context = [])
-    {
-        try {
-            new \DateTime($value);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
     }
 
     /**

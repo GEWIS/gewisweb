@@ -6,6 +6,7 @@ use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
+use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
 use Decision\Model\Organ;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
@@ -52,7 +53,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Create an activity from parameters.
+     * Create an activity from the creation form.
+     *
      * @pre $params is valid data of Activity\Form\Activity
      *
      * @param array $params Parameters describing activity
@@ -85,6 +87,121 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if ($organId !== 0){
             $organ = $this->findOrgan($organId);
         }
+        $activity = generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
+        return $activity;
+    }
+
+    /**
+     * Create a new update proposal from user form
+     *
+     * @param ActivityModel $oldActivity
+     * @param array $params
+     * @param type $dutch
+     * @param type $english
+     * @return ActivityProposalModel
+     */
+    public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
+    {
+        if (!$this->isAllowed('update', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to update an activity')
+            );
+        }
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        // Find the creator
+        $user = $em->merge($this->getServiceManager()->get('user_role'));
+
+        $newActivity = $this->generateActivity(
+            $params,
+            $user,
+            $oldActivity->getOrgan(),
+            $dutch,
+            $english,
+            ActivityModel::STATUS_UPDATE
+        );
+        $proposal = new \Activity\Model\ActivityUpdateProposal();
+        $proposal->setOld($oldActivity);
+        $proposal->setNew($newActivity);
+        $em->persist($proposal);
+        $em->flush();
+
+        return $proposal;
+    }
+
+    /**
+     * Apply a proposed activity update
+     *
+     * @param ActivityProposalModel $proposal
+     */
+    public function updateActivity(ActivityProposalModel $proposal)
+    {
+        $old = $proposal->getOld();
+        $new = $proposal->getNew();
+        $this->copyActivity($old, $new);
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+        $em->remove($proposal);//Proposal is no longer needed.
+        $em->remove($new);
+        $em->flush();
+        $this->approve($old);
+    }
+
+    /**
+     * Copies all relevant activity attributes from $new to $old
+     *
+     * @param ActivityModel $old
+     * @param ActivityModel $new
+     */
+    protected function copyActivity(ActivityModel $old, ActivityModel $new)
+    {
+        $old->setName($new->getName());
+        $old->setNameEn($new->getNameEn());
+        $old->setBeginTime($new->getBeginTime());
+        $old->setEndTime($new->getEndTime());
+        $old->setSubscriptionDeadline($new->getSubscriptionDeadline());
+        $old->setLocation($new->getLocation());
+        $old->setLocationEn($new->getLocationEn());
+        $old->setCosts($new->getCosts());
+        $old->setCostsEn($new->getCostsEn());
+        $old->setDescription($new->getDescription());
+        $old->setDescriptionEn($new->getDescriptionEn());
+        $old->setCreator($new->getCreator());
+        $old->setCanSignUp($new->getCanSignUp());
+        $old->setOnlyGEWIS($new->getOnlyGEWIS());
+    }
+
+    /**
+     * Revoke a proposed activity update
+     * NB: This action permanently removes the proposal, so this cannot be undone.
+     * (The potentially updated activity remains untouched)
+     *
+     * @param ActivityProposalModel $proposal
+     */
+    public function revokeUpdateProposal(ActivityProposalModel $proposal)
+    {
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $new = $proposal->getNew();
+        $em->remove($proposal);
+        $em->remove($new);
+        $em->flush();
+    }
+
+    /**
+     * Create an activity from parameters.
+     *
+     * @pre $params is valid data of Activity\Form\Activity
+     *
+     * @param array $params Parameters describing activity
+     * @param User $user The user that creates this activity
+     * @param Organ $organ The organ this activity is associated with
+     * @param boolean $dutch Whether dutch information is provided
+     * @param boolean $english Whether english information is provided
+     *
+     * @return ActivityModel Activity that was created.
+     */
+    protected function generateActivity(array $params, $user, $organ, $dutch, $english, $initialStatus)
+    {
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($params['beginTime']));
         $activity->setEndTime(new \DateTime($params['endTime']));
@@ -101,8 +218,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Not user provided input
         $activity->setCreator($user);
         $activity->setOrgan($organ);
-        $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
+        $activity->setStatus($initialStatus);
         $activity->setOnlyGEWIS(true); // Not yet implemented
+
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         if (isset($params['fields'])) {
             foreach ($params['fields'] as $fieldparams){
@@ -149,7 +268,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param type $dutch
      * @param type $english
      */
-    protected function setLanguageSpecificParameters($activity, $params, $dutch, $english)
+    protected function setLanguageSpecificParameters(ActivityModel $activity, $params, $dutch, $english)
     {
         if ($dutch ) {
             $activity->setName($params['name']);
@@ -257,7 +376,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
-
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);

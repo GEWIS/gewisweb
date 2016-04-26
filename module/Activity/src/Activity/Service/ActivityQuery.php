@@ -55,6 +55,44 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
+     * Get the information of one proposal from the database.
+     *
+     * @param int $id The proposal id to be searched for
+     *
+     * @return \Activity\Model\ActivityUpdateProposal or null if the proposal does not exist
+     */
+    public function getProposal($id)
+    {
+        $proposalMapper = $this->getServiceManager()->get('activity_mapper_proposal');
+        $proposal = $proposalMapper->getProposalById($id);
+
+        return $proposal;
+    }
+
+    /**
+     * Retrieve all update proposals from the database.
+     *
+     * @return a Collection of \Activity\Model\ActivityUpdateProposal
+     */
+    public function getAllProposals()
+    {
+        return $this->getServiceManager()->get('activity_mapper_proposal')->getAllProposals();
+    }
+
+    /**
+     * Get an array that states whether a language is available for
+     * the provided $activity
+     *
+     * @param ActivityModel $activity
+     * @return string
+     */
+    public function getAvailableLanguages($activity)
+    {
+        return ['nl' => !is_null($activity->getName()),
+                'en' => !is_null($activity->getNameEn())];
+    }
+
+    /**
      * Get the activity with additional details
      *
      * @param $id
@@ -101,7 +139,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
+                $translator->translate('You are not allowed to view unapproved activities')
             );
         }
 
@@ -121,7 +159,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view approved the activities')
+                $translator->translate('You are not allowed to view activities')
             );
         }
 

@@ -5,17 +5,15 @@ namespace Activity\Form;
 use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Doctrine\Common\Persistence\ObjectManager;
 use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct() {
+    public function __construct(ObjectManager $objectManager) {
 
         parent::__construct('activityfield');
-
-        $this->setHydrator(new ClassMethodsHydrator(false))
-             ->setObject(new ActivityField());
 
         $this->add([
             'name' => 'name',

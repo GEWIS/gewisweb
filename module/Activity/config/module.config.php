@@ -111,6 +111,16 @@ return [
                                 'action' => 'exportpdf',
                             ]
                         ]
+                    ],
+                    'update' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/update',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'update'
+                            ]
+                        ]
                     ]
                 ]
 
@@ -174,6 +184,36 @@ return [
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'view'
+                            ]
+                        ]
+                    ],
+                    'proposal' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/proposal/[:id]',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'viewProposal'
+                            ]
+                        ]
+                    ],
+                    'apply_proposal' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/proposal/[:id]/apply',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'applyProposal'
+                            ]
+                        ]
+                    ],
+                    'revoke_proposal' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/proposal/[:id]/revoke',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'revokeProposal'
                             ]
                         ]
                     ],
