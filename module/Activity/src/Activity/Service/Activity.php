@@ -87,7 +87,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if ($organId !== 0){
             $organ = $this->findOrgan($organId);
         }
-        $activity = generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
+        $activity = $this->generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
         return $activity;
     }
 
