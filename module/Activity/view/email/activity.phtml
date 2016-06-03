@@ -5,7 +5,7 @@ L.s.<br /><br />
 
 Er is een nieuwe activiteit aangemaakt op de de GEWIS website. 
 
-<h1><?= $this->escapeHtml($activity->getName()) ?></h1>
+<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
 
 <p><?= $this->escapeHtml($activity->getDescription()) ?></p>
 
@@ -33,7 +33,9 @@ Er is een nieuwe activiteit aangemaakt op de de GEWIS website.
         <td><?=$this->escapeHtml($activity->getCosts()) ?></td>
     </tr>
 </table>
-<br/><br/>
+<br/>
+Klik <a href="<?= $this->url('admin_activity/view', ['id' => $activity->getId()])?>">hier</a> om deze activiteit goed of af te keuren.
+<br/>
 
 Met vriendelijke groeten,<br />
 De Web Commissie
@@ -71,7 +73,9 @@ A new activity was created at the GEWIS website. See below for details.
         <td><?=$this->escapeHtml($activity->getCostsEn()) ?></td>
     </tr>
 </table>
-<br/><br/>
+<br/>
+Click <a href="<?= $this->url('admin_activity/view', ['id' => $activity->getId()])?>">here</a> to approve or disapprove this activity.
+<br/>
 
 Kind Regards, <br />
 The Web Comittee

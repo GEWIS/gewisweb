@@ -18,18 +18,15 @@ class Email extends AbstractService
 {
 
     /**
-     * Send registration email.
+     * Send activity creation email.
      *
-     * @param NewUserModel $newUser
-     * @param MemberModel $member
+     * @param Activity $activity
      */
     public function sendActivityCreationEmail(Activity $activity)
     {
         $body = $this->render('email/activity', [
             'activity' => $activity
         ]);
-
-        $translator = $this->getServiceManager()->get('translator');
 
         $html = new MimePart($body);
         $html->type = "text/html";

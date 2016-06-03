@@ -84,10 +84,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // for this organ. If the id is 0, the activity belongs to no organ.
         $organId = intval($params['organ']);
         $organ = null;
-        if ($organId !== 0){
+        if ($organId !== 0) {
             $organ = $this->findOrgan($organId);
         }
         $activity = $this->generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
+
         return $activity;
     }
 
@@ -208,8 +209,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         //Default to the endtime if no deadline was set (so there is no deadline effectively)
         $activity->setSubscriptionDeadline(
             empty($params['subscriptionDeadline']) ?
-            $activity->getEndTime() :
-            new \DateTime($params['subscriptionDeadline'])
+                $activity->getEndTime() :
+                new \DateTime($params['subscriptionDeadline'])
         );
 
         $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
@@ -224,7 +225,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         if (isset($params['fields'])) {
-            foreach ($params['fields'] as $fieldparams){
+            foreach ($params['fields'] as $fieldparams) {
 
                 $field = $this->createActivityField($fieldparams, $activity, $dutch, $english);
                 $em->persist($field);
@@ -253,12 +254,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $organService = $this->getServiceManager()->get('decision_service_organ');
         $organ = $organService->getOrgan($organId);
 
-        if (!$organService->canEditOrgan($organ)){
+        if (!$organService->canEditOrgan($organ)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to create an activity for this organ')
             );
         }
+
         return $organ;
     }
 
@@ -272,7 +274,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     protected function setLanguageSpecificParameters(ActivityModel $activity, $params, $dutch, $english)
     {
-        if ($dutch ) {
+        if ($dutch) {
             $activity->setName($params['name']);
             $activity->setLocation($params['location']);
             $activity->setCosts($params['costs']);
@@ -285,6 +287,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $activity->setDescriptionEn($params['descriptionEn']);
         }
     }
+
     /**
      * Create a new field
      *
@@ -303,20 +306,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $field = new ActivityFieldModel();
 
         $field->setActivity($activity);
-        if ($dutch){
+        if ($dutch) {
             $field->setName($params['name']);
         }
-        if ($english){
+        if ($english) {
             $field->setNameEn($params['nameEn']);
         }
         $field->setType($params['type']);
 
-        if ($params['type'] === '2'){
+        if ($params['type'] === '2') {
             $field->setMinimumValue($params['min. value']);
             $field->setMaximumValue($params['max. value']);
         }
 
-        if ($params['type'] === '3'){
+        if ($params['type'] === '3') {
             $this->createActivityOptions(
                 $field,
                 $params,
@@ -324,6 +327,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 $params['options'] !== '' && $dutch
             );
         }
+
         return $field;
     }
 
@@ -343,20 +347,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $numOptions = 0;
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
-        if ($createDutchOptions){
+        if ($createDutchOptions) {
             $options = explode(',', $params['options']);
             $numOptions = count($options);
         }
-        if ($createEnglishOptions){
+        if ($createEnglishOptions) {
             $optionsEn = explode(',', $params['optionsEn']);
             $numOptions = count($optionsEn);
         }
-        for ($i=0; $i<$numOptions; $i++){
+        for ($i = 0; $i < $numOptions; $i++) {
             $option = new ActivityOptionModel();
-            if ($createDutchOptions){
+            if ($createDutchOptions) {
                 $option->setValue($options[$i]);
             }
-            if ($createEnglishOptions){
+            if ($createEnglishOptions) {
                 $option->setValueEn($optionsEn[$i]);
             }
             $option->setField($field);
@@ -435,7 +439,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $this->sm->get('activity_mapper_activity');
     }
 
-        /**
+    /**
      * Get the email service.
      *
      * @return EmailService
