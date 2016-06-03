@@ -1,0 +1,77 @@
+<?php $lang = 'en'; ?>
+For English, see below
+
+L.s.<br /><br />
+
+Er is een nieuwe activiteit aangemaakt op de de GEWIS website. 
+
+<h1><?= $this->escapeHtml($activity->getName()) ?></h1>
+
+<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+
+<table>
+    <tr>
+        <td><b>Start tijd:</b></td>
+        <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b>Eind tijd</b></td>
+        <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b>Locatie:</b></td>
+        <td><?= $this->escapeHtml($activity->getLocation()) ?></td>
+    </tr>
+    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
+    <tr>
+        <td><b>Inschrijfdeadline:</b></td>
+        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <?php endif; ?>
+     <tr>
+        <td><b>Kosten:</b></td>
+        <td><?=$this->escapeHtml($activity->getCosts()) ?></td>
+    </tr>
+</table>
+<br/><br/>
+
+Met vriendelijke groeten,<br />
+De Web Commissie
+<hr />
+
+L.s.<br /><br />
+
+A new activity was created at the GEWIS website. See below for details.
+
+<h1><?= $this->escapeHtml($activity->getNameEn()) ?></h1>
+
+<p><?= $this->escapeHtml($activity->getDescriptionEn()) ?></p>
+
+<table>
+    <tr>
+        <td><b>Starting Time:</b></td>
+        <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b>Ending time:</b></td>
+        <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <tr>
+        <td><b>Location:</b></td>
+        <td><?= $this->escapeHtml($activity->getLocationEn()) ?></td>
+    </tr>
+    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
+    <tr>
+        <td><b>Subscription deadline:</b></td>
+        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
+    </tr>
+    <?php endif; ?>
+     <tr>
+        <td><b>Costs:</b></td>
+        <td><?=$this->escapeHtml($activity->getCostsEn()) ?></td>
+    </tr>
+</table>
+<br/><br/>
+
+Kind Regards, <br />
+The Web Comittee
