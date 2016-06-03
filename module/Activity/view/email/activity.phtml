@@ -34,8 +34,8 @@ Er is een nieuwe activiteit aangemaakt op de de GEWIS website.
     </tr>
 </table>
 <br/>
-Klik <a href="<?= $this->url('admin_activity/view', ['id' => $activity->getId()])?>">hier</a> om deze activiteit goed of af te keuren.
-<br/>
+Klik <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed of af te keuren.
+<br/><br/>
 
 Met vriendelijke groeten,<br />
 De Web Commissie
@@ -74,8 +74,8 @@ A new activity was created at the GEWIS website. See below for details.
     </tr>
 </table>
 <br/>
-Click <a href="<?= $this->url('admin_activity/view', ['id' => $activity->getId()])?>">here</a> to approve or disapprove this activity.
-<br/>
+Click <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">here</a> to approve or disapprove this activity.
+<br/><br/>
 
 Kind Regards, <br />
 The Web Comittee
