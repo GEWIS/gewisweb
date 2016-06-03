@@ -10,7 +10,7 @@ use Decision\Model\Member as MemberModel;
 
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
-use Activity\Model\Activity;
+use Activity\Model\Activity as ActivityModel;
 use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
 
@@ -20,9 +20,9 @@ class Email extends AbstractService
     /**
      * Send activity creation email.
      *
-     * @param Activity $activity
+     * @param ActivityModel $activity
      */
-    public function sendActivityCreationEmail(Activity $activity)
+    public function sendActivityCreationEmail(ActivityModel $activity)
     {
         $body = $this->render('email/activity', [
             'activity' => $activity
