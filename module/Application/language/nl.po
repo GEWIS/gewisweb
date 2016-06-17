@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-15 21:44+0100\n"
-"PO-Revision-Date: 2016-03-15 21:49+0100\n"
+"PO-Revision-Date: 2016-06-17 12:33+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Application/view/partial/admin-nav.phtml:78
@@ -2008,7 +2008,7 @@ msgid ""
 "Studenten) and was founded in 1982.\n"
 "                    On this website you can find out %s and %s."
 msgstr ""
-"GEWIS betekend GEmeenschap van Wiskunde en Informatica Studenten en was "
+"GEWIS betekent GEmeenschap van Wiskunde en Informatica Studenten en was "
 "opgericht in 1982. Op deze website kun je %s en %s vinden."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:21
