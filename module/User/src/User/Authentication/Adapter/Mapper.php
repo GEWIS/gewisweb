@@ -2,12 +2,15 @@
 
 namespace User\Authentication\Adapter;
 
+use User\Model\LoginAttempt;
 use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     User\Mapper\User as UserMapper,
     User\Model\User as UserModel;
 use Zend\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
+use User\Service\User as UserService;
+
 class Mapper implements AdapterInterface
 {
 
@@ -45,17 +48,26 @@ class Mapper implements AdapterInterface
      *
      * @var LegacyService
      */
-     protected $legacyService;
+    protected $legacyService;
+
+    /**
+     * User Service
+     * (for logging failed login attempts)
+     *
+     * @var UserService
+     */
+    protected $userService;
 
     /**
      * Constructor.
      *
      * @param Bcrypt $bcrypt
      */
-    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService)
+    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, UserService $userService)
     {
         $this->bcrypt = $bcrypt;
         $this->legacyService = $legacyService;
+        $this->userService = $userService;
     }
 
     /**
@@ -76,9 +88,19 @@ class Mapper implements AdapterInterface
                 []
             );
         }
+
         $mapper->detach($user);
 
+        if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
+            return new Result(
+                Result::FAILURE,
+                null,
+                []
+            );
+        }
+
         if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
+            $this->userService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,

@@ -6,6 +6,8 @@ use Application\Service\AbstractAclService;
 
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
+use User\Model\Session as SessionModel;
+use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Mapper\User as UserMapper;
 
 use User\Form\Register as RegisterForm;
@@ -79,12 +81,14 @@ class User extends AbstractAclService
 
         if (null === $member) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+
             return null;
         }
 
         // check if the email is the same
         if ($member->getEmail() != $data['email']) {
             $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+
             return null;
         }
 
@@ -92,6 +96,7 @@ class User extends AbstractAclService
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
         if (null !== $user) {
             $form->setError(RegisterForm::ERROR_USER_ALREADY_EXISTS);
+
             return null;
         }
 
@@ -102,6 +107,7 @@ class User extends AbstractAclService
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendRegisterEmail($newUser, $member);
+
         return $newUser;
     }
 
@@ -131,6 +137,7 @@ class User extends AbstractAclService
         $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
         if (null === $user) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+
             return null;
         }
 
@@ -145,6 +152,7 @@ class User extends AbstractAclService
         $this->getNewUserMapper()->persist($newUser);
 
         $this->getEmailService()->sendPasswordLostMail($newUser, $member);
+
         return $user;
     }
 
@@ -179,6 +187,7 @@ class User extends AbstractAclService
                     $this->getTranslator()->translate("Password incorrect")
                 ]
             ]);
+
             return false;
         }
 
@@ -223,10 +232,16 @@ class User extends AbstractAclService
         // process the result
         if (!$result->isValid()) {
             $form->setResult($result);
+
             return null;
         }
 
-        return $auth->getIdentity();
+        $this->getAuthStorage()->setRememberMe($data['remember']);
+        $user = $auth->getIdentity();
+        // Log the session in the database
+        $this->saveSession($user);
+
+        return $user;
     }
 
     /**
@@ -237,6 +252,11 @@ class User extends AbstractAclService
      */
     public function pinLogin($data)
     {
+        if (!$this->isAllowed('pin_login')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to login using pin codes')
+            );
+        }
         // try to authenticate
         $auth = $this->getServiceManager()->get('user_pin_auth_service');
         $authAdapter = $auth->getAdapter();
@@ -261,6 +281,75 @@ class User extends AbstractAclService
         // clear the user identity
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
+        $this->destroyStoredSession();
+    }
+
+    protected function detachUser($user)
+    {
+        /*
+         * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
+         * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
+         * This hack only is needed when we want to flush the entity manager during login.
+         */
+        $this->sm->get('user_doctrine_em')->clear();
+
+        return $this->getUserMapper()->findByLidnr($user->getLidnr());
+    }
+
+    /**
+     * Store the current session.
+     *
+     * @param \User\Model\User $user the logged in user
+     */
+    protected function saveSession($user)
+    {
+        $id = $this->getAuthStorage()->getId();
+        $sessionMapper = $this->getSessionMapper();
+        if (is_null($sessionMapper->findById($id))) {
+            $session = new SessionModel();
+            $session->setId($id);
+            $session->setIp($this->sm->get('user_remoteaddress'));
+            $user = $this->detachUser($user);
+            $session->setUser($user);
+            $sessionMapper->persist($session);
+        }
+    }
+
+    /**
+     * Remove the current session from the database
+     */
+    protected function destroyStoredSession()
+    {
+        $id = $this->getAuthStorage()->getId();
+        $sessionMapper = $this->getSessionMapper();
+        $sessionMapper->removeById($id);
+    }
+
+    public function logFailedLogin($user, $type)
+    {
+        $attempt = new LoginAttemptModel();
+        $attempt->setIp($this->sm->get('user_remoteaddress'));
+        $attempt->setTime(new \DateTime());
+        $attempt->setType($type);
+        $user = $this->detachUser($user);
+        $attempt->setUser($user);
+        $this->getLoginAttemptMapper()->persist($attempt);
+    }
+
+    public function loginAttemptsExceeded($type, $user)
+    {
+        $config = $this->getRateLimitConfig();
+        $ip = $this->sm->get('user_remoteaddress');
+        $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
+        $loginAttemptMapper = $this->getLoginAttemptMapper();
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
+            return true;
+        }
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -387,6 +476,26 @@ class User extends AbstractAclService
     }
 
     /**
+     * Get the session mapper.
+     *
+     * @return \User\Mapper\Session
+     */
+    public function getSessionMapper()
+    {
+        return $this->sm->get('user_mapper_session');
+    }
+
+    /**
+     * Get the login attempt mapper.
+     *
+     * @return \User\Mapper\LoginAttempt
+     */
+    public function getLoginAttemptMapper()
+    {
+        return $this->sm->get('user_mapper_loginattempt');
+    }
+
+    /**
      * Get the email service.
      *
      * @return EmailService
@@ -394,6 +503,28 @@ class User extends AbstractAclService
     public function getEmailService()
     {
         return $this->sm->get('user_service_email');
+    }
+
+    /**
+     * Get the auth storage.
+     *
+     * @return User\Authentication\Storage
+     */
+    public function getAuthStorage()
+    {
+        return $this->sm->get('user_auth_storage');
+    }
+
+    /**
+     * Get the rate limit config
+     *
+     * @return array containing the config
+     */
+    public function getRateLimitConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['login_rate_limits'];
     }
 
     /**

@@ -42,6 +42,17 @@ class Login extends Form
         ]);
 
         $this->add([
+            'name' => 'remember',
+            'type' => 'checkbox',
+            'options' => [
+                'label' => $translate->translate('Remember me'),
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+                'checked' => true
+            ],
+        ]);
+
+        $this->add([
             'name' => 'redirect',
             'type' => 'hidden'
         ]);
@@ -67,6 +78,13 @@ class Login extends Form
                 $this->setMessages([
                     'password' => [
                         $this->translate->translate('Wrong password provided.')
+                    ]
+                ]);
+                break;
+            case Result::FAILURE:
+                $this->setMessages([
+                    'password' => [
+                        $this->translate->translate('Too many login attempts, try again later.')
                     ]
                 ]);
                 break;

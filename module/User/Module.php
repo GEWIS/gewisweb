@@ -95,7 +95,7 @@ class Module
             ],
 
             'invokables' => [
-                'user_auth_storage' => 'Zend\Authentication\Storage\Session',
+                'user_auth_storage' => 'User\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
@@ -167,6 +167,16 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_session' => function($sm) {
+                    return new \User\Mapper\Session(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
+                'user_mapper_loginattempt' => function($sm) {
+                    return new \User\Mapper\LoginAttempt(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
 
                 'user_mail_transport' => function ($sm) {
                     $config = $sm->get('config');
@@ -180,14 +190,16 @@ class Module
                 'user_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt'),
-                        $sm->get('application_service_legacy')
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_user')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
                 'user_pin_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\PinMapper(
-                        $sm->get('application_service_legacy')
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_user')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
@@ -273,6 +285,7 @@ class Module
                     $acl->addResource(new Resource('user'));
 
                     $acl->allow('user', 'user', ['password_change']);
+                    $acl->allow('tueguest', 'user', 'pin_login');
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');

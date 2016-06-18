@@ -97,6 +97,18 @@ class User
     }
 
     /**
+     * Re-attach a user to the entity manager.
+     *
+     * @param UserModel $user
+     *
+     * @return UserModel
+     */
+    public function merge(UserModel $user)
+    {
+        return $this->em->merge($user);
+    }
+
+    /**
      * Finish user creation.
      *
      * This will both destroy the NewUser and create the given user

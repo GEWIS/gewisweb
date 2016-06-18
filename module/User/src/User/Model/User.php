@@ -45,6 +45,13 @@ class User implements RoleInterface, ResourceInterface
     protected $roles;
 
     /**
+     * User sessions
+     *
+     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="user")
+     */
+    protected $sessions;
+
+    /**
      * The corresponding member for this user.
      *
      * @ORM\OneToOne(targetEntity="Decision\Model\Member")
