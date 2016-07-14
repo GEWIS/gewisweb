@@ -14,7 +14,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
     public function __construct(ObjectManager $objectManager) {
 
         parent::__construct('activityfield');
-
+        $this->setHydrator(new ClassMethodsHydrator(false))
+              ->setObject(new ActivityField());
         $this->add([
             'name' => 'name',
             'options' => ['label' => 'Name'],

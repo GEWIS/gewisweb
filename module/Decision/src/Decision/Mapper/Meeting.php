@@ -74,12 +74,14 @@ class Meeting
     {
         $qb = $this->em->createQueryBuilder();
 
+        $today = new \DateTime();
+        $maxDate = $today->sub(new \DateInterval('P1D'));
         $qb->select('m')
             ->from('Decision\Model\Meeting', 'm')
             ->where('m.type = AV')
-            ->where('m.date > :date')
+            ->where('m.date >= :date')
             ->orderBy('m.date', 'DESC')
-            ->setParameter('date', new \DateTime())
+            ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();

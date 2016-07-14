@@ -170,6 +170,11 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
      */
     protected $organ;
 
+    public function __construct()
+    {
+        $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @return integer
      */
@@ -476,6 +481,22 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     public function getFields()
     {
         return $this->fields;
+    }
+
+    public function removeFields($fields)
+    {
+        foreach ($fields as $field) {
+            $field->setActivity(null);
+            $this->fields->removeElement($field);
+        }
+    }
+
+    public function addFields($fields)
+    {
+        foreach ($fields as $field) {
+            $field->setActivity($this);
+            $this->fields->add($field);
+        }
     }
 
     /**

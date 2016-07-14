@@ -58,7 +58,7 @@ class ActivityController extends AbstractActionController
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() && 
             !$subscriptionDeadLinePassed && 
-            $activity->getStatus() !== Activity::STATUS_APPROVED,
+            $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
