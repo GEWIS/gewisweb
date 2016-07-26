@@ -262,6 +262,25 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Deletes a temp uploaded exam or summary
+     *
+     * @param $filename The file to delete
+     * @param $type The type to delete (exam/summary)
+     */
+    public function deleteTempExam($filename, $type = 'exam')
+    {
+        if (!$this->isAllowed('delete')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to delete exams')
+            );
+        }
+        $config = $this->getConfig('education_temp');
+        $dir = $config['upload_' . $type . '_dir'];
+        unlink($dir . '/' . stripslashes($filename));
+    }
+
+    /**
      * Get the bulk edit form.
      *
      * @return \Education\Form\Bulk
