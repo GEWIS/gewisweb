@@ -1,3 +1,9 @@
+<?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/education-admin.js');
+
+$this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
+?>
 <?php if (isset($success) && $success): ?>
 <?= $this->translate('Upload of all exams was finished.') ?>
 <?php elseif (count($form->get('exams')->getIterator()) == 0): ?>
@@ -17,10 +23,14 @@ $form->setAttribute('class', 'form-horizontal');
 $exams = $form->get('exams');
 ?>
 <?php foreach ($exams->getIterator() as $fs): ?>
+<div>
     <div class="form-group">
         <h3 class="col-sm-offset-2 col-sm-10">
             <a target="_blank" href="<?= $this->basePath() ?>/<?= $config['public_exam_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
                 <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
+            </a>
+            <a onclick="Education.Admin.deleteTemp('exam', '<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>', this)" class="btn btn-xs btn-danger pull-right">
+                <?= $this->translate('Delete') ?>
             </a>
         </h3>
     </div>
@@ -74,6 +84,7 @@ $element->setAttribute('class', 'form-control');
                 <?= $this->formElementErrors($element) ?>
             </div>
         </div>
+    </div>
 <?php endforeach ?>
 
 <div class="form-group">

@@ -3,6 +3,7 @@
 namespace Education\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController {
@@ -122,6 +123,17 @@ class AdminController extends AbstractActionController {
         return new ViewModel([
             'form' => $service->getSummaryUploadForm()
         ]);
+    }
+
+    public function deleteTempAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $service->deleteTempExam($this->params()->fromRoute('filename'), $this->params()->fromRoute('type'));
+            return new JsonModel(['success' => 'true']);
+        }
+        return $this->notFoundAction();
     }
 
     /**

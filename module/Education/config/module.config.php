@@ -110,6 +110,18 @@ return [
                             ]
                         ]
                     ],
+                    'delete_temp' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:type/:filename/delete',
+                            'constraints' => [
+                                'type' => 'exam|summary',
+                            ],
+                            'defaults' => [
+                                'action' => 'deleteTemp'
+                            ]
+                        ],
+                    ]
                 ],
                 'priority' => 100
             ]
