@@ -1,4 +1,7 @@
-<?php use \Education\Model\Exam; ?>
+<?php use \Education\Model\Exam;
+$this->headTitle(sprintf('%s %s', $course->getCode(), $course->getName()));
+$this->headTitle($this->translate('Education'));
+?>
 <div class="container">
     <h1><?= $course->getCode() ?> - <?= $course->getName() ?></h1>
 

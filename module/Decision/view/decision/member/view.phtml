@@ -1,4 +1,8 @@
 <?php
+// set title
+$this->headTitle($member->getFullName());
+$this->headTitle($this->translate('Members')); ?>
+<?php
 use Decision\Model\Member;
 use Decision\Model\Address;
 ?>
