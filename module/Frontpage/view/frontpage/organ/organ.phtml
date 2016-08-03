@@ -1,4 +1,7 @@
 <?php
+// set title
+$this->headTitle($organ->getName());
+
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 $organInformation = $organ->getApprovedOrganInformation();
 function getOrganDescription($organInformation, $lang)

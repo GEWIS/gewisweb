@@ -1,3 +1,13 @@
+<?php
+// set title
+$this->headTitle($album->getName());
+$currentAlbum = $album;
+while(!is_null($currentAlbum->getParent())) {
+    $this->headTitle($currentAlbum->getParent()->getName());
+    $currentAlbum = $currentAlbum->getParent();
+}
+$this->headTitle($this->translate('Photos'));
+ ?>
 <?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
         ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
         ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
