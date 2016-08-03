@@ -30,6 +30,28 @@ function getOrganDescription($organInformation, $lang)
 }
 
 ?>
+<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
+    <section class="section section-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <?php if ($organ->getType() === 'fraternity'): ?>
+                        <a href="<?= $this->url('home/fraternity_list') ?>">
+                            <?= $this->translate('Fraternities') ?>
+                        </a>
+                    <?php elseif ($organ->getType() === 'committee'): ?>
+                        <a href="<?= $this->url('home/committee_list') ?>">
+                            <?= $this->translate('Committees') ?>
+                        </a>
+                    <?php endif; ?>
+                </li>
+                <li class="active">
+                    <?= $this->escapeHtml($organ->getName()) ?>
+                </li>
+            </ol>
+        </div>
+    </section>
+<?php endif; ?>
 <div class="container">
     <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
         <div class="col-md-12 organ-banner"
