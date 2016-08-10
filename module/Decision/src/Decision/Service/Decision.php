@@ -211,10 +211,21 @@ class Decision extends AbstractAclService
         $document->setMeeting($meeting);
 
         $this->getMeetingMapper()->persistDocument($document);
-
         return true;
     }
 
+    public function deleteDocument($post)
+    {
+        if (!$this->isAllowed('delete_document', 'meeting')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to delete meeting documents.')
+            );
+        }
+        $id = $post->toArray()['document'];
+        $document = $this->getMeetingDocument($id);
+        $this->getMeetingMapper()->remove($document);
+    }
     /**
      * Search for decisions.
      *

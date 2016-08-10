@@ -142,6 +142,17 @@ class Meeting
     }
 
     /**
+     * Removes an entity.
+     *
+     * @param $entity
+     */
+    public function remove($entity)
+    {
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
