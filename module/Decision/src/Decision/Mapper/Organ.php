@@ -115,7 +115,7 @@ class Organ
         $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
-            ->where('o.abbr LIKE :abbr');
+            ->where('o.abbr = :abbr');
 
         $qb->setParameter('abbr', $abbr);
 

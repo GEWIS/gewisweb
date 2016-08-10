@@ -39,7 +39,8 @@ class Decision
         $qb->select('d, m')
             ->where('d.content LIKE :query')
             ->join('d.meeting', 'm')
-            ->orderBy('m.date', 'DESC');
+            ->orderBy('m.date', 'DESC')
+            ->setMaxResults(50);
 
         $qb->setParameter('query', "%$query%");
 
