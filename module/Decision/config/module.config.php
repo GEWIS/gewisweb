@@ -112,13 +112,26 @@ return [
                         ]
                     ],
                     'document' => [
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => [
-                            'route' => '/document',
+                            'route' => '/document[/:type][/:number]',
+                            'constraints' => [
+                                'type' => 'BV|AV|VV|Virt',
+                                'number' => '[0-9]+'
+                            ],
                             'defaults' => [
                                 'action' => 'document'
                             ]
                         ]
+                    ],
+                    'delete_document' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/document/delete',
+                            'defaults' => [
+                                'action' => 'deleteDocument',
+                            ],
+                        ],
                     ],
                     'authorizations' => [
                         'type' => 'Segment',

@@ -17,21 +17,11 @@ class Document extends Form implements InputFilterProviderInterface
         parent::__construct();
         $this->translator = $translator;
 
-        $options = [];
-        foreach ($mapper->findAll() as $meeting) {
-            $meeting = $meeting[0];
-            $name = $meeting->getType() . '/' . $meeting->getNumber();
-            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
-                            . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
-        }
-
         $this->add([
             'name' => 'meeting',
-            'type' => 'select',
+            'type' => 'hidden',
             'options' => [
                 'label' => $translator->translate('Meeting'),
-                'empty_option' => $translator->translate('Choose a meeting'),
-                'value_options' => $options
             ]
         ]);
 
