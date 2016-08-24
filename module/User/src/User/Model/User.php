@@ -25,7 +25,7 @@ class User implements RoleInterface, ResourceInterface
 
     /**
      * The user's email address.
-     *
+     * Deprecated
      * @ORM\Column(type="string")
      */
     protected $email;
@@ -90,7 +90,7 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->member->getEmail();
     }
 
     /**
