@@ -23,7 +23,7 @@ class Session
     /**
      * The user whom created this session.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="sessions")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
      */
     protected $user;

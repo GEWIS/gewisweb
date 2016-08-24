@@ -6,6 +6,8 @@ services:
             - .:/code
             - ./docker/php.ini:/usr/local/etc/php/conf.d/default.ini
             #- ./docker/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        environment:
+            APP_ENV: development
         networks:
             - gewisweb
 

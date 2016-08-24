@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+define('APP_ENV', getenv('APP_ENV') ?: 'production');
+
+if (php_sapi_name() != 'cli') {
+    throw new RuntimeException("This script can only be called from the command line.");
+}
+
+// make sure we are in the correct directory
+chdir(__DIR__);
+
+// setup autoloading
+require 'init_autoloader.php';
+
+// run application
+Zend\Mvc\Application::init(require 'config/application.config.' . APP_ENV .'.php')->run();
