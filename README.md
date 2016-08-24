@@ -5,8 +5,32 @@ Website for Study association GEWIS.
 
 [![Build Status](https://travis-ci.org/GEWIS/gewisweb.png)](https://travis-ci.org/GEWIS/gewisweb)  [![Code Climate](https://codeclimate.com/github/GEWIS/gewisweb/badges/gpa.svg)](https://codeclimate.com/github/GEWIS/gewisweb)
 
-Installation
-============
+Installation in docker
+======================
+
+This is easier! Just do this:
+
+- Install docker and docker-compose
+- Run `docker-compose up -d`
+- Run `./run composer install`
+- Run `./web orm:schema-tool:create`
+
+Testdata
+--------
+
+Run the following commands:
+```sh
+./web testdata user
+./web testdata activity
+./web testdata decision
+./web testdata education
+./web testdata page
+./web testdata photo
+./web testdata poll
+```
+
+Installation (legacy for local)
+===============================
 
 - Clone the repository.
 - Install dependencies using composer: `php composer.phar install`

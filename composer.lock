@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fa5d37d834297d2b646974f02da580b4",
-    "content-hash": "2189283ef3c544026d58daa6289862d1",
+    "hash": "07330e014b7c0582cfe37c4ccc053cf0",
+    "content-hash": "2c2f81f34c32045b143d35e044af7ca9",
     "packages": [
         {
             "name": "dino/dompdf-module",
