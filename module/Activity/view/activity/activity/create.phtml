@@ -1,10 +1,13 @@
 <?php
 $this->headTitle($this->translate('Create activity'));
 $this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $this->headScript()
+    ->prependFile($this->basePath() . '/js/bootstrap-markdown.js')
     ->prependFile($this->basePath() . '/js/activity-create.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
+
 $form->prepare();
 ?>
 <div class="container">
@@ -114,12 +117,12 @@ $form->prepare();
             </div>
             <?php
             $description = $form->get('description');
-            $description->setAttribute('disabled', 'disabled');
-            $description->setAttribute('class', 'form-control form-control-dutch');
+            $description->setAttribute('class', 'form-control form-control-dutch markdown-editor');
             $description->setAttribute('style', 'width:100%; height:10em; resize:none');
+            $description->setAttribute('data-provide', 'markdown');
             ?>
             <div class="form-group<?= count($description->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $description->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $description->getName() ?>" class="control-label col-sm-2" style="margin-top:10px">
                     <?= $this->translate('Description') ?>
                 </label>
                 <?= $this->formRow($description) ?>
@@ -166,12 +169,12 @@ $form->prepare();
             </div>
             <?php
             $descriptionEn = $form->get('descriptionEn');
-            $descriptionEn->setAttribute('disabled', 'disabled');
-            $descriptionEn->setAttribute('class', 'form-control form-control-english');
+            $descriptionEn->setAttribute('class', 'form-control form-control-english markdown-editor');
             $descriptionEn->setAttribute('style', 'width:100%; height:10em; resize:none');
+            $descriptionEn->setAttribute('data-provide', 'markdown');
             ?>
             <div class="form-group<?= count($descriptionEn->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $descriptionEn->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $descriptionEn->getName() ?>" class="control-label col-sm-2" style="margin-top:10px">
                     <?= $this->translate('Description') ?>
                 </label>
                 <?= $this->formRow($descriptionEn) ?>
@@ -251,7 +254,12 @@ $form->prepare();
     $('[name="beginTime"]').datetimepicker();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
-    Activity.updateForm();
+    $('.markdown-editor').markdown({
+       onShow: function(e) {
+           Activity.updateForm();
+       }
+    });
+    //Activity.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
         Activity.updateFieldset(i);
     }
