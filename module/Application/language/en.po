@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-14 13:11+0200\n"
-"PO-Revision-Date: 2016-07-14 13:21+0100\n"
+"PO-Revision-Date: 2016-08-24 14:19+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Application/view/partial/admin-nav.phtml:78
@@ -2149,7 +2149,7 @@ msgstr "Home"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:3
 msgid "Studievereniging GEWIS"
-msgstr "Studie association GEWIS"
+msgstr "Study association GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:4
 msgid "Welkom op de website van Studievereniging GEWIS."
