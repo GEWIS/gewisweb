@@ -58,3 +58,8 @@ Styleguide: typography.font-features
     font-variant-numeric: lining-nums;
     @include font-feature-settings($lnum: 1);
 }
+
+.lead {
+    font-weight: 400;
+    font-size: 1.25em;
+}
