@@ -1,3 +1,6 @@
+@import '../variables';
+@import '../bootstrap-variables';
+
 /*
 Navbar
 
@@ -19,12 +22,13 @@ Markup:
 
 Styleguide: navbar
 */
+
 .navbar {
     margin: 0;
 
     font-family: $font-family-alt;
-    font-weight: 300;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 16px;
 
     a.disabled {
         background-color: #eee !important;
@@ -197,18 +201,14 @@ Styleguide: navbar
     padding: 30px 18px;
 
     span.glyphicon {
+        vertical-align: middle;
         font-size: 20px;
         margin-top: -5px;
     }
-
-
 }
 
 .navbar-nav.no-collapse {
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-right: 15px;
-    margin-left: 15px;
+    margin: 0 15px;
 
     .dropdown-menu {
         display: block;
@@ -284,9 +284,7 @@ Styleguide: navbar
     }
 }
 
-
 .nav {
-
     /* Disable hover in hamburger menu */
 
     li.dropdown.dropdown-hover.default > .dropdown-menu {
