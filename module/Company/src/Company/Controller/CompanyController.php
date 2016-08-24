@@ -15,9 +15,18 @@ class CompanyController extends AbstractActionController
     public function listAction()
     {
         $companyService = $this->getCompanyService();
+        $featuredPackage = $companyService->getFeaturedPackage();
+        if ($featuredPackage == null) {
+            return new ViewModel([
+                'companyList' => $companyService->getCompanyList(),
+                'translator' => $companyService->getTranslator(),
+            ]);
+        }
         return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
+            'featuredCompany' => $featuredPackage->getCompany(),
+            'featuredPackage' => $featuredPackage,
         ]);
 
     }

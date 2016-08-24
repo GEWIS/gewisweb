@@ -7,9 +7,27 @@ $this->headTitle($this->translate('Companies'));
 
 ?>
 <div class="container">
-    <h1><?= $this->translate('Companies') ?></h1>
+    <div class="row" style="margin-top:50px">
+        <?php if (isset($featuredPackage)): ?>
+            <div class="col-md-12">
+            <div class="panel panel-default">
 
-    <div class="row">
+            <div class="panel-body">
+               <h1>
+        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
+        <small><?= $this->translate('in the spotlight') ?></small>
+    </h1>
+    <?=
+        $this->partial('./companyStory.phtml', [
+            'company' => $featuredCompany,
+            'featuredPackage' => $featuredPackage,
+            'translator' => $translator,
+            'panels' => false,
+        ]);
+    ?>
+            </div>
+            </div>
+        <?php endif ?>
         <div class="col-md-3 hidden-sm">
             <div class="list-group">
                 <?php
@@ -24,6 +42,7 @@ $this->headTitle($this->translate('Companies'));
                 ?>
             </div>
         </div>
+
         <div class="col-md-9">
             <div class="company-grid row">
                 <?php
@@ -36,6 +55,6 @@ $this->headTitle($this->translate('Companies'));
                 ?>
             </div>
         </div>
-    </div>
+
 </div>
 
