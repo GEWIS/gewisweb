@@ -62,6 +62,7 @@ Photo = {
                                 '</span></a></li>'
                             );
                             $('#' + id).on('click', Photo.removeTag);
+                            $('#tagSearch').focus();
                         }
                         $('#tagSearch').val('');
                     });
