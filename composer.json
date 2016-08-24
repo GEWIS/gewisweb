@@ -14,14 +14,14 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.4.*",
-        "doctrine/doctrine-orm-module": "0.*",
-        "zendframework/zend-developer-tools": "dev-master",
-        "jszanto/gewisweb-test-data": "dev-master",
+        "php": ">=5.4.0",
         "ext-gd": "^0.0.0",
         "ext-exif": "^0.0.0",
         "ext-imagick": "^3.1",
+        "zendframework/zendframework": "2.4.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "zendframework/zend-developer-tools": "~1.0.0",
+        "jszanto/gewisweb-test-data": "dev-master",
         "twbs/bootstrap-sass": "^3.3",
         "maglnet/magl-markdown":"^1.4",
         "dino/dompdf-module": "0.2.0"
