@@ -24,7 +24,6 @@ $companyURL = $this->url('company/companyItem', // Route url
         </ol>
     </div>
 </section>
-
 <div class="container">
     <h1>
         <a href="<?= $companyURL ?>"><?= $this->company->getName() ?></a>
@@ -34,8 +33,7 @@ $companyURL = $this->url('company/companyItem', // Route url
         $this->partial('./companyStory.phtml', [
             'company' => $company,
             'featuredPackage' => $featuredPackage,
-            'translator' => $translator,
-            'panels' => false,
+            'translator' => $this->translator,
         ]);
     ?>
 </div>

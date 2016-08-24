@@ -8,13 +8,8 @@ $companyURL = $this->url('company/companyItem', // Route url
     true); // Reuse matched parameters
 ?>
 
-<?php if (!$panels):?>
 <div class="col-md-3">
-<?php endif ?>
-<?php if ($panels):?>
-<div class="panel panel-default">
-<?php endif ?>
-    <?php 
+    <?php
         $translation = $company->getTranslationFromLocale($locale);
         if (!isset($translation)) {
             $translation = $company->getTranslations()[0];
@@ -54,17 +49,8 @@ $companyURL = $this->url('company/companyItem', // Route url
             ?>
         </ul>
     </div>
-<?php if ($panels):?>
 </div>
-<?php endif ?>
-<?php if (!$panels):?>
-</div>
-<?php endif ?>
-<?php if (!$panels):?>
 <div class="col-md-9">
-<?php endif ?>
     <h4><?= $this->translate('Article') ?></h4>
     <div class="company-description text-justify markdown"><?= $this->markdown($featuredPackage->getArticle()) ?></div>
-<?php if (!$panels):?>
 </div>
-<?php endif ?>
