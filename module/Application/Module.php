@@ -9,6 +9,8 @@
 
 namespace Application;
 
+use Zend\ModuleManager\ModuleEvent;
+use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
@@ -16,11 +18,33 @@ use Zend\Validator\AbstractValidator;
 
 class Module
 {
+    public function init(ModuleManager $moduleManager)
+    {
+        $events = $moduleManager->getEventManager();
+        $events->attach(ModuleEvent::EVENT_MERGE_CONFIG, array($this, 'onMergeConfig'));
+    }
+
+    public function onMergeConfig(ModuleEvent $e)
+    {
+        $configListener = $e->getConfigListener();
+        $config         = $configListener->getMergedConfig(false);
+        // inject dependency for memcache factory interface, when memcached is enabled in config
+        if (isset($config['memcached_session']) && $config['memcached_session']['enabled'] == true) {
+            $config['service_manager']['factories']['Zend\Session\SaveHandler\SaveHandlerInterface'] = 'Application\Service\MemcachedStorageFactory';
+        }
+        // Pass the changed configuration back to the listener:
+        $configListener->setMergedConfig($config);
+    }
+
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sessionManager = $e->getApplication()->getServiceManager()->get('session_manager');
+        $sessionManager->start();
+        SessionContainer::setDefaultManager($sessionManager);
 
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator->setlocale($this->determineLocale($e));
@@ -70,6 +94,18 @@ class Module
             'invokables' => [
                 'application_service_storage' => 'Application\Service\FileStorage',
                 'application_service_legacy' => 'Application\Service\Legacy',
+            ],
+            'factories' => [
+                'session_manager' => function ($sm) {
+                    $config = $sm->get('config');
+                    $sessionManager = $sm->get('Zend\Session\SessionManager');
+                    if (isset($config['session_name'])) {
+                        $sessionManager->setName($config['session_name']);
+                    }
+                    return $sessionManager;
+                },
+                'Zend\Session\SessionManager' => 'Zend\Session\Service\SessionManagerFactory',
+                'Zend\Session\Config\ConfigInterface' => 'Zend\Session\Service\SessionConfigFactory',
             ],
         ];
     }

@@ -1,0 +1,33 @@
+<?php
+return [
+    'session_storage' => [
+        'type' => 'Zend\Session\Storage\SessionArrayStorage'
+    ],
+    'session_name' => 'gewiswebsessid',
+    'session_manager' => [
+
+        'validators' => array(
+            'Zend\Session\Validator\RemoteAddr',
+            'Zend\Session\Validator\HttpUserAgent',
+        ),
+    ],
+    'memcached_session' => [
+
+        'enabled' => true,
+
+        // Optionally we can add more servers here for redundancy
+        'servers' => [
+            '127.0.0.1:11211',
+        ],
+        'lib_options' => [
+            \Memcached::OPT_CONNECT_TIMEOUT => 10,
+            \Memcached::OPT_REMOVE_FAILED_SERVERS => true,
+            // set it to consistent hashing. If one memcached node is dead, its keys (and only its keys) will be evenly distributed to other nodes.
+            // This is where the magic is done. This is really different from removing one server in your ->addServers() call.
+            \Memcached::OPT_DISTRIBUTION => \Memcached::DISTRIBUTION_CONSISTENT,
+            \Memcached::OPT_SERVER_FAILURE_LIMIT => 5,
+            \Memcached::OPT_REMOVE_FAILED_SERVERS => true,
+            \Memcached::OPT_RETRY_TIMEOUT => 1,
+        ]
+    ]
+];

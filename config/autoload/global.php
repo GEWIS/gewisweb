@@ -87,6 +87,14 @@ return [
     'sslcapath' => '/etc/ssl/certs',
 
     /**
+     * Session configuration
+     */
+    'session_config' => [
+        'use_cookies' => true,
+        'hash_function' => 'sha1'
+    ],
+
+    /**
      * Photo's upload directory configuration
      */
     'photo' => [
