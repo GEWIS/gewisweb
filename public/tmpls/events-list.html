@@ -20,6 +20,9 @@
     Date.prototype.getDigitalTime = function() {
         return this.getFullHours() + ':' + this.getFullMinutes();
     };
+
+    var hasPlanned = false;
+    var hasOptions = false;
 %>
 <span id="cal-slide-tick" style="display: none"></span>
 <div id="cal-slide-content" class="cal-event-list">
@@ -30,6 +33,8 @@
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned === "true") { %>
                     <%
+                        hasPlanned = true;
+
                         var startDate = new Date(event.start);
                         var endDate = new Date(event.end);
                     %>
@@ -50,6 +55,11 @@
                     </li>
                     <% } %>
                 <% }) %>
+                <% if (!hasPlanned) { %>
+                <li>
+                    <i>No planned activities</i>
+                </li>
+                <% } %>
             </ul>
         </div>
         <div class="col-sm-6">
@@ -58,6 +68,8 @@
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned !== "true") { %>
                     <%
+                        hasOptions = true;
+
                         var startDate = new Date(event.start);
                         var endDate = new Date(event.end);
                     %>
@@ -78,6 +90,11 @@
                     </li>
                     <% } %>
                 <% }) %>
+                <% if (!hasOptions) { %>
+                <li>
+                    <i>No options</i>
+                </li>
+                <% } %>
             </ul>
         </div>
     </div>
