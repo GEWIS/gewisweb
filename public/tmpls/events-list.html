@@ -39,7 +39,9 @@
                        data-event-id="<%= event.id %>"
                        data-event-class="<%= event['class'] %>"
                        class="event-item"
-                       target="_blank">
+                       target="_blank"
+                       title="View <%= event.title %> on Google Calendar"
+                    >
                         <%= event.title %>
                         <%=
                             '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
