@@ -38,19 +38,19 @@ $this->headLink()
                 <form class="form" style="width: 300px;">
                     <div class="form-group">
                         <label for="name"><?= $this->translate("Name") ?></label>
-                        <input type="text" class="form-control" id="name" />
+                        <input type="text" class="form-control" name="name" id="name" required />
                     </div>
                     <div class="form-group">
                         <label for="beginTime"><?= $this->translate("From") ?></label>
-                        <input type="datetime" class="form-control" id="beginTime" />
+                        <input type="datetime" class="form-control" name="beginTime" id="beginTime" required />
                     </div>
                     <div class="form-group">
                         <label for="endTime"><?= $this->translate("To") ?></label>
-                        <input type="datetime" class="form-control" id="endTime" />
+                        <input type="datetime" class="form-control" name="endTime" id="endTime" required />
                     </div>
                     <div class="form-group">
                         <label for="organiser"><?= $this->translate("Organiser") ?></label>
-                        <input type="text" class="form-control" id="organiser" />
+                        <input type="text" class="form-control" name="organiser" id="organiser" required />
                     </div>
                     <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
                 </form>
