@@ -7,6 +7,11 @@
         margin: 0 0 0.8em;
         font-size: 24px;
     }
+
+    .list-inside {
+        list-style-position: inside;
+        padding-left: 0;
+    }
 </style>
 <%
     Date.prototype.getFullHours = function() {
@@ -64,7 +69,7 @@
         </div>
         <div class="col-sm-6">
             <h1>Options</h1>
-            <ol>
+            <ol class="list-inside">
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned !== "true") { %>
                     <%
@@ -74,7 +79,6 @@
                         var endDate = new Date(event.end);
                     %>
                     <li>
-                        <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
                         <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
                            data-event-id="<%= event.id %>"
                            data-event-class="<%= event['class'] %>"
@@ -97,12 +101,10 @@
                     </li>
                     <% } %>
                 <% }) %>
-                <% if (!hasOptions) { %>
-                <li>
-                    <i>No options</i>
-                </li>
-                <% } %>
             </ol>
+            <% if (!hasOptions) { %>
+            <i>No options</i>
+            <% } %>
         </div>
     </div>
 </div>
