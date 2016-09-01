@@ -88,7 +88,10 @@
                         >
                             <%= event.title %>
                             <%=
-                            '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
+                                '({0} - {1})'.format(
+                                    startDate.getDigitalTime(),
+                                    endDate.getDigitalTime()
+                                )
                             %>
                         </a>
                         <% if (event.isOwner === "true") { %>
