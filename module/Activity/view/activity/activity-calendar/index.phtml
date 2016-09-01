@@ -91,6 +91,7 @@ $this->headLink()
                 <?php if ($item->status != 'cancelled'): ?>
                 {
                     "isPlanned": "true",
+                    "isOwner": "true",
                     "id": "<?= $item->id ?>",
                     "title": "<?= isset($item->summary) ? htmlentities($item->summary) : ''?>",
                     "url": "<?= isset($item->htmlLink) ?$item->htmlLink : '' ?>",

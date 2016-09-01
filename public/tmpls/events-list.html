@@ -64,7 +64,7 @@
         </div>
         <div class="col-sm-6">
             <h1>Options</h1>
-            <ul class="unstyled list-unstyled">
+            <ol>
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned !== "true") { %>
                     <%
@@ -87,6 +87,13 @@
                             '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
                             %>
                         </a>
+                        <% if (event.isOwner === "true") { %>
+                        <form method="post" class="form form-inline form-delete">
+                            <button type="submit">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </form>
+                        <% } %>
                     </li>
                     <% } %>
                 <% }) %>
@@ -95,7 +102,7 @@
                     <i>No options</i>
                 </li>
                 <% } %>
-            </ul>
+            </ol>
         </div>
     </div>
 </div>
