@@ -1,17 +1,70 @@
+<style>
+    #cal-slide-content h1 {
+        margin: 0 0 0.8em;
+        font-size: 24px;
+    }
+
+    .row-offset-top {
+        margin-top: 10px;
+    }
+</style>
+
 <span id="cal-slide-tick" style="display: none"></span>
 <div id="cal-slide-content" class="cal-event-list">
-	<ul class="unstyled list-unstyled">
-		<% _.each(events, function(event) { %>
-			<li>
-				<span class="pull-left event <%= event['class'] %>"></span>&nbsp;
-				<a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
-				   data-event-id="<%= event.id %>"
-				   data-event-class="<%= event['class'] %>"
-				   class="event-item"
-				   target="_blank">
-					<%= event.title %>
-				</a>
-			</li>
-		<% }) %>
-	</ul>
+    <div class="row">
+        <div class="col-sm-6">
+            <h1>Gepland</h1>
+            <ul class="unstyled list-unstyled">
+                <% _.each(events, function(event) { %>
+                <li>
+                    <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
+                    <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
+                       data-event-id="<%= event.id %>"
+                       data-event-class="<%= event['class'] %>"
+                       class="event-item"
+                       target="_blank">
+                        <%= event.title %>
+                    </a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h1>Opties</h1>
+            <ul class="unstyled list-unstyled">
+                <li>
+                    <span class="pull-left event event-inverse"></span>&nbsp;
+                    <a href="javascript:void(0);"
+                       data-event-id="1"
+                       data-event-class="info"
+                       class="event-item"
+                       target="_blank">
+                        Een optie
+                    </a>
+                </li>
+                <li>
+                    <span class="pull-left event event-inverse"></span>&nbsp;
+                    <a href="javascript:void(0);"
+                       data-event-id="1"
+                       data-event-class="info"
+                       class="event-item"
+                       target="_blank">
+                        Een optie
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row row-offset-top">
+        <div class="col-sm-6">
+            <a href="#">
+                <button class="btn btn-primary">Activiteit toevoegen</button>
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <a href="#">
+                <button class="btn btn-primary">Optie toevoegen</button>
+            </a>
+        </div>
+    </div>
 </div>
