@@ -1,13 +1,19 @@
 <?php
 $this->headScript()
     ->prependFile($this->basePath() . '/js/calendar.min.js')
-    ->prependFile($this->basePath() . '/js/underscore-min.js');
+    ->prependFile($this->basePath() . '/js/underscore-min.js')
+    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/calendar.css');
+    ->prependStylesheet($this->basePath() . '/css/calendar.css')
+    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 ?>
 <style>
     .row-offset-top {
         margin-top: 20px;
+    }
+
+    .dropdown-spacing {
+        padding: 10px;
     }
 </style>
 <div class="container">
@@ -28,27 +34,27 @@ $this->headLink()
                 <i class="glyphicon glyphicon-question-sign"></i>
                 <?= $this->translate('Add option') ?>
             </button>
-            <ul class="dropdown-menu">
+            <div class="dropdown-menu dropdown-spacing">
                 <form class="form" style="width: 300px;">
                     <div class="form-group">
                         <label for="name"><?= $this->translate("Name") ?></label>
                         <input type="text" class="form-control" id="name" />
                     </div>
                     <div class="form-group">
-                        <label for="from"><?= $this->translate("From") ?></label>
-                        <input type="datetime" class="form-control" id="from" />
+                        <label for="beginTime"><?= $this->translate("From") ?></label>
+                        <input type="datetime" class="form-control" id="beginTime" />
                     </div>
                     <div class="form-group">
-                        <label for="from"><?= $this->translate("To") ?></label>
-                        <input type="datetime" class="form-control" id="to" />
+                        <label for="endTime"><?= $this->translate("To") ?></label>
+                        <input type="datetime" class="form-control" id="endTime" />
                     </div>
                     <div class="form-group">
                         <label for="organiser"><?= $this->translate("Organiser") ?></label>
                         <input type="text" class="form-control" id="organiser" />
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </ul>
+            </div>
         </div>
 
 
@@ -73,6 +79,10 @@ $this->headLink()
     </div>
 </div>
 <script type="text/javascript">
+    $("#beginTime").datetimepicker();
+    $("#endTime").datetimepicker();
+
+
     var calendar = $("#calendar").calendar(
         {
             tmpl_path: "/tmpls/",
