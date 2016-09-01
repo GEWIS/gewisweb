@@ -8,7 +8,19 @@
         margin-top: 10px;
     }
 </style>
+<%
+    Date.prototype.getFullHours = function() {
+        return ((this.getHours() < 10) ? '0' : '') + this.getHours();
+    };
 
+    Date.prototype.getFullMinutes = function() {
+        return ((this.getMinutes() < 10) ? '0' : '') + this.getMinutes();
+    };
+
+    Date.prototype.getDigitalTime = function() {
+        return this.getFullHours() + ':' + this.getFullMinutes();
+    };
+%>
 <span id="cal-slide-tick" style="display: none"></span>
 <div id="cal-slide-content" class="cal-event-list">
     <div class="row">
@@ -17,6 +29,11 @@
             <ul class="unstyled list-unstyled">
                 <% _.each(events, function(event) { %>
                 <li>
+                    <%
+                        var startDate = new Date(event.start);
+                        var endDate = new Date(event.end);
+                    %>
+
                     <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
                     <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
                        data-event-id="<%= event.id %>"
@@ -24,6 +41,9 @@
                        class="event-item"
                        target="_blank">
                         <%= event.title %>
+                        <%=
+                            '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
+                        %>
                     </a>
                 </li>
                 <% }) %>
