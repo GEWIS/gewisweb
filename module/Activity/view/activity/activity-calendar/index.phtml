@@ -31,8 +31,6 @@ $this->headLink()
             <div class="btn-group">
                 <button class="btn btn-default" data-calendar-view="year">Year</button>
                 <button class="btn btn-default active" data-calendar-view="month">Month</button>
-                <button class="btn btn-default" data-calendar-view="week">Week</button>
-                <button class="btn btn-default" data-calendar-view="day">Day</button>
             </div>
         </div>
         <div class="pull-right">
@@ -92,7 +90,23 @@ $this->headLink()
                 },
                 <?php endif ?>
                 <?php endforeach ?>
-            ]; }
+            ]; },
+            views: {
+                year: {
+                    slide_events: 1,
+                    enable: 1
+                },
+                month: {
+                    slide_events: 1,
+                    enable: 1
+                },
+                week: {
+                    enable: 0
+                },
+                day: {
+                    enable: 0
+                }
+            }
         });
 
     $('.btn-group button[data-calendar-nav]').each(function() {
