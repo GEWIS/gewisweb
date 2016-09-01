@@ -119,6 +119,8 @@ $this->headLink()
     $('.btn-group button[data-calendar-view]').each(function() {
         var $this = $(this);
         $this.click(function() {
+            $('.active').removeClass('active');
+            $this.addClass('active');
             calendar.view($this.data('calendar-view'));
         });
     });
