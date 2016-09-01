@@ -87,6 +87,12 @@ class Module
 
                     return $ac;
                 },
+                'activity_service_calendar' => function ($sm) {
+                    $ac = new Service\ActivityCalendar();
+                    $ac->setServiceManager($sm);
+
+                    return $ac;
+                },
                 'activity_mapper_activity' => function ($sm) {
                     return new \Activity\Mapper\Activity(
                         $sm->get('activity_doctrine_em')
@@ -109,6 +115,11 @@ class Module
                 },
                 'activity_mapper_signup' => function ($sm) {
                     return new \Activity\Mapper\Signup(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_calendar_option' => function ($sm) {
+                    return new \Activity\Mapper\ActivityCalendarOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
