@@ -16,18 +16,42 @@ $this->headLink()
     </div>
 
     <div class="row pull-right">
-        <a href="<?= $this->url('activity/create') ?>">
-            <button class="btn btn-primary">
+        <button class="btn btn-default" type="button">
+            <a href="<?= $this->url('activity/create') ?>">
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 <?= $this->translate('Add activity') ?>
-            </button>
-        </a>
-        <a href="#">
-            <button class="btn btn-primary">
+            </a>
+        </button>
+
+        <div class="dropdown pull-right">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-question-sign"></i>
                 <?= $this->translate('Add option') ?>
             </button>
-        </a>
+            <ul class="dropdown-menu">
+                <form class="form" style="width: 300px;">
+                    <div class="form-group">
+                        <label for="name"><?= $this->translate("Name") ?></label>
+                        <input type="text" class="form-control" id="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="from"><?= $this->translate("From") ?></label>
+                        <input type="datetime" class="form-control" id="from" />
+                    </div>
+                    <div class="form-group">
+                        <label for="from"><?= $this->translate("To") ?></label>
+                        <input type="datetime" class="form-control" id="to" />
+                    </div>
+                    <div class="form-group">
+                        <label for="organiser"><?= $this->translate("Organiser") ?></label>
+                        <input type="text" class="form-control" id="organiser" />
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </ul>
+        </div>
+
+
     </div>
 
     <div class="row">
