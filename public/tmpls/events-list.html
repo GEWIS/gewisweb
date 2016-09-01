@@ -28,52 +28,56 @@
             <h1>Planned</h1>
             <ul class="unstyled list-unstyled">
                 <% _.each(events, function(event) { %>
-                <li>
+                    <% if (event.isPlanned === "true") { %>
                     <%
                         var startDate = new Date(event.start);
                         var endDate = new Date(event.end);
                     %>
-
-                    <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
-                    <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
-                       data-event-id="<%= event.id %>"
-                       data-event-class="<%= event['class'] %>"
-                       class="event-item"
-                       target="_blank"
-                       title="View <%= event.title %> on Google Calendar"
-                    >
-                        <%= event.title %>
-                        <%=
-                            '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
-                        %>
-                    </a>
-                </li>
+                    <li>
+                        <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
+                        <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
+                           data-event-id="<%= event.id %>"
+                           data-event-class="<%= event['class'] %>"
+                           class="event-item"
+                           target="_blank"
+                           title="View <%= event.title %> on Google Calendar"
+                        >
+                            <%= event.title %>
+                            <%=
+                                '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
+                            %>
+                        </a>
+                    </li>
+                    <% } %>
                 <% }) %>
             </ul>
         </div>
         <div class="col-sm-6">
             <h1>Dibs</h1>
             <ul class="unstyled list-unstyled">
-                <li>
-                    <span class="pull-left event event-inverse"></span>&nbsp;
-                    <a href="javascript:void(0);"
-                       data-event-id="1"
-                       data-event-class="info"
-                       class="event-item"
-                       target="_blank">
-                        Een optie
-                    </a>
-                </li>
-                <li>
-                    <span class="pull-left event event-inverse"></span>&nbsp;
-                    <a href="javascript:void(0);"
-                       data-event-id="1"
-                       data-event-class="info"
-                       class="event-item"
-                       target="_blank">
-                        Een optie
-                    </a>
-                </li>
+                <% _.each(events, function(event) { %>
+                    <% if (event.isPlanned !== "true") { %>
+                    <%
+                        var startDate = new Date(event.start);
+                        var endDate = new Date(event.end);
+                    %>
+                    <li>
+                        <span class="pull-left event <%= event['class'] %>"></span>&nbsp;
+                        <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
+                           data-event-id="<%= event.id %>"
+                           data-event-class="<%= event['class'] %>"
+                           class="event-item"
+                           target="_blank"
+                           title=""
+                        >
+                            <%= event.title %>
+                            <%=
+                            '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
+                            %>
+                        </a>
+                    </li>
+                    <% } %>
+                <% }) %>
             </ul>
         </div>
     </div>

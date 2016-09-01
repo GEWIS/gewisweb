@@ -54,6 +54,7 @@ $this->headLink()
                 <?php foreach($data->items as $item): ?>
                 <?php if ($item->status != 'cancelled'): ?>
                 {
+                    "isPlanned": "true",
                     "id": "<?= $item->id ?>",
                     "title": "<?= isset($item->summary) ? htmlentities($item->summary) : ''?>",
                     "url": "<?= isset($item->htmlLink) ?$item->htmlLink : '' ?>",
