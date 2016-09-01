@@ -70,6 +70,18 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
+                'activity_form_calendar_option' => function ($sm) {
+                    $organService = $sm->get('decision_service_organ');
+                    $organs = $organService->getEditableOrgans();
+                    $form = new Form\ActivityCalendarOption($organs, $sm->get('translator'));
+                    $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
+                    return $form;
+                },
+                'activity_hydrator_calendar_option' => function     ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('activity_doctrine_em'), 'Activity\Model\ActivityCalendarOption'
+                    );
+                },
                 'activity_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('activity_doctrine_em')
@@ -128,6 +140,7 @@ class Module
                     $acl->addResource('activity');
                     $acl->addResource('activitySignup');
                     $acl->addResource('model');
+                    $acl->addResource('activity_calendar_option');
 
                     $acl->allow('guest', 'activity', 'view');
                     $acl->allow('guest', 'activitySignup', 'view');
@@ -140,6 +153,7 @@ class Module
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
+                    $acl->allow('user', 'activity_calendar_option', ['create', 'delete_own']);
                     return $acl;
                 },
             ]

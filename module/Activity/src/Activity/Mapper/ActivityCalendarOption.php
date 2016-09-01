@@ -3,9 +3,6 @@
 namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
-use \Activity\Model\Activity as ActivityModel;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
 
 class ActivityCalendarOption
 {

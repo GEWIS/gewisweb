@@ -6,6 +6,7 @@ $this->headScript()
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/calendar.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
+$form->prepare();
 ?>
 <style>
     .row-offset-top {
@@ -29,28 +30,51 @@ $this->headLink()
             </a>
         </button>
         &nbsp;
-        <div class="dropdown pull-right">
+        <div class="dropdown pull-right<?= $optionError ? ' open' : ''?>">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-question-sign"></i>
                 <?= $this->translate('Add option') ?>
             </button>
             <div class="dropdown-menu dropdown-spacing">
-                <form class="form" style="width: 300px;">
-                    <div class="form-group">
-                        <label for="name"><?= $this->translate("Name") ?></label>
-                        <input type="text" class="form-control" name="name" id="name" required />
+                <form class="form" method="post" style="width: 300px;">
+                    <?php
+                    $name = $form->get('name');
+                    $name->setAttribute('class', 'form-control');
+                    ?>
+                    <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
+                        <label for="<?= $name->getName() ?>">
+                            <?= $this->translate('Name') ?>
+                        </label>
+                        <?= $this->formInput($name) ?>
+                        <?= $this->formElementErrors($name) ?>
                     </div>
-                    <div class="form-group">
-                        <label for="beginTime"><?= $this->translate("From") ?></label>
-                        <input type="datetime" class="form-control" name="beginTime" id="beginTime" required />
+                    <?php
+                    $beginTime = $form->get('beginTime');
+                    $beginTime->setAttribute('class', 'form-control datepicker');
+                    $endTime = $form->get('endTime');
+                    $endTime->setAttribute('class', 'form-control datepicker');
+                    ?>
+                    <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                        <label for="<?= $beginTime->getName() ?>"><?= $this->translate('From') ?></label>
+                        <?= $this->formInput($beginTime) ?>
+                        <?= $this->formElementErrors($beginTime) ?>
                     </div>
-                    <div class="form-group">
-                        <label for="endTime"><?= $this->translate("To") ?></label>
-                        <input type="datetime" class="form-control" name="endTime" id="endTime" required />
+
+                    <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                        <label for="<?= $endTime->getName() ?>"><?= $this->translate('Until') ?></label>
+                        <?= $this->formInput($endTime) ?>
+                        <?= $this->formElementErrors($endTime) ?>
                     </div>
-                    <div class="form-group">
-                        <label for="organiser"><?= $this->translate("Organiser") ?></label>
-                        <input type="text" class="form-control" name="organiser" id="organiser" required />
+                    <?php
+                    $organ = $form->get('organ');
+                    $organ->setAttribute('class', 'form-control');
+                    ?>
+                    <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                        <label for="<?= $organ->getName(); ?>">
+                            <?= $this->translate('Organizing committee / fraternity') ?>
+                        </label>
+                        <?= $this->formSelect($organ) ?>
+                        <?= $this->formElementErrors($organ) ?>
                     </div>
                     <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
                 </form>
@@ -79,8 +103,7 @@ $this->headLink()
     </div>
 </div>
 <script type="text/javascript">
-    $("#beginTime").datetimepicker();
-    $("#endTime").datetimepicker();
+    $('.datepicker').datetimepicker();
     var calendar;
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);
@@ -92,7 +115,7 @@ $this->headLink()
                 "isPlanned": "false",
                 "isOwner": "false",
                 "id": "<?= $option->getId() ?>",
-                "title": "<?= $option->getName() ?>",
+                "title": "<?= $this->escapeHtml($option->getName()) ?>",
                 "url": "#",
                 "class": "event-info",
                 "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
