@@ -1,0 +1,31 @@
+<?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/calendar.min.js')
+    ->prependFile($this->basePath() . '/js/underscore-min.js');
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/calendar.css');
+?>
+<div class="container">
+    <div id="calendar"></div>
+
+</div>
+<script type="text/javascript">
+    var calendar = $("#calendar").calendar(
+        {
+            tmpl_path: "/tmpls/",
+            events_source: function () { return [
+                <?php foreach($data->items as $item): ?>
+                <?php if ($item->status != 'cancelled'): ?>
+                {
+                    "id": "<?= $item->id ?>",
+                    "title": "<?= isset($item->summary) ? htmlentities($item->summary) : ''?>",
+                    "url": "<?= isset($item->htmlLink) ?$item->htmlLink : '' ?>",
+                    "class": "event-important",
+                    "start": <?= isset($item->start->dateTime) ? (strtotime($item->start->dateTime)) * 1000 : (strtotime($item->start->date))?>, // Milliseconds
+                    "end": <?= isset($item->end->dateTime) ? (strtotime($item->end->dateTime)) * 1000 : (strtotime($item->end->date)) ?> // Milliseconds
+                },
+                <?php endif ?>
+                <?php endforeach ?>
+            ]; }
+        });
+</script>

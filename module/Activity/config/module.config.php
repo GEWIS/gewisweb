@@ -125,6 +125,61 @@ return [
                 ]
 
             ],
+            'activity_calendar' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/activity/calendar/',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Activity\Controller',
+                        'controller' => 'activityCalendar',
+                        'action' => 'index'
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'email' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/email',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'email',
+                            ]
+                        ]
+                    ],
+                    'export' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'export',
+                            ]
+                        ]
+                    ],
+                    'exportpdf' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/export/pdf',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'exportpdf',
+                            ]
+                        ]
+                    ],
+                    'update' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => ':id/update',
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'update'
+                            ]
+                        ]
+                    ]
+                ]
+
+            ],
             'admin_activity' => [
                 'type' => 'Literal',
                 'options' => [
@@ -326,6 +381,7 @@ return [
             'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
             'Activity\Controller\Api' => 'Activity\Controller\ApiController',
             'Activity\Controller\Organizer' => 'Activity\Controller\OrganizerController',
+            'Activity\Controller\ActivityCalendar' => 'Activity\Controller\ActivityCalendarController',
         ],
         'factories' => [
             'Activity\Controller\Activity' => function ($sm) {
