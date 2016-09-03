@@ -2,7 +2,6 @@
 
 namespace Activity\Service;
 
-use Activity\Form\ActivityCalendarOption;
 use Application\Service\AbstractAclService;
 use Activity\Model\ActivityCalendarOption as OptionModel;
 class ActivityCalendar extends AbstractAclService
@@ -14,6 +13,18 @@ class ActivityCalendar extends AbstractAclService
      */
     public function getUpcomingOptions() {
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptions();
+    }
+
+    /**
+     * Gets all future options which the current user is allowed to edit/delete
+     *
+     */
+    public function getEditableUpcomingOptions() {
+        $user = $this->sm->get('user_role');
+        return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
+            $this->getMemberMapper()->findOrgans($user->getMember()),
+            $user
+        );
     }
 
     /**
@@ -77,8 +88,43 @@ class ActivityCalendar extends AbstractAclService
         $option->setCreator($em->merge($this->sm->get('user_role')));
         $em->persist($option);
         $em->flush();
-        $form->setData([]);
         return $option;
+    }
+
+    public function deleteOption($data)
+    {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $option = $mapper->find($data['option_id']);
+        if (!$this->canDeleteOption($option)) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to delete this option')
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $option->setDeletedBy($em->merge($this->sm->get('user_role')));
+        $em->flush();
+    }
+
+    protected function canDeleteOption($option)
+    {
+        if (!$this->isAllowed('delete_own')) {
+            return false;
+        }
+
+        if ($this->isAllowed('editall')) {
+            return true;
+        }
+
+        if ($option->getOrgan() === null && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()) {
+            return true;
+        }
+
+        if ($this->getOrganService()->canEditOrgan($option->getOrgan())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -87,6 +133,16 @@ class ActivityCalendar extends AbstractAclService
     public function getEntityManager()
     {
         return $this->sm->get('doctrine.entitymanager.orm_default');
+    }
+
+    /**
+     * Get the member mapper.
+     *
+     * @return \Decision\Mapper\Member
+     */
+    public function getMemberMapper()
+    {
+        return $this->sm->get('decision_mapper_member');
     }
 
     /**
