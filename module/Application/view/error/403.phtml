@@ -3,28 +3,9 @@
         <h2><?= $this->translate('You do not have the required priviliges to view this page') ?></h2>
         <?php if ($this->identity() === null): ?>
         <p><?= $this->translate('You might be able to view this page by logging in below') ?></p>
-            <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>Login</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form action="<?= $this->url('user') ?>" method="post">
-                            <div class="form-group">
-                                <input type="text" name="login" class="form-control" placeholder="<?= $this->translate('Membership number or email address') ?>" />
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" name="remember" value="0">
-                                <input type="checkbox" name="remember" checked="checked" value="1"><?= $this->translate('Remember me') ?>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
-                            <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                        </form>
-                    </div>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <?= $this->partial('user/login', ['form' => $form]) ?>
                 </div>
             </div>
 

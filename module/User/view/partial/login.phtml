@@ -1,0 +1,64 @@
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user'));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+$form->setAttribute('class', 'form-horizontal');
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3><?= $this->translate('Login') ?></h3>
+    </div>
+    <div class="panel-body">
+        <?= $this->form()->openTag($form) ?>
+
+        <?php foreach (['login', 'password'] as $field): ?>
+            <?php
+            $element = $form->get($field);
+            $element->setAttribute('id', $field);
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                <div class="col-sm-7">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <?php
+        $element = $form->get('remember');
+        $element->setAttribute('checked', 'checked');
+        ?>
+        <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-7">
+                <?= $this->formCheckbox($element) ?>
+                <?= $element->getLabel() ?>
+            </div>
+        </div>
+
+        <?= $this->formInput($form->get('redirect')) ?>
+
+        <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-7">
+                <?php
+                $submit = $form->get('submit');
+                $submit->setAttribute('class', 'btn btn-primary');
+                ?>
+                <?= $this->formRow($submit); ?>
+            </div>
+        </div>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+    <div class="panel-footer">
+        <?php $url = $this->url('user/default', ['action' => 'register']); ?>
+        <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
+        <br>
+        <?php $url = $this->url('user/default', ['action' => 'reset']); ?>
+        <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+    </div>
+</div>
