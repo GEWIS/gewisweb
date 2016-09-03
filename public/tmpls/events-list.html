@@ -74,18 +74,11 @@
                         var endDate = new Date(event.end);
                     %>
                     <li>
-                        <a href="<%= event.url ? event.url : 'javascript:void(0)' %>"
-                           data-event-id="<%= event.id %>"
-                           data-event-class="<%= event['class'] %>"
-                           class="event-item"
-                           target="_blank"
-                           title=""
-                        >
-                            <%= event.title %>
-                            <%=
-                            '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
-                            %>
-                        </a>
+                        <strong><%= event.organizer %>:</strong>
+                        <%= event.title %>
+                        <%=
+                        '(' + startDate.getDigitalTime() + ' - ' + endDate.getDigitalTime() + ')'
+                        %>
                         <% if (event.isOwner === "true") { %>
                         <form method="post" class="form form-inline form-delete">
                             <button type="submit">

@@ -107,8 +107,8 @@ $form->prepare();
     var calendar;
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);
-    timeMinString = timeMin.getYear() + '-' + timeMin.getMonth() + '-' + timeMin.getDay() + 'T0:00:00Z'
-    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
+    timeMinString = timeMin.getYear() + '-' + timeMin.getMonth() + '-' + timeMin.getDay() + 'T0:00:00Z';
+    var result = $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
         var calendarItems = [
             <?php foreach($options as $option): ?>
             {
@@ -116,6 +116,7 @@ $form->prepare();
                 "isOwner": "false",
                 "id": "<?= $option->getId() ?>",
                 "title": "<?= $this->escapeHtml($option->getName()) ?>",
+                "organizer": "<?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>",
                 "url": "#",
                 "class": "event-info",
                 "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
@@ -143,6 +144,8 @@ $form->prepare();
                 events_source: function () { return calendarItems; }
             });
     });
+
+
     $('.btn-group button[data-calendar-nav]').each(function() {
         var $this = $(this);
         $this.click(function() {
