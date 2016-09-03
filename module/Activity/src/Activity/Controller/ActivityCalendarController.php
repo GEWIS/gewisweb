@@ -20,14 +20,13 @@ class ActivityCalendarController extends AbstractActionController
                 $optionError = true;
             }
         }
-        $form = $service->getCreateOptionForm();
-        $options = $service->getUpcomingOptions();
         $config = $service->getConfig();
         return new ViewModel([
-            'options' => $options,
+            'options' => $service->getUpcomingOptions(),
+            'editableOptions' => $service->getEditableUpcomingOptions(),
             'APIKey' => $config['google_api_key'],
             'calendarKey' => $config['google_calendar_key'],
-            'form' => $form,
+            'form' => $service->getCreateOptionForm(),
             'optionError' => $optionError,
             'createdOption' => $createdOption
         ]);

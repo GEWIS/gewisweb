@@ -49,10 +49,12 @@ class ActivityCalendarOption
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
-            ->andWhere()
+            ->andWhere('a.creator = :user OR a.organ IN (:organs)')
             ->orderBy('a.creationTime', 'ASC');
 
-        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('now', new \DateTime())
+            ->setParameter('user', $user)
+            ->setParameter('organs', $organs);
 
         return $qb->getQuery()->getResult();
     }

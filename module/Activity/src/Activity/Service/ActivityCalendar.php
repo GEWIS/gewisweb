@@ -20,6 +20,9 @@ class ActivityCalendar extends AbstractAclService
      *
      */
     public function getEditableUpcomingOptions() {
+        if (!$this->isAllowed('delete_own')) {
+            return [];
+        }
         $user = $this->sm->get('user_role');
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
             $this->getMemberMapper()->findOrgans($user->getMember()),

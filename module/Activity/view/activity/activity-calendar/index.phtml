@@ -102,6 +102,28 @@ $form->prepare();
     <div class="row row-offset-top">
         <div id="calendar"></div>
     </div>
+    <div class="row">
+        <h2><?= $this->translate('My options') ?></h2>
+        <ul>
+            <?php foreach($editableOptions as $option): ?>
+                <li>
+                    <?= $option->getDeletedBy() === null ? '' : '<strike>' ?>
+                    <strong><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>:</strong>
+                    <?= $option->getName() ?>
+
+                    <?php if($option->getDeletedBy() === null): ?>
+                        &nbsp;
+                        <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    <?php else: ?>
+                        </strike>
+                        (<?= $this->translate('Deleted by') ?> <?= $option->getCreator()->getLidnr() ?>)
+                    <?php endif ?>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -133,7 +155,7 @@ $form->prepare();
         <?php foreach($options as $option): ?>
         {
             "isPlanned": "false",
-            "isOwner": true,
+            "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
             "id": "<?= $option->getId() ?>",
             "title": "<?= $this->escapeHtml($option->getName()) ?>",
             "organizer": "<?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>",
