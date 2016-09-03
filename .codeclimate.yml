@@ -25,3 +25,5 @@ ratings:
   - "**.inc"
 exclude_paths:
 - config/**/*
+exclude_fingerprints:
+    - e948223556c67058a98b8ff9ed19d4b2

@@ -1,7 +1,9 @@
 <?php
 namespace Activity;
 
-use User\Permissions\Assertion\IsOrganMember;;
+use User\Permissions\Assertion\IsOrganMember;
+
+;
 
 class Module
 {
@@ -52,7 +54,7 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_service_email' => 'Activity\Service\Email', 
+                'activity_service_email' => 'Activity\Service\Email',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
@@ -77,7 +79,7 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
                     return $form;
                 },
-                'activity_hydrator_calendar_option' => function     ($sm) {
+                'activity_hydrator_calendar_option' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('activity_doctrine_em'), 'Activity\Model\ActivityCalendarOption'
                     );

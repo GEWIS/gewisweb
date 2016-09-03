@@ -4,6 +4,7 @@ namespace Activity\Service;
 
 use Application\Service\AbstractAclService;
 use Activity\Model\ActivityCalendarOption as OptionModel;
+
 class ActivityCalendar extends AbstractAclService
 {
 
@@ -11,7 +12,8 @@ class ActivityCalendar extends AbstractAclService
      * Gets all future options
      *
      */
-    public function getUpcomingOptions() {
+    public function getUpcomingOptions()
+    {
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptions();
     }
 
@@ -19,7 +21,8 @@ class ActivityCalendar extends AbstractAclService
      * Gets all future options which the current user is allowed to edit/delete
      *
      */
-    public function getEditableUpcomingOptions() {
+    public function getEditableUpcomingOptions()
+    {
         if (!$this->isAllowed('delete_own')) {
             return [];
         }
@@ -119,7 +122,8 @@ class ActivityCalendar extends AbstractAclService
             return true;
         }
 
-        if ($option->getOrgan() === null && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()) {
+        if ($option->getOrgan() === null
+            && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()) {
             return true;
         }
 
@@ -177,5 +181,4 @@ class ActivityCalendar extends AbstractAclService
     {
         return $this->sm->get('activity_acl');
     }
-
 }
