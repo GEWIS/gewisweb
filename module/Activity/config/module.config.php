@@ -137,46 +137,15 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'email' => [
-                        'type' => 'Segment',
+                    'delete' => [
+                        'type' => 'Literal',
                         'options' => [
-                            'route' => ':id/email',
+                            'route' => 'delete',
                             'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'email',
+                                'action' => 'delete',
                             ]
                         ]
                     ],
-                    'export' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => ':id/export',
-                            'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'export',
-                            ]
-                        ]
-                    ],
-                    'exportpdf' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => ':id/export/pdf',
-                            'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'exportpdf',
-                            ]
-                        ]
-                    ],
-                    'update' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => ':id/update',
-                            'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'update'
-                            ]
-                        ]
-                    ]
                 ]
 
             ],

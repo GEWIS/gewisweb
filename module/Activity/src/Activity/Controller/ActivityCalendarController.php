@@ -5,9 +5,11 @@ namespace Activity\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ActivityCalendarController extends AbstractActionController {
+class ActivityCalendarController extends AbstractActionController
+{
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $service = $this->getActivityCalendarService();
         $createdOption = null;
         $optionError = false;
@@ -29,6 +31,16 @@ class ActivityCalendarController extends AbstractActionController {
             'optionError' => $optionError,
             'createdOption' => $createdOption
         ]);
+    }
+
+    public function deleteAction()
+    {
+        $service = $this->getActivityCalendarService();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $service->deleteOption($request->getPost());
+            $this->redirect()->toRoute('activity_calendar');
+        }
     }
 
     /**
