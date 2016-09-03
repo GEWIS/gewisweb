@@ -129,22 +129,22 @@ $form->prepare();
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);
     timeMinString = timeMin.getYear() + '-' + timeMin.getMonth() + '-' + timeMin.getDay() + 'T0:00:00Z';
-    var result = $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
-        var calendarItems = [
-            <?php foreach($options as $option): ?>
-            {
-                "isPlanned": "false",
-                "isOwner": true,
-                "id": "<?= $option->getId() ?>",
-                "title": "<?= $this->escapeHtml($option->getName()) ?>",
-                "organizer": "<?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>",
-                "url": "#",
-                "class": "event-info",
-                "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-                "end": <?= $option->getEndTime()->getTimestamp() * 1000?>
-            },
-            <?php endforeach ?>
-        ];
+    var calendarItems = [
+        <?php foreach($options as $option): ?>
+        {
+            "isPlanned": "false",
+            "isOwner": true,
+            "id": "<?= $option->getId() ?>",
+            "title": "<?= $this->escapeHtml($option->getName()) ?>",
+            "organizer": "<?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>",
+            "url": "#",
+            "class": "event-info",
+            "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
+            "end": <?= $option->getEndTime()->getTimestamp() * 1000?>
+        },
+        <?php endforeach ?>
+    ];
+    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
         $.each( data.items, function( key, item ) {
             if (item.status != 'cancelled') {
                 calendarItems.push({
@@ -159,6 +159,11 @@ $form->prepare();
                 });
             }
         });
+        initCalendar();
+    }).error(function() { initCalendar() });
+
+
+    function initCalendar() {
         calendar = $("#calendar").calendar(
             {
                 tmpl_path: "/tmpls/",
@@ -183,8 +188,12 @@ $form->prepare();
                     $('#calendarTitle').text(this.getTitle());
                 },
             });
-    });
+    }
 
+    function showDeleteModal(optionId) {
+        $('#deleteOptionId').val(optionId);
+        $('#deleteModal').modal('show');
+    }
 
     $('.btn-group button[data-calendar-nav]').each(function() {
         var $this = $(this);
@@ -200,9 +209,4 @@ $form->prepare();
             calendar.view($this.data('calendar-view'));
         });
     });
-
-    var showDeleteModal = function(optionId) {
-        $('#deleteOptionId').val(optionId);
-        $('#deleteModal').modal('show');
-    };
 </script>
