@@ -18,6 +18,8 @@ class ActivityCalendarController extends AbstractActionController
             $createdOption = $service->createOption($request->getPost());
             if (!$createdOption) {
                 $optionError = true;
+            } else {
+                $this->redirect()->toRoute('activity_calendar');
             }
         }
         $config = $service->getConfig();
