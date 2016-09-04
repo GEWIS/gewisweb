@@ -1,11 +1,11 @@
 <?php
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/calendar.js')
+    ->prependFile($this->basePath() . '/js/calendar.min.js')
     ->prependFile($this->basePath() . '/js/language/nl-NL.js')
     ->prependFile($this->basePath() . '/js/underscore-min.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/calendar.css')
+    ->prependStylesheet($this->basePath() . '/css/calendar.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $form->prepare();
 ?>
