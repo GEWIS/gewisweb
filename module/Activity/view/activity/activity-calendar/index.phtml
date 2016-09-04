@@ -1,6 +1,7 @@
 <?php
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/calendar.min.js')
+    ->prependFile($this->basePath() . '/js/calendar.js')
+    ->prependFile($this->basePath() . '/js/language/nl-NL.js')
     ->prependFile($this->basePath() . '/js/underscore-min.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $this->headLink()
@@ -189,6 +190,7 @@ $form->prepare();
         calendar = $("#calendar").calendar(
             {
                 tmpl_path: "/tmpls/",
+                tmpl_cache: false,
                 events_source: function () { return calendarItems; },
                 views: {
                     year: {
@@ -210,6 +212,10 @@ $form->prepare();
                     $('#calendarTitle').text(this.getTitle());
                 },
             });
+        <?php if ($this->plugin('translate')->getTranslator()->getLocale() === 'nl'): ?>
+        calendar.setLanguage('nl-NL');
+        calendar.view();
+        <?php endif ?>
     }
 
     function showDeleteModal(optionId) {

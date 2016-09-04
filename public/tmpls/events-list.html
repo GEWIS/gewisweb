@@ -41,7 +41,7 @@
 <div id="cal-slide-content" class="cal-event-list">
     <div class="row">
         <div class="col-sm-6">
-            <h1>Planned</h1>
+            <h1><%= cal.locale.planned %></h1>
             <ul class="unstyled list-unstyled">
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned === "true") { %>
@@ -70,13 +70,13 @@
                 <% }) %>
                 <% if (!hasPlanned) { %>
                 <li>
-                    <i>No planned activities</i>
+                    <i><%= cal.locale.no_planned %></i>
                 </li>
                 <% } %>
             </ul>
         </div>
         <div class="col-sm-6">
-            <h1>Options</h1>
+            <h1><%= cal.locale.options %></h1>
             <ol class="list-inside">
                 <% _.each(events, function(event) { %>
                     <% if (event.isPlanned !== "true") { %>
@@ -106,7 +106,7 @@
                 <% }) %>
             </ol>
             <% if (!hasOptions) { %>
-            <i>No options</i>
+            <i><%= cal.locale.no_options %></i>
             <% } %>
         </div>
     </div>

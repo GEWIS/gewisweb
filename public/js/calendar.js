@@ -244,7 +244,12 @@ if(!String.prototype.formatNum) {
         d3: 'Wednesday',
         d4: 'Thursday',
         d5: 'Friday',
-        d6: 'Saturday'
+        d6: 'Saturday',
+
+        options: 'Options',
+        planned: 'Planned',
+        no_options: 'No options',
+        no_planned: 'No planned activities'
     };
 
     var browser_timezone = '';
