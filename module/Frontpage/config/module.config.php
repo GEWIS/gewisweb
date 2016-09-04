@@ -49,7 +49,7 @@ return [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
                                 'type' => 'committee|fraternity',
-                                'abbr' => '[a-zA-Z][a-zA-Z0-9\._-]*',
+                                'abbr' => '[^/]*',
                             ],
                             'defaults' => [
                                 'action' => 'organ',
