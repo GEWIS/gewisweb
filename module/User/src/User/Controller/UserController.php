@@ -22,11 +22,10 @@ class UserController extends AbstractActionController
             $login = $userService->login($data);
 
             if (null !== $login) {
-                $this->redirect()->toUrl($data['redirect']);
-
-                return new ViewModel([
-                    'login' => true
-                ]);
+                if (is_null($data['redirect'])) {
+                    return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
+                }
+                return $this->redirect()->toUrl($data['redirect']);
             }
         }
 
