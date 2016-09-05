@@ -366,6 +366,21 @@ return [
             'activity' => __DIR__ . '/../view/'
         ]
     ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'activity_calendar_update' => [
+                    'options' => [
+                        'route' => 'activity calendar notify',
+                        'defaults' => [
+                            'controller' => 'Activity\Controller\ActivityCalendar',
+                            'action' => 'sendNotifications'
+                        ]
+                    ]
+                ],
+            ]
+        ]
+    ],
     'doctrine' => [
         'driver' => [
             'activity_entities' => [

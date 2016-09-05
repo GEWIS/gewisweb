@@ -82,6 +82,29 @@ class ActivityCalendarOption
     }
 
     /**
+     * Get upcoming activity options sorted by creation date
+     *
+     * @param \DateTime $before the date to get the options before
+     * @param bool $withDeleted Whether to include deleted options
+     * @return array
+     */
+    public function getPastOptions($before, $withDeleted = false)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->where('a.creationTime < :before')
+            ->orderBy('a.creationTime', 'ASC');
+
+        if (!$withDeleted) {
+            $qb->andWhere('a.deletedBy IS NULL');
+        }
+        $qb->setParameter('before', $before);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Persist an option
      *
      * @param \Activity\Model\ActivityCalendarOption $option

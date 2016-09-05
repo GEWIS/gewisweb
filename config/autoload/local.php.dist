@@ -30,7 +30,8 @@ return [
         ],
         'from' => 'web@gewis.nl',
         'to' => [
-            'activity_creation' => 'secr@gewis.nl'
+            'activity_creation' => 'secr@gewis.nl',
+            'activity_calendar' => ''
         ]
     ]
 

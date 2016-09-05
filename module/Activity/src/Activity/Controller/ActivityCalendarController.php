@@ -44,6 +44,11 @@ class ActivityCalendarController extends AbstractActionController
         }
     }
 
+    public function sendNotificationsAction()
+    {
+        $this->getActivityCalendarService()->sendOverdueNotifications();
+    }
+
     /**
      * Get the activity calendar service
      *

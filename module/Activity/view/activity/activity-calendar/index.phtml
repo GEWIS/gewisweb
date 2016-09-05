@@ -121,7 +121,7 @@ $form->prepare();
                 <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
 
                     <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
-                    <td><?= $option->getName() ?></td>
+                    <td><?= $this->escapeHtml($option->getName()) ?></td>
                     <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
                     <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
                     <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>

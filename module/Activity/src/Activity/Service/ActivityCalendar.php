@@ -37,6 +37,16 @@ class ActivityCalendar extends AbstractAclService
         );
     }
 
+    public function sendOverdueNotifications()
+    {
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('P3W'));
+        $oldOptions = $this->getActivityCalendarOptionMapper()->getPastOptions($date);
+        if (!empty($oldOptions)) {
+            $this->getEmailService()->sendOptionsOverdueEmail($oldOptions);
+        }
+    }
+
     /**
      * Get calendar configuration.
      *
@@ -164,6 +174,16 @@ class ActivityCalendar extends AbstractAclService
     public function getOrganService()
     {
         return $this->sm->get('decision_service_organ');
+    }
+
+    /**
+     * Get the email service
+     *
+     * @return \Activity\Service\Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('activity_service_email');
     }
 
     /**
