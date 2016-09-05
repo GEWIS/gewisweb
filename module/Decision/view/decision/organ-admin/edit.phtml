@@ -1,16 +1,37 @@
 <?php
-$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js');
+$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js')
+    ->prependFile($this->basePath() . '/js/jquery.Jcrop.min.js')
+    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css');
 $this->scriptUrl()->requireUrl('admin_page/upload');
 ?>
+<style>
+    .cover-crop {
+        width: 640px;
+        height: 160px;
+    }
+
+    .thumbnail-crop {
+        width: 320px;
+        height: 180px;
+    }
+
+    .crop-area {
+        border: 2px solid;
+        background-color:#D40026;
+    }
+</style>
 <?php
 $form = $this->form;
 $form->prepare();
 
 $form->setAttribute('method', 'post');
 $form->setAttribute('role', 'form');
+$form->setAttribute('id', 'editForm');
 ?>
 <?= $this->form()->openTag($form); ?>
-<h3><?= $this->translate('Edit something') ?></h3>
+<h3><?= $this->translate('Edit organ information') ?></h3>
 
 <div class="form-group">
     <?php
@@ -74,14 +95,44 @@ $form->setAttribute('role', 'form');
 </div>
 <div class="form-group">
     <?php
-    $element = $form->get('upload');
+    $element = $form->get('thumbnail');
     $element->setAttribute('class', 'form-control');
+    $element->setAttribute('id', 'thumbnailUpload')
     ?>
     <?= $this->formLabel($element); ?>
     <?= $this->formFile($element) ?>
     <?= $this->formElementErrors($element) ?>
+    <br>
+    <div id="thumbnailPreviewAlert" style="display:none" class="alert alert-info">
+        <?= $this->translate('To optimally display your image on the overview page, please crop it below') ?>
+    </div>
+    <br>
+    <div id="thumbnailPreview"></div>
+</div>
+<div class="form-group">
+    <?php
+    $element = $form->get('cover');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('id', 'coverUpload')
+    ?>
+    <?= $this->formLabel($element); ?>
+    <?= $this->formFile($element) ?>
+    <?= $this->formElementErrors($element) ?>
+    <br>
+    <div id="coverPreviewAlert" style="display:none" class="alert alert-info">
+        <?= $this->translate('To optimally display your image your page, please crop it below') ?>
+    </div>
+    <br>
+    <div id="coverPreview"></div>
 </div>
 <hr>
+<?php
+foreach (['cover', 'thumbnail'] as $type) {
+    foreach (['X', 'Y', 'Scale'] as $param) {
+        echo $this->formHidden($form->get($type . 'Crop' . $param));
+    }
+}
+?>
 <?php
 $submit = $form->get('submit');
 $approve = $this->acl('decision_acl')->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
@@ -102,5 +153,55 @@ $submit->setAttribute('class', 'btn btn-primary');
         // Spelling checker language
         'scayt_sLang': 'nl_NL',
         'height': 500
+    });
+
+    function readImage(input, element, aspectX, aspectY, callback) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            $('#' + element).empty();
+            $('#' + element).append('<img class="img-responsive" id="' + element + 'Image"/>');
+            reader.onload = function (e) {
+                $('#' + element + 'Image').attr('src', e.target.result);
+                $('#' + element + 'Alert').show();
+                $('#' + element + 'Image').imagesLoaded( function() {
+                    var width = $('#' + element + 'Image').width();
+                    var height = Math.round(width / aspectX * aspectY);
+                    $('#' + element + 'Image').Jcrop({
+                        onSelect:    callback,
+                        bgColor:     'black',
+                        bgOpacity:   .4,
+                        setSelect:   [ 0, 0, width, height ],
+                        aspectRatio: aspectX / aspectY
+                    });
+                });
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            //reader.readAsArrayBuffer(input.files[0]);
+
+
+        }
+    }
+
+    $("#thumbnailUpload").change(function(){
+        readImage(this, 'thumbnailPreview', 16, 9, function(c) {
+            var width = $('#thumbnailPreviewImage').width();
+            var height = $('#thumbnailPreviewImage').height();
+            $('[name=thumbnailCropX]').val(c.x / width);
+            $('[name=thumbnailCropY]').val(c.y / height);
+            $('[name=thumbnailCropScale]').val(c.w / width);
+        });
+    });
+
+    $("#coverUpload").change(function(){
+        readImage(this, 'coverPreview', 16, 5, function(c) {
+            var width = $('#thumbnailPreviewImage').width();
+            var height = $('#thumbnailPreviewImage').height();
+            $('[name=coverCropX]').val(c.x / width);
+            $('[name=coverCropY]').val(c.y / height);
+            $('[name=coverCropScale]').val(c.w / width);
+        });
     });
 </script>
