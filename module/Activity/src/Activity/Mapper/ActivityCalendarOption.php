@@ -62,17 +62,20 @@ class ActivityCalendarOption
     /**
      * Get upcoming activity options sorted by creation date
      *
+     * @param bool $withDeleted whether to include deleted results
      * @return array
      */
-    public function getUpcomingOptions()
+    public function getUpcomingOptions($withDeleted = false)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
-            ->andWhere('a.deletedBy IS NULL')
             ->orderBy('a.creationTime', 'ASC');
 
+        if (!$withDeleted) {
+            $qb->andWhere('a.deletedBy IS NULL');
+        }
         $qb->setParameter('now', new \DateTime());
 
         return $qb->getQuery()->getResult();

@@ -105,25 +105,39 @@ $form->prepare();
     </div>
     <div class="row">
         <h2><?= $this->translate('My options') ?></h2>
-        <ul>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Creator') ?></th>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Created at') ?></th>
+                <th><?= $this->translate('Start') ?></th>
+                <th><?= $this->translate('End') ?></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
             <?php foreach($editableOptions as $option): ?>
-                <li>
-                    <?= $option->getDeletedBy() === null ? '' : '<strike>' ?>
-                    <strong><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>:</strong>
-                    <?= $option->getName() ?>
+                <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
 
-                    <?php if($option->getDeletedBy() === null): ?>
-                        &nbsp;
-                        <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
-                    <?php else: ?>
-                        </strike>
-                        (<?= $this->translate('Deleted by') ?> <?= $option->getCreator()->getLidnr() ?>)
-                    <?php endif ?>
-                </li>
+                    <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
+                    <td><?= $option->getName() ?></td>
+                    <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
+                    <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
+                    <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
+                    <td>
+                        <?php if($option->getDeletedBy() === null): ?>
+                            <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
+                                <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
+                            </a>
+                        <?php else: ?>
+                            <strong><?= $this->translate('Deleted by') ?> <?= $option->getCreator()->getMember()->getFullName() ?></strong>
+                        <?php endif ?>
+                    </td>
+                </tr>
             <?php endforeach ?>
-        </ul>
+            </tbody>
+        </table>
     </div>
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

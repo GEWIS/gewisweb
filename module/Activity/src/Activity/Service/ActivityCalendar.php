@@ -26,6 +26,10 @@ class ActivityCalendar extends AbstractAclService
         if (!$this->isAllowed('delete_own')) {
             return [];
         }
+        if ($this->isAllowed('delete_all')) {
+            // Return all
+            return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(true);
+        }
         $user = $this->sm->get('user_role');
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
             $this->getMemberMapper()->findOrgans($user->getMember()),
@@ -118,7 +122,7 @@ class ActivityCalendar extends AbstractAclService
             return false;
         }
 
-        if ($this->isAllowed('editall')) {
+        if ($this->isAllowed('delete_all')) {
             return true;
         }
 
