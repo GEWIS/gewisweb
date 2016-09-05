@@ -105,6 +105,26 @@ class ActivityCalendarOption
     }
 
     /**
+     * Retrieves upcoming, non-deleted options by name
+     *
+     * @param $name
+     *
+     * @return array
+     */
+    public function findOptionsByName($name)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->where('a.endTime > :now')
+            ->andWhere('a.name LIKE :name')
+            ->andWhere('a.deletedBy IS NULL')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('name', '%' . $name . '%');
+
+        return $qb->getQuery()->getResult();
+    }
+    /**
      * Persist an option
      *
      * @param \Activity\Model\ActivityCalendarOption $option

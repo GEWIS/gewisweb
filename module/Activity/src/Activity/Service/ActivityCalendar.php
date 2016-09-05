@@ -2,6 +2,7 @@
 
 namespace Activity\Service;
 
+use Activity\Model\ActivityCalendarOption;
 use Application\Service\AbstractAclService;
 use Activity\Model\ActivityCalendarOption as OptionModel;
 
@@ -103,6 +104,12 @@ class ActivityCalendar extends AbstractAclService
                 $this->getTranslator()->translate('You are not allowed to create options for this organ')
             );
         }
+        if ($this->optionLimitsExceeded($option)) {
+            $form->get('name')->setMessages([
+                $this->getTranslator()->translate('Maximum number of options which you can create has been exceeded. Delete some options before adding more.')
+            ]);
+            return false;
+        }
         $option->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
         $option->setCreator($em->merge($this->sm->get('user_role')));
@@ -111,6 +118,37 @@ class ActivityCalendar extends AbstractAclService
         return $option;
     }
 
+    /**
+     * Check if not too many options have been created
+     * @param ActivityCalendarOption $newOption the new option to be created
+     * @return bool indicating whether too many options have been created.
+     */
+    protected function optionLimitsExceeded($newOption)
+    {
+        // Do some basic fuzzy matching of names
+        $fuzzyName = strtolower($newOption->getName());
+        if (stristr($fuzzyName, 'option')) {
+            $fuzzyName = explode('option', $fuzzyName)[0];
+        }
+
+        if (stristr($fuzzyName, 'optie')) {
+            $fuzzyName = explode('optie', $fuzzyName)[0];
+        }
+
+        $options = $this->getActivityCalendarOptionMapper()->findOptionsByName($fuzzyName);
+        if (count($options) >= 3) {
+            return true;
+        }
+
+        foreach ($options as $option) {
+            // Can't add two options at the same time
+            if ($option->getBeginTime() == $newOption->getBeginTime() || $option->getEndTime() == $newOption->getEndTime()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public function deleteOption($data)
     {
         $mapper = $this->getActivityCalendarOptionMapper();

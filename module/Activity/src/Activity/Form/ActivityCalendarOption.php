@@ -78,6 +78,16 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
                             'callback' => ['Activity\Form\ActivityCalendarOption', 'beforeEndTime']
                         ],
                     ],
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity must after today'),
+                            ],
+                            'callback' => ['Activity\Form\ActivityCalendarOption', 'isFutureTime']
+                        ],
+                    ],
                 ]
             ],
             'endTime' => [
@@ -114,6 +124,25 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
             $thisTime = new \DateTime($value);
             $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
             return $thisTime <= $endTime;
+        } catch (\Exception $e) {
+            // An exception is an indication that one of the times was not valid
+            return false;
+        }
+    }
+
+    /**
+     * Check if a certain date is in the future
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public function isFutureTime($value, $context = [])
+    {
+        try {
+            $time = new \DateTime($value);
+            $now = new \DateTime();
+            return $time > $now;
         } catch (\Exception $e) {
             // An exception is an indication that one of the times was not valid
             return false;
