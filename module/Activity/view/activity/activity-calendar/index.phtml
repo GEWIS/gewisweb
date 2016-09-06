@@ -131,7 +131,7 @@ $form->prepare();
                                 <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                             </a>
                         <?php else: ?>
-                            <strong><?= $this->translate('Deleted by') ?> <?= $option->getCreator()->getMember()->getFullName() ?></strong>
+                            <strong><?= $this->translate('Deleted by') ?> <?= $option->getDeletedBy()->getMember()->getFullName() ?></strong>
                         <?php endif ?>
                     </td>
                 </tr>
