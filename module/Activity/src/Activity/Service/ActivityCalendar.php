@@ -32,6 +32,7 @@ class ActivityCalendar extends AbstractAclService
             return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(true);
         }
         $user = $this->sm->get('user_role');
+
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
             $this->getMemberMapper()->findOrgans($user->getMember()),
             $user
@@ -56,6 +57,7 @@ class ActivityCalendar extends AbstractAclService
     public function getConfig()
     {
         $config = $this->sm->get('config');
+
         return $config['calendar'];
     }
 
@@ -81,6 +83,7 @@ class ActivityCalendar extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to create activity options.')
             );
         }
+
         return $this->sm->get('activity_form_calendar_option');
     }
 
@@ -106,8 +109,10 @@ class ActivityCalendar extends AbstractAclService
         }
         if ($this->optionLimitsExceeded($option)) {
             $form->get('name')->setMessages([
-                $this->getTranslator()->translate('Maximum number of options which you can create has been exceeded. Delete some options before adding more.')
+                $this->getTranslator()->translate('Maximum number of options which you can create has been exceeded.
+                Delete some options before adding more.')
             ]);
+
             return false;
         }
         $option->setCreationTime(new \DateTime());
@@ -115,6 +120,7 @@ class ActivityCalendar extends AbstractAclService
         $option->setCreator($em->merge($this->sm->get('user_role')));
         $em->persist($option);
         $em->flush();
+
         return $option;
     }
 
@@ -142,13 +148,15 @@ class ActivityCalendar extends AbstractAclService
 
         foreach ($options as $option) {
             // Can't add two options at the same time
-            if ($option->getBeginTime() == $newOption->getBeginTime() || $option->getEndTime() == $newOption->getEndTime()) {
+            if ($option->getBeginTime() == $newOption->getBeginTime()
+                || $option->getEndTime() == $newOption->getEndTime()) {
                 return true;
             }
         }
 
         return false;
     }
+
     public function deleteOption($data)
     {
         $mapper = $this->getActivityCalendarOptionMapper();
@@ -175,7 +183,8 @@ class ActivityCalendar extends AbstractAclService
         }
 
         if ($option->getOrgan() === null
-            && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()) {
+            && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()
+        ) {
             return true;
         }
 
