@@ -172,7 +172,7 @@ $form->prepare();
     var calendar;
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);
-    timeMinString = timeMin.getYear() + '-' + timeMin.getMonth() + '-' + timeMin.getDay() + 'T0:00:00Z';
+    timeMinString = timeMin.toISOString();
     var calendarItems = [
         <?php foreach($options as $option): ?>
         {
