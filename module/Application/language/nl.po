@@ -572,7 +572,7 @@ msgid "Create API token"
 msgstr "Maak een API token"
 
 #: module/User/view/user/api-admin/add.phtml:36
-msgid "Token was succesfully generated"
+msgid "Token was successfully generated"
 msgstr "Token is gegenereerd"
 
 #: module/User/view/user/user/index.phtml:2
@@ -3230,7 +3230,7 @@ msgstr "Inkoper"
 #~ msgid "Import photos"
 #~ msgstr "Importeer foto's"
 
-#~ msgid "The photos have been imported succesfully"
+#~ msgid "The photos have been imported successfully"
 #~ msgstr "De foto's zijn succesvol geimporteerd."
 
 #~ msgid ""

@@ -571,8 +571,8 @@ msgid "Create API token"
 msgstr "Create API token"
 
 #: module/User/view/user/api-admin/add.phtml:36
-msgid "Token was succesfully generated"
-msgstr "Token was succesfully generated"
+msgid "Token was successfully generated"
+msgstr "Token was successfully generated"
 
 #: module/User/view/user/user/index.phtml:2
 #: module/User/view/user/user/index.phtml:24
@@ -3208,8 +3208,8 @@ msgstr "Purchaser"
 #~ msgid "Import photos"
 #~ msgstr "Import photos"
 
-#~ msgid "The photos have been imported succesfully"
-#~ msgstr "The photos have been imported succesfully"
+#~ msgid "The photos have been imported successfully"
+#~ msgstr "The photos have been imported successfully"
 
 #~ msgid ""
 #~ "Make sure that the folder permissions on your import folder are set such "
