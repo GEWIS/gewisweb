@@ -21,6 +21,11 @@ $form->prepare();
         </ul>
     </div>
     <hr>
+    <?php if($success): ?>
+        <div class="alert alert-success">
+            Your option has been added succesfully
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="pull-left">
             <div class="btn-group">
@@ -52,7 +57,7 @@ $form->prepare();
                     <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
                 </button>
                 <div class="dropdown-menu">
-                    <form class="form" method="post">
+                    <form class="form" action="<?= $this->url('activity_calendar') ?>" method="post">
                         <?php
                         $name = $form->get('name');
                         $name->setAttribute('class', 'form-control');

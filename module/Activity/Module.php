@@ -81,7 +81,8 @@ class Module
                 },
                 'activity_hydrator_calendar_option' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('activity_doctrine_em'), 'Activity\Model\ActivityCalendarOption'
+                        $sm->get('activity_doctrine_em'),
+                        'Activity\Model\ActivityCalendarOption'
                     );
                 },
                 'activity_hydrator' => function ($sm) {

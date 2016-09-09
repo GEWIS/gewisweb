@@ -16,8 +16,8 @@ class ActivityCalendarController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $createdOption = $service->createOption($request->getPost());
-            if (!$createdOption) {
-                return $this->redirect()->toRoute('activity_calendar');
+            if ($createdOption) {
+                return $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
 
             }
             $optionError = true;
@@ -30,7 +30,8 @@ class ActivityCalendarController extends AbstractActionController
             'calendarKey' => $config['google_calendar_key'],
             'form' => $service->getCreateOptionForm(),
             'optionError' => $optionError,
-            'createdOption' => $createdOption
+            'createdOption' => $createdOption,
+            'success' => $request->getQuery('success', false)
         ]);
     }
 
