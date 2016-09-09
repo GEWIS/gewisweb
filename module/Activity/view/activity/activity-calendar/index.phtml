@@ -210,7 +210,7 @@ $form->prepare();
     function initCalendar() {
         calendar = $("#calendar").calendar(
             {
-                tmpl_path: "/tmpls/",
+                tmpl_path: "<?= $this->basePath() ?>/tmpls/",
                 tmpl_cache: false,
                 events_source: function () { return calendarItems; },
                 views: {
