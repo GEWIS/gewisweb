@@ -132,7 +132,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
                             <li><a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a></li>
                         <?php endif; ?>
-
+                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+                            <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option 
+                            calendar') ?></a></li>
+                        <?php endif; ?>
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>

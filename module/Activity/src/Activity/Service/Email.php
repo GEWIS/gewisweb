@@ -46,6 +46,35 @@ class Email extends AbstractService
         $this->getTransport()->send($message);
     }
 
+    /**
+     * Send options overdue email.
+     *
+     * @param array $options
+     */
+    public function sendOptionsOverdueEmail($options)
+    {
+        $body = $this->render('email/options-overdue', [
+            'options' => $options
+        ]);
+
+        $html = new MimePart($body);
+        $html->type = "text/html";
+
+        $mimeMessage = new MimeMessage();
+        $mimeMessage->setParts([$html]);
+
+        $message = new Message();
+
+        $config = $this->getConfig();
+
+        $message->addFrom($config['from']);
+        $message->addTo($config['to']['activity_calendar']);
+        $message->setSubject('Activiteiten kalender opties verlopen | Activity calendar options expired');
+        $message->setBody($mimeMessage);
+
+        $this->getTransport()->send($message);
+    }
+
 
     /**
      * Render a template with given variables.

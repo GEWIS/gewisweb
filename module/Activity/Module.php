@@ -1,7 +1,9 @@
 <?php
 namespace Activity;
 
-use User\Permissions\Assertion\IsOrganMember;;
+use User\Permissions\Assertion\IsOrganMember;
+
+;
 
 class Module
 {
@@ -52,7 +54,7 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_service_email' => 'Activity\Service\Email', 
+                'activity_service_email' => 'Activity\Service\Email',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
@@ -70,6 +72,19 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
+                'activity_form_calendar_option' => function ($sm) {
+                    $organService = $sm->get('decision_service_organ');
+                    $organs = $organService->getEditableOrgans();
+                    $form = new Form\ActivityCalendarOption($organs, $sm->get('translator'));
+                    $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
+                    return $form;
+                },
+                'activity_hydrator_calendar_option' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('activity_doctrine_em'),
+                        'Activity\Model\ActivityCalendarOption'
+                    );
+                },
                 'activity_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('activity_doctrine_em')
@@ -83,6 +98,12 @@ class Module
                 },
                 'activity_service_signoff' => function ($sm) {
                     $ac = new Service\Signup();
+                    $ac->setServiceManager($sm);
+
+                    return $ac;
+                },
+                'activity_service_calendar' => function ($sm) {
+                    $ac = new Service\ActivityCalendar();
                     $ac->setServiceManager($sm);
 
                     return $ac;
@@ -112,11 +133,17 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
+                'activity_mapper_calendar_option' => function ($sm) {
+                    return new \Activity\Mapper\ActivityCalendarOption(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
                 'activity_acl' => function ($sm) {
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
                     $acl->addResource('activitySignup');
                     $acl->addResource('model');
+                    $acl->addResource('activity_calendar_option');
 
                     $acl->allow('guest', 'activity', 'view');
                     $acl->allow('guest', 'activitySignup', 'view');
@@ -129,6 +156,7 @@ class Module
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
+                    $acl->allow('user', 'activity_calendar_option', ['create', 'delete_own']);
                     return $acl;
                 },
             ]
