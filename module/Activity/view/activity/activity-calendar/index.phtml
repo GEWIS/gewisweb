@@ -9,16 +9,7 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $form->prepare();
 ?>
-<style>
-    .row-offset-top {
-        margin-top: 20px;
-    }
-
-    .dropdown-spacing {
-        padding: 10px;
-    }
-</style>
-<div class="container">
+<div class="container option-calendar">
     <div class="row">
         <h1><?= $this->translate('Option calendar') ?></h1>
         <?= $this->translate('Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like this was done before on the paper version of the option calendar. The red dots indicate activities that are already in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, such that it is clear where the option is for.') ?>
@@ -31,7 +22,7 @@ $form->prepare();
     </div>
     <hr>
     <div class="row">
-        <h3 class="pull-left">
+        <div class="pull-left">
             <div class="btn-group">
                 <button class="btn btn-primary" data-calendar-nav="prev">
                     <i class="glyphicon glyphicon-chevron-left"></i>
@@ -52,16 +43,16 @@ $form->prepare();
                 </button>
             </div>
 
-            <span id="calendarTitle"></span>
-        </h3>
+            <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
+        </div>
         <div class="pull-right">
             <div class="dropdown pull-right<?= $optionError ? ' open' : '' ?>">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
                 </button>
-                <div class="dropdown-menu dropdown-spacing">
-                    <form class="form" method="post" style="width: 300px;">
+                <div class="dropdown-menu">
+                    <form class="form" method="post">
                         <?php
                         $name = $form->get('name');
                         $name->setAttribute('class', 'form-control');
@@ -107,8 +98,8 @@ $form->prepare();
             </div>
         </div>
     </div>
-    <div class="row row-offset-top">
-        <div id="calendar"></div>
+    <div class="row">
+        <div id="calendar" class="calendar-control"></div>
     </div>
     <div class="row">
         <h2><?= $this->translate('My options') ?></h2>
