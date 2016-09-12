@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-04 16:48+0200\n"
-"PO-Revision-Date: 2016-09-04 16:51+0200\n"
+"POT-Creation-Date: 2016-09-12 10:50+0200\n"
+"PO-Revision-Date: 2016-09-12 11:06+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:138
+#: module/Application/view/partial/main-nav.phtml:141
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
 #: module/Photo/view/photo/photo/index.phtml:3
@@ -50,7 +50,8 @@ msgstr "Abbreviation"
 #: module/Activity/view/activity/organizer/email.phtml:30
 #: module/Activity/view/activity/admin/view.phtml:16
 #: module/Activity/view/activity/admin/view-proposal.phtml:36
-#: module/Activity/view/activity/activity-calendar/index.phtml:64
+#: module/Activity/view/activity/activity-calendar/index.phtml:67
+#: module/Activity/view/activity/activity-calendar/index.phtml:115
 #: module/Activity/view/activity/activity/view.phtml:81
 #: module/Activity/view/activity/activity/create.phtml:89
 #: module/Activity/view/activity/activity/create.phtml:141
@@ -99,7 +100,7 @@ msgstr "Organ mutations"
 #: module/Decision/view/decision/member/view.phtml:4
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/search.phtml:4
-#: module/Application/view/partial/main-nav.phtml:147
+#: module/Application/view/partial/main-nav.phtml:150
 msgid "Members"
 msgstr "Members"
 
@@ -147,6 +148,11 @@ msgstr "SuSOS"
 #: module/Decision/view/decision/member/index.phtml:60
 msgid "Decisions"
 msgstr "Decisions"
+
+#: module/Decision/view/decision/member/index.phtml:66
+#: module/Activity/view/activity/activity-calendar/index.phtml:14
+msgid "Option calendar"
+msgstr "Option calendar"
 
 #: module/Decision/view/decision/member/view.phtml:15
 #: module/Decision/view/decision/member/self.phtml:34
@@ -334,7 +340,8 @@ msgid "Documents for this meeting"
 msgstr "Documents for this meeting"
 
 #: module/Decision/view/decision/admin/document.phtml:75
-#: module/Activity/view/activity/activity-calendar/index.phtml:142
+#: module/Activity/view/activity/activity-calendar/index.phtml:134
+#: module/Activity/view/activity/activity-calendar/index.phtml:159
 #: module/Company/view/company/admin/index.phtml:83
 #: module/Company/view/company/admin/edit-company.phtml:127
 #: module/Education/view/education/admin/edit-exam.phtml:33
@@ -575,7 +582,7 @@ msgid "Token was successfully generated"
 msgstr "Token was successfully generated"
 
 #: module/User/view/user/user/index.phtml:2
-#: module/User/view/user/user/index.phtml:24
+#: module/User/view/partial/login.phtml:13
 #: module/Application/view/partial/main-nav.phtml:36
 #: module/Application/view/partial/main-nav.phtml:42
 #: module/Application/view/partial/main-nav.phtml:57
@@ -589,16 +596,6 @@ msgstr "Login"
 #: module/User/view/user/user/index.phtml:7
 msgid "You are logged in."
 msgstr "You are logged in."
-
-#: module/User/view/user/user/index.phtml:70
-#, php-format
-msgid "If you don't have an account yet, go to the %sRegistration page%s"
-msgstr "If you don't have an account yet, go to the %sRegistration page%s"
-
-#: module/User/view/user/user/index.phtml:73
-#, php-format
-msgid "If you forgot your password, go to the %sPassword reset page%s"
-msgstr "If you forgot your password, go to the %sPassword reset page%s"
 
 #: module/User/view/user/user/register.phtml:2
 #: module/User/view/user/user/register.phtml:23
@@ -664,6 +661,16 @@ msgid ""
 "An email has been sent to %s with instructions for resetting your password."
 msgstr ""
 "An email has been sent to %s with instructions for resetting your password."
+
+#: module/User/view/partial/login.phtml:59
+#, php-format
+msgid "If you don't have an account yet, go to the %sRegistration page%s"
+msgstr "If you don't have an account yet, go to the %sRegistration page%s"
+
+#: module/User/view/partial/login.phtml:62
+#, php-format
+msgid "If you forgot your password, go to the %sPassword reset page%s"
+msgstr "If you forgot your password, go to the %sPassword reset page%s"
 
 #: module/Application/view/layout/layout.phtml:6
 msgid "GEWIS Website"
@@ -853,7 +860,13 @@ msgstr "Vacancies"
 msgid "Create an activity"
 msgstr "Create an activity"
 
-#: module/Application/view/partial/main-nav.phtml:140
+#: module/Application/view/partial/main-nav.phtml:136
+msgid ""
+"Option \n"
+"                            calendar"
+msgstr ""
+
+#: module/Application/view/partial/main-nav.phtml:143
 #: module/Photo/view/photo/photo/view.phtml:80
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 msgid "Photo of the week"
@@ -901,6 +914,13 @@ msgid "Postal address"
 msgstr "Postal address"
 
 #: module/Application/view/error/403.phtml:3
+msgid "You do not have the required priviliges to view this page"
+msgstr "You do not have the required priviliges to view this page"
+
+#: module/Application/view/error/403.phtml:5
+msgid "You might be able to view this page by logging in below"
+msgstr "You might be able to view this page by logging in below"
+
 #: module/Application/view/error/debug/403.phtml:3
 msgid "403 Forbidden"
 msgstr "403 Forbidden"
@@ -1064,13 +1084,13 @@ msgid "Time and date"
 msgstr "Time and date"
 
 #: module/Activity/view/activity/organizer/update.phtml:52
-#: module/Activity/view/activity/activity-calendar/index.phtml:76
+#: module/Activity/view/activity/activity-calendar/index.phtml:79
 #: module/Activity/view/activity/activity/create.phtml:53
 msgid "From"
 msgstr "From"
 
 #: module/Activity/view/activity/organizer/update.phtml:60
-#: module/Activity/view/activity/activity-calendar/index.phtml:82
+#: module/Activity/view/activity/activity-calendar/index.phtml:85
 #: module/Activity/view/activity/activity/create.phtml:61
 msgid "Until"
 msgstr "Until"
@@ -1110,7 +1130,7 @@ msgstr "Costs"
 #: module/Activity/view/activity/activity/create.phtml:126
 #: module/Activity/view/activity/activity/create.phtml:178
 #: module/Company/view/company/company/job-list.phtml:92
-#: module/Company/view/company/company/jobs.phtml:61
+#: module/Company/view/company/company/jobs.phtml:62
 #: module/Company/view/partial/company/company/list/company.phtml:47
 #: module/Company/src/Company/Form/EditCompany.php:161
 #: module/Company/src/Company/Form/EditCompany.php:171
@@ -1232,56 +1252,113 @@ msgstr "Original English description"
 msgid "Updated English description"
 msgstr "Updated English description"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:23
-msgid "Activity calendar"
-msgstr "Activity calendar"
+#: module/Activity/view/activity/activity-calendar/index.phtml:15
+msgid ""
+"Welcome on the page of the digital Option Calendar. In the calendar below "
+"you can place options for GEWIS activities, just like this was done before "
+"on the paper version of the option calendar. The red dots indicate "
+"activities that are already in the GEWIS agenda, the blue dots are options "
+"for activities. If you insert an option, please give it a clear name, such "
+"that it is clear where the option is for."
+msgstr ""
+"Welcome on the page of the digital Option Calendar. In the calendar below "
+"you can place options for GEWIS activities, just like this was done before "
+"on the paper version of the option calendar. The red dots indicate "
+"activities that are already in the GEWIS agenda, the blue dots are options "
+"for activities. If you insert an option, please give it a clear name, such "
+"that it is clear where the option is for."
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:33
+#: module/Activity/view/activity/activity-calendar/index.phtml:17
+msgid "There are a few rules:"
+msgstr "There are a few rules:"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:19
+msgid "No more than 3 options for the same activity are allowed."
+msgstr "No more than 3 options for the same activity are allowed."
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:20
+msgid ""
+"The first to put an option on a particular date, has the first dibs on this "
+"date. If an option stays in the option calendar for more than 3 weeks "
+"without a budget being sent to the board, then the option gets deleted and "
+"the next one in line gets the chance to use this date for an activity."
+msgstr ""
+"The first to put an option on a particular date, has the first dibs on this "
+"date. If an option stays in the option calendar for more than 3 weeks "
+"without a budget being sent to the board, then the option gets deleted and "
+"the next one in line gets the chance to use this date for an activity."
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:26
+msgid "Your option has been added successfully"
+msgstr "Your option has been added successfully"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:36
 msgid "Today"
 msgstr "Today"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:41
+#: module/Activity/view/activity/activity-calendar/index.phtml:44
 msgid "Year"
 msgstr "Year"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:44
+#: module/Activity/view/activity/activity-calendar/index.phtml:47
 msgid "Month"
 msgstr "Month"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:54
+#: module/Activity/view/activity/activity-calendar/index.phtml:57
+#: module/Activity/view/activity/activity/index.phtml:21
 #: module/Frontpage/view/frontpage/poll/request.phtml:110
 msgid "Add option"
 msgstr "Add option"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:92
+#: module/Activity/view/activity/activity-calendar/index.phtml:95
 #: module/Activity/view/activity/activity/create.phtml:201
 msgid "Organizing committee / fraternity"
 msgstr "Organizing committee / fraternity"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:97
+#: module/Activity/view/activity/activity-calendar/index.phtml:100
 #: module/Decision/src/Decision/Form/Notes.php:57
 #: module/Education/src/Education/Form/SummaryUpload.php:70
 #: module/Frontpage/src/Frontpage/Form/Poll.php:50
 msgid "Submit"
 msgstr "Submit"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:107
+#: module/Activity/view/activity/activity-calendar/index.phtml:110
 msgid "My options"
 msgstr "My options"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:122
+#: module/Activity/view/activity/activity-calendar/index.phtml:114
+msgid "Creator"
+msgstr "Creator"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:116
+msgid "Created at"
+msgstr "Created at"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:117
+#: module/Activity/view/activity/activity/view.phtml:50
+#: module/Activity/view/activity/activity/list.phtml:39
+msgid "Start"
+msgstr "Start"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:118
+#: module/Activity/view/activity/activity/view.phtml:53
+#: module/Activity/view/activity/activity/list.phtml:41
+msgid "End"
+msgstr "End"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:137
 msgid "Deleted by"
 msgstr "Deleted by"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:133
+#: module/Activity/view/activity/activity-calendar/index.phtml:150
 msgid "Delete option"
 msgstr "Delete option"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:136
+#: module/Activity/view/activity/activity-calendar/index.phtml:153
 msgid "Are you sure you want to delete this option?"
 msgstr "Are you sure you want to delete this option?"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:141
+#: module/Activity/view/activity/activity-calendar/index.phtml:158
 #: module/Company/view/company/admin/index.phtml:121
 #: module/Company/view/company/admin/edit-company.phtml:151
 #: module/Photo/view/photo/photo-admin/index.phtml:119
@@ -1295,16 +1372,6 @@ msgstr "Cancel"
 #: module/Activity/view/activity/activity/index.phtml:13
 msgid "Create Activity"
 msgstr "Create Activity"
-
-#: module/Activity/view/activity/activity/view.phtml:50
-#: module/Activity/view/activity/activity/list.phtml:39
-msgid "Start"
-msgstr "Start"
-
-#: module/Activity/view/activity/activity/view.phtml:53
-#: module/Activity/view/activity/activity/list.phtml:41
-msgid "End"
-msgstr "End"
 
 #: module/Activity/view/activity/activity/view.phtml:59
 #: module/Activity/view/activity/activity/list.phtml:47
@@ -1467,12 +1534,12 @@ msgid "Filter results"
 msgstr "Filter results"
 
 #: module/Company/view/company/company/job-list.phtml:86
-#: module/Company/view/company/company/jobs.phtml:55
+#: module/Company/view/company/company/jobs.phtml:56
 msgid "View vacancy"
 msgstr "View vacancy"
 
 #: module/Company/view/company/company/job-list.phtml:88
-#: module/Company/view/company/company/jobs.phtml:57
+#: module/Company/view/company/company/jobs.phtml:58
 msgid "View website"
 msgstr "View website"
 
@@ -2615,15 +2682,23 @@ msgstr "You are not allowed to view the disapproved activities"
 msgid "You are not allowed to view upcoming the activities"
 msgstr "You are not allowed to view upcoming the activities"
 
-#: module/Activity/src/Activity/Service/ActivityCalendar.php:66
+#: module/Activity/src/Activity/Service/ActivityCalendar.php:83
 msgid "Not allowed to create activity options."
 msgstr "Not allowed to create activity options."
 
-#: module/Activity/src/Activity/Service/ActivityCalendar.php:89
+#: module/Activity/src/Activity/Service/ActivityCalendar.php:107
 msgid "You are not allowed to create options for this organ"
 msgstr "You are not allowed to create options for this organ"
 
-#: module/Activity/src/Activity/Service/ActivityCalendar.php:106
+#: module/Activity/src/Activity/Service/ActivityCalendar.php:112
+msgid ""
+"Maximum number of options which you can create has been exceeded.\n"
+"                Delete some options before adding more."
+msgstr ""
+"Maximum number of options which you can create has been exceeded.\n"
+"                Delete some options before adding more."
+
+#: module/Activity/src/Activity/Service/ActivityCalendar.php:166
 msgid "You are not allowed to delete this option"
 msgstr "You are not allowed to delete this option"
 
@@ -2717,6 +2792,10 @@ msgstr "No organ"
 #: module/Activity/src/Activity/Form/Activity.php:328
 msgid "The activity must start before it ends"
 msgstr "The activity must start before it ends"
+
+#: module/Activity/src/Activity/Form/ActivityCalendarOption.php:86
+msgid "The activity must after today"
+msgstr "The activity must after today"
 
 #: module/Activity/src/Activity/Form/Activity.php:350
 msgid "The subscription must stop before the activity ends"
@@ -3207,9 +3286,6 @@ msgstr "Purchaser"
 
 #~ msgid "Import photos"
 #~ msgstr "Import photos"
-
-#~ msgid "The photos have been imported successfully"
-#~ msgstr "The photos have been imported successfully"
 
 #~ msgid ""
 #~ "Make sure that the folder permissions on your import folder are set such "
