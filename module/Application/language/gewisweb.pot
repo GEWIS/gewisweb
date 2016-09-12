@@ -557,7 +557,7 @@ msgid "Create API token"
 msgstr ""
 
 #: module/User/view/user/api-admin/add.phtml:36
-msgid "Token was succesfully generated"
+msgid "Token was successfully generated"
 msgstr ""
 
 #: module/User/view/user/user/index.phtml:2
