@@ -1,5 +1,14 @@
 <section class="section">
     <div class="container">
-        <h1><?= $this->translate('403 Forbidden') ?></h1>
+        <h2><?= $this->translate('You do not have the required priviliges to view this page') ?></h2>
+        <?php if ($this->identity() === null): ?>
+        <p><?= $this->translate('You might be able to view this page by logging in below') ?></p>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <?= $this->partial('user/login', ['form' => $form]) ?>
+                </div>
+            </div>
+
+        <?php endif; ?>
     </div>
 </section>
