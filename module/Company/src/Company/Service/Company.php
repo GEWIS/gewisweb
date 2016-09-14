@@ -85,7 +85,7 @@ class Company extends AbstractACLService
         $translator = $this->getTranslator();
         if (!$this->isAllowed('listall')) {
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed list the companies')
+                $translator->translate('You are not allowed to list the companies')
             );
         }
         $startPackages = $this->getFuturePackageStartsBeforeDate($date);
@@ -101,7 +101,7 @@ class Company extends AbstractACLService
         $translator = $this->getTranslator();
         if (!$this->isAllowed('list')) {
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed list the companies')
+                $translator->translate('You are not allowed to list the companies')
             );
         }
         return $this->getCompanyMapper()->findPublicByLocale($translator->getLocale());
@@ -116,7 +116,7 @@ class Company extends AbstractACLService
         if (!$this->isAllowed('listall')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to acces the admin interface')
+                $translator->translate('You are not allowed to access the admin interface')
             );
         }
         return $this->getCompanyMapper()->findAll();
@@ -444,7 +444,7 @@ class Company extends AbstractACLService
             );
         }
         if (is_null($packageID)){
-            throw new \Exception('Invalid arguemnt');
+            throw new \Exception('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
         if (is_null($package)) {
