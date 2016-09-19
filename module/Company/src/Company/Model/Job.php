@@ -54,7 +54,14 @@ class Job
      * @ORM\Column(type="string", nullable=true)
      */
     protected $attachment;
-
+    
+    /**
+     * The job's contact's name.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $contactName;
+    
     /**
      * The job's phone.
      *
@@ -220,7 +227,27 @@ class Job
     {
         $this->attachment = $attachment;
     }
-
+    
+    /**
+     * Get the job's contact's name.
+     *
+     * @return string
+     */
+    public function getContactName()
+    {
+        return $this->contactName;
+    }
+    
+    /**
+     * Set the job's contact's name.
+     *
+     * @param string $name
+     */
+    public function setContactName($name)
+    {
+        $this->contactName = $name;
+    }
+    
     /**
      * Get the job's phone.
      *
