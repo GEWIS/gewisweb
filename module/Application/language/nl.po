@@ -137,8 +137,8 @@ msgstr "Organen"
 
 #: module/Decision/view/decision/member/index.phtml:48
 #: module/Education/view/education/education/index.phtml:24
-msgid "Dreamspark"
-msgstr "Dreamspark"
+msgid "Microsoft Imagine"
+msgstr "Microsoft Imagine"
 
 #: module/Decision/view/decision/member/index.phtml:54
 #: module/Application/view/partial/main-nav.phtml:73
@@ -2451,13 +2451,13 @@ msgid "You are not allowed to view members."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
 #: module/Decision/src/Decision/Service/Member.php:90
-msgid "You are not allowed login into dreamspark."
-msgstr "Het is niet toegestaan om in te loggen op dreamspark."
+msgid "You are not allowed login into Microsoft Imagine."
+msgstr "Het is niet toegestaan om in te loggen op Microsoft Imagine."
 
 #: module/Decision/src/Decision/Service/Member.php:126
-msgid "Login to dreamspark failed. If this persists, contact the WebCommittee."
+msgid "Login to Microsoft Imagine failed. If this persists, contact the WebCommittee."
 msgstr ""
-"Inloggen op dreamspark is mislukt. Als dit probleem zich blijft voordoen, "
+"Inloggen op Microsoft Imagine is mislukt. Als dit probleem zich blijft voordoen, "
 "contacteer de WebCommissie."
 
 #: module/Decision/src/Decision/Service/Member.php:147

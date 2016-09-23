@@ -87,7 +87,7 @@ class Member extends AbstractAclService
         if (!$this->isAllowed('login', 'dreamspark')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed login into dreamspark.')
+                $translator->translate('You are not allowed login into Microsoft Imagine.')
             );
         }
 
@@ -123,7 +123,7 @@ class Member extends AbstractAclService
         if ($response->getStatusCode() != 200) {
             $translator = $this->getTranslator();
             throw new \Exception(
-                $translator->translate('Login to dreamspark failed. If this persists, contact the WebCommittee.')
+                $translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
             );
         }
 
