@@ -136,7 +136,7 @@ msgstr ""
 
 #: module/Decision/view/decision/member/index.phtml:48
 #: module/Education/view/education/education/index.phtml:24
-msgid "Dreamspark"
+msgid "Microsoft Imagine"
 msgstr ""
 
 #: module/Decision/view/decision/member/index.phtml:54
@@ -2392,11 +2392,11 @@ msgid "You are not allowed to view members."
 msgstr ""
 
 #: module/Decision/src/Decision/Service/Member.php:90
-msgid "You are not allowed login into dreamspark."
+msgid "You are not allowed login into Microsoft Imagine."
 msgstr ""
 
 #: module/Decision/src/Decision/Service/Member.php:126
-msgid "Login to dreamspark failed. If this persists, contact the WebCommittee."
+msgid "Login to Microsoft Imagine failed. If this persists, contact the WebCommittee."
 msgstr ""
 
 #: module/Decision/src/Decision/Service/Member.php:147
