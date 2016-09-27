@@ -1,3 +1,5 @@
+@import '../bootstrap-variables';
+
 /*
 Typography
 
@@ -35,8 +37,26 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 400;
 }
 
-h1 {
-    margin: 1em 0 0.8em;
+h1, .h1 {
+    margin: 0 0 1.5rem;
+
+    font-size: 3.6rem;
+}
+
+h2, .h2 {
+    margin: 0 0 2rem;
+
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $brand-primary;
+}
+
+h3, .h3 {
+    margin: 0 0 1rem;
+
+    font-size: 2rem;
+    font-weight: 500;
 }
 
 /*
@@ -54,12 +74,26 @@ Weight: 2
 
 Styleguide: typography.font-features
 */
+
 .font-feature-lnum {
     font-variant-numeric: lining-nums;
     @include font-feature-settings($lnum: 1);
 }
 
+/*
+Lead paragraph.
+
+Markup:
+<p class="lead">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus dictum lectus non dapibus. Mauris tempus
+    lacus nec accumsan tristique. Ut tempor diam ac libero tincidunt faucibus.
+</p>
+
+*/
+
 .lead {
+    font-family: $font-family-alt;
     font-weight: 400;
-    font-size: 1.25em;
+    font-size: 2rem;
+    line-height: 1.7em;
 }

@@ -3,46 +3,47 @@
 <section class="section">
     <div class="container">
         <div class="row">
-            <div class="col-sm-7 col-md-8">
-                <p class="lead">
-                    <?= $this->translate('Welcome to the website of Study association GEWIS, the study association of
-                    the department of Mathematics & Computer Science of the Eindhoven University of Technology.') ?>
-                </p>
-                <p>
-                    <?= sprintf($this->translate('GEWIS means Community of Mathematics and Computer Science Students
-                    (or in Dutch: GEmeenschap van Wiskunde en Informatica Studenten) and was founded in 1982.
-                    On this website you can find out %s and %s.'),
-                        '<a href="' . $this->url('home/page',
-                            ['category' => 'vereniging']) . '">' . $this->translate('who we are') . '</a>',
-                        '<a href="' . $this->url('activity') . '">' . $this->translate('what we do') . '</a>')
-                    ?>
-                </p>
 
-                <h3><?= $this->translate('News') ?></h3>
-                <?php foreach ($news as $item): ?>
-                    <h4>
-                        <?php
-                        // TODO: Fix design and URLs
-                        $lang = $this->plugin('translate')->getTranslator()->getLocale();
-                        if ($item instanceof \Activity\Model\Activity) {
-                            echo ($lang === 'en') ? $item->getNameEn() : $item->getName();
-                        } else {
-                            echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
-                        }
-                        ?>
-                    </h4>
-                    <p>
-                        <?php
-                        if ($item instanceof \Activity\Model\Activity) {
-                            echo ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
-                        } else {
-                            echo ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
-                        }
-                        ?>
+            <div class="col-sm-7 col-md-8">
+                <section class="content-section">
+                    <h1><?= $this->translate('Studievereniging GEWIS') ?></h1>
+                    <p class="lead">
+                        <?= $this->translate('Welcome to the website of Study association GEWIS, the study association of
+                    the department of Mathematics & Computer Science of the Eindhoven University of Technology.') ?>
                     </p>
-                <?php endforeach; ?>
+                </section>
+
+                <section class="content-section">
+                    <h2><?= $this->translate('News') ?></h2>
+
+                    <?php foreach ($news as $item): ?>
+                        <article class="content-article">
+                            <h3>
+                                <?php
+                                // TODO: Fix design and URLs
+                                $lang = $this->plugin('translate')->getTranslator()->getLocale();
+                                if ($item instanceof \Activity\Model\Activity) {
+                                    echo ($lang === 'en') ? $item->getNameEn() : $item->getName();
+                                } else {
+                                    echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
+                                }
+                                ?>
+                            </h3>
+                            <p>
+                                <?php
+                                if ($item instanceof \Activity\Model\Activity) {
+                                    echo ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
+                                } else {
+                                    echo ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
+                                }
+                                ?>
+                            </p>
+                        </article>
+                    <?php endforeach; ?>
+                </section>
             </div>
-            <div class="col-sm-5 col-md-4">
+
+            <aside class="col-sm-5 col-md-4">
                 <div class="panel panel-default agenda">
                     <div class="panel-heading">
                         <h3><?= $this->translate('Agenda') ?></h3>
@@ -133,7 +134,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-            </div>
+            </aside>
         </div>
     </div>
 </section>

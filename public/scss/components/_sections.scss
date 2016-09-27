@@ -1,3 +1,5 @@
+@import '../bootstrap-variables';
+
 /*
 Sections
 
@@ -16,12 +18,12 @@ Markup:
 Styleguide: section
 */
 .section {
-  padding: 20px 0;
+    padding: 50px 0;
 
-  &.inverse {
-    background: $body-inverse-bg;
-    color: $text-inverse-color;
-  }
+    &.inverse {
+        background: $body-inverse-bg;
+        color: $text-inverse-color;
+    }
 }
 
 .section {
@@ -34,4 +36,12 @@ Styleguide: section
         padding: 0;
         background-color: #f5f5f5;
     }
+}
+
+.content-section {
+    margin-bottom: 5rem;
+}
+
+.content-article {
+    margin-bottom: 3rem;
 }
