@@ -76,8 +76,13 @@
                             the "#if @first" block as seen below.
                         }}
                         {{#each sections}}
-                            <section id="kssref-{{referenceURI}}" class="panel panel-default">
+                            <section id="kssref-{{referenceURI}}" class="panel panel-styleguide">
                                 <div class="panel-heading">
+                                    {{#if sourceFile.name}}
+                                        <span class="panel-source">
+                                            Source: <code>{{sourceFile.name}}</code>, line {{sourceFile.line}}
+                                        </span>
+                                    {{/if}}
                                     <h3 class="panel-title">
                                         <a href="#kssref-{{referenceURI}}">
                                             <span class="text-muted">{{referenceNumber}}</span>
@@ -146,13 +151,6 @@
                                         {{/if}}
                                     </div>
                                 {{/if}}
-
-                                {{#if sourceFile.name}}
-                                    <div class="panel-footer">
-                                        Source: <code>{{sourceFile.name}}</code>, line {{sourceFile.line}}
-                                    </div>
-                                {{/if}}
-
                             </section>
                         {{/each}}
                     {{/if}}
