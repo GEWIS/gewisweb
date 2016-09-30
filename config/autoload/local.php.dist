@@ -30,7 +30,16 @@ return [
         ],
         'from' => 'web@gewis.nl',
         'to' => [
-            'activity_creation' => 'secr@gewis.nl'
+            'activity_creation' => 'secr@gewis.nl',
+            'activity_calendar' => ''
         ]
+    ]
+
+    /*
+     * API key for google calendar
+     */
+    'calendar' => [
+        'google_api_key' => '',
+        'google_calendar_key' => ''
     ]
 ];

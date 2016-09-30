@@ -1,0 +1,55 @@
+<?php $lang = 'en'; ?>
+For English, see below
+
+Hoi,<br /><br />
+
+Er zijn een aantal opties ouder dan drie weken,<br />
+<table>
+    <tr>
+        <td>Aangemaakt door</td>
+        <td>Naam</td>
+        <td>Aanmaak tijd</td>
+        <td>Start tijd</td>
+        <td>Eind tijd</td>
+    </tr>
+    <?php foreach($options as $option): ?>
+        <tr>
+            <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
+            <td><?= $this->escapeHtml($option->getName()) ?></td>
+            <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
+            <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
+            <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
+        </tr>
+    <?php endforeach ?>
+</table>
+<br/>
+Met vriendelijke groeten,<br />
+De Web Commissie
+<hr />
+
+Hi,<br /><br />
+
+There are some options older than 3 weeks,<br />
+<table>
+    <tr>
+        <td>Created byr</td>
+        <td>Name</td>
+        <td>Creation time</td>
+        <td>Starting time</td>
+        <td>Ending time</td>
+    </tr>
+    <?php foreach($options as $option): ?>
+        <tr>
+            <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
+            <td><?= $this->escapeHtml($option->getName()) ?></td>
+            <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
+            <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
+            <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
+        </tr>
+    <?php endforeach ?>
+</table>
+<br/>
+
+
+Kind Regards, <br />
+The Web Comittee

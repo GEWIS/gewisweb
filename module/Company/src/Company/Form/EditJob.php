@@ -93,6 +93,15 @@ class EditJob extends Form
             ],
         ]);
         $this->add([
+            'name' => 'contactName',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translate->translate('Contact name'),
+            ],
+        ]);
+        $this->add([
             'name' => 'phone',
             'attributes' => [
                 'type' => 'text',
@@ -181,6 +190,19 @@ class EditJob extends Form
                     'options' => [
                         'min' => 2,
                         'max' => 10000,
+                    ],
+                ],
+            ],
+        ]);
+    
+        $filter->add([
+            'name' => 'contactName',
+            'required' => false,
+            'validators' => [
+                [
+                    'name' => 'string_length',
+                    'options' => [
+                        'max' => 200,
                     ],
                 ],
             ],

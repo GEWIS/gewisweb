@@ -50,7 +50,9 @@ $this->headTitle($this->translate('Jobs'));
                     </a>
                     <div class="">
                         <h4><?= $this->translate('Contact') ?></h4>
+                        <p class="job-contactName"><?= $job->getContactName() ?></p>
                         <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
+                        <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
                         <?php if ($job->getAttachment() !== ''): ?>
                         <p class="job-vacancy"><a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a></p>
                         <?php endif;?>

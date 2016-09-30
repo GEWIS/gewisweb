@@ -134,7 +134,10 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'user' => __DIR__ . '/../view/'
-        ]
+        ],
+        'template_map' => [
+            'user/login'       => __DIR__ . '/../view/partial/login.phtml',
+        ],
     ],
     'doctrine' => [
         'driver' => [
