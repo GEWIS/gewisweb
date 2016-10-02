@@ -326,10 +326,9 @@ class Poll extends AbstractAclService
      */
     public function getUser()
     {
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $user = $this->sm->get('user_role');
 
-        return ($user instanceof \User\Model\User) ? $em->merge($user) : $user;
+        return $user;
     }
 
     /**

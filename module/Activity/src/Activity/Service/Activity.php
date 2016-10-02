@@ -111,7 +111,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         // Find the creator
-        $user = $em->merge($this->getServiceManager()->get('user_role'));
+        $user = $this->getServiceManager()->get('user_role');
 
         $newActivity = $this->generateActivity(
             $params,
