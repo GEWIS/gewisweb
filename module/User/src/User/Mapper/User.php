@@ -28,18 +28,6 @@ class User
     }
 
     /**
-     * Find a user by its email.
-     *
-     * @param int $email Email to search by
-     *
-     * @return UserModel
-     */
-    public function findByEmail($email)
-    {
-        return $this->getRepository()->findOneBy(['email' => $email]);
-    }
-
-    /**
      * Find a user by its membership number.
      *
      * @param int $lidnr Membership number
@@ -72,7 +60,7 @@ class User
         if (is_numeric($login)) {
             $qb->where('u.lidnr = ?1');
         } else {
-            $qb->where('u.email = ?1');
+            $qb->where('m.email = ?1');
         }
 
         // set the parameters
