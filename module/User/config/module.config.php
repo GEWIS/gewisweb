@@ -63,7 +63,7 @@ return [
                     'activate' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/activate/:code',
+                            'route' => '/A/:code',
                             'constraints' => [
                                 'code' => '[a-zA-Z0-9]*'
                             ],

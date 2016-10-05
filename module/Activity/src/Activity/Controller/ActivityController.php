@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Model\Activity;
 use Activity\Service\Signup;
+use Doctrine\DBAL\Schema\View;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
@@ -245,5 +246,34 @@ class ActivityController extends AbstractActionController
             ->setTerminal(true);
 
         return $viewModel;
+    }
+
+
+    /**
+     * Display all the finished activities in a school year
+     *
+     * @param null $year
+     * @return ViewModel
+     */
+    public function archiveAction() {
+        //add any other special behavior which is required for the main photo page here later
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $years = $activityService->getActivityYears();
+        $year = $this->params()->fromRoute('year');
+        // If no year is supplied, use the latest year.
+        if (is_null($year)) {
+            $year = max($years);
+        } else {
+            $year = (int)$year;
+        }
+
+//        $albums = $this->getAlbumService()->getAlbumsByYear($year);
+
+
+        return new ViewModel([
+            'activeYear' => $year,
+            'years' => $years,
+//            'albums' => $albums
+        ]);
     }
 }
