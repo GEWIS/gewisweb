@@ -13,7 +13,6 @@ use Activity\Form\Activity as ActivityForm;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
-
     /**
      * Get the ACL.
      *
@@ -479,7 +478,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
     }
-
 
 
     /**

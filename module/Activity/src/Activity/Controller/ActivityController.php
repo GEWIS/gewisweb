@@ -4,7 +4,6 @@ namespace Activity\Controller;
 
 use Activity\Model\Activity;
 use Activity\Service\Signup;
-use Doctrine\DBAL\Schema\View;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
