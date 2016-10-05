@@ -9,7 +9,7 @@
                     <ul class="dropdown-menu">
                         <?php for ($i = 0; $i < max(0, count($years) - 5); $i++): ?>
                             <li>
-                                <a href="<?= $this->url('activity/archive', ['year' => $years[$i]]); ?>">
+                                <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
                                     <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
                                 </a>
                             </li>
@@ -18,7 +18,7 @@
                 </li>
                 <?php for ($i = max(0, count($years) - 5); $i < count($years); $i++): ?>
                     <li>
-                        <a href="<?= $this->url('activity/archive', ['year' => $years[$i]]); ?>">
+                        <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
                             <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
                         </a>
                     </li>
