@@ -302,7 +302,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
                 $translator->translate('You are not allowed to view the activities')
             );
         }
-        
+
         if (!is_int($year)) {
             return [];
         }
