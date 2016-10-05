@@ -249,6 +249,7 @@ class ActivityController extends AbstractActionController
     }
 
 
+
     /**
      * Display all the finished activities in a school year
      *
@@ -257,8 +258,11 @@ class ActivityController extends AbstractActionController
      */
     public function archiveAction() {
         //add any other special behavior which is required for the main photo page here later
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $years = $activityService->getActivityYears();
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+
+        $years = $queryService->getActivityYears();
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.
         if (is_null($year)) {
@@ -268,6 +272,13 @@ class ActivityController extends AbstractActionController
         }
 
 //        $albums = $this->getAlbumService()->getAlbumsByYear($year);
+//
+//        $activities = $queryService->getUpcomingActivities();
+//        $translatedActivities = [];
+//        foreach ($activities as $activity){
+//            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+//        }
+//        return ['activities' => $translatedActivities];
 
 
         return new ViewModel([
