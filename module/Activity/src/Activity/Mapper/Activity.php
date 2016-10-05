@@ -207,7 +207,7 @@ class Activity
             ->andWhere('a.beginTime >= :start')
             ->setParameter('start', $start)
             ->andWhere('a.endTime <= :end')
-            ->setParameter('end', 'end')
+            ->setParameter('end', $end)
             ->orderBy('a.beginTime', 'ASC');
 
         return $qb->getQuery()->getResult();
