@@ -271,20 +271,17 @@ class ActivityController extends AbstractActionController
             $year = (int)$year;
         }
 
-//        $albums = $this->getAlbumService()->getAlbumsByYear($year);
-//
-//        $activities = $queryService->getUpcomingActivities();
-//        $translatedActivities = [];
-//        foreach ($activities as $activity){
-//            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
-//        }
-//        return ['activities' => $translatedActivities];
+        $activities = $queryService->getFinishedActivitiesByYear($year);
+        $translatedActivities = [];
+        foreach ($activities as $activity){
+            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+        }
 
 
         return new ViewModel([
             'activeYear' => $year,
             'years' => $years,
-//            'albums' => $albums
+            'activities' => $translatedActivities
         ]);
     }
 }

@@ -14,7 +14,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     const ASSOCIATION_YEAR_START_MONTH = 7;
     const ASSOCIATION_YEAR_START_DAY = 1;
-    
+
     /**
      * Get the ACL.
      *
@@ -277,6 +277,30 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
+    }
+
+    /**
+     * Get all the activities that have finished in a year (and thus are archived
+     *
+     * @param integer $year First part of study year
+     * @return array
+     */
+    public function getFinishedActivitiesByYear($year)
+    {
+        if (!is_int($year)) {
+            return [];
+        }
+
+        $start = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+        $end = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            ($year + 1) . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+
+        return $this->getActivityMapper()->getArchivedActivitiesInRange($start, $end);
     }
 
     /**

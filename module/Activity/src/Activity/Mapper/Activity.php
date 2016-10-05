@@ -197,6 +197,18 @@ class Activity
         return empty($res) ? null : $res[0];
     }
 
+    public function getArchivedActivitiesInRange($start, $end)
+    {
+        $qb = $this->getArchivedActivityQueryBuilder()
+            ->andWhere('a.beginTime >= :start')
+            ->setParameter('start', $start)
+            ->andWhere('a.endTime <= :end')
+            ->setParameter('end', 'end')
+            ->orderBy('a.beginTime', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Create a query that is restricted to finished activities which are displayed in the activity.
      *
