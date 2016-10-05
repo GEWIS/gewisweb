@@ -2,6 +2,7 @@
 
 namespace Activity\Mapper;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -164,6 +165,59 @@ class Activity
         }
 
         $qb->orderBy('a.beginTime', 'DESC');
+
+        return $qb;
+    }
+
+    /**
+     * Returns the newest activity that has taken place
+     *
+     * @return \Activity\Model\Activity
+     */
+    public function getNewestActivity()
+    {
+        $qb = $this->getArchivedActivityQueryBuilder()
+            ->setMaxResults(1)
+            ->orderBy('a.beginTime', 'DESC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Returns the oldest activity that has taken place
+     *
+     * @return \Activity\Model\Activity
+     */
+    public function getOldestActivity()
+    {
+        $qb = $this->getArchivedActivityQueryBuilder()
+            ->setMaxResults(1)
+            ->orderBy('a.beginTime', 'ASC');
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Create a query that is restricted to finished activities which are displayed in the activity.
+     *
+     * Finished activities do have the following constaints (1) The begin time is less than the current time and
+     * (2) it must have been approved before
+     *
+     * @return QueryBuilder
+     */
+    protected function getArchivedActivityQueryBuilder()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->andWhere('a.status = :status')
+            ->andWhere('a.beginTime IS NOT NULL');
+        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
         return $qb;
     }
