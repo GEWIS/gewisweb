@@ -287,6 +287,13 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getFinishedActivitiesByYear($year)
     {
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+        
         if (!is_int($year)) {
             return [];
         }
