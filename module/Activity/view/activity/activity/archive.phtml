@@ -27,5 +27,10 @@
         </div>
     </section>
     <div class="container">
+        <?php
+        echo $this->partial('activity/activity/list.phtml',[
+            'activities' => $activities,
+        ]);
+        ?>
     </div>
 </div>

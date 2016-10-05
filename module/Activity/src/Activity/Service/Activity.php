@@ -13,11 +13,6 @@ use Activity\Form\Activity as ActivityForm;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
-    /**
-     * A GEWIS association year starts 01-07
-     */
-    const ASSOCIATION_YEAR_START_MONTH = 7;
-    const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
      * Get the ACL.
@@ -485,40 +480,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->flush();
     }
 
-    public function getActivityYears()
-    {
-        $oldest = $this->getActivityMapper()->getOldestActivity();
-        $newest = $this->getActivityMapper()->getNewestActivity();
-        if (is_null($oldest) || is_null($newest) || is_null($oldest->getBeginTime()) || is_null($newest->getBeginTime())) {
-            return [null];
-        }
 
-        $startYear = $this->getAssociationYear($oldest->getBeginTime());
-        $endYear = $this->getAssociationYear($newest->getBeginTime());
-
-        // We make the reasonable assumption that at least one photo is taken every year
-        return range($startYear, $endYear);
-    }
-
-    /**
-     * Returns the association year to which a certain date belongs
-     * In this context an association year is defined as the year which contains
-     * the first day of the association year.
-     *
-     * Example: A value of 2010 would represent the association year 2010/2011
-     *
-     * @param \DateTime $date
-     *
-     * @return int representing an association year.
-     */
-    protected function getAssociationYear(\DateTime $date)
-    {
-        if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
-            return $date->format('Y') - 1;
-        } else {
-            return $date->format('Y');
-        }
-    }
 
     /**
      * Get the activity mapper.
