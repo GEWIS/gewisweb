@@ -4,12 +4,11 @@ $this->headTitle($this->translate('Zoeken op lid'));
 $this->headTitle($this->translate('Members')); ?>
 
 <div class="container">
-    <form role="form">
-        <div class="form-group">
-            <label for=""><?= $this->translate('Zoeken op lid') ?></label>
-            <input type="text" class="form-control" placeholder="<?= $this->translate('Zoek') ?>" id="member-search" autofocus>
-        </div>
-    </form>
+    <div class="form-group">
+        <label for=""><?= $this->translate('Zoeken op lid') ?></label>
+        <input type="text" class="form-control" placeholder="<?= $this->translate('Zoek') ?>" id="member-search"
+               autofocus>
+    </div>
 
     <table class="table table-hover" id="members-result">
         <thead>
@@ -72,5 +71,10 @@ $this->headTitle($this->translate('Members')); ?>
             term = $(e.target).val();
             searchMember(term)
         });
+
+        // Called to search query again if user pressed back from other page.
+        term = $("#member-search").val();
+        searchMember(term)
+
     });
 </script>
