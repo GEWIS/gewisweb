@@ -17,3 +17,4 @@ public/css/gewis-theme.css.map
 public/styleguide/
 autoload_classmap.php
 .mysql
+.vagrant/
