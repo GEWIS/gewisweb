@@ -20,6 +20,21 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
+            <li>
+                <?php
+                    // determine association year
+                    $albumMonth = (int)$album->getStartDateTime()->format('m');
+                    $albumYear = (int)$album->getStartDateTime()->format('Y');
+                    if ($albumMonth < 7) {
+                        $associationYear = $albumYear - 1;
+                    } elseif ($albumMonth >= 7) {
+                        $associationYear = $albumYear;
+                    }
+                ?>
+                <a href="<?= $this->url('photo/year', ['year' => $associationYear]); ?>">
+                    <?= sprintf('%d/%d', $associationYear, $associationYear + 1) ?>
+                </a>
+            </li>
             <?php
             // first we need to get all parents
             $crumbs = [];

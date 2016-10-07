@@ -24,6 +24,21 @@ $this->scriptUrl()->requireUrl('member/search');
                         <?= $this->translate('Photos') ?>
                     </a>
                 </li>
+                <li>
+                    <?php
+                    // determine association year
+                    $albumMonth = (int)$photo->getAlbum()->getStartDateTime()->format('m');
+                    $albumYear = (int)$photo->getAlbum()->getStartDateTime()->format('Y');
+                    if ($albumMonth < 7) {
+                        $associationYear = $albumYear - 1;
+                    } elseif ($albumMonth >= 7) {
+                        $associationYear = $albumYear;
+                    }
+                    ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear]); ?>">
+                        <?= sprintf('%d/%d', $associationYear, $associationYear + 1) ?>
+                    </a>
+                </li>
                 <?php
                 // first we need to get all parents
                 $crumbs = [];
