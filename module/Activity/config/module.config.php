@@ -99,7 +99,7 @@ return [
                             ]
                         ]
                     ],
-                    // Route for categorizing albums by association year.
+                    // Route for categorizing activities by association year.
                     'year' => [
                         'type' => 'Segment',
                         'options' => [
