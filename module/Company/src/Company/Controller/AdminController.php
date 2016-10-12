@@ -347,9 +347,21 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            // TODO: possibly redirect to package
             $post = $request->getPost();
             $companyService->saveJobData($jobName, $job, $post, $files);
+            if ($jobName !== $post['slugName']) {
+                // Redirect to new slug name
+                return $this->redirect()->toRoute(
+                    'admin_company/editCompany/editJob',
+                    [
+                        'action' => 'edit',
+                        'slugCompanyName' => $companyName,
+                        'jobName' => $post['slugName'],
+                    ],
+                    [],
+                    false
+                );
+            }
         }
 
         // Initialize the form
