@@ -252,11 +252,10 @@ class ActivityController extends AbstractActionController
     /**
      * Display all the finished activities in a school year
      *
-     * @param null $year
      * @return ViewModel
      */
     public function archiveAction() {
-        //add any other special behavior which is required for the main photo page here later
+
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
