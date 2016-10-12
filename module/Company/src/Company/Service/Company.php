@@ -319,7 +319,7 @@ class Company extends AbstractACLService
         $package = $this->getPackageMapper()->findPackage($packageID);
         $job = new JobModel();
         $job->setPackage($package);
-        return $this->saveJobData($job, $data, $files);
+        return $this->saveJobData("", $job, $data, $files);
     }
 
     /**
@@ -331,7 +331,7 @@ class Company extends AbstractACLService
      *
      * @return JobModel|bool
      */
-    public function saveJobData($job, $data, $files)
+    public function saveJobData($currentSlug, $job, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
@@ -339,6 +339,7 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $jobForm->setCompanySlug($job->getCompany()->getSlugName());
+        $jobForm->setCurrentSlug($currentSlug);
         $jobForm->bind($job);
         $jobForm->setData($mergedData);
 
