@@ -175,7 +175,7 @@ class Job
 
     public function isActive()
     {
-        return $this->getActive() and $this->getPackage()->isActive();
+        return $this->getActive() and $this->getPackage()->isActive() && $this->getPackage()->getCompany()->isHidden();
     }
 
     /**
