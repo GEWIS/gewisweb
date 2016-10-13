@@ -170,6 +170,20 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
      */
     protected $organ;
 
+    /**
+     * Is this a My Future related activity
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isMyFuture;
+
+    /**
+     * Is this a food subscription list
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isFood;
+
     public function __construct()
     {
         $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
@@ -473,6 +487,38 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         $this->organ = $organ;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsMyFuture()
+    {
+        return $this->isMyFuture;
+    }
+
+    /**
+     * @param mixed $isMyFuture
+     */
+    public function setIsMyFuture($isMyFuture)
+    {
+        $this->isMyFuture = $isMyFuture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsFood()
+    {
+        return $this->isFood;
+    }
+
+    /**
+     * @param mixed $isFood
+     */
+    public function setIsFood($isFood)
+    {
+        $this->isFood = $isFood;
+    }
     
 
     /**
@@ -530,6 +576,8 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
             'description' => $this->getDescription(),
             'descriptionEn' => $this->getDescriptionEn(),
             'canSignUp' => $this->getCanSignUp(),
+            'isFood' => $this->getIsFood(),
+            'isMyFuture' => $this->getIsMyFuture(),
             'attendees' => $attendees,
             'fields' => $fields,
         ];
