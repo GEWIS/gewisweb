@@ -124,17 +124,11 @@ class Module
                     // add resource
                     $acl->addResource('company');
 
-                    // users (logged in GEWIS members) are allowed to view exams
-                    // TODO: besides users, also people on the TU/e network
-                    // are allowed to view exams
                     $acl->allow('guest', 'company', 'viewFeaturedCompany');
                     $acl->allow('guest', 'company', 'list');
                     $acl->allow('guest', 'company', 'view');
                     $acl->allow('guest', 'company', 'showBanner');
-                    $acl->allow('admin', 'company', 'insert');
-                    $acl->allow('admin', 'company', 'edit');
-                    $acl->allow('admin', 'company', 'delete');
-                    $acl->allow('admin', 'company', 'listall'); // Can use admin interface
+                    $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete', 'listall']);
 
                     return $acl;
                 },
