@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-18 21:22+0000\n"
-"PO-Revision-Date: 2016-09-12 11:06+0200\n"
+"PO-Revision-Date: 2016-10-18 23:32+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.10\n"
 
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:242
@@ -380,7 +380,6 @@ msgid "Option calendar"
 msgstr "Option calendar"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:15
-#, fuzzy
 msgid ""
 "Welcome on the page of the digital Option Calendar. In the calendar below "
 "you can place options for GEWIS activities, just like you were used to do in "
@@ -390,25 +389,25 @@ msgid ""
 "name, so it is clear where the option is for."
 msgstr ""
 "Welcome on the page of the digital Option Calendar. In the calendar below "
-"you can place options for GEWIS activities, just like this was done before "
-"on the paper version of the option calendar. The red dots indicate "
-"activities that are already in the GEWIS agenda, the blue dots are options "
-"for activities. If you insert an option, please give it a clear name, such "
-"that it is clear where the option is for."
+"you can place options for GEWIS activities, just like you were used to do in "
+"the paper version of the option calendar before. The red dots indicate "
+"activities that are already fixed in the GEWIS agenda, the blue dots are "
+"options for activities. If you insert an option, please give it a clear "
+"name, so it is clear where the option is for."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:17
 msgid "There are a few rules:"
 msgstr "There are a few rules:"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:19
-#, fuzzy
 msgid ""
 "It is not allowed to put more than 3 options for the same activity in the "
 "calendar."
-msgstr "No more than 3 options for the same activity are allowed."
+msgstr ""
+"It is not allowed to put more than 3 options for the same activity in the "
+"calendar."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
-#, fuzzy
 msgid ""
 "The first to put an option for an activity on a particular date, has the "
 "first dibs to let the activity take place on this date. Five weeks before "
@@ -418,10 +417,13 @@ msgid ""
 "within these two weeks nontheless, the option lapses and the next one in "
 "line gets the chance to use this date for an activity."
 msgstr ""
-"The first to put an option on a particular date, has the first dibs on this "
-"date. If an option stays in the option calendar for more than 3 weeks "
-"without a budget being sent to the board, then the option gets deleted and "
-"the next one in line gets the chance to use this date for an activity."
+"The first to put an option for an activity on a particular date, has the "
+"first dibs to let the activity take place on this date. Five weeks before "
+"the activity takes place, the budget must have been presented to the board. "
+"When this has not been done, the option will only stay in the calendar for "
+"two more weeks. In case the entity involved does not present their budget "
+"within these two weeks nontheless, the option lapses and the next one in "
+"line gets the chance to use this date for an activity."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:21
 msgid ""
@@ -429,6 +431,9 @@ msgid ""
 "for example in case of dependence on a third party, or when it concerns very "
 "big activities or weekends."
 msgstr ""
+"The board can always decide to make an exception to the rules written above, "
+"for example in case of dependence on a third party, or when it concerns very "
+"big activities or weekends."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:27
 msgid "Your option has been added successfully"
