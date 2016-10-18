@@ -12,12 +12,13 @@ $form->prepare();
 <div class="container option-calendar">
     <div class="row">
         <h1><?= $this->translate('Option calendar') ?></h1>
-        <?= $this->translate('Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like this was done before on the paper version of the option calendar. The red dots indicate activities that are already in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, such that it is clear where the option is for.') ?>
+        <?= $this->translate('Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, so it is clear where the option is for.') ?>
         <br/>
         <?= $this->translate('There are a few rules:') ?>
         <ul>
-            <li><?= $this->translate('No more than 3 options for the same activity are allowed.') ?></li>
-            <li><?= $this->translate('The first to put an option on a particular date, has the first dibs on this date. If an option stays in the option calendar for more than 3 weeks without a budget being sent to the board, then the option gets deleted and the next one in line gets the chance to use this date for an activity.') ?></li>
+            <li><?= $this->translate('It is not allowed to put more than 3 options for the same activity in the calendar.') ?></li>
+            <li><?= $this->translate('The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for two more weeks. In case the entity involved does not present their budget within these two weeks nontheless, the option lapses and the next one in line gets the chance to use this date for an activity.') ?></li>
+            <li><?= $this->translate('The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very big activities or weekends.') ?></li>
         </ul>
     </div>
     <hr>
