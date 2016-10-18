@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-18 21:22+0000\n"
-"PO-Revision-Date: 2016-09-12 11:06+0200\n"
+"PO-Revision-Date: 2016-10-18 23:29+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.10\n"
 
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:242
@@ -378,10 +378,9 @@ msgstr "Exporteer inschrijvingen"
 #: module/Activity/view/activity/activity-calendar/index.phtml:14
 #: module/Decision/view/decision/member/index.phtml:66
 msgid "Option calendar"
-msgstr "Optie kalender"
+msgstr "Optiekalender"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:15
-#, fuzzy
 msgid ""
 "Welcome on the page of the digital Option Calendar. In the calendar below "
 "you can place options for GEWIS activities, just like you were used to do in "
@@ -390,26 +389,26 @@ msgid ""
 "options for activities. If you insert an option, please give it a clear "
 "name, so it is clear where the option is for."
 msgstr ""
-"Welkom bij de digitale Optie Kalender. In onderstaande kalender kunnen er "
+"Welkom bij de digitale optiekalender. In onderstaande kalender kunnen er "
 "opties voor GEWIS-activiteiten geplaatst worden, net zoals dat voorheen in "
-"de papieren optie kalender gebeurde. De rode bolletjes geven activiteiten in "
-"de GEWIS agenda aan, de blauwe bolletjes zijn opties voor activiteiten. Als "
-"je een optie plaatst, geef deze dan een duidelijke naam waaruit blijkt waar "
-"de optie voor is."
+"de papieren optiekalender gebeurde. De rode bolletjes geven goedgekeurde en "
+"vaststaande activiteiten in de GEWIS agenda aan, de blauwe bolletjes zijn "
+"opties voor activiteiten. Als je een optie plaatst, geef deze dan een "
+"duidelijke naam waaruit blijkt waar de optie voor is. "
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:17
 msgid "There are a few rules:"
 msgstr "Er zijn een paar regels:"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:19
-#, fuzzy
 msgid ""
 "It is not allowed to put more than 3 options for the same activity in the "
 "calendar."
-msgstr "Niet meer dan 3 opties voor dezelfde activiteit."
+msgstr ""
+"Er mogen niet meer dan 3 opties voor dezelfde activiteit in de optiekalender "
+"geplaatst worden."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
-#, fuzzy
 msgid ""
 "The first to put an option for an activity on a particular date, has the "
 "first dibs to let the activity take place on this date. Five weeks before "
@@ -419,10 +418,14 @@ msgid ""
 "within these two weeks nontheless, the option lapses and the next one in "
 "line gets the chance to use this date for an activity."
 msgstr ""
-"De eerste die een optie op een dag plaatst, heeft ook het eerst recht op "
-"deze dag. Als er binnen 3 weken na het plaatsen van de optie nog geen "
-"begroting voor die activiteit is verschenen, dan wordt de optie verwijderd "
-"en krijgt de volgende in de rij de kans om deze dag te gebruiken."
+"Het eerste orgaan dat een optie op een bepaalde dag plaatst, heeft ook het "
+"eerst recht om hun activiteit plaats te laten vinden op deze dag. Vijf weken "
+"voordat de activiteit plaats vindt, moet er een begroting bij het bestuur "
+"liggen. Als dit niet het geval is, dan blijft de optie nog slechts 2 weken "
+"in de optiekalender staan (vanaf dat moment dat de activiteit over 5 weken "
+"plaatsvindt). Wanneer er niet binnen deze 2 weken alsnog een begroting wordt "
+"ingediend, dan vervalt de optie, en krijgt de volgende in de rij de kans om "
+"deze dag te gebruiken."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:21
 msgid ""
@@ -430,6 +433,9 @@ msgid ""
 "for example in case of dependence on a third party, or when it concerns very "
 "big activities or weekends."
 msgstr ""
+"Het bestuur kan altijd beslissen om een uitzondering op bovenstaande regels "
+"te maken, bijvoorbeeld in het geval van afhankelijkheid van een derde "
+"partij, of als het gaat om grote activiteiten en weekenden. "
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:27
 msgid "Your option has been added successfully"
