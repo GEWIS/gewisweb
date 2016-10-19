@@ -240,9 +240,16 @@ class EditJob extends Form
 
     private $companySlug;
 
+    private $currentSlug;
+
     public function setCompanySlug($companySlug)
     {
         $this->companySlug = $companySlug;
+    }
+
+    public function setCurrentSlug($currentSlug)
+    {
+        $this->currentSlug = $currentSlug;
     }
 
     /**
@@ -253,6 +260,10 @@ class EditJob extends Form
     public function slugNameUnique($slugName, $context)
     {
         $jid = $context['id'];
+        if ($this->currentSlug === $slugName) {
+            return true;
+        }
+
         return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid);
 
     }
