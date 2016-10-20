@@ -190,6 +190,27 @@ $form->prepare();
                     <?= $this->formCheckbox($canSignUp) ?>
                     <?= $this->formElementErrors($canSignUp) ?>
                 </label>
+                </div>
+            <?php
+            $isFood = $form->get('isFood');
+            ?>
+            <div class="form-group<?= count($isFood->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label>
+                    <?= $this->translate('This is a food subscription list') ?>
+                    <?= $this->formCheckbox($isFood) ?>
+                    <?= $this->formElementErrors($isFood) ?>
+                </label>
+            </div>
+            <?php
+            $isMyFuture = $form->get('isMyFuture');
+            ?>
+            <div class="form-group<?= count($isMyFuture->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label>
+                    <?= $this->translate('This is a My Future related activity') ?>
+                    <?= $this->formCheckbox($isMyFuture) ?>
+                    <?= $this->formElementErrors($isMyFuture) ?>
+                </label>
+            </div>
             <input type="hidden" name="organ" value="0"/>
         </div>
         <div class="col-md-12">

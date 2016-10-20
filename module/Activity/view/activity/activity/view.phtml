@@ -61,7 +61,11 @@ $this->headTitle($this->translate('Activities')); ?>
                             <?php endif; ?>
                             <dt><?= $this->translate('Costs') ?></dt>
                             <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
-
+                            <?php if ($activity->getIsMyFuture()): ?>
+                            <a href="https://myfuture.tue.nl/">
+                                <img class="img-responsive" style="max-width: 100px;" src="/img/myfuture.jpg"/>
+                            </a>
+                            <?php endif ?>
                         </dl>
                     </div>
                 </div>
