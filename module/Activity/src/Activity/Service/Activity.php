@@ -215,6 +215,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
         $activity->setCanSignUp($params['canSignUp']);
+        $activity->setIsFood($params['isFood']);
+        $activity->setIsMyFuture($params['isMyFuture']);
 
         // Not user provided input
         $activity->setCreator($user);

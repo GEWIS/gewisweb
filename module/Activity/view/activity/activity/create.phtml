@@ -193,6 +193,28 @@ $form->prepare();
                 </label>
             </div>
             <?php
+            $isFood = $form->get('isFood');
+            ?>
+            <div class="form-group<?= count($isFood->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label>
+                    <?= $this->translate('This is a food subscription list') ?>
+                    <?= $this->formCheckbox($isFood) ?>
+                    <?= $this->formElementErrors($isFood) ?>
+                </label>
+            </div>
+            <?php
+            $isMyFuture = $form->get('isMyFuture');
+            ?>
+            <div class="form-group<?= count($isMyFuture->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label>
+                    <?= $this->translate('This is a My Future related activity') ?>
+                    <?= $this->formCheckbox($isMyFuture) ?>
+                    <?= $this->formElementErrors($isMyFuture) ?>
+                </label>
+            </div>
+
+
+            <?php
             $organ = $form->get('organ');
             $organ->setAttribute('class', 'form-control');
             ?>

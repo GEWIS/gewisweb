@@ -90,6 +90,8 @@ class ActivityTranslator extends AbstractService
         $activityTranslation->setBeginTime($activity->getBeginTime());
         $activityTranslation->setEndTime($activity->getEndTime());
         $activityTranslation->setCanSignUp($activity->getCanSignUp());
+        $activityTranslation->setIsFood($activity->getIsFood());
+        $activityTranslation->setIsMyFuture($activity->getIsMyFuture());
         $activityTranslation->setOnlyGEWIS($activity->getOnlyGEWIS());
         $activityTranslation->setApprover($activity->getApprover());
         $activityTranslation->setCreator($activity->getCreator());
