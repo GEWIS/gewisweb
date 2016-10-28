@@ -21,7 +21,7 @@
                     <h4>
                         <?php if (!isset($proposals)): ?>
                         <a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
-                            <?= $this->escapeHtml($activity->getName()) ?>
+                            <?= $this->escapeHtml($activity->getName() === null ? $activity->getNameEn() : $activity->getName()) ?>
                         </a>
                         <?php else: ?>
                         <?php $proposal = $proposals[$activity->getId()] ?>
