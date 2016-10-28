@@ -103,7 +103,7 @@ class Course
     protected function getCourseInfo($course)
     {
         $year = $course->LaatsteStudiejaarGegeven->__toString();
-        $year = empty($year) ? '2013' : $year;
+        $year = (empty($year)  || $year == 0) ? date('Y') : $year;
         $code = $course->ActCode->__toString();
 
         $course = $this->client->GeefVakGegevens($code, $year, 'NL');

@@ -104,11 +104,7 @@ $this->headTitle($this->translate('Activities')); ?>
                                             echo $this->escapeHtml($fieldValue->getValue());
                                             break;
                                         case 1:
-                                            if ($fieldValue->getValue()) {
-                                                echo $this->translate('Yes');
-                                            } else {
-                                                echo $this->translate('No');
-                                            }
+                                            echo $this->translate($fieldValue->getValue());
                                             break;
                                         case 2:
                                             echo $fieldValue->getValue();
