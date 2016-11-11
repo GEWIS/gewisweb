@@ -13,7 +13,7 @@ $this->headTitle($this->translate('Photos')); ?>
                         <?php for ($i = 0; $i < max(0, count($years) - 5); $i++): ?>
                             <li>
                                 <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
-                                    <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
+                                    <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
                                 </a>
                             </li>
                         <?php endfor ?>
@@ -22,7 +22,7 @@ $this->headTitle($this->translate('Photos')); ?>
                 <?php for ($i = max(0, count($years) - 5); $i < count($years); $i++): ?>
                     <li>
                         <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
-                            <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
+                            <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
                         </a>
                     </li>
                 <?php endfor; ?>
