@@ -22,7 +22,10 @@ class AssociationYear
      *
      * AssociationYear constructor.
      */
-    private function __construct() {}
+    private function __construct()
+    {
+        // never used
+    }
     
     /**
      * Returns an instance of AssociationYear.
@@ -30,7 +33,8 @@ class AssociationYear
      * @param $year int first calendar year of the association year
      * @return static
      */
-    public static function fromYear($year) {
+    public static function fromYear($year)
+    {
         $inst = new static();
         $inst->firstYear = $year;
         return $inst;
@@ -42,7 +46,8 @@ class AssociationYear
      * @param \DateTime $dateTime date to find the AssociationYear for
      * @return static
      */
-    public static function fromDate(\DateTime $dateTime) {
+    public static function fromDate(\DateTime $dateTime)
+    {
         $inst = new static();
         if ($dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
             && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY) {
@@ -56,7 +61,8 @@ class AssociationYear
     /**
      * @return int the first calendar year of the association year
      */
-    public function getYear() {
+    public function getYear()
+    {
         return $this->firstYear;
     }
     
@@ -65,7 +71,8 @@ class AssociationYear
      *
      * @return string the association year
      */
-    public function getYearString() {
+    public function getYearString()
+    {
         return sprintf('%4d-%4d', $this->firstYear, $this->firstYear + 1);
     }
     
@@ -74,9 +81,12 @@ class AssociationYear
      *
      * @return \DateTime
      */
-    public function getStartDate() {
-        return \DateTime::createFromFormat('j-M-Y', sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY,
-            self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear));
+    public function getStartDate()
+    {
+        return \DateTime::createFromFormat(
+            'j-M-Y',
+            sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY, self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear)
+        );
     }
     
     /**
@@ -84,8 +94,11 @@ class AssociationYear
      *
      * @return \DateTime
      */
-    public function getEndDate() {
-        return \DateTime::createFromFormat('j-M-Y', sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY,
-            self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear + 1))->sub(new \DateInterval('P1D'));
+    public function getEndDate()
+    {
+        return \DateTime::createFromFormat(
+            'j-M-Y',
+            sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY, self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear + 1)
+        )->sub(new \DateInterval('P1D'));
     }
 }
