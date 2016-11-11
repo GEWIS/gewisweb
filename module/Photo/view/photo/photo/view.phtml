@@ -27,16 +27,10 @@ $this->scriptUrl()->requireUrl('member/search');
                 <li>
                     <?php
                     // determine association year
-                    $albumMonth = (int)$photo->getAlbum()->getStartDateTime()->format('m');
-                    $albumYear = (int)$photo->getAlbum()->getStartDateTime()->format('Y');
-                    if ($albumMonth < 7) {
-                        $associationYear = $albumYear - 1;
-                    } elseif ($albumMonth >= 7) {
-                        $associationYear = $albumYear;
-                    }
+                    $associationYear = \Decision\Model\AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
                     ?>
-                    <a href="<?= $this->url('photo/year', ['year' => $associationYear]); ?>">
-                        <?= sprintf('%d/%d', $associationYear, $associationYear + 1) ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                        <?= $associationYear->getYearString() ?>
                     </a>
                 </li>
                 <?php

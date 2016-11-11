@@ -22,17 +22,11 @@ $this->headTitle($this->translate('Photos'));
             </li>
             <li>
                 <?php
-                    // determine association year
-                    $albumMonth = (int)$album->getStartDateTime()->format('m');
-                    $albumYear = (int)$album->getStartDateTime()->format('Y');
-                    if ($albumMonth < 7) {
-                        $associationYear = $albumYear - 1;
-                    } elseif ($albumMonth >= 7) {
-                        $associationYear = $albumYear;
-                    }
+                // determine association year
+                $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
                 ?>
-                <a href="<?= $this->url('photo/year', ['year' => $associationYear]); ?>">
-                    <?= sprintf('%d/%d', $associationYear, $associationYear + 1) ?>
+                <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                    <?= $associationYear->getYearString() ?>
                 </a>
             </li>
             <?php
