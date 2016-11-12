@@ -20,6 +20,15 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
+            <li>
+                <?php
+                // determine association year
+                $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                ?>
+                <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                    <?= $associationYear->getYearString() ?>
+                </a>
+            </li>
             <?php
             // first we need to get all parents
             $crumbs = [];
