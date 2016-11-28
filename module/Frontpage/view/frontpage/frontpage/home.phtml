@@ -53,23 +53,25 @@
                         <h3><?= $this->translate('Agenda') ?></h3>
                     </div>
                     <div class="panel-body">
-                        <div class="list-group">
-                            <?php foreach ($activities as $activity): ?>
-                                <a class="list-group-item agenda-item"
-                                   href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                <span class="badge">
-                                    <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>
-                                        &nbsp;</span>
-                                    <span><?= $activity->getBeginTime()->format('d') ?></span>
-                                </span>
+                        <?php if (!empty($activities)): ?>
+                            <div class="list-group">
+                                <?php foreach ($activities as $activity): ?>
+                                    <a class="list-group-item agenda-item"
+                                       href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                    <span class="badge">
+                                        <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>
+                                            &nbsp;</span>
+                                        <span><?= $activity->getBeginTime()->format('d') ?></span>
+                                    </span>
 
-                                    <?= $activity->getName(); ?>
+                                        <?= $activity->getName(); ?>
 
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php  endif; ?>
 
-                        <p>
+                        <p class="small">
                             <?= sprintf(
                                 $this->translate('Donderdags is er %sborrel%s van 16.30 tot 19.00 uur.'),
                                 '<a href="~bac">',
@@ -78,21 +80,17 @@
                             ?>
                         </p>
                     </div>
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <a href="<?= $this->url('activity') ?>">
-                                    <?= $this->translate('Complete agenda') ?>
-                                    <span class="glyphicon glyphicon-arrow-right"></span>
-                                </a>
-                            </div>
-                            <div class="col-xs-4 text-right">
-                                <a href="https://www.google.com/calendar/embed?src=v23gq10ij44fhdsfdof1s613ak%40group.calendar.google.com&gsessionid=OK"
-                                   title="<?= $this->translate('Google Calendar') ?>">
-                                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;iCal
-                                </a>
-                            </div>
-                        </div>
+                    <div class="panel-footer panel-footer--links">
+                        <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
+                            <?= $this->translate('Complete agenda') ?>
+                        </a>
+                        <a
+                            href="https://www.google.com/calendar/embed?src=v23gq10ij44fhdsfdof1s613ak%40group.calendar.google.com&gsessionid=OK"
+                            title="<?= $this->translate('Google Calendar') ?>"
+                            class="panel-footer__link"
+                        >
+                            iCal
+                        </a>
                     </div>
                 </div>
 
@@ -131,10 +129,16 @@
                             <a href="<?= $this->url('poll') ?>"><?= $this->translate('View the results') ?></a>
                         </div>
                     <?php else: ?>
-                        <div class="panel-footer">
+                        <div class="panel-body">
                             <?= $this->translate('There currently is no poll.'); ?>
-                            <a href="<?= $this->url('poll/request') ?>"><?= $this->translate('Request a poll') ?></a> <?= $this->translate('or') ?>
-                            <a href="<?= $this->url('poll/history') ?>"><?= $this->translate('view old polls') ?></a>.
+                        </div>
+                        <div class="panel-footer panel-footer--links">
+                            <a href="<?= $this->url('poll/request') ?>" class="panel-footer__link">
+                                <?= $this->translate('Request a poll') ?>
+                            </a>
+                            <a href="<?= $this->url('poll/history') ?>" class="panel-footer__link">
+                                <?= $this->translate('view old polls') ?>
+                            </a>
                         </div>
                     <?php endif; ?>
                 </div>
