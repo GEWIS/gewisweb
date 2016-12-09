@@ -77,13 +77,16 @@ $panel-link-color: #969696;
 
     .panel-footer {
         padding: ($panel-spacing / 2) $panel-spacing;
+
         border: 0;
         background: $panel-footer-bg;
+        font: 600 0.9em 'Raleway';
+        line-height: 1em;
 
         &__link {
-            margin-right: 1em;
+            display: inline-block;
+            margin: 5px 1.5em 5px 0;
 
-            font: 600 0.9em 'Raleway';
             text-transform: uppercase;
             color: $panel-link-color;
             text-decoration: none;
