@@ -57,13 +57,17 @@ $panel-link-color: #969696;
     box-shadow: none;
 
     .panel-heading {
-        padding: $panel-spacing $panel-spacing ($panel-spacing / 2);
+        padding: ($panel-spacing * 0.8) $panel-spacing ($panel-spacing / 2);
         border: 0;
         background: $panel-bg;
 
         h3 {
             @extend .h2;
             margin: 0 !important;
+        }
+
+        &--full-height {
+            padding: ($panel-spacing * 0.8) $panel-spacing;
         }
     }
 
