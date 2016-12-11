@@ -63,6 +63,9 @@ class ActivityTranslator extends AbstractService
         for ($i=0; $i<count($translatedSignupData); $i++){
             foreach ($activity->getFields() as $field){
                 if ($field->getType() === 3){
+                    if (count($translatedSignupData[$i]['values']) != 1) {
+                        continue;
+                    }
                     $value = $this->createActivityOptionTranslation(
                         $translatedSignupData[$i]['values'][$field->getId()],
                         $language
@@ -90,6 +93,8 @@ class ActivityTranslator extends AbstractService
         $activityTranslation->setBeginTime($activity->getBeginTime());
         $activityTranslation->setEndTime($activity->getEndTime());
         $activityTranslation->setCanSignUp($activity->getCanSignUp());
+        $activityTranslation->setIsFood($activity->getIsFood());
+        $activityTranslation->setIsMyFuture($activity->getIsMyFuture());
         $activityTranslation->setOnlyGEWIS($activity->getOnlyGEWIS());
         $activityTranslation->setApprover($activity->getApprover());
         $activityTranslation->setCreator($activity->getCreator());

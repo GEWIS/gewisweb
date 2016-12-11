@@ -98,6 +98,10 @@ class ActivityTranslation
     // TODO -> where can i find member organ?
     protected $organ;
 
+    protected $isMyFuture;
+
+    protected $isFood;
+
     /**
      * @return integer
      */
@@ -332,6 +336,39 @@ class ActivityTranslation
     {
         $this->fields = $fields;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsMyFuture()
+    {
+        return $this->isMyFuture;
+    }
+
+    /**
+     * @param mixed $isMyFuture
+     */
+    public function setIsMyFuture($isMyFuture)
+    {
+        $this->isMyFuture = $isMyFuture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsFood()
+    {
+        return $this->isFood;
+    }
+
+    /**
+     * @param mixed $isFood
+     */
+    public function setIsFood($isFood)
+    {
+        $this->isFood = $isFood;
+    }
+
     /**
      * Returns an associative array representation of this object.
      *

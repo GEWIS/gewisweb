@@ -236,7 +236,6 @@ class User extends AbstractAclService
             return null;
         }
 
-        $this->getAuthStorage()->setRememberMe($data['remember']);
         $user = $auth->getIdentity();
         // Log the session in the database
         $this->saveSession($user);

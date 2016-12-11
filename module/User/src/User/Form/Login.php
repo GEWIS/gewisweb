@@ -42,17 +42,6 @@ class Login extends Form
         ]);
 
         $this->add([
-            'name' => 'remember',
-            'type' => 'checkbox',
-            'options' => [
-                'label' => $translate->translate('Remember me'),
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-                'checked' => true
-            ],
-        ]);
-
-        $this->add([
             'name' => 'redirect',
             'type' => 'hidden'
         ]);

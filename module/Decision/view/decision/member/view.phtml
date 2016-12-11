@@ -27,10 +27,12 @@ use Decision\Model\Address;
                         }
                         ?></td>
                 </tr>
+                <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
                 <tr>
                     <th><?= $this->translate('Email') ?></th>
                     <td><a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a></td>
                 </tr>
+                <?php endif; ?>
                 <tr>
                     <th><?= $this->translate('Birth date') ?></th>
                     <td><?= $member->getBirth()->format('l j F Y') ?></td>
