@@ -163,6 +163,10 @@ class Organ extends AbstractAclService
             $this->approveOrganInformation($organInformation);
         }
 
+        $this->getEmailService()->sendEmail('organ_update', 'email/organUpdate',
+            'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
+            ['organInfo' => $organInformation]);
+
         return true;
     }
 
@@ -345,5 +349,15 @@ class Organ extends AbstractAclService
     public function getAcl()
     {
         return $this->sm->get('decision_acl');
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return \Application\Service\Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('application_service_email');
     }
 }

@@ -45,7 +45,8 @@ class ActivityCalendar extends AbstractAclService
         $date->sub(new \DateInterval('P3W'));
         $oldOptions = $this->getActivityCalendarOptionMapper()->getPastOptions($date);
         if (!empty($oldOptions)) {
-            $this->getEmailService()->sendOptionsOverdueEmail($oldOptions);
+            $this->getEmailService()->sendEmail('activity_calendar', 'email/options-overdue',
+                'Activiteiten kalender opties verlopen | Activity calendar options expired', ['options' => $oldOptions]);
         }
     }
 
@@ -149,7 +150,8 @@ class ActivityCalendar extends AbstractAclService
         foreach ($options as $option) {
             // Can't add two options at the same time
             if ($option->getBeginTime() == $newOption->getBeginTime()
-                || $option->getEndTime() == $newOption->getEndTime()) {
+                || $option->getEndTime() == $newOption->getEndTime()
+            ) {
                 return true;
             }
         }
@@ -226,11 +228,11 @@ class ActivityCalendar extends AbstractAclService
     /**
      * Get the email service
      *
-     * @return \Activity\Service\Email
+     * @return \Application\Service\Email
      */
     public function getEmailService()
     {
-        return $this->sm->get('activity_service_email');
+        return $this->sm->get('application_service_email');
     }
 
     /**

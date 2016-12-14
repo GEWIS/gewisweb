@@ -223,6 +223,9 @@ class Poll extends AbstractAclService
         $pollMapper->persist($poll);
         $pollMapper->flush();
 
+        $this->getEmailService()->sendEmail('poll_creation', 'email/poll',
+            'Er is een nieuwe poll aangevraagd | A new poll has been requested', ['poll' => $poll]);
+
         return true;
     }
 
@@ -351,4 +354,15 @@ class Poll extends AbstractAclService
     {
         return 'poll';
     }
+
+    /**
+     * Get the email service
+     *
+     * @return \Application\Service\Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('application_service_email');
+    }
+
 }
