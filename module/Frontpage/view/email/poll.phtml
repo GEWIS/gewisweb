@@ -1,0 +1,31 @@
+<?php $lang = 'en'; ?>
+For English, see below.
+
+Lieve bestuurder,<br /><br />
+
+Er is een nieuwe poll aangemaakt op de GEWIS website.
+
+<h3>Vraag van de poll: <?= $this->escapeHtml($poll->getDutchQuestion()) ?></h3>
+<p>Deze poll is aangemaakt door lid <?= $this->escapeHtml($poll->getCreator()->getMember()->getLidnr()) ?> (lidnummer)</p>
+
+<br/>
+Klik <a href="<?= $this->serverUrl($this->url('admin_poll')) ?>">hier</a> om deze poll goed/af te keuren.
+<br/><br/>
+
+Met vriendelijke groeten,<br />
+De Web Commissie
+<hr />
+
+Dear board member,<br /><br />
+
+A new poll was created at the GEWIS website. See below for details.
+
+<h3>Question of the poll: <?= $this->escapeHtml($poll->getEnglishQuestion()) ?></h3>
+<p>Author of the poll: <?= $this->escapeHtml($poll->getCreator()->getMember()->getLidnr()) ?> (membership number)</p>
+
+<br/>
+Click <a href="<?= $this->serverUrl($this->url('admin_poll')) ?>">here</a> to approve or disapprove this poll.
+<br/><br/>
+
+Kind Regards, <br />
+The Web Committee
