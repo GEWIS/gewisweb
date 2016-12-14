@@ -238,7 +238,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
 
-        $this->getEmailService()->sendActivityCreationEmail($activity);
+        //$this->getEmailService()->sendActivityCreationEmail($activity);
+        $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
+            'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
+            ['activity' => $activity]);
+
 
         return $activity;
     }
@@ -444,10 +448,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Get the email service.
      *
-     * @return EmailService
+     * @return \Application\Service\Email
      */
     public function getEmailService()
     {
-        return $this->sm->get('activity_service_email');
+        return $this->sm->get('application_service_email');
     }
 }
