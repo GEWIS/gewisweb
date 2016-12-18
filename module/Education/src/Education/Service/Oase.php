@@ -52,7 +52,7 @@ class Oase extends AbstractService
      */
     public function getCourse($code)
     {
-        return $this->getOaseCourseService()->getCourse($code);
+        return $this->getOaseCourseService()->getCourse($code, date('Y'));
     }
 
     /**

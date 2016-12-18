@@ -33,7 +33,7 @@ class Signup extends AbstractAclService
 
     /**
      * Return the form for signing up in the preferred language, if available.
-     * Otherwise, it returns it in the avaiable language.
+     * Otherwise, it returns it in the available language.
      *
      * @param type $fields
      * @return type

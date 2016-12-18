@@ -207,6 +207,7 @@ return [
                 200, // bachelor (pre-bachelor-college)
                 210, // regulier onderwijs (incl. master)
                 212, // coherente keuzepakketten wss
+                250,
             ],
             /**
              * Education types

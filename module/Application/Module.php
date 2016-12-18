@@ -70,6 +70,7 @@ class Module
             'invokables' => [
                 'application_service_storage' => 'Application\Service\FileStorage',
                 'application_service_legacy' => 'Application\Service\Legacy',
+                'application_service_email' => 'Application\Service\Email'
             ],
         ];
     }

@@ -1,0 +1,25 @@
+<?php $lang = 'en'; ?>
+For English, see below.
+
+Lieve bestuurder,<br /><br />
+
+Het orgaan '<?= $this->escapeHtml($organInfo->getOrgan()->getName()) ?>' heeft een update doorgevoerd op haar pagina. Gelieve deze update te reviewen.
+
+<p></p>
+Klik <a href="<?= $this->serverUrl($this->url('admin_organ')) ?>">hier</a> om deze update te bekijken.
+<br/><br/>
+
+Met vriendelijke groeten,<br />
+De Web Commissie
+<hr />
+
+Dear board member,<br /><br />
+
+The organ '<?= $this->escapeHtml($organInfo->getOrgan()->getName()) ?>' has made a change to her page. Please review this update.
+
+<p></p>
+Click <a href="<?= $this->serverUrl($this->url('admin_organ')) ?>">here</a> to view this update.
+<br/><br/>
+
+Kind Regards, <br />
+The Web Committee

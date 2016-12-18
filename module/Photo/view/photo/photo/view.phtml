@@ -24,6 +24,15 @@ $this->scriptUrl()->requireUrl('member/search');
                         <?= $this->translate('Photos') ?>
                     </a>
                 </li>
+                <li>
+                    <?php
+                    // determine association year
+                    $associationYear = \Decision\Model\AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
+                    ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                        <?= $associationYear->getYearString() ?>
+                    </a>
+                </li>
                 <?php
                 // first we need to get all parents
                 $crumbs = [];

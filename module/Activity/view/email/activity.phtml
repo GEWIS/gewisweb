@@ -1,9 +1,9 @@
 <?php $lang = 'en'; ?>
-For English, see below
+For English, see below.
 
 L.s.<br /><br />
 
-Er is een nieuwe activiteit aangemaakt op de de GEWIS website. 
+Er is een nieuwe activiteit aangemaakt op de GEWIS website.
 
 <h3><?= $this->escapeHtml($activity->getName()) ?></h3>
 
@@ -11,11 +11,11 @@ Er is een nieuwe activiteit aangemaakt op de de GEWIS website.
 
 <table>
     <tr>
-        <td><b>Start tijd:</b></td>
+        <td><b>Starttijd:</b></td>
         <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
     </tr>
     <tr>
-        <td><b>Eind tijd</b></td>
+        <td><b>Eindtijd</b></td>
         <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@ Er is een nieuwe activiteit aangemaakt op de de GEWIS website.
     </tr>
 </table>
 <br/>
-Klik <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed of af te keuren.
+Klik <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed/af te keuren.
 <br/><br/>
 
 Met vriendelijke groeten,<br />
@@ -51,7 +51,7 @@ A new activity was created at the GEWIS website. See below for details.
 
 <table>
     <tr>
-        <td><b>Starting Time:</b></td>
+        <td><b>Starting time:</b></td>
         <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></td>
     </tr>
     <tr>
@@ -74,8 +74,8 @@ A new activity was created at the GEWIS website. See below for details.
     </tr>
 </table>
 <br/>
-Click <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">here</a> to approve or disapprove this activity.
+Click <a href="<?= $this->serverUrl($this->url('admin_activity/view', ['id' => $activity->getId()])) ?>">here</a> to approve/disapprove this activity.
 <br/><br/>
 
 Kind Regards, <br />
-The Web Comittee
+The Web Committee

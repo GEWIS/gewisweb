@@ -54,7 +54,6 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_service_email' => 'Activity\Service\Email',
                 'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],

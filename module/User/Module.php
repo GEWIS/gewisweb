@@ -256,6 +256,7 @@ class Module
                     $acl->addrole(new Role('apiuser'), 'guest');
                     $acl->addrole(new Role('sosuser'), 'apiuser');
                     $acl->addrole(new Role('active_member'), 'user');
+                    $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
 
                     $user = $sm->get('user_role');
