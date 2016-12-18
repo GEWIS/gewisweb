@@ -239,6 +239,30 @@ return [
                 ],
                 'priority' => 100
             ],
+            'member_api' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/api/member',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller' => 'MemberApi',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'lidnr' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/lidnr/:lidnr',
+                            'defaults' => [
+                                'action' => 'lidnr',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100,
+            ],
             'admin_organ' => [
                 'type' => 'Literal',
                 'options' => [
@@ -283,7 +307,8 @@ return [
             'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
             'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
-            'Decision\Controller\Member' => 'Decision\Controller\MemberController'
+            'Decision\Controller\Member' => 'Decision\Controller\MemberController',
+            'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
         ]
     ],
     'view_manager' => [
