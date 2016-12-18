@@ -72,7 +72,7 @@ $panel-link-color: #969696;
     }
 
     .panel-body {
-        padding: 0 $panel-spacing $panel-spacing;
+        padding: 0 $panel-spacing ($panel-spacing * 0.8);
 
         :last-child {
             margin-bottom: 0;
