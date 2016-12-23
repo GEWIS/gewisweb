@@ -15,7 +15,7 @@ class MemberApiController extends AbstractActionController
         $member = $this->getMemberService()->findMemberByLidNr($lidnr);
 
         if ($member) {
-            return new JsonModel($member->toArray());
+            return new JsonModel($member->toApiArray());
         }
 
         return new JsonModel([]);
