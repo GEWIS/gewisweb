@@ -76,6 +76,13 @@ class Member extends AbstractAclService
      */
     public function findMemberByLidNr($lidnr)
     {
+        if (!$this->isAllowed('view')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view members.')
+            );
+        }
+
         return $this->getMemberMapper()->findByLidnr($lidnr);
     }
 
