@@ -54,7 +54,6 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
             'factories' => [
@@ -62,6 +61,11 @@ class Module
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
+                },
+                'activity_form_activityfield_fieldset' => function ($sm) {
+                    $form = new \Activity\Form\ActivityFieldFieldSet();
+                    $form->setHydrator($sm->get('activity_hydrator'));
+                    return $form;
                 },
                 'activity_form_activity' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
