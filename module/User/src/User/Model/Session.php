@@ -36,6 +36,29 @@ class Session
     protected $ip;
 
     /**
+     * A cryptographically secure random session secret.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $secret;
+
+    /**
+     * @return mixed
+     */
+    public function getSecret()
+    {
+        return $this->secret;
+    }
+
+    /**
+     * @param mixed $secret
+     */
+    public function setSecret($secret)
+    {
+        $this->secret = $secret;
+    }
+
+    /**
      * The time the session was created at.
      *
      * @ORM\Column(type="datetime")
