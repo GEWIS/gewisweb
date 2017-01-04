@@ -24,6 +24,7 @@ class Frontpage extends AbstractAclService
         $pollDetails = $pollService->getPollDetails($poll);
         $pollDetails['poll'] = $poll;
         $news = $this->getNewsItems();
+        $companyBanner = $this->getCompanyService()->getCurrentBanner();
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
@@ -31,7 +32,8 @@ class Frontpage extends AbstractAclService
             'activities' => $activities,
             'weeklyPhoto' => $weeklyPhoto,
             'poll' => $pollDetails,
-            'news' => $news
+            'news' => $news,
+            'companyBanner' => $companyBanner
         ];
     }
 
@@ -184,6 +186,16 @@ class Frontpage extends AbstractAclService
     public function getNewsService()
     {
         return $this->sm->get('frontpage_service_news');
+    }
+
+    /**
+     * Get the company service.
+     *
+     * @return \Company\Service\Company
+     */
+    public function getCompanyService()
+    {
+        return $this->sm->get('company_service_company');
     }
 
     /**

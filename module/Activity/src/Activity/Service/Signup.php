@@ -167,9 +167,7 @@ class Signup extends AbstractAclService
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         // Find the current user
-        $user = $em->merge(
-            $this->getServiceManager()->get('user_role')
-        );
+        $user = $this->getServiceManager()->get('user_role');
 
         $signup = new UserActivitySignup();
         $signup->setActivity($activity);

@@ -207,7 +207,7 @@ class Module
                     return $adapter;
                 },
                 'user_auth_service' => function ($sm) {
-                    return new \Zend\Authentication\AuthenticationService(
+                    return new \User\Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );
