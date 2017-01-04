@@ -10,7 +10,7 @@ function addOption() {
 
 function removeOption() {
     var currentCount = $("#poll-options > .option").length - 1;
-    if (currentCount >= 0){
+    if (currentCount >= 2){
         $('#option'+currentCount).remove();
     }
 }
