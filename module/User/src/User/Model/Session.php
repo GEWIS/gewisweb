@@ -13,10 +13,10 @@ class Session
 {
 
     /**
-     * The PHPSESSID of this session
+     * The id of this session
      *
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="guid")
      */
     protected $id;
 
@@ -34,6 +34,52 @@ class Session
      * @ORM\Column(type="string")
      */
     protected $ip;
+
+    /**
+     * The time the session was created at.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * The last time this session was active
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $lastActive;
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastActive()
+    {
+        return $this->lastActive;
+    }
+
+    /**
+     * @param mixed $lastActive
+     */
+    public function setLastActive($lastActive)
+    {
+        $this->lastActive = $lastActive;
+    }
 
     /**
      * @return string
