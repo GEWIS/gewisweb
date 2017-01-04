@@ -45,7 +45,13 @@ use Decision\Model\Address;
             <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
             <ul>
                 <?php foreach ($memberships as $organ => $functions): ?>
-                    <li><?= $organ ?><?php if (!empty($functions)): ?> (<?= implode(', ', $functions) ?>)<?php endif ?></li>
+                    <?php $organObject = $this->findOrgan($organ); ?>
+                    <li><a href="<?= $this->url('home/organ', ['type' => $organObject->getType(), 'abbr' =>
+                            $organObject->getAbbr() ]) ?>"><?= $organ ?></a><?php if (!empty($functions)): ?> (<?=
+                            implode(', ', $functions) ?>)
+                        <?php
+                        endif
+                        ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
