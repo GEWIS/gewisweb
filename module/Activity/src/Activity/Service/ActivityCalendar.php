@@ -118,7 +118,7 @@ class ActivityCalendar extends AbstractAclService
         }
         $option->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
-        $option->setCreator($em->merge($this->sm->get('user_role')));
+        $option->setCreator($this->sm->get('user_role'));
         $em->persist($option);
         $em->flush();
 
@@ -170,7 +170,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $em = $this->getEntityManager();
-        $option->setDeletedBy($em->merge($this->sm->get('user_role')));
+        $option->setDeletedBy($this->sm->get('user_role'));
         $em->flush();
     }
 
