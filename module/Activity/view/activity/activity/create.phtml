@@ -279,12 +279,10 @@ $form->prepare();
     $('[name="beginTime"]').datetimepicker();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
-    $('.markdown-editor').markdown({
-       onShow: function(e) {
-           Activity.updateForm();
-       }
+    $('.markdown-editor').each(function() {
+      $(this).markdown();
     });
-    //Activity.updateForm();
+    Activity.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
         Activity.updateFieldset(i);
     }
