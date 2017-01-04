@@ -6,6 +6,9 @@ use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+
 
 class Activity
 {
@@ -87,6 +90,57 @@ class Activity
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Gets upcoming activities of the given organs, sorted by date.
+     *
+     * @param array $organs
+     * @return array
+     */
+    public function getUpcomingActivitiesByOrganizer($organs, $userid)
+    {
+        $qb = $this->activityByOrganizerQuery(
+                $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
+                $organs,
+                $userid);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Gets a paginator of old activities of the given organs, sorted by date.
+     *
+     * @param array $organs
+     * @return array
+     */
+    public function getOldActivityPaginatorAdapterByOrganizer($organs, $userid)
+    {
+        $qb = $this->activityByOrganizerQuery(
+                $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
+                $organs,
+                $userid);
+
+        return new DoctrineAdapter(new ORMPaginator($qb));
+    }
+
+    private function activityByOrganizerQuery($filter, $organs, $userid)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where($filter)
+            ->join('a.creator','u')
+            ->andWhere($qb->expr()->orX(
+                    $qb->expr()->in('a.organ', ':organs'),
+                    'u.lidnr = :userid')
+                    )
+            ->orderBy('a.endTime', 'ASC')
+            ->setParameter('organs', $organs)
+            ->setParameter('userid', $userid)
+            ->setParameter('now', new \DateTime());
+
+        return $qb;
     }
 
     /**

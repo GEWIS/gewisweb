@@ -6,6 +6,9 @@ use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use DoctrineModule\Paginator;
+use Decision\Model\Member;
+use Decision\Model\Organ;
+
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -220,6 +223,32 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         $activity = $activityMapper->getUpcomingActivities();
 
         return $activity;
+    }
+
+    /**
+     * Gets the upcoming activities created by this user or its organs.
+     *
+     * @param type $user
+     * @return type
+     */
+    public function getUpcomingCreatedActivities($user)
+    {
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
+        $activityMapper = $this->getActivityMapper();
+        return $activityMapper->getUpcomingActivitiesByOrganizer($organs, $user->getLidnr());
+    }
+
+    /**
+     * Gets a paginator for the old activities created by this user or its organs.
+     *
+     * @param type $user
+     * @return type
+     */
+    public function getOldCreatedActivitiesPaginator($user)
+    {
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
+        $activityMapper = $this->getActivityMapper();
+        return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
     /**
