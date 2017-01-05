@@ -21,8 +21,6 @@ class UserController extends AbstractActionController
             // try to login
             $login = $userService->login($data);
             if (null !== $login) {
-                // TODO
-
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
                 }
