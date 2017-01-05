@@ -330,9 +330,4 @@ return [
             ]
         ]
     ],
-    'view_helpers' => [
-        'invokables' => [
-            'findOrgan' => 'Decision\View\Helper\Organ'
-        ],
-    ],
 ];
