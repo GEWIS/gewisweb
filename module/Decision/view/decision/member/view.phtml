@@ -2,6 +2,10 @@
 // set title
 $this->headTitle($member->getFullName());
 $this->headTitle($this->translate('Members')); ?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
+    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+?>
 <?php
 use Decision\Model\Member;
 use Decision\Model\Address;
@@ -86,3 +90,9 @@ use Decision\Model\Address;
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        Photo.initGrid();
+    });
+</script>
