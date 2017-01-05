@@ -59,6 +59,29 @@ class NewsItem implements ResourceInterface
     protected $dutchContent;
 
     /**
+     * @return mixed
+     */
+    public function getPinned()
+    {
+        return $this->pinned;
+    }
+
+    /**
+     * @param mixed $pinned
+     */
+    public function setPinned($pinned)
+    {
+        $this->pinned = $pinned;
+    }
+
+    /**
+     * Whether this news item is pinned to the top of the news section or not
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $pinned;
+
+    /**
      * @return int
      */
     public function getId()

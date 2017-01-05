@@ -46,6 +46,15 @@ class NewsItem extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'pinned',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
