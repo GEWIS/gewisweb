@@ -24,7 +24,7 @@
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
-            <td><?= $activity->getStatus() ?></td>
+            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate(' (Update pending)')) ?></td>
             <td>
                 <a href="<?= $this->url('organizer_activity/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
             </td>
@@ -71,7 +71,7 @@
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
-            <td><?= $activity->getStatus() ?></td>
+            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate('(Update pending)')) ?></td>
             <td>
                 <a href="<?= $this->url('organizer_activity/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
             </td>

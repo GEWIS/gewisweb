@@ -129,13 +129,15 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->where($filter)
+            ->where('a.status <> :status')
+            ->andWhere($filter)
             ->join('a.creator','u')
             ->andWhere($qb->expr()->orX(
                     $qb->expr()->in('a.organ', ':organs'),
                     'u.lidnr = :userid')
                     )
             ->orderBy('a.endTime', 'ASC')
+            ->setParameter('status', ActivityModel::STATUS_UPDATE)
             ->setParameter('organs', $organs)
             ->setParameter('userid', $userid)
             ->setParameter('now', new \DateTime());
