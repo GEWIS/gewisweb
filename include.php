@@ -3,6 +3,8 @@
  * File to include in external pages.
  */
 
+use Zend\Mvc\MvcEvent;
+
 define('WEB_DIR', '/var/www/gewisweb');
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
@@ -33,13 +35,36 @@ $sm = $application->getServiceManager();
 $resolver = $sm->get('ViewTemplateMapResolver');
 $resolver->add('application/index/external', $_SERVER['SCRIPT_FILENAME']);
 
+$eventManager = $application->getEventManager();
+
+$router = $sm->get('Router');
+
+// Add an route for this external page
+$router->addRoute('external', [
+    'type' => 'Segment',
+    'options' => [
+        'route' => $_SERVER['REQUEST_URI'],
+        'defaults' => [
+            '__NAMESPACE__' => 'Application\Controller',
+            'controller'    => 'Index',
+            'action'        => 'external',
+        ]
+    ],
+    'priority' => 100
+]);
+
+$eventManager->attach (MvcEvent::EVENT_ROUTE, function (MvcEvent $e) {
+    global $requestUri;
+    // Restore the request uri just in time before it gets used
+    $_SERVER['REQUEST_URI'] = $requestUri;
+});
+
 // Switch back to the original directory.
 chdir($cwd);
 
+// Nothing to see here, just a regular zf2 application...
 $application->run();
 
-// Restore the request uri
-$_SERVER['REQUEST_URI'] = $requestUri;
 
 // Exit so we don't display the contents of the page twice.
 exit;
