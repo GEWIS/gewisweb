@@ -19,12 +19,6 @@ $this->headTitle($this->translate('Members')); ?>
                 <h4><?= $this->translate('Change password') ?></h4>
             </div>
         </a>
-        <a href="<?= $this->url('member/birthdays') ?>" class="panel panel-image col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-gift"></div>
-                <h4><?= $this->translate('Birthdays') ?></h4>
-            </div>
-        </a>
         <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-glass"></div>
@@ -37,13 +31,14 @@ $this->headTitle($this->translate('Members')); ?>
                 <h4><?= $this->translate('Find a member') ?></h4>
             </div>
         </a>
+    </div>
+    <div class="row">
         <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-cd"></div>
                 <h4><?= $this->translate('Microsoft Imagine') ?></h4>
             </div>
         </a>
-        
     </div>
     
     <h3 class="h-underline"><?= $this->translate('Meetings') ?></h3>
@@ -82,11 +77,19 @@ $this->headTitle($this->translate('Members')); ?>
                 <h4><?= $this->translate('Option calendar') ?></h4>
             </div>
         </a>
-        <a href="<?= $this->url('admin') ?>" class="panel panel-image col-sm-3 col-xs-6">
+        <a href="/webmail" class="panel panel-image col-sm-3 col-xs-6">
             <div class="panel-body">
-                <div class="glyphicon glyphicon-cog"></div>
-                <h4><?= $this->translate('Website admin') ?></h4>
+                <div class="glyphicon glyphicon-inbox"></div>
+                <h4><?= $this->translate('Webmail') ?></h4>
             </div>
         </a>
+        <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+            <a href="<?= $this->url('admin') ?>" class="panel panel-image col-sm-3 col-xs-6">
+                <div class="panel-body">
+                    <div class="glyphicon glyphicon-cog"></div>
+                    <h4><?= $this->translate('Website admin') ?></h4>
+                </div>
+            </a>
+        <?php endif ?>
     </div>
 </div>
