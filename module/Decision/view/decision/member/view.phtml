@@ -52,8 +52,7 @@ use Decision\Model\Address;
                     <li><?= $organ ?><?php if (!empty($functions)): ?> (<?= implode(', ', $functions) ?>)<?php endif ?></li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-        <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
             <h3><?= $this->translate('Adresses') ?></h3>
             <?php foreach ($member->getAddresses() as $address): ?>
                 <h4><?php
@@ -85,9 +84,10 @@ use Decision\Model\Address;
                 </table>
             <?php endforeach ?>
         <?php endif; ?>
-        <div class="col-md-6">
-            <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
         </div>
+    <div class="col-md-6">
+        <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
+    </div>
     </div>
 </div>
 
