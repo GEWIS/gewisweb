@@ -106,11 +106,12 @@ class Job
      *
      * @param mixed $companySlugName
      */
-    public function findJobByCompanySlugName($companySlugName)
+    public function findJobByCompanySlugName($companySlugName, $jobCategory)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('c.slugName=:companySlugName');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat')->where('c.slugName=:companySlugName').andWhere('cat.slug=:jobCategory');
         $qb->setParameter('companySlugName', $companySlugName);
+        $qb->setParameter('jobCategory', $jobCategory);
 
         return $qb->getQuery()->getResult();
     }
@@ -130,5 +131,22 @@ class Job
     public function getRepository()
     {
         return $this->em->getRepository('Company\Model\Job');
+    }
+    public function createObjectSelectConfig($targetClass, $property, $label, $name)
+    {
+        return [
+            'name' => $name,
+            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            'options' => [
+                'label' => $label,
+                'object_manager' => $this->em,
+                'target_class' => $targetClass,
+                'property' => $property,
+            ],
+            //'attributes' => [
+            //'class' => 'form-control input-sm'
+            //]
+        ];
+
     }
 }

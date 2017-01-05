@@ -309,7 +309,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $this->packages;
     }
 
-    
+
     /**
      * Get the number of packages.
      *
@@ -412,7 +412,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->languageNeutralId = $language;
     }
 
-    
+
     /**
      * If this object contains an translation for a given locale, it is returned, otherwise null is returned
      *

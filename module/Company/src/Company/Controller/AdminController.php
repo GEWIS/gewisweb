@@ -193,6 +193,78 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Action that displays a form for editing a category
+     *
+     *
+     */
+    public function editCategoryAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $categoryForm = $companyService->getCategoryForm();
+
+        // Get parameter
+        $categoryId = $this->params('categoryID');
+
+        // Get the specified company
+        $categories = $companyService->getAllCategoriesById($categoryId);
+
+        // If the company is not found, throw 404
+        if (empty($categories)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->saveCategoryByData(
+                $categories,
+                $request->getPost(),
+                $request->getFiles()
+            )){
+                $companyName = $request->getPost()['slugName'];
+                return $this->redirect()->toRoute(
+                    'admin_company/editCategory',
+                    [
+                        'categoryID' => $categoryId,
+                    ],
+                    [],
+                    false
+                );
+
+            }
+        }
+
+        // Initialize form
+        $categoriesDict = [];
+        foreach ($categories as $category) {
+            $categoriesDict[$category->getLanguage()] = $category;
+        }
+        $categoryForm->bind($categoriesDict);
+        $categoryForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/editCategory',
+                [
+                    'categoryID' => $categoryId,
+                ]
+            )
+        );
+        $languages = $companyService->getLanguages();
+        $f = function ($lang) use ($companyService) {
+            return [$lang, $companyService->getLanguageDescription($lang),];
+        };
+        $languageDescriptions = array_map($f, $languages);
+        $vm = new ViewModel([
+            'categories' => $categories,
+            'form' => $categoryForm,
+            'languages' => $languageDescriptions,
+        ]);
+
+        return $vm;
+    }
+    /**
      * Action that displays a form for editing a company
      *
      *
@@ -395,6 +467,54 @@ class AdminController extends AbstractActionController
         }
 
         return $this->notFoundAction();
+    }
+
+    public function addCategoryAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $categoryForm = $companyService->getCategoryForm();
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            // Check if data is valid, and insert when it is
+            $categories = $companyService->insertCategoryByData(
+                $request->getPost(),
+                $request->getFiles()
+            );
+            if (!is_null($categories)) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/default',
+                    [
+                        'action' => 'editCategory',
+                        'slugCompanyName' => $categories['nl']->getLanguageIndependentId(),
+                    ]
+                );
+            }
+        }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $categoryForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                ['action' => 'addCategory']
+            )
+        );
+        $languages = $companyService->getLanguages();
+        $f = function ($lang) use ($companyService) {
+            return [$lang, $companyService->getLanguageDescription($lang),];
+        };
+        $languageDescriptions = array_map($f, $languages);
+        // Initialize the view
+        return new ViewModel([
+            'form' => $categoryForm,
+            'languages' => $languageDescriptions,
+        ]);
     }
 
     /**

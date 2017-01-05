@@ -124,6 +124,20 @@ class EditJob extends Form
                 'label' => $translate->translate('Active'),
             ],
         ]);
+         //$this->add([
+            //'name' => 'category',
+            //'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            //'options' => [
+                //'label' => $translate->translate('Category'),
+                //'object_manager' => $objectManager,
+                //'target_class' => 'Company\Model\JobCategory',
+                //'property' => 'category'
+            //],
+            ////'attributes' => [
+                ////'class' => 'form-control input-sm'
+            ////]
+        //]);
+        $this->add($mapper->createObjectSelectConfig( 'Company\Model\JobCategory','name', $translate->translate('Category'), 'category'));
         $this->add([
             'name' => 'submit',
             'attributes' => [

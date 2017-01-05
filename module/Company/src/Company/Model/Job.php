@@ -106,6 +106,13 @@ class Job
     protected $package;
 
     /**
+     * The job's package.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory")
+     */
+    protected $category;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -141,6 +148,26 @@ class Job
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Get the job's category.
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the job's category.
+     *
+     * @param string $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 
     /**
@@ -367,11 +394,6 @@ class Job
         return $this->getPackage()->getCompany();
     }
 
-    /**
-     * Set the job's package.
-     *
-     * @param CompanyPackage $package the job's package
-     */
     public function setPackage(CompanyPackage $package)
     {
         $this->package = $package;

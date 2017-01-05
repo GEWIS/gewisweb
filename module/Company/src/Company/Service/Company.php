@@ -122,6 +122,101 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findAll();
     }
 
+    public function getAllCategoryList()
+    {
+        if (!$this->isAllowed('listAllCategories')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to access the admin interface')
+            );
+        }
+        return $this->getCategoryMapper()->findAll();
+    }
+
+    public function getVisibleCategoryList()
+    {
+        if (!$this->isAllowed('listVisibleCategories')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list all categories')
+            );
+        }
+        return $this->getCategoryMapper()->findAll();
+    }
+
+
+    /**
+     * Inserts a category, and binds it to the given package
+     *
+     * @param mixed $packageID
+     */
+    public function insertCategory($lang, $id, $cat = null)
+    {
+        if (!$this->isAllowed('insert')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to insert a job')
+            );
+        }
+        $result = $this->getCategoryMapper()->insert($lang, $id, $cat);
+        return $result;
+    }
+    /**
+     * Checks if the data is valid, and if it is, inserts the category, and sets
+     * all data
+     *
+     * @param mixed $data
+     */
+    public function insertCategoryByData($data,$files)
+    {
+        $categoryForm = $this->getCategoryForm();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $categoryForm->setData($mergedData);
+        $arr = [];
+        $categoryForm->get('categories')->setObject($arr);
+        $valid = $categoryForm->isValid();
+        if ($valid) {
+            $newCategories = $categoryForm->getObject();
+            $id = -1;
+            foreach ($newCategories as $lang => $category) {
+                $arr[$lang] = $this->insertCategory($lang, $id, $category);
+                if ($id == -1) {
+                    $id = current($arr)->getId();
+                }
+            }
+            return $arr;
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the data is valid, and if it is saves the category
+     *
+     * @param JobCategory $category The category to apply $data and $files to
+     * @param array $data The data to validate, and apply to the category
+     * @param array $files The files that were uploaded. These will be merged with the data, and applied.
+     */
+    public function saveCategoryByData($category, $data)
+    {
+        $categoryForm = $this->getCategoryForm();
+        $categoryForm->setData($data);
+        if ($categoryForm->isValid()){
+            $this->saveCategory();
+            return true;
+        }
+    }
+
+    /**
+     * Saves all modified categories
+     *
+     */
+    public function saveCategory()
+    {
+        $this->getCategoryMapper()->save();
+    }
     /**
      * Checks if the data is valid, and if it is saves the package
      *
@@ -432,6 +527,26 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns a persistent category
+     *
+     * @param mixed $categoryID
+     */
+    public function getAllCategoriesById($categoryID)
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit packages')
+            );
+        }
+        if (is_null($categoryID)){
+            throw new \Exception('Invalid argument');
+        }
+        $package = $this->getCategoryMapper()->findAllCategoriesById($categoryID);
+
+        return $package;
+    }
+    /**
      * Returns a persistent package
      *
      * @param mixed $packageID
@@ -510,9 +625,9 @@ class Company extends AbstractACLService
      *
      * @param mixed $companySlugName
      */
-    public function getJobsByCompanyName($companySlugName)
+    public function getJobsByCompanyName($companySlugName, $jobCategory)
     {
-        return $this->getJobMapper()->findJobByCompanySlugName($companySlugName);
+        return $this->getJobMapper()->findJobByCompanySlugName($companySlugName, $jobCategory);
     }
 
     /**
@@ -532,6 +647,22 @@ class Company extends AbstractACLService
     public function getCompanyForm()
     {
         return $this->sm->get('company_admin_edit_company_form');
+    }
+
+    /**
+     * Get the Category Edit form.
+     *
+     * @return Category Edit form
+     */
+    public function getCategoryForm()
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit jobs')
+            );
+        }
+        return $this->sm->get('company_admin_edit_category_form');
     }
 
     /**
@@ -628,6 +759,15 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns the category mapper
+     *
+     */
+    public function getCategoryMapper()
+    {
+        return $this->sm->get('company_mapper_category');
+    }
+
+    /**
      * Get the Acl.
      *
      * @return Zend\Permissions\Acl\Acl
@@ -655,5 +795,21 @@ class Company extends AbstractACLService
     public function getFileStorageService()
     {
         return $this->sm->get('application_service_storage');
+    }
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getLanguages()
+    {
+        return $this->sm->get('application_get_languages');
+    }
+    public function getLanguageDescription($lang)
+    {
+        if($lang === 'en') {
+            return 'English';
+        }
+        return 'Dutch';
     }
 }

@@ -72,6 +72,11 @@ class Module
                 'application_service_legacy' => 'Application\Service\Legacy',
                 'application_service_email' => 'Application\Service\Email'
             ],
+            'factories' => [
+                'application_get_languages' => function ($sm) {
+                    return ['nl', 'en'];
+                }
+            ],
         ];
     }
 
