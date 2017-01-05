@@ -6,13 +6,14 @@ use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use User\Model\User;
-
+use User\Permissions\Resource\OrganResourceInterface;
+use User\Permissions\Resource\CreatorResourceInterface;
 /**
  * Activity model.
  *
  * @ORM\Entity
  */
-class Activity implements  \User\Permissions\Resource\OrganResourceInterface
+class Activity implements  OrganResourceInterface, CreatorResourceInterface
 {
     /**
      * Status codes for the activity
@@ -601,6 +602,15 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
      */
     public function getResourceId()
     {
-        return $this->getId();
+        return 'activity';
     }
+
+    /**
+     * Get the creator of this resource
+     */
+    public function getResourceCreator()
+    {
+        return $this->getCreator();
+    }
+
 }

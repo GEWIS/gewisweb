@@ -9,7 +9,7 @@ use User\Model\NewUser as NewUserModel;
 use User\Model\Session as SessionModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Mapper\User as UserMapper;
-
+use User\Permissions\NotAllowedException;
 use User\Form\Register as RegisterForm;
 
 use Decision\Model\Member as MemberModel;

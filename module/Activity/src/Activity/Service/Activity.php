@@ -103,10 +103,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
-        if (!$this->isAllowed('update', 'activity')) {
+        if (!($this->isAllowed('update', 'activity') ||
+                $this->isAllowed('update', $oldActivity))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to update an activity')
+                $translator->translate('You are not allowed to update this activity')
             );
         }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
