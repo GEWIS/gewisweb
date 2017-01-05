@@ -8,6 +8,7 @@ define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 $cwd = getcwd();
 chdir(WEB_DIR);
+$requestUri = $_SERVER['REQUEST_URI'];
 $_SERVER['REQUEST_URI'] = '/external/';
 
 // Setup autoloading
@@ -36,6 +37,9 @@ $resolver->add('application/index/external', $_SERVER['SCRIPT_FILENAME']);
 chdir($cwd);
 
 $application->run();
+
+// Restore the request uri
+$_SERVER['REQUEST_URI'] = $requestUri;
 
 // Exit so we don't display the contents of the page twice.
 exit;
