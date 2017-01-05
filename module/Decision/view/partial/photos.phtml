@@ -5,7 +5,7 @@
     <div class="gutter-sizer"></div>
     <?php foreach($this->tags as $tag): ?>
             <div class="photo-grid-item photo-grid-item-photo">
-                <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
+                <a href="<?= $this->url('photo/photo', ['photo_id' => $tag->getPhoto()->getId()]); ?>">
                     <?php
                     $image = $tag->getPhoto()->getSmallThumbPath();
                     $size = getimagesize('public/data/' . $image);
