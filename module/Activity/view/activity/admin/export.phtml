@@ -28,5 +28,5 @@ $this->headTitle($this->translate('Activities')); ?>
             'signupData' => $signupData
     ]);?>
 
-    <a href="<?= $this->url('organizer_activity/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
+    <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
 </div>

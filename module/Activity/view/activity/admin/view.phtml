@@ -1,133 +1,84 @@
+<div class="container">
+<h1><?= $this->translate('Upcoming activities') ?></h1>
 <table class="table table-striped">
     <thead>
     <tr>
-        <td></td>
-        <td><?= $this->translate('Dutch') ?></td>
-        <td><?= $this->translate('English') ?></td>
+        <th>#</th>
+        <th><?= $this->translate('Dutch name') ?></th>
+        <th><?= $this->translate('English name') ?></th>
+        <th><?= $this->translate('Start date') ?></th>
+        <th><?= $this->translate('Subscriptions') ?></th>
+        <th><?= $this->translate('Organ') ?></th>
+        <th><?= $this->translate('Submitter') ?></th>
+        <th><?= $this->translate('Approval status') ?></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td><?php echo $this->translate('Activity id'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getId()); ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Name'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getName()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getNameEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Start time'); ?></td>
-        <td><?php echo $activity->getBeginTime()->format('Y-m-d H:i') ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('End time'); ?></td>
-        <td><?php echo $activity->getEndTime()->format('Y-m-d H:i') ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Location'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocation()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocationEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Costs'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCosts()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCostsEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Subscribe'); ?></td>
-        <td><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Only GEWIS'); ?></td>
-        <td><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-    </tr>
-
-    <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
+    <?php foreach ($upcomingActivities as $activity): ?>
         <tr>
+            <td><?= $activity->getId() ?></td>
+            <td><?= $activity->getName() ?></td>
+            <td><?= $activity->getNameEn() ?></td>
+            <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
+            <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
+            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
+            <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate(' (Update pending)')) ?></td>
             <td>
-                <?php $approvalForm->setAttribute('action', $this->url('admin_activity/approve', ['id' => $activity->getId()]));
-                $approvalForm->prepare();
-                echo $this->form()->openTag($approvalForm);
-                echo $this->formElement($approvalForm->get('security'));
-                $submit = $approvalForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
+                <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
             </td>
-            <td>
-                <?php $disapprovalForm->setAttribute('action', $this->url('admin_activity/disapprove', ['id' => $activity->getId()]));
-                $disapprovalForm->prepare();
-                echo $this->form()->openTag($disapprovalForm);
-                echo $this->formElement($disapprovalForm->get('security'));
-                $submit = $disapprovalForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>                
-            </td>
-            <td></td>
         </tr>
-
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED): ?>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <?php $resetForm->setAttribute('action', $this->url('admin_activity/reset', ['id' => $activity->getId()]));
-                $resetForm->prepare();
-                echo $this->form()->openTag($resetForm);
-                echo $this->formElement($resetForm->get('security'));
-                $submit = $resetForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>                                
-            </td>
-            <td></td>
-        </tr>
-
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <?php $resetForm->setAttribute('action', $this->url('admin_activity/reset', ['id' => $activity->getId()]));
-                $resetForm->prepare();
-                echo $this->form()->openTag($resetForm);
-                echo $this->formElement($resetForm->get('security'));
-                $submit = $resetForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>                                
-            </td>
-            <td></td>
-        </tr>
-    <?php endif; ?>
-    <tr>
-        <td>
-            <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                <?= $this->translate('View details / subscriptions') ?>
-            </a>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
+    <?php endforeach; ?>
     </tbody>
 </table>
 
-<div class="col-md-8">
-    <?= $this->translate('Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescription())) ?></p>
-</div>
-<div class="col-md-8">
-    <?= $this->translate('English description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescriptionEn())) ?></p>
+
+<h1><?= $this->translate('Old activities') ?></h1>
+<?= $this->paginationControl(
+    $oldActivityPaginator,
+    // the scrolling style
+    'elastic',
+    'paginator/default',
+    [
+        'path' => $this->url('activity_admin')
+    ]
+)
+?>
+<?php if (!empty($oldActivityPaginator)): ?>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th><?= $this->translate('Dutch name') ?></th>
+        <th><?= $this->translate('English name') ?></th>
+        <th><?= $this->translate('Start date') ?></th>
+        <th><?= $this->translate('Subscriptions') ?></th>
+        <th><?= $this->translate('Organ') ?></th>
+        <th><?= $this->translate('Submitter') ?></th>
+        <th><?= $this->translate('Approval status') ?></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <?php foreach($oldActivityPaginator as $activity): ?>
+        <tr>
+            <td><?= $activity->getId() ?></td>
+            <td><?= $activity->getName() ?></td>
+            <td><?= $activity->getNameEn() ?></td>
+            <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
+            <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
+            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
+            <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate('(Update pending)')) ?></td>
+            <td>
+                <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
+            </td>
+        </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>
+
+<?php endif; ?>
 </div>
