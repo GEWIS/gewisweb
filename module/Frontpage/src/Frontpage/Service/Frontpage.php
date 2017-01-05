@@ -84,8 +84,7 @@ class Frontpage extends AbstractAclService
         $newsItems = $this->getNewsService()->getLatestNewsItems($count);
         $news = array_merge($activities, $newsItems);
         usort($news, function ($a, $b) {
-            if (($a instanceof NewsItem) && ($b instanceof NewsItem))
-            {
+            if (($a instanceof NewsItem) && ($b instanceof NewsItem)) {
                 if ($a->getPinned() === $b->getPinned()) {
                     return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
                 }
@@ -93,8 +92,7 @@ class Frontpage extends AbstractAclService
                 return $a->getPinned() ? -1 : 1;
             }
 
-            if (($a instanceof Activity) && ($b instanceof Activity))
-            {
+            if (($a instanceof Activity) && ($b instanceof Activity)) {
                 return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
             }
 
