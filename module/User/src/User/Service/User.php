@@ -283,6 +283,24 @@ class User extends AbstractAclService
         $this->destroyStoredSession();
     }
 
+    /**
+     * Gets the user identity, or gives a 403 if the user is not logged in
+     *
+     * @return User the current logged in user
+     * @throws NotAllowedException if no user is logged in
+     */
+    public function getIdentity()
+    {
+        $authService = $this->getServiceManager()->get('user_auth_service');
+        if (!$authService->hasIdentity()) {
+            $translator = $this->getServiceManager()->get('translator');
+            throw new NotAllowedException(
+               $translator->translate('You need to log in to perform this action')
+            );
+        }
+        return $authService->getIdentity();
+    }
+
     protected function detachUser($user)
     {
         /*

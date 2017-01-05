@@ -77,7 +77,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the creator
         /** @var \User\Model\User $user */
         $user = $em->merge(
-            $this->getServiceManager()->get('user_role')
+            $this->getServiceManager()->get('user_service_user')->getIdentity()
         );
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
@@ -111,9 +111,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        // Find the creator
-        $user = $this->getServiceManager()->get('user_role');
 
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
         $newActivity = $this->generateActivity(
             $params,
             $user,

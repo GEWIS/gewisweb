@@ -111,7 +111,7 @@ class OrganizerController extends AbstractActionController
     public function viewAction()
     {
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $user = $this->getServiceLocator()->get('user_role')->getMember();
+        $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
 
         $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($user));
         $paginator->setDefaultItemCountPerPage(15);

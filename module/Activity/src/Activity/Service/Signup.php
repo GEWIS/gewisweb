@@ -138,7 +138,7 @@ class Signup extends AbstractAclService
                 $translator->translate('You are not allowed to view activities which you signed up for')
             );
         }
-        $user = $this->getServiceManager()->get('user_role');
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
         $activitySignups = $this->getServiceManager()->get('activity_mapper_signup')->getSignedUpActivities(
             $user->getLidnr()
         );
@@ -167,7 +167,7 @@ class Signup extends AbstractAclService
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         // Find the current user
-        $user = $this->getServiceManager()->get('user_role');
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
 
         $signup = new UserActivitySignup();
         $signup->setActivity($activity);
