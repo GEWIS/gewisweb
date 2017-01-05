@@ -1,0 +1,44 @@
+<?php
+/* An activity overview list. Parameters:
+ * $header
+ * $activities
+ * $admin
+ */
+?>
+<h1><?= $this->translate($header) ?></h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th><?= $this->translate('Dutch name') ?></th>
+        <th><?= $this->translate('English name') ?></th>
+        <th><?= $this->translate('Start date') ?></th>
+        <th><?= $this->translate('Subscriptions') ?></th>
+        <th><?= $this->translate('Organ') ?></th>
+        <th><?= $this->translate('Submitter') ?></th>
+        <th><?= $this->translate('Approval status') ?></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($activities as $activity): ?>
+        <tr>
+            <td><?= $activity->getId() ?></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName() ?></a></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getNameEn() ?></a></td>
+            <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
+            <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
+            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
+            <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate(' (Update pending)')) ?></td>
+            <td>
+                <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
+                <?php if($admin): ?>
+                <a href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+

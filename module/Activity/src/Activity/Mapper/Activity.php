@@ -93,54 +93,75 @@ class Activity
     }
 
     /**
-     * Gets upcoming activities of the given organs, sorted by date.
+     * Gets upcoming activities of the given organs or user, sorted by date.
      *
-     * @param array $organs
+     * @param array|null $organs
+     * @param int|null $userid
+     * @param int|null $status An optional filter for activity status
      * @return array
      */
-    public function getUpcomingActivitiesByOrganizer($organs, $userid)
+    public function getUpcomingActivitiesByOrganizer($organs=null, $userid=null, $status = null)
     {
         $qb = $this->activityByOrganizerQuery(
                 $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
                 $organs,
-                $userid);
+                $userid,
+                $status);
 
         return $qb->getQuery()->getResult();
     }
 
     /**
      * Gets a paginator of old activities of the given organs, sorted by date.
+     * Supplying 'null' to all arguments gets all activities
      *
-     * @param array $organs
+     * @param array|null $organs
+     * @param int|null $userid
+     * @param int|null $status An optional filter for activity status
      * @return array
      */
-    public function getOldActivityPaginatorAdapterByOrganizer($organs, $userid)
+    public function getOldActivityPaginatorAdapterByOrganizer($organs = null, $userid = null, $status = null)
     {
         $qb = $this->activityByOrganizerQuery(
                 $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
                 $organs,
-                $userid);
+                $userid,
+                $status);
 
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
-    private function activityByOrganizerQuery($filter, $organs, $userid)
+    protected function activityByOrganizerQuery($filter, $organs, $userid, $status)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status <> :status')
-            ->andWhere($filter)
-            ->join('a.creator','u')
-            ->andWhere($qb->expr()->orX(
+            ->from('Activity\Model\Activity', 'a');
+        if (!is_null($status)){
+            $qb->where('a.status = :status')
+                ->setParameter('status', $status);
+        }
+        else{
+            $qb->where('a.status <> :status')
+                ->setParameter('status', ActivityModel::STATUS_UPDATE);
+        }
+
+        if (!is_null($filter)){
+            $qb->andWhere($filter)
+                ->setParameter('now', new \DateTime());
+        }
+
+        $qb->join('a.creator','u');
+
+        if (!is_null($organs) && !is_null($userid)){
+            $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->in('a.organ', ':organs'),
                     'u.lidnr = :userid')
                     )
-            ->orderBy('a.endTime', 'ASC')
-            ->setParameter('status', ActivityModel::STATUS_UPDATE)
-            ->setParameter('organs', $organs)
-            ->setParameter('userid', $userid)
-            ->setParameter('now', new \DateTime());
+                ->setParameter('organs', $organs)
+                ->setParameter('userid', $userid);
+        }
+
+        $qb->orderBy('a.beginTime', 'DESC');
 
         return $qb;
     }

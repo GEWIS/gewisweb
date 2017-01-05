@@ -273,6 +273,6 @@ class AdminApprovalController extends AbstractActionController
 
         }
 
-        return $this->redirect()->toRoute('activity_admin_approval/queue');
+        return $this->redirect()->toRoute('activity_admin');
     }
 }

@@ -115,8 +115,19 @@ class AdminController extends AbstractActionController
      */
     public function viewAction()
     {
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $admin = false;
+        $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
         $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $disapprovedActivities = null;
+        $unapprovedActivities = null;
+        $approvedActivities = null;
+        if ($acl->isAllowed($user, 'activity', 'approve')){
+            $admin = true;
+            $disapprovedActivities = $queryService->getDisapprovedActivities();
+            $unapprovedActivities = $queryService->getUnapprovedActivities();
+            $approvedActivities = $queryService->getApprovedActivities();
+        }
 
         $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($user));
         $paginator->setDefaultItemCountPerPage(15);
@@ -127,7 +138,11 @@ class AdminController extends AbstractActionController
 
         return [
             'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
+            'disapprovedActivities' => $disapprovedActivities,
+            'unapprovedActivities' => $unapprovedActivities,
+            'approvedActivities' => $approvedActivities,
             'oldActivityPaginator' => $paginator,
+            'admin' => $admin,
                 ];
     }
 }

@@ -148,9 +148,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUnapprovedActivities();
-
-        return $activity;
+        return $activityMapper->getUpcomingActivitiesByOrganizer(null, null, ActivityModel::STATUS_TO_APPROVE);
     }
 
     /**
@@ -168,9 +166,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getApprovedActivities();
-
-        return $activity;
+        return $activityMapper->getUpcomingActivitiesByOrganizer(null, null, ActivityModel::STATUS_APPROVED);
     }
 
     /**
@@ -201,9 +197,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getDisapprovedActivities();
-
-        return $activity;
+        return $activityMapper->getUpcomingActivitiesByOrganizer(null, null, ActivityModel::STATUS_DISAPPROVED);
     }
 
     /**
@@ -228,27 +222,37 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
     /**
      * Gets the upcoming activities created by this user or its organs.
+     * Or, when the user is an admin, retrieve all upcoming activities
      *
      * @param type $user
      * @return type
      */
     public function getUpcomingCreatedActivities($user)
     {
-        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
         $activityMapper = $this->getActivityMapper();
+        if ($this->isAllowed('viewDetails', 'activity')){
+            //Only admins are allowed to unconditionally view activity details
+            return $activityMapper->getUpcomingActivitiesByOrganizer();
+        }
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
         return $activityMapper->getUpcomingActivitiesByOrganizer($organs, $user->getLidnr());
     }
 
     /**
      * Gets a paginator for the old activities created by this user or its organs.
+     * Or, when the user is an admin, retrieve all old activities
      *
      * @param type $user
      * @return type
      */
     public function getOldCreatedActivitiesPaginator($user)
     {
-        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
         $activityMapper = $this->getActivityMapper();
+        if ($this->isAllowed('viewDetails', 'activity')){
+            //Only admins are allowed to unconditionally view activity details
+            return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
+        }
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
         return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
