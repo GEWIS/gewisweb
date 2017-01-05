@@ -121,6 +121,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $english,
             ActivityModel::STATUS_UPDATE
         );
+
+        $oldProposalContainer = $oldActivity->getUpdateProposal();
+
+        if ($oldProposalContainer->count() !== 0){
+            $oldProposal = $oldProposalContainer->unwrap()->first();
+            //Remove old update proposal
+            $oldUpdate = $oldProposal->getNew();
+            $oldProposal->setNew($newActivity);
+            $em->remove($oldUpdate);
+            $em->flush();
+
+            return $oldProposal;
+        }
+
         $proposal = new \Activity\Model\ActivityUpdateProposal();
         $proposal->setOld($oldActivity);
         $proposal->setNew($newActivity);

@@ -135,6 +135,13 @@ class Activity implements  OrganResourceInterface, CreatorResourceInterface
     protected $status;
 
     /**
+     * The update proposal associated with this activity
+     *
+     * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old")
+     */
+    protected $updateProposal;
+
+    /**
      * Activity description.
      *
      * @Orm\Column(type="text", nullable=true)
@@ -197,7 +204,7 @@ class Activity implements  OrganResourceInterface, CreatorResourceInterface
     {
         return $this->id;
     }
-    
+
     /**
      * @return string
      */
@@ -426,6 +433,13 @@ class Activity implements  OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @return Activity\Model\ActivityUpdateProposal
+     */
+    public function getUpdateProposal()
+    {
+        return $this->updateProposal;
+    }
+    /**
      * @return string
      */
     public function getDescription()
@@ -520,7 +534,7 @@ class Activity implements  OrganResourceInterface, CreatorResourceInterface
     {
         $this->isFood = $isFood;
     }
-    
+
 
     /**
      * @return array

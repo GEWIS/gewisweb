@@ -93,6 +93,11 @@ class OrganizerController extends AbstractActionController
                 return $view;
             }
         }
+        $updateProposal = $activity->getUpdateProposal();
+        if ($updateProposal->count() !== 0) {
+            //if there exists an update proposal, show that instead of the old activity
+            $activity = $updateProposal->first()->getNew();
+        }
         $form->bind($activity);
         $languages = $queryService->getAvailableLanguages($activity);
         return ['form' => $form, 'activity' => $activity, 'languages' => $languages];
