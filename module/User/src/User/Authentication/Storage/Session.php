@@ -110,15 +110,19 @@ class Session extends Storage\Session
     public function saveSession($user)
     {
         $mapper = $this->sm->get('user_mapper_session');
+
         $session = new SessionModel();
         $session->setIp($this->sm->get('user_remoteaddress'));
+
         $user = $this->sm->get('user_service_user')->detachUser($user);
         $session->setUser($user);
         $session->setSecret($this->generateSecret());
         $session->setCreatedAt(new \DateTime());
         $session->setLastActive(new \DateTime());
+
         $mapper->persist($session);
         $mapper->flush();
+
         $this->saveCookie($session);
     }
 
@@ -175,14 +179,6 @@ class Session extends Storage\Session
         $response = $this->sm->get('Response');
         $response->getHeaders()->addHeader($sessionId);
         $response->getHeaders()->addHeader($sessionSecret);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->session->getManager()->getId();
     }
 
     public function __construct($sm)

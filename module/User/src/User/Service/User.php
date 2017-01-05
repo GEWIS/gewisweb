@@ -277,7 +277,6 @@ class User extends AbstractAclService
         // clear the user identity
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
-        $this->destroyStoredSession();
     }
 
     public function detachUser($user)
@@ -290,16 +289,6 @@ class User extends AbstractAclService
         $this->sm->get('user_doctrine_em')->clear();
 
         return $this->getUserMapper()->findByLidnr($user->getLidnr());
-    }
-
-    /**
-     * Remove the current session from the database
-     */
-    protected function destroyStoredSession()
-    {
-        $id = $this->getAuthStorage()->getId();
-        $sessionMapper = $this->getSessionMapper();
-        $sessionMapper->removeById($id);
     }
 
     public function logFailedLogin($user, $type)

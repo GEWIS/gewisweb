@@ -85,18 +85,6 @@ class Session
     }
 
     /**
-     * Re-attach a user to the entity manager.
-     *
-     * @param entity $entity
-     *
-     * @return entity
-     */
-    public function merge($entity)
-    {
-        return $this->em->merge($entity);
-    }
-
-    /**
      * Flush the entity manager
      */
     public function flush()
