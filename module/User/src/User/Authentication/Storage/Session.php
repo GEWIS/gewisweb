@@ -14,16 +14,22 @@ class Session extends Storage\Session
      */
     protected $sm;
 
+    /**
+     * @var boolean indicating whether we should remember the user
+     */
+    protected $rememberMe;
+
     public function setRememberMe($rememberMe = 0, $time = 1209600)
     {
-        if ($rememberMe == 1) {
-            $this->session->getManager()->rememberMe($time);
+        $this->rememberMe = $rememberMe;
+        if ($rememberMe) {
+            $this->saveSession($this->session->{$this->member});
         }
     }
 
     public function forgetMe()
     {
-        $this->session->getManager()->forgetMe();
+        $this->rememberMe = false;
     }
 
     public function isEmpty()
@@ -33,6 +39,7 @@ class Session extends Storage\Session
         }
 
         return !$this->readDatabaseSession();
+
     }
 
     protected function readDatabaseSession()
@@ -40,6 +47,9 @@ class Session extends Storage\Session
         $mapper = $this->sm->get('user_mapper_session');
         $request = $this->sm->get('Request');
         $cookies = $request->getHeaders()->get('cookie');
+        if (!isset($cookies->SESSID) || !isset($cookies->SECRET)) {
+            return false;
+        }
         $session = $mapper->find($cookies->SESSID, $cookies->SECRET);
         if ($session === null) {
             return false;
@@ -62,7 +72,9 @@ class Session extends Storage\Session
     public function write($contents)
     {
         $this->session->{$this->member} = $contents;
-        $this->saveSession($contents);
+        if ($this->rememberMe) {
+            $this->saveSession($contents);
+        }
     }
 
     /**
@@ -98,6 +110,9 @@ class Session extends Storage\Session
         $mapper = $this->sm->get('user_mapper_session');
         $request = $this->sm->get('Request');
         $cookies = $request->getHeaders()->get('cookie');
+        if (!isset($cookies->SESSID) || !isset($cookies->SECRET)) {
+            return;
+        }
         $session = $mapper->find($cookies->SESSID, $cookies->SECRET);
         if ($session !== null) {
             $mapper->remove($session);
