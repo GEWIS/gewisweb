@@ -7,6 +7,7 @@ use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
+use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 use DOMPDFModule\View\Model\PdfModel;
 
@@ -102,5 +103,26 @@ class OrganizerController extends AbstractActionController
         $pdf = new PdfModel();
         $pdf->setVariables($this->exportAction());
         return $pdf;
+    }
+
+    /**
+     * Show a list of all activities this user can manage.
+     */
+    public function viewAction()
+    {
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $user = $this->getServiceLocator()->get('user_role')->getMember();
+
+        $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($user));
+        $paginator->setDefaultItemCountPerPage(15);
+        $page = $this->params()->fromRoute('page');
+        if ($page) {
+            $paginator->setCurrentPageNumber($page);
+        }
+
+        return [
+            'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
+            'oldActivityPaginator' => $paginator,
+                ];
     }
 }

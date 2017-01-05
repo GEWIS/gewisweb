@@ -74,18 +74,32 @@ return [
             'organizer_activity' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/activity/organizer/',
+                    'route' => '/activity/organizer',
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'organizer',
+                        'action' => 'view'
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'index' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'organizer',
+                                'action' => 'view'
+                            ]
+                        ]
+                    ],
                     'email' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/email',
+                            'route' => '/:id/email',
                             'defaults' => [
                                 'controller' => 'organizer',
                                 'action' => 'email',
@@ -95,7 +109,7 @@ return [
                     'export' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/export',
+                            'route' => '/:id/export',
                             'defaults' => [
                                 'controller' => 'organizer',
                                 'action' => 'export',
@@ -105,7 +119,7 @@ return [
                     'exportpdf' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/export/pdf',
+                            'route' => '/:id/export/pdf',
                             'defaults' => [
                                 'controller' => 'organizer',
                                 'action' => 'exportpdf',
@@ -115,7 +129,7 @@ return [
                     'update' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/update',
+                            'route' => '/:id/update',
                             'defaults' => [
                                 'controller' => 'organizer',
                                 'action' => 'update'
