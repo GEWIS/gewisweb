@@ -19,7 +19,12 @@ class Session extends Storage\Session
      */
     protected $rememberMe;
 
-    public function setRememberMe($rememberMe = 0, $time = 1209600)
+    /**
+     * Set whether we should remember this session or not.
+     *
+     * @param int $rememberMe
+     */
+    public function setRememberMe($rememberMe = 0)
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
@@ -27,11 +32,19 @@ class Session extends Storage\Session
         }
     }
 
+    /**
+     * Ensure that this session is no longer remembered.
+     */
     public function forgetMe()
     {
         $this->rememberMe = false;
     }
 
+    /**
+     * Defined by Zend\Authentication\Storage\StorageInterface
+     *
+     * @return bool
+     */
     public function isEmpty()
     {
         if (isset($this->session->{$this->member})) {
@@ -42,6 +55,11 @@ class Session extends Storage\Session
 
     }
 
+    /**
+     * Check if there is a session stored in the database and load it when possible.
+     *
+     * @return bool indicating whether a session was loaded.
+     */
     protected function readDatabaseSession()
     {
         $mapper = $this->sm->get('user_mapper_session');
@@ -58,6 +76,11 @@ class Session extends Storage\Session
         return true;
     }
 
+    /**
+     * Defined by Zend\Authentication\Storage\StorageInterface
+     *
+     * @return mixed
+     */
     public function read()
     {
         return $this->session->{$this->member};
@@ -154,6 +177,9 @@ class Session extends Storage\Session
         $response->getHeaders()->addHeader($sessionSecret);
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->session->getManager()->getId();
