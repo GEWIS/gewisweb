@@ -4,6 +4,7 @@
 * Allow empty poll options to be deleted (#599)
 * Add a contact name to companies (#654)
 * Clarify the activity creation UI
+* Improve the photo UI on the members page
 * Send emails on the creation of polls and organ information (#512)
 
 ---
