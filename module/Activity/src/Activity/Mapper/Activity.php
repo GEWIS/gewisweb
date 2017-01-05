@@ -4,8 +4,6 @@ namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
@@ -100,13 +98,14 @@ class Activity
      * @param int|null $status An optional filter for activity status
      * @return array
      */
-    public function getUpcomingActivitiesByOrganizer($organs=null, $userid=null, $status = null)
+    public function getAllUpcomingActivities($organs=null, $userid=null, $status = null)
     {
         $qb = $this->activityByOrganizerQuery(
                 $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
                 $organs,
                 $userid,
-                $status);
+                $status
+                );
 
         return $qb->getQuery()->getResult();
     }
@@ -126,7 +125,8 @@ class Activity
                 $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
                 $organs,
                 $userid,
-                $status);
+                $status
+                );
 
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
@@ -164,80 +164,5 @@ class Activity
         $qb->orderBy('a.beginTime', 'DESC');
 
         return $qb;
-    }
-
-    /**
-     * Get an activity paginator by the status of the activity
-     * @param integer $status
-     * @param integer $page
-     * @param integer $perPage
-     * @return Paginator
-     */
-    public function getActivityPaginatorByStatus($status, $page = 1, $perPage = 5)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = :status')
-            ->orderBy('a.beginTime', 'desc')
-            ->setParameters([
-                'status' => $status
-            ]);
-
-        $resultArray = $qb->getQuery()->getResult();
-        $paginator = new Paginator(new ArrayAdapter($resultArray));
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setItemCountPerPage($perPage);
-        return $paginator;
-    }
-
-
-    /**
-     * get all activities including options.
-     *
-     * @return array
-     */
-    public function getApprovedActivities()
-    {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_APPROVED);
-    }
-
-    /**
-     * Get all disapproved activitiesa.
-     *
-     * @return array
-     */
-    public function getDisapprovedActivities()
-    {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_DISAPPROVED);
-    }
-
-    /**
-     * Get all the unapproved activities
-     *
-     * @return array
-     */
-    public function getUnapprovedActivities()
-    {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_TO_APPROVE);
-    }
-
-    /**
-     * Get all the activities with a specific status
-     *
-     * @param integer $status
-     * @return array
-     */
-    protected function getActivitiesByStatus($status)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = :status')
-            ->orderBy('a.beginTime', 'DESC');
-
-        $qb->setParameter('status', $status);
-
-        return $qb->getQuery()->getResult();
     }
 }

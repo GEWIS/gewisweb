@@ -172,51 +172,10 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'adminApproval',
-                        'action' => 'queue'
                     ]
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'queue' => [
-                        'type' => 'Literal',
-                        'options' => [
-                            'route' => '/queue',
-                            'defaults' => [
-                                'controller' => 'adminApproval',
-                                'action' => 'queue'
-                            ]
-                        ]
-                    ],
-                    'queue_unapproved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/unapproved[/:page]',
-                            'defaults' => [
-                                'controller' => 'adminApproval',
-                                'action' => 'queueUnapproved'
-                            ]
-                        ]
-                    ],
-                    'queue_approved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/approved[/:page]',
-                            'defaults' => [
-                                'controller' => 'adminApproval',
-                                'action' => 'queueApproved'
-                            ]
-                        ]
-                    ],
-                    'queue_disapproved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/disapproved[/:page]',
-                            'defaults' => [
-                                'controller' => 'adminApproval',
-                                'action' => 'queueDisapproved'
-                            ]
-                        ]
-                    ],
                     'view' => [
                         'type' => 'Segment',
                         'options' => [

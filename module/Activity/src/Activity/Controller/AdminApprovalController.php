@@ -63,57 +63,6 @@ class AdminApprovalController extends AbstractActionController
     }
 
     /**
-     * View all the unapproved activities with paginator
-     * @return array
-     */
-    public function queueUnapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueApprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_APPROVED, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueDisapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_DISAPPROVED, $page);
-    }
-
-
-
-    /**
-     * View activities with a certain status
-     *
-     * @param integer $status
-     * @param integer $page
-     * @return array
-     */
-    protected function viewStatus($status, $page = 1)
-    {
-        $activityService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activities = $activityService->getActivityPaginatorByStatus($status, $page);
-
-        return [
-            'activities' => $activities,
-        ];
-    }
-
-    /**
      * Approve of an activity
      */
     public function approveAction()

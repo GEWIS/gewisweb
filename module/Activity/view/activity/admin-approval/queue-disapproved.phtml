@@ -1,8 +1,0 @@
-<h1><?php echo $this->translate('Disapproved Activities');?> </h1>
-<?php
-echo $this->partial('activity/activity/list.phtml', [
-    'activities' => $activities,
-    'admin' => true,
-    'route' => 'activity_admin_approval/queue_disapproved',
-]);
-
