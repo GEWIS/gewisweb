@@ -69,27 +69,27 @@ $this->headTitle($this->translate('Members')); ?>
         </a>
     </div>
     
-    <h3 class="h-underline"><?= $this->translate('Active members') ?></h3>
-    <div class="row">
-        <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-calendar"></div>
-                <h4><?= $this->translate('Option calendar') ?></h4>
-            </div>
-        </a>
-        <a href="/webmail" class="panel panel-image col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-inbox"></div>
-                <h4><?= $this->translate('Webmail') ?></h4>
-            </div>
-        </a>
-        <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+    <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+        <h3 class="h-underline"><?= $this->translate('Active members') ?></h3>
+        <div class="row">
+            <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image col-sm-3 col-xs-6">
+                <div class="panel-body">
+                    <div class="glyphicon glyphicon-calendar"></div>
+                    <h4><?= $this->translate('Option calendar') ?></h4>
+                </div>
+            </a>
+            <a href="/webmail" class="panel panel-image col-sm-3 col-xs-6">
+                <div class="panel-body">
+                    <div class="glyphicon glyphicon-inbox"></div>
+                    <h4><?= $this->translate('Webmail') ?></h4>
+                </div>
+            </a>
             <a href="<?= $this->url('admin') ?>" class="panel panel-image col-sm-3 col-xs-6">
                 <div class="panel-body">
                     <div class="glyphicon glyphicon-cog"></div>
                     <h4><?= $this->translate('Website admin') ?></h4>
                 </div>
             </a>
-        <?php endif ?>
-    </div>
+        </div>
+    <?php endif ?>
 </div>
