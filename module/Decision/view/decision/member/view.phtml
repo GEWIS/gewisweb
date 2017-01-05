@@ -48,8 +48,14 @@ use Decision\Model\Address;
             </table>
             <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
             <ul>
-                <?php foreach ($memberships as $organ => $functions): ?>
-                    <li><?= $organ ?><?php if (!empty($functions)): ?> (<?= implode(', ', $functions) ?>)<?php endif ?></li>
+                <?php foreach ($memberships as $abbr => $install): ?>
+                    <li><a href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
+                            $abbr ]) ?>"><?= $abbr ?></a>
+                        <?php $functions = $install['functions']; ?>
+                        <?php if (!empty($functions)): ?> (<?=
+                            $functions ?>)
+                        <?php endif ?>
+                    </li>
                 <?php endforeach; ?>
             </ul>
             <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
