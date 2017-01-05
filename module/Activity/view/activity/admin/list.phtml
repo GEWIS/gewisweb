@@ -16,7 +16,7 @@
         <th><?= $this->translate('Subscriptions') ?></th>
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
-        <th><?= $this->translate('Approval status') ?></th>
+        <th><?= $this->translate('Update status') ?></th>
         <th></th>
     </tr>
     </thead>
@@ -30,7 +30,7 @@
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
-            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate(' (Update pending)')) ?></td>
+            <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' : $this->translate('Update pending') ?></td>
             <td>
                 <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
                 <?php if($admin): ?>
