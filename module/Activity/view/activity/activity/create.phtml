@@ -20,21 +20,25 @@ $form->prepare();
             <?php
             $dutchElement = $form->get('language_dutch');
             $dutchElement->setAttribute('onchange', 'Activity.updateForm()');
+            $dutchElement->setAttribute('id', 'dutch-check');
             $dutchElement->setAttribute('class', 'form-control');
             $englishElement = $form->get('language_english');
             $englishElement->setAttribute('onchange', 'Activity.updateForm()');
+            $englishElement->setAttribute('id', 'english-check');
             $englishElement->setAttribute('class', 'form-control');
             ?>
             <div class="form-group form-inline">
                 <div class="form-group<?= count($dutchElement->getMessages()) > 0 ? ' has-error' : '' ?>">
-                    <label for="<?= $dutchElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Dutch') ?></label>
+                    <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label col-sm-2"><?=
+                        $this->translate('Dutch') ?></label>
                     <div class="col-sm-10">
                         <?= $this->formCheckbox($dutchElement) ?>
                         <?= $this->formElementErrors($dutchElement) ?>
                     </div>
                 </div>
                 <div class="form-group<?= count($englishElement->getMessages()) > 0 ? ' has-error' : '' ?>">
-                    <label for="<?= $englishElement->getName() ?>" class="control-label col-sm-2"><?= $this->translate('English') ?></label>
+                    <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label col-sm-2"><?=
+                        $this->translate('English') ?></label>
                     <div class="col-sm-10">
                         <?= $this->formCheckbox($englishElement) ?>
                         <?= $this->formElementErrors($englishElement) ?>
@@ -45,12 +49,14 @@ $form->prepare();
             <div class="form-group form-inline">
                 <?php
                 $beginTime = $form->get('beginTime');
-                $beginTime->setAttribute('class', 'form-control');
+                $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
                 $endTime = $form->get('endTime');
-                $endTime->setAttribute('class', 'form-control');
+                $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
                 ?>
                 <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                    <label for="<?= $beginTime->getName() ?>" class="control-label col-sm-2"><?= $this->translate('From') ?></label>
+                    <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label col-sm-2">
+                        <?= $this->translate('From') ?>
+                    </label>
                     <div class="col-sm-10">
                         <?= $this->formInput($beginTime) ?>
                         <?= $this->formElementErrors($beginTime) ?>
@@ -58,7 +64,9 @@ $form->prepare();
                 </div>
 
                 <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                    <label for="<?= $endTime->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Until') ?></label>
+                    <label for="<?= $endTime->getAttribute('id') ?>" class="control-label col-sm-2">
+                        <?= $this->translate('Until') ?>
+                    </label>
                     <div class="col-sm-10">
                         <?= $this->formInput($endTime) ?>
                         <?= $this->formElementErrors($endTime) ?>
@@ -67,10 +75,12 @@ $form->prepare();
             </div>
             <?php
             $subscriptionDeadline = $form->get('subscriptionDeadline');
-            $subscriptionDeadline->setAttribute('class', 'form-control');
+            $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
             ?>
             <div class="form-group<?= count($subscriptionDeadline->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $subscriptionDeadline->getName() ?>" class="control-label col-sm-2"><?= $this->translate('Subscription deadline') ?></label>
+                <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Subscription deadline') ?>
+                </label>
                 <div class="col-sm-10">
                     <?= $this->formInput($subscriptionDeadline) ?>
                     <?= $this->formElementErrors($subscriptionDeadline) ?>
@@ -83,9 +93,10 @@ $form->prepare();
             $name = $form->get('name');
             $name->setAttribute('disabled', 'disabled');
             $name->setAttribute('class', 'form-control form-control-dutch');
+            $name->setAttribute('id', 'name-nl');
             ?>
             <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $name->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $name->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Name') ?>
                 </label>
                 <?= $this->formInput($name) ?>
@@ -95,9 +106,10 @@ $form->prepare();
             $location = $form->get('location');
             $location->setAttribute('disabled', 'disabled');
             $location->setAttribute('class', 'form-control form-control-dutch');
+            $location->setAttribute('id', 'location-nl');
             ?>
             <div class="form-group<?= count($location->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $location->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $location->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Location') ?>
                 </label>
                 <?= $this->formInput($location) ?>
@@ -107,9 +119,10 @@ $form->prepare();
             $costs = $form->get('costs');
             $costs->setAttribute('disabled', 'disabled');
             $costs->setAttribute('class', 'form-control form-control-dutch');
+            $costs->setAttribute('id', 'cost-nl');
             ?>
             <div class="form-group<?= count($costs->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $costs->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $costs->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Costs') ?>
                 </label>
                 <?= $this->formInput($costs) ?>
@@ -120,9 +133,10 @@ $form->prepare();
             $description->setAttribute('class', 'form-control form-control-dutch markdown-editor');
             $description->setAttribute('style', 'width:100%; height:10em; resize:none');
             $description->setAttribute('data-provide', 'markdown');
+            $description->setAttribute('id', 'description-nl');
             ?>
             <div class="form-group<?= count($description->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $description->getName() ?>" class="control-label col-sm-2" style="margin-top:10px">
+                <label for="<?= $description->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
                     <?= $this->translate('Description') ?>
                 </label>
                 <?= $this->formRow($description) ?>
@@ -135,9 +149,10 @@ $form->prepare();
             $nameEn = $form->get('nameEn');
             $nameEn->setAttribute('disabled', 'disabled');
             $nameEn->setAttribute('class', 'form-control form-control-english');
+            $nameEn->setAttribute('id', 'name-en');
             ?>
             <div class="form-group<?= count($nameEn->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $nameEn->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Name') ?>
                 </label>
                 <?= $this->formInput($nameEn) ?>
@@ -147,9 +162,10 @@ $form->prepare();
             $locationEn = $form->get('locationEn');
             $locationEn->setAttribute('disabled', 'disabled');
             $locationEn->setAttribute('class', 'form-control form-control-english');
+            $locationEn->setAttribute('id', 'location-en');
             ?>
             <div class="form-group<?= count($locationEn->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $locationEn->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Location') ?>
                 </label>
                 <?= $this->formInput($locationEn) ?>
@@ -159,9 +175,10 @@ $form->prepare();
             $costsEn = $form->get('costsEn');
             $costsEn->setAttribute('disabled', 'disabled');
             $costsEn->setAttribute('class', 'form-control form-control-english');
+            $costsEn->setAttribute('id', 'cost-en');
             ?>
             <div class="form-group<?= count($costsEn->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $costsEn->getName() ?>" class="control-label col-sm-2">
+                <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label col-sm-2">
                     <?= $this->translate('Costs') ?>
                 </label>
                 <?= $this->formInput($costsEn) ?>
@@ -172,9 +189,10 @@ $form->prepare();
             $descriptionEn->setAttribute('class', 'form-control form-control-english markdown-editor');
             $descriptionEn->setAttribute('style', 'width:100%; height:10em; resize:none');
             $descriptionEn->setAttribute('data-provide', 'markdown');
+            $descriptionEn->setAttribute('id', 'description-en');
             ?>
             <div class="form-group<?= count($descriptionEn->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $descriptionEn->getName() ?>" class="control-label col-sm-2" style="margin-top:10px">
+                <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
                     <?= $this->translate('Description') ?>
                 </label>
                 <?= $this->formRow($descriptionEn) ?>
@@ -220,9 +238,10 @@ $form->prepare();
             <?php
             $organ = $form->get('organ');
             $organ->setAttribute('class', 'form-control');
+            $organ->setAttribute('id', 'organizing-organ');
             ?>
             <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $organ->getName(); ?>" class="control-label col-sm-2">
+                <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
                     <?= $this->translate('Organizing committee / fraternity') ?>
                 </label>
                 <div class="col-sm-10">
