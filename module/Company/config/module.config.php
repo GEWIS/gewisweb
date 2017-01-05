@@ -6,7 +6,7 @@ return [
             'company' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/company',
+                    'route' => '/career',
                     'priority' => 2,
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
@@ -21,7 +21,7 @@ return [
                         'priority' => 3,
                         'type' => 'segment',
                         'options' => [
-                            'route' => '/jobs/:category',
+                            'route' => '/:category',
                             'constraints' => [
                                 'category' => '[a-zA-Z0-9_\-\.]*',
                             ],
@@ -82,9 +82,9 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'joblist' => [
-                                'type' => 'literal',
+                                'type' => 'segment',
                                 'options' => [
-                                    'route' => '/jobs',
+                                    'route' => '/:category',
                                     'defaults' => [
                                         'controller' => 'Company\Controller\Company',
                                         'action' => 'jobList',

@@ -137,7 +137,7 @@ class EditJob extends Form
                 ////'class' => 'form-control input-sm'
             ////]
         //]);
-        $this->add($mapper->createObjectSelectConfig( 'Company\Model\JobCategory','name', $translate->translate('Category'), 'category'));
+        $this->add($mapper->createObjectSelectConfig( 'Company\Model\JobCategory','name', $translate->translate('Category'), 'category', 'nl'));
         $this->add([
             'name' => 'submit',
             'attributes' => [

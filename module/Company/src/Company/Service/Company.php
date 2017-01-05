@@ -614,9 +614,9 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getJobsBySlugName($companySlugName, $jobSlugName)
+    public function getJobsBySlugName($companySlugName, $jobSlugName, $category)
     {
-        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
+        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName, $category);
     }
 
     /**
@@ -634,9 +634,9 @@ class Company extends AbstractACLService
      * Returns all jobs in the database
      *
      */
-    public function getJobList()
+    public function getJobList($jobCategory)
     {
-        return $this->getJobMapper()->findAll();
+        return $this->getJobMapper()->findJobByCategory($jobCategory);
     }
 
     /**

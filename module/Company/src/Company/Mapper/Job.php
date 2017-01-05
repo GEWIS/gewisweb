@@ -90,13 +90,30 @@ class Job
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function findJobBySlugName($companySlugName, $jobSlugName)
+    public function findJobByCategory($jobCategory)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
-        ->andWhere('c.slugName=:companySlugName');
+        $qb->select('j')->join('j.category', 'cat')->where('cat.slug =:category');
+        $qb->setParameter('category', $jobCategory);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all jobs identified by $jobSlugName that are owned by a company
+     * identified with $companySlugName
+     *
+     * @param mixed $companySlugName
+     * @param mixed $jobSlugName
+     */
+    public function findJobBySlugName($companySlugName, $jobSlugName, $category)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat')->where('j.slugName=:jobId')
+            ->andWhere('cat.slug=:category')->andWhere('c.slugName=:companySlugName');
         $qb->setParameter('jobId', $jobSlugName);
         $qb->setParameter('companySlugName', $companySlugName);
+        $qb->setParameter('category', $category);
 
         return $qb->getQuery()->getResult();
     }
@@ -109,7 +126,7 @@ class Job
     public function findJobByCompanySlugName($companySlugName, $jobCategory)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat')->where('c.slugName=:companySlugName').andWhere('cat.slug=:jobCategory');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat')->where('c.slugName=:companySlugName')->andWhere('cat.slug=:jobCategory');
         $qb->setParameter('companySlugName', $companySlugName);
         $qb->setParameter('jobCategory', $jobCategory);
 
@@ -132,7 +149,7 @@ class Job
     {
         return $this->em->getRepository('Company\Model\Job');
     }
-    public function createObjectSelectConfig($targetClass, $property, $label, $name)
+    public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [
             'name' => $name,
@@ -141,8 +158,16 @@ class Job
                 'label' => $label,
                 'object_manager' => $this->em,
                 'target_class' => $targetClass,
-                'property' => $property,
-            ],
+                 'find_method'    => [
+                    'name'   => 'findBy',
+                    'params' => [
+                        'criteria' => ['lang' => $locale],
+                        // Use key 'orderBy' if using ORM
+                        //'orderBy'  => ['lastname' => 'ASC'],
+
+                    ],
+                ],
+            ]
             //'attributes' => [
             //'class' => 'form-control input-sm'
             //]

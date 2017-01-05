@@ -91,7 +91,7 @@ class CompanyController extends AbstractActionController
         }
         // all jobs
         return new ViewModel([
-            'jobList' => $companyService->getJobList($jobCategory),
+            'jobList' => $companyService->getJobList($jobCategory, $jobCategory),
             'translator' => $companyService->getTranslator(),
             'randomize' => true,
         ]);
@@ -99,7 +99,7 @@ class CompanyController extends AbstractActionController
 
     /**
      *
-     * Action to list jobs of a certain company
+     * Action to list a single job of a certain company
      *
      */
     public function jobsAction()
@@ -107,9 +107,10 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
+        $category = $this->params('category');
         if ($jobName != null) {
-            $jobs = $companyService->getJobsBySlugName($companyName, $jobName);
-            if (count($jobs) != 0) {
+            $jobs = $companyService->getJobsBySlugName($companyName, $jobName, $category);
+            if (count($jobs) > 0) {
                 return new ViewModel([
                     'job' => $jobs[0],
                     'translator' => $companyService->getTranslator(),
