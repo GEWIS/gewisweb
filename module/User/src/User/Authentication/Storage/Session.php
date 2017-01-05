@@ -145,9 +145,9 @@ class Session extends Storage\Session
             $sessionId->setSecure(true)->setHttponly(true);
             $sessionSecret->setSecure(true)->setHttponly(true);
         }
-        // TODO
-        $sessionId->setDomain('192.168.41.42');
-        $sessionSecret->setDomain('192.168.41.42');
+        $config = $this->sm->get('config');
+        $sessionId->setDomain($config['cookie_domain']);
+        $sessionSecret->setDomain($config['cookie_domain']);
 
         $response = $this->sm->get('Response');
         $response->getHeaders()->addHeader($sessionId);
