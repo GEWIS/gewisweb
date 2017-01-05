@@ -52,10 +52,11 @@ class Member extends AbstractAclService
             }
             if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
                 $memberships[$install->getOrgan()->getAbbr()] = [];
+                $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
             }
             if ($install->getFunction() != 'Lid') {
                 $function = $this->getTranslator()->translate($install->getFunction());
-                $memberships[$install->getOrgan()->getAbbr()][] = $function;
+                $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
             }
         }
 

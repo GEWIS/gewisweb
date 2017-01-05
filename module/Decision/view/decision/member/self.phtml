@@ -91,11 +91,11 @@ $this->headTitle($member->getFullName());
                 </table>
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
-                    <?php foreach ($memberships as $organ => $functions): ?>
-                        <?php $organObject = $this->findOrgan($organ); ?>
-                        <li><a href="<?= $this->url('home/organ', ['type' => $organObject->getType(), 'abbr' =>
-                                $organObject->getAbbr() ]) ?>"><?= $organ ?></a>
-                            <?php if (!empty($functions)): ?> (<?= implode(', ', $functions) ?>)
+                    <?php foreach ($memberships as $abbr => $install): ?>
+                        <li><a href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
+                                $abbr ]) ?>"><?= $abbr ?></a>
+                            <?php $functions = $install['functions']; ?>
+                            <?php if (!empty($functions)): ?> (<?= $functions ?>)
                             <?php endif ?></li>
                     <?php endforeach; ?>
                 </ul>
