@@ -13,6 +13,12 @@ $this->headTitle($this->translate('Members')); ?>
                 <h4><?= $this->translate('Profile') ?></h4>
             </div>
         </a>
+        <a href="<?= $this->url('user/default', ['action' => 'password']) ?>" class="panel panel-image col-sm-3 col-xs-6">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-lock"></div>
+                <h4><?= $this->translate('Change password') ?></h4>
+            </div>
+        </a>
         <a href="<?= $this->url('member/birthdays') ?>" class="panel panel-image col-sm-3 col-xs-6">
             <div class="panel-body">
                 <div class="glyphicon glyphicon-gift"></div>
@@ -74,6 +80,12 @@ $this->headTitle($this->translate('Members')); ?>
             <div class="panel-body">
                 <div class="glyphicon glyphicon-calendar"></div>
                 <h4><?= $this->translate('Option calendar') ?></h4>
+            </div>
+        </a>
+        <a href="<?= $this->url('admin') ?>" class="panel panel-image col-sm-3 col-xs-6">
+            <div class="panel-body">
+                <div class="glyphicon glyphicon-cog"></div>
+                <h4><?= $this->translate('Website admin') ?></h4>
             </div>
         </a>
     </div>
