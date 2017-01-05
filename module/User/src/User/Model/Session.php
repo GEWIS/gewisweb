@@ -17,6 +17,7 @@ class Session
      *
      * @ORM\Id
      * @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 

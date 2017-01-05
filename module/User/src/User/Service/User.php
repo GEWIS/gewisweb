@@ -6,13 +6,11 @@ use Application\Service\AbstractAclService;
 
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
-use User\Model\Session as SessionModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Mapper\User as UserMapper;
+use User\Model\Session as SessionModel;
 
 use User\Form\Register as RegisterForm;
-
-use Decision\Model\Member as MemberModel;
 
 /**
  * User service.
@@ -237,8 +235,6 @@ class User extends AbstractAclService
         }
 
         $user = $auth->getIdentity();
-        // Log the session in the database
-        $this->saveSession($user);
 
         return $user;
     }
@@ -283,7 +279,7 @@ class User extends AbstractAclService
         $this->destroyStoredSession();
     }
 
-    protected function detachUser($user)
+    public function detachUser($user)
     {
         /*
          * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
@@ -293,25 +289,6 @@ class User extends AbstractAclService
         $this->sm->get('user_doctrine_em')->clear();
 
         return $this->getUserMapper()->findByLidnr($user->getLidnr());
-    }
-
-    /**
-     * Store the current session.
-     *
-     * @param \User\Model\User $user the logged in user
-     */
-    protected function saveSession($user)
-    {
-        $id = $this->getAuthStorage()->getId();
-        $sessionMapper = $this->getSessionMapper();
-        if (is_null($sessionMapper->findById($id))) {
-            $session = new SessionModel();
-            $session->setId($id);
-            $session->setIp($this->sm->get('user_remoteaddress'));
-            $user = $this->detachUser($user);
-            $session->setUser($user);
-            $sessionMapper->persist($session);
-        }
     }
 
     /**

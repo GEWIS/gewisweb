@@ -20,8 +20,9 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->login($data);
-
             if (null !== $login) {
+                // TODO
+
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
                 }
@@ -177,10 +178,11 @@ class UserController extends AbstractActionController
         ]);
     }
 
+
     /**
      * Get a user service.
      *
-     * @return User\Service\User
+     * @return \User\Service\User
      */
     protected function getUserService()
     {

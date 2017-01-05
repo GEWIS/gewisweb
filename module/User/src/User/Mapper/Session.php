@@ -25,6 +25,18 @@ class Session
         $this->em = $em;
     }
 
+    public function find($id, $secret)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('s')
+            ->from('User\Model\Session', 's')
+            ->where('s.id = ?1')
+            ->andWhere('s.secret = ?2');
+        $qb->setParameter(1, $id)
+            ->setParameter(2, $secret);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
     /**
      * Find a session by its id
      *
@@ -62,6 +74,45 @@ class Session
         $this->em->flush();
     }
 
+    /**
+     * Detach an entity from the entity manager.
+     *
+     * @param $entity
+     */
+    public function detach($entity)
+    {
+        $this->em->detach($entity);
+    }
+
+    /**
+     * Re-attach a user to the entity manager.
+     *
+     * @param entity $entity
+     *
+     * @return entity
+     */
+    public function merge($entity)
+    {
+        return $this->em->merge($entity);
+    }
+
+    /**
+     * Flush the entity manager
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * Remove an entity
+     *
+     * @param $entity
+     */
+    public function remove($entity)
+    {
+        $this->em->remove($entity);
+    }
     /**
      * Get the repository for this mapper.
      *
