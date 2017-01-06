@@ -41,6 +41,7 @@
                 <?php if($admin): ?>
                 <a href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
                 <?php endif; ?>
+                <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
         </tr>
     <?php endforeach; ?>

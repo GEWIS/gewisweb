@@ -97,23 +97,13 @@ return [
                             ]
                         ]
                     ],
-                    'email' => [
+                    'participants' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/email',
+                            'route' => '/:id/participants',
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'email',
-                            ]
-                        ]
-                    ],
-                    'export' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/:id/export',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'export',
+                                'action' => 'participants',
                             ]
                         ]
                     ],
