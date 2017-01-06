@@ -28,7 +28,8 @@ class CollectionBaseFieldsetAwareForm extends Form
             $this->baseFieldset->setObject($object);
         }
         $this->bindAs = $flags;
-        // If the fieldset is an collection, setting the object of self raises an exception. It is also not needed in this situation, so it is better not to do it.
+        // If the fieldset is an collection, setting the object of self raises an exception.
+        // It is also not needed in this situation, so it is better not to do it.
         if (!is_array($object) || !($this->baseFieldset instanceof Collection)) {
             $this->setObject($object);
         }

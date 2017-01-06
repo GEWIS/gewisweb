@@ -26,11 +26,7 @@ class FixedKeyDictionaryCollection extends Collection
         $collection = array();
         foreach ($values as $name => $value) {
             $element = $this->get($name);
-            if ($element instanceof FieldsetInterface) {
-                $collection[$name] = $element->bindValues($value);
-            } else {
-                $collection[$name] = $value;
-            }
+            $collection[$name] = $element instanceof FieldsetInterface ? $element->bindValues($value) : $value;
         }
         return $collection;
     }

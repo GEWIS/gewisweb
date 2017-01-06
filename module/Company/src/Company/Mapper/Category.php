@@ -104,11 +104,6 @@ class Category
         return $this->getRepository()->findAll();
     }
 
-    private function createPackage($type)
-    {
-        return new JobCategory ($this->em);
-    }
-
     /**
      * Get the repository for this mapper.
      *

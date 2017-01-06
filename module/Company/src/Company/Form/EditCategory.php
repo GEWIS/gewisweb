@@ -48,6 +48,5 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
     {
         $cid = $context['id'];
         return $this->mapper->isSlugNameUnique($slugName, $cid);
-
     }
 }

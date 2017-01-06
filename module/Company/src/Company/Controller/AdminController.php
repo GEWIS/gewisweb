@@ -228,7 +228,6 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             )){
-                $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
                     'admin_company/editCategory',
                     [

@@ -167,7 +167,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $data
      */
-    public function insertCategoryByData($data,$files)
+    public function insertCategoryByData($data, $files)
     {
         $categoryForm = $this->getCategoryForm();
         $mergedData = array_merge_recursive(

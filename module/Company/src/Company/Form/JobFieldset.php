@@ -135,7 +135,15 @@ class JobFieldset extends Fieldset
     {
         $jc = new \Company\Model\Job();
         $jc->setLanguage($lang);
-        $this->add($this->mapper->createObjectSelectConfig( 'Company\Model\JobCategory','name', $this->translate->translate('Category'), 'category', $lang));
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobCategory',
+                'name',
+                $this->translate->translate('Category'),
+                'category',
+                $lang
+            )
+        );
         $this->setObject($jc);
     }
 }

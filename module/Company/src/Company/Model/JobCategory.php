@@ -4,7 +4,6 @@ namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Job Category model.
  *
@@ -162,4 +161,3 @@ class JobCategory
         $this->language = $language;
     }
 }
-
