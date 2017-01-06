@@ -149,13 +149,14 @@ class Module
 
                     $acl->allow('guest', 'activity', 'view');
                     $acl->allow('guest', 'activitySignup', 'view');
+                    $acl->allow('guest', 'activitySignup', 'externalSignup');
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
-                    $acl->allow('admin', 'activity', ['update', 'viewDetails']);
-                    $acl->allow('user', 'activity', ['update', 'viewDetails'], new IsCreator());
-                    $acl->allow('active_member', 'activity', ['update', 'viewDetails'], new IsOrganMember());
+                    $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
+                    $acl->allow('user', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsCreator());
+                    $acl->allow('active_member', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsOrganMember());
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 

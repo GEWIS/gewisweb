@@ -3,7 +3,9 @@
 namespace Activity\Service;
 
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivitySignup;
 use Activity\Model\UserActivitySignup;
+use Activity\Model\ExternalActivitySignup;
 use Application\Service\AbstractAclService;
 use Decision\Model\Member;
 
@@ -150,7 +152,7 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Sign up  an activity with the specified field values.
+     * Sign a User up for an activity with the specified field values.
      *
      * @param ActivityModel $activity
      * @param array $fieldResults
@@ -163,16 +165,82 @@ class Signup extends AbstractAclService
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
-
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-        // Find the current user
         $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
-
         $signup = new UserActivitySignup();
-        $signup->setActivity($activity);
         $signup->setUser($user);
+        $this->createSignup($signup, $activity, $fieldResults);
+    }
+
+    /**
+     * Sign an external user up for an activity, which the current user may admin.
+     *
+     * @param \Activity\Service\AcitivityModel $activity
+     * @param type $fullName
+     * @param type $email
+     * @param array $fieldResults
+     * @throws \User\Permissions\NotAllowedException
+     */
+    public function adminSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    {
+        if (!($this->isAllowed('adminSignup', 'activity') ||
+                $this->isAllowed('adminSignup', $activity))) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create signups for this activity')
+            );
+        }
+        $this->manualSignUp($activity, $fullName, $email, $fieldResults);
+    }
+
+    /**
+     * Sign an external user up for an activity, allowed by a guest.
+     *
+     * @param \Activity\Service\AcitivityModel $activity
+     * @param type $fullName
+     * @param type $email
+     * @param array $fieldResults
+     * @throws \User\Permissions\NotAllowedException
+     */
+    public function externalSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    {
+        if (!($this->isAllowed('externalSignup', 'activitySignup'))) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to create signups for this activity')
+            );
+        }
+        $this->manualSignUp($activity, $fullName, $email, $fieldResults);
+    }
+
+    /**
+     * Sign an external user up for an activity.
+     *
+     * @param \Activity\Service\AcitivityModel $activity
+     * @param type $user
+     * @param array $fieldResults
+     * @throws \User\Permissions\NotAllowedException
+     */
+    protected function manualSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    {
+        $signup = new ExternalActivitySignup();
+        $signup->setEmail($email);
+        $signup->setFullName($fullName);
+        $this->createSignup($signup, $activity, $fieldResults);
+    }
+
+    /**
+     * Creates the generic parts of a signup.
+     * @param ActivitySignup $signup
+     * @param ActivityModel $activity
+     * @param type $user
+     * @param array $fieldResults
+     * @return ActivitySignup
+     */
+    protected function createSignup(ActivitySignup $signup, ActivityModel $activity, array $fieldResults)
+    {
+        $signup->setActivity($activity);
         $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         foreach ($activity->getFields() as $field){
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
@@ -196,6 +264,7 @@ class Signup extends AbstractAclService
         }
         $em->persist($signup);
         $em->flush();
+        return $signup;
     }
 
     /**
@@ -220,13 +289,29 @@ class Signup extends AbstractAclService
         if (is_null($signUp)) {
             return;
         }
+        $this->removeSignUp($signUp);
+    }
 
+    public function externalSignOff(ExternalActivitySignup $signup)
+    {
+        if (!($this->isAllowed('adminSignup', 'activity') ||
+                $this->isAllowed('adminSignup', $signup->getActivity()))) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to remove external signups for this activity')
+            );
+        }
+        $this->removeSignUp($signup);
+    }
+
+    protected function removeSignUp(ActivitySignup $signup)
+    {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $values = $this->getActivityFieldValueMapper()->getFieldValuesBySignup($signUp);
+        $values = $this->getActivityFieldValueMapper()->getFieldValuesBySignup($signup);
         foreach($values as $value){
             $em->remove($value);
         }
-        $em->remove($signUp);
+        $em->remove($signup);
         $em->flush();
     }
 
