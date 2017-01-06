@@ -32,7 +32,7 @@
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
             <?php if($admin): ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' :
-                    '<a href="' . $this->url('activity_admin_approval/proposal', ['id' => $activity->getId()]) .'">' . $this->translate('Update pending') . '</a>' ?></td>
+                    '<a href="' . $this->url('activity_admin_approval/proposal', ['id' => $activity->getUpdateProposal()->first()->getId()]) .'">' . $this->translate('Update pending') . '</a>' ?></td>
             <?php else: ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' : $this->translate('Update pending') ?></td>
             <?php endif; ?>
