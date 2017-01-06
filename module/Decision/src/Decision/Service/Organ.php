@@ -186,7 +186,7 @@ class Organ extends AbstractAclService
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
             ['organInfo' => $organInformation]);
 
-        return false;
+        return true;
     }
 
     /**
