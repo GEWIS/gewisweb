@@ -164,7 +164,6 @@ class Organ extends AbstractAclService
                 $config['cover_width'],
                 $config['cover_height']
             );
-            var_dump($coverPath);
             $organInformation->setCoverPath($coverPath);
         }
 
@@ -213,7 +212,7 @@ class Organ extends AbstractAclService
         $y = round($y * $size[1]);
         $width = round($width * $size[0]);
         $height = round($height * $size[1]);
-var_dump($width,$height);
+
         $image = new Imagick($file);
         $image->cropImage($width, $height, $x, $y);
         $image->thumbnailImage($thumbWidth, $thumbHeight);
