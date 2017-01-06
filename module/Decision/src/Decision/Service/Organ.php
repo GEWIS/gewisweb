@@ -153,13 +153,16 @@ class Organ extends AbstractAclService
             return false;
         }
 
+        $config = $this->getConfig();
         if ($files['cover']['size'] > 0) {
             $coverPath = $this->makeOrganInformationImage(
                 $files['cover']['tmp_name'],
                 $data['coverCropX'],
                 $data['coverCropY'],
                 $data['coverCropWidth'],
-                $data['coverCropHeight']
+                $data['coverCropHeight'],
+                $config['cover_width'],
+                $config['cover_height']
             );
             var_dump($coverPath);
             $organInformation->setCoverPath($coverPath);
@@ -171,7 +174,9 @@ class Organ extends AbstractAclService
                 $data['thumbnailCropX'],
                 $data['thumbnailCropY'],
                 $data['thumbnailCropWidth'],
-                $data['thumbnailCropHeight']
+                $data['thumbnailCropHeight'],
+                $config['thumbnail_width'],
+                $config['thumbnail_height']
             );
             $organInformation->setThumbnailPath($thumbnailPath);
         }
@@ -186,7 +191,7 @@ class Organ extends AbstractAclService
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
             ['organInfo' => $organInformation]);
 
-        return true;
+        return false;
     }
 
     /**
@@ -195,20 +200,23 @@ class Organ extends AbstractAclService
      * @param string $file The file to create the thumbnail of
      * @param string $x The start x position in the image
      * @param string $y The start y position in the image
-     * @param string $width The width of the thumbnail
-     * @param string $height The height of the thumbnail
+     * @param string $width The width of the area to crop
+     * @param string $height The height of the are to crop
+     * @param int $thumbWidth The width of the final thumbnail
+     * @param int $thumbHeight The height of the final thumbnail
      * @return string path of where the thumbnail is stored
      */
-    public function makeOrganInformationImage($file, $x, $y, $width, $height)
+    public function makeOrganInformationImage($file, $x, $y, $width, $height, $thumbWidth, $thumbHeight)
     {
         $size = getimagesize($file);
         $x = round($x * $size[0]);
         $y = round($y * $size[1]);
         $width = round($width * $size[0]);
         $height = round($height * $size[1]);
-
+var_dump($width,$height);
         $image = new Imagick($file);
         $image->cropImage($width, $height, $x, $y);
+        $image->thumbnailImage($thumbWidth, $thumbHeight);
         $image->setimageformat('jpg');
 
         //Tempfile is used to generate sha1ot sure this is the best method
@@ -378,6 +386,18 @@ class Organ extends AbstractAclService
     public function getEntityManager()
     {
         return $this->sm->get('doctrine.entitymanager.orm_default');
+    }
+
+    /**
+     * Get the organ information config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['organ_information'];
     }
 
     /**
