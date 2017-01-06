@@ -7,6 +7,7 @@ use Application\Service\AbstractAclService;
 use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\OrganInformation;
+use Imagick;
 
 /**
  * User service.
@@ -152,9 +153,27 @@ class Organ extends AbstractAclService
             return false;
         }
 
-        if ($files['upload']['size'] > 0) {
-            $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+        if ($files['cover']['size'] > 0) {
+            $coverPath = $this->makeOrganInformationImage(
+                $files['cover']['tmp_name'],
+                $data['coverCropX'],
+                $data['coverCropY'],
+                $data['coverCropWidth'],
+                $data['coverCropHeight']
+            );
+            var_dump($coverPath);
             $organInformation->setCoverPath($coverPath);
+        }
+
+        if ($files['thumbnail']['size'] > 0) {
+            $thumbnailPath = $this->makeOrganInformationImage(
+                $files['thumbnail']['tmp_name'],
+                $data['thumbnailCropX'],
+                $data['thumbnailCropY'],
+                $data['thumbnailCropWidth'],
+                $data['thumbnailCropHeight']
+            );
+            $organInformation->setThumbnailPath($thumbnailPath);
         }
 
         $this->getEntityManager()->flush();
@@ -167,7 +186,37 @@ class Organ extends AbstractAclService
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
             ['organInfo' => $organInformation]);
 
-        return true;
+        return false;
+    }
+
+    /**
+     * Create a thumbnail of the given file at the given location and scale.
+     *
+     * @param string $file The file to create the thumbnail of
+     * @param string $x The start x position in the image
+     * @param string $y The start y position in the image
+     * @param string $width The width of the thumbnail
+     * @param string $height The height of the thumbnail
+     * @return string path of where the thumbnail is stored
+     */
+    public function makeOrganInformationImage($file, $x, $y, $width, $height)
+    {
+        $size = getimagesize($file);
+        $x = round($x * $size[0]);
+        $y = round($y * $size[1]);
+        $width = round($width * $size[0]);
+        $height = round($height * $size[1]);
+
+        $image = new Imagick($file);
+        $image->cropImage($width, $height, $x, $y);
+        $image->setimageformat('jpg');
+
+        //Tempfile is used to generate sha1ot sure this is the best method
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
+        $image->writeImage($tempFileName);
+        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
+
+        return $newPath;
     }
 
     public function approveOrganInformation($organInformation)
@@ -314,9 +363,9 @@ class Organ extends AbstractAclService
     }
 
     /**
-     * Gets the storage service.
+     * Gets the file storage service.
      *
-     * @return \Application\Service\Storage
+     * @return \Application\Service\FileStorage
      */
     public function getFileStorageService()
     {

@@ -72,7 +72,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
         ]);
 
         foreach (['cover', 'thumbnail'] as $type) {
-            foreach (['X', 'Y', 'Scale'] as $param) {
+            foreach (['X', 'Y', 'Width', 'Height'] as $param) {
                 $this->add([
                     'name' => $type . 'Crop' . $param,
                     'type' => 'hidden'

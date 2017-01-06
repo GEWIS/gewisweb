@@ -128,7 +128,7 @@ $form->setAttribute('id', 'editForm');
 <hr>
 <?php
 foreach (['cover', 'thumbnail'] as $type) {
-    foreach (['X', 'Y', 'Scale'] as $param) {
+    foreach (['X', 'Y', 'Width', 'Height'] as $param) {
         echo $this->formHidden($form->get($type . 'Crop' . $param));
     }
 }
@@ -191,17 +191,19 @@ $submit->setAttribute('class', 'btn btn-primary');
             var height = $('#thumbnailPreviewImage').height();
             $('[name=thumbnailCropX]').val(c.x / width);
             $('[name=thumbnailCropY]').val(c.y / height);
-            $('[name=thumbnailCropScale]').val(c.w / width);
+            $('[name=thumbnailCropWidth]').val(c.w / width);
+            $('[name=thumbnailCropHeight]').val(c.h / height);
         });
     });
 
     $("#coverUpload").change(function(){
         readImage(this, 'coverPreview', 16, 5, function(c) {
-            var width = $('#thumbnailPreviewImage').width();
-            var height = $('#thumbnailPreviewImage').height();
+            var width = $('#coverPreviewImage').width();
+            var height = $('#coverPreviewImage').height();
             $('[name=coverCropX]').val(c.x / width);
             $('[name=coverCropY]').val(c.y / height);
-            $('[name=coverCropScale]').val(c.w / width);
+            $('[name=coverCropWidth]').val(c.w / width);
+            $('[name=coverCropHeight]').val(c.h / height);
         });
     });
 </script>
