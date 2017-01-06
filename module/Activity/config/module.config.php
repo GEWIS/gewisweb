@@ -97,13 +97,13 @@ return [
                             ]
                         ]
                     ],
-                    'export' => [
+                    'participants' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/export',
+                            'route' => '/:id/participants',
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'export',
+                                'action' => 'participants',
                             ]
                         ]
                     ],

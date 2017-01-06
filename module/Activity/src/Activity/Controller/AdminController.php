@@ -19,11 +19,11 @@ class AdminController extends AbstractActionController
 {
 
     /**
-     * Return the data for exporting activities
+     * Return the data of the activity participants
      *
      * @return array
      */
-    public function exportAction()
+    public function participantsAction()
     {
         $id = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
@@ -84,7 +84,7 @@ class AdminController extends AbstractActionController
     public function exportPdfAction()
     {
         $pdf = new PdfModel();
-        $pdf->setVariables($this->exportAction());
+        $pdf->setVariables($this->participantsAction());
         return $pdf;
     }
 

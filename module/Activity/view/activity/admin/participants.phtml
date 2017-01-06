@@ -6,7 +6,7 @@ $this->headTitle($this->translate('Participants')); ?>
 
 
 <div class="container">
-    <?= $this->partial('activity/admin/exportTable.phtml', [
+    <?= $this->partial('activity/admin/participantsTable.phtml', [
             'activity' => $activity,
             'signupData' => $signupData
     ]);?>
