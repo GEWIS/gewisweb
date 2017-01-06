@@ -2,277 +2,147 @@
 
 namespace Activity\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Model\Activity;
+use Activity\Service\Signup;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
+use Zend\Paginator\Paginator;
+use Zend\View\Model\ViewModel;
+use DOMPDFModule\View\Model\PdfModel;
 
 /**
- * Controller for all administrative activity actions
+ * Controller that gives some additional details for activities, such as a list of email adresses
+ * or an export function specially tailored for the organizer.
  */
 class AdminController extends AbstractActionController
 {
     /**
-     * View the queue of not approved activities
+     * Show the email adresses belonging to an Activity
      */
-    public function queueAction()
+    public function emailAction()
     {
-        $perPage = 5;
+        $id = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $unapprovedActivities = $queryService->getUnapprovedActivities();
-        $approvedActivities = $queryService->getApprovedActivities();
-        $disapprovedActivities = $queryService->getDisapprovedActivities();
-        $updatedActivities = [];
-        $updateProposals = [];
-        foreach ($queryService->getAllProposals() as $updateProposal) {
-            $updatedActivities[$updateProposal->getId()] = $updateProposal->getNew();
-            $updateProposals[$updateProposal->getNew()->getId()] = $updateProposal;
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+
+        /** @var $activity Activity*/
+        $activity = $queryService->getActivityWithDetails($id);
+        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+
+        if (is_null($activity)) {
+            return $this->notFoundAction();
         }
+
         return [
-            'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
-            'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
-            'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
-            'updatedActivities' => array_slice($updatedActivities, 0, $perPage),
-            'updateProposals' => $updateProposals,
-            'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
-            'moreApprovedActivities' => count($approvedActivities) > $perPage,
-            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
+            'activity' => $translatedActivity,
         ];
     }
 
     /**
-     * View one activity.
+     * Return the data for exporting activities
+     *
+     * @return array
+     */
+    public function exportAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+
+
+        /** @var $activity Activity*/
+        $activity = $queryService->getActivityWithDetails($id);
+        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+
+        if (is_null($activity)) {
+            return $this->notFoundAction();
+        }
+
+        return [
+            'activity' => $translatedActivity,
+            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+        ];
+    }
+
+    public function updateAction()
+    {
+        $id = (int) $this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+
+        $activity = $queryService->getActivityWithDetails($id);
+
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $form = $activityService->getForm();
+
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+                $activityService->createUpdateProposal(
+                    $activity,
+                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
+                $view = new ViewModel();
+                $view->setTemplate('activity/activity/updateSuccess.phtml');
+                return $view;
+            }
+        }
+        $updateProposal = $activity->getUpdateProposal();
+        if ($updateProposal->count() !== 0) {
+            //if there exists an update proposal, show that instead of the old activity
+            $activity = $updateProposal->first()->getNew();
+        }
+        $form->bind($activity);
+        $languages = $queryService->getAvailableLanguages($activity);
+        return ['form' => $form, 'activity' => $activity, 'languages' => $languages];
+    }
+
+    public function exportPdfAction()
+    {
+        $pdf = new PdfModel();
+        $pdf->setVariables($this->exportAction());
+        return $pdf;
+    }
+
+    /**
+     * Show a list of all activities this user can manage.
      */
     public function viewAction()
     {
-        $id = (int) $this->params('id');
+        $admin = false;
+        $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
+        $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $disapprovedActivities = null;
+        $unapprovedActivities = null;
+        $approvedActivities = null;
+        if ($acl->isAllowed($user, 'activity', 'approve')) {
+            $admin = true;
+            $disapprovedActivities = $queryService->getDisapprovedActivities();
+            $unapprovedActivities = $queryService->getUnapprovedActivities();
+            $approvedActivities = $queryService->getApprovedActivities();
+        }
 
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivity($id);
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
+        $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($user));
+        $paginator->setDefaultItemCountPerPage(15);
+        $page = $this->params()->fromRoute('page');
+        if ($page) {
+            $paginator->setCurrentPageNumber($page);
         }
 
         return [
-            'activity' => $activity,
-            'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
-            'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
-            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset')
-        ];
-    }
-
-    /**
-     * View all the unapproved activities with paginator
-     * @return array
-     */
-    public function queueUnapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueApprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_APPROVED, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueDisapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_DISAPPROVED, $page);
-    }
-
-
-
-    /**
-     * View activities with a certain status
-     *
-     * @param integer $status
-     * @param integer $page
-     * @return array
-     */
-    protected function viewStatus($status, $page = 1)
-    {
-        $activityService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activities = $activityService->getActivityPaginatorByStatus($status, $page);
-
-        return [
-            'activities' => $activities,
-        ];
-    }
-
-    /**
-     * Approve of an activity
-     */
-    public function approveAction()
-    {
-        return $this->setApprovalStatus('approve');
-    }
-
-    /**
-     * Disapprove an activity
-     */
-    public function disapproveAction()
-    {
-        return $this->setApprovalStatus('disapprove');
-    }
-
-    /**
-     * Reset the approval status of an activity
-     */
-    public function resetAction()
-    {
-        return $this->setApprovalStatus('reset');
-    }
-
-    /**
-     * Display the proposed update
-     */
-    public function viewProposalAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        $proposal = $queryService->getProposal($id);
-
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
-        }
-
-        return [
-            'proposal' => $proposal,
-            'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
-            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update')
-            ];
-    }
-
-    /**
-     * Apply the proposed update
-     */
-    public function applyProposalAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('proposalApply');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
-        }
-        $oldId = $proposal->getOld()->getId();
-        $activityService->updateActivity($proposal);
-
-        $this->redirect()->toRoute('admin_activity/view', [
-            'id' => $oldId,
-        ]);
-    }
-
-    /**
-     * Revoke the proposed update
-     */
-    public function revokeProposalAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('proposalRevoke');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
-        }
-
-        $oldId = $proposal->getOld()->getId();
-        $activityService->revokeUpdateProposal($proposal);
-
-        $this->redirect()->toRoute('admin_activity/view', [
-            'id' => $oldId,
-        ]);
-    }
-
-    /**
-     * Set the approval status of the activity requested
-     *
-     * @param $status
-     * @return array|\Zend\Http\Response
-     */
-    protected function setApprovalStatus($status)
-    {
-        $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivity($id);
-
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('updateApprovalStatus');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
-        }
-
-        switch ($status) {
-            case 'approve':
-                $activityService->approve($activity);
-                break;
-            case 'disapprove':
-                $activityService->disapprove($activity);
-                break;
-            case 'reset':
-                $activityService->reset($activity);
-                break;
-            default:
-                throw new \InvalidArgumentException('No such status ' . $status);
-
-        }
-
-        return $this->redirect()->toRoute('admin_activity/queue');
+            'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
+            'disapprovedActivities' => $disapprovedActivities,
+            'unapprovedActivities' => $unapprovedActivities,
+            'approvedActivities' => $approvedActivities,
+            'oldActivityPaginator' => $paginator,
+            'admin' => $admin,
+                ];
     }
 }

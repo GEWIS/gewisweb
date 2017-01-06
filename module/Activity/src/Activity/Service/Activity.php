@@ -77,7 +77,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the creator
         /** @var \User\Model\User $user */
         $user = $em->merge(
-            $this->getServiceManager()->get('user_role')
+            $this->getServiceManager()->get('user_service_user')->getIdentity()
         );
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
@@ -103,16 +103,16 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
-        if (!$this->isAllowed('update', 'activity')) {
+        if (!($this->isAllowed('update', 'activity') ||
+                $this->isAllowed('update', $oldActivity))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to update an activity')
+                $translator->translate('You are not allowed to update this activity')
             );
         }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        // Find the creator
-        $user = $this->getServiceManager()->get('user_role');
 
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
         $newActivity = $this->generateActivity(
             $params,
             $user,
@@ -121,6 +121,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $english,
             ActivityModel::STATUS_UPDATE
         );
+
+        $oldProposalContainer = $oldActivity->getUpdateProposal();
+
+        if ($oldProposalContainer->count() !== 0) {
+            $oldProposal = $oldProposalContainer->unwrap()->first();
+            //Remove old update proposal
+            $oldUpdate = $oldProposal->getNew();
+            $oldProposal->setNew($newActivity);
+            $em->remove($oldUpdate);
+            $em->flush();
+
+            return $oldProposal;
+        }
+
         $proposal = new \Activity\Model\ActivityUpdateProposal();
         $proposal->setOld($oldActivity);
         $proposal->setNew($newActivity);

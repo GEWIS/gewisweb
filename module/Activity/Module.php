@@ -2,8 +2,7 @@
 namespace Activity;
 
 use User\Permissions\Assertion\IsOrganMember;
-
-;
+use User\Permissions\Assertion\IsCreator;
 
 class Module
 {
@@ -153,9 +152,10 @@ class Module
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
-                    $acl->allow('active_member', 'activity', 'viewDetails');
 
-                    $acl->allow('admin', 'activity', 'update');
+                    $acl->allow('admin', 'activity', ['update', 'viewDetails']);
+                    $acl->allow('user', 'activity', ['update', 'viewDetails'], new IsCreator());
+                    $acl->allow('active_member', 'activity', ['update', 'viewDetails'], new IsOrganMember());
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 

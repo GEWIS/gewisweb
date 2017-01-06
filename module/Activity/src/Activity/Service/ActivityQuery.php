@@ -5,7 +5,6 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
-use DoctrineModule\Paginator;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -100,7 +99,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getActivityWithDetails($id)
     {
-        if (! $this->isAllowed('viewDetails', 'activity')) {
+        if (!($this->isAllowed('viewDetails', 'activity') ||
+                $this->isAllowed('viewDetails', $this->getActivity($id)))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
@@ -144,9 +144,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUnapprovedActivities();
-
-        return $activity;
+        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_TO_APPROVE);
     }
 
     /**
@@ -164,9 +162,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getApprovedActivities();
-
-        return $activity;
+        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_APPROVED);
     }
 
     /**
@@ -197,9 +193,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getDisapprovedActivities();
-
-        return $activity;
+        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_DISAPPROVED);
     }
 
     /**
@@ -223,24 +217,39 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
-     * Get an activity paginator by the status of the activity
-     * @param $status
-     * @param $page
-     * @return Paginator
+     * Gets the upcoming activities created by this user or its organs.
+     * Or, when the user is an admin, retrieve all upcoming activities
+     *
+     * @param type $user
+     * @return type
      */
-    public function getActivityPaginatorByStatus($status, $page = 1)
+    public function getUpcomingCreatedActivities($user)
     {
-        if (!$this->isAllowed('viewUnapproved', 'activity') ||
-            !$this->isAllowed('viewDisapproved', 'activity') ||
-            !$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
+        $activityMapper = $this->getActivityMapper();
+        if ($this->isAllowed('viewDetails', 'activity')) {
+            //Only admins are allowed to unconditionally view activity details
+            return $activityMapper->getAllUpcomingActivities();
         }
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityPaginatorByStatus($status, $page);
-        return $activity;
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
+        return $activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
+    }
+
+    /**
+     * Gets a paginator for the old activities created by this user or its organs.
+     * Or, when the user is an admin, retrieve all old activities
+     *
+     * @param type $user
+     * @return type
+     */
+    public function getOldCreatedActivitiesPaginator($user)
+    {
+        $activityMapper = $this->getActivityMapper();
+        if ($this->isAllowed('viewDetails', 'activity')) {
+            //Only admins are allowed to unconditionally view activity details
+            return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
+        }
+        $organs = $this->getServiceManager()->get('decision_service_organ')->getEditableOrgans();
+        return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
     /**

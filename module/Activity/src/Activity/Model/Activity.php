@@ -6,13 +6,15 @@ use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use User\Model\User;
+use User\Permissions\Resource\OrganResourceInterface;
+use User\Permissions\Resource\CreatorResourceInterface;
 
 /**
  * Activity model.
  *
  * @ORM\Entity
  */
-class Activity implements  \User\Permissions\Resource\OrganResourceInterface
+class Activity implements OrganResourceInterface, CreatorResourceInterface
 {
     /**
      * Status codes for the activity
@@ -134,6 +136,13 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     protected $status;
 
     /**
+     * The update proposal associated with this activity
+     *
+     * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old")
+     */
+    protected $updateProposal;
+
+    /**
      * Activity description.
      *
      * @Orm\Column(type="text", nullable=true)
@@ -196,7 +205,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         return $this->id;
     }
-    
+
     /**
      * @return string
      */
@@ -425,6 +434,13 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     }
 
     /**
+     * @return Activity\Model\ActivityUpdateProposal
+     */
+    public function getUpdateProposal()
+    {
+        return $this->updateProposal;
+    }
+    /**
      * @return string
      */
     public function getDescription()
@@ -519,7 +535,7 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
     {
         $this->isFood = $isFood;
     }
-    
+
 
     /**
      * @return array
@@ -601,6 +617,14 @@ class Activity implements  \User\Permissions\Resource\OrganResourceInterface
      */
     public function getResourceId()
     {
-        return $this->getId();
+        return 'activity';
+    }
+
+    /**
+     * Get the creator of this resource
+     */
+    public function getResourceCreator()
+    {
+        return $this->getCreator();
     }
 }

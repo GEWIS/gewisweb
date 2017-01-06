@@ -99,7 +99,7 @@ class Member extends AbstractAclService
             );
         }
 
-        $user = $this->getServiceManager()->get('user_role');
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
 
         $config = $this->getServiceManager()->get('config');
         $sslcapath = $config['sslcapath'];

@@ -9,7 +9,7 @@ use User\Model\NewUser as NewUserModel;
 use User\Model\Session as SessionModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Mapper\User as UserMapper;
-
+use User\Permissions\NotAllowedException;
 use User\Form\Register as RegisterForm;
 
 use Decision\Model\Member as MemberModel;
@@ -281,6 +281,24 @@ class User extends AbstractAclService
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
         $this->destroyStoredSession();
+    }
+
+    /**
+     * Gets the user identity, or gives a 403 if the user is not logged in
+     *
+     * @return User the current logged in user
+     * @throws NotAllowedException if no user is logged in
+     */
+    public function getIdentity()
+    {
+        $authService = $this->getServiceManager()->get('user_auth_service');
+        if (!$authService->hasIdentity()) {
+            $translator = $this->getServiceManager()->get('translator');
+            throw new NotAllowedException(
+                $translator->translate('You need to log in to perform this action')
+            );
+        }
+        return $authService->getIdentity();
     }
 
     protected function detachUser($user)
