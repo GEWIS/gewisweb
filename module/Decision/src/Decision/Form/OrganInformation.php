@@ -62,13 +62,25 @@ class OrganInformation extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'upload',
+            'name' => 'thumbnail',
             'type' => 'file',
-            'option' => [
-                'label' => $translator->translate('Cover photo to upload')
-            ]
         ]);
-        $this->get('upload')->setLabel($translator->translate('Cover photo to upload'));
+
+        $this->add([
+            'name' => 'cover',
+            'type' => 'file',
+        ]);
+
+        foreach (['cover', 'thumbnail'] as $type) {
+            foreach (['X', 'Y', 'Width', 'Height'] as $param) {
+                $this->add([
+                    'name' => $type . 'Crop' . $param,
+                    'type' => 'hidden'
+                ]);
+            }
+        }
+        $this->get('thumbnail')->setLabel($translator->translate('Thumbnail photo to upload'));
+        $this->get('cover')->setLabel($translator->translate('Cover photo to upload'));
 
         $this->add([
             'name' => 'submit',
@@ -89,6 +101,9 @@ class OrganInformation extends Form implements InputFilterProviderInterface
     {
         return [
             'website' => [
+                'required' => false
+            ],
+            'email' => [
                 'required' => false
             ],
             'shortDutchDescription' => [
@@ -135,19 +150,30 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'upload' => [
+            'thumbnail' => [
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'File\MimeType',
-                        'options' => [
-                            'mimeType' => 'image/png'
-                        ]
+                        'name' => 'File\IsImage',
                     ],
                     [
                         'name' => 'File\Extension',
                         'options' => [
-                            'extension' => 'png'
+                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif']
+                        ]
+                    ],
+                ],
+            ],
+            'cover' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'File\IsImage',
+                    ],
+                    [
+                        'name' => 'File\Extension',
+                        'options' => [
+                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif']
                         ]
                     ],
                 ],

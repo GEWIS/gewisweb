@@ -7,6 +7,7 @@ use Application\Service\AbstractAclService;
 use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\OrganInformation;
+use Imagick;
 
 /**
  * User service.
@@ -152,9 +153,31 @@ class Organ extends AbstractAclService
             return false;
         }
 
-        if ($files['upload']['size'] > 0) {
-            $coverPath = $this->getFileStorageService()->storeUploadedFile($files['upload']);
+        $config = $this->getConfig();
+        if ($files['cover']['size'] > 0) {
+            $coverPath = $this->makeOrganInformationImage(
+                $files['cover']['tmp_name'],
+                $data['coverCropX'],
+                $data['coverCropY'],
+                $data['coverCropWidth'],
+                $data['coverCropHeight'],
+                $config['cover_width'],
+                $config['cover_height']
+            );
             $organInformation->setCoverPath($coverPath);
+        }
+
+        if ($files['thumbnail']['size'] > 0) {
+            $thumbnailPath = $this->makeOrganInformationImage(
+                $files['thumbnail']['tmp_name'],
+                $data['thumbnailCropX'],
+                $data['thumbnailCropY'],
+                $data['thumbnailCropWidth'],
+                $data['thumbnailCropHeight'],
+                $config['thumbnail_width'],
+                $config['thumbnail_height']
+            );
+            $organInformation->setThumbnailPath($thumbnailPath);
         }
 
         $this->getEntityManager()->flush();
@@ -167,7 +190,40 @@ class Organ extends AbstractAclService
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
             ['organInfo' => $organInformation]);
 
-        return true;
+        return false;
+    }
+
+    /**
+     * Create a thumbnail of the given file at the given location and scale.
+     *
+     * @param string $file The file to create the thumbnail of
+     * @param string $x The start x position in the image
+     * @param string $y The start y position in the image
+     * @param string $width The width of the area to crop
+     * @param string $height The height of the are to crop
+     * @param int $thumbWidth The width of the final thumbnail
+     * @param int $thumbHeight The height of the final thumbnail
+     * @return string path of where the thumbnail is stored
+     */
+    public function makeOrganInformationImage($file, $x, $y, $width, $height, $thumbWidth, $thumbHeight)
+    {
+        $size = getimagesize($file);
+        $x = round($x * $size[0]);
+        $y = round($y * $size[1]);
+        $width = round($width * $size[0]);
+        $height = round($height * $size[1]);
+
+        $image = new Imagick($file);
+        $image->cropImage($width, $height, $x, $y);
+        $image->thumbnailImage($thumbWidth, $thumbHeight);
+        $image->setimageformat('jpg');
+
+        //Tempfile is used such that the file storage service can generate a filename
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
+        $image->writeImage($tempFileName);
+        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
+
+        return $newPath;
     }
 
     public function approveOrganInformation($organInformation)
@@ -314,9 +370,9 @@ class Organ extends AbstractAclService
     }
 
     /**
-     * Gets the storage service.
+     * Gets the file storage service.
      *
-     * @return \Application\Service\Storage
+     * @return \Application\Service\FileStorage
      */
     public function getFileStorageService()
     {
@@ -329,6 +385,18 @@ class Organ extends AbstractAclService
     public function getEntityManager()
     {
         return $this->sm->get('doctrine.entitymanager.orm_default');
+    }
+
+    /**
+     * Get the organ information config, as used by this service.
+     *
+     * @return array containing the config for the module
+     */
+    public function getConfig()
+    {
+        $config = $this->sm->get('config');
+
+        return $config['organ_information'];
     }
 
     /**
