@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
 
 /**
- * 
+ *
  */
 class CategoryFieldset extends Fieldset
 {

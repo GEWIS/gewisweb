@@ -93,12 +93,12 @@ class Job
      */
     public function findJob($dict)
     {
-        $jobId = $dict['jobSlug'];
+        $jobSlugName = $dict['jobSlug'];
         $category = $dict['category'];
         $companySlugName = $dict['companySlugName'];
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat');
-        if ($jobId != null) {
+        if ($jobSlugName != null) {
             $qb->where('j.slugName=:jobId');
             $qb->setParameter('jobId', $jobSlugName);
         }
@@ -155,6 +155,5 @@ class Job
             //'class' => 'form-control input-sm'
             //]
         ];
-
     }
 }
