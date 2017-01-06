@@ -8,12 +8,13 @@ use \DateTime;
 use User\Model\User;
 use User\Permissions\Resource\OrganResourceInterface;
 use User\Permissions\Resource\CreatorResourceInterface;
+
 /**
  * Activity model.
  *
  * @ORM\Entity
  */
-class Activity implements  OrganResourceInterface, CreatorResourceInterface
+class Activity implements OrganResourceInterface, CreatorResourceInterface
 {
     /**
      * Status codes for the activity
@@ -626,5 +627,4 @@ class Activity implements  OrganResourceInterface, CreatorResourceInterface
     {
         return $this->getCreator();
     }
-
 }

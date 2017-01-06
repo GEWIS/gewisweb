@@ -4,7 +4,6 @@ namespace User\Permissions\Resource;
 
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
-
 interface CreatorResourceInterface extends ResourceInterface
 {
 

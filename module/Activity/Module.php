@@ -3,7 +3,6 @@ namespace Activity;
 
 use User\Permissions\Assertion\IsOrganMember;
 use User\Permissions\Assertion\IsCreator;
-;
 
 class Module
 {

@@ -9,7 +9,6 @@ use Zend\Permissions\Acl\Assertion\AssertionInterface;
 
 use User\Model\User;
 
-use Decision\Model\BoardMember;
 use User\Permissions\Resource\CreatorResourceInterface;
 
 /**

@@ -295,7 +295,7 @@ class User extends AbstractAclService
         if (!$authService->hasIdentity()) {
             $translator = $this->getServiceManager()->get('translator');
             throw new NotAllowedException(
-               $translator->translate('You need to log in to perform this action')
+                $translator->translate('You need to log in to perform this action')
             );
         }
         return $authService->getIdentity();

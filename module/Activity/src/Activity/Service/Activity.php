@@ -124,7 +124,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $oldProposalContainer = $oldActivity->getUpdateProposal();
 
-        if ($oldProposalContainer->count() !== 0){
+        if ($oldProposalContainer->count() !== 0) {
             $oldProposal = $oldProposalContainer->unwrap()->first();
             //Remove old update proposal
             $oldUpdate = $oldProposal->getNew();

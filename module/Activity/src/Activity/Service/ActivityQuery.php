@@ -5,10 +5,6 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
-use DoctrineModule\Paginator;
-use Decision\Model\Member;
-use Decision\Model\Organ;
-
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -230,7 +226,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getUpcomingCreatedActivities($user)
     {
         $activityMapper = $this->getActivityMapper();
-        if ($this->isAllowed('viewDetails', 'activity')){
+        if ($this->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getAllUpcomingActivities();
         }
@@ -248,7 +244,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getOldCreatedActivitiesPaginator($user)
     {
         $activityMapper = $this->getActivityMapper();
-        if ($this->isAllowed('viewDetails', 'activity')){
+        if ($this->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
         }
