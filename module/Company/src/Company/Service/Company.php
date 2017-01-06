@@ -412,9 +412,14 @@ class Company extends AbstractACLService
     public function createJob($packageID, $data, $files)
     {
         $package = $this->getPackageMapper()->findPackage($packageID);
-        $job = new JobModel();
-        $job->setPackage($package);
-        return $this->saveJobData("", $job, $data, $files);
+        $jobs = [];
+        foreach ($this->getLanguages() as $lang) {
+            $job = new JobModel();
+            $job->setPackage($package);
+            $job->setLanguage($lang);
+            $jobs[$lang] = $job;
+        }
+        return $this->saveJobData("", $jobs, $data, $files);
     }
 
     /**
@@ -426,41 +431,56 @@ class Company extends AbstractACLService
      *
      * @return JobModel|bool
      */
-    public function saveJobData($currentSlug, $job, $data, $files)
+    public function saveJobData($languageIndependentId, $jobs, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
-        $jobForm->setCompanySlug($job->getCompany()->getSlugName());
-        $jobForm->setCurrentSlug($currentSlug);
-        $jobForm->bind($job);
+        $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
+        $jobForm->setCurrentSlug($data['slugName']);
         $jobForm->setData($mergedData);
+        $jobForm->bind($jobs);
 
         if (!$jobForm->isValid()) {
             return false;
         }
+        $id = -1;
+        foreach ($jobs as $lang=>$job) {
 
-        $file = $files['attachment_file'];
-        if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-            $oldPath = $job->getAttachment();
-            try {
-                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-            } catch (\Exception $e) {
-                return false;
+            $file = $files['attachment_file'];
+            if($file != null) {
+                if ($file['jobs'][$lang]['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $oldPath = $job->getAttachment();
+                    try {
+                        $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    } catch (\Exception $e) {
+                        return false;
+                    }
+
+                    if (!is_null($oldPath) && $oldPath != $newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+
+                    $job->setAttachment($newPath);
+                }
             }
 
-            if (!is_null($oldPath) && $oldPath != $newPath) {
-                $this->getFileStorageService()->removeFile($oldPath);
+            $job->setTimeStamp(new \DateTime());
+            if ($languageIndependentId != "") {
+                $job->setLanguageIndependentId($id);
+                $this->getJobMapper()->persist($job);
+                $this->getJobMapper()->save();
+                if ($id == -1) {
+                    $id = $job->getId();
+                }
+                $job->setLanguageIndependentId($id);
+                continue;
             }
-
-            $job->setAttachment($newPath);
+            $job->setLanguageIndependentId($languageIndependentId);
         }
-
-        $job->setTimeStamp(new \DateTime());
-        $this->getJobMapper()->persist($job);
-        return $job;
+        return true;
     }
 
     /**
@@ -468,7 +488,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $packageID
      */
-    public function insertJobIntoPackageID($packageID)
+    public function insertJobIntoPackageID($packageID, $lang, $languageIndependentId)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -477,7 +497,7 @@ class Company extends AbstractACLService
             );
         }
         $package = $this->getEditablePackage($packageID);
-        $result = $this->getJobMapper()->insertIntoPackage($package);
+        $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageIndependentId);
 
         return $result;
     }
@@ -596,7 +616,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getEditableJobsBySlugName($companySlugName, $jobSlugName)
+    public function getEditableJobsByLanguageIndependentId($companySlugName, $languageIndependentId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -604,7 +624,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
+        return $this->getJobMapper()->findHiddenJobByLanguageIndependentId($companySlugName, $languageIndependentId);
     }
 
     /**

@@ -6,138 +6,31 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator as Translator;
 
-class EditJob extends Form
+class EditJob extends CollectionBaseFieldsetAwareForm
 {
-    public function __construct($mapper, Translator $translate)
+    public function __construct($mapper, Translator $translate, $languages, $hydrator)
     {
         // we want to ignore the name passed
         parent::__construct();
 
         $this->mapper = $mapper;
 
+        $this->setHydrator($hydrator);
+
         $this->setAttribute('method', 'post');
 
         $this->add([
-            'name' => 'id',
-            'attributes' => [
-                'type' => 'hidden',
-            ],
+            'type' => '\Company\Form\FixedKeyDictionaryCollection',
+            'name' => 'jobs',
+            'hydrator' => $this->getHydrator(),
+            'options' => [
+                'use_as_base_fieldset' => true,
+                'count' => count($languages),
+                'target_element' => new JobFieldset($mapper, $translate, $this->getHydrator()),
+                'items' => $languages,
+            ]
         ]);
 
-        $this->add([
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'language',
-            'options' => [
-                'label' => 'Language',
-                'value_options' => [
-                    'nl' => $translate->translate('Dutch'),
-                    'en' => $translate->translate('English'),
-                ],
-            ],
-        ]);
-        $this->add([
-            'name' => 'name',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Name'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'slugName',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Permalink'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'active',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'label' => $translate->translate('Active'),
-                'use_hidden_element' => true,
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-            ],
-        ]);
-        $this->add([
-            'name' => 'website',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Website'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'attachment_file',
-            'type' => '\Zend\Form\Element\File',
-            'attributes' => [
-                'type' => 'file',
-            ],
-            'options' => [
-                'label' => $translate->translate('Attachment'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Email'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'contactName',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Contact name'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'phone',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translate->translate('Phone'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'description',
-            'type' => 'Zend\Form\Element\Textarea',
-            'options' => [
-                'label' => $translate->translate('Description'),
-            ],
-        ]);
-        $this->add([
-            'name' => 'active',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'label' => $translate->translate('Active'),
-            ],
-        ]);
-         //$this->add([
-            //'name' => 'category',
-            //'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            //'options' => [
-                //'label' => $translate->translate('Category'),
-                //'object_manager' => $objectManager,
-                //'target_class' => 'Company\Model\JobCategory',
-                //'property' => 'category'
-            //],
-            ////'attributes' => [
-                ////'class' => 'form-control input-sm'
-            ////]
-        //]);
-        $this->add($mapper->createObjectSelectConfig( 'Company\Model\JobCategory','name', $translate->translate('Category'), 'category', 'nl'));
         $this->add([
             'name' => 'submit',
             'attributes' => [
@@ -149,7 +42,6 @@ class EditJob extends Form
 
         $this->initFilters($translate);
     }
-
     protected function initFilters($translate)
     {
         $filter = new InputFilter();
@@ -208,7 +100,6 @@ class EditJob extends Form
                 ],
             ],
         ]);
-    
         $filter->add([
             'name' => 'contactName',
             'required' => false,
@@ -230,26 +121,45 @@ class EditJob extends Form
             ],
         ]);
 
-        $filter->add([
-            'name' => 'attachment_file',
-            'required' => false,
-            'validators' => [
-                [
-                    'name' => 'File\Extension',
-                    'options' => [
-                        'extension' => 'pdf',
-                    ],
-                ],
-                [
-                    'name' => 'File\MimeType',
-                    'options' => [
-                        'mimeType' => 'application/pdf',
-                    ],
-                ],
-            ],
-        ]);
+        //$filter->add([
+            //'name' => 'attachment_file',
+            //'required' => false,
+            //'validators' => [
+                //[
+                    //'name' => 'File\Extension',
+                    //'options' => [
+                        //'extension' => 'pdf',
+                    //],
+                //],
+                //[
+                    //'name' => 'File\MimeType',
+                    //'options' => [
+                        //'mimeType' => 'application/pdf',
+                    //],
+                //],
+            //],
+        //]);
+        $this->inputFilter = $filter;
+    }
 
-        $this->setInputFilter($filter);
+    public function isValid()
+    {
+        if (!parent::isValid()) {
+            return false;
+        }
+        $arr = [];
+        foreach ($this->get('jobs')->getFieldSets() as $fieldset) {
+            foreach ($fieldset->getElements() as $el) {
+                $val = $el->getValue();
+                $arr[$el->getName()] = $val;
+            }
+        }
+        $this->inputFilter->setData($arr);
+        $valid = $this->inputFilter->isValid();
+        if (!$valid) {
+            var_dump($this->inputFilter->getMessages());
+        }
+        return $valid;
     }
 
     private $companySlug;
@@ -266,6 +176,8 @@ class EditJob extends Form
         $this->currentSlug = $currentSlug;
     }
 
+    protected $inputFilter;
+
     /**
      *
      * Checks if a given slugName is unique. (Callback for validation).
@@ -274,11 +186,12 @@ class EditJob extends Form
     public function slugNameUnique($slugName, $context)
     {
         $jid = $context['id'];
+        $cat = $context['category'];
         if ($this->currentSlug === $slugName) {
             return true;
         }
 
-        return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid);
+        return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
 
     }
 }

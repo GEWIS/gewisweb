@@ -18,7 +18,7 @@ $companyURL = $this->url('company/companyItem', // Route url
                 <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
                 <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
                 <p>
-                    <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                    <a href="<?=/*TODO: show all categories*/ $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => 'jobs']) ?>">
                         <?= $company->getNumberOfActiveJobs() ?> <?= $company->getNumberOfActiveJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
                     </a>
                 </p>

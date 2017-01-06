@@ -57,11 +57,11 @@ class Job
      * @param int $cid The id to ignore
      *
      */
-    public function isSlugNameUnique($companySlug, $slugName, $cid)
+    public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
-        $objects = $this->findJobBySlugName($companySlug, $slugName);
+        $objects = $this->findJobBySlugName($companySlug, $slugName, $category);
         foreach ($objects as $job) {
-            if ($job->getID() != $cid) {
+            if ($job->getID() != $jid && $category != $job->getCategory()->getId()) {
                 return false;
             }
         }
@@ -73,13 +73,23 @@ class Job
      *
      * @param mixed $package
      */
-    public function insertIntoPackage($package)
+    public function insertIntoPackage($package, $lang, $languageIndependentId)
     {
         $job = new JobModel($this->em);
+        $job->setLanguage($lang);
+        $job->setLanguageIndependentId($languageIndependentId);
+        $this->em->persist($job);
+        $this->em->flush();
+        if ($id == -1) {
+            $id = $category->getId();
+        }
 
         $job->setPackage($package);
-        $this->em->persist($job);
 
+        if ($id == -1) {
+            $id = $category->getId();
+        }
+        $job->setLanguageIndependentId($id);
         return $job;
     }
 
@@ -99,6 +109,23 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Find all jobs identified by $jobSlugName that are owned by a company
+     * identified with $companySlugName
+     *
+     * @param mixed $companySlugName
+     * @param mixed $jobSlugName
+     */
+    public function findHiddenJobByLanguageIndependentId($companySlugName, $languageIndependentId)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.languageIndependentId=:jobId')
+            ->andWhere('c.slugName=:companySlugName');
+        $qb->setParameter('jobId', $languageIndependentId);
+        $qb->setParameter('companySlugName', $companySlugName);
+
+        return $qb->getQuery()->getResult();
+    }
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName
@@ -158,10 +185,11 @@ class Job
                 'label' => $label,
                 'object_manager' => $this->em,
                 'target_class' => $targetClass,
-                 'find_method'    => [
+                'property' => $property,
+                'find_method'    => [
                     'name'   => 'findBy',
                     'params' => [
-                        'criteria' => ['lang' => $locale],
+                        'criteria' => ['language' => $locale],
                         // Use key 'orderBy' if using ORM
                         //'orderBy'  => ['lastname' => 'ASC'],
 

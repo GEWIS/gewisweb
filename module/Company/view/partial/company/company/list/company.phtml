@@ -34,7 +34,8 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
                                 <li class="company-jobs-job">
                                 <a href="<?= $this->url('company/companyItem/joblist/job_item',
                                     ['slugCompanyName' => $company->getSlugName(),
-                                    'slugJobName' => $job->getSlugName()
+                                    'slugJobName' => $job->getSlugName(),
+                                    'category' => $job->getCategory()->getSlug(),
                                 ], [], true) ?>"><?= $job->getName(); ?></a>
                                 </li>
                                 <?php

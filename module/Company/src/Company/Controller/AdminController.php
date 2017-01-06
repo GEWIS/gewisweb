@@ -182,9 +182,15 @@ class AdminController extends AbstractActionController
             )
         );
 
+        $languages = $companyService->getLanguages();
+        $f = function ($lang) use ($companyService) {
+            return [$lang, $companyService->getLanguageDescription($lang),];
+        };
+        $languageDescriptions = array_map($f, $languages);
         // Initialize the view
         $vm = new ViewModel([
             'form' => $companyForm,
+            'languages' => $languageDescriptions,
         ]);
 
         $vm->setTemplate('company/admin/edit-job');
@@ -401,48 +407,47 @@ class AdminController extends AbstractActionController
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
-        $jobName = $this->params('jobName');
+        $languageIndependentId = $this->params('languageIndependentJobId');
 
 
         // Find the specified jobs
-        $jobList = $companyService->getEditableJobsBySlugName($companyName, $jobName);
+        $jobs = $companyService->getEditableJobsByLanguageIndependentId($companyName, $languageIndependentId);
 
         // Check the job is found. If not, throw 404
-        if (empty($jobList)) {
+        if (empty($jobs)) {
             $company = null;
             return $this->notFoundAction();
         }
-
-        $job = $jobList[0];
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
             $post = $request->getPost();
-            $companyService->saveJobData($jobName, $job, $post, $files);
-            if ($jobName !== $post['slugName']) {
-                // Redirect to new slug name
-                return $this->redirect()->toRoute(
-                    'admin_company/editCompany/editJob',
-                    [
-                        'action' => 'edit',
-                        'slugCompanyName' => $companyName,
-                        'jobName' => $post['slugName'],
-                    ],
-                    [],
-                    false
-                );
+            $jobDict = [];
+            foreach ($jobs as $job) {
+                $jobDict[$job->getLanguage()] = $job;
             }
+            $companyService->saveJobData($languageIndependentId, $jobDict, $post, $files);
         }
 
         // Initialize the form
-        $jobForm->bind($job);
+        $jobDict = [];
+        foreach ($jobs as $job) {
+            $jobDict[$job->getLanguage()] = $job;
+        }
+        $jobForm->bind($jobDict);
 
+        $languages = $companyService->getLanguages();
+        $f = function ($lang) use ($companyService) {
+            return [$lang, $companyService->getLanguageDescription($lang),];
+        };
+        $languageDescriptions = array_map($f, $languages);
         // Initialize the view
         return new ViewModel([
             'form' => $jobForm,
-            'job' => $job
+            'job' => $job,
+            'languages' => $languageDescriptions,
         ]);
     }
 

@@ -113,11 +113,35 @@ class Job
     protected $category;
 
     /**
+     * The category id.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $languageIndependentId;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         // noting to do
+    }
+
+
+    /**
+     * Get's the id
+     */
+    public function getLanguageIndependentId()
+    {
+        return $this->languageIndependentId;
+    }
+
+    /**
+     * Set's the id
+     */
+    public function setLanguageIndependentId($languageIndependentId)
+    {
+        $this->languageIndependentId = $languageIndependentId;
     }
 
     /**
