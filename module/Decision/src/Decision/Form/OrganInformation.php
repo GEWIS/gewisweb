@@ -103,6 +103,9 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'website' => [
                 'required' => false
             ],
+            'email' => [
+                'required' => false
+            ],
             'shortDutchDescription' => [
                 'required' => false,
                 'validators' => [
