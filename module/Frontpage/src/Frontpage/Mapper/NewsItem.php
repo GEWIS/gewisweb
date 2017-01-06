@@ -51,7 +51,8 @@ class NewsItem
     public function getLatestNewsItems($count)
     {
         $qb = $this->getRepository()->createQueryBuilder('newsItem');
-        $qb->orderBy('newsItem.date', 'DESC')
+        $qb->addOrderBy('newsItem.pinned', 'DESC')
+            ->addOrderBy('newsItem.date', 'DESC')
             ->setMaxResults($count);
 
         return $qb->getQuery()->getResult();

@@ -68,7 +68,7 @@ class Organ extends AbstractAclService
             );
         }
 
-        $user = $this->sm->get('user_role');
+        $user = $this->sm->get('user_service_user')->getIdentity();
 
         //TODO: filter out avc's
         return $this->getMemberMapper()->findOrgans($user->getMember());
@@ -89,7 +89,7 @@ class Organ extends AbstractAclService
             return true;
         }
 
-        $user = $this->sm->get('user_role');
+        $user = $this->sm->get('user_service_user')->getIdentity();
 
         foreach ($this->getMemberMapper()->findOrgans($user->getMember()) as $memberOrgan) {
             if ($memberOrgan->getId() === $organ->getId()) {
@@ -177,7 +177,7 @@ class Organ extends AbstractAclService
         if (!is_null($oldInformation)) {
             $em->remove($oldInformation);
         }
-        $user = $em->merge($this->sm->get('user_role'));
+        $user = $em->merge($this->sm->get('user_service_user')->getIdentity());
         $organInformation->setApprover($user);
         $em->flush();
     }

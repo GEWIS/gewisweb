@@ -1,0 +1,133 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td></td>
+        <td><?= $this->translate('Dutch') ?></td>
+        <td><?= $this->translate('English') ?></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><?php echo $this->translate('Activity id'); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getId()); ?></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Name'); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getName()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getNameEn()); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Start time'); ?></td>
+        <td><?php echo $activity->getBeginTime()->format('Y-m-d H:i') ?></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('End time'); ?></td>
+        <td><?php echo $activity->getEndTime()->format('Y-m-d H:i') ?></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Location'); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getLocation()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getLocationEn()); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Costs'); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getCosts()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getCostsEn()); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Subscribe'); ?></td>
+        <td><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Only GEWIS'); ?></td>
+        <td><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
+        <td></td>
+    </tr>
+
+    <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
+        <tr>
+            <td>
+                <?php $approvalForm->setAttribute('action', $this->url('activity_admin_approval/approve', ['id' => $activity->getId()]));
+                $approvalForm->prepare();
+                echo $this->form()->openTag($approvalForm);
+                echo $this->formElement($approvalForm->get('security'));
+                $submit = $approvalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>
+            </td>
+            <td>
+                <?php $disapprovalForm->setAttribute('action', $this->url('activity_admin_approval/disapprove', ['id' => $activity->getId()]));
+                $disapprovalForm->prepare();
+                echo $this->form()->openTag($disapprovalForm);
+                echo $this->formElement($disapprovalForm->get('security'));
+                $submit = $disapprovalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                
+            </td>
+            <td></td>
+        </tr>
+
+    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED): ?>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
+                $resetForm->prepare();
+                echo $this->form()->openTag($resetForm);
+                echo $this->formElement($resetForm->get('security'));
+                $submit = $resetForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                                
+            </td>
+            <td></td>
+        </tr>
+
+    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
+                $resetForm->prepare();
+                echo $this->form()->openTag($resetForm);
+                echo $this->formElement($resetForm->get('security'));
+                $submit = $resetForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>                                
+            </td>
+            <td></td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td>
+            <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                <?= $this->translate('View details / subscriptions') ?>
+            </a>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="col-md-8">
+    <?= $this->translate('Dutch description') ?>
+    <p><?= nl2br($this->escapeHtml($activity->getDescription())) ?></p>
+</div>
+<div class="col-md-8">
+    <?= $this->translate('English description') ?>
+    <p><?= nl2br($this->escapeHtml($activity->getDescriptionEn())) ?></p>
+</div>

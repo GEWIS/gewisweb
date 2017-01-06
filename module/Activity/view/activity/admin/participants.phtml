@@ -1,0 +1,15 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+// set title
+$this->headTitle($this->escapeHtml($activity->getName()));
+$this->headTitle($this->translate('Participants')); ?>
+
+
+<div class="container">
+    <?= $this->partial('activity/admin/participantsTable.phtml', [
+            'activity' => $activity,
+            'signupData' => $signupData
+    ]);?>
+
+    <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
+</div>

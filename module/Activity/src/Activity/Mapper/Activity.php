@@ -4,8 +4,8 @@ namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 class Activity
 {
@@ -90,77 +90,77 @@ class Activity
     }
 
     /**
-     * Get an activity paginator by the status of the activity
-     * @param integer $status
-     * @param integer $page
-     * @param integer $perPage
-     * @return Paginator
-     */
-    public function getActivityPaginatorByStatus($status, $page = 1, $perPage = 5)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = :status')
-            ->orderBy('a.beginTime', 'desc')
-            ->setParameters([
-                'status' => $status
-            ]);
-
-        $resultArray = $qb->getQuery()->getResult();
-        $paginator = new Paginator(new ArrayAdapter($resultArray));
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setItemCountPerPage($perPage);
-        return $paginator;
-    }
-
-
-    /**
-     * get all activities including options.
+     * Gets upcoming activities of the given organs or user, sorted by date.
      *
+     * @param array|null $organs
+     * @param int|null $userid
+     * @param int|null $status An optional filter for activity status
      * @return array
      */
-    public function getApprovedActivities()
+    public function getAllUpcomingActivities($organs = null, $userid = null, $status = null)
     {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_APPROVED);
-    }
-
-    /**
-     * Get all disapproved activitiesa.
-     *
-     * @return array
-     */
-    public function getDisapprovedActivities()
-    {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_DISAPPROVED);
-    }
-
-    /**
-     * Get all the unapproved activities
-     *
-     * @return array
-     */
-    public function getUnapprovedActivities()
-    {
-        return $this->getActivitiesByStatus(ActivityModel::STATUS_TO_APPROVE);
-    }
-
-    /**
-     * Get all the activities with a specific status
-     *
-     * @param integer $status
-     * @return array
-     */
-    protected function getActivitiesByStatus($status)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.status = :status')
-            ->orderBy('a.beginTime', 'DESC');
-
-        $qb->setParameter('status', $status);
+        $qb = $this->activityByOrganizerQuery(
+            $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
+            $organs,
+            $userid,
+            $status
+        );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Gets a paginator of old activities of the given organs, sorted by date.
+     * Supplying 'null' to all arguments gets all activities
+     *
+     * @param array|null $organs
+     * @param int|null $userid
+     * @param int|null $status An optional filter for activity status
+     * @return array
+     */
+    public function getOldActivityPaginatorAdapterByOrganizer($organs = null, $userid = null, $status = null)
+    {
+        $qb = $this->activityByOrganizerQuery(
+            $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
+            $organs,
+            $userid,
+            $status
+        );
+
+        return new DoctrineAdapter(new ORMPaginator($qb));
+    }
+
+    protected function activityByOrganizerQuery($filter, $organs, $userid, $status)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a');
+        if (!is_null($status)) {
+            $qb->where('a.status = :status')
+                ->setParameter('status', $status);
+        } else {
+            $qb->where('a.status <> :status')
+                ->setParameter('status', ActivityModel::STATUS_UPDATE);
+        }
+
+        if (!is_null($filter)) {
+            $qb->andWhere($filter)
+                ->setParameter('now', new \DateTime());
+        }
+
+        $qb->join('a.creator', 'u');
+
+        if (!is_null($organs) && !is_null($userid)) {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->in('a.organ', ':organs'),
+                'u.lidnr = :userid'
+            ))
+                ->setParameter('organs', $organs)
+                ->setParameter('userid', $userid);
+        }
+
+        $qb->orderBy('a.beginTime', 'DESC');
+
+        return $qb;
     }
 }

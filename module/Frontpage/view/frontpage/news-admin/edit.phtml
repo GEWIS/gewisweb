@@ -56,7 +56,16 @@ $form->setAttribute('role', 'form');
     <?= $this->formTextarea($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
-
+<?php
+$pinned = $form->get('pinned');
+?>
+<div class="form-group">
+    <label>
+        <?= $this->formCheckbox($pinned) ?>
+        <?= $this->translate('Pin news item') ?>
+        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if you want this news item to stay at the top of the page.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+    </label>
+</div>
 <hr>
 <?php
 $submit = $form->get('submit');

@@ -2,6 +2,10 @@
 // set title
 $this->headTitle($member->getFullName());
 $this->headTitle($this->translate('Members')); ?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
+    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+?>
 <?php
 use Decision\Model\Member;
 use Decision\Model\Address;
@@ -44,47 +48,57 @@ use Decision\Model\Address;
             </table>
             <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
             <ul>
-                <?php foreach ($memberships as $organ => $functions): ?>
-                    <li><?= $organ ?><?php if (!empty($functions)): ?> (<?= implode(', ', $functions) ?>)<?php endif ?></li>
+                <?php foreach ($memberships as $abbr => $install): ?>
+                    <li><a href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
+                            $abbr ]) ?>"><?= $abbr ?></a>
+                        <?php $functions = $install['functions']; ?>
+                        <?php if (!empty($functions)): ?> (<?=
+                            $functions ?>)
+                        <?php endif ?>
+                    </li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-        <div class="col-md-6">
-            <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
-        </div>
-        <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
-            <div class="col-md-6">
-                <h3><?= $this->translate('Adresses') ?></h3>
-                <?php foreach ($member->getAddresses() as $address): ?>
-                    <h4><?php
-                        switch ($address->getType()) {
-                            case Address::TYPE_HOME:
-                                echo $this->translate('Home address (parents)');
-                                break;
-                            case Address::TYPE_STUDENT:
-                                echo $this->translate('Student address');
-                                break;
-                            case Address::TYPE_MAIL:
-                                echo $this->translate('Mail address');
-                                break;
-                        }
-                        ?></h4>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th><?= $this->translate('Country') ?></th>
-                            <td><?= $address->getCountry() ?></td>
-                        </tr>
-                        <tr>
-                            <th><?= $this->translate('Street and number') ?></th>
-                            <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
-                        </tr>
-                        <tr>
-                            <th><?= $this->translate('City and postal code') ?></th>
-                            <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
-                        </tr>
-                    </table>
-                <?php endforeach ?>
-            </div>
+            <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
+            <h3><?= $this->translate('Adresses') ?></h3>
+            <?php foreach ($member->getAddresses() as $address): ?>
+                <h4><?php
+                    switch ($address->getType()) {
+                        case Address::TYPE_HOME:
+                            echo $this->translate('Home address (parents)');
+                            break;
+                        case Address::TYPE_STUDENT:
+                            echo $this->translate('Student address');
+                            break;
+                        case Address::TYPE_MAIL:
+                            echo $this->translate('Mail address');
+                            break;
+                    }
+                    ?></h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th><?= $this->translate('Country') ?></th>
+                        <td><?= $address->getCountry() ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('Street and number') ?></th>
+                        <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('City and postal code') ?></th>
+                        <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+                    </tr>
+                </table>
+            <?php endforeach ?>
         <?php endif; ?>
+        </div>
+    <div class="col-md-6">
+        <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
+    </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        Photo.initGrid();
+    });
+</script>
