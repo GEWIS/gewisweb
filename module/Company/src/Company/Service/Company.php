@@ -122,28 +122,26 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findAll();
     }
 
-    public function getAllCategoryList()
+    public function getCategoryList($visible)
     {
-        if (!$this->isAllowed('listAllCategories')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to access the admin interface')
-            );
+        if (!$visible) {
+            if (!$this->isAllowed('listAllCategories')) {
+                $translator = $this->getTranslator();
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to access the admin interface')
+                );
+            }
+            return $this->getCategoryMapper()->findAll();
         }
-        return $this->getCategoryMapper()->findAll();
-    }
-
-    public function getVisibleCategoryList()
-    {
         if (!$this->isAllowed('listVisibleCategories')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to list all categories')
             );
         }
+        // TODO: actually filter this
         return $this->getCategoryMapper()->findAll();
     }
-
 
     /**
      * Inserts a category, and binds it to the given package
@@ -193,28 +191,21 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is saves the category
+     * Checks if the data is valid (if nonnull), and if it is saves the category
      *
-     * @param JobCategory $category The category to apply $data and $files to
      * @param array $data The data to validate, and apply to the category
-     * @param array $files The files that were uploaded. These will be merged with the data, and applied.
      */
-    public function saveCategoryByData($data)
+    public function saveCategory($data = null)
     {
-        $categoryForm = $this->getCategoryForm();
-        $categoryForm->setData($data);
-        if ($categoryForm->isValid()) {
-            $this->saveCategory();
-            return true;
+        if ($data == null) {
+            $categoryForm = $this->getCategoryForm();
+            $categoryForm->setData($data);
+            if ($categoryForm->isValid()) {
+                $this->saveCategory();
+                return true;
+            }
+            return;
         }
-    }
-
-    /**
-     * Saves all modified categories
-     *
-     */
-    public function saveCategory()
-    {
         $this->getCategoryMapper()->save();
     }
     /**
@@ -463,21 +454,26 @@ class Company extends AbstractACLService
 
                 $job->setAttachment($newPath);
             }
-
+            $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $job->setTimeStamp(new \DateTime());
-            if ($languageNeutralId != "") {
-                $job->setLanguageNeutralId($id);
-                $this->getJobMapper()->persist($job);
-                $this->getJobMapper()->save();
-                if ($id == -1) {
-                    $id = $job->getId();
-                }
-                $job->setLanguageNeutralId($id);
-                continue;
-            }
-            $job->setLanguageNeutralId($languageNeutralId);
         }
         return true;
+    }
+    private function setLanguageNeutralId($id, $job, $languageNeutralId)
+    {
+        if ($languageNeutralId != "") {
+            $job->setLanguageNeutralId($id);
+            $this->getJobMapper()->persist($job);
+            $this->getJobMapper()->save();
+            if ($id == -1) {
+                $id = $job->getId();
+            }
+            $job->setLanguageNeutralId($id);
+            return $id;
+        }
+        $job->setLanguageNeutralId($languageNeutralId);
+        return $id;
+
     }
 
     /**

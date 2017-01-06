@@ -224,9 +224,8 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveCategoryByData(
-                $request->getPost(),
-                $request->getFiles()
+            if ($companyService->saveCategory(
+                $request->getPost()
             )){
                 return $this->redirect()->toRoute(
                     'admin_company/editCategory',
