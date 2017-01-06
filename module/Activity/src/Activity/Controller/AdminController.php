@@ -17,28 +17,6 @@ use DOMPDFModule\View\Model\PdfModel;
  */
 class AdminController extends AbstractActionController
 {
-    /**
-     * Show the email adresses belonging to an Activity
-     */
-    public function emailAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $langSession = new SessionContainer('lang');
-
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivityWithDetails($id);
-        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
-        }
-
-        return [
-            'activity' => $translatedActivity,
-        ];
-    }
 
     /**
      * Return the data for exporting activities

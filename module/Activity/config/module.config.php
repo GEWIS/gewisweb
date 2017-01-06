@@ -97,16 +97,6 @@ return [
                             ]
                         ]
                     ],
-                    'email' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/:id/email',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'email',
-                            ]
-                        ]
-                    ],
                     'export' => [
                         'type' => 'Segment',
                         'options' => [
