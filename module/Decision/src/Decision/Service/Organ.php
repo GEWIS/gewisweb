@@ -218,7 +218,7 @@ class Organ extends AbstractAclService
         $image->thumbnailImage($thumbWidth, $thumbHeight);
         $image->setimageformat('jpg');
 
-        //Tempfile is used to generate sha1ot sure this is the best method
+        //Tempfile is used such that the file storage service can generate a filename
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
         $image->writeImage($tempFileName);
         $newPath = $this->getFileStorageService()->storeFile($tempFileName);
