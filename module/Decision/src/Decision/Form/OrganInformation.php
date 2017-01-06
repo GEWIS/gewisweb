@@ -159,7 +159,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'File\Extension',
                         'options' => [
-                            'extension' => ['png', 'jpg', 'jpeg', 'bmp', 'tiff']
+                            'extension' => ['bmp']
                         ]
                     ],
                 ],
@@ -173,7 +173,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'File\Extension',
                         'options' => [
-                            'extension' => ['png', 'jpg', 'jpeg', 'bmp', 'tiff']
+                            'extension' => ['bmp']
                         ]
                     ],
                 ],
