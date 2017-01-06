@@ -225,7 +225,6 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($companyService->saveCategoryByData(
-                $categories,
                 $request->getPost(),
                 $request->getFiles()
             )){

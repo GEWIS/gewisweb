@@ -199,11 +199,11 @@ class Company extends AbstractACLService
      * @param array $data The data to validate, and apply to the category
      * @param array $files The files that were uploaded. These will be merged with the data, and applied.
      */
-    public function saveCategoryByData($category, $data)
+    public function saveCategoryByData($data)
     {
         $categoryForm = $this->getCategoryForm();
         $categoryForm->setData($data);
-        if ($categoryForm->isValid()){
+        if ($categoryForm->isValid()) {
             $this->saveCategory();
             return true;
         }
@@ -227,9 +227,9 @@ class Company extends AbstractACLService
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
-        if ($packageForm->isValid()){
+        if ($packageForm->isValid()) {
             $package->exchangeArray($data);
-            if ($package->getType() == 'banner'){
+            if ($package->getType() == 'banner') {
                 $file = $files['banner'];
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -263,7 +263,7 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-        if ($companyForm->isValid()){
+        if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -317,7 +317,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $data
      */
-    public function insertCompanyByData($data,$files)
+    public function insertCompanyByData($data, $files)
     {
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
@@ -330,8 +330,8 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== UPLOAD_ERR_NO_FILE){
-                    if ($file['error'] !== UPLOAD_ERR_OK){
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
@@ -447,24 +447,21 @@ class Company extends AbstractACLService
             return false;
         }
         $id = -1;
-        foreach ($jobs as $lang=>$job) {
-
+        foreach ($jobs as $lang => $job) {
             $file = $files['attachment_file'];
-            if($file != null) {
-                if ($file['jobs'][$lang]['error'] !== UPLOAD_ERR_NO_FILE) {
-                    $oldPath = $job->getAttachment();
-                    try {
-                        $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    } catch (\Exception $e) {
-                        return false;
-                    }
-
-                    if (!is_null($oldPath) && $oldPath != $newPath) {
-                        $this->getFileStorageService()->removeFile($oldPath);
-                    }
-
-                    $job->setAttachment($newPath);
+            if ($file != null && $file['jobs'][$lang]['error'] !== UPLOAD_ERR_NO_FILE) {
+                $oldPath = $job->getAttachment();
+                try {
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                } catch (\Exception $e) {
+                    return false;
                 }
+
+                if (!is_null($oldPath) && $oldPath != $newPath) {
+                    $this->getFileStorageService()->removeFile($oldPath);
+                }
+
+                $job->setAttachment($newPath);
             }
 
             $job->setTimeStamp(new \DateTime());
@@ -559,7 +556,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit packages')
             );
         }
-        if (is_null($categoryID)){
+        if (is_null($categoryID)) {
             throw new \Exception('Invalid argument');
         }
         $package = $this->getCategoryMapper()->findAllCategoriesById($categoryID);
@@ -579,7 +576,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit packages')
             );
         }
-        if (is_null($packageID)){
+        if (is_null($packageID)) {
             throw new \Exception('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
@@ -629,34 +626,15 @@ class Company extends AbstractACLService
 
     /**
      * Returns all jobs with a $jobSlugName, owned by a company with a
-     * $companySlugName
+     * $companySlugName, and a specific $category
      *
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
+     * @param mixed $category
      */
-    public function getJobsBySlugName($companySlugName, $jobSlugName, $category)
+    public function getJobs($dict)
     {
-        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName, $category);
-    }
-
-    /**
-     * Returns all jobs with owned by a company with a
-     * $companySlugName
-     *
-     * @param mixed $companySlugName
-     */
-    public function getJobsByCompanyName($companySlugName, $jobCategory)
-    {
-        return $this->getJobMapper()->findJobByCompanySlugName($companySlugName, $jobCategory);
-    }
-
-    /**
-     * Returns all jobs in the database
-     *
-     */
-    public function getJobList($jobCategory)
-    {
-        return $this->getJobMapper()->findJobByCategory($jobCategory);
+        return $this->getJobMapper()->findJob($dict);
     }
 
     /**
@@ -722,7 +700,8 @@ class Company extends AbstractACLService
      */
     public function getActiveJobList()
     {
-        $jobList = $this->getJobList();
+        //TODO: design update needed to generalize this
+        $jobList = $this->getJobs('jobs');
         $array = [];
         foreach ($jobList as $job) {
             if ($job->isActive()) {
@@ -827,7 +806,7 @@ class Company extends AbstractACLService
     }
     public function getLanguageDescription($lang)
     {
-        if($lang === 'en') {
+        if ($lang === 'en') {
             return 'English';
         }
         return 'Dutch';
