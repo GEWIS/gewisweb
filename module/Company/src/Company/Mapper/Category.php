@@ -57,14 +57,14 @@ class Category
             $category = new CategoryModel();
         }
         $category->setLanguage($lang);
-        $category->setLanguageIndependentId($id);
+        $category->setLanguageNeutralId($id);
         $category->setHidden(false);
         $this->em->persist($category);
         $this->em->flush();
         if ($id == -1) {
             $id = $category->getId();
         }
-        $category->setLanguageIndependentId($id);
+        $category->setLanguageNeutralId($id);
 
         return $category;
     }
@@ -73,7 +73,7 @@ class Category
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageIndependentId=:categoryID');
+        $qb->select('c')->where('c.languageNeutralId=:categoryID');
         $qb->setParameter('categoryID', $categoryId);
         $categories = $qb->getQuery()->getResult();
 

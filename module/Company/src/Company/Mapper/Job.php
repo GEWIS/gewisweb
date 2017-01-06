@@ -73,11 +73,11 @@ class Job
      *
      * @param mixed $package
      */
-    public function insertIntoPackage($package, $lang, $languageIndependentId)
+    public function insertIntoPackage($package, $lang, $languageNeutralId)
     {
         $job = new JobModel($this->em);
         $job->setLanguage($lang);
-        $job->setLanguageIndependentId($languageIndependentId);
+        $job->setLanguageNeutralId($languageNeutralId);
         $this->em->persist($job);
         $this->em->flush();
         if ($id == -1) {
@@ -89,7 +89,7 @@ class Job
         if ($id == -1) {
             $id = $category->getId();
         }
-        $job->setLanguageIndependentId($id);
+        $job->setLanguageNeutralId($id);
         return $job;
     }
 
@@ -116,12 +116,12 @@ class Job
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function findHiddenJobByLanguageIndependentId($companySlugName, $languageIndependentId)
+    public function findHiddenJobByLanguageNeutralId($companySlugName, $languageNeutralId)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.languageIndependentId=:jobId')
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.languageNeutralId=:jobId')
             ->andWhere('c.slugName=:companySlugName');
-        $qb->setParameter('jobId', $languageIndependentId);
+        $qb->setParameter('jobId', $languageNeutralId);
         $qb->setParameter('companySlugName', $companySlugName);
 
         return $qb->getQuery()->getResult();

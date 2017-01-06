@@ -192,7 +192,7 @@ return [
                                     'editJob' => [
                                         'type' => 'segment',
                                         'options' => [
-                                            'route' => '/job/:languageIndependentJobId',
+                                            'route' => '/job/:languageNeutralJobId',
                                             'defaults' => [
                                                 'action' => 'editJob',
                                             ],

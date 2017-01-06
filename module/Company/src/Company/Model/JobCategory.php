@@ -80,22 +80,22 @@ class JobCategory
      *
      * @ORM\Column(type="integer")
      */
-    protected $languageIndependentId;
+    protected $languageNeutralId;
 
     /**
      * Get's the id
      */
-    public function getLanguageIndependentId()
+    public function getLanguageNeutralId()
     {
-        return $this->languageIndependentId;
+        return $this->languageNeutralId;
     }
 
     /**
      * Set's the id
      */
-    public function setLanguageIndependentId($languageIndependentId)
+    public function setLanguageNeutralId($languageNeutralId)
     {
-        $this->languageIndependentId = $languageIndependentId;
+        $this->languageNeutralId = $languageNeutralId;
     }
 
     /**

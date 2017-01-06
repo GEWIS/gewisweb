@@ -431,7 +431,7 @@ class Company extends AbstractACLService
      *
      * @return JobModel|bool
      */
-    public function saveJobData($languageIndependentId, $jobs, $data, $files)
+    public function saveJobData($languageNeutralId, $jobs, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
@@ -468,17 +468,17 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
-            if ($languageIndependentId != "") {
-                $job->setLanguageIndependentId($id);
+            if ($languageNeutralId != "") {
+                $job->setLanguageNeutralId($id);
                 $this->getJobMapper()->persist($job);
                 $this->getJobMapper()->save();
                 if ($id == -1) {
                     $id = $job->getId();
                 }
-                $job->setLanguageIndependentId($id);
+                $job->setLanguageNeutralId($id);
                 continue;
             }
-            $job->setLanguageIndependentId($languageIndependentId);
+            $job->setLanguageNeutralId($languageNeutralId);
         }
         return true;
     }
@@ -488,7 +488,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $packageID
      */
-    public function insertJobIntoPackageID($packageID, $lang, $languageIndependentId)
+    public function insertJobIntoPackageID($packageID, $lang, $languageNeutralId)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -497,7 +497,7 @@ class Company extends AbstractACLService
             );
         }
         $package = $this->getEditablePackage($packageID);
-        $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageIndependentId);
+        $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
 
         return $result;
     }
@@ -616,7 +616,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getEditableJobsByLanguageIndependentId($companySlugName, $languageIndependentId)
+    public function getEditableJobsByLanguageNeutralId($companySlugName, $languageNeutralId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -624,7 +624,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        return $this->getJobMapper()->findHiddenJobByLanguageIndependentId($companySlugName, $languageIndependentId);
+        return $this->getJobMapper()->findHiddenJobByLanguageNeutralId($companySlugName, $languageNeutralId);
     }
 
     /**

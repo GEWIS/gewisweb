@@ -407,11 +407,11 @@ class AdminController extends AbstractActionController
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
-        $languageIndependentId = $this->params('languageIndependentJobId');
+        $languageNeutralId = $this->params('languageNeutralJobId');
 
 
         // Find the specified jobs
-        $jobs = $companyService->getEditableJobsByLanguageIndependentId($companyName, $languageIndependentId);
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($companyName, $languageNeutralId);
 
         // Check the job is found. If not, throw 404
         if (empty($jobs)) {
@@ -428,7 +428,7 @@ class AdminController extends AbstractActionController
             foreach ($jobs as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
-            $companyService->saveJobData($languageIndependentId, $jobDict, $post, $files);
+            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
         }
 
         // Initialize the form
@@ -494,7 +494,7 @@ class AdminController extends AbstractActionController
                     'admin_company/default',
                     [
                         'action' => 'editCategory',
-                        'slugCompanyName' => $categories['nl']->getLanguageIndependentId(),
+                        'slugCompanyName' => $categories['nl']->getLanguageNeutralId(),
                     ]
                 );
             }
