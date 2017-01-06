@@ -459,6 +459,7 @@ class Company extends AbstractACLService
         }
         return true;
     }
+
     private function setLanguageNeutralId($id, $job, $languageNeutralId)
     {
         if ($languageNeutralId != "") {
@@ -473,7 +474,6 @@ class Company extends AbstractACLService
         }
         $job->setLanguageNeutralId($languageNeutralId);
         return $id;
-
     }
 
     /**
