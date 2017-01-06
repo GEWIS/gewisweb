@@ -104,7 +104,7 @@ class AdminApprovalController extends AbstractActionController
             'proposal' => $proposal,
             'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
             'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update')
-            ];
+        ];
     }
 
     /**

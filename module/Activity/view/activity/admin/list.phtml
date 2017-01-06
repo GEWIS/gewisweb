@@ -30,7 +30,12 @@
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+            <?php if($admin): ?>
+            <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' :
+                    '<a href="' . $this->url('activity_admin_approval/proposal', ['id' => $activity->getId()]) .'">' . $this->translate('Update pending') . '</a>' ?></td>
+            <?php else: ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' : $this->translate('Update pending') ?></td>
+            <?php endif; ?>
             <td>
                 <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
                 <?php if($admin): ?>
