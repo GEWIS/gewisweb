@@ -2,28 +2,11 @@
 
 // set title
 $this->headTitle($this->escapeHtml($activity->getName()));
-$this->headTitle($this->translate('Activities')); ?>
+$this->headTitle($this->translate('Participants')); ?>
 
-
-<?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
-    <section class="section section-breadcrumb">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li>
-                    <a href="<?= $this->url('activity') ?>">
-                        <?= $this->translate('Activities') ?>
-                    </a>
-                </li>
-                <li class="active">
-                    <?= $this->escapeHtml($activity->getName()) ?>
-                </li>
-            </ol>
-        </div>
-    </section>
-<?php endif; ?>
 
 <div class="container">
-    <?= $this->partial('activity/organizer/exportTable.phtml', [
+    <?= $this->partial('activity/admin/exportTable.phtml', [
             'activity' => $activity,
             'signupData' => $signupData
     ]);?>

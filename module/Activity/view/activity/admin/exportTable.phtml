@@ -4,16 +4,22 @@
         <tr>
             <th></th>
             <th><?= $this->translate('Name') ?></th>
+            <th><?= $this->translate('Email') ?></th>
             <?php foreach ($activity->getFields() as $field): ?>
                 <th><?= $this->escapeHtml($field->getName()) ?></th>
             <?php endforeach; ?>
         </tr>
     </thead>
-    <?php $i = 1; ?>
+    <?php $i = 1; $mailAllString = ''; ?>
     <?php foreach($activity->getSignUps() as $signup): ?>
         <tr>
-            <td><?php echo $i; $i = $i + 1; ?></td>
+            <td><?php echo $i; $i = $i + 1; $email = $signup->getEmail(); $mailAllString .= $email . '; '; ?></td>
             <td><?= $signup->getFullName() ?></td>
+            <td>
+                <a href="mailto:<?= $email ?>">
+                    <?= $email ?>
+                </a>
+            </td>
             <?php foreach ($activity->getFields() as $field): ?>
                 <?php foreach($signup->getFieldValues() as $fieldValue):?>
                     <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
@@ -49,4 +55,18 @@
         </tr>
     <?php endforeach;?>
     </tbody>
+   <tfoot>
+       <tr>
+        <td></td>
+        <td></td>
+        <td>
+            <a href="mailto:<?= substr($mailAllString, 0, -2) ?>">
+                <?= $this->translate('Mail everybody') ?>
+            </a>
+        </td>
+        <?php foreach ($activity->getFields() as $field): ?>
+            <td></td>
+        <?php endforeach; ?>
+        </tr>
+    </tfoot>
 </table>
