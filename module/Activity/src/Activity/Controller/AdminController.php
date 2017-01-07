@@ -56,7 +56,7 @@ class AdminController extends AbstractActionController
         if ($activity->getEndTime() < new DateTime()) {
             $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
             $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
-            if(!$acl->isAllowed($user, 'activity', 'update')) {
+            if (!$acl->isAllowed($user, 'activity', 'update')) {
                 //Only admins may update old activities
                 $translator = $this->getServiceLocator()->get('translator');
                 throw new \User\Permissions\NotAllowedException(
