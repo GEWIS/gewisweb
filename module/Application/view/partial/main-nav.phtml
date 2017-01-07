@@ -104,6 +104,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
+                        <li><a href="<?= $this->url('home/page', ['category' => 'links']) ?>"><?= $this->translate('Links') ?></a></li>
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
