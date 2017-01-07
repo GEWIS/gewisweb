@@ -133,6 +133,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $em->remove($oldUpdate);
             $em->flush();
 
+            if ($this->canApplyUpdateProposal($oldActivity)) {
+                $this->updateActivity($oldProposal);
+                return true;
+            }
+
             return false;
         }
 
