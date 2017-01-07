@@ -158,12 +158,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     protected function canApplyUpdateProposal(ActivityModel $activity)
     {
-        if (!$this->isAllowed('update', $activity)) {
-            return false;
-        }
-
         if ($this->isAllowed('update', 'activity')) {
             return true;
+        }
+
+        if (!$this->isAllowed('update', $activity)) {
+            return false;
         }
 
         // If the activity has not been approved yet the update proposal can be applied
