@@ -11,6 +11,7 @@
 * Improved the photo UI on the members page
 * Emails are sent on the creation of polls and organ information (#512)
 * Various bugfixes and improvements (#700, #487, #506, #648, #529, #599, #683, #578, #610, #498)
+
 ---
 
 ## [v1.1](https://github.com/GEWIS/gewisweb/tree/v1.1) (2016-09-12)
