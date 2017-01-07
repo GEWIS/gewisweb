@@ -1,5 +1,12 @@
 <div class="container">
 
+    <?php if (isset($success)): // Display messages ?>
+        <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+            <div class="container">
+                <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+            </div>
+        </div>
+    <?php endif;?>
 <?php if ($admin): ?>
 <?= $this->partial('activity/admin/list.phtml', [
     'header' => 'Unapproved Activities',

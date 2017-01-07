@@ -185,7 +185,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->remove($proposal);//Proposal is no longer needed.
         $em->remove($new);
         $em->flush();
-        $this->approve($old);
     }
 
     /**

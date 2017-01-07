@@ -79,9 +79,12 @@ class AdminController extends AbstractActionController
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
-                $view = new ViewModel();
-                $view->setTemplate('activity/activity/updateSuccess.phtml');
-                return $view;
+                $translator = $this->getServiceLocator()->get('translator');
+                $message = $translator->translate('The activity has been successfully updated.');
+                if (!$updated) {
+                    $message .= ' ' . $translator->translate('It will become applied after it has been approved by the board.');
+                }
+                $this->redirectActivityAdmin(true, $message);
             }
         }
         $updateProposal = $activity->getUpdateProposal();
@@ -127,13 +130,31 @@ class AdminController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        return [
+        $result = [
             'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
             'disapprovedActivities' => $disapprovedActivities,
             'unapprovedActivities' => $unapprovedActivities,
             'approvedActivities' => $approvedActivities,
             'oldActivityPaginator' => $paginator,
             'admin' => $admin,
-                ];
+        ];
+
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        if (isset($activityAdminSession->success)){
+            $result['success'] = $activityAdminSession->success;
+            unset($activityAdminSession->success);
+            $result['message'] = $activityAdminSession->message;
+            unset($activityAdminSession->message);
+        }
+
+        return $result;
+    }
+
+    protected function redirectActivityAdmin($success, $message)
+    {
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        $activityAdminSession->success = $success;
+        $activityAdminSession->message = $message;
+        $this->redirect()->toRoute('activity_admin');
     }
 }
