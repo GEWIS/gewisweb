@@ -73,7 +73,7 @@ class AdminController extends AbstractActionController
             $form->setData($postData);
 
             if ($form->isValid()) {
-                $activityService->createUpdateProposal(
+                $updated = $activityService->createUpdateProposal(
                     $activity,
                     $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
