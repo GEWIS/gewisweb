@@ -50,7 +50,6 @@ class IsOrganMember implements AssertionInterface
         }
 
         foreach ($member->getOrganInstallations() as $organInstall) {
-            var_dump($organInstall->getOrgan(), $organ);
             if ($organInstall->getOrgan()->getId() === $organ->getId()
                 && $this->isCurrentMember($organInstall)) {
                 return true;
