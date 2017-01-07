@@ -50,7 +50,7 @@
                 <?php if($admin): ?>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
                 <?php endif; ?>
-                <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
         </tr>
     <?php endforeach; ?>
