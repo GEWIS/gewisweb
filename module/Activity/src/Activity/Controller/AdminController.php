@@ -26,13 +26,13 @@ class AdminController extends AbstractActionController
      */
     public function participantsAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
 
-        /** @var $activity Activity*/
+        /** @var $activity Activity */
         $activity = $queryService->getActivityWithDetails($id);
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
@@ -48,7 +48,7 @@ class AdminController extends AbstractActionController
 
     public function updateAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $activity = $queryService->getActivityWithDetails($id);
@@ -94,6 +94,7 @@ class AdminController extends AbstractActionController
         }
         $form->bind($activity);
         $languages = $queryService->getAvailableLanguages($activity);
+
         return ['form' => $form, 'activity' => $activity, 'languages' => $languages];
     }
 
@@ -140,7 +141,7 @@ class AdminController extends AbstractActionController
         ];
 
         $activityAdminSession = new SessionContainer('activityAdmin');
-        if (isset($activityAdminSession->success)){
+        if (isset($activityAdminSession->success)) {
             $result['success'] = $activityAdminSession->success;
             unset($activityAdminSession->success);
             $result['message'] = $activityAdminSession->message;
