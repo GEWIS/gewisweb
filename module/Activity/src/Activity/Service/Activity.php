@@ -100,6 +100,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param type $dutch
      * @param type $english
      * @return ActivityProposalModel
+     * @return bool indicating whether the update was applied or is pending
      */
     public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
@@ -132,7 +133,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $em->remove($oldUpdate);
             $em->flush();
 
-            return $oldProposal;
+            if ($this->canApplyUpdateProposal($oldActivity)) {
+                $this->updateActivity($oldProposal);
+                return true;
+            }
+
+            return false;
         }
 
         $proposal = new \Activity\Model\ActivityUpdateProposal();
@@ -141,7 +147,32 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($proposal);
         $em->flush();
 
-        return $proposal;
+        if ($this->canApplyUpdateProposal($oldActivity)) {
+            $this->updateActivity($proposal);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether the current user is allowed to apply an update proposal for the given activity
+     *
+     * @param ActivityModel $activity
+     * @return bool indicating whether the update may be applied
+     */
+    protected function canApplyUpdateProposal(ActivityModel $activity)
+    {
+        if ($this->isAllowed('update', 'activity')) {
+            return true;
+        }
+
+        if (!$this->isAllowed('update', $activity)) {
+            return false;
+        }
+
+        // If the activity has not been approved yet the update proposal can be applied
+        return $activity->getStatus() !== ActivityModel::STATUS_APPROVED;
     }
 
     /**
@@ -159,7 +190,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->remove($proposal);//Proposal is no longer needed.
         $em->remove($new);
         $em->flush();
-        $this->approve($old);
     }
 
     /**

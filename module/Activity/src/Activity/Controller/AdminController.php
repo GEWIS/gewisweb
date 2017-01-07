@@ -26,13 +26,13 @@ class AdminController extends AbstractActionController
      */
     public function participantsAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
 
-        /** @var $activity Activity*/
+        /** @var $activity Activity */
         $activity = $queryService->getActivityWithDetails($id);
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
@@ -48,7 +48,7 @@ class AdminController extends AbstractActionController
 
     public function updateAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $activity = $queryService->getActivityWithDetails($id);
@@ -73,15 +73,18 @@ class AdminController extends AbstractActionController
             $form->setData($postData);
 
             if ($form->isValid()) {
-                $activityService->createUpdateProposal(
+                $updated = $activityService->createUpdateProposal(
                     $activity,
                     $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
-                $view = new ViewModel();
-                $view->setTemplate('activity/activity/updateSuccess.phtml');
-                return $view;
+                $translator = $this->getServiceLocator()->get('translator');
+                $message = $translator->translate('The activity has been successfully updated.');
+                if (!$updated) {
+                    $message .= ' ' . $translator->translate('It will become applied after it has been approved by the board.');
+                }
+                $this->redirectActivityAdmin(true, $message);
             }
         }
         $updateProposal = $activity->getUpdateProposal();
@@ -91,6 +94,7 @@ class AdminController extends AbstractActionController
         }
         $form->bind($activity);
         $languages = $queryService->getAvailableLanguages($activity);
+
         return ['form' => $form, 'activity' => $activity, 'languages' => $languages];
     }
 
@@ -127,13 +131,31 @@ class AdminController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        return [
+        $result = [
             'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
             'disapprovedActivities' => $disapprovedActivities,
             'unapprovedActivities' => $unapprovedActivities,
             'approvedActivities' => $approvedActivities,
             'oldActivityPaginator' => $paginator,
             'admin' => $admin,
-                ];
+        ];
+
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        if (isset($activityAdminSession->success)) {
+            $result['success'] = $activityAdminSession->success;
+            unset($activityAdminSession->success);
+            $result['message'] = $activityAdminSession->message;
+            unset($activityAdminSession->message);
+        }
+
+        return $result;
+    }
+
+    protected function redirectActivityAdmin($success, $message)
+    {
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        $activityAdminSession->success = $success;
+        $activityAdminSession->message = $message;
+        $this->redirect()->toRoute('activity_admin');
     }
 }

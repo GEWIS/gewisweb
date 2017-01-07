@@ -17,6 +17,9 @@
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Update status') ?></th>
+        <?php if (!$admin): ?>
+        <th><?= $this->translate('Approved') ?></th>
+        <?php endif ?>
         <th></th>
     </tr>
     </thead>
@@ -36,12 +39,18 @@
             <?php else: ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' : $this->translate('Update pending') ?></td>
             <?php endif; ?>
+            <?php if (!$admin): ?>
             <td>
-                <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
+                <?php $icons = ['question-sign', 'ok-sign',  'remove-sign'] ?>
+                <span class="glyphicon glyphicon-<?= $icons[$activity->getStatus() -1]?>"></span>&nbsp;
+            </td>
+            <?php endif ?>
+            <td>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
                 <?php if($admin): ?>
-                <a href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
                 <?php endif; ?>
-                <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
         </tr>
     <?php endforeach; ?>

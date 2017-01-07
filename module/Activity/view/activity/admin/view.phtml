@@ -1,5 +1,12 @@
 <div class="container">
 
+    <?php if (isset($success)): // Display messages ?>
+        <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+            <div class="container">
+                <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+            </div>
+        </div>
+    <?php endif;?>
 <?php if ($admin): ?>
 <?= $this->partial('activity/admin/list.phtml', [
     'header' => 'Unapproved Activities',
@@ -53,7 +60,6 @@
         <th><?= $this->translate('Subscriptions') ?></th>
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
-        <th><?= $this->translate('Approval status') ?></th>
         <?php if ($admin): ?>
         <th></th>
         <?php endif; ?>
@@ -70,10 +76,9 @@
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
-            <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate('(Update pending)')) ?></td>
             <?php if ($admin): ?>
             <td>
-                 <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
+                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
             </td>
             <?php endif; ?>
         </tr>
