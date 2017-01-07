@@ -50,7 +50,8 @@ class AssociationYear
     {
         $inst = new static();
         if ($dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
-            && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY) {
+            || ($dateTime->format('n') == self::ASSOCIATION_YEAR_START_MONTH
+                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)) {
             $inst->firstYear = $dateTime->format('Y') - 1;
         } else {
             $inst->firstYear = $dateTime->format('Y');
