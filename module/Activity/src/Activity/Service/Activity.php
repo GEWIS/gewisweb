@@ -162,7 +162,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             return false;
         }
 
-        if ($this->isAllowed('approve', 'model')) {
+        if ($this->isAllowed('update', 'activity')) {
             return true;
         }
 
