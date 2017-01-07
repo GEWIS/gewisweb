@@ -10,6 +10,7 @@ use Activity\Form\ModifyRequest as RequestForm;
 use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 use DOMPDFModule\View\Model\PdfModel;
+use DateTime;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -51,6 +52,18 @@ class AdminController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $activity = $queryService->getActivityWithDetails($id);
+
+        if ($activity->getEndTime() < new DateTime()) {
+            $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
+            $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+            if(!$acl->isAllowed($user, 'activity', 'update')) {
+                //Only admins may update old activities
+                $translator = $this->getServiceLocator()->get('translator');
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to update old activities')
+                );
+            }
+        }
 
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $form = $activityService->getForm();
