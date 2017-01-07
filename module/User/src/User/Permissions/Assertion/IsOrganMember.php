@@ -45,7 +45,7 @@ class IsOrganMember implements AssertionInterface
         $member = $role->getMember();
         $organ = $resource->getResourceOrgan();
 
-        if ($organ === null) {
+        if (!$organ instanceof Organ) {
             return false;
         }
 
