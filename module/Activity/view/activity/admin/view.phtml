@@ -1,6 +1,6 @@
 <div class="container">
 
-<?php if ($admin): ?>    
+<?php if ($admin): ?>
 <?= $this->partial('activity/admin/list.phtml', [
     'header' => 'Unapproved Activities',
     'activities' => $unapprovedActivities,
@@ -14,14 +14,14 @@
     'admin' => true,
 ])
 ?>
-    
+
 <?= $this->partial('activity/admin/list.phtml', [
     'header' => 'Disapproved Activities',
     'activities' => $disapprovedActivities,
     'admin' => true,
 ])
 ?>
-    
+
 <?php else: ?>
 <?= $this->partial('activity/admin/list.phtml', [
     'header' => 'Upcoming Activities',
@@ -29,8 +29,8 @@
     'admin' => false,
 ])
 ?>
-<?php endif; ?>    
-    
+<?php endif; ?>
+
 <h1><?= $this->translate('Old activities') ?></h1>
 <?= $this->paginationControl(
     $oldActivityPaginator,
@@ -54,7 +54,9 @@
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Approval status') ?></th>
+        <?php if ($admin): ?>
         <th></th>
+        <?php endif; ?>
     </tr>
     </thead>
     <tbody>
@@ -69,9 +71,11 @@
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
             <td><?= $activity->getStatus() . ($activity->getUpdateProposal()->count() === 0 ? '' : $this->translate('(Update pending)')) ?></td>
+            <?php if ($admin): ?>
             <td>
                  <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
             </td>
+            <?php endif; ?>
         </tr>
     <?php endforeach;?>
     </tbody>
