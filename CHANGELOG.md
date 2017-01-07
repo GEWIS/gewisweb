@@ -1,4 +1,4 @@
-## [v1.2](https://github.com/GEWIS/gewisweb/tree/v1.2) (2017-09-01)
+## [v1.2](https://github.com/GEWIS/gewisweb/tree/v1.2) (2017-01-09)
 
 * Images on committee/fraternity pages now look normal
 * Activities can now be edited :tada: (#594)
