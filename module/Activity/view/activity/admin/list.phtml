@@ -17,7 +17,7 @@
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Update status') ?></th>
-        <th><?= $this->translate('Approval status') ?></th>
+        <th><?= $this->translate('Approved') ?></th>
         <th></th>
     </tr>
     </thead>
@@ -42,9 +42,9 @@
                 <span class="glyphicon glyphicon-<?= $icons[$activity->getStatus() -1]?>"></span>&nbsp;
             </td>
             <td>
-                <a href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Update') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
                 <?php if($admin): ?>
-                <a href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
                 <?php endif; ?>
                 <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
