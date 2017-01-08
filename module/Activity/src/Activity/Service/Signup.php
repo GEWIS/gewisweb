@@ -315,10 +315,6 @@ class Signup extends AbstractAclService
     protected function removeSignUp(ActivitySignup $signup)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $values = $this->getActivityFieldValueMapper()->getFieldValuesBySignup($signup);
-        foreach($values as $value){
-            $em->remove($value);
-        }
         $em->remove($signup);
         $em->flush();
     }
