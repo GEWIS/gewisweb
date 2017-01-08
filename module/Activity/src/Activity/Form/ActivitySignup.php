@@ -38,22 +38,24 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      *
      * @param ActivityField $fields
      */
-    public function initialiseForm($fields, $external = false)
+    public function initialiseForm($fields)
     {
-        foreach($fields as $field){
+        foreach($fields as $field) {
             $this->add($this->createFieldElementArray($field));
         }
-        //For external login by admin
-        if ($external){
-            $this->add([
-                'name' => 'fullName',
-                'type' => 'Text'
-            ]);
-            $this->add([
-                'name' => 'email',
-                'type' => 'Text'
-            ]);
-        }
+    }
+
+    public function initialiseExternalForm($fields)
+    {
+        $this->add([
+            'name' => 'fullName',
+            'type' => 'Text'
+        ]);
+        $this->add([
+            'name' => 'email',
+            'type' => 'Text'
+        ]);
+        $this->initialiseForm($fields);
     }
 
     /**

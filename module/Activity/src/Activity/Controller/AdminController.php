@@ -41,7 +41,7 @@ class AdminController extends AbstractActionController
         }
 
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $externalSignupForm = $signupService->getForm($activity->getFields(), true);
+        $externalSignupForm = $signupService->getExternalForm($activity->getFields());
 
         $result = [
             'activity' => $translatedActivity,
@@ -50,7 +50,7 @@ class AdminController extends AbstractActionController
             'externalSignoffForm' => new RequestForm('activityExternalSignoff', $translator->translate('Remove')),
         ];
         //Retrieve and clear the request status from the session, if it exists.
-        if (isset($signupRequestSession->success)){
+        if (isset($signupRequestSession->success)) {
             $result['success'] = $signupRequestSession->success;
             unset($signupRequestSession->success);
             $result['message'] = $signupRequestSession->message;
@@ -114,17 +114,17 @@ class AdminController extends AbstractActionController
         $translator = $activityService->getTranslator();
 
         //Assure the form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             $error = $translator->translate('Use the form to subscribe');
             $this->redirectSignupRequest($id, false, $error);
             return;
         }
 
-        $form = $signupService->getForm($activity->getFields(), true);
+        $form = $signupService->getExternalForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             $error = $translator->translate('Invalid form');
             $this->redirectSignupRequest($id, false, $error);
             return;
@@ -150,14 +150,14 @@ class AdminController extends AbstractActionController
 
         $signup = $signupMapper->getSignupById($id);
 
-        if (is_null($signup)){
+        if (is_null($signup)) {
             return $this->notFoundAction();
         }
         $activity = $signup->getActivity();
         $translator = $activityService->getTranslator();
 
         //Assure a form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             $message = $translator->translate('Use the form to unsubscribe an external participant');
             $this->redirectSignupRequest($activity->getId(), false, $message);
             return;
@@ -167,7 +167,7 @@ class AdminController extends AbstractActionController
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             $message = $translator->translate('Invalid form');
             $this->redirectSignupRequest($activity->getId(), false, $message);
             return;

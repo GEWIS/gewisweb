@@ -33,12 +33,6 @@ class Signup extends AbstractAclService
         return 'activitySignup';
     }
 
-/*    public function getSignupById(ActivitySignup $signup)
-    {
-        $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        return $signUpMapper->getSignupById($);
-    }
-  */
     /**
      * Return the form for signing up in the preferred language, if available.
      * Otherwise, it returns it in the available language.
@@ -48,7 +42,7 @@ class Signup extends AbstractAclService
      * @return type
      * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm($fields, $external = false)
+    public function getForm($fields)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -57,7 +51,14 @@ class Signup extends AbstractAclService
             );
         }
         $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseForm($fields, $external);
+        $form->initialiseForm($fields);
+        return $form;
+    }
+
+    public function getExternalForm($fields)
+    {
+        $form = new \Activity\Form\ActivitySignup();
+        $form->initialiseExternalForm($fields);
         return $form;
     }
 
