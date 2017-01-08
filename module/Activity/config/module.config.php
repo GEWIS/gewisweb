@@ -107,6 +107,26 @@ return [
                             ]
                         ]
                     ],
+                    'adminSignup' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:id/adminSignup',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'externalSignup',
+                            ]
+                        ]
+                    ],
+                    'externalSignoff' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:id/externalSignoff',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'externalSignoff',
+                            ]
+                        ]
+                    ],
                     'exportpdf' => [
                         'type' => 'Segment',
                         'options' => [
