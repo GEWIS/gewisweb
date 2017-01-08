@@ -156,8 +156,11 @@ class Module
 
                     $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
                     $acl->allow('user', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsCreator());
-                    $acl->allow('active_member', 'activity',
-                            ['update', 'viewDetails', 'adminSignup'], new IsOrganMember());
+                    $acl->allow('active_member',
+                        'activity',
+                        ['update', 'viewDetails', 'adminSignup'],
+                        new IsOrganMember()
+                    );
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
