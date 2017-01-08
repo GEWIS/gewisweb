@@ -38,10 +38,11 @@ class Signup extends AbstractAclService
      * Otherwise, it returns it in the available language.
      *
      * @param type $fields
+     * @param bool $external Whether the signup is external.
      * @return type
      * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm($fields)
+    public function getForm($fields, $external = false)
     {
         if (!$this->isAllowed('signup', 'activitySignup')) {
             $translator = $this->getTranslator();
@@ -50,7 +51,7 @@ class Signup extends AbstractAclService
             );
         }
         $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseForm($fields);
+        $form->initialiseForm($fields, $external);
         return $form;
     }
 
@@ -180,7 +181,7 @@ class Signup extends AbstractAclService
      * @param array $fieldResults
      * @throws \User\Permissions\NotAllowedException
      */
-    public function adminSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    public function adminSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
     {
         if (!($this->isAllowed('adminSignup', 'activity') ||
                 $this->isAllowed('adminSignup', $activity))) {
@@ -201,7 +202,7 @@ class Signup extends AbstractAclService
      * @param array $fieldResults
      * @throws \User\Permissions\NotAllowedException
      */
-    public function externalSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    public function externalSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
     {
         if (!($this->isAllowed('externalSignup', 'activitySignup'))) {
             $translator = $this->getTranslator();
@@ -220,7 +221,7 @@ class Signup extends AbstractAclService
      * @param array $fieldResults
      * @throws \User\Permissions\NotAllowedException
      */
-    protected function manualSignUp(AcitivityModel $activity, $fullName, $email, array $fieldResults)
+    protected function manualSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
     {
         $signup = new ExternalActivitySignup();
         $signup->setEmail($email);

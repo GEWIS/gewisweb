@@ -29,7 +29,7 @@ class AdminController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-
+        $signupRequestSession = new SessionContainer('signupRequest');
 
         /** @var $activity Activity*/
         $activity = $queryService->getActivityWithDetails($id);
@@ -39,10 +39,22 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return [
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $externalSignupForm = $signupService->getForm($activity->getFields(), true);
+
+        $result = [
             'activity' => $translatedActivity,
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'externalSignupForm' => $externalSignupForm,
         ];
+        //Retrieve and clear the request status from the session, if it exists.
+        if (isset($signupRequestSession->success)){
+            $result['success'] = $signupRequestSession->success;
+            unset($signupRequestSession->success);
+            $result['message'] = $signupRequestSession->message;
+            unset($signupRequestSession->message);
+        }
+        return $result;
     }
 
     public function updateAction()
@@ -86,6 +98,63 @@ class AdminController extends AbstractActionController
         $pdf = new PdfModel();
         $pdf->setVariables($this->participantsAction());
         return $pdf;
+    }
+
+    public function externalSignupAction()
+    {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+
+        $activity = $queryService->getActivity($id);
+
+        $translator = $activityService->getTranslator();
+
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()){
+            $error = $translator->translate('Use the form to subscribe');
+            $this->redirectSignupRequest($id, false, $error);
+            return;
+        }
+
+        $form = $signupService->getForm($activity->getFields(), true);
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $error = $translator->translate('Invalid form');
+            $this->redirectSignupRequest($id, false, $error);
+            return;
+        }
+
+        $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+        $fullName = $formData['fullName'];
+        unset($formData['fullName']);
+        $email = $formData['email'];
+        unset($formData['email']);
+        $signupService->adminSignUp($activity, $fullName, $email, $formData);
+        $message = $translator->translate('Successfully subscribed external participant');
+        $this->redirectSignupRequest($id, true, $message);
+    }
+
+    /**
+     * Redirects to the view of the activity with the given $id, where the
+     * $error message can be displayed if the request was unsuccesful (i.e.
+     * $success was false)
+     *
+     * @param int $id
+     * @param boolean $success Whether the request was successful
+     * @param string $message
+     */
+    protected function redirectSignupRequest($id, $success, $message)
+    {
+        $signupRequestSession = new SessionContainer('signupRequest');
+        $signupRequestSession->success = $success;
+        $signupRequestSession->message = $message;
+        $this->redirect()->toRoute('activity_admin/participants', [
+            'id' => $id,
+        ]);
     }
 
     /**

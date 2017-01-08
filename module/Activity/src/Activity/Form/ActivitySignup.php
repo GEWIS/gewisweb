@@ -19,6 +19,11 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             ->setObject(new \Activity\Model\UserActivitySignup());
 
         $this->add([
+            'name' => 'security',
+            'type' => 'Zend\Form\Element\Csrf'
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -28,15 +33,26 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Initilialise the form, i.e. set the language and the fields
+     * Initialize the form, i.e. set the language and the fields
      * Add every field in $fields to the form.
-     * 
+     *
      * @param ActivityField $fields
      */
-    public function initialiseForm($fields)
+    public function initialiseForm($fields, $external = false)
     {
         foreach($fields as $field){
             $this->add($this->createFieldElementArray($field));
+        }
+        //For external login by admin
+        if ($external){
+            $this->add([
+                'name' => 'fullName',
+                'type' => 'Text'
+            ]);
+            $this->add([
+                'name' => 'email',
+                'type' => 'Text'
+            ]);
         }
     }
 

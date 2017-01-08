@@ -5,6 +5,7 @@
             <th></th>
             <th><?= $this->translate('Name') ?></th>
             <th><?= $this->translate('Email') ?></th>
+            <th><?= $this->translate('Type') ?></th>
             <?php foreach ($activity->getFields() as $field): ?>
                 <th><?= $this->escapeHtml($field->getName()) ?></th>
             <?php endforeach; ?>
@@ -20,6 +21,7 @@
                     <?= $email ?>
                 </a>
             </td>
+            <td><?= ($signup instanceof Activity\Model\UserActivitySignup) ? $this->translate('User'): $this->translate('External') ?></td>
             <?php foreach ($activity->getFields() as $field): ?>
                 <?php foreach($signup->getFieldValues() as $fieldValue):?>
                     <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
@@ -64,6 +66,7 @@
                 <?= $this->translate('Mail everybody') ?>
             </a>
         </td>
+        <td></td>
         <?php foreach ($activity->getFields() as $field): ?>
             <td></td>
         <?php endforeach; ?>
