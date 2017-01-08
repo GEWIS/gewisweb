@@ -33,6 +33,12 @@ class Signup extends AbstractAclService
         return 'activitySignup';
     }
 
+/*    public function getSignupById(ActivitySignup $signup)
+    {
+        $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+        return $signUpMapper->getSignupById($);
+    }
+  */
     /**
      * Return the form for signing up in the preferred language, if available.
      * Otherwise, it returns it in the available language.

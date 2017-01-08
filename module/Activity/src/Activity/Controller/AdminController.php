@@ -29,6 +29,7 @@ class AdminController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
+        $translator = $this->getServiceLocator()->get('activity_service_activity')->getTranslator();
         $signupRequestSession = new SessionContainer('signupRequest');
 
         /** @var $activity Activity*/
@@ -46,6 +47,7 @@ class AdminController extends AbstractActionController
             'activity' => $translatedActivity,
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'externalSignupForm' => $externalSignupForm,
+            'externalSignoffForm' => new RequestForm('activityExternalSignoff', $translator->translate('Remove')),
         ];
         //Retrieve and clear the request status from the session, if it exists.
         if (isset($signupRequestSession->success)){
@@ -136,6 +138,44 @@ class AdminController extends AbstractActionController
         $signupService->adminSignUp($activity, $fullName, $email, $formData);
         $message = $translator->translate('Successfully subscribed external participant');
         $this->redirectSignupRequest($id, true, $message);
+    }
+
+    public function externalSignoffAction()
+    {
+        $id = (int) $this->params('id');
+
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $signupMapper = $this->getServiceLocator()->get('activity_mapper_signup');
+
+        $signup = $signupMapper->getSignupById($id);
+
+        if (is_null($signup)){
+            return $this->notFoundAction();
+        }
+        $activity = $signup->getActivity();
+        $translator = $activityService->getTranslator();
+
+        //Assure a form is used
+        if (!$this->getRequest()->isPost()){
+            $message = $translator->translate('Use the form to unsubscribe an external participant');
+            $this->redirectSignupRequest($activity->getId(), false, $message);
+            return;
+        }
+
+        $form = new RequestForm('activityExternalSignoff', $translator->translate('Remove'));
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()){
+            $message = $translator->translate('Invalid form');
+            $this->redirectSignupRequest($activity->getId(), false, $message);
+            return;
+        }
+
+        $signupService->externalSignOff($signup);
+        $message = $translator->translate('Successfully removed external participant');
+        $this->redirectSignupRequest($activity->getId(), true, $message);
     }
 
     /**

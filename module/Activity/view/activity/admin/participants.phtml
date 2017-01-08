@@ -15,7 +15,8 @@ $this->headTitle($this->translate('Participants')); ?>
 <div class="container">
     <?= $this->partial('activity/admin/participantsTable.phtml', [
             'activity' => $activity,
-            'signupData' => $signupData
+            'signupData' => $signupData,
+            'externalSignoffForm' => $externalSignoffForm,
     ]);?>
 
     <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
@@ -43,6 +44,7 @@ $this->headTitle($this->translate('Participants')); ?>
         <?php
         $submit = $externalSignupForm->get('submit');
         $submit->setAttribute('class', 'btn btn-primary');
+        $submit->setAttribute('value', $this->translate('Subscribe external participant'));
         echo $this->formElement($externalSignupForm->get('security'));
         echo $this->formSubmit($submit);
         echo $this->form()->closeTag();?>

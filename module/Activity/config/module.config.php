@@ -117,6 +117,16 @@ return [
                             ]
                         ]
                     ],
+                    'externalSignoff' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:id/externalSignoff',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'externalSignoff',
+                            ]
+                        ]
+                    ],
                     'exportpdf' => [
                         'type' => 'Segment',
                         'options' => [

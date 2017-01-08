@@ -21,7 +21,22 @@
                     <?= $email ?>
                 </a>
             </td>
-            <td><?= ($signup instanceof Activity\Model\UserActivitySignup) ? $this->translate('User'): $this->translate('External') ?></td>
+            <?php if ($signup instanceof Activity\Model\UserActivitySignup): ?>
+            <td><?= $this->translate('User')?></td>
+            <?php else: ?>
+            <td>
+                <?= $this->translate('External')?>
+                <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
+                $externalSignoffForm->prepare();
+                echo $this->form()->openTag($externalSignoffForm);
+                echo $this->formElement($externalSignoffForm->get('security'));
+                $submit = $externalSignoffForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-primary btn-xs');
+                echo $this->formSubmit($submit);
+                echo $this->form()->closeTag();
+                ?>
+            </td>
+            <?php endif; ?>
             <?php foreach ($activity->getFields() as $field): ?>
                 <?php foreach($signup->getFieldValues() as $fieldValue):?>
                     <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
