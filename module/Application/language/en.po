@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 19:48+0100\n"
+"POT-Creation-Date: 2017-01-08 15:32+0100\n"
 "PO-Revision-Date: 2017-01-07 20:06+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
@@ -52,7 +52,7 @@ msgstr "Contact"
 #: module/Company/view/company/admin/index.phtml:34
 #: module/Company/view/company/admin/index.phtml:92
 #: module/Company/view/company/admin/edit-package.phtml:23
-#: module/Application/view/partial/main-nav.phtml:123
+#: module/Application/view/partial/main-nav.phtml:124
 msgid "Jobs"
 msgstr "Vacancies"
 
@@ -112,7 +112,7 @@ msgstr "English"
 #: module/Company/view/company/company/spotlight.phtml:15
 #: module/Company/view/company/company/list.phtml:6
 #: module/Company/view/company/company/job-list.phtml:18
-#: module/Application/view/partial/main-nav.phtml:111
+#: module/Application/view/partial/main-nav.phtml:112
 msgid "Companies"
 msgstr "Companies"
 
@@ -422,7 +422,7 @@ msgstr "View attachment"
 #: module/Education/view/education/education/index.phtml:6
 #: module/Education/view/education/education/course.phtml:3
 #: module/Application/view/partial/admin-nav.phtml:52
-#: module/Application/view/partial/main-nav.phtml:126
+#: module/Application/view/partial/main-nav.phtml:127
 msgid "Education"
 msgstr "Education"
 
@@ -650,7 +650,7 @@ msgstr ""
 #: module/Activity/view/activity/activity/view.phtml:5
 #: module/Activity/view/activity/activity/view.phtml:14
 #: module/Application/view/partial/admin-nav.phtml:11
-#: module/Application/view/partial/main-nav.phtml:129
+#: module/Application/view/partial/main-nav.phtml:130
 msgid "Activities"
 msgstr "Activities"
 
@@ -818,7 +818,7 @@ msgid "Create activity"
 msgstr "Create activity"
 
 #: module/Activity/view/activity/activity/create.phtml:17
-#: module/Application/view/partial/main-nav.phtml:133
+#: module/Application/view/partial/main-nav.phtml:134
 msgid "Create an activity"
 msgstr "Create an activity"
 
@@ -1022,6 +1022,23 @@ msgstr "(dis)approve"
 #: module/Activity/view/activity/admin/participants.phtml:5
 msgid "Participants"
 msgstr "Participants"
+
+#: module/Activity/view/activity/admin/view.phtml:12
+msgid "Unapproved Activities"
+msgstr "Unapproved Activities"
+
+#: module/Activity/view/activity/admin/view.phtml:19
+msgid "Approved Activities"
+msgstr "Approved Activities"
+
+#: module/Activity/view/activity/admin/view.phtml:26
+msgid "Disapproved Activities"
+msgstr "Disapproved Activities"
+
+#: module/Activity/view/activity/admin/view.phtml:34
+#, fuzzy
+msgid "Upcoming Activities"
+msgstr "Upcoming activities"
 
 #: module/Activity/view/activity/admin/view.phtml:41
 msgid "Old activities"
@@ -1482,7 +1499,7 @@ msgstr "view old polls"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 #: module/Photo/view/photo/photo/view.phtml:89
-#: module/Application/view/partial/main-nav.phtml:143
+#: module/Application/view/partial/main-nav.phtml:144
 msgid "Photo of the week"
 msgstr "Photo of the week"
 
@@ -1678,7 +1695,7 @@ msgstr "Create album"
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:141
+#: module/Application/view/partial/main-nav.phtml:142
 #: module/Decision/view/partial/photos.phtml:1
 msgid "Photos"
 msgstr "Photos"
@@ -1895,11 +1912,15 @@ msgstr "GEWIS song"
 msgid "Regulations"
 msgstr "Regulations"
 
-#: module/Application/view/partial/main-nav.phtml:118
+#: module/Application/view/partial/main-nav.phtml:107
+msgid "Links"
+msgstr ""
+
+#: module/Application/view/partial/main-nav.phtml:119
 msgid "Featured"
 msgstr "Featured"
 
-#: module/Application/view/partial/main-nav.phtml:136
+#: module/Application/view/partial/main-nav.phtml:137
 msgid ""
 "Option \n"
 "                            calendar"
@@ -1907,7 +1928,7 @@ msgstr ""
 "Option \n"
 "                            calendar"
 
-#: module/Application/view/partial/main-nav.phtml:150
+#: module/Application/view/partial/main-nav.phtml:151
 #: module/Decision/view/decision/member/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:6
 #: module/Decision/view/decision/member/view.phtml:4
@@ -3327,15 +3348,6 @@ msgstr "Purchaser"
 
 #~ msgid "Export subscriptions"
 #~ msgstr "Export subscriptions"
-
-#~ msgid "Unapproved Activities"
-#~ msgstr "Unapproved Activities"
-
-#~ msgid "Approved Activities"
-#~ msgstr "Approved Activities"
-
-#~ msgid "Disapproved Activities"
-#~ msgstr "Disapproved Activities"
 
 #~ msgid "Subscription email adresses for activity "
 #~ msgstr "Subscription email adresses for activity "

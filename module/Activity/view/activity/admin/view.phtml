@@ -9,21 +9,21 @@
     <?php endif;?>
 <?php if ($admin): ?>
 <?= $this->partial('activity/admin/list.phtml', [
-    'header' => 'Unapproved Activities',
+    'header' => $this->translate('Unapproved Activities'),
     'activities' => $unapprovedActivities,
     'admin' => true,
 ])
 ?>
 
 <?= $this->partial('activity/admin/list.phtml', [
-    'header' => 'Approved Activities',
+    'header' => $this->translate('Approved Activities'),
     'activities' => $approvedActivities,
     'admin' => true,
 ])
 ?>
 
 <?= $this->partial('activity/admin/list.phtml', [
-    'header' => 'Disapproved Activities',
+    'header' => $this->translate('Disapproved Activities'),
     'activities' => $disapprovedActivities,
     'admin' => true,
 ])
@@ -31,7 +31,7 @@
 
 <?php else: ?>
 <?= $this->partial('activity/admin/list.phtml', [
-    'header' => 'Upcoming Activities',
+    'header' => $this->translate('Upcoming Activities'),
     'activities' => $upcomingActivities,
     'admin' => false,
 ])

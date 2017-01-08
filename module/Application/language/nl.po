@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 19:48+0100\n"
-"PO-Revision-Date: 2017-01-07 20:01+0100\n"
+"POT-Creation-Date: 2017-01-08 15:32+0100\n"
+"PO-Revision-Date: 2017-01-08 15:33+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -52,7 +52,7 @@ msgstr "Contact"
 #: module/Company/view/company/admin/index.phtml:34
 #: module/Company/view/company/admin/index.phtml:92
 #: module/Company/view/company/admin/edit-package.phtml:23
-#: module/Application/view/partial/main-nav.phtml:123
+#: module/Application/view/partial/main-nav.phtml:124
 msgid "Jobs"
 msgstr "Vacatures"
 
@@ -112,7 +112,7 @@ msgstr "Engels"
 #: module/Company/view/company/company/spotlight.phtml:15
 #: module/Company/view/company/company/list.phtml:6
 #: module/Company/view/company/company/job-list.phtml:18
-#: module/Application/view/partial/main-nav.phtml:111
+#: module/Application/view/partial/main-nav.phtml:112
 msgid "Companies"
 msgstr "Bedrijven"
 
@@ -422,7 +422,7 @@ msgstr "Bekijk Bijlage"
 #: module/Education/view/education/education/index.phtml:6
 #: module/Education/view/education/education/course.phtml:3
 #: module/Application/view/partial/admin-nav.phtml:52
-#: module/Application/view/partial/main-nav.phtml:126
+#: module/Application/view/partial/main-nav.phtml:127
 msgid "Education"
 msgstr "Onderwijs"
 
@@ -655,7 +655,7 @@ msgstr ""
 #: module/Activity/view/activity/activity/view.phtml:5
 #: module/Activity/view/activity/activity/view.phtml:14
 #: module/Application/view/partial/admin-nav.phtml:11
-#: module/Application/view/partial/main-nav.phtml:129
+#: module/Application/view/partial/main-nav.phtml:130
 msgid "Activities"
 msgstr "Activiteiten"
 
@@ -824,7 +824,7 @@ msgid "Create activity"
 msgstr "Create activity"
 
 #: module/Activity/view/activity/activity/create.phtml:17
-#: module/Application/view/partial/main-nav.phtml:133
+#: module/Application/view/partial/main-nav.phtml:134
 msgid "Create an activity"
 msgstr "Maak een activiteit"
 
@@ -1029,6 +1029,22 @@ msgstr "Details"
 #: module/Activity/view/activity/admin/participants.phtml:5
 msgid "Participants"
 msgstr "Deelnemers"
+
+#: module/Activity/view/activity/admin/view.phtml:12
+msgid "Unapproved Activities"
+msgstr "Niet goedgekeurde activiteiten"
+
+#: module/Activity/view/activity/admin/view.phtml:19
+msgid "Approved Activities"
+msgstr "Goedgekeurde activiteiten"
+
+#: module/Activity/view/activity/admin/view.phtml:26
+msgid "Disapproved Activities"
+msgstr "Afgekeurde activiteiten"
+
+#: module/Activity/view/activity/admin/view.phtml:34
+msgid "Upcoming Activities"
+msgstr "Aankomende activiteiten"
 
 #: module/Activity/view/activity/admin/view.phtml:41
 msgid "Old activities"
@@ -1488,7 +1504,7 @@ msgstr "bekijk oude polls"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 #: module/Photo/view/photo/photo/view.phtml:89
-#: module/Application/view/partial/main-nav.phtml:143
+#: module/Application/view/partial/main-nav.phtml:144
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
@@ -1684,7 +1700,7 @@ msgstr "Nieuw album"
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:141
+#: module/Application/view/partial/main-nav.phtml:142
 #: module/Decision/view/partial/photos.phtml:1
 msgid "Photos"
 msgstr "Foto's"
@@ -1901,17 +1917,21 @@ msgstr "GEWIS-lied"
 msgid "Regulations"
 msgstr "Reguleringen"
 
-#: module/Application/view/partial/main-nav.phtml:118
+#: module/Application/view/partial/main-nav.phtml:107
+msgid "Links"
+msgstr "Links"
+
+#: module/Application/view/partial/main-nav.phtml:119
 msgid "Featured"
 msgstr "Uitgelicht"
 
-#: module/Application/view/partial/main-nav.phtml:136
+#: module/Application/view/partial/main-nav.phtml:137
 msgid ""
 "Option \n"
 "                            calendar"
 msgstr "Optie kalender"
 
-#: module/Application/view/partial/main-nav.phtml:150
+#: module/Application/view/partial/main-nav.phtml:151
 #: module/Decision/view/decision/member/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:6
 #: module/Decision/view/decision/member/view.phtml:4
@@ -3346,15 +3366,6 @@ msgstr "Inkoper"
 
 #~ msgid "Export subscriptions"
 #~ msgstr "Exporteer inschrijvingen"
-
-#~ msgid "Unapproved Activities"
-#~ msgstr "Niet goedgekeurde activiteiten"
-
-#~ msgid "Approved Activities"
-#~ msgstr "Goedgekeurde activiteiten"
-
-#~ msgid "Disapproved Activities"
-#~ msgstr "Afgekeurde activiteiten"
 
 #~ msgid "Subscription email adresses for activity "
 #~ msgstr "E-mail adressen van ingeschreven leden"
