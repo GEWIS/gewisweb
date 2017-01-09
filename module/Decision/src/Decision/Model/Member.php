@@ -576,6 +576,22 @@ class Member
         ];
     }
 
+    public function toApiArray()
+    {
+        return [
+            'lidnr' => $this->getLidnr(),
+            'email' => $this->getEmail(),
+            'fullName' => $this->getFullName(),
+            'initials' => $this->getInitials(),
+            'firstName' => $this->getFirstName(),
+            'middleName' => $this->getMiddleName(),
+            'lastName' => $this->getLastName(),
+            'birth' => $this->getBirth()->format(\DateTime::ISO8601),
+            'generation' => $this->getGeneration(),
+            'expiration' => $this->getExpiration()->format(\DateTime::ISO8601),
+        ];
+    }
+
     /**
      * Get all addresses.
      *

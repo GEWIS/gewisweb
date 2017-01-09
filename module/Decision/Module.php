@@ -135,6 +135,7 @@ class Module
 
                     // users are allowed to view and search members
                     $acl->allow('user', 'member', ['view', 'view_self', 'search', 'birthdays']);
+                    $acl->allow('apiuser', 'member', ['view']);
 
                     $acl->allow('user', 'decision', ['search', 'view_meeting', 'list_meetings']);
 

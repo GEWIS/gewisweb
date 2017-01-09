@@ -52,10 +52,11 @@ class Member extends AbstractAclService
             }
             if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
                 $memberships[$install->getOrgan()->getAbbr()] = [];
+                $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
             }
             if ($install->getFunction() != 'Lid') {
                 $function = $this->getTranslator()->translate($install->getFunction());
-                $memberships[$install->getOrgan()->getAbbr()][] = $function;
+                $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
             }
         }
 
@@ -76,6 +77,13 @@ class Member extends AbstractAclService
      */
     public function findMemberByLidNr($lidnr)
     {
+        if (!$this->isAllowed('view')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view members.')
+            );
+        }
+
         return $this->getMemberMapper()->findByLidnr($lidnr);
     }
 
@@ -91,7 +99,7 @@ class Member extends AbstractAclService
             );
         }
 
-        $user = $this->getServiceManager()->get('user_role');
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
 
         $config = $this->getServiceManager()->get('config');
         $sslcapath = $config['sslcapath'];

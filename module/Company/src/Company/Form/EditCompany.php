@@ -126,6 +126,15 @@ class EditCompany extends Form
             ],
         ]);
         $this->add([
+            'name' => 'contactName',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translate->translate('Contact name'),
+            ],
+        ]);
+        $this->add([
             'name' => 'phone',
             'attributes' => [
                 'type' => 'text',
@@ -281,6 +290,19 @@ class EditCompany extends Form
                     ]
                 ]
             ]
+        ]);
+    
+        $filter->add([
+            'name' => 'contactName',
+            'required' => false,
+            'validators' => [
+                [
+                    'name' => 'string_length',
+                    'options' => [
+                        'max' => 200,
+                    ],
+                ],
+            ],
         ]);
 
         $filter->add([

@@ -70,21 +70,21 @@
     <tr>
         <td><?= $this->translate('Subscribe'); ?></td>
         <td><?= $old->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
         <td><?= $new->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
         <td><?= $this->translate('Only GEWIS'); ?></td>
         <td><?= $old->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
         <td><?= $new->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
+        <td></td>
         <td></td>
     </tr>
 
     <tr>
         <td>
-            <?php $proposalApplyForm->setAttribute('action', $this->url('admin_activity/apply_proposal', ['id' => $proposal->getId()]));
+            <?php $proposalApplyForm->setAttribute('action', $this->url('activity_admin_approval/apply_proposal', ['id' => $proposal->getId()]));
             $proposalApplyForm->prepare();
             echo $this->form()->openTag($proposalApplyForm);
             echo $this->formElement($proposalApplyForm->get('security'));
@@ -95,7 +95,7 @@
             ?>                                            
         </td>
         <td>
-            <?php $proposalRevokeForm->setAttribute('action', $this->url('admin_activity/revoke_proposal', ['id' => $proposal->getId()]));
+            <?php $proposalRevokeForm->setAttribute('action', $this->url('activity_admin_approval/revoke_proposal', ['id' => $proposal->getId()]));
             $proposalRevokeForm->prepare();
             echo $this->form()->openTag($proposalRevokeForm);
             echo $this->formElement($proposalRevokeForm->get('security'));

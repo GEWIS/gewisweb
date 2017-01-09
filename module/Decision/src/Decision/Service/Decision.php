@@ -290,7 +290,7 @@ class Decision extends AbstractAclService
             );
         }
 
-        $lidnr = $this->sm->get('user_role')->getLidnr();
+        $lidnr = $this->sm->get('user_service_user')->getIdentity()->getLidnr();
 
         return $this->getAuthorizationMapper()->findUserAuthorization($meetingNumber, $lidnr);
     }
@@ -304,7 +304,7 @@ class Decision extends AbstractAclService
         if (!$form->isValid()) {
             return false;
         }
-        $user = $this->sm->get('decision_doctrine_em')->merge($this->sm->get('user_role'));
+        $user = $this->sm->get('user_service_user')->getIdentity();
         $authorizer = $user->getMember();
         $recipient = $this->getMemberMapper()->findByLidnr($data['recipient']);
         if (is_null($recipient) || $recipient->getLidnr() === $authorizer->getLidnr()) {

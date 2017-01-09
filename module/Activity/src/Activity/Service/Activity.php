@@ -77,7 +77,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Find the creator
         /** @var \User\Model\User $user */
         $user = $em->merge(
-            $this->getServiceManager()->get('user_role')
+            $this->getServiceManager()->get('user_service_user')->getIdentity()
         );
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
@@ -100,19 +100,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param type $dutch
      * @param type $english
      * @return ActivityProposalModel
+     * @return bool indicating whether the update was applied or is pending
      */
     public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
     {
-        if (!$this->isAllowed('update', 'activity')) {
+        if (!($this->isAllowed('update', 'activity') ||
+                $this->isAllowed('update', $oldActivity))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to update an activity')
+                $translator->translate('You are not allowed to update this activity')
             );
         }
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        // Find the creator
-        $user = $em->merge($this->getServiceManager()->get('user_role'));
 
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
         $newActivity = $this->generateActivity(
             $params,
             $user,
@@ -121,13 +122,57 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $english,
             ActivityModel::STATUS_UPDATE
         );
+
+        $oldProposalContainer = $oldActivity->getUpdateProposal();
+
+        if ($oldProposalContainer->count() !== 0) {
+            $oldProposal = $oldProposalContainer->unwrap()->first();
+            //Remove old update proposal
+            $oldUpdate = $oldProposal->getNew();
+            $oldProposal->setNew($newActivity);
+            $em->remove($oldUpdate);
+            $em->flush();
+
+            if ($this->canApplyUpdateProposal($oldActivity)) {
+                $this->updateActivity($oldProposal);
+                return true;
+            }
+
+            return false;
+        }
+
         $proposal = new \Activity\Model\ActivityUpdateProposal();
         $proposal->setOld($oldActivity);
         $proposal->setNew($newActivity);
         $em->persist($proposal);
         $em->flush();
 
-        return $proposal;
+        if ($this->canApplyUpdateProposal($oldActivity)) {
+            $this->updateActivity($proposal);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether the current user is allowed to apply an update proposal for the given activity
+     *
+     * @param ActivityModel $activity
+     * @return bool indicating whether the update may be applied
+     */
+    protected function canApplyUpdateProposal(ActivityModel $activity)
+    {
+        if ($this->isAllowed('update', 'activity')) {
+            return true;
+        }
+
+        if (!$this->isAllowed('update', $activity)) {
+            return false;
+        }
+
+        // If the activity has not been approved yet the update proposal can be applied
+        return $activity->getStatus() !== ActivityModel::STATUS_APPROVED;
     }
 
     /**
@@ -145,7 +190,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->remove($proposal);//Proposal is no longer needed.
         $em->remove($new);
         $em->flush();
-        $this->approve($old);
     }
 
     /**

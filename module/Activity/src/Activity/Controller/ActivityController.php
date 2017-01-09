@@ -43,7 +43,7 @@ class ActivityController extends AbstractActionController
         $activity = $queryService->getActivity($id);
 
         $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
-        $identity = $this->getServiceLocator()->get('user_role');
+        $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $isAllowedToSubscribe = $signupService->isAllowedToSubscribe();
@@ -152,7 +152,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $identity = $this->getServiceLocator()->get('user_role');
+        $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $user = $identity->getMember();
 
         //Assure the user is not subscribed yet
@@ -205,7 +205,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $identity = $this->getServiceLocator()->get('user_role');
+        $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $user = $identity->getMember();
 
         if (!$signupService->isSignedUp($activity, $user)) {

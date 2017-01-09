@@ -20,19 +20,20 @@
                 <div class="col-md-12">
                     <h4>
                         <?php if (!isset($proposals)): ?>
-                        <a href="<?php echo $this->url((isset($admin) ? 'admin_activity' : 'activity'). '/view', ['id' => $activity->getId()])?>">
+                        <a href="<?php echo $this->url((isset($admin) ? 'activity_admin_approval' : 'activity'). '/view', ['id' => $activity->getId()])?>">
                             <?= $this->escapeHtml($activity->getName() === null ? $activity->getNameEn() : $activity->getName()) ?>
                         </a>
                         <?php else: ?>
                         <?php $proposal = $proposals[$activity->getId()] ?>
-                        <a href="<?php echo $this->url('admin_activity/proposal', ['id' => $proposal->getId()]) ?>">
+                        <a href="<?php echo $this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()]) ?>">
                             <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()) ?>
-                        </a>                        
+                        </a>
                         <?php endif;?>
                     </h4>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 reveal reveal-10">
                     <p><?= strip_tags($this->markdown($activity->getDescription())) ?></p>
+                    <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
                 </div>
                 <div class="col-md-4">
                     <dl>
@@ -69,3 +70,8 @@
     </li>
     <?php endif; ?>
 </ul>
+<script type="application/javascript">
+    $(".reveal-button").click(function() {
+      $(this).parent().addClass("revealed");
+    });
+</script>

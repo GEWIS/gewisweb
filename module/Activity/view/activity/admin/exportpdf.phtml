@@ -1,7 +1,7 @@
 <html>
     <body>
         <h1><?= $this->translate('Details for activity ') . ' ' . $activity->getName() ?></h1>
-        <?= $this->partial('activity/organizer/exportTable.phtml', [
+        <?= $this->partial('activity/admin/participantsTable.phtml', [
                 'activity' => $activity,
                 'signupData' => $signupData
         ]);?>

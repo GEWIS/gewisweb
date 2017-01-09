@@ -120,6 +120,13 @@ return [
         ]
     ],
 
+    'organ_information' => [
+        'cover_width' => 2000,
+        'cover_height' => 625,
+        'thumbnail_width' => 512,
+        'thumbnail_height' => 288,
+    ],
+
     'frontpage' => [
         'activity_count' => 3, // Number of activities to display
         'news_count' => 3, // Number of news items to display

@@ -66,7 +66,7 @@ class ApiController extends AbstractActionController
         $params = [];
         $params['success'] = false;
 
-        $identity = $this->getServiceLocator()->get('user_role');
+        $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $user = $identity->getMember();
         if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
             $activity = $activityService->getActivity($id);

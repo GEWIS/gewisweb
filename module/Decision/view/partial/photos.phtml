@@ -1,11 +1,17 @@
 <h3><?= $this->translate('Photos') ?></h3>
 
-<div class="row">
+<div class="photo-grid">
+    <div class="grid-sizer"></div>
+    <div class="gutter-sizer"></div>
     <?php foreach($this->tags as $tag): ?>
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $tag->getPhoto()->getId()]); ?>">
-            <img class="img-responsive" src="<?= $this->fileUrl($tag->getPhoto()->getSmallThumbPath()) ?>" alt="">
-        </a>
-    </div>
+            <div class="photo-grid-item photo-grid-item-photo">
+                <a href="<?= $this->url('photo/photo', ['photo_id' => $tag->getPhoto()->getId()]); ?>">
+                    <?php
+                    $image = $tag->getPhoto()->getSmallThumbPath();
+                    $size = getimagesize('public/data/' . $image);
+                    ?>
+                    <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($tag->getPhoto()->getSmallThumbPath()) ?>">
+                </a>
+            </div>
     <?php endforeach; ?>
 </div>

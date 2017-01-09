@@ -21,7 +21,7 @@ $this->headTitle($this->translate('Current poll')); ?>
 
     <div class="row">
     <p>
-        <?= sprintf('%sRequest a poll%s', '<a href="' . $this->url('poll/request') . '">', '</a>') ?>
+        <?= sprintf($this->translate('%sRequest a poll%s'), '<a href="' . $this->url('poll/request') . '">', '</a>') ?>
     </p>
     </div>
 

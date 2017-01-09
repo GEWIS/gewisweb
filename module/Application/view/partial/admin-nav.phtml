@@ -5,9 +5,9 @@
         </div>
     </div>
     <ul class="nav nav-pills head-menu">
-        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'approve')): ?>
+        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
         <li>
-            <a href="<?= $this->url('admin_activity') ?>">
+            <a href="<?= $this->url('activity_admin') ?>">
                 <?= $this->translate('Activities') ?>
             </a>
         </li>

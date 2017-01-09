@@ -20,6 +20,9 @@ $companyURL = $this->url('company/companyItem', // Route url
     </a>
     <div class="">
         <h4><?= $this->translate('Contact') ?></h4>
+        <?php if (!empty($company->getContactName())): ?>
+            <p class="company-contactName"><?= $company->getContactName() ?></p>
+        <?php endif ?>
         <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
         <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()) ?>"><?= $company->getPhone() ?></a></p>
         <p class="company-website"><a href="<?= $translation->getWebsite() ?>">Visit website</a></p>

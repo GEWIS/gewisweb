@@ -50,6 +50,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <div class="form-group">
                                     <input type="password" name="password" class="form-control" placeholder="<?= $this->translate('Password') ?>">
                                 </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="remember" value="0"><input type="checkbox" name="remember" checked="checked" value="1">
+                                    Remember me
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
                                 <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
 
@@ -100,6 +104,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a></li>
+                        <li><a href="<?= $this->url('home/page', ['category' => 'links']) ?>"><?= $this->translate('Links') ?></a></li>
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">

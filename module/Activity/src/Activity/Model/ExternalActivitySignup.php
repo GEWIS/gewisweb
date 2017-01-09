@@ -44,4 +44,14 @@ class ExternalActivitySignup extends ActivitySignup
     {
         return $this->email;
     }
+
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
 }

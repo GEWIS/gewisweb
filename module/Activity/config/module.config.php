@@ -71,43 +71,68 @@ return [
                 ],
                 'priority' => 100
             ],
-            'organizer_activity' => [
+            'activity_admin' => [
+                'priority' => 100,
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/activity/organizer/',
+                    'route' => '/admin/activity',
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'organizer',
+                        'controller' => 'admin',
+                        'action' => 'view'
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'email' => [
+                    'index' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/email',
+                            'route' => '[/:page]',
+                            'constraints' => [
+                                'page' => '[0-9]+',
+                            ],
                             'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'email',
+                                'controller' => 'admin',
+                                'action' => 'view'
                             ]
                         ]
                     ],
-                    'export' => [
+                    'participants' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/export',
+                            'route' => '/:id/participants',
                             'defaults' => [
-                                'controller' => 'organizer',
-                                'action' => 'export',
+                                'controller' => 'admin',
+                                'action' => 'participants',
+                            ]
+                        ]
+                    ],
+                    'adminSignup' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:id/adminSignup',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'externalSignup',
+                            ]
+                        ]
+                    ],
+                    'externalSignoff' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/:id/externalSignoff',
+                            'defaults' => [
+                                'controller' => 'admin',
+                                'action' => 'externalSignoff',
                             ]
                         ]
                     ],
                     'exportpdf' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/export/pdf',
+                            'route' => '/:id/export/pdf',
                             'defaults' => [
-                                'controller' => 'organizer',
+                                'controller' => 'admin',
                                 'action' => 'exportpdf',
                             ]
                         ]
@@ -115,9 +140,9 @@ return [
                     'update' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => ':id/update',
+                            'route' => '/:id/update',
                             'defaults' => [
-                                'controller' => 'organizer',
+                                'controller' => 'admin',
                                 'action' => 'update'
                             ]
                         ]
@@ -149,64 +174,24 @@ return [
                 ]
 
             ],
-            'admin_activity' => [
+            'activity_admin_approval' => [
+                'priority' => 150,
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/admin/activity',
+                    'route' => '/admin/activity/approval',
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'admin',
-                        'action' => 'queue'
+                        'controller' => 'adminApproval',
                     ]
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'queue' => [
-                        'type' => 'Literal',
-                        'options' => [
-                            'route' => '/queue',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'queue'
-                            ]
-                        ]
-                    ],
-                    'queue_unapproved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/unapproved[/:page]',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'queueUnapproved'
-                            ]
-                        ]
-                    ],
-                    'queue_approved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/approved[/:page]',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'queueApproved'
-                            ]
-                        ]
-                    ],
-                    'queue_disapproved' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/queue/disapproved[/:page]',
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'queueDisapproved'
-                            ]
-                        ]
-                    ],
                     'view' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/view/[:id]',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'view'
                             ]
                         ]
@@ -216,7 +201,7 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'viewProposal'
                             ]
                         ]
@@ -226,7 +211,7 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]/apply',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'applyProposal'
                             ]
                         ]
@@ -236,7 +221,7 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]/revoke',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'revokeProposal'
                             ]
                         ]
@@ -246,7 +231,7 @@ return [
                         'options' => [
                             'route' => '/approve/[:id]',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'approve'
                             ]
                         ]
@@ -256,7 +241,7 @@ return [
                         'options' => [
                             'route' => '/disapprove/[:id]',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'disapprove'
                             ]
                         ]
@@ -266,7 +251,7 @@ return [
                         'options' => [
                             'route' => '/reset/[:id]',
                             'defaults' => [
-                                'controller' => 'admin',
+                                'controller' => 'adminApproval',
                                 'action' => 'reset'
                             ]
                         ]
@@ -347,9 +332,9 @@ return [
     'controllers' => [
         'invokables' => [
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
-            'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
+            'Activity\Controller\AdminApproval' => 'Activity\Controller\AdminApprovalController',
             'Activity\Controller\Api' => 'Activity\Controller\ApiController',
-            'Activity\Controller\Organizer' => 'Activity\Controller\OrganizerController',
+            'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
             'Activity\Controller\ActivityCalendar' => 'Activity\Controller\ActivityCalendarController',
         ],
         'factories' => [
