@@ -1,5 +1,6 @@
 ## [v1.2](https://github.com/GEWIS/gewisweb/tree/v1.2) (2017-01-09)
 
+* External participants can now be subscribed to activites through the activity admin
 * Images on committee/fraternity pages now look normal
 * Activities can now be edited :tada: (#594)
 * Improved the activity administrator interface (#642)

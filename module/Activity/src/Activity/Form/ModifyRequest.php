@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 /**
  * Specifies a form that is used to let an user do a modification request that
  * does not require any other data, such as signing off for activities or
- * approving or dissapproving them.
+ * approving or disapproving them.
  */
 class ModifyRequest extends Form implements InputFilterProviderInterface
 {
