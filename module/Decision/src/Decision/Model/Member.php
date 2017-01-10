@@ -140,6 +140,19 @@ class Member
     protected $paid = 0;
 
     /**
+     * Iban number.
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $iban;
+    /**
+     * If the member receives a 'supremum'
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $supremum;
+
+    /**
      * Addresses of this member.
      *
      * @ORM\OneToMany(targetEntity="Address", mappedBy="member",cascade={"persist"})
