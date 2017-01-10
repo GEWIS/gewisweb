@@ -54,12 +54,13 @@ class ActivityController extends AbstractActionController
             $form = $signupService->getForm($fields);
         }
         $externalForm = null;
-        if ($signupService->isAllowedToExternalSubscribe()){
+        if ($signupService->isAllowedToExternalSubscribe()) {
             $externalForm = $signupService->getExternalForm($fields);
         }
         $isSignedUp = false;
-        if ($signupService->isAllowedToInternalSubscribe()){
-            $isSignedUp = $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember());
+        if ($signupService->isAllowedToInternalSubscribe()) {
+            $isSignedUp = $isAllowedToSubscribe
+                && $signupService->isSignedUp($translatedActivity, $identity->getMember());
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         $result = [

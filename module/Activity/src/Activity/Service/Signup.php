@@ -64,7 +64,7 @@ class Signup extends AbstractAclService
 
     public function getExternalForm($fields)
     {
-        if (!$this->isAllowed('externalSignup', 'activitySignup')){
+        if (!$this->isAllowed('externalSignup', 'activitySignup')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to use the external signup')
