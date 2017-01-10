@@ -148,7 +148,7 @@ class Module
                     $acl->addResource('activity_calendar_option');
 
                     $acl->allow('guest', 'activity', 'view');
-                    $acl->allow('guest', 'activitySignup', 'view');
+                    $acl->allow('guest', 'activitySignup', ['view', 'signup']);
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
