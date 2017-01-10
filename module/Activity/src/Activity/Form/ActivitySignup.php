@@ -7,6 +7,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Captcha\Dumb as TestCaptcha;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
@@ -36,7 +37,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $fields to the form.
      *
-     * @param ActivityField $fields
+     * @param array(ActivityField) $fields
      */
     public function initialiseForm($fields)
     {
@@ -45,7 +46,13 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         }
     }
 
-    public function initialiseExternalForm($fields)
+    /**
+     * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
+     * Add every field in $fields to the form.
+     *
+     * @param array(ActivityField) $fields
+     */
+    public function initialiseExternalAdminForm($fields)
     {
         $this->add([
             'name' => 'fullName',
@@ -56,6 +63,19 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'type' => 'Text'
         ]);
         $this->initialiseForm($fields);
+    }
+
+    public function initialiseExternalForm($fields)
+    {
+        $this->add([
+            'name' => 'captcha',
+            'type' => 'Zend\Form\Element\Captcha',
+            'options' => [
+                'label' => 'Beep-boop I\'m a robot.',
+                'captcha' => new TestCaptcha(),
+            ]
+        ]);
+        $this->initialiseExternalAdminForm($fields);
     }
 
     /**

@@ -53,6 +53,14 @@ class ActivityController extends AbstractActionController
         if ($isAllowedToSubscribe) {
             $form = $signupService->getForm($fields);
         }
+        $externalForm = null;
+        if ($signupService->isAllowedToExternalSubscribe()){
+            $externalForm = $signupService->getExternalForm($fields);
+        }
+        $isSignedUp = false;
+        if ($signupService->isAllowedToInternalSubscribe()){
+            $isSignedUp = $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember());
+        }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         $result = [
             'activity' => $translatedActivity,
@@ -60,9 +68,10 @@ class ActivityController extends AbstractActionController
             !$subscriptionDeadLinePassed &&
             $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
-            'isSignedUp' => $isAllowedToSubscribe && $signupService->isSignedUp($translatedActivity, $identity->getMember()),
+            'isSignedUp' => $isSignedUp,
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'form' => $form,
+            'externalForm' => $externalForm,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
         ];
@@ -164,6 +173,44 @@ class ActivityController extends AbstractActionController
 
         $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
         $message = $translator->translate('Successfully subscribed');
+        $this->redirectActivityRequest($id, true, $message);
+    }
+
+    public function externalSignupAction()
+    {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+
+        $activity = $queryService->getActivity($id);
+
+        $translator = $activityService->getTranslator();
+
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()) {
+            $error = $translator->translate('Use the form to subscribe');
+            $this->redirectActivityRequest($id, false, $error);
+            return;
+        }
+
+        $form = $signupService->getExternalForm($activity->getFields());
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()) {
+            $error = $translator->translate('Invalid form');
+            $this->redirectActivityRequest($id, false, $error);
+            return;
+        }
+
+        $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+        $fullName = $formData['fullName'];
+        unset($formData['fullName']);
+        $email = $formData['email'];
+        unset($formData['email']);
+        $signupService->externalSignUp($activity, $fullName, $email, $formData);
+        $message = $translator->translate('Successfully subscribed as external participant');
         $this->redirectActivityRequest($id, true, $message);
     }
 

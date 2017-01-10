@@ -38,7 +38,19 @@ return [
                             ]
                         ],
                     ],
-					'signoff' => [
+                    'externalSignup' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/externalSignup/:id',
+                            'constraints' => [
+                                'actions' => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'externalSignup'
+                            ],
+                        ],
+                    ],
+                    'signoff' => [
                         'type'    => 'Segment',
                         'options' => [
                             'route'    => '/signoff/[:id]',

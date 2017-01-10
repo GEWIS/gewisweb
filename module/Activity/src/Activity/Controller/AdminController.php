@@ -42,7 +42,7 @@ class AdminController extends AbstractActionController
         }
 
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $externalSignupForm = $signupService->getExternalForm($activity->getFields());
+        $externalSignupForm = $signupService->getExternalAdminForm($activity->getFields());
 
         $result = [
             'activity' => $translatedActivity,
@@ -137,7 +137,7 @@ class AdminController extends AbstractActionController
             return;
         }
 
-        $form = $signupService->getExternalForm($activity->getFields());
+        $form = $signupService->getExternalAdminForm($activity->getFields());
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid

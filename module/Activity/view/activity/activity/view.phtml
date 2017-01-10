@@ -150,7 +150,37 @@ $this->headTitle($this->translate('Activities')); ?>
             <?= $this->translate('Login to subscribe') ?>
         </a>
     <?php endif; ?>
-
+    <?php if(!$activity->getOnlyGEWIS() && !is_null($externalForm)): ?>
+        <br/>
+        <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
+        <?php $externalForm->setAttribute('action', $this->url('activity/externalSignup', ['id' => $activity->getId()]));
+        $externalForm->prepare();
+        echo $this->form()->openTag($externalForm); ?>
+            <table>
+                <tr>
+                    <td><?= $this->translate('Full name:'); ?></td>
+                    <td><?= $this->formRow($externalForm->get('fullName')) ?></td>
+                </tr>
+                <tr>
+                    <td><?= $this->translate('Email address:'); ?></td>
+                    <td><?= $this->formRow($externalForm->get('email')) ?></td>
+                </tr>
+                <?php foreach($activity->getFields() as $field):?>
+                    <tr>
+                        <td><?= $this->escapeHtml($field->getName()) ?>:</td>
+                        <td><?= $this->formRow($externalForm->get($field->getId())) ?></td>
+                    </tr>
+                <?php endforeach;?>
+            </table>
+        <?= $this->formRow($externalForm->get('captcha')) ?>
+        <?php
+        $submit = $externalForm->get('submit');
+        $submit->setAttribute('class', 'btn btn-primary');
+        $submit->setAttribute('value', $this->translate('Subscribe as external participant'));
+        echo $this->formElement($externalForm->get('security'));
+        echo $this->formSubmit($submit);
+        echo $this->form()->closeTag();?>
+    <?php endif; ?>
     <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>
         <?php $form->setAttribute('action', $this->url('activity/signup', ['id' => $activity->getId()]));
         $form->prepare();

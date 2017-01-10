@@ -55,8 +55,21 @@ class Signup extends AbstractAclService
         return $form;
     }
 
+    public function getExternalAdminForm($fields)
+    {
+        $form = new \Activity\Form\ActivitySignup();
+        $form->initialiseExternalAdminForm($fields);
+        return $form;
+    }
+
     public function getExternalForm($fields)
     {
+        if (!$this->isAllowed('externalSignup', 'activitySignup')){
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to use the external signup')
+            );
+        }
         $form = new \Activity\Form\ActivitySignup();
         $form->initialiseExternalForm($fields);
         return $form;
@@ -329,6 +342,20 @@ class Signup extends AbstractAclService
         return $this->isAllowed('signup', 'activitySignup');
     }
 
+    /**
+     * Is the (guest) user allowed to use the external signup
+     *
+     * @return bool
+     */
+    public function isAllowedToExternalSubscribe()
+    {
+        return $this->isAllowed('externalSignup', 'activitySignup');
+    }
+
+    public function isAllowedToInternalSubscribe()
+    {
+        return $this->isAllowed('signup', 'activitySignup');
+    }
     /**
      * @return \Activity\Mapper\ActivityFieldValue
      */
