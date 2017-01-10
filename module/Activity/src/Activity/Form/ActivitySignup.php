@@ -7,7 +7,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Captcha\Dumb as TestCaptcha;
+use Zend\Captcha\Image as ImageCaptcha;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
@@ -71,8 +71,12 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'name' => 'captcha',
             'type' => 'Zend\Form\Element\Captcha',
             'options' => [
-                'label' => 'Beep-boop I\'m a robot.',
-                'captcha' => new TestCaptcha(),
+                //'label' => 'Beep-boop I\'m a robot.',
+                'captcha' => new ImageCaptcha([
+                    'font' => getcwd() . '/public/fonts/bitstream-vera/Vera.ttf',
+                    'imgDir' => 'public/img/captcha/',
+                    'imgUrl' => '/img/captcha/',
+                    ]),
             ]
         ]);
         $this->initialiseExternalAdminForm($fields);
