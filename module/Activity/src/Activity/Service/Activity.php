@@ -261,12 +261,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCanSignUp($params['canSignUp']);
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
+        $activity->setOnlyGEWIS($params['onlyGEWIS']);
 
         // Not user provided input
         $activity->setCreator($user);
         $activity->setOrgan($organ);
         $activity->setStatus($initialStatus);
-        $activity->setOnlyGEWIS(true); // Not yet implemented
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
