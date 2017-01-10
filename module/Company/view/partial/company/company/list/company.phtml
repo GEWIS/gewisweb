@@ -13,7 +13,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
             </a>
             <div class="">
                 <h4><?= $this->translate('Contact') ?></h4>
-                <?php if (!empty($company->getContactName())): ?>
+                <?php if ($company->getContactName()): ?>
                     <p class="company-contactName"><?= $company->getContactName() ?></p>
                 <?php endif ?>
                 <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
