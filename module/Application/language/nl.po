@@ -2365,7 +2365,7 @@ msgstr ""
 
 #: module/Decision/view/decision/member/index.phtml:8
 msgid "Personal"
-msgstr "Persoonlijjk"
+msgstr "Persoonlijk"
 
 #: module/Decision/view/decision/member/index.phtml:13
 msgid "Profile"
