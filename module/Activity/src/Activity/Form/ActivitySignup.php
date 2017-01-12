@@ -86,7 +86,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'type' => 'Zend\Form\Element\Captcha',
             'options' => [
                 'captcha' => new ImageCaptcha([
-                    'font' => getcwd() . '/public/fonts/bitstream-vera/Vera.ttf',
+                    'font' => 'public/fonts/bitstream-vera/Vera.ttf',
                     'imgDir' => 'public/img/captcha/',
                     'imgUrl' => '/img/captcha/',
                     ]),
