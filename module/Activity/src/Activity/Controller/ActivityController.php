@@ -8,6 +8,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
 use Zend\View\Model\ViewModel;
+use Zend\Stdlib\Parameters;
 
 class ActivityController extends AbstractActionController
 {
@@ -50,12 +51,19 @@ class ActivityController extends AbstractActionController
 
         $fields = $translatedActivity->getFields();
         $form = null;
-        if ($isAllowedToSubscribe) {
+        $externalForm = null;
+        if ($isAllowedToSubscribe && is_null($form)) {
             $form = $signupService->getForm($fields);
         }
-        $externalForm = null;
-        if ($signupService->isAllowedToExternalSubscribe()) {
+        if ($signupService->isAllowedToExternalSubscribe() && is_null($externalForm)) {
             $externalForm = $signupService->getExternalForm($fields);
+        }
+        if (isset($activityRequestSession->signupData)){
+            //$postData = new Parameters;
+            $externalForm->setData(new Parameters($activityRequestSession->signupData));
+            $externalForm->isValid();
+            var_dump($externalForm->getMessages());
+            unset($activityRequestSession->signupData);
         }
         $isSignedUp = false;
         if ($signupService->isAllowedToInternalSubscribe()) {
@@ -196,12 +204,15 @@ class ActivityController extends AbstractActionController
         }
 
         $form = $signupService->getExternalForm($activity->getFields());
-        $form->setData($this->getRequest()->getPost());
+        $postData = $this->getRequest()->getPost();
+        $form->setData($postData);
 
         //Assure the form is valid
         if (!$form->isValid()) {
             $error = $translator->translate('Invalid form');
-            $this->redirectActivityRequest($id, false, $error);
+            $activityRequestSession = new SessionContainer('activityRequest');
+            $activityRequestSession->signupData = $postData->toArray();
+            $this->redirectActivityRequest($id, false, $error, $activityRequestSession);
             return;
         }
 
@@ -276,11 +287,13 @@ class ActivityController extends AbstractActionController
      * @param boolean $success Whether the request was successful
      * @param string $message
      */
-    protected function redirectActivityRequest($id, $success, $message)
+    protected function redirectActivityRequest($id, $success, $message, $session = null)
     {
-        $activityRequestSession = new SessionContainer('activityRequest');
-        $activityRequestSession->success = $success;
-        $activityRequestSession->message = $message;
+        if (is_null($session)){
+            $session = new SessionContainer('activityRequest');
+        }
+        $session->success = $success;
+        $session->message = $message;
         $this->redirect()->toRoute('activity/view', [
             'id' => $id,
         ]);

@@ -93,7 +93,7 @@ $this->headTitle($this->translate('Activities')); ?>
                 <?php foreach($activity->getSignUps() as $signup): ?>
                     <tr>
                         <td><?php echo $i; $i = $i + 1; ?></td>
-                        <td><?= $signup->getFullName() ?></td>
+                        <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
                         <?php foreach ($fields as $field): ?>
                             <?php foreach($signup->getFieldValues() as $fieldValue):?>
                                 <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
@@ -152,36 +152,11 @@ $this->headTitle($this->translate('Activities')); ?>
         <?php if(!$activity->getOnlyGEWIS() && !is_null($externalForm)): ?>
             <br/>
             <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
-            <?php $externalForm->setAttribute('action', $this->url('activity/externalSignup', ['id' => $activity->getId()]));
-            $externalForm->prepare();
-            echo $this->form()->openTag($externalForm); ?>
-                <table>
-                    <tr>
-                        <td><?= $this->translate('Full name:'); ?></td>
-                        <td><?= $this->formRow($externalForm->get('fullName')) ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= $this->translate('Email address:'); ?></td>
-                        <td><?= $this->formRow($externalForm->get('email')) ?></td>
-                    </tr>
-                    <?php foreach($activity->getFields() as $field):?>
-                        <tr>
-                            <td><?= $this->escapeHtml($field->getName()) ?>:</td>
-                            <td><?= $this->formRow($externalForm->get($field->getId())) ?></td>
-                        </tr>
-                    <?php endforeach;?>
-                </table>
-            <?= $this->translate('Please fill in this CAPTCHA:') ?>
-            <br/>
-            <?= $this->formRow($externalForm->get('captcha')) ?>
-            <br/>
-            <?php
-            $submit = $externalForm->get('submit');
-            $submit->setAttribute('class', 'btn btn-primary');
-            $submit->setAttribute('value', $this->translate('Subscribe as external participant'));
-            echo $this->formElement($externalForm->get('security'));
-            echo $this->formSubmit($submit);
-            echo $this->form()->closeTag();?>
+            <?= $this->partial('partial/signupForm', [
+                'form' => $externalForm,
+                'activity' => $activity,
+            ])
+            ?>
         <?php endif; ?>
     <?php endif; ?>
     <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>

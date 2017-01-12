@@ -11,6 +11,12 @@ use Zend\Captcha\Image as ImageCaptcha;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
+    const USER = 1;
+    const EXTERNAL_USER = 2;
+    const EXTERNAL_ADMIN = 3;
+
+    protected $type;
+    protected $fields;
 
     public function __construct()
     {
@@ -33,6 +39,11 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
     /**
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $fields to the form.
@@ -44,6 +55,8 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         foreach($fields as $field) {
             $this->add($this->createFieldElementArray($field));
         }
+        $this->fields = $fields;
+        $this->type = ActivitySignup::USER;
     }
 
     /**
@@ -63,6 +76,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'type' => 'Text'
         ]);
         $this->initialiseForm($fields);
+        $this->type = ActivitySignup::EXTERNAL_ADMIN;
     }
 
     public function initialiseExternalForm($fields)
@@ -71,7 +85,6 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'name' => 'captcha',
             'type' => 'Zend\Form\Element\Captcha',
             'options' => [
-                //'label' => 'Beep-boop I\'m a robot.',
                 'captcha' => new ImageCaptcha([
                     'font' => getcwd() . '/public/fonts/bitstream-vera/Vera.ttf',
                     'imgDir' => 'public/img/captcha/',
@@ -80,6 +93,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             ]
         ]);
         $this->initialiseExternalAdminForm($fields);
+        $this->type = ActivitySignup::EXTERNAL_USER;
     }
 
     /**
@@ -89,7 +103,43 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return [];
+        $filter = [];
+        switch ($this->type) {
+            case ActivitySignup::EXTERNAL_USER:
+            case ActivitySignup::EXTERNAL_ADMIN:
+                $filter['fullName'] = [
+                    'required' => true,
+                    'validators' => [
+                        [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'min' => 1,
+                                'max' => 100,
+                            ]
+                        ]
+                    ]
+                ];
+                $filter['email'] = [
+                    'required' => true,
+                    'validators' => [
+                        [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'min' => 1,
+                                'max' => 100,
+                            ]
+                        ],
+                        [
+                            'name' => 'EmailAddress',
+                        ],
+                    ],
+                ];
+            case ActivitySignup::USER:
+        }
+
+        return $filter;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -110,7 +160,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         $result = [
             'name' => $field->getId(),
         ];
-        switch($field->getType()){
+        switch($field->getType()) {
             case 0: //'Text'
                 $result['type'] = 'Text';
                 break;
