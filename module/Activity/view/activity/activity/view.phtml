@@ -149,33 +149,21 @@ $this->headTitle($this->translate('Activities')); ?>
         <a href="<?= $this->url('user') ?>">
             <?= $this->translate('Login to subscribe') ?>
         </a>
-        <?php if(!$activity->getOnlyGEWIS() && !is_null($externalForm)): ?>
+        <?php if(!$activity->getOnlyGEWIS() && !is_null($form)): ?>
             <br/>
             <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
             <?= $this->partial('partial/signupForm', [
-                'form' => $externalForm,
+                'form' => $form,
                 'activity' => $activity,
             ])
             ?>
         <?php endif; ?>
     <?php endif; ?>
-    <?php if (!is_null($form) && $signupOpen && !$isSignedUp): //display the form ?>
-        <?php $form->setAttribute('action', $this->url('activity/signup', ['id' => $activity->getId()]));
-        $form->prepare();
-        echo $this->form()->openTag($form); ?>
-            <table>
-                <?php foreach($fields as $field):?>
-                <tr>
-                    <td><?= $this->escapeHtml($field->getName()) ?>:</td>
-                    <td><?= $this->formRow($form->get($field->getId())) ?></td>
-                </tr>
-                <?php endforeach;?>
-            </table>
-        <?php
-        $submit = $form->get('submit');
-        $submit->setAttribute('class', 'btn btn-primary');
-        echo $this->formElement($form->get('security'));
-        echo $this->formSubmit($submit);
-        echo $this->form()->closeTag();?>
+    <?php if (!is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
+        <?= $this->partial('partial/signupForm', [
+            'form' => $form,
+            'activity' => $activity,
+        ])
+        ?>
     <?php endif; ?>
 </div>

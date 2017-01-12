@@ -51,18 +51,15 @@ class ActivityController extends AbstractActionController
 
         $fields = $translatedActivity->getFields();
         $form = null;
-        $externalForm = null;
-        if ($isAllowedToSubscribe && is_null($form)) {
+        if ($isAllowedToSubscribe) {
             $form = $signupService->getForm($fields);
         }
-        if ($signupService->isAllowedToExternalSubscribe() && is_null($externalForm)) {
-            $externalForm = $signupService->getExternalForm($fields);
+        if ($signupService->isAllowedToExternalSubscribe() && is_null($form)) {
+            $form = $signupService->getExternalForm($fields);
         }
         if (isset($activityRequestSession->signupData)){
-            //$postData = new Parameters;
-            $externalForm->setData(new Parameters($activityRequestSession->signupData));
-            $externalForm->isValid();
-            var_dump($externalForm->getMessages());
+            $form->setData(new Parameters($activityRequestSession->signupData));
+            $form->isValid();
             unset($activityRequestSession->signupData);
         }
         $isSignedUp = false;
@@ -80,7 +77,6 @@ class ActivityController extends AbstractActionController
             'isSignedUp' => $isSignedUp,
             'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
             'form' => $form,
-            'externalForm' => $externalForm,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
         ];
@@ -161,13 +157,15 @@ class ActivityController extends AbstractActionController
         }
 
         $form = $signupService->getForm($activity->getFields());
-        $form->setData($this->getRequest()->getPost());
+        $postData = $this->getRequest()->getPost();
+        $form->setData($postData);
 
         //Assure the form is valid
         if (!$form->isValid()){
-            $error = $translator->translate('Wrong form');
-            $this->redirectActivityRequest($id, false, $error);
-            return;
+            $error = $translator->translate('Invalid form');
+            $activityRequestSession = new SessionContainer('activityRequest');
+            $activityRequestSession->signupData = $postData->toArray();
+            $this->redirectActivityRequest($id, false, $error, $activityRequestSession);
         }
 
         $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
@@ -289,7 +287,7 @@ class ActivityController extends AbstractActionController
      */
     protected function redirectActivityRequest($id, $success, $message, $session = null)
     {
-        if (is_null($session)){
+        if (is_null($session)) {
             $session = new SessionContainer('activityRequest');
         }
         $session->success = $success;
