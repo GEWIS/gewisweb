@@ -44,7 +44,7 @@ class AdminController extends AbstractActionController
 
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $externalSignupForm = $signupService->getExternalAdminForm($activity->getFields());
-        if (isset($signupRequestSession->signupData)){
+        if (isset($signupRequestSession->signupData)) {
             $externalSignupForm->setData(new Parameters($signupRequestSession->signupData));
             $externalSignupForm->isValid();
             unset($signupRequestSession->signupData);

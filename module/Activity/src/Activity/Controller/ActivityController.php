@@ -57,7 +57,7 @@ class ActivityController extends AbstractActionController
         if ($signupService->isAllowedToExternalSubscribe() && is_null($form)) {
             $form = $signupService->getExternalForm($fields);
         }
-        if (isset($activityRequestSession->signupData)){
+        if (isset($activityRequestSession->signupData)) {
             $form->setData(new Parameters($activityRequestSession->signupData));
             $form->isValid();
             unset($activityRequestSession->signupData);

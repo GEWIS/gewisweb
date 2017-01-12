@@ -104,39 +104,37 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $filter = [];
-        switch ($this->type) {
-            case ActivitySignup::EXTERNAL_USER:
-            case ActivitySignup::EXTERNAL_ADMIN:
-                $filter['fullName'] = [
-                    'required' => true,
-                    'validators' => [
-                        [
-                            'name' => 'StringLength',
-                            'options' => [
-                                'encoding' => 'UTF-8',
-                                'min' => 1,
-                                'max' => 100,
-                            ]
+        if ($this->type = ActivitySignup::EXTERNAL_USER ||
+            $this->type =  ActivitySignup::EXTERNAL_ADMIN) {
+            $filter['fullName'] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
                         ]
                     ]
-                ];
-                $filter['email'] = [
-                    'required' => true,
-                    'validators' => [
-                        [
-                            'name' => 'StringLength',
-                            'options' => [
-                                'encoding' => 'UTF-8',
-                                'min' => 1,
-                                'max' => 100,
-                            ]
-                        ],
-                        [
-                            'name' => 'EmailAddress',
-                        ],
+                ]
+            ];
+            $filter['email'] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ]
                     ],
-                ];
-            case ActivitySignup::USER:
+                    [
+                        'name' => 'EmailAddress',
+                    ],
+                ],
+            ];
         }
 
         return $filter;
