@@ -38,8 +38,8 @@ class ActivityController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-        $activityRequestSession = new SessionContainer('activityRequest');
-        $externalRequestSession = new SessionContainer('externalActivityRequest');
+        $activitySession = new SessionContainer('activityRequest');
+        $externalSession = new SessionContainer('externalActivityRequest');
         /** @var $activity Activity*/
         $activity = $queryService->getActivity($id);
 
@@ -50,7 +50,7 @@ class ActivityController extends AbstractActionController
         $isAllowedToSubscribe = $signupService->isAllowedToSubscribe();
 
         $fields = $translatedActivity->getFields();
-        $form = $this->prepareSignupForm($fields, $activityRequestSession, $externalRequestSession);
+        $form = $this->prepareSignupForm($fields, $activitySession, $externalSession);
         $isSignedUp = false;
         if ($signupService->isAllowedToInternalSubscribe()) {
             $isSignedUp = $isAllowedToSubscribe
@@ -71,17 +71,17 @@ class ActivityController extends AbstractActionController
         ];
 
         //Retrieve and clear the request status from the session, if it exists.
-        if (isset($activityRequestSession->success)){
-            $result['success'] = $activityRequestSession->success;
-            unset($activityRequestSession->success);
-            $result['message'] = $activityRequestSession->message;
-            unset($activityRequestSession->message);
+        if (isset($activitySession->success)) {
+            $result['success'] = $activitySession->success;
+            unset($activitySession->success);
+            $result['message'] = $activitySession->message;
+            unset($activitySession->message);
         }
-        if (isset($externalRequestSession->success)){
-            $result['success'] = $externalRequestSession->success;
-            unset($externalRequestSession->success);
-            $result['message'] = $externalRequestSession->message;
-            unset($externalRequestSession->message);
+        if (isset($externalSession->success)) {
+            $result['success'] = $externalSession->success;
+            unset($externalSession->success);
+            $result['message'] = $externalSession->message;
+            unset($externalSession->message);
         }
 
         return $result;
@@ -91,28 +91,28 @@ class ActivityController extends AbstractActionController
      * Get the appropriate signup form.
      *
      * @param type $fields
-     * @param type $activityRequestSession
-     * @param type $externalRequestSession
+     * @param type $activitySession
+     * @param type $externalSession
      * @return type $form
      */
-    protected function prepareSignupForm($fields, & $activityRequestSession, & $externalRequestSession)
+    protected function prepareSignupForm($fields, & $activitySession, & $externalSession)
     {
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         if ($signupService->isAllowedToSubscribe()) {
             $form = $signupService->getForm($fields);
-            if (isset($activityRequestSession->signupData)) {
-                $form->setData(new Parameters($activityRequestSession->signupData));
+            if (isset($activitySession->signupData)) {
+                $form->setData(new Parameters($activitySession->signupData));
                 $form->isValid();
-                unset($activityRequestSession->signupData);
+                unset($activitySession->signupData);
             }
             return $form;
         }
         if ($signupService->isAllowedToExternalSubscribe()) {
             $form = $signupService->getExternalForm($fields);
-            if (isset($externalRequestSession->signupData)) {
-                $form->setData(new Parameters($externalRequestSession->signupData));
+            if (isset($externalSession->signupData)) {
+                $form->setData(new Parameters($externalSession->signupData));
                 $form->isValid();
-                unset($externalRequestSession->signupData);
+                unset($externalSession->signupData);
             }
             return $form;
         }
