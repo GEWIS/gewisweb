@@ -39,7 +39,7 @@ class ActivityController extends AbstractActionController
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
         $activityRequestSession = new SessionContainer('activityRequest');
-
+        $externalRequestSession = new SessionContainer('externalActivityRequest');
         /** @var $activity Activity*/
         $activity = $queryService->getActivity($id);
 
@@ -50,18 +50,7 @@ class ActivityController extends AbstractActionController
         $isAllowedToSubscribe = $signupService->isAllowedToSubscribe();
 
         $fields = $translatedActivity->getFields();
-        $form = null;
-        if ($isAllowedToSubscribe) {
-            $form = $signupService->getForm($fields);
-        }
-        if ($signupService->isAllowedToExternalSubscribe() && is_null($form)) {
-            $form = $signupService->getExternalForm($fields);
-        }
-        if (isset($activityRequestSession->signupData)) {
-            $form->setData(new Parameters($activityRequestSession->signupData));
-            $form->isValid();
-            unset($activityRequestSession->signupData);
-        }
+        $form = $this->prepareSignupForm($fields, $activityRequestSession, $externalRequestSession);
         $isSignedUp = false;
         if ($signupService->isAllowedToInternalSubscribe()) {
             $isSignedUp = $isAllowedToSubscribe
@@ -88,8 +77,46 @@ class ActivityController extends AbstractActionController
             $result['message'] = $activityRequestSession->message;
             unset($activityRequestSession->message);
         }
+        if (isset($externalRequestSession->success)){
+            $result['success'] = $externalRequestSession->success;
+            unset($externalRequestSession->success);
+            $result['message'] = $externalRequestSession->message;
+            unset($externalRequestSession->message);
+        }
 
         return $result;
+    }
+
+    /**
+     * Get the appropriate signup form.
+     *
+     * @param type $fields
+     * @param type $activityRequestSession
+     * @param type $externalRequestSession
+     * @return type $form
+     */
+    protected function prepareSignupForm($fields, & $activityRequestSession, & $externalRequestSession)
+    {
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        if ($signupService->isAllowedToSubscribe()) {
+            $form = $signupService->getForm($fields);
+            if (isset($activityRequestSession->signupData)) {
+                $form->setData(new Parameters($activityRequestSession->signupData));
+                $form->isValid();
+                unset($activityRequestSession->signupData);
+            }
+            return $form;
+        }
+        if ($signupService->isAllowedToExternalSubscribe()) {
+            $form = $signupService->getExternalForm($fields);
+            if (isset($externalRequestSession->signupData)) {
+                $form->setData(new Parameters($externalRequestSession->signupData));
+                $form->isValid();
+                unset($externalRequestSession->signupData);
+            }
+            return $form;
+        }
+        return null;
     }
 
     /**
@@ -208,7 +235,7 @@ class ActivityController extends AbstractActionController
         //Assure the form is valid
         if (!$form->isValid()) {
             $error = $translator->translate('Invalid form');
-            $activityRequestSession = new SessionContainer('activityRequest');
+            $activityRequestSession = new SessionContainer('externalActivityRequest');
             $activityRequestSession->signupData = $postData->toArray();
             $this->redirectActivityRequest($id, false, $error, $activityRequestSession);
             return;

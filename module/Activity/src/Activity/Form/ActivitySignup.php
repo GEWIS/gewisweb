@@ -104,8 +104,8 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $filter = [];
-        if ($this->type = ActivitySignup::EXTERNAL_USER ||
-            $this->type =  ActivitySignup::EXTERNAL_ADMIN) {
+        if ($this->type === ActivitySignup::EXTERNAL_USER ||
+            $this->type ===  ActivitySignup::EXTERNAL_ADMIN) {
             $filter['fullName'] = [
                 'required' => true,
                 'validators' => [
