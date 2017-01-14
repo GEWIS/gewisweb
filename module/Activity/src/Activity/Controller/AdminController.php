@@ -11,6 +11,7 @@ use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 use DOMPDFModule\View\Model\PdfModel;
 use DateTime;
+use Zend\Stdlib\Parameters;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -42,7 +43,12 @@ class AdminController extends AbstractActionController
         }
 
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $externalSignupForm = $signupService->getExternalForm($activity->getFields());
+        $externalSignupForm = $signupService->getExternalAdminForm($activity->getFields());
+        if (isset($signupRequestSession->signupData)) {
+            $externalSignupForm->setData(new Parameters($signupRequestSession->signupData));
+            $externalSignupForm->isValid();
+            unset($signupRequestSession->signupData);
+        }
 
         $result = [
             'activity' => $translatedActivity,
@@ -137,13 +143,16 @@ class AdminController extends AbstractActionController
             return;
         }
 
-        $form = $signupService->getExternalForm($activity->getFields());
-        $form->setData($this->getRequest()->getPost());
+        $form = $signupService->getExternalAdminForm($activity->getFields());
+        $postData = $this->getRequest()->getPost();
+        $form->setData($postData);
 
         //Assure the form is valid
         if (!$form->isValid()) {
             $error = $translator->translate('Invalid form');
-            $this->redirectSignupRequest($id, false, $error);
+            $signupRequestSession = new SessionContainer('signupRequest');
+            $signupRequestSession->signupData = $postData->toArray();
+            $this->redirectSignupRequest($id, false, $error, $signupRequestSession);
             return;
         }
 
@@ -204,11 +213,13 @@ class AdminController extends AbstractActionController
      * @param boolean $success Whether the request was successful
      * @param string $message
      */
-    protected function redirectSignupRequest($id, $success, $message)
+    protected function redirectSignupRequest($id, $success, $message, $session = null)
     {
-        $signupRequestSession = new SessionContainer('signupRequest');
-        $signupRequestSession->success = $success;
-        $signupRequestSession->message = $message;
+        if (is_null($session)) {
+            $session = new SessionContainer('signupRequest');
+        }
+        $session->success = $success;
+        $session->message = $message;
         $this->redirect()->toRoute('activity_admin/participants', [
             'id' => $id,
         ]);
