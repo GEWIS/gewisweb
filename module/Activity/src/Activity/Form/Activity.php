@@ -150,6 +150,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'options' => [
                 'checked_value' => 0,
                 'unchecked_value' => 1,
+                'use_hidden_element' => true,
             ]
         ]);
 

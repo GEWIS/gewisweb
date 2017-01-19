@@ -30,11 +30,8 @@ Activity = {
      * Toggles the availability of some dependent fields.
      */
     toggleExternal: function () {
-        if ($('[name="canSignUp"]').is(':checked')) {
-            $('[name="onlyGEWIS"]').removeAttr('disabled');
-        } else {
-            $('[name="onlyGEWIS"]').attr('disabled', 'disabled');
-            $('[name="onlyGEWIS"]').attr('checked', false);
+        if ($('[name="onlyGEWIS"]').is(':checked')) {
+            $('[name="canSignUp"]').attr('checked', true);
         }
     },
 

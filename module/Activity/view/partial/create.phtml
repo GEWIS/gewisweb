@@ -186,7 +186,6 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
 <div class="col-md-12">
     <?php
     $canSignUp = $form->get('canSignUp');
-    $canSignUp->setAttribute('onchange', 'Activity.toggleExternal()');
     ?>
     <div class="form-group<?= count($canSignUp->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label>
@@ -198,7 +197,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     </div>
     <?php
     $onlyGEWIS = $form->get('onlyGEWIS');
-    $onlyGEWIS->setAttribute('disabled', 'disabled');
+    $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()');
     ?>
     <div class="form-group<?= count($onlyGEWIS->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label>
