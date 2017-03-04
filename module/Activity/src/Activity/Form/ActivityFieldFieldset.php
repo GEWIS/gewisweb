@@ -148,7 +148,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    'The number of English options differs must equal the number of dutch options'
+                                    'The number of English options must equal the number of Dutch options'
                             ],
                             'callback' => function ($value, $context=null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
