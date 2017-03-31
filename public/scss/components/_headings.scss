@@ -1,0 +1,6 @@
+h1, h2, h3, h4, h5, h6 {
+    &.h-underline {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5em;
+    }
+}

@@ -140,6 +140,19 @@ class Member
     protected $paid = 0;
 
     /**
+     * Iban number.
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $iban;
+    /**
+     * If the member receives a 'supremum'
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $supremum;
+
+    /**
      * Addresses of this member.
      *
      * @ORM\OneToMany(targetEntity="Address", mappedBy="member",cascade={"persist"})
@@ -573,6 +586,22 @@ class Member
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
             'expiration' => $this->getExpiration()->format('l j F Y')
+        ];
+    }
+
+    public function toApiArray()
+    {
+        return [
+            'lidnr' => $this->getLidnr(),
+            'email' => $this->getEmail(),
+            'fullName' => $this->getFullName(),
+            'initials' => $this->getInitials(),
+            'firstName' => $this->getFirstName(),
+            'middleName' => $this->getMiddleName(),
+            'lastName' => $this->getLastName(),
+            'birth' => $this->getBirth()->format(\DateTime::ISO8601),
+            'generation' => $this->getGeneration(),
+            'expiration' => $this->getExpiration()->format(\DateTime::ISO8601),
         ];
     }
 

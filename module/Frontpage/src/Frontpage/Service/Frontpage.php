@@ -2,8 +2,11 @@
 
 namespace Frontpage\Service;
 
+use Activity\Form\ActivityCalendarOption;
 use Application\Service\AbstractAclService;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
+use Frontpage\Model\NewsItem;
+use Activity\Model\Activity;
 
 /**
  * Frontpage service.
@@ -24,6 +27,7 @@ class Frontpage extends AbstractAclService
         $pollDetails = $pollService->getPollDetails($poll);
         $pollDetails['poll'] = $poll;
         $news = $this->getNewsItems();
+        $companyBanner = $this->getCompanyService()->getCurrentBanner();
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
@@ -31,7 +35,8 @@ class Frontpage extends AbstractAclService
             'activities' => $activities,
             'weeklyPhoto' => $weeklyPhoto,
             'poll' => $pollDetails,
-            'news' => $news
+            'news' => $news,
+            'companyBanner' => $companyBanner
         ];
     }
 
@@ -79,7 +84,19 @@ class Frontpage extends AbstractAclService
         $newsItems = $this->getNewsService()->getLatestNewsItems($count);
         $news = array_merge($activities, $newsItems);
         usort($news, function ($a, $b) {
-            return ($this->getItemTimestamp($a) < $this->getItemTimestamp($b));
+            if (($a instanceof NewsItem) && ($b instanceof NewsItem)) {
+                if ($a->getPinned() === $b->getPinned()) {
+                    return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
+                }
+
+                return $a->getPinned() ? -1 : 1;
+            }
+
+            if (($a instanceof Activity) && ($b instanceof Activity)) {
+                return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
+            }
+
+            return $a instanceof Activity ? 1 : -1;
         });
 
         return array_slice($news, 0, $count);
@@ -184,6 +201,16 @@ class Frontpage extends AbstractAclService
     public function getNewsService()
     {
         return $this->sm->get('frontpage_service_news');
+    }
+
+    /**
+     * Get the company service.
+     *
+     * @return \Company\Service\Company
+     */
+    public function getCompanyService()
+    {
+        return $this->sm->get('company_service_company');
     }
 
     /**

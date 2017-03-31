@@ -11,12 +11,16 @@ $this->headTitle($this->translate('Education'));
                 <h4><?= $this->translate('Books') ?></h4>
             </div>
         </a>
-        <a href="#" class="panel panel-image col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-education"></div>
-                <h4><?= $this->translate('Exams') ?></h4>
-            </div>
-        </a>
+        
+            <a href="#" class="panel panel-image col-sm-3 col-xs-6">
+                <label for="exam-search">
+                <div class="panel-body">
+                    <div class="glyphicon glyphicon-education"></div>
+                    <h4><?= $this->translate('Exams') ?></h4>
+                </div>
+                </label>
+            </a>
+        
         <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
         <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image  col-sm-3 col-xs-6">
             <div class="panel-body">
@@ -37,7 +41,7 @@ $this->headTitle($this->translate('Education'));
 
     <div class="row">
         <div class="col-md-6">
-            <p><?= $this->translate('Zoeken naar oude tentamens en eventuele uitwerkingen') ?></p>
+            <p><?= $this->translate('Search for old exams and elaborations') ?></p>
             <?php
             $form = $this->form;
             $form->prepare();
@@ -53,7 +57,8 @@ $this->headTitle($this->translate('Education'));
                 <?php
                     $element = $form->get('query');
                     $element->setAttribute('class', 'form-control form');
-                    $element->setAttribute('placeholder', $this->translate('Vakcode/vaknaam'));
+                    $element->setAttribute('id', 'exam-search');
+                    $element->setAttribute('placeholder', $this->translate('Course code or course description'));
                 ?>
                 <?= $this->formInput($element) ?>
                 <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
@@ -89,13 +94,13 @@ $this->headTitle($this->translate('Education'));
             <?php endif; ?>
         </div>
         <div class="col-md-6">
-            <p><?= $this->translate("Voor oude tentamens van minor vakken kun je ook kijken bij:") ?></p>
+            <p><?= $this->translate("For old exams of minor courses, you can also look at:") ?></p>
             <ul>
-                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Technische Natuurkunde") ?>)</li>
-                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedische Technologie") ?>)</li>
-                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Elektrotechniek") ?>)</li>
-                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Scheikundige Technologie") ?>)</li>
-                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Technische Innovatiewetenschappen") ?>)</li>
+                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Applied Physics") ?>)</li>
+                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedical Engineering") ?>)</li>
+                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Electrical Engineering") ?>)</li>
+                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Chemical Engineering") ?>)</li>
+                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Innovation Sciences") ?>)</li>
             </ul>
         </div>
     </div>

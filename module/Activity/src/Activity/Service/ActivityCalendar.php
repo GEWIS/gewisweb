@@ -31,7 +31,7 @@ class ActivityCalendar extends AbstractAclService
             // Return all
             return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(true);
         }
-        $user = $this->sm->get('user_role');
+        $user = $this->sm->get('user_service_user')->getIdentity();
 
         return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
             $this->getMemberMapper()->findOrgans($user->getMember()),
@@ -118,7 +118,7 @@ class ActivityCalendar extends AbstractAclService
         }
         $option->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
-        $option->setCreator($em->merge($this->sm->get('user_role')));
+        $option->setCreator($this->sm->get('user_service_user')->getIdentity());
         $em->persist($option);
         $em->flush();
 
@@ -170,7 +170,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $em = $this->getEntityManager();
-        $option->setDeletedBy($em->merge($this->sm->get('user_role')));
+        $option->setDeletedBy($this->sm->get('user_service_user')->getIdentity());
         $em->flush();
     }
 
@@ -185,7 +185,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         if ($option->getOrgan() === null
-            && $option->getCreator()->getLidnr() === $this->sm->get('user_role')->getLidnr()
+            && $option->getCreator()->getLidnr() === $this->sm->get('user_service_user')->getIdentity()->getLidnr()
         ) {
             return true;
         }

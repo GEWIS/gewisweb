@@ -97,13 +97,17 @@ class Module
             ],
 
             'invokables' => [
-                'user_auth_storage' => 'User\Authentication\Storage\Session',
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
             ],
 
             'factories' => [
+                'user_auth_storage' => function ($sm) {
+                    return new \User\Authentication\Storage\Session(
+                        $sm
+                    );
+                },
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
                     $config = $sm->get('config');
@@ -207,7 +211,7 @@ class Module
                     return $adapter;
                 },
                 'user_auth_service' => function ($sm) {
-                    return new \Zend\Authentication\AuthenticationService(
+                    return new \User\Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );

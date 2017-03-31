@@ -24,7 +24,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
-     * 
+     *
      * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"})
      */
     protected $translations;
@@ -42,6 +42,13 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="string")
      */
     protected $slugName;
+    
+    /**
+     * The company's contact's name.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $contactName;
 
     /**
      * The company's address.
@@ -73,7 +80,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * The company's packages.
-     * 
+     *
      * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company", cascade={"persist", "remove"})
      */
     protected $packages;
@@ -123,7 +130,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Remove a translation.
-     * 
+     *
      * @param CompanyI18n $translation Translation to remove
      */
     public function removeTranslation(CompanyI18n $translation)
@@ -153,7 +160,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Gets the company's slug name.
-     * 
+     *
      * @return string the company's slug name
      */
     public function getSlugName()
@@ -163,12 +170,32 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Sets the company's slug name.
-     * 
+     *
      * @param string $slugName the new slug name
      */
     public function setSlugName($slugName)
     {
         $this->slugName = $slugName;
+    }
+    
+    /**
+     * Get the company's contact's name.
+     *
+     * @return string
+     */
+    public function getContactName()
+    {
+        return $this->contactName;
+    }
+    
+    /**
+     * Set the company's contact's name.
+     *
+     * @param string $name
+     */
+    public function setContactName($name)
+    {
+        $this->contactName = $name;
     }
 
     /**
@@ -400,13 +427,13 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         if ($companyLanguages->contains($locale)) {
             $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
-        } 
+        }
 
         return $translation;
     }
 
     /**
-     * Updates the variable if the first argument is set, Otherwise, it will 
+     * Updates the variable if the first argument is set, Otherwise, it will
      * use the second argument.
      *
      * @param mixed $object
@@ -471,6 +498,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             }
         }
         $this->setName($this->updateIfSet($data['name'],''));
+        $this->setContactName($this->updateIfSet($data['contactName'], ''));
         $this->setSlugName($this->updateIfSet($data['slugName'], ''));
         $this->setAddress($this->updateIfSet($data['address'],  ''));
         $this->setEmail($this->updateIfSet($data['email'],''));
@@ -480,8 +508,8 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns an array copy with varName=> var for all variables except the 
-     * translation. 
+     * Returns an array copy with varName=> var for all variables except the
+     * translation.
      *
      * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
      *
@@ -493,6 +521,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['id'] = $this->getID();
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
+        $arraycopy['contactName'] = $this->getContactName();
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
         $arraycopy['phone'] = $this->getPhone();

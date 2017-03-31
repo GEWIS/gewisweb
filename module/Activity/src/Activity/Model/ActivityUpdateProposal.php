@@ -25,7 +25,7 @@ class ActivityUpdateProposal
     /**
      * The previous activity version, if any.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="updateProposal")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $old;

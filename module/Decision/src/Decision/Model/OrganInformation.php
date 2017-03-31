@@ -77,6 +77,13 @@ class OrganInformation
     protected $coverPath;
 
     /**
+     * The thumbnail photo to display for this organ.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $thumbnailPath;
+
+    /**
      * Who was the last one to approve this information. If null then nobody approved it.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
@@ -236,6 +243,21 @@ class OrganInformation
         $this->coverPath = $coverPath;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getThumbnailPath()
+    {
+        return $this->thumbnailPath;
+    }
+
+    /**
+     * @param mixed $thumbnailPath
+     */
+    public function setThumbnailPath($thumbnailPath)
+    {
+        $this->thumbnailPath = $thumbnailPath;
+    }
 
     public function __clone()
     {

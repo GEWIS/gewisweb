@@ -28,7 +28,7 @@ class AlbumDate
     protected function albumPersisted($album)
     {
         $parent = $album->getParent();
-        if (!is_null($parent) && !is_null($album->getStartDateTime())) {
+        if (!is_null($parent)) {
             if (is_null($parent->getStartDateTime()) || $parent->getStartDateTime()->getTimestamp() >
                 $album->getStartDateTime()->getTimeStamp()
             ) {
@@ -60,5 +60,7 @@ class AlbumDate
         if (is_null($albumEndDateTime) || $albumEndDateTime->getTimestamp() < $photo->getDateTime()->getTimeStamp()) {
             $photo->getAlbum()->setEndDateTime($photo->getDateTime());
         }
+
+        $this->albumPersisted($album);
     }
 }

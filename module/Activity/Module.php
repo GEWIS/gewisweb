@@ -2,8 +2,7 @@
 namespace Activity;
 
 use User\Permissions\Assertion\IsOrganMember;
-
-;
+use User\Permissions\Assertion\IsCreator;
 
 class Module
 {
@@ -54,7 +53,6 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
-                'activity_form_activityfield_fieldset' => 'Activity\Form\ActivityFieldFieldSet',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
             'factories' => [
@@ -62,6 +60,11 @@ class Module
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
+                },
+                'activity_form_activityfield_fieldset' => function ($sm) {
+                    $form = new \Activity\Form\ActivityFieldFieldSet();
+                    $form->setHydrator($sm->get('activity_hydrator'));
+                    return $form;
                 },
                 'activity_form_activity' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
@@ -145,13 +148,20 @@ class Module
                     $acl->addResource('activity_calendar_option');
 
                     $acl->allow('guest', 'activity', 'view');
-                    $acl->allow('guest', 'activitySignup', 'view');
+
+                    $acl->allow('guest', 'activitySignup', ['view', 'externalSignup']);
 
                     $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
-                    $acl->allow('active_member', 'activity', 'viewDetails');
 
-                    $acl->allow('admin', 'activity', 'update');
+                    $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
+                    $acl->allow('user', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsCreator());
+                    $acl->allow(
+                        'active_member',
+                        'activity',
+                        ['update', 'viewDetails', 'adminSignup'],
+                        new IsOrganMember()
+                    );
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 

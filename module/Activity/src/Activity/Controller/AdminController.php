@@ -2,277 +2,280 @@
 
 namespace Activity\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Model\Activity;
+use Activity\Service\Signup;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
+use Zend\Paginator\Paginator;
+use Zend\View\Model\ViewModel;
+use DOMPDFModule\View\Model\PdfModel;
+use DateTime;
+use Zend\Stdlib\Parameters;
 
 /**
- * Controller for all administrative activity actions
+ * Controller that gives some additional details for activities, such as a list of email adresses
+ * or an export function specially tailored for the organizer.
  */
 class AdminController extends AbstractActionController
 {
+
     /**
-     * View the queue of not approved activities
+     * Return the data of the activity participants
+     *
+     * @return array
      */
-    public function queueAction()
+    public function participantsAction()
     {
-        $perPage = 5;
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $unapprovedActivities = $queryService->getUnapprovedActivities();
-        $approvedActivities = $queryService->getApprovedActivities();
-        $disapprovedActivities = $queryService->getDisapprovedActivities();
-        $updatedActivities = [];
-        $updateProposals = [];
-        foreach ($queryService->getAllProposals() as $updateProposal) {
-            $updatedActivities[$updateProposal->getId()] = $updateProposal->getNew();
-            $updateProposals[$updateProposal->getNew()->getId()] = $updateProposal;
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+        $translator = $this->getServiceLocator()->get('activity_service_activity')->getTranslator();
+        $signupRequestSession = new SessionContainer('signupRequest');
+
+        /** @var $activity Activity */
+        $activity = $queryService->getActivityWithDetails($id);
+        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+
+        if (is_null($activity)) {
+            return $this->notFoundAction();
         }
-        return [
-            'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
-            'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
-            'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
-            'updatedActivities' => array_slice($updatedActivities, 0, $perPage),
-            'updateProposals' => $updateProposals,
-            'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
-            'moreApprovedActivities' => count($approvedActivities) > $perPage,
-            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
+
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $externalSignupForm = $signupService->getExternalAdminForm($activity->getFields());
+        if (isset($signupRequestSession->signupData)) {
+            $externalSignupForm->setData(new Parameters($signupRequestSession->signupData));
+            $externalSignupForm->isValid();
+            unset($signupRequestSession->signupData);
+        }
+
+        $result = [
+            'activity' => $translatedActivity,
+            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'externalSignupForm' => $externalSignupForm,
+            'externalSignoffForm' => new RequestForm('activityExternalSignoff', $translator->translate('Remove')),
         ];
+        //Retrieve and clear the request status from the session, if it exists.
+        if (isset($signupRequestSession->success)) {
+            $result['success'] = $signupRequestSession->success;
+            unset($signupRequestSession->success);
+            $result['message'] = $signupRequestSession->message;
+            unset($signupRequestSession->message);
+        }
+        return $result;
+    }
+
+    public function updateAction()
+    {
+        $id = (int)$this->params('id');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+
+        $activity = $queryService->getActivityWithDetails($id);
+
+        if ($activity->getEndTime() < new DateTime()) {
+            $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
+            $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+            if (!$acl->isAllowed($user, 'activity', 'update')) {
+                //Only admins may update old activities
+                $translator = $this->getServiceLocator()->get('translator');
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to update old activities')
+                );
+            }
+        }
+
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $form = $activityService->getForm();
+
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+                $updated = $activityService->createUpdateProposal(
+                    $activity,
+                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $postData['language_dutch'],
+                    $postData['language_english']
+                );
+                $translator = $this->getServiceLocator()->get('translator');
+                $message = $translator->translate('The activity has been successfully updated.');
+                if (!$updated) {
+                    $message .= ' ' . $translator->translate('It will become applied after it has been approved by the board.');
+                }
+                $this->redirectActivityAdmin(true, $message);
+            }
+        }
+        $updateProposal = $activity->getUpdateProposal();
+        if ($updateProposal->count() !== 0) {
+            //if there exists an update proposal, show that instead of the old activity
+            $activity = $updateProposal->first()->getNew();
+        }
+        $form->bind($activity);
+        $languages = $queryService->getAvailableLanguages($activity);
+
+        return ['form' => $form, 'activity' => $activity, 'languages' => $languages];
+    }
+
+    public function exportPdfAction()
+    {
+        $pdf = new PdfModel();
+        $pdf->setVariables($this->participantsAction());
+        return $pdf;
+    }
+
+    public function externalSignupAction()
+    {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+
+        $activity = $queryService->getActivity($id);
+
+        $translator = $activityService->getTranslator();
+
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()) {
+            $error = $translator->translate('Use the form to subscribe');
+            $this->redirectSignupRequest($id, false, $error);
+            return;
+        }
+
+        $form = $signupService->getExternalAdminForm($activity->getFields());
+        $postData = $this->getRequest()->getPost();
+        $form->setData($postData);
+
+        //Assure the form is valid
+        if (!$form->isValid()) {
+            $error = $translator->translate('Invalid form');
+            $signupRequestSession = new SessionContainer('signupRequest');
+            $signupRequestSession->signupData = $postData->toArray();
+            $this->redirectSignupRequest($id, false, $error, $signupRequestSession);
+            return;
+        }
+
+        $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+        $fullName = $formData['fullName'];
+        unset($formData['fullName']);
+        $email = $formData['email'];
+        unset($formData['email']);
+        $signupService->adminSignUp($activity, $fullName, $email, $formData);
+        $message = $translator->translate('Successfully subscribed external participant');
+        $this->redirectSignupRequest($id, true, $message);
+    }
+
+    public function externalSignoffAction()
+    {
+        $id = (int) $this->params('id');
+
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $signupMapper = $this->getServiceLocator()->get('activity_mapper_signup');
+
+        $signup = $signupMapper->getSignupById($id);
+
+        if (is_null($signup)) {
+            return $this->notFoundAction();
+        }
+        $activity = $signup->getActivity();
+        $translator = $activityService->getTranslator();
+
+        //Assure a form is used
+        if (!$this->getRequest()->isPost()) {
+            $message = $translator->translate('Use the form to unsubscribe an external participant');
+            $this->redirectSignupRequest($activity->getId(), false, $message);
+            return;
+        }
+
+        $form = new RequestForm('activityExternalSignoff', $translator->translate('Remove'));
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()) {
+            $message = $translator->translate('Invalid form');
+            $this->redirectSignupRequest($activity->getId(), false, $message);
+            return;
+        }
+
+        $signupService->externalSignOff($signup);
+        $message = $translator->translate('Successfully removed external participant');
+        $this->redirectSignupRequest($activity->getId(), true, $message);
     }
 
     /**
-     * View one activity.
+     * Redirects to the view of the activity with the given $id, where the
+     * $error message can be displayed if the request was unsuccesful (i.e.
+     * $success was false)
+     *
+     * @param int $id
+     * @param boolean $success Whether the request was successful
+     * @param string $message
+     */
+    protected function redirectSignupRequest($id, $success, $message, $session = null)
+    {
+        if (is_null($session)) {
+            $session = new SessionContainer('signupRequest');
+        }
+        $session->success = $success;
+        $session->message = $message;
+        $this->redirect()->toRoute('activity_admin/participants', [
+            'id' => $id,
+        ]);
+    }
+
+    /**
+     * Show a list of all activities this user can manage.
      */
     public function viewAction()
     {
-        $id = (int) $this->params('id');
+        $admin = false;
+        $acl = $this->getServiceLocator()->get('activity_service_activity')->getAcl();
+        $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivity($id);
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
+        $disapprovedActivities = null;
+        $unapprovedActivities = null;
+        $approvedActivities = null;
+        if ($acl->isAllowed($user, 'activity', 'approve')) {
+            $admin = true;
+            $disapprovedActivities = $queryService->getDisapprovedActivities();
+            $unapprovedActivities = $queryService->getUnapprovedActivities();
+            $approvedActivities = $queryService->getApprovedActivities();
         }
 
-        return [
-            'activity' => $activity,
-            'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
-            'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
-            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset')
+        $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($user));
+        $paginator->setDefaultItemCountPerPage(15);
+        $page = $this->params()->fromRoute('page');
+        if ($page) {
+            $paginator->setCurrentPageNumber($page);
+        }
+
+        $result = [
+            'upcomingActivities' => $queryService->getUpcomingCreatedActivities($user),
+            'disapprovedActivities' => $disapprovedActivities,
+            'unapprovedActivities' => $unapprovedActivities,
+            'approvedActivities' => $approvedActivities,
+            'oldActivityPaginator' => $paginator,
+            'admin' => $admin,
         ];
-    }
 
-    /**
-     * View all the unapproved activities with paginator
-     * @return array
-     */
-    public function queueUnapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_TO_APPROVE, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueApprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_APPROVED, $page);
-    }
-
-    /**
-     * View all the approved activities with paginator
-     *
-     * @return array
-     */
-    public function queueDisapprovedAction()
-    {
-        $page = (int) $this->params('page', 1);
-        return $this->viewStatus(Activity::STATUS_DISAPPROVED, $page);
-    }
-
-
-
-    /**
-     * View activities with a certain status
-     *
-     * @param integer $status
-     * @param integer $page
-     * @return array
-     */
-    protected function viewStatus($status, $page = 1)
-    {
-        $activityService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activities = $activityService->getActivityPaginatorByStatus($status, $page);
-
-        return [
-            'activities' => $activities,
-        ];
-    }
-
-    /**
-     * Approve of an activity
-     */
-    public function approveAction()
-    {
-        return $this->setApprovalStatus('approve');
-    }
-
-    /**
-     * Disapprove an activity
-     */
-    public function disapproveAction()
-    {
-        return $this->setApprovalStatus('disapprove');
-    }
-
-    /**
-     * Reset the approval status of an activity
-     */
-    public function resetAction()
-    {
-        return $this->setApprovalStatus('reset');
-    }
-
-    /**
-     * Display the proposed update
-     */
-    public function viewProposalAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        $proposal = $queryService->getProposal($id);
-
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        if (isset($activityAdminSession->success)) {
+            $result['success'] = $activityAdminSession->success;
+            unset($activityAdminSession->success);
+            $result['message'] = $activityAdminSession->message;
+            unset($activityAdminSession->message);
         }
 
-        return [
-            'proposal' => $proposal,
-            'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
-            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update')
-            ];
+        return $result;
     }
 
-    /**
-     * Apply the proposed update
-     */
-    public function applyProposalAction()
+    protected function redirectActivityAdmin($success, $message)
     {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('proposalApply');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
-        }
-        $oldId = $proposal->getOld()->getId();
-        $activityService->updateActivity($proposal);
-
-        $this->redirect()->toRoute('admin_activity/view', [
-            'id' => $oldId,
-        ]);
-    }
-
-    /**
-     * Revoke the proposed update
-     */
-    public function revokeProposalAction()
-    {
-        $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('proposalRevoke');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        $proposal = $queryService->getProposal($id);
-        if (is_null($proposal)) {
-            return $this->notFoundAction();
-        }
-
-        $oldId = $proposal->getOld()->getId();
-        $activityService->revokeUpdateProposal($proposal);
-
-        $this->redirect()->toRoute('admin_activity/view', [
-            'id' => $oldId,
-        ]);
-    }
-
-    /**
-     * Set the approval status of the activity requested
-     *
-     * @param $status
-     * @return array|\Zend\Http\Response
-     */
-    protected function setApprovalStatus($status)
-    {
-        $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivity($id);
-
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('updateApprovalStatus');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
-        }
-
-        switch ($status) {
-            case 'approve':
-                $activityService->approve($activity);
-                break;
-            case 'disapprove':
-                $activityService->disapprove($activity);
-                break;
-            case 'reset':
-                $activityService->reset($activity);
-                break;
-            default:
-                throw new \InvalidArgumentException('No such status ' . $status);
-
-        }
-
-        return $this->redirect()->toRoute('admin_activity/queue');
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        $activityAdminSession->success = $success;
+        $activityAdminSession->message = $message;
+        $this->redirect()->toRoute('activity_admin');
     }
 }

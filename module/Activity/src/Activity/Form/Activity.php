@@ -145,6 +145,16 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'onlyGEWIS',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 0,
+                'unchecked_value' => 1,
+                'use_hidden_element' => true,
+            ]
+        ]);
+
+        $this->add([
             'name' => 'isFood',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [

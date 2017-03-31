@@ -35,7 +35,8 @@ return [
             'poll_creation' => '',
             'organ_update' => ''
         ]
-    ]
+    ],
+    'cookie_domain' => '*.gewis.nl',
 
     /*
      * API key for google calendar

@@ -1,0 +1,63 @@
+.reveal {
+    $lineheight: 1.8;
+
+    overflow: hidden;
+
+    &.reveal-10 {
+        $lines-to-display: 10;
+
+        max-height: ($lines-to-display * $lineheight) * 1em;
+        &:before {
+            top: calc((#{$lines-to-display} * #{$lineheight} * 1em) - 100px);
+        }
+        .reveal-button {
+            top: calc((#{$lines-to-display} * #{$lineheight} * 1em) - 6.2em)
+        }
+    }
+
+    &.revealed {
+        overflow: auto;
+        height: auto;
+        max-height: none;
+
+        &:before {
+            display: none;
+        }
+
+        .reveal-button {
+            display: none;
+        }
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        left: 0;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100 */
+        background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+        opacity: 0.9;
+        height: 100px;
+    }
+
+    &:hover, &:focus, &:active {
+        .reveal-button {
+            opacity: 1;
+        }
+    }
+
+    .reveal-button {
+        position: absolute;
+        right: 0;
+        left: 0;
+        text-align: center;
+        color: #000;
+        opacity: 0;
+        padding-top: 50px;
+        cursor: pointer;
+    }
+
+}

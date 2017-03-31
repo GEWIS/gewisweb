@@ -24,6 +24,23 @@ class Signup
     }
 
     /**
+     * @param int $id
+     * @return \Activity\Model\ActivitySignup
+     */
+    public function getSignupById($id)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivitySignup', 'a')
+            ->where('a.id = :id')
+            ->setParameter('id', $id);
+        $result = $qb->getQuery()->getResult();
+
+        return count($result) > 0 ? $result[0] : null;
+    }
+
+
+    /**
      * Check if a user is signed up for an activity.
      *
      * @param $activityId
