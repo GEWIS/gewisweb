@@ -121,7 +121,9 @@
                             ]) ?>
                         </div>
                         <div class="panel-footer">
-                            <a href="<?= $this->url('poll') ?>"><?= $this->translate('View the results') ?></a>
+                            <a href="<?= $this->url('poll') ?>" class="panel-footer__link">
+                                <?= $this->translate('View the results') ?>
+                            </a>
                         </div>
                     <?php else: ?>
                         <div class="panel-body">
