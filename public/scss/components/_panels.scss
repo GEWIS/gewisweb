@@ -72,11 +72,19 @@ $panel-link-color: #969696;
     }
 
     .panel-body {
-        padding: 0 $panel-spacing ($panel-spacing * 0.8);
+        padding: ($panel-spacing * 0.8) $panel-spacing;
 
-        :last-child {
+        > :last-child {
             margin-bottom: 0;
         }
+    }
+
+    .panel-heading + .panel-body {
+        padding-top: 0;
+    }
+
+    .list-group + .panel-body {
+        padding-top: $panel-spacing * 0.25;
     }
 
     .panel-footer {

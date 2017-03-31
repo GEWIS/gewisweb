@@ -1,3 +1,5 @@
+@import '../variables';
+
 /*
 List group
 
@@ -6,53 +8,17 @@ Markup:
 Styleguide: list-group
 */
 
+.panel > .list-group {
+    .list-group-item {
+        padding: 10px 30px;
 
-.agenda-item {
-    margin-bottom: 1em;
-    padding: 0;
-    border: none;
-
-    .agenda-item-heading {
-        text-align: center;
-
-        .badge.badge-large {
-            margin: 0.3em auto;
-        }
-    }
-
-    .agenda-item-body {
-        dd {
-            margin-left: 1em;
-        }
-    }
-}
-
-a.agenda-item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    border: none;
-    color: $panel-color;
-
-    &:first-child {
-        margin-top: 0;
-    }
-
-    .badge {
-        margin-right: 1em;
-    }
-}
-
-a.agenda-item {
-    &:hover {
         background: none;
-        color: $brand-primary;
-    }
-}
+        border: none;
 
-.agenda-subscriptions {
-    th:first-child, td:first-child {
-        width: 25px;
+        transition: background $transition-duration-fast ease;
+
+        &:hover {
+            background: rgba(black, 0.05);
+        }
     }
 }
