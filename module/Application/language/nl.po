@@ -3370,6 +3370,9 @@ msgstr "Deze activiteit heeft een GEFLITST lid nodig om foto's te maken"
 msgid "When this is checked, GEFLITST will be notified that this activity needs a photographer."
 msgstr "Als je dit aanvinkt zal GEFLITST een berichtje krijgen dat deze activiteit een fotograaf nodig heeft."
 
+msgid "Activity options"
+msgstr "Activeiten opties"
+
 #~ msgid "Export subscriptions"
 #~ msgstr "Exporteer inschrijvingen"
 

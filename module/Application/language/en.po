@@ -3352,6 +3352,9 @@ msgstr "This activity needs a GEFLITST member to take photos"
 msgid "When this is checked, GEFLITST will be notified that this activity needs a photographer."
 msgstr "When this is checked, GEFLITST will be notified that this activity needs a photographer."
 
+msgid "Activity options"
+msgstr "Activity options"
+
 #~ msgid "Export subscriptions"
 #~ msgstr "Export subscriptions"
 
