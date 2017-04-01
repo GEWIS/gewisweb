@@ -601,6 +601,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'canSignUp' => $this->getCanSignUp(),
             'isFood' => $this->getIsFood(),
             'isMyFuture' => $this->getIsMyFuture(),
+            'requireGEFLITST' => $this->getRequireGEFLITST(),
             'attendees' => $attendees,
             'fields' => $fields,
         ];

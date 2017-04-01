@@ -261,6 +261,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCanSignUp($params['canSignUp']);
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
+        $activity->setRequireGEFLITST($params['requireGEFLITST']);
 
         // Not user provided input
         $activity->setCreator($user);
