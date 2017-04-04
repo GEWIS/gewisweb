@@ -1,4 +1,4 @@
-/* 
+/*
  * This script handles all javascript functions for the activity creation form
  */
 
@@ -24,6 +24,15 @@ Activity = {
             $('#additionalField' + currentCount).remove();
         }
         return false;
+    },
+
+    /**
+     * Toggles the availability of some dependent fields.
+     */
+    toggleExternal: function () {
+        if ($('[name="onlyGEWIS"]').is(':checked')) {
+            $('[name="canSignUp"]').attr('checked', true);
+        }
     },
 
     updateForm: function () {

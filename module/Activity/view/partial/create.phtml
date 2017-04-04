@@ -199,6 +199,18 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
         </label>
     </div>
     <?php
+    $onlyGEWIS = $form->get('onlyGEWIS');
+    $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()');
+    ?>
+    <div class="form-group<?= count($onlyGEWIS->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label>
+            <?= $this->formCheckbox($onlyGEWIS) ?>
+            <?= $this->translate('Allow external participants') ?>
+            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <?= $this->formElementErrors($onlyGEWIS) ?>
+        </label>
+    </div>
+    <?php
     $isFood = $form->get('isFood');
     ?>
     <div class="form-group<?= count($isFood->getMessages()) > 0 ? ' has-error' : '' ?>">

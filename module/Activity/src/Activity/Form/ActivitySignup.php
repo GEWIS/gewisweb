@@ -7,9 +7,16 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Captcha\Image as ImageCaptcha;
 
 class ActivitySignup extends Form implements InputFilterProviderInterface
 {
+    const USER = 1;
+    const EXTERNAL_USER = 2;
+    const EXTERNAL_ADMIN = 3;
+
+    protected $type;
+    protected $fields;
 
     public function __construct()
     {
@@ -32,20 +39,33 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
     /**
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $fields to the form.
      *
-     * @param ActivityField $fields
+     * @param array(ActivityField) $fields
      */
     public function initialiseForm($fields)
     {
         foreach($fields as $field) {
             $this->add($this->createFieldElementArray($field));
         }
+        $this->fields = $fields;
+        $this->type = ActivitySignup::USER;
     }
 
-    public function initialiseExternalForm($fields)
+    /**
+     * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
+     * Add every field in $fields to the form.
+     *
+     * @param array(ActivityField) $fields
+     */
+    public function initialiseExternalAdminForm($fields)
     {
         $this->add([
             'name' => 'fullName',
@@ -56,6 +76,24 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'type' => 'Text'
         ]);
         $this->initialiseForm($fields);
+        $this->type = ActivitySignup::EXTERNAL_ADMIN;
+    }
+
+    public function initialiseExternalForm($fields)
+    {
+        $this->add([
+            'name' => 'captcha',
+            'type' => 'Zend\Form\Element\Captcha',
+            'options' => [
+                'captcha' => new ImageCaptcha([
+                    'font' => 'public/fonts/bitstream-vera/Vera.ttf',
+                    'imgDir' => 'public/img/captcha/',
+                    'imgUrl' => '/img/captcha/',
+                    ]),
+            ]
+        ]);
+        $this->initialiseExternalAdminForm($fields);
+        $this->type = ActivitySignup::EXTERNAL_USER;
     }
 
     /**
@@ -65,7 +103,41 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return [];
+        $filter = [];
+        if ($this->type === ActivitySignup::EXTERNAL_USER ||
+            $this->type ===  ActivitySignup::EXTERNAL_ADMIN) {
+            $filter['fullName'] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ]
+                    ]
+                ]
+            ];
+            $filter['email'] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ]
+                    ],
+                    [
+                        'name' => 'EmailAddress',
+                    ],
+                ],
+            ];
+        }
+
+        return $filter;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -86,7 +158,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         $result = [
             'name' => $field->getId(),
         ];
-        switch($field->getType()){
+        switch($field->getType()) {
             case 0: //'Text'
                 $result['type'] = 'Text';
                 break;

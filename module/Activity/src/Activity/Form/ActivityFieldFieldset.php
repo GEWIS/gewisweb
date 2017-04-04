@@ -139,7 +139,25 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
-            ]
+            ],
+            'optionsEn' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'Callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    'The number of English options must equal the number of Dutch options'
+                            ],
+                            'callback' => function ($value, $context=null) {
+                                return !((new NotEmpty())->isValid($context['nameEn']))
+                                    || substr_count($context['options'],",") === substr_count($value,",");
+                            }
+                        ]
+                    ]
+                ]
+            ],
         ];
     }
 
@@ -153,7 +171,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
      * @param string $testvalue
      * @return boolean
      */
-    protected function fieldDependantRequired($value, $context, $child, $testvalue){
+    protected function fieldDependantRequired($value, $context, $child, $testvalue) {
 
         if ($value === $testvalue){
             return (new NotEmpty())->isValid($context[$child]);
