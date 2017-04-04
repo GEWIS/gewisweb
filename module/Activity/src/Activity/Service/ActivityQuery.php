@@ -9,6 +9,12 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
+     * A GEWIS association year starts 01-07
+     */
+    const ASSOCIATION_YEAR_START_MONTH = 7;
+    const ASSOCIATION_YEAR_START_DAY = 1;
+
+    /**
      * Get the ACL.
      *
      * @return \Zend\Permissions\Acl\Acl
@@ -260,5 +266,76 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getActivityMapper()
     {
         return $this->sm->get('activity_mapper_activity');
+    }
+
+    /**
+     * Get all the years activities took place
+     *
+     * @return array
+     */
+    public function getActivityYears()
+    {
+        $oldest = $this->getActivityMapper()->getOldestActivity();
+        $newest = $this->getActivityMapper()->getNewestActivity();
+        if (is_null($oldest) || is_null($newest) || is_null($oldest->getBeginTime()) || is_null($newest->getBeginTime())) {
+            return [null];
+        }
+
+        $startYear = $this->getAssociationYear($oldest->getBeginTime());
+        $endYear = $this->getAssociationYear($newest->getBeginTime());
+
+        // We make the reasonable assumption that at least one photo is taken every year
+        return range($startYear, $endYear);
+    }
+
+    /**
+     * Get all the activities that have finished in a year (and thus are archived
+     *
+     * @param integer $year First part of study year
+     * @return array
+     */
+    public function getFinishedActivitiesByYear($year)
+    {
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+
+        if (!is_int($year)) {
+            return [];
+        }
+
+        $start = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+        $end = \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            ($year + 1) . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+        );
+
+        return $this->getActivityMapper()->getArchivedActivitiesInRange($start, $end);
+    }
+
+    /**
+     * Returns the association year to which a certain date belongs
+     * In this context an association year is defined as the year which contains
+     * the first day of the association year.
+     *
+     * Example: A value of 2010 would represent the association year 2010/2011
+     *
+     * @param \DateTime $date
+     *
+     * @return int representing an association year.
+     */
+    protected function getAssociationYear(\DateTime $date)
+    {
+        if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
+            return $date->format('Y') - 1;
+        } else {
+            return $date->format('Y');
+        }
     }
 }

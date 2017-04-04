@@ -80,6 +80,28 @@ return [
                             ]
                         ]
                     ],
+                    'archive' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/archive',
+                            'defaults' => [
+                                'action' => 'archive'
+                            ]
+                        ]
+                    ],
+                    // Route for categorizing activities by association year.
+                    'year' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/archive[/:year]',
+                            'constraints' => [
+                                'year' => '\d{4}',
+                            ],
+                            'defaults' => [
+                                'action' => 'archive',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],

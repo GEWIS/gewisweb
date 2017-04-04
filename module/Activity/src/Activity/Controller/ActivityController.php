@@ -332,4 +332,40 @@ class ActivityController extends AbstractActionController
 
         return $viewModel;
     }
+
+
+
+    /**
+     * Display all the finished activities in a school year
+     *
+     * @return ViewModel
+     */
+    public function archiveAction() {
+
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+
+        $years = $queryService->getActivityYears();
+        $year = $this->params()->fromRoute('year');
+        // If no year is supplied, use the latest year.
+        if (is_null($year)) {
+            $year = max($years);
+        } else {
+            $year = (int)$year;
+        }
+
+        $activities = $queryService->getFinishedActivitiesByYear($year);
+        $translatedActivities = [];
+        foreach ($activities as $activity){
+            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+        }
+
+
+        return new ViewModel([
+            'activeYear' => $year,
+            'years' => $years,
+            'activities' => $translatedActivities
+        ]);
+    }
 }
