@@ -176,14 +176,20 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>">
-                    <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
-                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                        <?= $this->translate('Photos') ?>
-                        <span class="caret"></span>
-                    </a>
-                    <a href="<?= $this->url('photo') ?>" role="button" class="hidden-sm hidden-xs">
-                        <?= $this->translate('Photos') ?>
-                    </a>
+                    <?php if ($this->acl('photo_acl')->isAllowed('photo','view')): ?>
+                        <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                           class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                            <?= $this->translate('Photos') ?>
+                            <span class="caret"></span>
+                        </a>
+                        <a href="<?= $this->url('photo') ?>" role="button" class="hidden-sm hidden-xs">
+                            <?= $this->translate('Photos') ?>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= $this->url('photo') ?>">
+                            <?= $this->translate('Photos') ?>
+                        </a>
+                    <?php endif; ?>
                     <?php if ($this->acl('photo_acl')->isAllowed('photo','view')): ?>
                         <ul class="dropdown-menu">
                             <li class="visible-sm visible-xs">
