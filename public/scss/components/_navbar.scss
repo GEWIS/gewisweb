@@ -163,6 +163,10 @@ Styleguide: navbar
             background-color: #fff;
             color: $gray;
         }
+
+        .caret {
+            transform: rotate(180deg);
+        }
     }
 
     .navbar-nav > li > .dropdown-menu {
