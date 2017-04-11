@@ -94,8 +94,8 @@ $this->headTitle($this->translate('Activities')); ?>
                         <tr>
                             <td align="center" colspan="<?= count($fields) + 2 ?>">
                                 <?php if ($activity->getDisplaySubscribedNumber()){
-                                    echo sprintf($this->translate('The number of subscribed member(s) is currently %d.'), $memberSignups);
-                                }?><br/>
+                                    echo sprintf($this->translate('The number of subscribed member(s) is currently %d.'), $memberSignups) . '<br/>';
+                                }?>
                                 <a href="<?= $this->url('user') ?>">
                                     <?= $this->translate('Login to view the subscribed members.') ?>
                                 </a>
