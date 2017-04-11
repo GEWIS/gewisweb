@@ -17,11 +17,11 @@ class ActivityController extends AbstractActionController
      */
     public function indexAction()
     {
+
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-
-        $activities = $queryService->getUpcomingActivities();
+        $activities = $queryService->getUpcomingActivities($this->params('category'));
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);

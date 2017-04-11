@@ -71,6 +71,16 @@ return [
                             ]
                         ]
                     ],
+                    'career' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/career',
+                            'defaults' => [
+                                'action' => 'index',
+                                'category' => 'career'
+                            ]
+                        ]
+                    ],
                     'touch' => [
                         'type' => 'Literal',
                         'options' => [
