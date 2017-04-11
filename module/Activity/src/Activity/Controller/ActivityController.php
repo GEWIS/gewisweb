@@ -64,7 +64,9 @@ class ActivityController extends AbstractActionController
             $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isSignedUp,
-            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'signupData' => $signupService->isAllowedToViewSubscriptions() ?
+                $translatorService->getTranslatedSignedUpData($activity, $langSession->lang) :
+                null,
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,

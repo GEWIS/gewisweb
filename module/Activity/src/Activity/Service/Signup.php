@@ -352,6 +352,11 @@ class Signup extends AbstractAclService
         return $this->isAllowed('externalSignup', 'activitySignup');
     }
 
+    public function isAllowedToViewSubscriptions()
+    {
+        return $this->isAllowed('view', 'activitySignup');
+    }
+
     public function isAllowedToInternalSubscribe()
     {
         return $this->isAllowed('signup', 'activitySignup');
