@@ -70,6 +70,7 @@ class ActivityController extends AbstractActionController
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
+            'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
         ];
 
         //Retrieve and clear the request status from the session, if it exists.
