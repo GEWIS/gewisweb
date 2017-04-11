@@ -103,7 +103,7 @@ class Signup
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('COUNT(s)')
-           ->from('Activity\Model\UserActivitySignup','s')
+           ->from('Activity\Model\UserActivitySignup', 's')
            ->join('s.activity', 'a')
            ->where('a.id = ?1')
            ->setParameter(1, $activityId);
