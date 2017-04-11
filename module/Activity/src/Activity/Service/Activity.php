@@ -262,6 +262,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
         $activity->setOnlyGEWIS($params['onlyGEWIS']);
+        $activity->setDisplaySubscribedNumber($params['displaySubscribedNumber']);
 
         // Not user provided input
         $activity->setCreator($user);

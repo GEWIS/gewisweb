@@ -92,9 +92,9 @@ $this->headTitle($this->translate('Activities')); ?>
                     <?php $i = 1; ?>
                     <?php if(!$this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
                         <tr>
-                            <td align="center" rowspan="1" colspan="<?= count($fields) + 2 ?>">
+                            <td align="center" colspan="<?= count($fields) + 2 ?>">
                                 <a href="<?= $this->url('user') ?>">
-                                    <?= $this->translate('Login to view the subscribed members') ?>
+                                    <?= $this->translate('Login to view the subscribed members.') ?>
                                 </a>
                             </td>
                         </tr>
