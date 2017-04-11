@@ -26,7 +26,7 @@ class ActivityController extends AbstractActionController
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         }
-        return ['activities' => $translatedActivities];
+        return ['activities' => $translatedActivities, 'category' => $this->params('category')];
     }
 
     /**

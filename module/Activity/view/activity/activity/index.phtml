@@ -4,7 +4,11 @@ $this->headTitle($this->translate('Activities'));
 <div class="container">
     <div class="row">
         <h1 class="col-md-5 col-sm-5 col-xs-5">
-            <?= $this->translate('Activities') ?>
+            <?php if ($category === 'career'): ?>
+                <?= $this->translate('Career related activities') ?>
+            <?php else: ?>
+                <?= $this->translate('Activities') ?>
+            <?php endif ?>
         </h1>
 
         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
