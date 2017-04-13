@@ -173,6 +173,15 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'displaySubscribedNumber',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
