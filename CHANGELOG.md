@@ -1,3 +1,15 @@
+## [v1.2.2](https://github.com/GEWIS/gewisweb/tree/v1.2.2) (2017-04-21)
+
+* External participants can now subscribe to activities on their own
+* Photos can now only be viewed by logged in members
+* The list of activity participants can now be hidden for non-members
+* The changelog is now displayed in the website admin
+* Various bugfixes and UI improvements
+
+## [v1.2.1](https://github.com/GEWIS/gewisweb/tree/v1.2.1) (2017-01-10)
+
+* Various bugfixes
+
 ## [v1.2](https://github.com/GEWIS/gewisweb/tree/v1.2) (2017-01-09)
 
 * External participants can now be subscribed to activites through the activity admin
