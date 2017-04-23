@@ -201,7 +201,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      *
      * @return array Array of activities
      */
-    public function getUpcomingActivities()
+    public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
@@ -211,7 +211,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUpcomingActivities();
+        $activity = $activityMapper->getUpcomingActivities(null, null, $category);
 
         return $activity;
     }

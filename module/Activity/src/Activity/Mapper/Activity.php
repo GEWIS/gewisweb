@@ -65,7 +65,7 @@ class Activity
      *
      * @return array
      */
-    public function getUpcomingActivities($count = null, $organ = null)
+    public function getUpcomingActivities($count = null, $organ = null, $category = null)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
@@ -83,6 +83,10 @@ class Activity
                 ->setParameter('organ', $organ);
         }
 
+        // For now 'career' is the only category, however this may change in the future
+        if ($category === 'career') {
+            $qb->andWhere('a.isMyFuture = 1');
+        }
         $qb->setParameter('now', new \DateTime());
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
