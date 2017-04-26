@@ -1,3 +1,9 @@
+## [v1.2.3](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-04-26)
+
+* Added a page for career related activities
+
+---
+
 ## [v1.2.2](https://github.com/GEWIS/gewisweb/tree/v1.2.2) (2017-04-21)
 
 * External participants can now subscribe to activities on their own
@@ -6,9 +12,13 @@
 * The changelog is now displayed in the website admin
 * Various bugfixes and UI improvements
 
+---
+
 ## [v1.2.1](https://github.com/GEWIS/gewisweb/tree/v1.2.1) (2017-01-10)
 
 * Various bugfixes
+
+---
 
 ## [v1.2](https://github.com/GEWIS/gewisweb/tree/v1.2) (2017-01-09)
 
