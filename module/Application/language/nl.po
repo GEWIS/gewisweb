@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 17:17+0200\n"
-"PO-Revision-Date: 2017-04-21 17:31+0200\n"
+"POT-Creation-Date: 2017-04-26 11:54+0200\n"
+"PO-Revision-Date: 2017-04-26 11:56+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -65,15 +65,17 @@ msgstr ""
 msgid "Activities"
 msgstr "Activiteiten"
 
-#: module/Activity/view/activity/activity/index.phtml:13
+#: module/Activity/view/activity/activity/index.phtml:10
+msgid "All Activities"
+msgstr "Alle Activiteiten"
+
+#: module/Activity/view/activity/activity/index.phtml:11
+msgid "Career Activities"
+msgstr "Carrière Activiteiten"
+
+#: module/Activity/view/activity/activity/index.phtml:17
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
-
-#: module/Activity/view/activity/activity/index.phtml:21
-#: module/Activity/view/activity/activity-calendar/index.phtml:58
-#: module/Frontpage/view/frontpage/poll/request.phtml:114
-msgid "Add option"
-msgstr "Voeg optie toe"
 
 #: module/Activity/view/activity/activity/list.phtml:29
 msgid "Proposal to update into: "
@@ -378,6 +380,11 @@ msgstr "Jaar"
 #: module/Activity/view/activity/activity-calendar/index.phtml:48
 msgid "Month"
 msgstr "Maand"
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:58
+#: module/Frontpage/view/frontpage/poll/request.phtml:114
+msgid "Add option"
+msgstr "Voeg optie toe"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:83
 #: module/Activity/view/partial/create.phtml:42
@@ -737,15 +744,17 @@ msgstr ""
 "weergegeven worden op de schermen."
 
 #: module/Activity/view/partial/create.phtml:238
-msgid "This is a My Future related activity"
-msgstr "Dit is een cariere gerelateerde activiteit"
+msgid "This is a career related activity"
+msgstr "Dit is een carrière gerelateerde activiteit"
 
 #: module/Activity/view/partial/create.phtml:239
 msgid ""
-"If this is checked the My Future logo will be displayed on the activity page."
+"If this is checked the My Future logo will be displayed on the activity page "
+"and the activity will be included on the career activities page."
 msgstr ""
 "Als dit geselecteerd is dan wordt het My Future logo weergegeven op de "
-"pagina van de activiteit."
+"pagina van de activiteit en zal de activiteit op de carrière activiteiten "
+"pagina weergegeven worden."
 
 #: module/Activity/view/partial/signupForm.phtml:19
 msgid "Subscribe as external participant"
@@ -930,10 +939,10 @@ msgid "News"
 msgstr "Nieuws"
 
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:182
-#: module/Application/view/partial/main-nav.phtml:186
-#: module/Application/view/partial/main-nav.phtml:190
-#: module/Application/view/partial/main-nav.phtml:197
+#: module/Application/view/partial/main-nav.phtml:183
+#: module/Application/view/partial/main-nav.phtml:187
+#: module/Application/view/partial/main-nav.phtml:191
+#: module/Application/view/partial/main-nav.phtml:198
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
@@ -1115,13 +1124,17 @@ msgstr ""
 "Optie\n"
 "Kalender"
 
-#: module/Application/view/partial/main-nav.phtml:200
+#: module/Application/view/partial/main-nav.phtml:176
+msgid "Career related"
+msgstr "Carri&egrave;re gerelateerd"
+
+#: module/Application/view/partial/main-nav.phtml:201
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 #: module/Photo/view/photo/photo/view.phtml:89
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
-#: module/Application/view/partial/main-nav.phtml:207
+#: module/Application/view/partial/main-nav.phtml:208
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:6
