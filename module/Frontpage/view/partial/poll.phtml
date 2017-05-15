@@ -29,7 +29,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
         <?php if ($showResults || !$canVote): ?>
             <div>
-                <h5 class="<?= $voted ? 'text-primary' : '' ?>">
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
                     <?= $text ?>
                     <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
                 </h5>
