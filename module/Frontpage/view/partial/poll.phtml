@@ -29,12 +29,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
         <?php if ($showResults || !$canVote): ?>
             <div>
-                <h5 class="<?= $voted ? 'text-primary' : '' ?>"><?= $text ?></h5>
+                <h5 class="<?= $voted ? 'text-primary' : '' ?>">
+                    <?= $text ?>
+                    <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                </h5>
 
-                <?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?>
-
-                <div class="progress">
-                    <div class="progress-bar poll-bar" style="min-width: 2em; width: <?= $percentages[$option->getId()] ?>%;"></div>
+                <div class="progress progress--poll">
+                    <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
                 </div>
             </div>
         <?php else: ?>

@@ -1,0 +1,12 @@
+@import '../bootstrap-variables';
+
+.progress--poll {
+    height: 4px;
+    box-shadow: none;
+    background: rgba(black, 0.1);
+    border-radius: 2px;
+
+    .progress-bar {
+        background-color: $brand-primary;
+    }
+}
