@@ -14,7 +14,9 @@
                 </section>
 
                 <section class="content-section">
-                    <?= $this->partial('partial/banner.phtml') ?>
+                    <?php if ($companyBanner !== null): ?>
+                        <?= $this->partial('partial/banner.phtml', ['banner' => $companyBanner]) ?>
+                    <?php endif ?>
                 </section>
 
                 <section class="content-section">
