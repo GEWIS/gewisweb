@@ -113,6 +113,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $onlyGEWIS;
 
     /**
+     * Should the number of subscribed members be displayed
+     * when the user is NOT logged in?
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $displaySubscribedNumber;
+
+    /**
      * Who did approve this activity.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
@@ -386,6 +394,22 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @return boolean
+     */
+    public function getDisplaySubscribedNumber()
+    {
+        return $this->displaySubscribedNumber;
+    }
+
+    /**
+     * @param boolean $displaySubscribedNumber
+     */
+    public function setDisplaySubscribedNumber($displaySubscribedNumber)
+    {
+        $this->displaySubscribedNumber = $displaySubscribedNumber;
+    }
+
+    /**
      * @return User
      */
     public function getApprover()
@@ -594,6 +618,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'canSignUp' => $this->getCanSignUp(),
             'isFood' => $this->getIsFood(),
             'isMyFuture' => $this->getIsMyFuture(),
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'attendees' => $attendees,
             'fields' => $fields,
         ];

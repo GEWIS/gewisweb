@@ -36,10 +36,10 @@ $this->headTitle($this->translate('Activities')); ?>
         <ul class="list-group">
             <li class="list-group-item agenda-item row">
                 <div class="agenda-item-heading col-md-2">
-        <span class="badge badge-large">
-            <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
-            <?= $activity->getBeginTime()->format('d') ?>
-        </span>
+                    <span class="badge badge-large">
+                        <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
+                        <?= $activity->getBeginTime()->format('d') ?>
+                    </span>
                 </div>
                 <div class="agenda-item-body col-md-10">
                     <div class="row">
@@ -88,16 +88,30 @@ $this->headTitle($this->translate('Activities')); ?>
                             <th><?= $this->escapeHtml($field->getName()) ?></th>
                         <?php endforeach;?>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach($activity->getSignUps() as $signup): ?>
+                    <?php if(!$this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
                         <tr>
-                            <td><?php echo $i; $i = $i + 1; ?></td>
-                            <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
-                            <?php foreach ($fields as $field): ?>
-                                <?php foreach($signup->getFieldValues() as $fieldValue):?>
-                                    <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                            <td align="center" colspan="<?= count($fields) + 2 ?>">
+                                <?php if ($activity->getDisplaySubscribedNumber()){
+                                    echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
+                                }?>
+                                <a href="<?= $this->url('user') ?>">
+                                    <?= $this->translate('Login to view the subscribed members.') ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php foreach($activity->getSignUps() as $signup): ?>
+
+                        <?php if (($signup instanceof Activity\Model\ExternalActivitySignup) || $this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
+                            <tr>
+                                <td><?= $this->acl('activity_acl')->isAllowed('activitySignup', 'view') || $activity->getDisplaySubscribedNumber() ? $i : '' ?></td>
+                                <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
+                                <?php foreach ($fields as $field): ?>
+                                    <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                                        <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
                                         <td>
                                             <?php
                                             switch ($field->getType()) {
@@ -120,15 +134,17 @@ $this->headTitle($this->translate('Activities')); ?>
                                             }
                                             ?>
                                         </td>
-                                    <?php endif; ?>
-                                <?php endforeach;?>
-                            <?php endforeach; ?>
-                        </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach;?>
+                                <?php endforeach; ?>
+                            </tr>
+                            <?php $i = $i + 1;?>
+                        <?php endif; ?>
                     <?php endforeach;?>
-                    </tbody>
-                </table>
-            </div>
-        <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
 
         <?php if ($isSignedUp) :?>
             <div>

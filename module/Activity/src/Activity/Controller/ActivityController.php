@@ -17,16 +17,16 @@ class ActivityController extends AbstractActionController
      */
     public function indexAction()
     {
+
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-
-        $activities = $queryService->getUpcomingActivities();
+        $activities = $queryService->getUpcomingActivities($this->params('category'));
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         }
-        return ['activities' => $translatedActivities];
+        return ['activities' => $translatedActivities, 'category' => $this->params('category')];
     }
 
     /**
@@ -64,10 +64,13 @@ class ActivityController extends AbstractActionController
             $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isSignedUp,
-            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'signupData' => $signupService->isAllowedToViewSubscriptions() ?
+                $translatorService->getTranslatedSignedUpData($activity, $langSession->lang) :
+                null,
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
+            'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
         ];
 
         //Retrieve and clear the request status from the session, if it exists.

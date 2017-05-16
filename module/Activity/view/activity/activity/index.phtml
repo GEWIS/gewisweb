@@ -4,31 +4,33 @@ $this->headTitle($this->translate('Activities'));
 <section class="section">
     <div class="container">
         <div class="row">
-            <h1 class="col-md-5 col-sm-5 col-xs-5">
+            <h1 class="col-md-12 col-sm-12 col-xs-12">
                 <?= $this->translate('Activities') ?>
             </h1>
 
+            <ul class="nav nav-pills col-md-5 col-sm-5 col-xs-12">
+                <li role="presentation" class="<?= $category === null ? 'active' : '' ?>">
+                    <a href="<?= $this->url('activity') ?>"><?= $this->translate('All Activities') ?></a>
+                </li>
+                <li role="presentation" class="<?= $category === 'career' ? 'active' : '' ?>">
+                    <a href="<?= $this->url('activity/career') ?>"><?= $this->translate('Career Activities') ?></a>
+                </li>
+            </ul>
             <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-                <a href="<?= $this->url('activity/create') ?>" class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
-                    <button class="btn btn-default">
+                <a href="<?= $this->url('activity/create') ?>" class="col-md-3 col-sm-4 col-xs-12 pull-right ">
+                    <button class="btn btn-primary">
+                        <i class="glyphicon glyphicon-plus"></i>
                         <?php echo $this->translate('Create Activity'); ?>
-                    </button>
-                </a>
-            <?php endif; ?>
-            <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-                <a href="<?= $this->url('activity_calendar') ?>" class="col-md-2 col-sm-2 col-xs-12 page-top-action
-            pull-right text-right">
-                    <button class="btn btn-default">
-                        <?php echo $this->translate('Add option'); ?>
                     </button>
                 </a>
             <?php endif; ?>
         </div>
 
+        <br>
         <?php
-        echo $this->partial('activity/activity/list.phtml',[
-            'activities' => $activities,
-        ]);
+            echo $this->partial('activity/activity/list.phtml',[
+                'activities' => $activities,
+            ]);
         ?>
     </div>
 </section>

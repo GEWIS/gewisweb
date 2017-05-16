@@ -244,12 +244,12 @@ class Photo extends AbstractAclService
     }
     /**
      * Generates the PhotoOfTheWeek and adds it to the list
-     * if at least one photo has been viewed in the specified time. 
-     * The parameters determine the week to check the photos of.  
-     * 
+     * if at least one photo has been viewed in the specified time.
+     * The parameters determine the week to check the photos of.
+     *
      * @param \DateTime $begindate
      * @param \DateTime $enddate
-     * 
+     *
      * @return \Photo\Model\Photo|null
      */
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
@@ -270,10 +270,10 @@ class Photo extends AbstractAclService
         $mapper->flush();
         return $weeklyPhoto;
     }
-    
+
     /**
      * Determine which photo is the photo of the week
-     * 
+     *
      * @param \DateTime $begindate
      * @param \DateTime $enddate
      * @return \Photo\Model\Photo|null
@@ -304,12 +304,17 @@ class Photo extends AbstractAclService
      */
     public function getPhotosOfTheWeek()
     {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view previous photos of the week')
+            );
+        }
         return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
     }
 
     /**
      * Determine the preference rating of the photo.
-     * 
+     *
      * @param \Photo\Model\Photo $photo
      * @param integer $occurences
      * @return float
@@ -503,7 +508,7 @@ class Photo extends AbstractAclService
     {
         return $this->sm->get('photo_mapper_tag');
     }
-    
+
     public function getHitMapper()
     {
         return $this->sm->get('photo_mapper_hit');
@@ -511,7 +516,7 @@ class Photo extends AbstractAclService
 
     /**
      * Get the weekly photo mapper.
-     * 
+     *
      * @return \Photo\Mapper\WeeklyPhoto
      */
     public function getWeeklyPhotoMapper()

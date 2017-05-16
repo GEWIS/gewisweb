@@ -313,6 +313,12 @@ class Signup extends AbstractAclService
         $this->removeSignUp($signUp);
     }
 
+    public function getNumberOfSubscribedMembers(ActivityModel $activity)
+    {
+        return $this->getServiceManager()->get('activity_mapper_signup')
+                ->getNumberOfSignedUpMembers($activity->getId())[1];
+    }
+
     public function externalSignOff(ExternalActivitySignup $signup)
     {
         if (!($this->isAllowed('adminSignup', 'activity') ||
@@ -350,6 +356,11 @@ class Signup extends AbstractAclService
     public function isAllowedToExternalSubscribe()
     {
         return $this->isAllowed('externalSignup', 'activitySignup');
+    }
+
+    public function isAllowedToViewSubscriptions()
+    {
+        return $this->isAllowed('view', 'activitySignup');
     }
 
     public function isAllowedToInternalSubscribe()
