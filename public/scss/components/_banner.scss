@@ -7,11 +7,8 @@
 }
 
 .banner__image {
-    width: 100%;
     max-width: 728px;
-    padding-top: 100% / 728px * 90px;
-
-    background: #ddd;
+    max-height: 90px;
 }
 
 .banner__message {
