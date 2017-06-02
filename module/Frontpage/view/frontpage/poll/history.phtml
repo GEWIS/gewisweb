@@ -14,6 +14,7 @@ $this->headTitle($this->translate('Poll history')); ?>
 ?>
 <?php if (!empty($paginator)): ?>
         <?php foreach ($paginator as $poll): ?>
+            <hr>
             <?= $this->partial('partial/poll.phtml', [
                 'poll' => $poll,
                 'canVote' => false,
