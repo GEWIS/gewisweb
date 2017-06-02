@@ -6,36 +6,45 @@ $this->headTitle($this->translate('Education'));
     <div class="container">
         <h1><?= $this->translate("Education") ?></h1>
         <div class="row">
-            <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image  col-sm-3 col-xs-6">
-                <div class="panel-body">
-                    <div class="glyphicon glyphicon-book"></div>
-                    <h4><?= $this->translate('Books') ?></h4>
-                </div>
-            </a>
-
-            <a href="#" class="panel panel-image col-sm-3 col-xs-6">
-                <label for="exam-search">
+            <div class="col-sm-3 col-xs-6">
+                <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image">
                     <div class="panel-body">
-                        <div class="glyphicon glyphicon-education"></div>
-                        <h4><?= $this->translate('Exams') ?></h4>
-                    </div>
-                </label>
-            </a>
-
-            <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
-                <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image  col-sm-3 col-xs-6">
-                    <div class="panel-body">
-                        <div class="glyphicon glyphicon-cd"></div>
-                        <h4><?= $this->translate('Microsoft Imagine') ?></h4>
+                        <div class="glyphicon glyphicon-book"></div>
+                        <h4><?= $this->translate('Books') ?></h4>
                     </div>
                 </a>
-            <?php endif ?>
-            <a href="mailto:klachten@gewis.nl" class="panel panel-image col-sm-3 col-xs-6">
-                <div class="panel-body">
-                    <div class="glyphicon glyphicon-sunglasses"></div>
-                    <h4><?= $this->translate('Complaints') ?></h4>
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#" class="panel panel-image">
+                    <label for="exam-search">
+                        <div class="panel-body">
+                            <div class="glyphicon glyphicon-education"></div>
+                            <h4><?= $this->translate('Exams') ?></h4>
+                        </div>
+                    </label>
+                </a>
+            </div>
+
+            <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
+                <div class="col-sm-3 col-xs-6">
+                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image">
+                        <div class="panel-body">
+                            <div class="glyphicon glyphicon-cd"></div>
+                            <h4><?= $this->translate('Microsoft Imagine') ?></h4>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            <?php endif ?>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="mailto:klachten@gewis.nl" class="panel panel-image">
+                    <div class="panel-body">
+                        <div class="glyphicon glyphicon-sunglasses"></div>
+                        <h4><?= $this->translate('Complaints') ?></h4>
+                    </div>
+                </a>
+            </div>
         </div>
 
         <h2><?= $this->translate('Exams') ?></h2>
@@ -54,18 +63,18 @@ $this->headTitle($this->translate('Education'));
 
                 echo $this->form()->openTag($form);
                 ?>
-                <div class="form-inline">
+                <div class="input-group">
                     <?php
                     $element = $form->get('query');
-                    $element->setAttribute('class', 'form-control form');
+                    $element->setAttribute('class', 'form-control');
                     $element->setAttribute('id', 'exam-search');
                     $element->setAttribute('placeholder', $this->translate('Course code or course description'));
                     ?>
                     <?= $this->formInput($element) ?>
-                    <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+                    </span>
                 </div>
-
-                <!-- <?= $this->formLabel($element) ?> -->
 
                 <?= $this->formElementErrors($element) ?>
 
