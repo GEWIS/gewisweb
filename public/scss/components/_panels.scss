@@ -168,21 +168,30 @@ $panel-link-color: #969696;
 
 a {
     &.panel-image {
+        display: block;
+
         color: #000;
         text-decoration: none;
+        background: darken(white, 2%);
+
+        transition:
+            background 150ms ease,
+            color 150ms ease;
+
+        &:hover {
+            color: white;
+            background: $brand-primary;
+        }
     }
 }
 
 .panel-image {
+    margin: 0 0 3em;
+    padding: 1em;
+
     text-align: center;
     box-shadow: none;
-    border-radius: 0;
     border: none;
-    margin: 1.5em 0;
-
-    &:hover {
-        background: #f0f0f0;
-    }
 
     h4 {
         margin-bottom: 0;
