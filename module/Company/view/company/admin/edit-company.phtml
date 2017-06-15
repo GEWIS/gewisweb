@@ -96,10 +96,10 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
                     <?php echo $package->isActive() ? 'Yes' : 'No' ?>
                 </td>
                 <td>
-                    <?= $package->getStartingDate()->format('Y-m-d') ?>
+                    <?= $package->getStartingDate()->format('d-m-Y') ?>
                 </td>
                 <td>
-                    <?= $package->getExpirationDate()->format('Y-m-d') ?>
+                    <?= $package->getExpirationDate()->format('d-m-Y') ?>
                 </td>
                 <td>
                     <?php if ($package->getType() === 'banner') {
