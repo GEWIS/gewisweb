@@ -19,6 +19,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
 
         $this->setAttribute('method', 'post');
 
+        $this ->setLanguages($languages);
         $this->add([
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
             'name' => 'jobs',
@@ -39,132 +40,160 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'id' => 'submitbutton',
             ],
         ]);
+        $this->translate = $translate;
 
         $this->initFilters($translate);
     }
     protected function initFilters($translate)
     {
-        $filter = new InputFilter();
-
-        $filter->add([
-            'name' => 'name',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'min' => 2,
-                        'max' => 127,
+        $supremeFilter = new InputFilter();
+        $rootFilter =  new InputFilter();
+        foreach ($this->languages as $lang) {
+            $filter = new JobInputFilter();
+            
+            $filter->add([
+                'name' => 'id',
+                'required' => false,
+            ]);
+            $filter->add([
+                'name' => 'name',
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 2,
+                            'max' => 127,
+                        ],
                     ],
                 ],
-            ],
-        ]);
-
-        $filter->add([
-            'name' => 'slugName',
-            'required' => true,
-            'validators' => [
-                new \Zend\Validator\Callback([
-                    'callback' => [$this,'slugNameUnique'],
-                    'message' => $translate->translate('This slug is already taken'),
-                ]),
-                new \Zend\Validator\Regex([
-                    'message' => $translate->translate('This slug contains invalid characters') ,
-                    'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-                ]),
-            ],
-            'filters' => [
-            ],
-        ]);
-
-        $filter->add([
-            'name' => 'website',
-            'required' => false,
-            'validators' => [
-                [
-                    'name' => 'uri',
+            ]);
+            $filter->add([
+                'name' => 'slugName',
+                'required' => true,
+                'validators' => [
+                    new \Zend\Validator\Callback([
+                        'callback' => [$this,'slugNameUnique'],
+                        'message' => $this->translate->translate('This slug is already taken'),
+                    ]),
+                    new \Zend\Validator\Regex([
+                        'message' => $this->translate->translate('This slug contains invalid characters') ,
+                        'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                    ]),
                 ],
-            ],
-        ]);
+                'filters' => [
+                ],
+            ]);
 
-        $filter->add([
-            'name' => 'description',
-            'required' => false,
-            'validators' => [
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'min' => 2,
-                        'max' => 10000,
+            $filter->add([
+                'name' => 'website',
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'uri',
                     ],
                 ],
-            ],
-        ]);
-        $filter->add([
-            'name' => 'contactName',
-            'required' => false,
-            'validators' => [
-                [
-                    'name' => 'string_length',
-                    'options' => [
-                        'max' => 200,
+            ]);
+
+            $filter->add([
+                'name' => 'description',
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 2,
+                            'max' => 10000,
+                        ],
                     ],
                 ],
-            ],
-        ]);
+            ]);
+            $filter->add([
+                'name' => 'contactName',
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'max' => 200,
+                        ],
+                    ],
+                ],
+            ]);
 
-        $filter->add([
-            'name' => 'email',
-            'required' => false,
-            'validators' => [
-                ['name' => 'email_address'],
-            ],
-        ]);
+            $filter->add([
+                'name' => 'email',
+                'required' => false,
+                'validators' => [
+                    ['name' => 'email_address'],
+                ],
+            ]);
+            $filter->add([
+                'name' => 'phone',
+                'required' => false,
+            ]);
+            $filter->add([
+                'name' => 'active',
+                'required' => false,
+            ]);
 
-        //$filter->add([
-            //'name' => 'attachment_file',
-            //'required' => false,
-            //'validators' => [
-                //[
-                    //'name' => 'File\Extension',
-                    //'options' => [
-                        //'extension' => 'pdf',
-                    //],
-                //],
-                //[
-                    //'name' => 'File\MimeType',
-                    //'options' => [
-                        //'mimeType' => 'application/pdf',
-                    //],
-                //],
-            //],
-        //]);
-        $this->inputFilter = $filter;
+            $filter->add([
+                'name' => 'attachment_file',
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'Callback',
+                        'options' => [
+                            'callback' => function($value) {
+                                // If no file is uploaded, we don't care, because it is optional
+                                if ($value['error'] == 4) {
+                                    return true;
+                                }
+                                $extensionValidator = Zend\Validator\File\Extension('pdf');
+                                if (!$extensionValidator->isValid($value)) {
+                                    return false;
+                                }
+                                $mimeValidator = Zend\Validator\File\MimeType('application/pdf');
+                                return $mimeValidator->isValid($values);
+
+                            }
+                        ],
+                    ],
+                ],
+            ]);
+            $filter->add([
+                'name' => 'category',
+                'required' => false,
+            ]);
+            $rootFilter->add($filter, $lang);
+
+        }
+        $supremeFilter->add($rootFilter, $this->baseFieldset->getName());
+        $this->extraInputFilter = $supremeFilter;
     }
 
-    public function isValid()
+    public function getInputFilter()
     {
-        if (!parent::isValid()) {
-            return false;
-        }
-        $arr = [];
-        foreach ($this->get('jobs')->getFieldSets() as $fieldset) {
-            foreach ($fieldset->getElements() as $el) {
-                $val = $el->getValue();
-                $arr[$el->getName()] = $val;
-            }
-        }
-        $this->inputFilter->setData($arr);
-        $valid = $this->inputFilter->isValid();
-        if (!$valid) {
-            var_dump($this->inputFilter->getMessages());
-        }
-        return $valid;
+        return $this->extraInputFilter;
     }
+
+    private $translate;
 
     private $companySlug;
 
     private $currentSlug;
+
+    private $languages;
+
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+    }
+
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
 
     public function setCompanySlug($companySlug)
     {
@@ -176,7 +205,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $this->currentSlug = $currentSlug;
     }
 
-    protected $inputFilter;
+    protected $extraInputFilter;
 
     /**
      *

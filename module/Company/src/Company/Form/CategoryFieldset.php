@@ -42,6 +42,26 @@ class CategoryFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
+        $this->add([
+            'name' => 'pluralName',
+            'attributes' => [
+                'type' => 'text',
+                'required' => 'required',
+            ],
+            'options' => [
+                'label' => $translate->translate('Plural display name'),
+                'required' => 'required',
+            ],
+        ]);
+        $this->add([
+            'name' => 'hidden',
+            'attributes' => [
+                'type' => 'checkbox',
+            ],
+            'options' => [
+                'label' => $translate->translate('Hidden'),
+            ],
+        ]);
         // Hidden language element, because it will only be set at initialization.
         $this->add([
             'name' => 'language',

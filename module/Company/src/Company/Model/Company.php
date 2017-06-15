@@ -341,10 +341,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      * company.
      *
      */
-    public function getNumberOfActiveJobs()
+    public function getNumberOfActiveJobs($category = null)
     {
-        $jobCount = function ($package) {
-            return $package->getNumberOfActiveJobs();
+        $jobCount = function ($package) use ($category) {
+            return $package->getNumberOfActiveJobs($category);
         };
 
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));

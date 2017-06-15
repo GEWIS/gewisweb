@@ -36,24 +36,22 @@ class CompanyJobPackage extends CompanyPackage
     {
         return $this->jobs;
     }
-    
+
     /**
      * Get the number of jobs in the package.
      *
      * @return number of jobs in the package
      */
-    public function getNumberOfActiveJobs()
+    public function getNumberOfActiveJobs($category)
     {
-        if (!$this->isActive()) {
-            return 0;
-        }
-        $count = 0;
-        foreach ($this->jobs as $job) {
-            if ($job->getActive()) {
-                $count ++;
+        $filter = function ($job) use ($category){
+            if ($category == null){
+                return true;
             }
-        }
-        return $count;
+            return $job->getCategory()->getLanguageNeutralId() ===  $category->getLanguageNeutralId();
+        };
+        $filteredJobs = array_filter($this->jobs->toArray(), $filter);
+        return count($filteredJobs);
     }
 
 

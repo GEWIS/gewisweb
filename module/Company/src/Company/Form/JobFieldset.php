@@ -61,6 +61,7 @@ class JobFieldset extends Fieldset
             ],
             'options' => [
                 'label' => $translate->translate('Website'),
+                'required' => false,
             ],
         ]);
         $this->add([
@@ -71,6 +72,7 @@ class JobFieldset extends Fieldset
             ],
             'options' => [
                 'label' => $translate->translate('Attachment'),
+                'required' => false,
             ],
         ]);
         $this->add([
@@ -81,6 +83,7 @@ class JobFieldset extends Fieldset
             ],
             'options' => [
                 'label' => $translate->translate('Email'),
+                'required' => false,
             ],
         ]);
         $this->add([
@@ -90,6 +93,7 @@ class JobFieldset extends Fieldset
             ],
             'options' => [
                 'label' => $translate->translate('Contact name'),
+                'required' => false,
             ],
         ]);
         $this->add([
@@ -99,6 +103,7 @@ class JobFieldset extends Fieldset
             ],
             'options' => [
                 'label' => $translate->translate('Phone'),
+                'required' => false,
             ],
         ]);
         $this->add([
@@ -106,27 +111,21 @@ class JobFieldset extends Fieldset
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
                 'label' => $translate->translate('Description'),
+                'required' => false,
             ],
         ]);
-        $this->add([
-            'name' => 'active',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'label' => $translate->translate('Active'),
-            ],
-        ]);
-         //$this->add([
-            //'name' => 'category',
-            //'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            //'options' => [
-                //'label' => $translate->translate('Category'),
-                //'object_manager' => $objectManager,
-                //'target_class' => 'Company\Model\JobCategory',
-                //'property' => 'category'
-            //],
-            ////'attributes' => [
-                ////'class' => 'form-control input-sm'
-            ////]
+        //$this->add([
+        //'name' => 'category',
+        //'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+        //'options' => [
+        //'label' => $translate->translate('Category'),
+        //'object_manager' => $objectManager,
+        //'target_class' => 'Company\Model\JobCategory',
+        //'property' => 'category'
+        //],
+        ////'attributes' => [
+        ////'class' => 'form-control input-sm'
+        ////]
         //]);
     }
     protected $mapper;

@@ -105,6 +105,13 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
+                'jobCategories' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobCategories();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();

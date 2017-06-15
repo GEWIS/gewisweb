@@ -49,7 +49,7 @@ class Job
      */
     public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
-        $objects = $this->findJobBySlugName($companySlug, $slugName, $category);
+        $objects = $this->findJob(['companySlugName' => $companySlug, 'jobSlug' =>  $slugName,  'category' => $category]);
         foreach ($objects as $job) {
             if ($job->getID() != $jid && $category != $job->getCategory()->getId()) {
                 return false;
@@ -68,18 +68,7 @@ class Job
         $job = new JobModel($this->em);
         $job->setLanguage($lang);
         $job->setLanguageNeutralId($languageNeutralId);
-        $this->em->persist($job);
-        $this->em->flush();
-        if ($id == -1) {
-            $id = $category->getId();
-        }
-
         $job->setPackage($package);
-
-        if ($id == -1) {
-            $id = $category->getId();
-        }
-        $job->setLanguageNeutralId($id);
         return $job;
     }
 
@@ -93,22 +82,27 @@ class Job
      */
     public function findJob($dict)
     {
-        $jobSlugName = $dict['jobSlug'];
-        $category = $dict['category'];
-        $companySlugName = $dict['companySlugName'];
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat');
-        if ($jobSlugName != null) {
-            $qb->where('j.slugName=:jobId');
+        if (isset($dict['jobSlug'])) {
+            $jobSlugName = $dict['jobSlug'];
+            $qb->andWhere('j.slugName=:jobId');
             $qb->setParameter('jobId', $jobSlugName);
         }
+        if (isset($dict['languageNeutralId'])) {
+            $languageNeutralId = $dict['languageNeutralId'];
+            $qb->andWhere('j.languageNeutralId=:languageNeutralId');
+            $qb->setParameter('languageNeutralId', $languageNeutralId);
+        }
 
-        if ($category != null) {
+        if (isset($dict['jobCategory'])) {
+            $category = $dict['jobCategory'];
             $qb->andWhere('cat.slug=:category');
             $qb->setParameter('category', $category);
         }
 
-        if ($companySlugName != null) {
+        if (isset($dict['companySlugName'])) {
+            $companySlugName = $dict['companySlugName'];
             $qb->andWhere('c.slugName=:companySlugName');
             $qb->setParameter('companySlugName', $companySlugName);
         }

@@ -20,6 +20,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
+            'categoryList' => $companyService->getCategoryList(false),
             'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
                 new \DateInterval("P1M")
             )),
@@ -221,24 +222,6 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        // Handle incoming form data
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            if ($companyService->saveCategory(
-                $request->getPost()
-            )){
-                return $this->redirect()->toRoute(
-                    'admin_company/editCategory',
-                    [
-                        'categoryID' => $categoryId,
-                    ],
-                    [],
-                    false
-                );
-
-            }
-        }
-
         // Initialize form
         $categoriesDict = [];
         foreach ($categories as $category) {
@@ -254,6 +237,22 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->saveCategory(
+                $request->getPost()
+            )){
+                return $this->redirect()->toRoute(
+                    'admin_company/editCategory',
+                    [
+                        'categoryID' => $categoryId,
+                    ]
+                );
+
+            }
+        }
+
         $languages = $companyService->getLanguages();
         $f = function ($lang) use ($companyService) {
             return [$lang, $companyService->getLanguageDescription($lang),];
@@ -433,9 +432,19 @@ class AdminController extends AbstractActionController
         foreach ($jobs as $job) {
             $jobDict[$job->getLanguage()] = $job;
         }
+        $languages = $companyService->getLanguages();
+        foreach ($languages as $lang) {
+            if (!isset($jobDict[$lang])) {
+                $anyJob = current($jobDict);
+                $jobDict[$lang] = $companyService->insertJobIntoPackageID(
+                    $anyJob->getPackage()->getId(),
+                    $lang,
+                    $anyJob->getLanguageNeutralId()
+                );
+            }
+        }
         $jobForm->bind($jobDict);
 
-        $languages = $companyService->getLanguages();
         $f = function ($lang) use ($companyService) {
             return [$lang, $companyService->getLanguageDescription($lang),];
         };

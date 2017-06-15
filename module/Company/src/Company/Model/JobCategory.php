@@ -36,6 +36,14 @@ class JobCategory
 
     /**
      *
+     * The name of the category
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $pluralName;
+
+    /**
+     *
      * The slug of the category
      *
      * @ORM\Column(type="string")
@@ -119,6 +127,22 @@ class JobCategory
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get's the plural name
+     */
+    public function getPluralName()
+    {
+        return $this->pluralName;
+    }
+
+    /**
+     * Set's the name
+     */
+    public function setPluralName($name)
+    {
+        $this->pluralName = $name;
     }
 
     /**

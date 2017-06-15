@@ -1,4 +1,53 @@
-<?php foreach( $languages as $lang):?>
-<h1><?= $this->translate($lang[1])?></h1>
-<?php print($this->formCollection($this->form->get("categories")->get($lang[0]))) ?>
-<?php endforeach ?>
+<div class="row">
+    <?php foreach( $languages as $lang):?>
+        <div class="col-md-6">
+            <h1><?= $this->translate($lang[1])?></h1>
+            <?php $fieldset = $this->form->get("categories")->get($lang[0]); ?>
+            <?php
+                $element = $fieldset->get('name');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('pluralName');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('slug');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('hidden');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+
+        </div>
+    <?php endforeach ?>
+</div>

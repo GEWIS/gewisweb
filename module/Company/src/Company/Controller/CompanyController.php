@@ -93,11 +93,15 @@ class CompanyController extends AbstractActionController
             ]);
         }
         // all jobs
-        return new ViewModel([
-            'jobList' => $companyService->getJobs(['jobCategory' => $jobCategory]),
-            'translator' => $companyService->getTranslator(),
-            'randomize' => true,
-        ]);
+        $jobs = $companyService->getJobs(['jobCategory' => $jobCategory]);
+        if (count($jobs) > 0) {
+            return new ViewModel([
+                'jobList' => $jobs,
+                'translator' => $companyService->getTranslator(),
+                'randomize' => true,
+            ]);
+        }
+        return $this->notFoundAction();
     }
 
     /**

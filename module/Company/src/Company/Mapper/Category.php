@@ -47,6 +47,19 @@ class Category
         return $this->getRepository()->findOneBy(['slug' => $categorySlug]);
     }
 
+    public function findVisibleCategoryByLanguage($categoryLanguage)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.language=:lang');
+        $qb->andWhere('c.hidden=:hidden');
+        $qb->setParameter('lang', $categoryLanguage);
+        $qb->setParameter('hidden', false);
+        $categories = $qb->getQuery()->getResult();
+
+        return $categories;
+    }
+
     /**
      * Inserts a new package into the given company
      *

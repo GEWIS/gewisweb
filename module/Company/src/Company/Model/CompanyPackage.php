@@ -127,7 +127,7 @@ abstract class CompanyPackage
      *
      * @return returns 0
      */
-    public function getNumberOfActiveJobs()
+    public function getNumberOfActiveJobs($category)
     {
         return 0;
     }

@@ -23,7 +23,7 @@ class FixedKeyDictionaryCollection extends Collection
     // Return a dictionary instead of an array
     public function bindValues(array $values = array())
     {
-        $collection = array();
+        $collection = [];
         foreach ($values as $name => $value) {
             $element = $this->get($name);
             $collection[$name] = $element instanceof FieldsetInterface ? $element->bindValues($value) : $value;
