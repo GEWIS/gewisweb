@@ -168,7 +168,7 @@ class Job
      *
      * @return bool
      */
-    protected function getActive()
+    public function getActive()
     {
         return $this->active;
     }
