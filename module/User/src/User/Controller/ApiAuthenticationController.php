@@ -3,6 +3,9 @@
 namespace User\Controller;
 
 
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use User\Service\ApiApp;
 use User\Service\User as UserService;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -14,7 +17,16 @@ class ApiAuthenticationController extends AbstractActionController
      */
     protected $userService;
 
+    /**
+     * @var ApiApp
+     */
+    protected $apiAppService;
 
+
+    /**
+     * ApiAuthenticationController constructor.
+     * @param UserService $userService
+     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -23,8 +35,15 @@ class ApiAuthenticationController extends AbstractActionController
     public function tokenAction()
     {
         $appId = $this->params()->fromRoute('appId');
-        var_dump($appId);
         $identity = $this->getUserService()->getIdentity();
+
+        if (!$identity instanceof User) {
+            throw new NotAllowedException('User not fully authenticated.');
+        }
+
+        return $this->redirect()->toUrl(
+            $this->getApiAppService()->callbackWithToken($appId, $identity)
+        );
     }
 
     /**
@@ -33,5 +52,13 @@ class ApiAuthenticationController extends AbstractActionController
     public function getUserService()
     {
         return $this->userService;
+    }
+
+    /**
+     * @return ApiApp
+     */
+    public function getApiAppService()
+    {
+        return $this->apiAppService;
     }
 }
