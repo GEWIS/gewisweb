@@ -40,6 +40,6 @@ class ApiApp
      */
     public function getRepository()
     {
-        $this->em->getRepository(ApiAppModel::class);
+        return $this->em->getRepository(ApiAppModel::class);
     }
 }

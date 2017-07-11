@@ -133,8 +133,9 @@ return [
                     'defaults' => [
                         'controller' => \User\Controller\ApiAuthenticationController::class,
                         'action' => 'token',
-                    ],
-                ]
+                    ]
+                ],
+                'priority' => 100
             ]
         ],
     ],

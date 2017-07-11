@@ -3,11 +3,12 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractAclService;
+use Application\Service\AbstractService;
+use Firebase\JWT\JWT;
 use User\Mapper\ApiApp as ApiAppMapper;
-use User\Model\User;
+use User\Model\User as UserModel;
 
-class ApiApp extends AbstractAclService
+class ApiApp extends AbstractService
 {
 
     /**
@@ -16,19 +17,34 @@ class ApiApp extends AbstractAclService
     protected $mapper;
 
     /**
+     * Constructor
+     *
+     * @param ApiAppMapper $mapper
+     */
+    public function __construct(ApiAppMapper $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
+    /**
      * Get a callback from an appId and a user identity
      * @param string $appId
-     * @param User $user
+     * @param UserModel $user
      * @return string
      */
-    public function callbackWithToken($appId, User $user)
+    public function callbackWithToken($appId, UserModel $user)
     {
         $app = $this->getMapper()->findByAppId($appId);
 
-        // TODO: create JWT token
-        $token = '';
+        $token = [
+            'iss' => 'https://gewis.nl/',
+            'exp' => (new \DateTime('+5 min'))->getTimestamp(),
+            'iat' => (new \DateTime())->getTimestamp(),
+            'lidnr' => $user->getLidnr(),
+            'nonce' => 
+        ];
 
-        return $app->getCallback() . '?token=' . $token;
+        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
     }
 
     /**

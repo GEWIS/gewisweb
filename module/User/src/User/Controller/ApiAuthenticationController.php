@@ -26,10 +26,12 @@ class ApiAuthenticationController extends AbstractActionController
     /**
      * ApiAuthenticationController constructor.
      * @param UserService $userService
+     * @param ApiApp $apiAppService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ApiApp $apiAppService)
     {
         $this->userService = $userService;
+        $this->apiAppService = $apiAppService;
     }
 
     public function tokenAction()

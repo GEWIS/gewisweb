@@ -5,7 +5,7 @@ namespace User\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ApiUser model
+ * ApiApp model
  *
  * @ORM\Entity
  */
