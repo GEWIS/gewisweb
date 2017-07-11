@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-26 11:54+0200\n"
-"PO-Revision-Date: 2017-04-26 11:56+0200\n"
+"PO-Revision-Date: 2017-07-11 14:46+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -1050,7 +1050,7 @@ msgstr "Algemene Vergadering"
 
 #: module/Application/view/partial/main-nav.phtml:113
 msgid "Board 2015/2016"
-msgstr "Bestuur 2016/2017"
+msgstr "Bestuur"
 
 #: module/Application/view/partial/main-nav.phtml:114
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
