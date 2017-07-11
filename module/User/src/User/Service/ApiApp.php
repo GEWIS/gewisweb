@@ -38,10 +38,10 @@ class ApiApp extends AbstractService
 
         $token = [
             'iss' => 'https://gewis.nl/',
+            'lidnr' => $user->getLidnr(),
             'exp' => (new \DateTime('+5 min'))->getTimestamp(),
             'iat' => (new \DateTime())->getTimestamp(),
-            'lidnr' => $user->getLidnr(),
-            'nonce' => 
+            'nonce' => bin2hex(random_bytes(16))
         ];
 
         return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
