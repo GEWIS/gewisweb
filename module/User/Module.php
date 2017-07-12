@@ -1,6 +1,8 @@
 <?php
 namespace User;
 
+use User\Service\ApiApp;
+use User\Service\Factory\ApiAppFactory;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
@@ -103,6 +105,8 @@ class Module
             ],
 
             'factories' => [
+                ApiApp::class => ApiAppFactory::class,
+                \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {
                     return new \User\Authentication\Storage\Session(
                         $sm
