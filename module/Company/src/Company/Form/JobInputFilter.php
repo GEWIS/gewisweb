@@ -15,9 +15,7 @@ class JobInputFilter extends InputFilter
     public function setData($data)
     {
 
-        var_dump($data);
         if($data['active'] == '0'){
-            echo "Set Validation Group";
             $this->setValidationGroup(['active']);
         }
 
@@ -26,8 +24,6 @@ class JobInputFilter extends InputFilter
     }
     public function setValidationGroup($arr)
     {
-        var_dump($arr);
-        var_dump(debug_backtrace());
         return parent::setValidationGroup($arr);
     }
     /**
@@ -44,9 +40,6 @@ class JobInputFilter extends InputFilter
         $this->validInputs   = [];
         $this->invalidInputs = [];
         $valid               = true;
-        echo "NONO";
-        var_dump($this->validationGroup);
-        var_dump($inputs);
         foreach ($inputs as $name) {
             $input       = $this->inputs[$name];
             // Validate an input filter

@@ -6,7 +6,7 @@ $locale = $this->translator->getLocale();
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
-$this->headTitle($this->translate('Jobs'));
+$this->headTitle($this->category->getPluralName());
 
 
 ?>
@@ -26,7 +26,7 @@ $this->headTitle($this->translate('Jobs'));
                 </li>
             <?php endif; ?>
             <li class="active">
-                <?= $this->translate('Jobs') ?>
+                <?= $category->getPluralName()?>
             </li>
         </ol>
     </div>
@@ -36,9 +36,8 @@ $this->headTitle($this->translate('Jobs'));
     <div class="container">
 
         <div class="job-list">
-
             <div class="row">
-                <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $this->translate('Jobs') ?>
+                <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $category->getPluralName() ?>
                     <?php if (isset($this->company)): ?>
                         <small>
                             <?= $this->translate('at') ?>
@@ -48,7 +47,6 @@ $this->headTitle($this->translate('Jobs'));
                         </small>
                     <?php endif; ?>
                 </h1>
-
                 <fieldset class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
                     <div class="form-group">
                         <label for="filter-all"><?= $this->translate('Search') ?></label>
@@ -65,6 +63,7 @@ $this->headTitle($this->translate('Jobs'));
             if ($randomize) {
                 shuffle($jobList);
             }
+<<<<<<< HEAD
             ?>
             <?php foreach ($jobList as $job): ?>
                 <?php if ($job->isActive()): ?>
@@ -98,13 +97,41 @@ $this->headTitle($this->translate('Jobs'));
                                     </p>
                                     <?php if ($job->getAttachment() !== ''): ?>
                                         <p class="job-vacancy">
-                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a>
+<a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?></a>
                                         </p>
                                     <?php endif; ?>
                                     <p class="job-website">
                                         <a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a>
                                     </p>
                                 </div>
+=======
+        ?>
+        <?php foreach ($jobList as $job):?>
+            <?php if ($job->isActive()):?>
+                <?php $company = $job->getPackage()->getCompany(); ?>
+
+                <div class="job-list-item list-item" id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
+                <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
+                        ['slugCompanyName' => $company->getSlugName(),
+                        'slugJobName' => $job->getSlugName(), 'category' => $job->getCategory()->getSlug()]) ?>"><?= $job->getName() ?></a>
+                    <small><?= $this->translate('at') ?> <a href="<?= $this->url('company/companyItem',
+                            ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a></small>
+                </h2>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                                <img class="company-logo img-responsive center-block" src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()); ?>" />
+                            </a>
+                            <div class="">
+                                <h4><?= $this->translate('Contact') ?></h4>
+                                <p class="job-contactName"><?= $job->getContactName() ?></p>
+                                <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
+                                <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
+                                <?php if ($job->getAttachment() !== '' && $job->getAttachment() !== null): ?>
+                                <p class="job-vacancy"><a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?></a></p>
+                                <?php endif; ?>
+                                <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a></p>
+>>>>>>> Improved interface for website user, fixed hidden checkbox
                             </div>
                             <div class="col-md-9">
                                 <h2><?= $this->translate('Description') ?></h2>

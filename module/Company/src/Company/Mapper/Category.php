@@ -61,6 +61,20 @@ class Category
     }
 
     /**
+     * Find the same category, but in the given language
+     *
+     */
+    public function siblingCategory($category, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.languageNeutralId=:categoryID')->andWhere('c.language=:language');
+        $qb->setParameter('categoryID', $category->getLanguageNeutralId());
+        $qb->setParameter('language', $lang);
+        $categories = $qb->getQuery()->getResult();
+        return $categories[0];
+    }
+    /**
      * Inserts a new package into the given company
      *
      */

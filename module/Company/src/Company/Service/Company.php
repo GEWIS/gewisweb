@@ -122,6 +122,18 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findAll();
     }
 
+    public function categoryForSlug($slug)
+    {
+        $translator = $this->getTranslator();
+        $mapper = $this->getCategoryMapper();
+        $category = $mapper->findCategory($slug);
+        $locale = $translator->getLocale();
+        if ($category->getLanguage() == $locale) {
+            return $category;
+        }
+        return $mapper->siblingCategory($category, $locale);
+    }
+
     public function getCategoryList($visible)
     {
         $translator = $this->getTranslator();

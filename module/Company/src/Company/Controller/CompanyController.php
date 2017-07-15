@@ -79,26 +79,28 @@ class CompanyController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
-        $jobCategory = $this->params('category');
+        $category = $companyService->categoryForSlug($this->params('category'));
         if (isset($companyName)) {
             // jobs for a single company
             return new ViewModel([
                 'company' => $companyService->getCompanyBySlugName($companyName),
                 'jobList' => $companyService->getJobs([
                     'companySlugName' => $companyName,
-                    'category' => $jobCategory
+                    'jobCategory' => $category->getSlug()
                 ]),
+                'category' => $category,
                 'translator' => $companyService->getTranslator(),
                 'randomize' => false,
             ]);
         }
         // all jobs
-        $jobs = $companyService->getJobs(['jobCategory' => $jobCategory]);
+        $jobs = $companyService->getJobs(['jobCategory' => $category->getSlug()]);
         if (count($jobs) > 0) {
             return new ViewModel([
                 'jobList' => $jobs,
                 'translator' => $companyService->getTranslator(),
                 'randomize' => true,
+                'category' => $category,
             ]);
         }
         return $this->notFoundAction();
@@ -114,17 +116,18 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
-        $category = $this->params('category');
+        $category = $companyService->categoryForSlug($this->params('category'));
         if ($jobName != null) {
             $jobs = $companyService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
-                'category' => $category
+                'jobCategory' => $category->getSlug()
             ]);
             if (count($jobs) > 0) {
                 return new ViewModel([
                     'job' => $jobs[0],
                     'translator' => $companyService->getTranslator(),
+                    'category' => $category,
                 ]);
             }
             return $this->notFoundAction();

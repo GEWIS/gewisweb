@@ -4,8 +4,10 @@ $form->prepare();
 ?>
 
 <?= $this->form()->openTag($form) ?>
+<div class="row">
 <?php foreach($languages as $lang):
 ?>
+<div class="col-md-6">
 <h1><?= $this->translate($lang[1]);?></h1>
 <?php
 $fieldset = $form->get('jobs')->get($lang[0]);
@@ -167,7 +169,9 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php endif;?>
+</div>
 <?php endforeach;?>
+</div>
 
 <?php
 $submit = $form->get('submit');

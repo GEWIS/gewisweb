@@ -183,15 +183,10 @@ class AdminController extends AbstractActionController
             )
         );
 
-        $languages = $companyService->getLanguages();
-        $f = function ($lang) use ($companyService) {
-            return [$lang, $companyService->getLanguageDescription($lang),];
-        };
-        $languageDescriptions = array_map($f, $languages);
         // Initialize the view
         $vm = new ViewModel([
             'form' => $companyForm,
-            'languages' => $languageDescriptions,
+            'languages' => $this->getLanguageDescriptions(),
         ]);
 
         $vm->setTemplate('company/admin/edit-job');
@@ -253,18 +248,22 @@ class AdminController extends AbstractActionController
             }
         }
 
+        $vm = new ViewModel([
+            'categories' => $categories,
+            'form' => $categoryForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+
+        return $vm;
+    }
+    private function getLanguageDescriptions() {
+        $companyService = $this->getCompanyService();
         $languages = $companyService->getLanguages();
         $f = function ($lang) use ($companyService) {
             return [$lang, $companyService->getLanguageDescription($lang),];
         };
         $languageDescriptions = array_map($f, $languages);
-        $vm = new ViewModel([
-            'categories' => $categories,
-            'form' => $categoryForm,
-            'languages' => $languageDescriptions,
-        ]);
-
-        return $vm;
+        return $languageDescriptions;
     }
     /**
      * Action that displays a form for editing a company
@@ -445,15 +444,11 @@ class AdminController extends AbstractActionController
         }
         $jobForm->bind($jobDict);
 
-        $f = function ($lang) use ($companyService) {
-            return [$lang, $companyService->getLanguageDescription($lang),];
-        };
-        $languageDescriptions = array_map($f, $languages);
         // Initialize the view
         return new ViewModel([
             'form' => $jobForm,
             'job' => $job,
-            'languages' => $languageDescriptions,
+            'languages' => $this->getLanguageDescriptions(),
         ]);
     }
 
@@ -516,15 +511,10 @@ class AdminController extends AbstractActionController
                 ['action' => 'addCategory']
             )
         );
-        $languages = $companyService->getLanguages();
-        $f = function ($lang) use ($companyService) {
-            return [$lang, $companyService->getLanguageDescription($lang),];
-        };
-        $languageDescriptions = array_map($f, $languages);
         // Initialize the view
         return new ViewModel([
             'form' => $categoryForm,
-            'languages' => $languageDescriptions,
+            'languages' => $this->getLanguageDescriptions(),
         ]);
     }
 

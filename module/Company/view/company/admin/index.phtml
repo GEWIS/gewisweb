@@ -40,7 +40,7 @@
                                 ['categoryID' => $category->getLanguageNeutralId()]);
                            ?>
                            <tr>
-                               <td><a href=<?= $editUrl; ?>><?= $category->getName(); ?></a></td>
+                           <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
                            </tr>
                            <?php endforeach; ?>
                     </tbody>
