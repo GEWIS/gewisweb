@@ -38,56 +38,55 @@ class Module
         return include __DIR__.'/config/module.config.php';
     }
 
-    function getFormFactories()
+    private function getFormFactories()
     {
         return [
             'company_admin_edit_package_form' => function ($sm) {
-                    return new \Company\Form\EditPackage(
-                        $sm->get('translator'),
-                        "job"
-                    );
-                },
-                'company_admin_edit_featuredpackage_form' => function ($sm) {
-                    return new \Company\Form\EditPackage(
-                        $sm->get('translator'),
-                        "featured"
-                    );
-                },
-                'company_admin_edit_category_form' => function ($sm) {
-                    $form = new \Company\Form\EditCategory(
-                        $sm->get('company_mapper_category'),
-                        $sm->get('translator'),
-                        $sm->get('application_get_languages'),
-                        $sm->get('company_hydrator')
-                    );
-                    return $form;
-                },
-                'company_admin_edit_bannerpackage_form' => function ($sm) {
-                    return new \Company\Form\EditPackage(
-                        $sm->get('translator'),
-                        "banner"
-                    );
-                },
-                'company_admin_edit_company_form' => function ($sm) {
-                    return new \Company\Form\EditCompany(
-                        $sm->get('company_mapper_company'),
-                        $sm->get('translator')
-                    );
-                },
-                'company_admin_edit_job_form' => function ($sm) {
-                    $form = new \Company\Form\EditJob(
-                        $sm->get('company_mapper_job'),
-                        $sm->get('translator'),
-                        $sm->get('application_get_languages'),
-                        $sm->get('company_hydrator')
-                    );
-                    $form->setHydrator($sm->get('company_hydrator'));
-                    return $form;
-                },
-            ];
-
+                return new \Company\Form\EditPackage(
+                    $sm->get('translator'),
+                    "job"
+                );
+            },
+            'company_admin_edit_featuredpackage_form' => function ($sm) {
+                return new \Company\Form\EditPackage(
+                    $sm->get('translator'),
+                    "featured"
+                );
+            },
+            'company_admin_edit_category_form' => function ($sm) {
+                $form = new \Company\Form\EditCategory(
+                    $sm->get('company_mapper_category'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
+                return $form;
+            },
+            'company_admin_edit_bannerpackage_form' => function ($sm) {
+                return new \Company\Form\EditPackage(
+                    $sm->get('translator'),
+                    "banner"
+                );
+            },
+            'company_admin_edit_company_form' => function ($sm) {
+                return new \Company\Form\EditCompany(
+                    $sm->get('company_mapper_company'),
+                    $sm->get('translator')
+                );
+            },
+            'company_admin_edit_job_form' => function ($sm) {
+                $form = new \Company\Form\EditJob(
+                    $sm->get('company_mapper_job'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
+                $form->setHydrator($sm->get('company_hydrator'));
+                return $form;
+            },
+        ];
     }
-    function getMapperFactories()
+    private function getMapperFactories()
     {
         return [
             'company_mapper_company' => function ($sm) {
@@ -123,7 +122,7 @@ class Module
         ];
     }
 
-    function getOtherFactories()
+    private function getOtherFactories()
     {
         return [
             'company_doctrine_em' => function ($sm) {

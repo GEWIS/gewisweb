@@ -731,7 +731,7 @@ class Company extends AbstractACLService
      * Returns the companyMapper
      *
      */
-    function getCompanyMapper()
+    private function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');
     }
@@ -740,7 +740,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    function getPackageMapper()
+    private function getPackageMapper()
     {
         return $this->sm->get('company_mapper_package');
     }
@@ -749,7 +749,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    function getBannerPackageMapper()
+    private function getBannerPackageMapper()
     {
         return $this->sm->get('company_mapper_bannerpackage');
     }

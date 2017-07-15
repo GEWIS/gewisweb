@@ -18,8 +18,8 @@ class JobFieldset extends Fieldset
         $this->translator = $translator;
         $this->setHydrator($hydrator);
         $this->addFields();
-
     }
+
     public function addFields($translator)
     {
         $this->add([
