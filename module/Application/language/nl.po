@@ -1692,7 +1692,7 @@ msgstr "Vakcode"
 
 #: module/Education/view/education/education/index.phtml:54
 msgid "Course name"
-msgstr "Vak naam"
+msgstr "Vaknaam"
 
 #: module/Education/view/education/education/index.phtml:55
 msgid "Available documents"
