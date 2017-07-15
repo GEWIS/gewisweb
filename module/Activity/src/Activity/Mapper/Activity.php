@@ -178,6 +178,8 @@ class Activity
     {
         $qb = $this->getArchivedActivityQueryBuilder()
             ->setMaxResults(1)
+            ->where('a.status = :status')
+            ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->orderBy('a.beginTime', 'DESC');
 
         $res = $qb->getQuery()->getResult();
@@ -193,6 +195,8 @@ class Activity
     public function getOldestActivity()
     {
         $qb = $this->getArchivedActivityQueryBuilder()
+            ->where('a.status = :status')
+            ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->setMaxResults(1)
             ->orderBy('a.beginTime', 'ASC');
 
@@ -208,6 +212,8 @@ class Activity
             ->setParameter('start', $start)
             ->andWhere('a.endTime <= :end')
             ->setParameter('end', $end)
+            ->andWhere('a.status = :status')
+            ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->orderBy('a.beginTime', 'ASC');
 
         return $qb->getQuery()->getResult();

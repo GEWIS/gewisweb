@@ -349,7 +349,7 @@ class ActivityController extends AbstractActionController
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
 
-        $years = $queryService->getActivityYears();
+        $years = $queryService->getActivityArchiveYears();
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.
         if (is_null($year)) {

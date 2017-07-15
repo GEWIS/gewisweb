@@ -270,22 +270,21 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
-     * Get all the years activities took place
+     * Get all the years activities have taken place in the past
      *
      * @return array
      */
-    public function getActivityYears()
+    public function getActivityArchiveYears()
     {
         $oldest = $this->getActivityMapper()->getOldestActivity();
-        $newest = $this->getActivityMapper()->getNewestActivity();
-        if (is_null($oldest) || is_null($newest) || is_null($oldest->getBeginTime()) || is_null($newest->getBeginTime())) {
+        if (is_null($oldest) || is_null($oldest->getBeginTime())) {
             return [null];
         }
 
         $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
-        $endYear = AssociationYear::fromDate($newest->getBeginTime())->getYear();
+        $endYear = AssociationYear::fromDate(new \DateTime())->getYear();
 
-        // We make the reasonable assumption that at least one photo is taken every year
+        // We make the reasonable assumption that there is at least one activity
         return range($startYear, $endYear);
     }
 
@@ -308,6 +307,9 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             return [];
         }
         $associationYear = AssociationYear::fromYear($year);
-        return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $associationYear->getEndDate());
+
+        $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
+
+        return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
 }
