@@ -128,7 +128,7 @@ class Company extends AbstractACLService
         $mapper = $this->getCategoryMapper();
         $category = $mapper->findCategory($slug);
         $locale = $translator->getLocale();
-        if ($category->getLanguage() == $locale) {
+        if ($category == null || $category->getLanguage() == $locale) {
             return $category;
         }
         return $mapper->siblingCategory($category, $locale);

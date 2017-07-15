@@ -8,7 +8,7 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
-    public function __construct($mapper, Translator $translate, $languages, $hydrator)
+    public function __construct($mapper, Translator $translator, $languages, $hydrator)
     {
         // we want to ignore the name passed
         parent::__construct();
@@ -27,7 +27,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             'options' => [
                 'use_as_base_fieldset' => true,
                 'count' => count($languages),
-                'target_element' => new JobFieldset($mapper, $translate, $this->getHydrator()),
+                'target_element' => new JobFieldset($mapper, $translator, $this->getHydrator()),
                 'items' => $languages,
             ]
         ]);
@@ -36,17 +36,17 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
-                'value' => $translate->translate('Submit changes'),
+                'value' => $translator->translate('Submit changes'),
                 'id' => 'submitbutton',
             ],
         ]);
-        $this->translate = $translate;
+        $this->translator = $translator;
 
-        $this->initFilters($translate);
+        $this->initFilters($translator);
     }
     protected function initFilters($translate)
     {
-        $supremeFilter = new InputFilter();
+        $parentFilter = new InputFilter();
         $rootFilter =  new InputFilter();
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
@@ -74,10 +74,10 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'validators' => [
                     new \Zend\Validator\Callback([
                         'callback' => [$this,'slugNameUnique'],
-                        'message' => $this->translate->translate('This slug is already taken'),
+                        'message' => $this->translator->translate('This slug is already taken'),
                     ]),
                     new \Zend\Validator\Regex([
-                        'message' => $this->translate->translate('This slug contains invalid characters') ,
+                        'message' => $this->translator->translate('This slug contains invalid characters') ,
                         'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                     ]),
                 ],
@@ -168,8 +168,9 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             $rootFilter->add($filter, $lang);
 
         }
-        $supremeFilter->add($rootFilter, $this->baseFieldset->getName());
-        $this->extraInputFilter = $supremeFilter;
+        $parentFilter->add($rootFilter, $this->baseFieldset->getName());
+        $this->extraInputFilter = $parentFilter;
+        $this->setInputFilter($parentFilter);
     }
 
     public function getInputFilter()
@@ -177,7 +178,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         return $this->extraInputFilter;
     }
 
-    private $translate;
+    private $translator;
 
     private $companySlug;
 

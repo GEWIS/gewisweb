@@ -80,6 +80,9 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         $category = $companyService->categoryForSlug($this->params('category'));
+        if ($category == null) {
+            return $this->notFoundAction();
+        }
         if (isset($companyName)) {
             // jobs for a single company
             return new ViewModel([
