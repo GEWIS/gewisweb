@@ -110,7 +110,6 @@ class Module
                     $helper = new \Application\View\Helper\JobCategories();
                     $helper->setServiceLocator($locator);
                     return $helper;
-
                 },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();

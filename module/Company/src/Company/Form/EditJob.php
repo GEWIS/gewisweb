@@ -42,9 +42,9 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         ]);
         $this->translator = $translator;
 
-        $this->initFilters($translator);
+        $this->initFilters();
     }
-    protected function initFilters($translate)
+    protected function initFilters()
     {
         $parentFilter = new InputFilter();
         $rootFilter =  new InputFilter();
@@ -144,7 +144,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                     [
                         'name' => 'Callback',
                         'options' => [
-                            'callback' => function($value) {
+                            'callback' => function ($value) {
                                 // If no file is uploaded, we don't care, because it is optional
                                 if ($value['error'] == 4) {
                                     return true;
@@ -154,7 +154,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                                     return false;
                                 }
                                 $mimeValidator = Zend\Validator\File\MimeType('application/pdf');
-                                return $mimeValidator->isValid($values);
+                                return $mimeValidator->isValid($value);
 
                             }
                         ],

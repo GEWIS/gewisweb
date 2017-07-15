@@ -629,7 +629,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getEditableJobsByLanguageNeutralId($companySlugName, $languageNeutralId)
+    public function getEditableJobsByLanguageNeutralId($languageNeutralId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -731,7 +731,7 @@ class Company extends AbstractACLService
      * Returns the companyMapper
      *
      */
-    public function getCompanyMapper()
+    function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');
     }
@@ -740,7 +740,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    public function getPackageMapper()
+    function getPackageMapper()
     {
         return $this->sm->get('company_mapper_package');
     }
@@ -749,7 +749,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    public function getBannerPackageMapper()
+    function getBannerPackageMapper()
     {
         return $this->sm->get('company_mapper_bannerpackage');
     }

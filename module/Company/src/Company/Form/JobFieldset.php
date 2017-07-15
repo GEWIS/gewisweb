@@ -9,30 +9,32 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
-    public function __construct($mapper, Translator $translate, $hydrator)
+    public function __construct($mapper, Translator $translator, $hydrator)
     {
-        // we want to ignore the name passed
         parent::__construct();
 
         $this->setAttribute('method', 'post');
         $this->mapper = $mapper;
-        $this->translate = $translate;
+        $this->translator = $translator;
         $this->setHydrator($hydrator);
+        $this->addFields();
 
+    }
+    public function addFields($translator)
+    {
         $this->add([
             'name' => 'id',
             'attributes' => [
                 'type' => 'hidden',
             ],
         ]);
-
         $this->add([
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Name'),
+                'label' => $translator->translate('Name'),
             ],
         ]);
         $this->add([
@@ -41,14 +43,14 @@ class JobFieldset extends Fieldset
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Permalink'),
+                'label' => $translator->translate('Permalink'),
             ],
         ]);
         $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
-                'label' => $translate->translate('Active'),
+                'label' => $translator->translate('Active'),
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
@@ -60,7 +62,7 @@ class JobFieldset extends Fieldset
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Website'),
+                'label' => $translator->translate('Website'),
                 'required' => false,
             ],
         ]);
@@ -71,7 +73,7 @@ class JobFieldset extends Fieldset
                 'type' => 'file',
             ],
             'options' => [
-                'label' => $translate->translate('Attachment'),
+                'label' => $translator->translate('Attachment'),
                 'required' => false,
             ],
         ]);
@@ -82,7 +84,7 @@ class JobFieldset extends Fieldset
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Email'),
+                'label' => $translator->translate('Email'),
                 'required' => false,
             ],
         ]);
@@ -92,7 +94,7 @@ class JobFieldset extends Fieldset
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Contact name'),
+                'label' => $translator->translate('Contact name'),
                 'required' => false,
             ],
         ]);
@@ -102,7 +104,7 @@ class JobFieldset extends Fieldset
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Phone'),
+                'label' => $translator->translate('Phone'),
                 'required' => false,
             ],
         ]);
@@ -110,7 +112,7 @@ class JobFieldset extends Fieldset
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
-                'label' => $translate->translate('Description'),
+                'label' => $translator->translate('Description'),
                 'required' => false,
             ],
         ]);

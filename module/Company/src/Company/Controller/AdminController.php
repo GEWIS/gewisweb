@@ -256,7 +256,8 @@ class AdminController extends AbstractActionController
 
         return $vm;
     }
-    private function getLanguageDescriptions() {
+    private function getLanguageDescriptions()
+    {
         $companyService = $this->getCompanyService();
         $languages = $companyService->getLanguages();
         $f = function ($lang) use ($companyService) {
@@ -406,7 +407,7 @@ class AdminController extends AbstractActionController
 
 
         // Find the specified jobs
-        $jobs = $companyService->getEditableJobsByLanguageNeutralId($companyName, $languageNeutralId);
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
 
         // Check the job is found. If not, throw 404
         if (empty($jobs)) {

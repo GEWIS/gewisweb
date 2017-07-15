@@ -53,11 +53,12 @@ class CompanyJobPackage extends CompanyPackage
      */
     public function getJobsInCategory($category)
     {
-        $filter = function ($job) use ($category){
-            if ($category == null){
+        $filter = function ($job) use ($category) {
+            if ($category == null) {
                 return true;
             }
-            return $job->getCategory()->getLanguageNeutralId() ===  $category->getLanguageNeutralId() && $job->isActive() && $job->getLanguage() === $category->getLanguage();
+            return $job->getCategory()->getLanguageNeutralId() ===  $category->getLanguageNeutralId() 
+                && $job->isActive() && $job->getLanguage() === $category->getLanguage();
         };
         $filteredJobs = array_filter($this->jobs->toArray(), $filter);
         return $filteredJobs;
