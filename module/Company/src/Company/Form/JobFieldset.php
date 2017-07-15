@@ -114,19 +114,6 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
-        //$this->add([
-        //'name' => 'category',
-        //'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-        //'options' => [
-        //'label' => $translate->translate('Category'),
-        //'object_manager' => $objectManager,
-        //'target_class' => 'Company\Model\JobCategory',
-        //'property' => 'category'
-        //],
-        ////'attributes' => [
-        ////'class' => 'form-control input-sm'
-        ////]
-        //]);
     }
     protected $mapper;
     protected $translate;

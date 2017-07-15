@@ -49,11 +49,14 @@ class Job
      */
     public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
-        $objects = $this->findJob(['companySlugName' => $companySlug, 'jobSlug' =>  $slugName,  'category' => $category]);
+        // A slug in unique if there is no other slug of the same category and same language
+        $objects = $this->findJob(['companySlugName' => $companySlug, 'jobSlug' =>  $slugName,  'jobCategory' => $category]);
         foreach ($objects as $job) {
-            if ($job->getID() != $jid && $category != $job->getCategory()->getId()) {
-                return false;
+            // If the current job is in the database under the same slug, we can safely skip it
+            if ($job->getID() == $jid ) {
+                continue;
             }
+            return false;
         }
         return true;
     }
@@ -97,7 +100,7 @@ class Job
 
         if (isset($dict['jobCategory'])) {
             $category = $dict['jobCategory'];
-            $qb->andWhere('cat.slug=:category');
+            $qb->andWhere('cat.id=:category');
             $qb->setParameter('category', $category);
         }
 

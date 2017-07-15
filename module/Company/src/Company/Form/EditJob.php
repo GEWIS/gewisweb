@@ -220,7 +220,8 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             return true;
         }
 
-        return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
+        $val =  $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
+        return $val;
 
     }
 }
