@@ -5,6 +5,7 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Decision\Model\AssociationYear as AssociationYear;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -281,8 +282,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             return [null];
         }
 
-        $startYear = $this->getAssociationYear($oldest->getBeginTime());
-        $endYear = $this->getAssociationYear($newest->getBeginTime());
+        $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
+        $endYear = AssociationYear::fromDate($newest->getBeginTime())->getYear();
 
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
@@ -306,36 +307,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!is_int($year)) {
             return [];
         }
-
-        $start = \DateTime::createFromFormat(
-            'Y-m-d H:i:s',
-            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
-        );
-        $end = \DateTime::createFromFormat(
-            'Y-m-d H:i:s',
-            ($year + 1) . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-' . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
-        );
-
-        return $this->getActivityMapper()->getArchivedActivitiesInRange($start, $end);
-    }
-
-    /**
-     * Returns the association year to which a certain date belongs
-     * In this context an association year is defined as the year which contains
-     * the first day of the association year.
-     *
-     * Example: A value of 2010 would represent the association year 2010/2011
-     *
-     * @param \DateTime $date
-     *
-     * @return int representing an association year.
-     */
-    protected function getAssociationYear(\DateTime $date)
-    {
-        if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
-            return $date->format('Y') - 1;
-        } else {
-            return $date->format('Y');
-        }
+        $associationYear = AssociationYear::fromYear($year);
+        return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $associationYear->getEndDate());
     }
 }
