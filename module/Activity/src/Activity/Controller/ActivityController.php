@@ -343,7 +343,8 @@ class ActivityController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function archiveAction() {
+    public function archiveAction()
+    {
 
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
@@ -354,8 +355,6 @@ class ActivityController extends AbstractActionController
         // If no year is supplied, use the latest year.
         if (is_null($year)) {
             $year = max($years);
-        } else {
-            $year = (int)$year;
         }
 
         $activities = $queryService->getFinishedActivitiesByYear($year);

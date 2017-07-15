@@ -303,9 +303,6 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        if (!is_int($year)) {
-            return [];
-        }
         $associationYear = AssociationYear::fromYear($year);
 
         $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
