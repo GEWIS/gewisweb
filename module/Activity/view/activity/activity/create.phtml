@@ -10,32 +10,43 @@ $this->headScript()
 
 $form->prepare();
 ?>
+<style>
+    .row-spacing-top--lg { margin-top: 4rem; }
+</style>
 <section class="section">
     <div class="container">
         <?= $this->form()->openTag($form) ?>
         <div class="row">
             <div class="col-md-12">
                 <h1><?= $this->translate('Create an activity') ?></h1>
-                <hr>
-                <?= $this->partial('partial/create', [
-                    'form' => $form
-                ])
-                ?>
+            </div>
+        </div>
+        <div class="row row-spacing-top">
+            <div class="col-md-12">
+                <h2>Organizer</h2>
+                <p><?= $this->translate('Select which organ or fraternity is responsible for the activity. Individual initiatives are also welcome!') ?></p>
+            </div>
+            <div class="col-md-6">
                 <?php
                 $organ = $form->get('organ');
                 $organ->setAttribute('class', 'form-control');
                 $organ->setAttribute('id', 'organizing-organ');
                 ?>
-                <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                    <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
-                        <?= $this->translate('Organizing committee / fraternity') ?>
+                <div class="form-group <?= count($organ->getMessages()) > 0 ? 'has-error' : '' ?>">
+                    <label for="<?= $organ->getAttribute('id'); ?>" class="control-label">
+                        <?= $this->translate('Committee / fraternity') ?>
                     </label>
-                    <div class="col-sm-10">
-                        <?= $this->formSelect($organ) ?>
-                        <?= $this->formElementErrors($organ) ?>
-                    </div>
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->partial('partial/create', [ 'form' => $form ]) ?>
+            </div>
+        </div>
+        <div class="row row-spacing-top--lg">
             <div class="col-md-12">
                 <?php
                 /* render template for fields */
@@ -44,7 +55,7 @@ $form->prepare();
                 echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
                 $tpl = trim(ob_get_clean())
                 ?>
-                <h3><?= $this->translate('Additional signup fields') ?></h3>
+                <h2><?= $this->translate('Additional fields') ?></h2>
                 <fieldset id="additionalFields">
                     <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
                     <?php
@@ -66,6 +77,8 @@ $form->prepare();
                     </div>
                 </fieldset>
             </div>
+        </div>
+        <div class="row row-spacing-top--lg">
             <div class="col-md-12">
                 <?php
                 $submit = $form->get('submit');
@@ -76,8 +89,8 @@ $form->prepare();
                     <?= $this->formButton($submit) ?>
                 </div>
             </div>
-            <?= $this->form()->closeTag(); ?>
         </div>
+        <?= $this->form()->closeTag(); ?>
     </div>
 </section>
 
