@@ -1,6 +1,7 @@
 <style>
-    .row-spacing-top--lg { margin-top: 4rem; }
-    .row-spacing-top--md { margin-top: 2.5rem; }
+    .spacing-top--lg { margin-top: 4rem; }
+    .spacing-top--md { margin-top: 2.5rem; }
+    .spacing-top--sm { margin-top: 1rem; }
 
     label { cursor: pointer;}
     label input[type=checkbox] { margin-right: 1.5rem; }
@@ -8,14 +9,14 @@
     .label-required:after { content: "*"; color: #d40026; }
 </style>
 
-<div class="row row-spacing-top--lg">
+<div class="row spacing-top--lg">
     <div class="col-md-12">
         <h2><?= $this->translate('Date and time') ?></h2>
         <p><?= $this->translate('Enter the begin and end date of the activity. Optionally, enter the ultimate date a participant can subscribe.') ?></p>
     </div>
     <div class="col-md-6">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 spacing-top--sm">
                 <?php
                 $beginTime = $form->get('beginTime');
                 $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
@@ -28,7 +29,7 @@
                     <?= $this->formElementErrors($beginTime) ?>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 spacing-top--sm">
                 <?php
                 $endTime = $form->get('endTime');
                 $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
@@ -42,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="row row-spacing-top--md">
+        <div class="row spacing-top--md">
             <?php
             $subscriptionDeadline = $form->get('subscriptionDeadline');
             $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
@@ -60,13 +61,12 @@
     </div>
 </div>
 
-<div class="row row-spacing-top--lg">
+<div class="row spacing-top--lg">
     <div class="col-md-12">
         <h2><?= $this->translate('Translations') ?></h2>
         <p><?= $this->translate('Choose which translations you want to fill-in. At least one translation needs to be filled in.') ?></p>
-        <hr />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 spacing-top--md">
         <?php
         $dutchElement = $form->get('language_dutch');
         $dutchElement->setAttribute('onchange', 'Activity.updateForm()');
@@ -144,7 +144,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 spacing-top--md">
         <?php
         $englishElement = $form->get('language_english');
         $englishElement->setAttribute('onchange', 'Activity.updateForm()');
@@ -223,7 +223,7 @@
     </div>
 </div>
 
-<div class="row row-spacing-top--lg">
+<div class="row spacing-top--lg">
     <div class="col-md-12">
         <h2><?= $this->translate('Options') ?></h2>
         <p>Choose which options are applicable to the activity.</p>
