@@ -1,113 +1,126 @@
 <div class="field" id="additionalField<?= $this->index ?>">
-    <div class="form-group form-inline">
+    <div class="row">
         <?php
-        $element = $this->fs->get('name');
-        $element->setAttribute('class', 'form-control form-control-dutch');
-        $element->setAttribute('id', 'name-field');
-        $element->setAttribute('placeholder', $element->getLabel());
+        /** @var \Zend\Form\Element $type */
+        $type = $this->fs->get('type')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'field-type--' . $this->index)
+            ->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index . ')');
+
+        /** @var \Zend\Form\Element[] $name */
+        $name = [];
+
+        $name['nl'] = $this->fs->get('name')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'field-name-nl--' . $this->index);
+
+        $name['en'] = $this->fs->get('nameEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'field-name-en--' . $this->index);
         ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-4">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="<?= $type->getAttribute('id') ?>">
+                    <?= $type->getLabel() ?>:
+                </label>
+                <?= $this->formSelect($type) ?>
+                <?= $this->formElementErrors($type) ?>
             </div>
         </div>
-        <?php
-        $element = $this->fs->get('nameEn');
-        $element->setAttribute('class', 'form-control form-control-english');
-        $element->setAttribute('id', 'name-en-field');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-4">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
+        <div class="col-md-4">
+            <div class="form-group spacing-top-sm--sm <?= hasError($name['nl']) ?>">
+                <label for="<?= $name['nl']->getAttribute('id') ?>">
+                    <?= $name['nl']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-nl"></i>)</span>:
+                </label>
+                <?= $this->formInput($name['nl']) ?>
+                <?= $this->formElementErrors($name['nl']) ?>
             </div>
         </div>
-        <?php
-        $element = $this->fs->get('type');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('id', 'type-field');
-        $element->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index. ')');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-        <div class="form-group">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-4"><?= $element->getLabel()
-                ?></label>
-            <div class="col-sm-10">
-                <?= $this->formSelect($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
-    </div>
-    <div class="form-group form-inline field-dependant type-2" style="display:none;">
-        <?php
-        $element = $this->fs->get('min. value');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('id', 'min-value-field');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-4">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
-        <?php
-        $element = $this->fs->get('max. value');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('id', 'max-value-field');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-4">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
+        <div class="col-md-4">
+            <div class="form-group spacing-top-sm--sm <?= hasError($name['en']) ?>">
+                <label for="<?= $name['en']->getAttribute('id') ?>">
+                    <?= $name['en']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-en"></i>)</span>:
+                </label>
+                <?= $this->formInput($name['en']) ?>
+                <?= $this->formElementErrors($name['en']) ?>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline field-dependant type-3" style="display:none;">
+    <div class="row field-dependant type-2" style="display:none;">
         <?php
-        $element = $this->fs->get('options');
-        $element->setAttribute('class', 'form-control form-control-dutch');
-        $element->setAttribute('id', 'options-field');
-        $element->setAttribute('placeholder', $element->getLabel());
+        /** @var \Zend\Form\Element $minValue */
+        $minValue = $this->fs->get('min. value')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'field-min--' . $this->index);
+
+        /** @var \Zend\Form\Element $maxValue */
+        $maxValue = $this->fs->get('max. value')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'field-max--' . $this->index);
         ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
+        <div class="col-md-3 col-md-offset-1">
+            <div class="row spacing-top--sm">
+                <div class="col-md-12">
+                    <div class="form-group <?= hasError($minValue) ?>">
+                        <label for="<?= $minValue->getAttribute('id') ?>">
+                            <?= $minValue->getLabel() ?>:
+                        </label>
+                        <?= $this->formInput($minValue) ?>
+                        <?= $this->formElementErrors($minValue) ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row spacing-top--sm">
+                <div class="col-md-12">
+                    <div class="form-group <?= hasError($maxValue) ?>">
+                        <label for="<?= $maxValue->getAttribute('id') ?>">
+                            <?= $maxValue->getLabel() ?>:
+                        </label>
+                        <?= $this->formInput($maxValue) ?>
+                        <?= $this->formElementErrors($maxValue) ?>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="row spacing-top--sm field-dependant type-3" style="display:none;">
         <?php
-        $element = $this->fs->get('optionsEn');
-        $element->setAttribute('class', 'form-control form-control-english');
-        $element->setAttribute('id', 'options-en-field');
-        $element->setAttribute('placeholder', $element->getLabel());
+        /** @var \Zend\Form\Element[] $options */
+        $options = [];
+
+        $options['nl'] = $this->fs->get('options')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'field-options-nl--' . $this->index)
+            ->setAttribute('placeholder', $this->translate('Option 1, option 2, ...'));
+
+
+        $options['en'] = $this->fs->get('optionsEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'field-options-en--' . $this->index)
+            ->setAttribute('placeholder', $this->translate('Option 1, option 2, ...'));
         ?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5">
-                <?= $element->getLabel() ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
+        <div class="col-md-4 col-md-offset-4">
+            <div class="form-group <?= hasError($options['nl']) ?>">
+                <label for="<?= $options['nl']->getAttribute('id') ?>">
+                    <?= $options['nl']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-nl"></i>)</span>:
+                </label>
+                <?= $this->formInput($options['nl']) ?>
+                <?= $this->formElementErrors($options['nl']) ?>
             </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group spacing-top-sm--sm <?= hasError($options['en']) ?>">
+                <label for="<?= $options['en']->getAttribute('id') ?>">
+                    <?= $options['en']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-en"></i>)</span>:
+                </label>
+                <?= $this->formInput($options['en']) ?>
+                <?= $this->formElementErrors($options['en']) ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
         </div>
     </div>
 </div>

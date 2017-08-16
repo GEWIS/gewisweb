@@ -8,10 +8,48 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 
-$form->prepare();
 ?>
+
+<?php
+
+use Zend\Form\ElementInterface;
+use Zend\Form\Form;
+
+/** @var Form $form */
+$form->prepare();
+
+function hasError(ElementInterface $input)
+{
+    return count($input->getMessages()) > 0 ? 'has-error' : '';
+}
+?>
+
 <style>
+
+    .spacing-top--lg { margin-top: 4rem; }
+    .spacing-top--md { margin-top: 2.5rem; }
+    .spacing-top--sm { margin-top: 1rem; }
+
+    .flag-icon-nl { background-image: url('/img/nl.svg'); }
+    .flag-icon-en { background-image: url('/img/en.svg'); }
+
+
     .row-spacing-top--lg { margin-top: 4rem; }
+
+    @media (max-width: 992px) {
+        .show-sm { display: inline-block; }
+        #additionalFieldsHeader { display: none !important; }
+        .spacing-top-sm--sm { margin-top: 1rem; }
+    }
+
+    @media (min-width: 992px) {
+        .hide-md { display: none; }
+        .hide-lg { display: none; }
+
+        .spacing-top-sm--sm { margin-top: 0; }
+
+        #additionalFieldsHeader { display: block; }
+    }
 </style>
 <section class="section">
     <div class="container">
@@ -21,19 +59,19 @@ $form->prepare();
                 <h1><?= $this->translate('Create an activity') ?></h1>
             </div>
         </div>
-        <div class="row row-spacing-top">
+        <div class="row">
             <div class="col-md-12">
                 <h2>Organizer</h2>
                 <p><?= $this->translate('Select which organ or fraternity is responsible for the activity. Individual initiatives are also welcome!') ?></p>
             </div>
             <div class="col-md-6">
                 <?php
-                $organ = $form->get('organ');
-                $organ->setAttribute('class', 'form-control');
-                $organ->setAttribute('id', 'organizing-organ');
+                $organ = $form->get('organ')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'organizing-organ');
                 ?>
-                <div class="form-group <?= count($organ->getMessages()) > 0 ? 'has-error' : '' ?>">
-                    <label for="<?= $organ->getAttribute('id'); ?>" class="control-label">
+                <div class="form-group <?= hasError($organ) ?>">
+                    <label for="<?= $organ->getAttribute('id') ?>" class="control-label">
                         <?= $this->translate('Committee / fraternity') ?>
                     </label>
                     <?= $this->formSelect($organ) ?>
@@ -46,7 +84,25 @@ $form->prepare();
                 <?= $this->partial('partial/create', [ 'form' => $form ]) ?>
             </div>
         </div>
-        <div class="row row-spacing-top--lg">
+        <div class="row spacing-top--lg">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Additional fields') ?></h2>
+                <p><?= $this->translate('Add additional fields to collect specific information from the participants.') ?></p>
+            </div>
+        </div>
+        <div class="row spacing-top--sm" id="additionalFieldsHeader" style="display: none">
+            <div class="col-md-4 col-md-offset-4">
+                <i class="flag-icon flag-icon-nl"></i>
+                <strong><?= $this->translate('Dutch') ?></strong>
+                <hr />
+            </div>
+            <div class="col-md-4">
+                <i class="flag-icon flag-icon-en"></i>
+                <strong><?= $this->translate('English') ?></strong>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <?php
                 /* render template for fields */
@@ -55,12 +111,11 @@ $form->prepare();
                 echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
                 $tpl = trim(ob_get_clean())
                 ?>
-                <h2><?= $this->translate('Additional fields') ?></h2>
                 <fieldset id="additionalFields">
                     <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
                     <?php
                     $index = 0;
-                    foreach ($form->get('fields')->getIterator() as $fs){
+                    foreach ($form->get('fields')->getIterator() as $fs) {
                         echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
                         $index++;
                     }
@@ -81,9 +136,9 @@ $form->prepare();
         <div class="row row-spacing-top--lg">
             <div class="col-md-12">
                 <?php
-                $submit = $form->get('submit');
-                $submit->setLabel($this->translate('Create activity'));
-                $submit->setAttribute('class', 'btn btn-primary');
+                $submit = $form->get('submit')
+                    ->setLabel($this->translate('Create activity'))
+                    ->setAttribute('class', 'btn btn-primary');
                 ?>
                 <div class="form-group">
                     <?= $this->formButton($submit) ?>
@@ -93,14 +148,7 @@ $form->prepare();
         <?= $this->form()->closeTag(); ?>
     </div>
 </section>
-
 <script>
-    $('[name="beginTime"]').datetimepicker();
-    $('[name="endTime"]').datetimepicker();
-    $('[name="subscriptionDeadline"]').datetimepicker();
-    $('.markdown-editor').each(function() {
-      $(this).markdown();
-    });
     Activity.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
         Activity.updateFieldset(i);

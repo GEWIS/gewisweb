@@ -1,8 +1,10 @@
-<style>
-    .spacing-top--lg { margin-top: 4rem; }
-    .spacing-top--md { margin-top: 2.5rem; }
-    .spacing-top--sm { margin-top: 1rem; }
+<?php
 
+use Zend\Form\Form;
+
+/** @var Form $form */
+?>
+<style>
     label { cursor: pointer;}
     label input[type=checkbox] { margin-right: 1.5rem; }
 
@@ -16,12 +18,13 @@
     </div>
     <div class="col-md-6">
         <div class="row">
-            <div class="col-md-6 spacing-top--sm">
+            <div class="col-md-6">
                 <?php
-                $beginTime = $form->get('beginTime');
-                $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
+                $beginTime = $form->get('beginTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'begin-time');
                 ?>
-                <div class="form-group <?= count($beginTime->getMessages()) > 0 ? 'has-error' : '' ?>">
+                <div class="form-group <?= hasError($beginTime) ?>">
                     <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('Begin date') ?>
                     </label>
@@ -29,12 +32,13 @@
                     <?= $this->formElementErrors($beginTime) ?>
                 </div>
             </div>
-            <div class="col-md-6 spacing-top--sm">
+            <div class="col-md-6 spacing-top-sm--sm">
                 <?php
-                $endTime = $form->get('endTime');
-                $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
+                $endTime = $form->get('endTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'end-time');
                 ?>
-                <div class="form-group <?= count($endTime->getMessages()) > 0 ? 'has-error' : '' ?>">
+                <div class="form-group <?= hasError($endTime) ?>">
                     <label for="<?= $endTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('End date') ?>
                     </label>
@@ -45,11 +49,12 @@
         </div>
         <div class="row spacing-top--md">
             <?php
-            $subscriptionDeadline = $form->get('subscriptionDeadline');
-            $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
+            $subscriptionDeadline = $form->get('subscriptionDeadline')
+                ->setAttribute('class', 'form-control')
+                ->setAttribute('id', 'deadline-date');
             ?>
             <div class="col-md-6">
-                <div class="form-group <?= count($subscriptionDeadline->getMessages()) > 0 ? 'has-error' : '' ?>">
+                <div class="form-group <?= hasError($subscriptionDeadline) ?>">
                     <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label">
                         <?= $this->translate('Subscription deadline') ?>
                     </label>
@@ -60,82 +65,80 @@
         </div>
     </div>
 </div>
-
 <div class="row spacing-top--lg">
     <div class="col-md-12">
         <h2><?= $this->translate('Translations') ?></h2>
         <p><?= $this->translate('Choose which translations you want to fill-in. At least one translation needs to be filled in.') ?></p>
     </div>
-    <div class="col-md-6 spacing-top--md">
+    <div class="col-md-6">
         <?php
+        /** @var \Zend\Form\Element\Checkbox $dutchElement */
         $dutchElement = $form->get('language_dutch');
-        $dutchElement->setAttribute('onchange', 'Activity.updateForm()');
-        $dutchElement->setAttribute('id', 'dutch-check');
-        $dutchElement->setAttribute('class', '');
+
+        $dutchElement
+            ->setChecked(isset($languages) ? $languages['nl'] : false)
+            ->setAttribute('onchange', 'Activity.updateForm()')
+            ->setAttribute('id', 'dutch-check')
+            ->setAttribute('class', '');
+
         ?>
-        <div class="form-group <?= count($dutchElement->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($dutchElement) ?>">
             <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
-                <?php $dutchElement->setChecked(isset($languages) ? $languages['nl'] : false); ?>
+                <?php  ?>
                 <?= $this->formCheckbox($dutchElement) ?>
-                <i class="flag-icon flag-icon-nl" style="background-image: url('/img/nl.svg');"></i>
+                <i class="flag-icon flag-icon-nl"></i>
                 <?= $this->translate('Dutch') ?>
             </label>
             <?= $this->formElementErrors($dutchElement) ?>
         </div>
-
         <hr />
-
         <?php
-        $name = $form->get('name');
-        $name->setAttribute('disabled', 'disabled');
-        $name->setAttribute('class', 'form-control form-control-dutch');
-        $name->setAttribute('id', 'name-nl');
+        $name = $form->get('name')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'name-nl');
         ?>
-        <div class="form-group <?= count($name->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($name) ?>">
             <label for="<?= $name->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Name') ?>
             </label>
             <?= $this->formInput($name) ?>
             <?= $this->formElementErrors($name) ?>
         </div>
-
         <?php
-        $location = $form->get('location');
-        $location->setAttribute('disabled', 'disabled');
-        $location->setAttribute('class', 'form-control form-control-dutch');
-        $location->setAttribute('id', 'location-nl');
+        $location = $form->get('location')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'location-nl');
         ?>
-        <div class="form-group<?= count($location->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <div class="form-group <?= hasError($location) ?>">
             <label for="<?= $location->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Location') ?>
             </label>
             <?= $this->formInput($location) ?>
             <?= $this->formElementErrors($location) ?>
         </div>
-
-
         <?php
-        $costs = $form->get('costs');
-        $costs->setAttribute('disabled', 'disabled');
-        $costs->setAttribute('class', 'form-control form-control-dutch');
-        $costs->setAttribute('id', 'cost-nl');
+        $costs = $form->get('costs')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'cost-nl');
         ?>
-        <div class="form-group <?= count($costs->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($costs) ?>">
             <label for="<?= $costs->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Costs') ?>
             </label>
             <?= $this->formInput($costs) ?>
             <?= $this->formElementErrors($costs) ?>
         </div>
-
         <?php
-        $description = $form->get('description');
-        $description->setAttribute('class', 'form-control form-control-dutch markdown-editor');
-        $description->setAttribute('style', 'width:100%; height:10em; resize:none');
-        $description->setAttribute('data-provide', 'markdown');
-        $description->setAttribute('id', 'description-nl');
+        $description = $form->get('description')
+            ->setAttribute('class', 'form-control form-control-dutch markdown-editor')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('data-provide', 'markdown')
+            ->setAttribute('id', 'description-nl');
         ?>
-        <div class="form-group <?= count($description->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($description) ?>">
             <label for="<?= $description->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Description') ?>
             </label>
@@ -143,77 +146,73 @@
             <?= $this->formElementErrors($description) ?>
         </div>
     </div>
-
-    <div class="col-md-6 spacing-top--md">
+    <div class="col-md-6">
         <?php
+        /** @var \Zend\Form\Element\Checkbox $englishElement */
         $englishElement = $form->get('language_english');
-        $englishElement->setAttribute('onchange', 'Activity.updateForm()');
-        $englishElement->setAttribute('id', 'english-check');
-        $englishElement->setAttribute('class', '');
-        ?>
-        <div class="form-group <?= count($englishElement->getMessages()) > 0 ? 'has-error' : '' ?>">
 
-            <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
-                <?php $englishElement->setChecked(isset($languages) ? $languages['en'] : false); ?>
+        $englishElement
+            ->setChecked(isset($languages) ? $languages['en'] : false)
+            ->setAttribute('onchange', 'Activity.updateForm()')
+            ->setAttribute('id', 'english-check')
+            ->setAttribute('class', '');
+        ?>
+        <div class="form-group <?= hasError($englishElement) ?>">
+            <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
                 <?= $this->formCheckbox($englishElement) ?>
-                <i class="flag-icon flag-icon-en" style="background-image: url('/img/en.svg');"></i>
+                <i class="flag-icon flag-icon-en"></i>
                 <?= $this->translate('English') ?>
             </label>
             <?= $this->formElementErrors($englishElement) ?>
         </div>
-
         <hr />
-
         <?php
-        $nameEn = $form->get('nameEn');
-        $nameEn->setAttribute('disabled', 'disabled');
-        $nameEn->setAttribute('class', 'form-control form-control-english');
-        $nameEn->setAttribute('id', 'name-en');
+        $nameEn = $form->get('nameEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'name-en');
         ?>
-        <div class="form-group <?= count($nameEn->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($nameEn) ?>">
             <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Name') ?>
             </label>
             <?= $this->formInput($nameEn) ?>
             <?= $this->formElementErrors($nameEn) ?>
         </div>
-
         <?php
-        $locationEn = $form->get('locationEn');
-        $locationEn->setAttribute('disabled', 'disabled');
-        $locationEn->setAttribute('class', 'form-control form-control-english');
-        $locationEn->setAttribute('id', 'location-en');
+        $locationEn = $form->get('locationEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'location-en');
         ?>
-        <div class="form-group <?= count($locationEn->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($locationEn) ?>">
             <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Location') ?>
             </label>
             <?= $this->formInput($locationEn) ?>
             <?= $this->formElementErrors($locationEn) ?>
         </div>
-
         <?php
-        $costsEn = $form->get('costsEn');
-        $costsEn->setAttribute('disabled', 'disabled');
-        $costsEn->setAttribute('class', 'form-control form-control-english');
-        $costsEn->setAttribute('id', 'cost-en');
+        $costsEn = $form->get('costsEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'cost-en');
         ?>
-        <div class="form-group <?= count($costsEn->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($costsEn) ?>">
             <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Costs') ?>
             </label>
             <?= $this->formInput($costsEn) ?>
             <?= $this->formElementErrors($costsEn) ?>
         </div>
-
         <?php
-        $descriptionEn = $form->get('descriptionEn');
-        $descriptionEn->setAttribute('class', 'form-control form-control-english markdown-editor');
-        $descriptionEn->setAttribute('style', 'width:100%; height:10em; resize:none');
-        $descriptionEn->setAttribute('data-provide', 'markdown');
-        $descriptionEn->setAttribute('id', 'description-en');
+        $descriptionEn = $form->get('descriptionEn')
+            ->setAttribute('class', 'form-control form-control-english markdown-editor')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('data-provide', 'markdown')
+            ->setAttribute('id', 'description-en');
         ?>
-        <div class="form-group <?= count($descriptionEn->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($descriptionEn) ?>">
             <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Description') ?>
             </label>
@@ -222,17 +221,15 @@
         </div>
     </div>
 </div>
-
 <div class="row spacing-top--lg">
     <div class="col-md-12">
         <h2><?= $this->translate('Options') ?></h2>
-        <p>Choose which options are applicable to the activity.</p>
-
+        <p><?= $this->translate('Choose which options are applicable to the activity.') ?></p>
         <?php
-        $canSignUp = $form->get('canSignUp');
-        $canSignUp->setAttribute('id', 'can-sign-up');
+        $canSignUp = $form->get('canSignUp')
+            ->setAttribute('id', 'can-sign-up');
         ?>
-        <div class="form-group <?= count($canSignUp->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($canSignUp) ?>">
             <label for="<?= $canSignUp->getAttribute('id') ?>">
                 <?= $this->formCheckbox($canSignUp) ?>
                 <?= $this->translate('Enable subscriptions') ?>
@@ -240,12 +237,12 @@
                 <?= $this->formElementErrors($canSignUp) ?>
             </label>
         </div>
-
         <?php
-            $onlyGEWIS = $form->get('onlyGEWIS');
-            $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()')->setAttribute('id', 'only-gewis');
+        $onlyGEWIS = $form->get('onlyGEWIS')
+            ->setAttribute('onchange', 'Activity.toggleExternal()')
+            ->setAttribute('id', 'only-gewis');
         ?>
-        <div class="form-group <?= count($onlyGEWIS->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($onlyGEWIS) ?>">
             <label for="<?= $onlyGEWIS->getAttribute('id') ?>">
                 <?= $this->formCheckbox($onlyGEWIS) ?>
                 <?= $this->translate('Allow external participants') ?>
@@ -253,12 +250,11 @@
                 <?= $this->formElementErrors($onlyGEWIS) ?>
             </label>
         </div>
-
         <?php
-            $displaySubscribedNumber = $form->get('displaySubscribedNumber');
-            $displaySubscribedNumber->setAttribute('id', 'display-subscriber-number');
+        $displaySubscribedNumber = $form->get('displaySubscribedNumber')
+            ->setAttribute('id', 'display-subscriber-number');
         ?>
-        <div class="form-group <?= count($displaySubscribedNumber->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($displaySubscribedNumber) ?>">
             <label for="<?= $displaySubscribedNumber->getAttribute('id') ?>">
                 <?= $this->formCheckbox($displaySubscribedNumber) ?>
                 <?= $this->translate('Display number of subscribed members') ?>
@@ -266,12 +262,11 @@
                 <?= $this->formElementErrors($displaySubscribedNumber) ?>
             </label>
         </div>
-
         <?php
-        $isFood = $form->get('isFood');
-        $isFood->setAttribute('id', 'is-food');
+        $isFood = $form->get('isFood')
+            ->setAttribute('id', 'is-food');
         ?>
-        <div class="form-group <?= count($isFood->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($isFood) ?>">
             <label for="<?= $isFood->getAttribute('id') ?>">
                 <?= $this->formCheckbox($isFood) ?>
                 <?= $this->translate('This is a food subscription list') ?>
@@ -279,12 +274,11 @@
                 <?= $this->formElementErrors($isFood) ?>
             </label>
         </div>
-
         <?php
-        $isMyFuture = $form->get('isMyFuture');
-        $isMyFuture->setAttribute('id', 'is-my-future');
+        $isMyFuture = $form->get('isMyFuture')
+            ->setAttribute('id', 'is-my-future');
         ?>
-        <div class="form-group <?= count($isMyFuture->getMessages()) > 0 ? 'has-error' : '' ?>">
+        <div class="form-group <?= hasError($isMyFuture) ?>">
             <label for="<?= $isMyFuture->getAttribute('id') ?>">
                 <?= $this->formCheckbox($isMyFuture) ?>
                 <?= $this->translate('This is a career related activity') ?>
@@ -294,3 +288,11 @@
         </div>
     </div>
 </div>
+<script>
+$('[name="beginTime"]').datetimepicker();
+$('[name="endTime"]').datetimepicker();
+$('[name="subscriptionDeadline"]').datetimepicker();
+$('.markdown-editor').each(function() {
+    $(this).markdown();
+});
+</script>
