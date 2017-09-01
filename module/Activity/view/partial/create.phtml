@@ -24,7 +24,7 @@ use Zend\Form\Form;
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'begin-time');
                 ?>
-                <div class="form-group <?= hasError($beginTime) ?>">
+                <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
                     <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('Begin date') ?>
                     </label>
@@ -38,7 +38,7 @@ use Zend\Form\Form;
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'end-time');
                 ?>
-                <div class="form-group <?= hasError($endTime) ?>">
+                <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
                     <label for="<?= $endTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('End date') ?>
                     </label>
@@ -54,7 +54,7 @@ use Zend\Form\Form;
                 ->setAttribute('id', 'deadline-date');
             ?>
             <div class="col-md-6">
-                <div class="form-group <?= hasError($subscriptionDeadline) ?>">
+                <div class="form-group <?= $this->bootstrapElementError($subscriptionDeadline) ?>">
                     <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label">
                         <?= $this->translate('Subscription deadline') ?>
                     </label>
@@ -82,7 +82,7 @@ use Zend\Form\Form;
             ->setAttribute('class', '');
 
         ?>
-        <div class="form-group <?= hasError($dutchElement) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($dutchElement) ?>">
             <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
                 <?php  ?>
                 <?= $this->formCheckbox($dutchElement) ?>
@@ -98,7 +98,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'name-nl');
         ?>
-        <div class="form-group <?= hasError($name) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($name) ?>">
             <label for="<?= $name->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Name') ?>
             </label>
@@ -111,7 +111,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'location-nl');
         ?>
-        <div class="form-group <?= hasError($location) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($location) ?>">
             <label for="<?= $location->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Location') ?>
             </label>
@@ -124,7 +124,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'cost-nl');
         ?>
-        <div class="form-group <?= hasError($costs) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($costs) ?>">
             <label for="<?= $costs->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Costs') ?>
             </label>
@@ -138,7 +138,7 @@ use Zend\Form\Form;
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-nl');
         ?>
-        <div class="form-group <?= hasError($description) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($description) ?>">
             <label for="<?= $description->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Description') ?>
             </label>
@@ -157,7 +157,7 @@ use Zend\Form\Form;
             ->setAttribute('id', 'english-check')
             ->setAttribute('class', '');
         ?>
-        <div class="form-group <?= hasError($englishElement) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($englishElement) ?>">
             <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
                 <?= $this->formCheckbox($englishElement) ?>
                 <i class="flag-icon flag-icon-en"></i>
@@ -172,7 +172,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'name-en');
         ?>
-        <div class="form-group <?= hasError($nameEn) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
             <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Name') ?>
             </label>
@@ -185,7 +185,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'location-en');
         ?>
-        <div class="form-group <?= hasError($locationEn) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($locationEn) ?>">
             <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Location') ?>
             </label>
@@ -198,7 +198,7 @@ use Zend\Form\Form;
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'cost-en');
         ?>
-        <div class="form-group <?= hasError($costsEn) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($costsEn) ?>">
             <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Costs') ?>
             </label>
@@ -212,7 +212,7 @@ use Zend\Form\Form;
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-en');
         ?>
-        <div class="form-group <?= hasError($descriptionEn) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($descriptionEn) ?>">
             <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label label-required">
                 <?= $this->translate('Description') ?>
             </label>
@@ -229,7 +229,7 @@ use Zend\Form\Form;
         $canSignUp = $form->get('canSignUp')
             ->setAttribute('id', 'can-sign-up');
         ?>
-        <div class="form-group <?= hasError($canSignUp) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($canSignUp) ?>">
             <label for="<?= $canSignUp->getAttribute('id') ?>">
                 <?= $this->formCheckbox($canSignUp) ?>
                 <?= $this->translate('Enable subscriptions') ?>
@@ -242,7 +242,7 @@ use Zend\Form\Form;
             ->setAttribute('onchange', 'Activity.toggleExternal()')
             ->setAttribute('id', 'only-gewis');
         ?>
-        <div class="form-group <?= hasError($onlyGEWIS) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($onlyGEWIS) ?>">
             <label for="<?= $onlyGEWIS->getAttribute('id') ?>">
                 <?= $this->formCheckbox($onlyGEWIS) ?>
                 <?= $this->translate('Allow external participants') ?>
@@ -254,7 +254,7 @@ use Zend\Form\Form;
         $displaySubscribedNumber = $form->get('displaySubscribedNumber')
             ->setAttribute('id', 'display-subscriber-number');
         ?>
-        <div class="form-group <?= hasError($displaySubscribedNumber) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
             <label for="<?= $displaySubscribedNumber->getAttribute('id') ?>">
                 <?= $this->formCheckbox($displaySubscribedNumber) ?>
                 <?= $this->translate('Display number of subscribed members') ?>
@@ -266,7 +266,7 @@ use Zend\Form\Form;
         $isFood = $form->get('isFood')
             ->setAttribute('id', 'is-food');
         ?>
-        <div class="form-group <?= hasError($isFood) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($isFood) ?>">
             <label for="<?= $isFood->getAttribute('id') ?>">
                 <?= $this->formCheckbox($isFood) ?>
                 <?= $this->translate('This is a food subscription list') ?>
@@ -278,7 +278,7 @@ use Zend\Form\Form;
         $isMyFuture = $form->get('isMyFuture')
             ->setAttribute('id', 'is-my-future');
         ?>
-        <div class="form-group <?= hasError($isMyFuture) ?>">
+        <div class="form-group <?= $this->bootstrapElementError($isMyFuture) ?>">
             <label for="<?= $isMyFuture->getAttribute('id') ?>">
                 <?= $this->formCheckbox($isMyFuture) ?>
                 <?= $this->translate('This is a career related activity') ?>

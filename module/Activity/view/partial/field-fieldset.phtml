@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group spacing-top-sm--sm <?= hasError($name['nl']) ?>">
+            <div class="form-group spacing-top-sm--sm <?= $this->bootstrapElementError($name['nl']) ?>">
                 <label for="<?= $name['nl']->getAttribute('id') ?>">
                     <?= $name['nl']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-nl"></i>)</span>:
                 </label>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group spacing-top-sm--sm <?= hasError($name['en']) ?>">
+            <div class="form-group spacing-top-sm--sm <?= $this->bootstrapElementError($name['en']) ?>">
                 <label for="<?= $name['en']->getAttribute('id') ?>">
                     <?= $name['en']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-en"></i>)</span>:
                 </label>
@@ -61,7 +61,7 @@
         <div class="col-md-3 col-md-offset-1">
             <div class="row spacing-top--sm">
                 <div class="col-md-12">
-                    <div class="form-group <?= hasError($minValue) ?>">
+                    <div class="form-group <?= $this->bootstrapElementError($minValue) ?>">
                         <label for="<?= $minValue->getAttribute('id') ?>">
                             <?= $minValue->getLabel() ?>:
                         </label>
@@ -72,7 +72,7 @@
             </div>
             <div class="row spacing-top--sm">
                 <div class="col-md-12">
-                    <div class="form-group <?= hasError($maxValue) ?>">
+                    <div class="form-group <?= $this->bootstrapElementError($maxValue) ?>">
                         <label for="<?= $maxValue->getAttribute('id') ?>">
                             <?= $maxValue->getLabel() ?>:
                         </label>
@@ -100,7 +100,7 @@
             ->setAttribute('placeholder', $this->translate('Option 1, option 2, ...'));
         ?>
         <div class="col-md-4 col-md-offset-4">
-            <div class="form-group <?= hasError($options['nl']) ?>">
+            <div class="form-group <?= $this->bootstrapElementError($options['nl']) ?>">
                 <label for="<?= $options['nl']->getAttribute('id') ?>">
                     <?= $options['nl']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-nl"></i>)</span>:
                 </label>
@@ -109,7 +109,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group spacing-top-sm--sm <?= hasError($options['en']) ?>">
+            <div class="form-group spacing-top-sm--sm <?= $this->bootstrapElementError($options['en']) ?>">
                 <label for="<?= $options['en']->getAttribute('id') ?>">
                     <?= $options['en']->getLabel() ?><span class="show-sm hide-md">&nbsp;(<i class="flag-icon flag-icon-en"></i>)</span>:
                 </label>

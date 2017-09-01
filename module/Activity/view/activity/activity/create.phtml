@@ -9,21 +9,14 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 
 ?>
-
 <?php
 
-use Zend\Form\ElementInterface;
 use Zend\Form\Form;
 
 /** @var Form $form */
 $form->prepare();
 
-function hasError(ElementInterface $input)
-{
-    return count($input->getMessages()) > 0 ? 'has-error' : '';
-}
 ?>
-
 <style>
 
     .spacing-top--lg { margin-top: 4rem; }
@@ -70,7 +63,7 @@ function hasError(ElementInterface $input)
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'organizing-organ');
                 ?>
-                <div class="form-group <?= hasError($organ) ?>">
+                <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
                     <label for="<?= $organ->getAttribute('id') ?>" class="control-label">
                         <?= $this->translate('Committee / fraternity') ?>
                     </label>
