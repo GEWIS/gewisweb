@@ -12,7 +12,7 @@ $showName = false;
 switch ($form->getType()) {
     case Activity\Form\ActivitySignup::USER:
         $submitUrl = $this->url('activity/signup', ['id' => $activity->getId() ]);
-        $submitText = $this->translate('Subscribe');
+        $submitText = $this->translate('Confirm subscription');
         break;
     case Activity\Form\ActivitySignup::EXTERNAL_USER:
         $submitUrl = $this->url('activity/externalSignup', ['id' => $activity->getId() ]);
@@ -29,11 +29,18 @@ switch ($form->getType()) {
 
 function formElementRender($element, $label, $id, $context){
     $element->setAttribute('id', $id);
+    $elementType = (new \ReflectionClass($element))->getShortName();
+    if (!in_array($elementType, ['Radio','Checkbox'])) {
+        $element->setAttribute('class', 'form-control');
+    }
     $result = '<div class="form-group' . (count($element->getMessages()) > 0 ? ' has-error' : '') . '">';
-    $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label col-sm-2">' . $label . '</label>';
-    $result .= '<div class="col-sm-10">';
-    $result .= $context->formRow($element);
-    $result .= '</div>';
+    $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label">' . $label . '</label>';
+    if (in_array($elementType, ['Radio'])) {
+        $context->formRadio()->setSeparator('</div><div class="radio">');
+        $result .= '<div class="radio">'.$context->formRadio($element).'</div>';
+    } else {
+        $result .= $context->formRow($element);
+    }
     $result .= '</div>';
     return $result;
 }
@@ -44,25 +51,17 @@ function formElementRender($element, $label, $id, $context){
       echo $this->form()->openTag($form);
 ?>
 <?php if($showName): ?>
-<div class="form-group form-inline">
      <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this)?>
-</div>
-<div class="form-group form-inline">
      <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this)?>
-</div>
 <?php endif; ?>
 
 <?php if($showCaptcha): ?>
-<div class="form-group form-inline">
      <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
-</div>
 <?php endif; ?>
 
-<div class="form-group form-inline">
     <?php foreach($activity->getFields() as $field):?>
          <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()), $field->getId(), $this) ?>
     <?php endforeach;?>
-</div>
 
 <?php
     $submit = $form->get('submit');
