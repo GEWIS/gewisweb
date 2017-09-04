@@ -8,27 +8,31 @@ $this->headTitle($this->translate('Activities'));
                 <?= $this->translate('Activities') ?>
             </h1>
 
-            <ul class="nav nav-pills col-md-5 col-sm-5 col-xs-12">
-                <li role="presentation" class="<?= $category === null ? 'active' : '' ?>">
-                    <a href="<?= $this->url('activity') ?>"><?= $this->translate('All Activities') ?></a>
-                </li>
-                <li role="presentation" class="<?= $category === 'career' ? 'active' : '' ?>">
-                    <a href="<?= $this->url('activity/career') ?>"><?= $this->translate('Career Activities') ?></a>
-                </li>
-            </ul>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="<?= $category === null ? 'active' : '' ?>">
+                        <a href="<?= $this->url('activity') ?>"><?= $this->translate('All Activities') ?></a>
+                    </li>
+                    <li role="presentation" class="<?= $category === 'career' ? 'active' : '' ?>">
+                        <a href="<?= $this->url('activity/career') ?>"><?= $this->translate('Career Activities') ?></a>
+                    </li>
+                </ul>
+            </div>
+
+
             <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-                <a href="<?= $this->url('activity/create') ?>" class="col-md-3 col-sm-4 col-xs-12 pull-right ">
-                    <button class="btn btn-primary">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <?php echo $this->translate('Create Activity'); ?>
-                    </button>
+            <div class="col-md-3 col-sm-4 col-xs-12 pull-right">
+                <a href="<?= $this->url('activity/create') ?>" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <?=$this->translate('Create Activity')?>
                 </a>
+            </div>
             <?php endif; ?>
         </div>
 
         <br>
         <?php
-            echo $this->partial('activity/activity/list.phtml',[
+            echo $this->partial('activity/activity/list.phtml', [
                 'activities' => $activities,
             ]);
         ?>
