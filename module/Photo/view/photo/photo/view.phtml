@@ -4,7 +4,7 @@ $this->headTitle($this->translate('Photo'));
 $album = $photo->getAlbum();
 $this->headTitle($album->getName());
 $currentAlbum = $album;
-while(!is_null($currentAlbum->getParent())) {
+while (!is_null($currentAlbum->getParent())) {
     $this->headTitle($currentAlbum->getParent()->getName());
     $currentAlbum = $currentAlbum->getParent();
 }
@@ -37,16 +37,16 @@ $this->scriptUrl()->requireUrl('member/search');
                 // first we need to get all parents
                 $crumbs = [];
                 $currentAlbum = $photo->getAlbum();
-                while(!is_null($currentAlbum->getParent())) {
+                while (!is_null($currentAlbum->getParent())) {
                     // prepend parent to array
                     array_unshift($crumbs, [
-                        'url'  => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
+                        'url' => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
                         'name' => $currentAlbum->getParent()->getName()
                     ]);
                     $currentAlbum = $currentAlbum->getParent();
                 }
                 // then we print them
-                foreach($crumbs as $crumb): ?>
+                foreach ($crumbs as $crumb): ?>
                     <li>
                         <a href="<?= $crumb['url'] ?>">
                             <?= $this->escapeHtml($crumb['name']) ?>
@@ -64,64 +64,91 @@ $this->scriptUrl()->requireUrl('member/search');
             </ol>
         </div>
     </section>
-    <div class="container">
-        <nav>
-            <ul class="pager">
-                <li class="previous">
-                    <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
-                        <span aria-hidden="true">&larr;</span>
-                        <?= $this->translate('Return to album') ?>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="row">
-            <div class="col-lg-9">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <a href="<?= is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>">
-                                <img style="width:100%" src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>" alt=""/>
-                            </a>
-                            <?php if(!is_null($photo->getWeeklyPhoto())): ?>
-                                <div class="carousel-caption">
-                                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
-                                    <?= $this->translate('Photo of the week') ?>
-                                    <?= $photo->getWeeklyPhoto()->getWeek()->format('d-m-Y') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <?php if (!is_null($previous)): ?>
-                        <a id="previous" class="left carousel-control"
-                           href="<?= $this->url('photo/photo', ['photo_id' => $previous->getId()]); ?>" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only"><?= $this->translate('Previous') ?></span>
+    <section class="section">
+        <div class="container">
+            <nav>
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                            <span aria-hidden="true">&larr;</span>
+                            <?= $this->translate('Return to album') ?>
                         </a>
-                        <?php
-                    endif;
-                    if (!is_null($next)): ?>
-                        <a id="next" class="right carousel-control"
-                           href="<?= $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only"><?= $this->translate('Next') ?></span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="row">
+                <div class="col-lg-9">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <a href="<?= is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>">
+                                    <img
+                                        style="width:100%"
+                                        src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>"
+                                        alt=""
+                                    />
+                                </a>
+                                <?php if (!is_null($photo->getWeeklyPhoto())): ?>
+                                    <div class="carousel-caption">
+                                        <span
+                                            class="glyphicon glyphicon-certificate"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <?= $this->translate('Photo of the week') ?>
+                                        <?= $photo->getWeeklyPhoto()->getWeek()->format('d-m-Y') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php if (!is_null($previous)): ?>
+                            <a
+                                id="previous"
+                                class="left carousel-control"
+                                href="<?= $this->url('photo/photo', ['photo_id' => $previous->getId()]); ?>"
+                                role="button"
+                                data-slide="prev"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-chevron-left"
+                                    aria-hidden="true"
+                                ></span>
+                                <span class="sr-only"><?= $this->translate('Previous') ?></span>
+                            </a>
+                            <?php
+                        endif;
+                        if (!is_null($next)): ?>
+                            <a
+                                id="next"
+                                class="right carousel-control"
+                                href="<?= $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>"
+                                role="button"
+                                data-slide="next"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-chevron-right"
+                                    aria-hidden="true"
+                                ></span>
+                                <span class="sr-only"><?= $this->translate('Next') ?></span>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
+                    <?php if ($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
+                        <a
+                            class="btn btn-default" href="<?= $this->url('photo/photo_download',
+                            ['photo_id' => $photo->getId()]); ?>"
+                        >
+                            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                            <?= $this->translate('Full resolution'); ?>
                         </a>
                     <?php endif; ?>
+                    <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
-                <?php if($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
-                    <a class="btn btn-default" href="<?= $this->url('photo/photo_download',
-                        ['photo_id' => $photo->getId()]); ?>">
-                        <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                        <?= $this->translate('Full resolution'); ?>
-                    </a>
-                <?php endif; ?>
-                <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
-            </div>
         </div>
-    </div>
+    </section>
 
     <script>
         $(document).ready(function () {

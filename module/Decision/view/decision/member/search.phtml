@@ -3,30 +3,37 @@
 $this->headTitle($this->translate('Zoeken op lid'));
 $this->headTitle($this->translate('Members')); ?>
 
-<div class="container">
-    <div class="form-group">
-        <label for=""><?= $this->translate('Zoeken op lid') ?></label>
-        <input type="text" class="form-control" placeholder="<?= $this->translate('Zoek') ?>" id="member-search"
-               autofocus>
-    </div>
+<section class="section">
+    <div class="container">
+        <div class="form-group">
+            <label for=""><?= $this->translate('Zoeken op lid') ?></label>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="<?= $this->translate('Zoek') ?>"
+                id="member-search"
+                autofocus
+            >
+        </div>
 
-    <table class="table table-hover" id="members-result">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th><?= $this->translate('Naam') ?></th>
-            <th><?= $this->translate('Generatie') ?></th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <tfoot style="display: none">
-        <tr>
-            <td colspan="4"> <?= $this->translate('Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten te zien.') ?></td>
-        </tr>
-        </tfoot>
-    </table>
-</div>
+        <table class="table table-hover" id="members-result">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?= $this->translate('Naam') ?></th>
+                    <th><?= $this->translate('Generatie') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot style="display: none">
+                <tr>
+                    <td colspan="4"> <?= $this->translate('Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten te zien.') ?></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
 
 <script>
     var urlTemplate = '<?= $this->url('member/view', ['lidnr' => '__LIDNR__']) ?>';

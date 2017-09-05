@@ -7,95 +7,103 @@ $this->headTitle($this->translate('Members')); ?>
     ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
 ?>
 <?php
+
 use Decision\Model\Member;
 use Decision\Model\Address;
+
 ?>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h1><?= $member->getFullName() ?></h1>
-            <table class="table table-bordered">
-                <tr>
-                    <th><?= $this->translate('Gender') ?></th>
-                    <td><?php
-                        switch ($member->getGender()) {
-                            case Member::GENDER_MALE:
-                                echo $this->translate('Male');
-                                break;
-                            case Member::GENDER_FEMALE:
-                                echo $this->translate('Female');
-                                break;
-                            case Member::GENDER_OTHER:
-                                echo $this->translate('Other');
-                                break;
-                        }
-                        ?></td>
-                </tr>
-                <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
-                <tr>
-                    <th><?= $this->translate('Email') ?></th>
-                    <td><a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a></td>
-                </tr>
-                <?php endif; ?>
-                <tr>
-                    <th><?= $this->translate('Birth date') ?></th>
-                    <td><?= $member->getBirth()->format('l j F Y') ?></td>
-                </tr>
-                <tr>
-                    <th><?= $this->translate('Generation') ?></th>
-                    <td><?= $member->getGeneration() ?></td>
-                </tr>
-            </table>
-            <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
-            <ul>
-                <?php foreach ($memberships as $abbr => $install): ?>
-                    <li><a href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
-                            $abbr ]) ?>"><?= $abbr ?></a>
-                        <?php $functions = $install['functions']; ?>
-                        <?php if (!empty($functions)): ?> (<?=
-                            $functions ?>)
-                        <?php endif ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
-            <h3><?= $this->translate('Adresses') ?></h3>
-            <?php foreach ($member->getAddresses() as $address): ?>
-                <h4><?php
-                    switch ($address->getType()) {
-                        case Address::TYPE_HOME:
-                            echo $this->translate('Home address (parents)');
-                            break;
-                        case Address::TYPE_STUDENT:
-                            echo $this->translate('Student address');
-                            break;
-                        case Address::TYPE_MAIL:
-                            echo $this->translate('Mail address');
-                            break;
-                    }
-                    ?></h4>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><?= $member->getFullName() ?></h1>
                 <table class="table table-bordered">
                     <tr>
-                        <th><?= $this->translate('Country') ?></th>
-                        <td><?= $address->getCountry() ?></td>
+                        <th><?= $this->translate('Gender') ?></th>
+                        <td><?php
+                            switch ($member->getGender()) {
+                                case Member::GENDER_MALE:
+                                    echo $this->translate('Male');
+                                    break;
+                                case Member::GENDER_FEMALE:
+                                    echo $this->translate('Female');
+                                    break;
+                                case Member::GENDER_OTHER:
+                                    echo $this->translate('Other');
+                                    break;
+                            }
+                            ?></td>
+                    </tr>
+                    <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
+                        <tr>
+                            <th><?= $this->translate('Email') ?></th>
+                            <td>
+                                <a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <th><?= $this->translate('Birth date') ?></th>
+                        <td><?= $member->getBirth()->format('l j F Y') ?></td>
                     </tr>
                     <tr>
-                        <th><?= $this->translate('Street and number') ?></th>
-                        <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
-                    </tr>
-                    <tr>
-                        <th><?= $this->translate('City and postal code') ?></th>
-                        <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+                        <th><?= $this->translate('Generation') ?></th>
+                        <td><?= $member->getGeneration() ?></td>
                     </tr>
                 </table>
-            <?php endforeach ?>
-        <?php endif; ?>
+                <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
+                <ul>
+                    <?php foreach ($memberships as $abbr => $install): ?>
+                        <li><a
+                                href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
+                                    $abbr]) ?>"
+                            ><?= $abbr ?></a>
+                            <?php $functions = $install['functions']; ?>
+                            <?php if (!empty($functions)): ?> (<?=
+                                $functions ?>)
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php if ($this->acl('decision_acl')->isAllowed('member', 'view_full')): ?>
+                    <h3><?= $this->translate('Adresses') ?></h3>
+                    <?php foreach ($member->getAddresses() as $address): ?>
+                        <h4><?php
+                            switch ($address->getType()) {
+                                case Address::TYPE_HOME:
+                                    echo $this->translate('Home address (parents)');
+                                    break;
+                                case Address::TYPE_STUDENT:
+                                    echo $this->translate('Student address');
+                                    break;
+                                case Address::TYPE_MAIL:
+                                    echo $this->translate('Mail address');
+                                    break;
+                            }
+                            ?></h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th><?= $this->translate('Country') ?></th>
+                                <td><?= $address->getCountry() ?></td>
+                            </tr>
+                            <tr>
+                                <th><?= $this->translate('Street and number') ?></th>
+                                <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
+                            </tr>
+                            <tr>
+                                <th><?= $this->translate('City and postal code') ?></th>
+                                <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+                            </tr>
+                        </table>
+                    <?php endforeach ?>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-6">
+                <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
+            </div>
         </div>
-    <div class="col-md-6">
-        <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
     </div>
-    </div>
-</div>
+</section>
 
 <script>
     $(document).ready(function () {

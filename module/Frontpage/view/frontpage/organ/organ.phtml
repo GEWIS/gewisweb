@@ -55,7 +55,8 @@ function getOrganDescription($organInformation, $lang)
         </div>
     </section>
 <?php endif; ?>
-<div class="container">
+<section class="section">
+    <div class="container">
     <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
         <div class="col-md-12 organ-banner"
              style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
@@ -136,4 +137,4 @@ function getOrganDescription($organInformation, $lang)
             <?php endif; ?>
         </div>
     </div>
-</div>
+</div></section>
