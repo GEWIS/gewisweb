@@ -21,8 +21,8 @@ $this->headTitle($this->translate('Activities'));
 
 
             <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-            <div class="col-md-3 col-sm-4 col-xs-12 pull-right">
-                <a href="<?= $this->url('activity/create') ?>" class="btn btn-primary">
+            <div class="col-md-4 col-sm-4 col-xs-12 pull-right">
+                <a href="<?= $this->url('activity/create') ?>" class="btn btn-primary pull-right">
                     <i class="glyphicon glyphicon-plus"></i>
                     <?=$this->translate('Create Activity')?>
                 </a>
