@@ -17,7 +17,8 @@ class JobCategories extends AbstractHelper implements ServiceLocatorAwareInterfa
      */
     public function __invoke()
     {
-        $companyService = $this->getServiceLocator()->getServiceLocator()->get('Company\Service\Company');
+        $pluginManager = $this->getServiceLocator();
+        $companyService = $pluginManager->getServiceLocator()->get('Company\Service\Company');
         $categories = $companyService->getCategoryList(true);
         return $categories;
     }

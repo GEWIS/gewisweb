@@ -17,7 +17,7 @@ class JobFieldset extends Fieldset
         $this->mapper = $mapper;
         $this->translator = $translator;
         $this->setHydrator($hydrator);
-        $this->addFields();
+        $this->addFields($translator);
     }
 
     public function addFields($translator)
@@ -118,7 +118,7 @@ class JobFieldset extends Fieldset
         ]);
     }
     protected $mapper;
-    protected $translate;
+    protected $translator;
     public function setLanguage($lang)
     {
         $jc = new \Company\Model\Job();
@@ -127,7 +127,7 @@ class JobFieldset extends Fieldset
             $this->mapper->createObjectSelectConfig(
                 'Company\Model\JobCategory',
                 'name',
-                $this->translate->translate('Category'),
+                $this->translator->translate('Category'),
                 'category',
                 $lang
             )

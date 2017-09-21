@@ -134,6 +134,18 @@ class Company extends AbstractACLService
         return $mapper->siblingCategory($category, $locale);
     }
 
+    private function filterCategories($categories) {
+        $nonemptyCategories = [];
+        foreach ($categories as $category) {
+            if (count(
+                $this->getActiveJobList(['jobCategoryID' => $category->getId()])
+            ) > 0) {
+                $nonemptyCategories[] = $category;
+            }
+        }
+        return $nonemptyCategories;
+
+    }
     public function getCategoryList($visible)
     {
         $translator = $this->getTranslator();
@@ -151,7 +163,8 @@ class Company extends AbstractACLService
             );
         }
         if ($visible) {
-            return $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
+            $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
+            return $this->filterCategories($categories);
         }
         return $this->getCategoryMapper()->findAll();
     }
@@ -714,9 +727,9 @@ class Company extends AbstractACLService
      * Returns all jobs that are active
      *
      */
-    public function getActiveJobList()
+    public function getActiveJobList($dict = [])
     {
-        $jobList = $this->getJobs();
+        $jobList = $this->getJobs($dict);
         $array = [];
         foreach ($jobList as $job) {
             if ($job->isActive()) {
