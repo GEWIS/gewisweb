@@ -87,6 +87,12 @@ return [
     'sslcapath' => '/etc/ssl/certs',
 
     /**
+     * Path for JWT keypairs
+     */
+    'jwt_key_path' => 'data/keys/jwt-key',
+    'jwt_pub_key_path' => 'data/keys/jwt-key.pub',
+
+    /**
      * Photo's upload directory configuration
      */
     'photo' => [
