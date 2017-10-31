@@ -1878,7 +1878,7 @@ msgstr "Zoek oude tentamens en uitwerkingen"
 
 #: module/Education/view/education/education/index.phtml:61
 msgid "Course code or course description"
-msgstr "Vak code of omscrhrijving"
+msgstr "Vak code of omschrijving"
 
 #: module/Education/view/education/education/index.phtml:79
 #: module/Education/src/Education/Form/Fieldset/Exam.php:29
