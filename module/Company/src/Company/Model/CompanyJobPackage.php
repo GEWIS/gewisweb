@@ -42,7 +42,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @return number of jobs in the package
      */
-    public function getNumberOfActiveJobs($category)
+    public function getNumberOfActiveJobs($category = null)
     {
         return count($this->getJobsInCategory($category));
     }
