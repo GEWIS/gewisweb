@@ -79,6 +79,18 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * Action to download regulations.
+     */
+    public function downloadRegulationAction() {
+        $regulation = $this->params("regulation");
+        $response = $this->getMemberService()->getRegulationDownload($regulation);
+        if($response)
+            return $regulation;
+
+        $this->getResponse()->setStatusCode(404);
+    }
+
+    /**
      * Get the member service.
      *
      * @return Decision\Service\Member
