@@ -138,7 +138,8 @@ class Member extends AbstractAclService
         return $response->getBody();
     }
 
-    public function getRegulationDownload($regulation) {
+    public function getRegulationDownload($regulation)
+    {
         if (!$this->isAllowed('edit', 'organ')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(

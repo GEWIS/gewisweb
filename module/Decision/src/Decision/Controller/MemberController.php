@@ -81,11 +81,13 @@ class MemberController extends AbstractActionController
     /**
      * Action to download regulations.
      */
-    public function downloadRegulationAction() {
+    public function downloadRegulationAction()
+    {
         $regulation = $this->params("regulation");
         $response = $this->getMemberService()->getRegulationDownload($regulation);
-        if($response)
+        if ($response) {
             return $regulation;
+        }
 
         $this->getResponse()->setStatusCode(404);
     }
