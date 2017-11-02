@@ -11,7 +11,7 @@ Er is een nieuwe activiteit aangemaakt op de GEWIS website waarvoor een fotograa
 
 <br/>
 
-Het orgaan dat deze activiteit heeft aangemaakt kan worden bereikt via dit e-mailadres: <?= $this->escapeHtml($activity->getResourceOrgan()->getOrganInformation()['email']) ?>
+Ze zouden graag een antwoord van jullie horen. Kunnen jullie dat sturen naar '<b><?= $this->escapeHtml($activity->getResourceOrgan()->getName())?></b>'?
 <br/><br/>
 
 Met vriendelijke groeten,<br />
@@ -28,7 +28,7 @@ A new activity has been created on the GEWIS website that needs a photographer o
 
 <br/>
 
-The organ that created this activity can be reached via this e-mail address: <?= $this->escapeHtml($activity->getResourceOrgan()->getOrganInformation()['email']) ?>
+The organ that created this activity would love to have a reply back from you. Can you send this to '<b><?= $this->escapeHtml($activity->getResourceOrgan()->getName())?></b>'?
 <br/><br/>
 
 With kind regards,<br />
