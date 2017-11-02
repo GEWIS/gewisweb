@@ -106,9 +106,9 @@ class Job
     protected $package;
 
     /**
-     * The job's package.
+     * The job's category.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory", inversedBy="jobs")
      */
     protected $category;
 

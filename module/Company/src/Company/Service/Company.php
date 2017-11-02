@@ -663,6 +663,9 @@ class Company extends AbstractACLService
      */
     public function getJobs($dict)
     {
+        $translator = $this->getTranslator();
+        $locale = $translator->getLocale();
+        $dict["language"] = $locale;
         return $this->getJobMapper()->findJob($dict);
     }
 

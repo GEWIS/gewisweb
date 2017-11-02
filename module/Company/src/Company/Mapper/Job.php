@@ -91,29 +91,35 @@ class Job
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat');
-        if (isset($dict['jobSlug'])) {
+        if (array_key_exists('jobSlug', $dict)) {
             $jobSlugName = $dict['jobSlug'];
             $qb->andWhere('j.slugName=:jobId');
             $qb->setParameter('jobId', $jobSlugName);
         }
-        if (isset($dict['languageNeutralId'])) {
+        if (array_key_exists('languageNeutralId', $dict)) {
             $languageNeutralId = $dict['languageNeutralId'];
             $qb->andWhere('j.languageNeutralId=:languageNeutralId');
             $qb->setParameter('languageNeutralId', $languageNeutralId);
         }
 
-        if (isset($dict['jobCategory'])) {
+        if (array_key_exists('jobCategory', $dict)) {
             $category = $dict['jobCategory'];
             $qb->andWhere('cat.slug=:category');
             $qb->setParameter('category', $category);
         }
-        if (isset($dict['jobCategoryID'])) {
+        if (array_key_exists('jobCategoryID', $dict)) {
             $category = $dict['jobCategoryID'];
             $qb->andWhere('cat.id=:category');
             $qb->setParameter('category', $category);
         }
 
-        if (isset($dict['companySlugName'])) {
+        if (array_key_exists('language', $dict)) {
+            $lang = $dict['language'];
+            $qb->andWhere('j.language=:language');
+            $qb->setParameter('language', $lang);
+        }
+
+        if (array_key_exists('companySlugName', $dict)) {
             $companySlugName = $dict['companySlugName'];
             $qb->andWhere('c.slugName=:companySlugName');
             $qb->setParameter('companySlugName', $companySlugName);
