@@ -295,6 +295,9 @@ class Company extends AbstractACLService
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 }
+                else {
+                    $translation->setLogo("");
+                }
             }
             $this->saveCompany();
             return true;

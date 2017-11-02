@@ -25,7 +25,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
      *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $translations;
 
