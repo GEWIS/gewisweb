@@ -93,10 +93,22 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['frontpage', 'page']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
+                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <?= $this->translate('Association') ?>
+                        <span class="caret"></span>
+                    </a>
+                    <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
+                       class="hidden-sm hidden-xs">
                         <?= $this->translate('Association') ?>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="visible-sm visible-xs">
+                            <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>">
+                                <?= $this->translate('Association') ?>
+                            </a>
+                        </li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'av']) ?>"><?= $this->translate('General Meeting') ?></a></li>
                         <li><a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a></li>
                         <li><a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a></li>
@@ -108,10 +120,20 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                        <?= $this->translate('Companies') ?>
+                        <span class="caret"></span>
+                    </a>
+                    <a href="<?= $this->url('company') ?>" role="button" class="hidden-sm hidden-xs">
                         <?= $this->translate('Companies') ?>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="visible-sm visible-xs">
+                            <a href="<?= $this->url('company') ?>">
+                                <?= $this->translate('Companies') ?>
+                            </a>
+                        </li>
                         <?php if (!is_null($this->featuredCompanyPackage())): ?>
                             <li>
                                 <a href="<?= $this->url('company/spotlight') ?>">
@@ -124,26 +146,64 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
                     </ul>
                 </li>
-                <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>"><a href="<?= $this->url('education') ?>"><?= $this->translate('Education') ?></a></li>
+                <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>">
+                    <a href="<?= $this->url('education') ?>">
+                        <?= $this->translate('Education') ?>
+                    </a>
+                </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['activity']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                        <?= $this->translate('Activities') ?>
+                        <span class="caret"></span>
+                    </a>
+                    <a href="<?= $this->url('activity') ?>" role="button" class="hidden-sm hidden-xs">
                         <?= $this->translate('Activities') ?>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="visible-sm visible-xs">
+                            <a href="<?= $this->url('activity') ?>">
+                                <?= $this->translate('Activities') ?>
+                            </a>
+                        </li>
+                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+                            <li><a href="<?= $this->url('activity/archive') ?>"> <?= $this->translate('Activity Archive') ?></a></li>
+                        <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
                             <li><a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a></li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-                            <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option 
+                            <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option
                             calendar') ?></a></li>
                         <?php endif; ?>
+                        <li><a href="<?= $this->url('activity/career') ?>"> <?= $this->translate('Career related') ?></a></li>
                     </ul>
                 </li>
-                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>"><a href="<?= $this->url('photo') ?>"><?= $this->translate('Photos') ?></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
-
-                    </ul>
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>">
+                    <?php if ($this->acl('photo_acl')->isAllowed('photo','view')): ?>
+                        <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                           class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                            <?= $this->translate('Photos') ?>
+                            <span class="caret"></span>
+                        </a>
+                        <a href="<?= $this->url('photo') ?>" role="button" class="hidden-sm hidden-xs">
+                            <?= $this->translate('Photos') ?>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= $this->url('photo') ?>">
+                            <?= $this->translate('Photos') ?>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ($this->acl('photo_acl')->isAllowed('photo','view')): ?>
+                        <ul class="dropdown-menu">
+                            <li class="visible-sm visible-xs">
+                                <a href="<?= $this->url('photo') ?>">
+                                    <?= $this->translate('Photos') ?>
+                                </a>
+                            </li>
+                            <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
+                        </ul>
+                    <?php endif;?>
                 </li>
             </ul>
             <?php if (null != $this->identity()): ?>

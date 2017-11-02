@@ -2,7 +2,7 @@
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="active"><a href="/"><?= $this->translate('Home') ?></a></li>
+            <li class="active"><a href="<?= $this->url('home') ?>"><?= $this->translate('Home') ?></a></li>
             <?php foreach ($parents as $parent): ?>
                 <?php if (is_null($parent)): ?>
                     <li>...</li>

@@ -17,16 +17,16 @@ class ActivityController extends AbstractActionController
      */
     public function indexAction()
     {
+
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-
-        $activities = $queryService->getUpcomingActivities();
+        $activities = $queryService->getUpcomingActivities($this->params('category'));
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         }
-        return ['activities' => $translatedActivities];
+        return ['activities' => $translatedActivities, 'category' => $this->params('category')];
     }
 
     /**
@@ -64,10 +64,13 @@ class ActivityController extends AbstractActionController
             $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isSignedUp,
-            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'signupData' => $signupService->isAllowedToViewSubscriptions() ?
+                $translatorService->getTranslatedSignedUpData($activity, $langSession->lang) :
+                null,
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
+            'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
         ];
 
         //Retrieve and clear the request status from the session, if it exists.
@@ -331,5 +334,40 @@ class ActivityController extends AbstractActionController
             ->setTerminal(true);
 
         return $viewModel;
+    }
+
+
+
+    /**
+     * Display all the finished activities in a school year
+     *
+     * @return ViewModel
+     */
+    public function archiveAction()
+    {
+
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
+        $langSession = new SessionContainer('lang');
+
+        $years = $queryService->getActivityArchiveYears();
+        $year = $this->params()->fromRoute('year');
+        // If no year is supplied, use the latest year.
+        if (is_null($year)) {
+            $year = max($years);
+        }
+
+        $activities = $queryService->getFinishedActivitiesByYear($year);
+        $translatedActivities = [];
+        foreach ($activities as $activity){
+            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
+        }
+
+
+        return new ViewModel([
+            'activeYear' => $year,
+            'years' => $years,
+            'activities' => $translatedActivities
+        ]);
     }
 }

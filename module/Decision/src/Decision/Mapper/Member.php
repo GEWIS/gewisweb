@@ -47,14 +47,14 @@ class Member
      *
      * @return array
      */
-    public function searchByName($query, $maxResults = 32)
-    {
+    public function searchByName($query, $maxResults = 32, $orderColumn = 'generation', $orderDirection = 'DESC')    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('m')
             ->from('Decision\Model\Member', 'm')
             ->where("CONCAT(LOWER(m.firstName), ' ', LOWER(m.lastName)) LIKE :name")
             ->orWhere("CONCAT(LOWER(m.firstName), ' ', LOWER(m.middleName), ' ', LOWER(m.lastName)) LIKE :name")
             ->setMaxResults($maxResults)
+            ->orderBy("m.$orderColumn", $orderDirection)
             ->setFirstResult(0);
         $qb->setParameter(':name', '%' . strtolower($query) . '%');
         return $qb->getQuery()->getResult();

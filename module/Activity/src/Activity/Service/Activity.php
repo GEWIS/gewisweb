@@ -272,6 +272,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setIsMyFuture($params['isMyFuture']);
         $activity->setRequireGEFLITST($params['requireGEFLITST']);
         $activity->setOnlyGEWIS($params['onlyGEWIS']);
+        $activity->setDisplaySubscribedNumber($params['displaySubscribedNumber']);
 
         // Not user provided input
         $activity->setCreator($user);

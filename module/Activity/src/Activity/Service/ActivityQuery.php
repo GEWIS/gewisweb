@@ -5,9 +5,16 @@ namespace Activity\Service;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Decision\Model\AssociationYear as AssociationYear;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
+    /**
+     * A GEWIS association year starts 01-07
+     */
+    const ASSOCIATION_YEAR_START_MONTH = 7;
+    const ASSOCIATION_YEAR_START_DAY = 1;
+
     /**
      * Get the ACL.
      *
@@ -201,7 +208,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      *
      * @return array Array of activities
      */
-    public function getUpcomingActivities()
+    public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
@@ -211,7 +218,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUpcomingActivities();
+        $activity = $activityMapper->getUpcomingActivities(null, null, $category);
 
         return $activity;
     }
@@ -260,5 +267,46 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getActivityMapper()
     {
         return $this->sm->get('activity_mapper_activity');
+    }
+
+    /**
+     * Get all the years activities have taken place in the past
+     *
+     * @return array
+     */
+    public function getActivityArchiveYears()
+    {
+        $oldest = $this->getActivityMapper()->getOldestActivity();
+        if (is_null($oldest) || is_null($oldest->getBeginTime())) {
+            return [null];
+        }
+
+        $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
+        $endYear = AssociationYear::fromDate(new \DateTime())->getYear();
+
+        // We make the reasonable assumption that there is at least one activity
+        return range($startYear, $endYear);
+    }
+
+    /**
+     * Get all the activities that have finished in a year (and thus are archived
+     *
+     * @param integer $year First part of study year
+     * @return array
+     */
+    public function getFinishedActivitiesByYear($year)
+    {
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+
+        $associationYear = AssociationYear::fromYear($year);
+
+        $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
+
+        return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
 }

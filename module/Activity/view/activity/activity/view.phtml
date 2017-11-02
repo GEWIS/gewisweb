@@ -89,41 +89,57 @@ $this->headTitle($this->translate('Activities')); ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php $i = 1; ?>
-                <?php foreach($activity->getSignUps() as $signup): ?>
-                    <tr>
-                        <td><?php echo $i; $i = $i + 1; ?></td>
-                        <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
-                        <?php foreach ($fields as $field): ?>
-                            <?php foreach($signup->getFieldValues() as $fieldValue):?>
-                                <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
-                                <td>
-                                    <?php
-                                    switch ($field->getType()) {
-                                        case 0:
-                                            echo $this->escapeHtml($fieldValue->getValue());
-                                            break;
-                                        case 1:
-                                            echo $this->translate($fieldValue->getValue());
-                                            break;
-                                        case 2:
-                                            echo $fieldValue->getValue();
-                                            break;
-                                        case 3:
-                                            if ($lang === 'nl') {
-                                                echo $fieldValue->getOption()->getValue();
-                                            } else {
-                                                echo $fieldValue->getOption()->getValueEn();
+                    <?php $i = 1; ?>
+                    <?php if(!$this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
+                        <tr>
+                            <td align="center" colspan="<?= count($fields) + 2 ?>">
+                                <?php if ($activity->getDisplaySubscribedNumber()){
+                                    echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
+                                }?>
+                                <a href="<?= $this->url('user') ?>">
+                                    <?= $this->translate('Login to view the subscribed members.') ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php foreach($activity->getSignUps() as $signup): ?>
+
+                        <?php if (($signup instanceof Activity\Model\ExternalActivitySignup) || $this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
+                            <tr>
+                                <td><?= $this->acl('activity_acl')->isAllowed('activitySignup', 'view') || $activity->getDisplaySubscribedNumber() ? $i : '' ?></td>
+                                <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
+                                <?php foreach ($fields as $field): ?>
+                                    <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                                        <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                        <td>
+                                            <?php
+                                            switch ($field->getType()) {
+                                                case 0:
+                                                    echo $this->escapeHtml($fieldValue->getValue());
+                                                    break;
+                                                case 1:
+                                                    echo $this->translate($fieldValue->getValue());
+                                                    break;
+                                                case 2:
+                                                    echo $fieldValue->getValue();
+                                                    break;
+                                                case 3:
+                                                    if ($lang === 'nl') {
+                                                        echo $fieldValue->getOption()->getValue();
+                                                    } else {
+                                                        echo $fieldValue->getOption()->getValueEn();
+                                                    }
+                                                    break;
                                             }
-                                            break;
-                                    }
-                                    ?>
-                                </td>
-                                <?php endif; ?>
-                            <?php endforeach;?>
-                        <?php endforeach; ?>
-                    </tr>
-                <?php endforeach;?>
+                                            ?>
+                                        </td>
+                                        <?php endif; ?>
+                                    <?php endforeach;?>
+                                <?php endforeach; ?>
+                            </tr>
+                            <?php $i = $i + 1;?>
+                        <?php endif; ?>
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </div>

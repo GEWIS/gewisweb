@@ -98,4 +98,17 @@ class Signup
 
         return $result;
     }
+
+    public function getNumberOfSignedUpMembers($activityId)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('COUNT(s)')
+           ->from('Activity\Model\UserActivitySignup', 's')
+           ->join('s.activity', 'a')
+           ->where('a.id = ?1')
+           ->setParameter(1, $activityId);
+        $result = $qb->getQuery()->getResult();
+
+        return $result[0];
+    }
 }
