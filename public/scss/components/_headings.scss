@@ -4,3 +4,7 @@ h1, h2, h3, h4, h5, h6 {
         padding-bottom: 0.5em;
     }
 }
+// Word-wrap the committee names when needed
+h1{
+    word-wrap: break-word;
+}
