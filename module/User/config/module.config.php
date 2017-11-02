@@ -131,7 +131,7 @@ return [
                 'options' => [
                     'route' => '/token/:appId',
                     'defaults' => [
-                        'controller' => \User\Controller\ApiAuthenticationController::class,
+                        'controller' => '\User\Controller\ApiAuthenticationController',
                         'action' => 'token',
                     ]
                 ],

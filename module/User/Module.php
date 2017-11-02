@@ -105,8 +105,8 @@ class Module
             ],
 
             'factories' => [
-                ApiApp::class => ApiAppFactory::class,
-                \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
+                'ApiApp' => 'ApiAppFactory',
+                '\User\Mapper\ApiApp' => '\User\Mapper\Factory\ApiAppFactory',
                 'user_auth_storage' => function ($sm) {
                     return new \User\Authentication\Storage\Session(
                         $sm
