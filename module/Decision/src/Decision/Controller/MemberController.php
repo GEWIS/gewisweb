@@ -86,7 +86,7 @@ class MemberController extends AbstractActionController
         $regulation = $this->params("regulation");
         $response = $this->getMemberService()->getRegulationDownload($regulation);
         if ($response) {
-            return $regulation;
+            return $response;
         }
 
         $this->getResponse()->setStatusCode(404);
