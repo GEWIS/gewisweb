@@ -234,6 +234,18 @@ return [
                                 'action' => 'self'
                             ]
                         ]
+                    ],
+                    'regulations' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/regulations/:regulation',
+                            'constraints' => [
+                                'regulation' => '[a-zA-Z_-]+'
+                            ],
+                            'defaults' => [
+                                'action' => 'downloadRegulation'
+                            ]
+                        ]
                     ]
 
                 ],
