@@ -57,7 +57,6 @@ class AdminController extends AbstractActionController
         }
 
         // The form was not valid, or we did not get data back
-
         // Initialize the form
         $companyForm->setAttribute(
             'action',
@@ -294,9 +293,10 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $post = $request->getPost();
             if ($companyService->saveCompanyByData(
                 $company,
-                $request->getPost(),
+                $post,
                 $request->getFiles()
             )){
                 $companyName = $request->getPost()['slugName'];
