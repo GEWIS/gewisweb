@@ -121,7 +121,7 @@ class Session extends Storage\Session
         $key = $this->getPrivateKey();
         if (!$key) {
             // Key not readable
-            return;
+            return false;
         }
         $token = [
             'iss' => 'https://gewis.nl/',
@@ -166,7 +166,6 @@ class Session extends Storage\Session
 
         $response = $this->sm->get('Response');
         $response->getHeaders()->addHeader($sessionToken);
-       // var_dump($response->getHeaders());die();
     }
 
     protected function clearCookie()
