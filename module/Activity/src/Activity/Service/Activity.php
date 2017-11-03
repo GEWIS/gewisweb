@@ -89,6 +89,15 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $activity = $this->generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
 
+        // Send email to GEFLITST if user checked checkbox of GEFLITST
+        if ($activity->getRequireGEFLITST()) {
+            $this->getEmailService()->sendEmail('activity_creation_require_GEFLITST', 'email/activity_created_require_GEFLITST',
+                'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST',
+                ['activity' => $activity]);
+
+
+        }
+
         return $activity;
     }
 
@@ -261,6 +270,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCanSignUp($params['canSignUp']);
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
+        $activity->setRequireGEFLITST($params['requireGEFLITST']);
         $activity->setOnlyGEWIS($params['onlyGEWIS']);
         $activity->setDisplaySubscribedNumber($params['displaySubscribedNumber']);
 
@@ -283,11 +293,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
 
-        //$this->getEmailService()->sendActivityCreationEmail($activity);
+        // Send an email when a new Activity was created.
         $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
             'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
             ['activity' => $activity]);
-
 
         return $activity;
     }

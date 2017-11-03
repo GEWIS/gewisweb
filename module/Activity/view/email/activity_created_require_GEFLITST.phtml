@@ -1,0 +1,36 @@
+<?php $lang = 'en'; ?>
+For English, see below.
+
+L.s.<br /><br />
+
+Er is een nieuwe activiteit aangemaakt op de GEWIS website waarvoor een fotograaf van GEFLITST nodig is.
+
+<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
+
+<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+
+<br/>
+
+Ze zouden graag een antwoord van jullie horen. Kunnen jullie dat sturen naar '<b><?= $this->escapeHtml($activity->getResourceOrgan()->getName())?></b>'?
+<br/><br/>
+
+Met vriendelijke groeten,<br />
+De Web Commissie
+<hr />
+
+L.s.<br /><br />
+
+A new activity has been created on the GEWIS website that needs a photographer of GEFLITST.
+
+<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
+
+<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+
+<br/>
+
+The organ that created this activity would love to have a reply back from you. Can you send this to '<b><?= $this->escapeHtml($activity->getResourceOrgan()->getName())?></b>'?
+<br/><br/>
+
+With kind regards,<br />
+The Web Committee
+<hr />
