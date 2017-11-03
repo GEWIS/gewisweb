@@ -1,0 +1,6 @@
+-----BEGIN RSA PRIVATE KEY-----
+1) Generate an RSA keypair
+2) Put the private key in this file
+3) Rename it to jwt-key (without the .dist part)
+4) Make sure nobody can read it except for the gewisweb user!!
+-----END RSA PRIVATE KEY-----

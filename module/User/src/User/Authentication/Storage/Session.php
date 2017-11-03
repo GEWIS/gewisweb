@@ -2,6 +2,7 @@
 
 namespace User\Authentication\Storage;
 
+use Firebase\JWT\JWT;
 use Zend\Authentication\Storage,
     User\Model\Session as SessionModel,
     Zend\Http\Header\SetCookie;
@@ -28,7 +29,7 @@ class Session extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->session->{$this->member});
+            $this->saveSession($this->session->{$this->member}->getLidnr());
         }
     }
 
@@ -51,7 +52,7 @@ class Session extends Storage\Session
             return false;
         }
 
-        return !$this->readDatabaseSession();
+        return !$this->validateSession();
 
     }
 
@@ -60,19 +61,27 @@ class Session extends Storage\Session
      *
      * @return bool indicating whether a session was loaded.
      */
-    protected function readDatabaseSession()
+    protected function validateSession()
     {
-        $mapper = $this->sm->get('user_mapper_session');
+        $key = $this->getPublicKey();
+        if (!$key) {
+            // Key not readable
+            return false;
+        }
+
         $request = $this->sm->get('Request');
         $cookies = $request->getHeaders()->get('cookie');
-        if (!isset($cookies->SESSID) || !isset($cookies->SECRET)) {
+        if (!isset($cookies->SESSTOKEN)) {
             return false;
         }
-        $session = $mapper->find($cookies->SESSID, $cookies->SECRET);
-        if ($session === null) {
+        try {
+            $session = JWT::decode($cookies->SESSTOKEN, $key, ['RS256']);
+        } catch (\UnexpectedValueException $e) {
             return false;
         }
-        $this->session->{$this->member} = $session->getUser()->getLidnr();
+
+        $this->session->{$this->member} = $session->lidnr;
+        $this->saveSession($session->lidnr);
         return true;
     }
 
@@ -103,27 +112,28 @@ class Session extends Storage\Session
     /**
      * Store the current session.
      *
-     * @param \User\Model\User $user the logged in user
+     * @param $lidnr the lidnr of the logged in user
      *
      * @return SessionModel
      */
-    public function saveSession($user)
+    public function saveSession($lidnr)
     {
-        $mapper = $this->sm->get('user_mapper_session');
+        $key = $this->getPrivateKey();
+        if (!$key) {
+            // Key not readable
+            return false;
+        }
+        $token = [
+            'iss' => 'https://gewis.nl/',
+            'lidnr' => $lidnr,
+            'exp' => (new \DateTime('+2 weeks'))->getTimestamp(),
+            'iat' => (new \DateTime())->getTimestamp(),
+            'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
+        ];
 
-        $session = new SessionModel();
-        $session->setIp($this->sm->get('user_remoteaddress'));
+        $jwt = JWT::encode($token, $key, 'RS256');
 
-        $user = $this->sm->get('user_service_user')->detachUser($user);
-        $session->setUser($user);
-        $session->setSecret($this->generateSecret());
-        $session->setCreatedAt(new \DateTime());
-        $session->setLastActive(new \DateTime());
-
-        $mapper->persist($session);
-        $mapper->flush();
-
-        $this->saveCookie($session);
+        $this->saveCookie($jwt);
     }
 
     /**
@@ -133,57 +143,68 @@ class Session extends Storage\Session
      */
     public function clear()
     {
+        // Clear the session
         unset($this->session->{$this->member});
-        $mapper = $this->sm->get('user_mapper_session');
-        $request = $this->sm->get('Request');
-        $cookies = $request->getHeaders()->get('cookie');
-        if (!isset($cookies->SESSID) || !isset($cookies->SECRET)) {
-            return;
-        }
-        $session = $mapper->find($cookies->SESSID, $cookies->SECRET);
-        if ($session !== null) {
-            $mapper->remove($session);
-            $mapper->flush();
-        }
+        $this->clearCookie();
+
     }
 
     /**
-     * Generates a cryptographically secure random secret
-     *
-     * @return string The secret
+     * Store the session token as a cookie
+     * @param string $jwt The session token to store
      */
-    public function generateSecret()
+    protected function saveCookie($jwt)
     {
-        return bin2hex(openssl_random_pseudo_bytes(16));
-    }
-
-
-    /**
-     * Store the session data as cookies
-     * @param SessionModel $session The session to store
-     */
-    protected function saveCookie($session)
-    {
-        $sessionId = new SetCookie('SESSID', $session->getId(), time() + 15552000);
-        $sessionSecret = new SetCookie('SECRET', $session->getSecret(), time() + 15552000);
-
+        $sessionToken = new SetCookie('SESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
         // Use secure cookies in production
         if (APP_ENV === 'production') {
-            $sessionId->setSecure(true)->setHttponly(true);
-            $sessionSecret->setSecure(true)->setHttponly(true);
+            $sessionToken->setSecure(true)->setHttponly(true);
         }
+
         $config = $this->sm->get('config');
-        $sessionId->setDomain($config['cookie_domain']);
-        $sessionSecret->setDomain($config['cookie_domain']);
+        $sessionToken->setDomain($config['cookie_domain']);
 
         $response = $this->sm->get('Response');
-        $response->getHeaders()->addHeader($sessionId);
-        $response->getHeaders()->addHeader($sessionSecret);
+        $response->getHeaders()->addHeader($sessionToken);
+    }
+
+    protected function clearCookie()
+    {
+        $sessionToken = new SetCookie('SESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
+        $sessionToken->setSecure(true)->setHttponly(true);
+        $response = $this->sm->get('Response');
+        $response->getHeaders()->addHeader($sessionToken);
     }
 
     public function __construct($sm)
     {
         $this->sm = $sm;
         parent::__construct(null, null, null);
+    }
+
+    /**
+     * Get the private key to use for JWT
+     * @return string|boolean returns false if the private key is not readable
+     */
+    protected function getPrivateKey()
+    {
+        $config = $this->sm->get('config');
+        if (!is_readable($config['jwt_key_path'])) {
+            return false;
+        }
+        return file_get_contents($config['jwt_key_path']);
+    }
+
+    /**
+     * Get the public key to use for JWT
+     * @return string|boolean returns false if the public key is not readable
+     */
+    protected function getPublicKey()
+    {
+        $config = $this->sm->get('config');
+        if (!is_readable($config['jwt_pub_key_path'])) {
+            return false;
+        }
+        return file_get_contents($config['jwt_pub_key_path']);
     }
 }
