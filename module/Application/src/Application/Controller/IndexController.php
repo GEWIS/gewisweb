@@ -10,7 +10,6 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Zend\Session\Container as SessionContainer;
 
 class IndexController extends AbstractActionController
@@ -33,6 +32,14 @@ class IndexController extends AbstractActionController
         }
 
         return $this->redirect()->toRoute('home');
+
+    }
+
+    /**
+     * Action called when loading pages from external templates
+     */
+    public function externalAction()
+    {
 
     }
 }

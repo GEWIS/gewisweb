@@ -87,10 +87,11 @@ class Tag
             // Retrieve the most recent tag of a member
             $qb2->select('t')
                 ->from('Photo\Model\Tag', 't')
+                ->join('Photo\Model\Photo', 'p', 'WITH', 'p.id = t.photo')
                 ->where('t.member = ?1')
                 ->setParameter(1, $lidnr)
                 ->setMaxResults(1)
-                ->orderBy('t.id', 'DESC');
+                ->orderBy('p.dateTime', 'DESC');
 
             return $qb2->getQuery()->getSingleResult();
         }

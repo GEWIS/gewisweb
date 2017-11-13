@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "07330e014b7c0582cfe37c4ccc053cf0",
-    "content-hash": "2c2f81f34c32045b143d35e044af7ca9",
+    "content-hash": "3fae3c6056f0f22201cdad5ac2d7dab0",
     "packages": [
         {
             "name": "dino/dompdf-module",
@@ -47,7 +46,7 @@
                 "pdf",
                 "zf2"
             ],
-            "time": "2013-04-25 10:31:36"
+            "time": "2013-04-25T10:31:36+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -115,7 +114,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2015-08-31 12:32:49"
+            "time": "2015-08-31T12:32:49+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -185,7 +184,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-12-19 05:03:47"
+            "time": "2015-12-19T05:03:47+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -251,7 +250,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "doctrine/common",
@@ -324,7 +323,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-12-25 13:10:16"
+            "time": "2015-12-25T13:10:16+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -395,7 +394,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-05 22:11:12"
+            "time": "2016-01-05T22:11:12+00:00"
         },
         {
             "name": "doctrine/doctrine-module",
@@ -473,7 +472,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2015-12-01 22:04:42"
+            "time": "2015-12-01T22:04:42+00:00"
         },
         {
             "name": "doctrine/doctrine-orm-module",
@@ -551,7 +550,7 @@
                 "orm",
                 "zf2"
             ],
-            "time": "2015-10-05 23:06:08"
+            "time": "2015-10-05T23:06:08+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -618,7 +617,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -672,7 +671,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -726,7 +725,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -802,7 +801,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2016-01-05 21:34:58"
+            "time": "2016-01-05T21:34:58+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -841,7 +840,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-10-04 16:44:32"
+            "time": "2015-10-04T16:44:32+00:00"
         },
         {
             "name": "erusev/parsedown-extra",
@@ -885,7 +884,53 @@
                 "parsedown",
                 "parser"
             ],
-            "time": "2015-11-01 10:19:22"
+            "time": "2015-11-01T10:19:22+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": " 4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -933,7 +978,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "time": "2016-04-29T12:21:54+00:00"
         },
         {
             "name": "jszanto/gewisweb-test-data",
@@ -1033,7 +1078,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2016-07-02 18:48:39"
+            "time": "2016-07-02T18:48:39+00:00"
         },
         {
             "name": "maglnet/magl-markdown",
@@ -1098,7 +1143,7 @@
                 "parsedown",
                 "zf2"
             ],
-            "time": "2015-07-27 10:01:34"
+            "time": "2015-07-27T10:01:34+00:00"
         },
         {
             "name": "michelf/php-markdown",
@@ -1149,7 +1194,55 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2015-12-24 01:37:31"
+            "time": "2015-12-24T01:37:31+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v2.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/random.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "pseudorandom",
+                "random"
+            ],
+            "time": "2017-03-13T16:27:32+00:00"
         },
         {
             "name": "symfony/console",
@@ -1209,7 +1302,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-30 07:20:35"
+            "time": "2016-07-30T07:20:35+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1268,7 +1361,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18 14:26:46"
+            "time": "2016-05-18T14:26:46+00:00"
         },
         {
             "name": "twbs/bootstrap-sass",
@@ -1321,7 +1414,7 @@
                 "css",
                 "sass"
             ],
-            "time": "2016-07-25 19:58:53"
+            "time": "2016-07-25T19:58:53+00:00"
         },
         {
             "name": "zendframework/zend-developer-tools",
@@ -1389,7 +1482,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2015-11-24 11:08:25"
+            "time": "2015-11-24T11:08:25+00:00"
         },
         {
             "name": "zendframework/zendframework",
@@ -1506,7 +1599,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2016-05-09 20:54:25"
+            "time": "2016-05-09T20:54:25+00:00"
         },
         {
             "name": "zendframework/zendxml",
@@ -1551,7 +1644,7 @@
                 "xml",
                 "zf2"
             ],
-            "time": "2016-02-04 21:02:08"
+            "time": "2016-02-04T21:02:08+00:00"
         }
     ],
     "packages-dev": [],

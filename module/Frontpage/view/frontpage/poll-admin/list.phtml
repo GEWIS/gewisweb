@@ -79,7 +79,7 @@ $this->scriptUrl()->requireUrls(
     'elastic',
     'paginator/default',
     [
-        'path' => $this->url('poll/history')
+        'path' => $this->url('admin_poll')
     ]
 )
 ?>
@@ -121,11 +121,13 @@ $this->scriptUrl()->requireUrls(
                 <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
                 <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>
                 <td>
+                    <?php if ($poll->isActive()): ?>
                     <button type="button" class="btn btn-danger btn-xs"
                             onclick="Poll.Admin.deletePoll(<?= $poll->getId() ?>)" data-toggle="modal"
                             data-target="#deleteModal">
                         <?= $this->translate('Delete') ?>
                     </button>
+                    <?php endif ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -22,7 +22,7 @@ return [
                     ]
                 ],
                 'priority' => 100
-            ]
+            ],
         ],
     ],
     'service_manager' => [

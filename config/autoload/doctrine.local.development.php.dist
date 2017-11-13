@@ -25,11 +25,11 @@ return [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
                 'params' => [
-                    'host'     => 'localhost',
+                    'host'     => 'webmysql',
                     'port'     => '3306',
-                    'user'     => 'username',
-                    'password' => 'password',
-                    'dbname'   => 'database',
+                    'user'     => 'gewis',
+                    'password' => 'gewis',
+                    'dbname'   => 'gewis',
                 ]
             ],
         ],

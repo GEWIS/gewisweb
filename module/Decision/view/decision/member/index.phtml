@@ -26,6 +26,13 @@ if ($this->acl('decision_acl')->isAllowed('organ', 'edit')) {
         [$this->translate('Webmail'), 'inbox', '/webmail'],
         [$this->translate('Website admin'), 'cog', $this->url('admin')],
     ];
+
+    $sections[$this->translate('Regulations')] = [
+        [$this->translate('Borrelreglement'), 'glass', $this->url('member/regulations', ['regulation' => 'borrel-reglement'])],
+        [$this->translate('Computerreglement'), 'hdd', $this->url('member/regulations', ['regulation' => 'computer-reglement'])],
+        [$this->translate('Posterreglement'), 'file', $this->url('member/regulations', ['regulation' => 'poster-reglement'])],
+        [$this->translate('Sleutelbeleid'), 'lock', $this->url('member/regulations', ['regulation' => 'sleutel-beleid'])],
+    ];
 }
 
 ?>

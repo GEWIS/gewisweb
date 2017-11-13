@@ -1,0 +1,36 @@
+<div class="content-container">
+    <section class="section">
+        <div class="container">
+            <ul class="nav nav-pills head-menu">
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <?= $this->translate('Older')?> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php for ($i = 0; $i < max(0, count($years) - 5); $i++): ?>
+                            <li>
+                                <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
+                                    <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
+                                </a>
+                            </li>
+                        <?php endfor ?>
+                    </ul>
+                </li>
+                <?php for ($i = max(0, count($years) - 5); $i < count($years); $i++): ?>
+                    <li>
+                        <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
+                            <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
+                        </a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </div>
+    </section>
+    <div class="container">
+        <?php
+        echo $this->partial('activity/activity/list.phtml',[
+            'activities' => $activities,
+        ]);
+        ?>
+    </div>
+</div>

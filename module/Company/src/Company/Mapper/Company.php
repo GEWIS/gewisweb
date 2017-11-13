@@ -105,7 +105,9 @@ class Company
             ->andWhere('t.language = ?1')
             ->setParameter(1, $locale)
             ->orderBy('c.name', 'ASC');
-        return $qb->getQuery()->getResult();
+        return array_filter($qb->getQuery()->getResult(), function ($company) {
+            return $company->getNumberOfPackages() > $company->getNumberOfExpiredPackages();
+        });
     }
 
     /**

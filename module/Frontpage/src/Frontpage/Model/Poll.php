@@ -148,7 +148,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param date $expiryDate
+     * @param \DateTime $expiryDate
      */
     public function setExpiryDate($expiryDate)
     {
@@ -244,5 +244,23 @@ class Poll implements ResourceInterface
     public function getResourceId()
     {
         return 'poll';
+    }
+
+    /**
+     * Check to see if the poll is approved. <br>
+     * If no-one approved this poll, this poll is not approved.
+     * @return bool true if poll is approved; false otherwise
+     */
+    public function isApproved()
+    {
+        return ($this->getApprover() !== null);
+    }
+
+    /**
+     * Check to see if the poll is currently displayed.
+     */
+    public function isActive()
+    {
+        return $this->getExpiryDate() > new \DateTime();
     }
 }

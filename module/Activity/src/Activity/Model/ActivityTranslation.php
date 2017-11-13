@@ -106,6 +106,8 @@ class ActivityTranslation
 
     protected $isMyFuture;
 
+    protected $requireGEFLITST;
+
     protected $isFood;
 
     /**
@@ -417,6 +419,22 @@ class ActivityTranslation
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'fields' => $fields,
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequireGEFLITST()
+    {
+        return $this->requireGEFLITST;
+    }
+
+    /**
+     * @param mixed $requireGEFLITST
+     */
+    public function setRequireGEFLITST($requireGEFLITST)
+    {
+        $this->requireGEFLITST = $requireGEFLITST;
     }
 }
 
