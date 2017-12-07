@@ -21,6 +21,10 @@ Styleguide: list-group
             background: rgba(black, 0.05);
         }
     }
+
+    & + .panel-footer {
+        margin-top: 15px;
+    }
 }
 
 
