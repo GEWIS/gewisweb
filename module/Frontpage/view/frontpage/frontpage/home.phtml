@@ -35,17 +35,28 @@
                                 }
                                 ?>
                             </h3>
-                            <p>
-                                <?php
-                                if ($item instanceof \Activity\Model\Activity) {
-                                    echo ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
-                                } else {
-                                    echo ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
-                                }
-                                ?>
-                            </p>
+                            <div style="position: relative; overflow: hidden;">
+                                <div class="reveal reveal-10">
+                                    <?php
+                                    if ($item instanceof \Activity\Model\Activity) {
+                                        $content = ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
+                                    } else {
+                                        $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
+                                    }
+
+                                    echo $this->markdown($content);
+                                    ?>
+                                    <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
+                                </div>
+                            </div>
                         </article>
                     <?php endforeach; ?>
+
+                    <script>
+                        $(".reveal-button").click(function () {
+                            $(this).parent().addClass("revealed");
+                        });
+                    </script>
                 </section>
             </div>
 
