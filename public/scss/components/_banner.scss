@@ -1,0 +1,20 @@
+@import '../bootstrap-variables';
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner__image {
+    width: 100%;
+    max-width: 728px;
+    max-height: 90px;
+}
+
+.banner__message {
+    margin-top: 0.5rem;
+
+    font-size: 1.2rem;
+    color: $gray-light;
+}

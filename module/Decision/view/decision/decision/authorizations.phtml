@@ -3,74 +3,76 @@
 $this->headTitle($this->translate('Authorizations')); ?>
 <?php $this->headScript()->prependFile($this->basePath() . '/js/jquery.autocomplete.js'); ?>
 <br>
-<div class="container">
-    <h1><?= $this->translate('Authorizations') ?></h1>
-<?php if (is_null($meeting)): ?>
-<?= $this->translate('There are no upcoming meetings for which you can authorize someone.
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate('Authorizations') ?></h1>
+        <?php if (is_null($meeting)): ?>
+            <?= $this->translate('There are no upcoming meetings for which you can authorize someone.
 You may still be able to authorize someone or revoke an authorization by contacting the board.') ?>
-    <?php elseif ($authorization): ?>
-    <?= sprintf(
-        $this->translate('You have authorized %s for AV %s (%s)'),
-        '<strong>' . $authorization->getRecipient()->getFullName() . '</strong>',
-        $meeting->getNumber(),
-        $meeting->getDate()->format('Y-m-d')
-    ) ?>
-    <br>
-    <?= $this->translate('If you want to revoke your authorization you have to communicate this to the board in writing (not by email).') ?>
-    <?php else: ?>
-    <h3>
-        <?= sprintf(
-            $this->translate('Authorize someone for GM %s (%s)'),
-            $meeting->getNumber(),
-            $meeting->getDate()->format('Y-m-d')
-        ) ?>
-    </h3>
-    <?php
-    $form->setAttribute('class', 'form-horizontal');
-    $form->prepare();
-    ?>
-    <?= $this->form()->openTag($form) ?>
-    <?php
-    $element = $form->get('recipient');
-    ?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-            <?= $this->translate('Member') ?>
-        </label>
-        <div class="col-sm-10">
-            <input id="memberSearch" type="text" class="form-control"/>
-            <?= $this->formElementErrors($element) ?>
-            <?= $this->formElement($element) ?>
-        </div>
-    </div>
-    <?php
-    $element = $form->get('agree');
-    ?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-            <?= $this->translate('Terms') ?>
-        </label>
-        <div class="col-sm-10">
-            <?= $this->formCheckbox($element) ?>
+        <?php elseif ($authorization): ?>
             <?= sprintf(
-                $this->translate('I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS'),
-                $this->identity()->getMember()->getFullName(),
-                $meeting->getNumber()
+                $this->translate('You have authorized %s for AV %s (%s)'),
+                '<strong>' . $authorization->getRecipient()->getFullName() . '</strong>',
+                $meeting->getNumber(),
+                $meeting->getDate()->format('Y-m-d')
             ) ?>
-            <?= $this->formElementErrors($element) ?>
-        </div>
+            <br>
+            <?= $this->translate('If you want to revoke your authorization you have to communicate this to the board in writing (not by email).') ?>
+        <?php else: ?>
+            <h3>
+                <?= sprintf(
+                    $this->translate('Authorize someone for GM %s (%s)'),
+                    $meeting->getNumber(),
+                    $meeting->getDate()->format('Y-m-d')
+                ) ?>
+            </h3>
+            <?php
+            $form->setAttribute('class', 'form-horizontal');
+            $form->prepare();
+            ?>
+            <?= $this->form()->openTag($form) ?>
+            <?php
+            $element = $form->get('recipient');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Member') ?>
+                </label>
+                <div class="col-sm-10">
+                    <input id="memberSearch" type="text" class="form-control" />
+                    <?= $this->formElementErrors($element) ?>
+                    <?= $this->formElement($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('agree');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $this->translate('Terms') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formCheckbox($element) ?>
+                    <?= sprintf(
+                        $this->translate('I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS'),
+                        $this->identity()->getMember()->getFullName(),
+                        $meeting->getNumber()
+                    ) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $submit = $form->get('submit');
+            $submit->setLabel($this->translate('Authorize'));
+            $submit->setAttribute('class', 'btn btn-primary pull-right');
+            ?>
+            <div class="form-group">
+                <?= $this->formButton($submit) ?>
+            </div>
+            <?= $this->form()->closeTag($form) ?>
+        <?php endif; ?>
     </div>
-    <?php
-    $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Authorize'));
-    $submit->setAttribute('class', 'btn btn-primary pull-right');
-    ?>
-    <div class="form-group">
-        <?= $this->formButton($submit) ?>
-    </div>
-    <?= $this->form()->closeTag($form) ?>
-    <?php endif; ?>
-</div>
+</section>
 <script>
     $(document).ready(function () {
         $('#memberSearch').autocomplete({

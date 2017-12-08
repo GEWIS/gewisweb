@@ -1,33 +1,38 @@
-<div class="container">
-    <div class="form-group">
-        <select class="form-control" onchange="window.location=this.value">
-            <?php foreach ($meetings as $meeting): ?>
-                <option value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
-                <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>>
-                    AV <?= $meeting->getNumber() ?> (<?= $meeting->getDate()->format('Y-m-d') ?>)
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <?php if (!is_null($number)): ?>
-        <h3><?= sprintf($this->translate('Authorizations for AV %s'), $number) ?></h3>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <td><?= $this->translate('Authorizer') ?></td>
-                <td><?= $this->translate('Recipient') ?></td>
-                <td><?= $this->translate('Valid') ?></td>
-            </tr>
-            </thead>
-            <tbody>
+<section class="section">
+    <div class="container">
+        <div class="form-group">
+            <select class="form-control" onchange="window.location=this.value">
+                <?php foreach ($meetings as $meeting): ?>
+                    <option value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
+                        <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>>
+                        AV <?= $meeting->getNumber() ?> (<?= $meeting->getDate()->format('Y-m-d') ?>
+                        )
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <?php if (!is_null($number)): ?>
+            <h3><?= sprintf($this->translate('Authorizations for AV %s'), $number) ?></h3>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <td><?= $this->translate('Authorizer') ?></td>
+                    <td><?= $this->translate('Recipient') ?></td>
+                    <td><?= $this->translate('Valid') ?></td>
+                </tr>
+                </thead>
+                <tbody>
                 <?php foreach ($authorizations as $authorization): ?>
                     <tr>
                         <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
                         <td><?= $authorization->getRecipient()->getFullName() ?></td>
-                        <td><span class="glyphicon glyphicon-<?= $authorization->getRevoked() ? 'remove' : 'ok' ?>"</td>
+                        <td>
+                            <span class="glyphicon glyphicon-<?= $authorization->getRevoked() ? 'remove' : 'ok' ?>"
+                        </td>
                     </tr>
                 <?php endforeach ?>
-            </tbody>
-        </table>
-    <?php endif ?>
-</div>
+                </tbody>
+            </table>
+        <?php endif ?>
+    </div>
+</section>

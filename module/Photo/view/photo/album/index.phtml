@@ -57,64 +57,66 @@ $this->headTitle($this->translate('Photos'));
         </ol>
     </div>
 </section>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?><small> <?= $album->getStartDateTime()->format('d-m-Y') ?></small></h1>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?><small> <?= $album->getStartDateTime()->format('d-m-Y') ?></small></h1>
+            </div>
+        </div>
+        <?= $this->paginationControl(
+            $this->paginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+            ]
+        )
+        ?>
+        <div class="photo-grid">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($paginator as $item): ?>
+                <?php if ($item instanceof \Photo\Model\Album): ?>
+                    <div class="photo-grid-item photo-grid-item-album">
+                        <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
+                            <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
+                            <div class="caption">
+                                <?= $this->escapeHtml($item->getName()); ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                        <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
+                            <?php
+                            $image = is_null($item->getWeeklyPhoto()) ?
+                                $item->getSmallThumbPath()
+                                : $item->getLargeThumbPath();
+                            $size = getimagesize('public/data/' . $image);
+                            ?>
+                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
+                        </a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="pull-right">
+            <?= $this->paginationControl(
+                $this->paginator,
+                // the scrolling style
+                'elastic',
+                'paginator/default',
+                [
+                    'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+                ]
+            )
+            ?>
         </div>
     </div>
-    <?= $this->paginationControl(
-        $this->paginator,
-        // the scrolling style
-        'elastic',
-        'paginator/default',
-        [
-            'path' => $this->url('photo/album', ['album_id' => $album->getId()])
-        ]
-    )
-    ?>
-    <div class="photo-grid">
-        <div class="grid-sizer"></div>
-        <div class="gutter-sizer"></div>
-        <?php foreach ($paginator as $item): ?>
-            <?php if ($item instanceof \Photo\Model\Album): ?>
-                <div class="photo-grid-item photo-grid-item-album">
-                    <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
-                        <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
-                        <div class="caption">
-                            <?= $this->escapeHtml($item->getName()); ?>
-                        </div>
-                    </a>
-                </div>
-            <?php else: ?>
-                <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                    <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
-                        <?php
-                            $image = is_null($item->getWeeklyPhoto()) ?
-                                    $item->getSmallThumbPath()
-                                    : $item->getLargeThumbPath();
-                            $size = getimagesize('public/data/' . $image);
-                        ?>
-                        <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
-                    </a>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
-    <div class="pull-right">
-        <?= $this->paginationControl(
-        $this->paginator,
-        // the scrolling style
-        'elastic',
-        'paginator/default',
-        [
-            'path' => $this->url('photo/album', ['album_id' => $album->getId()])
-        ]
-    )
-    ?>
-    </div>
-</div>
-
+</section>
 
 <script>
     $(document).ready(function () {

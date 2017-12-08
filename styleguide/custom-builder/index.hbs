@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{options.title}}</title>
+
+  <meta name="description" content="">
+  <meta name="generator" content="kss-node">
+  <meta name="viewport" content="width=device-width">
+
+  <!--<link rel="stylesheet" href="kss-assets/kss.css">-->
+  {{{styles}}}
+</head>
+<body id="kss-node">
+
+    <header class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header navbar-left pull-left">
+                <a href="/" class="navbar-brand">
+                    <img src="/img/gewis-footer.svg" alt="GEWIS Logo">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-left">
+                <li class=""><a href="/styleguide">Styleguide</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <nav>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li>
+                                <a href="./">
+                                    <small class="text-muted">0</small>
+                                    <span>Overview</span>
+                                </a>
+                            </li>
+                            {{#each menu}}
+                                <li {{#if isActive}}class="active"{{/if}}>
+                                    <a href="section-{{referenceURI}}.html">
+                                        <small class="text-muted">{{referenceNumber}}</small>
+                                        <span>{{header}}</span>
+                                    </a>
+                                    {{#if isActive}}
+                                        {{#if children}}
+                                            <ul>
+                                                {{#each children}}
+                                                    <li>
+                                                        <a href="section-{{../referenceURI}}.html#kssref-{{referenceURI}}">
+                                                            <small class="text-muted {{#if isGrandChild}}kss-nav__ref-child{{/if}}">{{referenceNumber}}</small>
+                                                            <span>{{header}}</span>
+                                                        </a>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+                                        {{/if}}
+                                    {{/if}}
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-9">
+                    {{#if homepage}}
+                        <div id="kssref-0">
+                            {{{homepage}}}
+                        </div>
+                    {{else}}
+                        {{!
+                            Display each section, in order.
+
+                            The "root" element comes first in this loop, and can be detected using
+                            the "#if @first" block as seen below.
+                        }}
+                        {{#each sections}}
+                            <section id="kssref-{{referenceURI}}" class="panel panel-styleguide">
+                                <div class="panel-heading">
+                                    {{#if sourceFile.name}}
+                                        <span class="panel-source">
+                                            Source: <code>{{sourceFile.name}}</code>, line {{sourceFile.line}}
+                                        </span>
+                                    {{/if}}
+                                    <h3 class="panel-title">
+                                        <a href="#kssref-{{referenceURI}}">
+                                            <span class="text-muted">{{referenceNumber}}</span>
+                                            {{header}}
+                                            <small>
+                                                {{#if @root.hasNumericReferences}}
+                                                    #permalink
+                                                {{else}}
+                                                    #{{reference}}
+                                                {{/if}}
+                                            </small>
+                                        </a>
+                                    </h3>
+                                </div>
+
+                                {{#if description}}
+                                    <div class="panel-body">
+                                        {{{description}}}
+                                    </div>
+                                {{/if}}
+
+                                {{#if parameters}}
+                                    <div class="panel-heading">
+                                        Parameters:
+                                    </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="kss-parameters__name"><code>{{name}}</code></div>
+                                            <div class="kss-parameters__description">
+                                                {{{description}}}
+                                                {{#if defaultValue}}
+                                                    <div class="kss-parameters__default-value">
+                                                        Defaults to: <code>{{defaultValue}}</code>
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                {{/if}}
+
+                                {{#if example}}
+                                    <div class="panel-heading">
+                                        Example{{#if modifiers}}s{{/if}}
+                                    </div>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            {{#if modifiers}}
+                                                <h4 class="list-group-item-heading">Default styling</h4>
+                                            {{/if}}
+                                            {{{example}}}
+                                        </div>
+
+                                        {{#each modifiers}}
+                                            <div class="list-group-item">
+                                                <h4 class="list-group-item-heading">{{name}}</h4>
+                                                <p class="list-group-item-text">{{{description}}}</p>
+                                                <div>{{{markup}}}</div>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="panel-footer">
+                                        {{#if example}}
+                                            <div class="kss-markup kss-style">
+                                                <pre class="prettyprint linenums lang-html"><code data-language="html">{{markup}}</code></pre>
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            </section>
+                        {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- SCRIPTS -->
+<script src="kss-assets/kss.js"></script>
+<script src="kss-assets/scrollspy.js"></script>
+<script src="kss-assets/prettify.js"></script>
+<script>
+  prettyPrint();
+  var spy = new ScrollSpy('#kss-node', {
+    nav: '.kss-nav__menu-child > li > a',
+    className: 'is-in-viewport'
+  });
+</script>
+{{{scripts}}}
+
+{{! This will only be included in the demo page. }}
+{{#if options.demo}}
+  <footer class="kss-github">
+    <!-- https://github.com/blog/273-github-ribbons -->
+    <a href="https://github.com/kss-node/kss-node"><img src="kss-assets/github-fork--black.png" alt="Fork me on GitHub"></a>
+  </footer>
+{{/if}}
+
+<!-- Automatically built using <a href="https://github.com/kss-node/kss-node">kss-node</a>. -->
+</body>
+</html>

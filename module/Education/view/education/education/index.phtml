@@ -2,106 +2,117 @@
     ->prependFile($this->basePath() . '/js/etc.js');
 $this->headTitle($this->translate('Education'));
 ?>
-<div class="container">
-    <h1><?= $this->translate("Education") ?></h1>
-    <div class="row">
-        <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image  col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-book"></div>
-                <h4><?= $this->translate('Books') ?></h4>
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate("Education") ?></h1>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <a href="https://gewis.nl/boeken" target="_blank" class="panel panel-image">
+                    <div class="panel-body">
+                        <div class="glyphicon glyphicon-book"></div>
+                        <h4><?= $this->translate('Books') ?></h4>
+                    </div>
+                </a>
             </div>
-        </a>
-        
-            <a href="#" class="panel panel-image col-sm-3 col-xs-6">
-                <label for="exam-search">
-                <div class="panel-body">
-                    <div class="glyphicon glyphicon-education"></div>
-                    <h4><?= $this->translate('Exams') ?></h4>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#" class="panel panel-image">
+                    <label for="exam-search">
+                        <div class="panel-body">
+                            <div class="glyphicon glyphicon-education"></div>
+                            <h4><?= $this->translate('Exams') ?></h4>
+                        </div>
+                    </label>
+                </a>
+            </div>
+
+            <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
+                <div class="col-sm-3 col-xs-6">
+                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image">
+                        <div class="panel-body">
+                            <div class="glyphicon glyphicon-cd"></div>
+                            <h4><?= $this->translate('Microsoft Imagine') ?></h4>
+                        </div>
+                    </a>
                 </div>
-                </label>
-            </a>
-        
-        <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
-        <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image  col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-cd"></div>
-                <h4><?= $this->translate('Microsoft Imagine') ?></h4>
+            <?php endif ?>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="mailto:klachten@gewis.nl" class="panel panel-image">
+                    <div class="panel-body">
+                        <div class="glyphicon glyphicon-sunglasses"></div>
+                        <h4><?= $this->translate('Complaints') ?></h4>
+                    </div>
+                </a>
             </div>
-        </a>
-        <?php endif ?>
-        <a href="mailto:klachten@gewis.nl" class="panel panel-image col-sm-3 col-xs-6">
-            <div class="panel-body">
-                <div class="glyphicon glyphicon-sunglasses"></div>
-                <h4><?= $this->translate('Complaints') ?></h4>
-            </div>
-        </a>
-    </div>
+        </div>
 
-    <h2><?= $this->translate('Exams') ?></h2>
+        <h2><?= $this->translate('Exams') ?></h2>
 
-    <div class="row">
-        <div class="col-md-6">
-            <p><?= $this->translate('Search for old exams and elaborations') ?></p>
-            <?php
-            $form = $this->form;
-            $form->prepare();
-
-            $form->setAttribute('action', $this->url('education'));
-            $form->setAttribute('method', 'get');
-            $form->setAttribute('class', '');
-            $form->setAttribute('role', 'form');
-
-            echo $this->form()->openTag($form);
-            ?>
-            <div class="form-inline">
+        <div class="row">
+            <div class="col-md-6">
+                <p><?= $this->translate('Search for old exams and elaborations') ?></p>
                 <?php
+                $form = $this->form;
+                $form->prepare();
+
+                $form->setAttribute('action', $this->url('education'));
+                $form->setAttribute('method', 'get');
+                $form->setAttribute('class', '');
+                $form->setAttribute('role', 'form');
+
+                echo $this->form()->openTag($form);
+                ?>
+                <div class="input-group">
+                    <?php
                     $element = $form->get('query');
-                    $element->setAttribute('class', 'form-control form');
+                    $element->setAttribute('class', 'form-control');
                     $element->setAttribute('id', 'exam-search');
                     $element->setAttribute('placeholder', $this->translate('Course code or course description'));
-                ?>
-                <?= $this->formInput($element) ?>
-                <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+                    ?>
+                    <?= $this->formInput($element) ?>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+                    </span>
+                </div>
+
+                <?= $this->formElementErrors($element) ?>
+
+                <?= $this->form()->closeTag(); ?>
+
+                <?php if (!empty($courses)): ?>
+                    <br />
+                    <br />
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><?= $this->translate('Course code') ?></th>
+                            <th><?= $this->translate('Course description') ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($courses as $course): ?>
+                            <tr>
+                                <td>
+                                    <a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>"><?= $course->getCode() ?></a>
+                                </td>
+                                <td><?= $course->getName() ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
             </div>
-
-            <!-- <?= $this->formLabel($element) ?> -->
-
-            <?= $this->formElementErrors($element) ?>
-
-            <?= $this->form()->closeTag(); ?>
-
-            <?php if (!empty($courses)): ?>
-                <br />
-                <br />
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th><?= $this->translate('Course code') ?></th>
-                    <th><?= $this->translate('Course description') ?></th>
-                </tr>
-                </thead>
-                <tbody>
-            <?php foreach ($courses as $course): ?>
-                <tr>
-                    <td>
-                        <a href="<?= $this->url('education/course', ['code' => $course->getCode()]) ?>"><?= $course->getCode() ?></a>
-                    </td>
-                    <td><?= $course->getName() ?></td>
-                </tr>
-            <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php endif; ?>
-        </div>
-        <div class="col-md-6">
-            <p><?= $this->translate("For old exams of minor courses, you can also look at:") ?></p>
-            <ul>
-                <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Applied Physics") ?>)</li>
-                <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedical Engineering") ?>)</li>
-                <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Electrical Engineering") ?>)</li>
-                <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Chemical Engineering") ?>)</li>
-                <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Innovation Sciences") ?>)</li>
-            </ul>
+            <div class="col-md-6">
+                <p><?= $this->translate("For old exams of minor courses, you can also look at:") ?></p>
+                <ul>
+                    <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Applied Physics") ?>)</li>
+                    <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedical Engineering") ?>)</li>
+                    <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Electrical Engineering") ?>)</li>
+                    <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Chemical Engineering") ?>)</li>
+                    <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Innovation Sciences") ?>)</li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+</section>

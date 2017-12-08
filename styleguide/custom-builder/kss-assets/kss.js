@@ -4,7 +4,7 @@
   KssStateGenerator = (function() {
     var pseudo_selectors;
 
-    pseudo_selectors = ['hover', 'enabled', 'disabled', 'active', 'visited', 'focus', 'target', 'checked', 'empty'/*, 'first-of-type', 'last-of-type', 'first-child', 'last-child'*/];
+    pseudo_selectors = ['hover', 'enabled', 'disabled', 'active', 'visited', 'focus', 'target', 'checked', 'empty', 'first-of-type', 'last-of-type', 'first-child', 'last-child'];
 
     function KssStateGenerator() {
       var idx, idxs, pseudos, replaceRule, rule, stylesheet, _i, _len, _len2, _ref, _ref2;

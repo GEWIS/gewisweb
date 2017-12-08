@@ -1,26 +1,29 @@
 <?php
 // set title
 $this->headTitle($this->translate('Poll history')); ?>
-<div class="container">
-<?= $this->paginationControl(
-    $paginator,
-    // the scrolling style
-    'elastic',
-    'paginator/default',
-    [
-        'path' => $this->url('poll/history')
-    ]
-)
-?>
-<?php if (!empty($paginator)): ?>
-        <?php foreach ($paginator as $poll): ?>
-            <?= $this->partial('partial/poll.phtml', [
-                'poll' => $poll,
-                'canVote' => false,
-                'userVote' => null,
-                'showResults' => true,
-                'viewLink' => true
-            ]) ?>
-        <?php endforeach; ?>
-<?php endif; ?>
-</div>
+<section class="section">
+    <div class="container">
+        <?= $this->paginationControl(
+            $paginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $this->url('poll/history')
+            ]
+        )
+        ?>
+        <?php if (!empty($paginator)): ?>
+            <?php foreach ($paginator as $poll): ?>
+                <hr>
+                <?= $this->partial('partial/poll.phtml', [
+                    'poll' => $poll,
+                    'canVote' => false,
+                    'userVote' => null,
+                    'showResults' => true,
+                    'viewLink' => true
+                ]) ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</section>

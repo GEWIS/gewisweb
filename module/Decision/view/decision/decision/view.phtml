@@ -1,47 +1,54 @@
 <?php
 // set title
 $this->headTitle(sprintf('%s %d', $meeting->getType(), $meeting->getNumber())); ?>
-<div class="container">
-    <h1><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
-        <small><?= $this->dateFormat(
-                $meeting->getDate(),
-                \IntlDateFormatter::FULL,
-                \IntlDateFormatter::NONE,
-                'nl_NL'
-            ) ?></small>
-    </h1>
-    <div class="row">
-        <div class="col-md-6">
-            <?php if (!is_null($meeting->getNotes())): ?>
-                <a href="<?= $this->url('decision/meeting/notes', [
-                    'type' => $meeting->getType(),
-                    'number' => $meeting->getNumber()
-                ]) ?>">
-                    <?= $this->translate('Notes for this meeting') ?></a>
-            <?php endif ?>
+<section class="section">
+    <div class="container">
+        <h1><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
+            <small><?= $this->dateFormat(
+                    $meeting->getDate(),
+                    \IntlDateFormatter::FULL,
+                    \IntlDateFormatter::NONE,
+                    'nl_NL'
+                ) ?></small>
+        </h1>
+        <div class="row">
+            <div class="col-md-6">
+                <?php if (!is_null($meeting->getNotes())): ?>
+                    <a
+                        href="<?= $this->url('decision/meeting/notes', [
+                            'type' => $meeting->getType(),
+                            'number' => $meeting->getNumber()
+                        ]) ?>"
+                    >
+                        <?= $this->translate('Notes for this meeting') ?></a>
+                <?php endif ?>
+            </div>
+
+            <div class="col-md-6">
+                <ul>
+                    <?php foreach ($meeting->getDocuments() as $document): ?>
+                        <li><a
+                                href="<?= $this->url('decision/document', [
+                                    'id' => $document->getId()
+                                ]) ?>"
+                            >
+                                <?= $document->getName() ?></a></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
         </div>
 
-        <div class="col-md-6">
-            <ul>
-                <?php foreach ($meeting->getDocuments() as $document): ?>
-                    <li><a href="<?= $this->url('decision/document', [
-                            'id' => $document->getId()
-                        ]) ?>">
-                            <?= $document->getName() ?></a></li>
-                <?php endforeach ?>
-            </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <?php foreach ($meeting->getDecisions() as $decision): ?>
+                        <li><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
+                            .<?= $decision->getPoint() ?>
+                            .<?= $decision->getNumber() ?>
+                            <?= $decision->getContent() ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <ul>
-                <?php foreach ($meeting->getDecisions() as $decision): ?>
-                    <li><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>.<?= $decision->getPoint() ?>
-                        .<?= $decision->getNumber() ?>
-                        <?= $decision->getContent() ?></li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-    </div>
-</div>
+</section>

@@ -2,42 +2,48 @@
 // set title
 $this->headTitle($this->translate('Search for decision')); ?>
 
-<div class="container">
-    <?php
-    $form->prepare();
-
-    $form->setAttribute('action', $this->url('decision/default', ['action' => 'search']));
-    $form->setAttribute('method', 'post');
-
-    $form->setAttribute('role', 'form');
-    ?>
-    <?= $this->form()->openTag($form) ?>
-
-    <div class="form-group">
+<section class="section">
+    <div class="container">
         <?php
-        $element = $form->get('query');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('placeholder', $this->translate('Search query'));
+        $form->prepare();
+
+        $form->setAttribute('action', $this->url('decision/default', ['action' => 'search']));
+        $form->setAttribute('method', 'post');
+
+        $form->setAttribute('role', 'form');
         ?>
-        <?= $this->formLabel($element) ?>
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element) ?>
+        <?= $this->form()->openTag($form) ?>
+
+        <div class="form-group">
+            <?php
+            $element = $form->get('query');
+            $element->setAttribute('class', 'form-control');
+            $element->setAttribute('placeholder', $this->translate('Search query'));
+            ?>
+            <?= $this->formLabel($element) ?>
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+
+        <?php
+        $submit = $form->get('submit');
+        $submit->setLabel($this->translate('Search'));
+        $submit->setAttribute('class', 'btn btn-primary');
+        ?>
+        <?= $this->formButton($submit) ?>
+
+        <?= $this->form()->closeTag() ?>
+
+        <?php if (isset($result)): ?>
+            <ul>
+                <?php foreach ($result
+
+                as $decision): ?>
+                <li><?= $decision->getMeeting()->getType() ?> <?= $decision->getMeeting()->getNumber() ?>
+                    .<?= $decision->getPoint() ?>
+                    .<?= $decision->getNumber() ?> <?= $decision->getContent() ?>
+                    <?php endforeach ?>
+            </ul>
+        <?php endif ?>
     </div>
-
-    <?php
-    $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Search'));
-    $submit->setAttribute('class', 'btn btn-primary');
-    ?>
-    <?= $this->formButton($submit) ?>
-
-    <?= $this->form()->closeTag() ?>
-
-    <?php if (isset($result)): ?>
-        <ul>
-            <?php foreach ($result as $decision): ?>
-            <li><?= $decision->getMeeting()->getType() ?> <?= $decision->getMeeting()->getNumber() ?>.<?= $decision->getPoint() ?>.<?= $decision->getNumber() ?> <?= $decision->getContent() ?>
-                <?php endforeach ?>
-        </ul>
-    <?php endif ?>
-</div>
+</section>

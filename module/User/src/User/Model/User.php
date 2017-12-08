@@ -54,7 +54,7 @@ class User implements RoleInterface, ResourceInterface
     /**
      * The corresponding member for this user.
      *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
+     * @ORM\OneToOne(targetEntity="Decision\Model\Member", fetch="EAGER")
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $member;

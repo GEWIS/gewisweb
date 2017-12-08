@@ -1,3 +1,5 @@
+@import '../variables';
+
 /*
 List group
 
@@ -6,7 +8,27 @@ Markup:
 Styleguide: list-group
 */
 
+.panel > .list-group {
+    .list-group-item {
+        padding: 10px 30px;
 
+        background: none;
+        border: none;
+
+        transition: background $transition-duration-fast ease;
+
+        &:hover {
+            background: rgba(black, 0.05);
+        }
+    }
+
+    & + .panel-footer {
+        margin-top: 15px;
+    }
+}
+
+
+// Legacy agenda item, used on Activity page
 .agenda-item {
     margin-bottom: 1em;
     padding: 0;

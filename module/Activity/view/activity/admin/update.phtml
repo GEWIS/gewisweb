@@ -7,36 +7,38 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $form->prepare();
 ?>
-<div class="container">
-    <?= $this->form()->openTag($form) ?>
-    <div class="row">
-        <div class="col-md-12">
-            <h1><?= $this->translate('Update an activity') ?></h1>
-            <hr>
-            <?= $this->partial('partial/create', [
-                'form' => $form,
-                'languages' => $languages
-            ])
-            ?>
-            <input type="hidden" name="organ" value="0"/>
-        </div>
-        <div class="col-md-12">
-            <?php
-            $submit = $form->get('submit');
-            $submit->setLabel($this->translate('Update activity'));
-            $submit->setAttribute('class', 'btn btn-primary');
-            ?>
-            <div class="form-group">
-                <?= $this->formButton($submit) ?>
+<section class="section">
+    <div class="container">
+        <?= $this->form()->openTag($form) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Update an activity') ?></h1>
+                <hr>
+                <?= $this->partial('partial/create', [
+                    'form' => $form,
+                    'languages' => $languages
+                ])
+                ?>
+                <input type="hidden" name="organ" value="0" />
             </div>
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit');
+                $submit->setLabel($this->translate('Update activity'));
+                $submit->setAttribute('class', 'btn btn-primary');
+                ?>
+                <div class="form-group">
+                    <?= $this->formButton($submit) ?>
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
         </div>
-        <?= $this->form()->closeTag(); ?>
     </div>
-</div>
+</section>
 
 <script>
     $('[name="beginTime"]').datetimepicker();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
-    $(window).load(Activity.updateForm); 
+    $(window).load(Activity.updateForm);
 </script>

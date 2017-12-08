@@ -6,55 +6,58 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 $this->headTitle($this->translate('Companies'));
 
 ?>
-<div class="container">
-    <div class="row" style="margin-top:50px">
-        <?php if (isset($featuredPackage)): ?>
+<section class="section">
+    <div class="container">
+        <div class="row" style="margin-top:50px">
+            <?php if (isset($featuredPackage)): ?>
             <div class="col-md-12">
-            <div class="panel panel-default">
+                <div class="panel panel-default">
 
-            <div class="panel-body">
-               <h1>
-        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
-        <small><?= $this->translate('in the spotlight') ?></small>
-    </h1>
-    <?=
-        $this->partial('./companyStory.phtml', [
-            'company' => $featuredCompany,
-            'featuredPackage' => $featuredPackage,
-            'translator' => $translator,
-            'panels' => false,
-        ]);
-    ?>
-            </div>
-            </div>
-        <?php endif ?>
-        <div class="col-md-3 hidden-sm">
-            <div class="list-group">
-                <?php
-                foreach ($companyList as $company) {
-                    ?>
-                    <a href="<?= $this->url('company/companyItem', // Route url
-                        ['slugCompanyName' => $company->getSlugName()], // Url parameters
-                        [], // routeOptions
-                        true); // Reuse matched parameters ?>" class="list-group-item"><?= $company->getName() ?></a>
-                <?php
-                }
-                ?>
-            </div>
-        </div>
+                    <div class="panel-body">
+                        <h1>
+                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
+                            <small><?= $this->translate('in the spotlight') ?></small>
+                        </h1>
+                        <?=
+                        $this->partial('./companyStory.phtml', [
+                            'company' => $featuredCompany,
+                            'featuredPackage' => $featuredPackage,
+                            'translator' => $translator,
+                            'panels' => false,
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <?php endif ?>
+                <div class="col-md-3 hidden-sm">
+                    <div class="list-group">
+                        <?php
+                        foreach ($companyList as $company) {
+                            ?>
+                            <a href="<?= $this->url('company/companyItem', // Route url
+                                ['slugCompanyName' => $company->getSlugName()], // Url parameters
+                                [], // routeOptions
+                                true); // Reuse matched parameters  ?>"
+                                class="list-group-item"><?= $company->getName() ?></a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
 
-        <div class="col-md-9">
-            <div class="company-grid row">
-                <?php
-                // Randomize the order of companies
-                shuffle($companyList);
-                foreach ($companyList as $company) {
-                    echo $this->partial('partial/company/company/grid/company.phtml',
-                        ['company' => $company, 'locale' => $locale]);
-                }
-                ?>
+                <div class="col-md-9">
+                    <div class="company-grid row">
+                        <?php
+                        // Randomize the order of companies
+                        shuffle($companyList);
+                        foreach ($companyList as $company) {
+                            echo $this->partial('partial/company/company/grid/company.phtml',
+                                ['company' => $company, 'locale' => $locale]);
+                        }
+                        ?>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-</div>
-
+</section>

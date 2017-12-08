@@ -13,11 +13,16 @@ $this->headTitle($this->translate('Photos')); ?>
                     </li>
                 <?php endfor; ?>
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <?= $this->translate('Older')?> <span class="caret"></span>
+                    <a class="dropdown-toggle"
+                        data-toggle="dropdown"
+                        href="#"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <?= $this->translate('Older') ?> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <?php for ($i = max(0, count($years) - 6); $i > 0 ; $i--): ?>
+                        <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
                             <li>
                                 <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
                                     <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
@@ -29,24 +34,28 @@ $this->headTitle($this->translate('Photos')); ?>
             </ul>
         </div>
     </section>
-    <div class="container">
-        <div class="row">
-            <?php if (!empty($albums)): ?>
-                <?php for ($i = 0; $i < count($albums); $i++): ?>
-                    <?php if($albums[$i]->getPhotoCount() > 0): ?>
-                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                            <a class="thumbnail"
-                               href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
-                                <img class="img-responsive" src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>" alt="">
-                                <div class="caption">
-                                    <?= $albums[$i]->getName(); ?>
-                                </div>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                <?php endfor; ?>
-            <?php endif; ?>
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <?php if (!empty($albums)): ?>
+                    <?php for ($i = 0; $i < count($albums); $i++): ?>
+                        <?php if ($albums[$i]->getPhotoCount() > 0): ?>
+                            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                <a class="thumbnail"
+                                    href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
+                                    <img class="img-responsive"
+                                        src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>"
+                                        alt="">
+                                    <div class="caption">
+                                        <?= $albums[$i]->getName(); ?>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 

@@ -1929,7 +1929,7 @@ msgstr "Recente wijzigingen"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:3
 msgid "Studievereniging GEWIS"
-msgstr "Studie vereniging GEWIS"
+msgstr "Studievereniging GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:4
 msgid "Welkom op de website van Studievereniging GEWIS."

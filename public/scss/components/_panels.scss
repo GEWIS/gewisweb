@@ -1,3 +1,5 @@
+@import '../variables';
+
 /*
 Panels
 
@@ -38,94 +40,158 @@ Styleguide: panels.panel-default
     }
 }
 
-.panel-group {
-    .panel {
-        border-radius: 0;
-    }
-}
-
-.panel {
-    font-size: 12px;
-
-    .panel-heading {
-        h3 {
-            text-transform: uppercase;
-        }
-    }
-}
-
 .panel-inverse {
     background: #000;
     color: #FFF;
 }
 
+$panel-bg: #f8f8f8;
+$panel-footer-bg: #f2f2f2;
+$panel-spacing: 30px;
+$panel-link-color: #969696;
+
 .panel-default {
-    > .panel-heading {
-        background: none;
-        padding: 1.5em;
-        border: none;
+    background: $panel-bg;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+
+    .panel-heading {
+        padding: ($panel-spacing * 0.8) $panel-spacing ($panel-spacing / 2);
+        border: 0;
+        background: $panel-bg;
 
         h3 {
-            margin: 0;
+            @extend .h2;
+            margin: 0 !important;
+        }
+
+        &--full-height {
+            padding: ($panel-spacing * 0.8) $panel-spacing;
         }
     }
 
-    > .panel-body {
-        padding: 15px;
+    .panel-body {
+        padding: ($panel-spacing * 0.8) $panel-spacing;
+
+        > :last-child {
+            margin-bottom: 0;
+        }
     }
 
-    > .panel-footer {
-        border: none;
-        padding: 2em 1.5em 1.5em;
-        background: none;
-        text-transform: uppercase;
-        font-family: Raleway;
+    .panel-heading + .panel-body {
+        padding-top: 0;
+    }
 
-        a {
-            position: relative;
+    .list-group + .panel-body {
+        padding-top: $panel-spacing * 0.25;
+    }
+
+    .panel-footer {
+        padding: ($panel-spacing / 2) $panel-spacing;
+
+        border: 0;
+        background: $panel-footer-bg;
+        font: 600 0.9em 'Raleway';
+        line-height: 1em;
+
+        &__link {
+            display: inline-block;
+            margin: 5px 1.5em 5px 0;
+
+            text-transform: uppercase;
+            color: $panel-link-color;
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.8em;
+
+            transition: color $transition-duration-fast ease;
 
             &:last-child {
-                margin-bottom: 0;
+                margin-right: 0;
             }
-        }
 
-        a .glyphicon {
-            padding-left: 1em;
-            transition: padding-left $transition-duration-fast linear;
-        }
-
-        a:hover .glyphicon {
-            padding-left: 1.5em;
+            &:hover {
+                color: darken($panel-link-color, 20%);
+            }
         }
     }
 }
 
-.panel-emphasize {
-    background: #222;
-    border: none;
-    box-shadow: none;
-}
+//.panel-default {
+//    > .panel-heading {
+//        background: none;
+//        padding: 1.5em;
+//        border: none;
+//
+//        h3 {
+//            margin: 0;
+//        }
+//    }
+//
+//    > .panel-body {
+//        padding: 15px;
+//    }
+//
+//    > .panel-footer {
+//        border: none;
+//        padding: 2em 1.5em 1.5em;
+//        background: none;
+//        text-transform: uppercase;
+//        font-family: Raleway;
+//
+//        a {
+//            position: relative;
+//            text-decoration: none;
+//            display: block;
+//            margin-bottom: 0.8em;
+//
+//            &:last-child {
+//                margin-bottom: 0;
+//            }
+//        }
+//
+//        a .glyphicon {
+//            padding-left: 1em;
+//            transition: padding-left $transition-duration-fast linear;
+//        }
+//
+//        a:hover .glyphicon {
+//            padding-left: 1.5em;
+//        }
+//    }
+//}
+//
+//.panel-emphasize {
+//    background: #222;
+//    border: none;
+//    box-shadow: none;
+//}
 
 a {
     &.panel-image {
+        display: block;
+
         color: #000;
         text-decoration: none;
+        background: darken(white, 2%);
+
+        transition:
+            background 150ms ease,
+            color 150ms ease;
+
+        &:hover {
+            color: white;
+            background: $brand-primary;
+        }
     }
 }
 
 .panel-image {
+    margin: 0 0 3em;
+    padding: 1em;
+
     text-align: center;
     box-shadow: none;
-    border-radius: 0;
     border: none;
-    margin: 1.5em 0;
-
-    &:hover {
-        background: #f0f0f0;
-    }
 
     h4 {
         margin-bottom: 0;
