@@ -12,8 +12,10 @@
             <div class="row">
                 <div class="agenda-item-heading col-md-2">
                     <span class="badge badge-large">
-                        <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
-                        <?= $activity->getBeginTime()->format('d') ?>
+                        <span class="small">
+                            <?= $activity->getBeginTime()->format('M') ?><br>
+                            <?= $activity->getBeginTime()->format('d') ?>
+                        </span>
                     </span>
                 </div>
                 <div class="agenda-item-body col-md-10">

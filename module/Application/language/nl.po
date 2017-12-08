@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-08 20:38+0100\n"
-"PO-Revision-Date: 2017-12-08 20:40+0100\n"
+"PO-Revision-Date: 2017-12-08 23:51+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.1\n"
 
 #: module/Activity/view/partial/signupForm.phtml:15
 #: module/Activity/view/activity/admin-approval/view.phtml:41
@@ -338,7 +338,7 @@ msgstr "Alle Activiteiten"
 
 #: module/Activity/view/activity/activity/index.phtml:17
 msgid "Career Activities"
-msgstr "CarriÃ¨re Activiteiten"
+msgstr "Carri&egrave;re Activiteiten"
 
 #: module/Activity/view/activity/activity/index.phtml:27
 msgid "Create Activity"

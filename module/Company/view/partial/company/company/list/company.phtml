@@ -3,8 +3,8 @@
 $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 
 ?>
-<div class="company-list-item list-item" id="company-<?= $company->getId(); ?>">
-<h2 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h2>
+<div id="company-<?= $company->getId(); ?>">
+<h1 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h1>
     <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
     <div class="row">
         <div class="col-md-3">
@@ -47,7 +47,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
             </div>
         </div>
         <div class="col-md-9">
-            <h4><?= $this->translate('Description') ?></h4>
+            <h2><?= $this->translate('Description') ?></h2>
             <div class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
         </div>
     </div>
