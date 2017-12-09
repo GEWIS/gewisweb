@@ -1,3 +1,14 @@
+## [v1.3](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-12-09)
+
+* Completely redesigned homepage!
+* Added an activity archive
+* Company banners can now be shown on the homepage
+* Automatically email GEFLITST for new activities
+* Various UI improvements
+* Various bugfixes
+
+---
+
 ## [v1.2.3](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-04-26)
 
 * Added a page for career related activities
