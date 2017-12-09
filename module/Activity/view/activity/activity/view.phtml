@@ -83,12 +83,12 @@ $this->headTitle($this->translate('Activities')); ?>
         </ul>
         
         <?php if ($isSignedUp) : ?>
-            <button class="btn btn-default btn-lg" type="button" data-toggle="collapse" data-target="#subscriptionForm"
+            <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
                     aria-expanded="false" aria-controls="subscriptionForm">
                 <?= $this->translate('Already subscribed') ?>
             </button>
         <?php else: ?>
-            <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#subscriptionForm"
+            <button class="btn btn-primary btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
                     aria-expanded="false" aria-controls="subscriptionForm">
                 <span class="glyphicon glyphicon-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
             </button>
