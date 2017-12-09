@@ -61,3 +61,7 @@ a[href^='mailto:klachten@gewis.nl'] .panel-special {
     50% { transform: translateY(0); }
     80% { transform: rotate(360deg) scale(1.4) }
 }
+
+.no-pad {
+    padding: 0;
+}

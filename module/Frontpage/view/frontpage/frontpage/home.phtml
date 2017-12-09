@@ -14,12 +14,6 @@
                 </section>
 
                 <section class="content-section">
-                    <?php if ($companyBanner !== null): ?>
-                        <?= $this->partial('partial/banner.phtml', ['banner' => $companyBanner]) ?>
-                    <?php endif ?>
-                </section>
-
-                <section class="content-section">
                     <h2><?= $this->translate('News') ?></h2>
 
                     <?php foreach ($news as $item): ?>
@@ -50,6 +44,13 @@
                                 </div>
                             </div>
                         </article>
+                        <?php if (!isset($bannerShown)): ?>
+                            <article class="content-article">
+                                <?php if ($companyBanner !== null): ?>
+                                    <?= $this->partial('partial/banner.phtml', ['banner' => $companyBanner]) ?>
+                                <?php endif ?>
+                            </article>
+                        <?php endif; $bannerShown = true; ?>
                     <?php endforeach; ?>
 
                     <script>
@@ -58,6 +59,36 @@
                         });
                     </script>
                 </section>
+                <?php if (!empty($birthdays) && $this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                <section class="content-section">
+                    <div class="panel panel-default" style="overflow:hidden;">
+                        <?php if (!is_null($birthdayTag)): ?>
+                            <div class="col-md-6 no-pad">
+                                <a href="<?= $this->url('photo/photo',
+                                    ['photo_id' => $birthdayTag->getPhoto()->getId()]); ?>">
+                                    <img class="img-responsive"
+                                         src="<?= $this->fileUrl($birthdayTag->getPhoto()->getLargeThumbPath()) ?>"
+                                         alt="">
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <div class="col-md-<?= is_null($birthdayTag) ? '12' : '6' ?> no-pad">
+                            <div class="panel-heading">
+                                <h3><?= $this->translate('Verjaardagen') ?></h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul>
+                                    <?php foreach ($birthdays as $birthday): ?>
+                                        <li><?= sprintf($this->translate('%s wil be %s years old today!'),
+                                                $birthday['member']->getFullName(),
+                                                $birthday['age']) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <?php endif; ?>
             </div>
 
             <aside class="col-sm-5 col-md-4">
@@ -119,7 +150,14 @@
                         </div>
                     </div>
                 <?php endif; ?>
-
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading--full-height">
+                        <h3><?= $this->translate('Infima') ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <?= $this->infima() ?>
+                    </div>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3><?= $this->translate('Poll') ?></h3>
