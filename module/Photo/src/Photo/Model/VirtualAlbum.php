@@ -2,19 +2,14 @@
 
 namespace Photo\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
-
 /**
- * Album.
+ * VirtualAlbum.
  *
- * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  *
  */
-class Album implements ResourceInterface
+class VirtualAlbum extends Album
 {
-
     /**
      * Album ID.
      *
@@ -23,7 +18,7 @@ class Album implements ResourceInterface
      * @ORM\Column(type="integer")
      */
     protected $id;
-
+    
     /**
      * First date of photos in album
      *
@@ -74,7 +69,8 @@ class Album implements ResourceInterface
      */
     protected $coverPath;
 
-    public function __construct() {
+    public function __construct($id) {
+        $this->id = $id;
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -126,7 +122,7 @@ class Album implements ResourceInterface
      */
     public function getParent()
     {
-        return $this->parent;
+        return null;
     }
 
     /**
@@ -136,7 +132,7 @@ class Album implements ResourceInterface
      */
     public function getChildren()
     {
-        return $this->children;
+        return [];
     }
 
     /**
@@ -146,7 +142,7 @@ class Album implements ResourceInterface
      */
     public function getCoverPath()
     {
-        return $this->coverPath;
+        return "";
     }
 
     /**
@@ -154,17 +150,12 @@ class Album implements ResourceInterface
      *
      * @return integer
      */
-    public function getPhotoCount($includeSubAlbums = true)
+    public function getPhotoCount($includeSubAlbums = false)
     {
         $count = $this->photos->count();
-        if ($includeSubAlbums) {
-            foreach($this->children as $album) {
-                $count += $album->getPhotoCount();
-            }
-        }
         return $count;
     }
-
+    
     /**
      * Get the amount of subalbums in the album
      *
@@ -172,7 +163,11 @@ class Album implements ResourceInterface
      */
     public function getAlbumCount()
     {
-        return $this->children->count();
+        return 0;
+    }
+    
+    public function getPhotos() {
+        return $this->photos->toArray();
     }
 
     /**
@@ -204,15 +199,16 @@ class Album implements ResourceInterface
     {
         $this->name = $name;
     }
-
+    
     /**
      * Set the parent of the album
      *
      * @param album $parent
+     * @throws \Exception
      */
     public function setParent($parent)
     {
-        $this->parent = $parent;
+        throw new \Exception("Method is not implemented");
     }
 
     /**
@@ -232,19 +228,48 @@ class Album implements ResourceInterface
      */
     public function addPhoto($photo)
     {
-        $photo->setAlbum($this);
         $this->photos[] = $photo;
     }
-
+    
+    public function sortPhotos() {
+        $iterator = $this->photos->getIterator();
+        $iterator->uasort(function (\Photo\Model\Photo $a, \Photo\Model\Photo $b) {
+            return ($a->getDateTime() < $b->getDateTime()) ? -1 : 1;
+        });
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator));
+    }
+    
+    public function next(\Photo\Model\Photo $current) {
+        $array = $this->photos->toArray();
+        $currentKey = key($array);
+        while ($currentKey !== null && $array[$currentKey]->getId() !== $current->getId()) {
+            next($array);
+            $currentKey = key($array);
+        }
+        $next = next($array);
+        return $next == false ? null : $next;
+    }
+    
+    public function previous(\Photo\Model\Photo $current) {
+        $array = $this->photos->toArray();
+        $currentKey = key($array);
+        while ($currentKey !== null && $array[$currentKey]->getId() !== $current->getId()) {
+            next($array);
+            $currentKey = key($array);
+        }
+        $prev = prev($array);
+        return $prev == false ? null : $prev;
+    }
+    
     /**
      * Add a sub album to an album.
      *
      * @param \Photo\Model\Album $album
+     * @throws \Exception
      */
     public function addAlbum($album)
     {
-        $album->setParent($this);
-        $this->children[] = $album;
+        throw new \Exception("Method is not implemented");
     }
 
     /**
@@ -259,7 +284,7 @@ class Album implements ResourceInterface
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
             'name' => $this->getName(),
-            'parent' => is_null($this->getParent()) ? null : $this->getParent()->toArray(),
+            'parent' => null,
             'children' => [],
             'photos' => [],
             'coverPath' => $this->getCoverPath(),
@@ -283,20 +308,10 @@ class Album implements ResourceInterface
             $array['photos'][] = $photo->toArray();
         }
         foreach ($this->children as $album) {
-            $array['children'][] = $album->toArray();
+            $array['children'][] = [];
         }
 
         return $array;
-    }
-
-    /**
-     * Get the resource ID.
-     *
-     * @return string
-     */
-    public function getResourceId()
-    {
-        return 'album';
     }
 
 }

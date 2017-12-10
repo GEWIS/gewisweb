@@ -20,6 +20,7 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
+            <?php if (!$currentAlbum instanceof \Photo\Model\VirtualAlbum): ?>
             <li>
                 <?php
                 // determine association year
@@ -29,6 +30,7 @@ $this->headTitle($this->translate('Photos'));
                     <?= $associationYear->getYearString() ?>
                 </a>
             </li>
+            <?php endif; ?>
             <?php
             // first we need to get all parents
             $crumbs = [];
@@ -65,13 +67,20 @@ $this->headTitle($this->translate('Photos'));
                 <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?><small> <?= $album->getStartDateTime()->format('d-m-Y') ?></small></h1>
             </div>
         </div>
-        <?= $this->paginationControl(
+        <?php
+        $path = '';
+        if ($album instanceof \Photo\Model\VirtualAlbum) {
+            $this->url('photo/member', ['lidnr' => $album->getId()]);
+        } else {
+            $this->url('photo/album', ['album_id' => $album->getId()]);
+        }
+        $this->paginationControl(
             $this->paginator,
             // the scrolling style
             'elastic',
             'paginator/default',
             [
-                'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+                'path' => $path
             ]
         )
         ?>
@@ -90,7 +99,16 @@ $this->headTitle($this->translate('Photos'));
                     </div>
                 <?php else: ?>
                     <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
+                        <a href="<?php
+                        if ($album instanceof \Photo\Model\VirtualAlbum) {
+                            echo $this->url('photo/member/photo', [
+                                'lidnr' => $album->getId(),
+                                'page' => isset($paginator->current) ? $paginator->current : 0,
+                                'photo_id' => $item->getId()]);
+                        } else {
+                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
+                        }
+                        ?>">
                             <?php
                             $image = is_null($item->getWeeklyPhoto()) ?
                                 $item->getSmallThumbPath()
@@ -110,7 +128,7 @@ $this->headTitle($this->translate('Photos'));
                 'elastic',
                 'paginator/default',
                 [
-                    'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+                    'path' => $path
                 ]
             )
             ?>

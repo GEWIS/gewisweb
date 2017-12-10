@@ -86,13 +86,14 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @param int $albumId the id of the album
      * @param int $activePage the page of the album
+     * @param string $type "album"|"member"|"year"
      *
      * @return array|null Array with data or null if the page does not exist
      */
-    public function getAlbumPage($albumId, $activePage)
+    public function getAlbumPage($albumId, $activePage, $type = 'album')
     {
         $albumService = $this->getAlbumService();
-        $album = $albumService->getAlbum($albumId);
+        $album = $albumService->getAlbum($albumId, $type);
         if (is_null($album)) {
             return null;
         }

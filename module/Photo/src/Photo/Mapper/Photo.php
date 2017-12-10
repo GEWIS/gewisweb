@@ -39,19 +39,23 @@ class Photo
      */
     public function getAlbumPhotos($album, $start = 0, $maxResults = null)
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.album = ?1')
-            ->setParameter(1, $album)
-            ->setFirstResult($start)
-            ->orderBy('a.dateTime', 'ASC');
-        if (!is_null($maxResults)) {
-            $qb->setMaxResults($maxResults);
+        if ($album instanceof \Photo\Model\VirtualAlbum) {
+            return $album->getPhotos();
+        } else {
+            $qb = $this->em->createQueryBuilder();
+    
+            $qb->select('a')
+                ->from('Photo\Model\Photo', 'a')
+                ->where('a.album = ?1')
+                ->setParameter(1, $album)
+                ->setFirstResult($start)
+                ->orderBy('a.dateTime', 'ASC');
+            if (!is_null($maxResults)) {
+                $qb->setMaxResults($maxResults);
+            }
+    
+            return $qb->getQuery()->getResult();
         }
-
-        return $qb->getQuery()->getResult();
     }
 
     /**

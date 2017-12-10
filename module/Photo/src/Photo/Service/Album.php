@@ -16,22 +16,35 @@ class Album extends AbstractAclService
      */
     const ASSOCIATION_YEAR_START_MONTH = 7;
     const ASSOCIATION_YEAR_START_DAY = 1;
-
+    
     /**
      * Gets an album using the album id.
      *
      * @param integer $albumId the id of the album
+     * @param string  $type    "album"|"member"|"year"
      *
      * @return \Photo\Model\Album album matching the given id
+     * @throws \Exception If there are not sufficient permissions
      */
-    public function getAlbum($albumId)
+    public function getAlbum($albumId, $type = 'album')
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view albums')
             );
         }
-        return $this->getAlbumMapper()->getAlbumById($albumId);
+        $album = null;
+        switch($type) {
+            case 'album':
+                $album = $this->getAlbumMapper()->getAlbumById($albumId);
+                break;
+            case 'member':
+                $album = $this->getMemberAlbum($albumId);
+                break;
+            default:
+                throw new \Exception("Album type not allowed");
+        }
+        return $album;
     }
 
     /**
@@ -52,6 +65,8 @@ class Album extends AbstractAclService
         }
         if ($album == null) {
             return $this->getAlbumMapper()->getRootAlbums();
+        } elseif ($album instanceof \Photo\Model\VirtualAlbum) {
+            return [];
         } else {
             return $this->getAlbumMapper()->getSubAlbums($album, $start, $maxResults);
         }
@@ -321,6 +336,25 @@ class Album extends AbstractAclService
         }
         return $this->sm->get('photo_form_album_create');
     }
+    
+    public function getMemberAlbum($lidNr)
+    {
+        $member = $this->getMemberService()->findMemberByLidnr($lidNr);
+        if ($member == null) {
+            return null;
+        }
+        $tags = $this->getPhotoService()->getTagsForMember($member);
+        
+        $album = new \Photo\Model\VirtualAlbum($lidNr);
+        $album->setName($member->getFullName());
+        $album->setStartDateTime($member->getBirth()); // ugly fix
+        $album->setEndDateTime(new \DateTime());
+        foreach ($tags as $tag) {
+            $album->addPhoto($tag->getPhoto());
+        }
+        $album->sortPhotos();
+        return $album;
+    }
 
     /**
      * Get the album mapper.
@@ -340,6 +374,16 @@ class Album extends AbstractAclService
     public function getPhotoMapper()
     {
         return $this->sm->get('photo_mapper_photo');
+    }
+    
+    /**
+     * Get the member service.
+     *
+     * @return \Decision\Service\Member
+     */
+    public function getMemberService()
+    {
+        return $this->sm->get('decision_service_member');
     }
 
     /**

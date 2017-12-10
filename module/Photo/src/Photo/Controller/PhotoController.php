@@ -45,6 +45,32 @@ class PhotoController extends AbstractActionController
 
         return new ViewModel($photoData);
     }
+    
+    public function memberAction()
+    {
+        $lidnr = $this->params()->fromRoute('lidnr');
+        $page = $this->params()->fromRoute('page');
+        $photoId = $this->params()->fromRoute('photo_id');
+        $photoData = $this->getPhotoService()->getPhotoData($photoId);
+        $memberAlbum = $this->getAlbumService()->getAlbum($lidnr, 'member');
+        
+        if (is_null($photoData)) {
+            return $this->notFoundAction();
+        }
+        
+        $photoData = array_merge($photoData, [
+           'memberAlbum' => $memberAlbum,
+           'memberAlbumPage' => $page,
+           'memberNext' => $memberAlbum->next($photoData['photo']),
+           'memberPrevious' => $memberAlbum->previous($photoData['photo']),
+        ]);
+        
+        $this->getPhotoService()->countHit($photoData['photo']);
+    
+        $vm = new ViewModel($photoData);
+        $vm->setTemplate('photo/view');
+        return $vm;
+    }
 
     public function downloadAction()
     {

@@ -2,11 +2,15 @@
 // set title
 $this->headTitle($this->translate('Photo'));
 $album = $photo->getAlbum();
-$this->headTitle($album->getName());
 $currentAlbum = $album;
-while (!is_null($currentAlbum->getParent())) {
-    $this->headTitle($currentAlbum->getParent()->getName());
-    $currentAlbum = $currentAlbum->getParent();
+if (isset($memberAlbum)) {
+    $this->headTitle($memberAlbum->getName());
+} else {
+    $this->headTitle($album->getName());
+    while (!is_null($currentAlbum->getParent())) {
+        $this->headTitle($currentAlbum->getParent()->getName());
+        $currentAlbum = $currentAlbum->getParent();
+    }
 }
 $this->headTitle($this->translate('Photos'));
 ?>
@@ -19,6 +23,28 @@ $this->scriptUrl()->requireUrl('member/search');
     <section class="section section-breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
+            <?php if (isset($memberAlbum)): ?>
+                <li>
+                    <a href="<?= $this->url('photo') ?>">
+                        <?= $this->translate('Photos') ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getId(), 'page' =>
+                        $memberAlbumPage]);
+                    ?>">
+                        <?= $memberAlbum->getName() ?>
+                    </a>
+                </li>
+                <li class="active">
+                    <?= $this->translate('Photo') ?>
+                </li>
+            </ol>
+            <ol class="breadcrumb">
+                <li class="note">
+                    <?= $this->translate('From album') ?>:
+                </li>
+            <?php endif; ?>
                 <li>
                     <a href="<?= $this->url('photo') ?>">
                         <?= $this->translate('Photos') ?>
@@ -68,12 +94,27 @@ $this->scriptUrl()->requireUrl('member/search');
         <div class="container">
             <nav>
                 <ul class="pager">
+                    <?php if (isset($memberAlbum)): ?>
+                    <li class="previous">
+                        <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getId(), 'page' =>
+                            $memberAlbumPage]); ?>">
+                            <span aria-hidden="true">&larr;</span>
+                            <?= $this->translate('Return to album') ?>
+                        </a>
+                    </li>
+                    <li class="previous">
+                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                            <?= sprintf($this->translate('View album %s'), $photo->getAlbum()->getName()) ?>
+                        </a>
+                    </li>
+                    <?php else: ?>
                     <li class="previous">
                         <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
                             <span aria-hidden="true">&larr;</span>
                             <?= $this->translate('Return to album') ?>
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
             <div class="row">
@@ -81,7 +122,19 @@ $this->scriptUrl()->requireUrl('member/search');
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                                <a href="<?= is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>">
+                                <?php
+                                $urlNext = is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]);
+                                $urlPrevious = is_null($previous) ? '#' : $this->url('photo/photo', ['photo_id' => $previous->getId()]);
+                                if (isset($memberAlbum)) {
+                                    $urlNext = is_null($memberNext) ? '#' : $this->url('photo/member/photo', [
+                                        'photo_id' => $memberNext->getId(), 'lidnr' => $memberAlbum->getId(), 'page' => $memberAlbumPage
+                                    ]);
+                                    $urlPrevious = is_null($memberPrevious) ? '#' : $this->url('photo/member/photo', [
+                                        'photo_id' => $memberPrevious->getId(), 'lidnr' => $memberAlbum->getId(), 'page' => $memberAlbumPage
+                                    ]);
+                                }
+                                ?>
+                                <a href="<?= $urlNext ?>">
                                     <img
                                         style="width:100%"
                                         src="<?= $this->fileUrl($photo->getLargeThumbPath()) ?>"
@@ -100,11 +153,11 @@ $this->scriptUrl()->requireUrl('member/search');
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <?php if (!is_null($previous)): ?>
+                        <?php if ($urlPrevious != '#'): ?>
                             <a
                                 id="previous"
                                 class="left carousel-control"
-                                href="<?= $this->url('photo/photo', ['photo_id' => $previous->getId()]); ?>"
+                                href="<?= $urlPrevious ?>"
                                 role="button"
                                 data-slide="prev"
                             >
@@ -116,11 +169,11 @@ $this->scriptUrl()->requireUrl('member/search');
                             </a>
                             <?php
                         endif;
-                        if (!is_null($next)): ?>
+                        if ($urlNext != '#'): ?>
                             <a
                                 id="next"
                                 class="right carousel-control"
-                                href="<?= $this->url('photo/photo', ['photo_id' => $next->getId()]); ?>"
+                                href="<?= $urlNext ?>"
                                 role="button"
                                 data-slide="next"
                             >

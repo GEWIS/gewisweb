@@ -165,7 +165,7 @@ class Album
 
         return empty($res) ? null : $res[0];
     }
-
+    
     /**
      * Removes an album.
      *
