@@ -39,36 +39,29 @@ $this->headTitle($this->translate('Photos')); ?>
         <div class="container">
             <div class="row">
                 <?php if (!empty($albums)): ?>
-                    <?php for ($i = 0; $i < count($albums); $i++): ?>
-                        <?php if ($albums[$i]->getPhotoCount() > 0): ?>
-
+                    <?php foreach ($albums as $album): ?>
+                        <?php if ($album->getPhotoCount() > 0): ?>
                             <div class="col-md-4 col-sm-6 col-xs-12 thumb albumContainer">
-
                                 <div class="panel panel-default">
                                     <div class="titleAndDate">
                                         <div class="panel-heading">
-                                            <a href="<?= $this->url('photo/album',
-                                                ["album_id" => $albums[$i]->getId()]); ?>">
-                                                <h2><?= $albums[$i]->getName(); ?></h2>
+                                            <a href="<?= $this->url('photo/album', ["album_id" => $album->getId()]); ?>">
+                                                <h2><?= $album->getName(); ?></h2>
                                             </a>
                                         </div>
-
-                                        <div class="panel-body"><?= $albums[$i]->getStartDateTime()->format('F jS Y'); ?></div>
+                                        <div class="panel-body">
+                                            <?= $album->getStartDateTime()->format('F jS Y'); ?>
+                                        </div>
                                     </div>
-
-                                    <a class="thumbnail"
-                                       href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
-                                        <img id="" class="img img-responsive"
-                                             src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>">
+                                    <a href="<?= $this->url('photo/album', ["album_id" => $album->getId()]); ?>" class="thumbnail">
+                                        <img class="img img-responsive" src="<?= $this->fileUrl($album->getCoverPath()) ?>" />
                                     </a>
-
                                 </div>
                             </div>
                         <?php endif; ?>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </div>
     </section>
 </div>
-
