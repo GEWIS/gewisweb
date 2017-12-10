@@ -52,7 +52,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="remember" value="0"><input type="checkbox" name="remember" checked="checked" value="1">
-                                    Remember me
+                                    <?= $this->translate('Remember me') ?>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
                                 <p><?= $this->translate('Or go to the') ?> <a href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a></p>
@@ -202,6 +202,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                             <li><a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a></li>
+                            <?php if (null != $this->identity()): ?>
+                                <li>
+                                    <a href="<?= $this->url('photo/member', ['lidnr' => $this->identity()->getMember()->getLidnr(), 'page' => null]) ?>">
+                                        <?= $this->translate('My photo\'s') ?>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     <?php endif;?>
                 </li>
