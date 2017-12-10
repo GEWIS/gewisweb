@@ -30,10 +30,10 @@ $this->scriptUrl()->requireUrl('member/search');
                     </a>
                 </li>
                 <li>
-                    <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getId(), 'page' =>
-                        $memberAlbumPage]);
+                    <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getId(), 'page' => null]);
                     ?>">
-                        <?= $memberAlbum->getName() ?>
+                        <span class="glyphicon glyphicon-user"></span>
+                        &nbsp;<?= $memberAlbum->getName() ?>
                     </a>
                 </li>
                 <li class="active">
