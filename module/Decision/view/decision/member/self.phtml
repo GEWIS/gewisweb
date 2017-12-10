@@ -139,7 +139,16 @@ $this->headTitle($member->getFullName());
                 <?php endforeach ?>
             </div>
             <div class="col-md-6">
-                <?= $this->partial('partial/photos.phtml', ['tags' => $tags, 'basedir' => $basedir]) ?>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6">
+                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
+                            <div class="panel-body">
+                                <div class="glyphicon glyphicon-picture"></div>
+                                <h4><?= $this->translate("My photo's"); ?></h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
