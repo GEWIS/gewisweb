@@ -2,7 +2,6 @@
 Photo
 
 */
-
 @import '../_bootstrap-variables.scss';
 
 .photo-grid:after {
@@ -14,6 +13,7 @@ Photo
 .gutter-sizer {
   width: 0.5%;
 }
+
 .grid-sizer, .photo-grid-item {
   width: 24.5%;
   margin-bottom: 0.5%;
@@ -22,6 +22,7 @@ Photo
 .photo-grid-item-photo {
   background-color: #d40026;
 }
+
 .photo-grid-item {
   float: left;
 }
@@ -67,4 +68,40 @@ Photo
 
 .corner-ribbon.shadow {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.albumContainer {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .titleAndDate {
+    padding-top: 24px;
+    padding-bottom: 15px;
+  }
+
+  .panel-heading, .panel-body {
+    padding-bottom: 0px;
+    padding-top: 0px;
+
+    a {
+      text-decoration-color: #D40026;
+    }
+
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  .thumbnail img {
+    width: 100%;
+  }
+}
+
+.navigationBar {
+  padding-bottom: 0px;
+}
+
+.albumHolder {
+  padding-top: 25px;
 }

@@ -1,8 +1,9 @@
 <?php
 // set title
 $this->headTitle($this->translate('Photos')); ?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js'); ?>
 <div class="content-container">
-    <section class="section">
+    <section class="section navigationBar">
         <div class="container">
             <ul class="nav nav-pills head-menu">
                 <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
@@ -14,11 +15,11 @@ $this->headTitle($this->translate('Photos')); ?>
                 <?php endfor; ?>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle"
-                        data-toggle="dropdown"
-                        href="#"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false">
+                       data-toggle="dropdown"
+                       href="#"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">
                         <?= $this->translate('Older') ?> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -34,22 +35,34 @@ $this->headTitle($this->translate('Photos')); ?>
             </ul>
         </div>
     </section>
-    <section class="section">
+    <section class="section albumHolder">
         <div class="container">
             <div class="row">
                 <?php if (!empty($albums)): ?>
                     <?php for ($i = 0; $i < count($albums); $i++): ?>
                         <?php if ($albums[$i]->getPhotoCount() > 0): ?>
-                            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                <a class="thumbnail"
-                                    href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
-                                    <img class="img-responsive"
-                                        src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>"
-                                        alt="">
-                                    <div class="caption">
-                                        <?= $albums[$i]->getName(); ?>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 thumb albumContainer">
+
+                                <div class="panel panel-default">
+                                    <div class="titleAndDate">
+                                        <div class="panel-heading">
+                                            <a href="<?= $this->url('photo/album',
+                                                ["album_id" => $albums[$i]->getId()]); ?>">
+                                                <h2><?= $albums[$i]->getName(); ?></h2>
+                                            </a>
+                                        </div>
+
+                                        <div class="panel-body"><?= $albums[$i]->getStartDateTime()->format('F jS Y'); ?></div>
                                     </div>
-                                </a>
+
+                                    <a class="thumbnail"
+                                       href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
+                                        <img id="" class="img img-responsive"
+                                             src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>">
+                                    </a>
+
+                                </div>
                             </div>
                         <?php endif; ?>
                     <?php endfor; ?>
