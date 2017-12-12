@@ -72,8 +72,8 @@
         <td>
             <?= is_null($this->photo->getLongitude()) || is_null($this->photo->getLatitude()) ?
                 $this->translate("Unknown") : "<a target='_blank'
-				href='https://www.google.com/maps/?q={$this->photo->getLatitude()},{$this->photo->getLongitude()}'>
-				{$this->translate("View on map")}</a>"
+				href='https://www.google.com/maps/?q={$this->photo->getLatitude()},{$this->photo->getLongitude()}'>"
+				. $this->translate("View on map") . "</a>"
             ?>
         </td>
     </tr>

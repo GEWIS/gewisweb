@@ -296,7 +296,8 @@ class Photo implements ResourceInterface
      *
      * @return float
      */
-    public function getLongitude() {
+    public function getLongitude()
+    {
         return $this->longitude;
     }
 
@@ -305,7 +306,8 @@ class Photo implements ResourceInterface
      *
      * @return float
      */
-    public function getLatitude() {
+    public function getLatitude()
+    {
         return $this->latitude;
     }
 
@@ -460,7 +462,8 @@ class Photo implements ResourceInterface
      *
      * @param float $longitude
      */
-    public function setLongitude($longitude) {
+    public function setLongitude($longitude)
+    {
         $this->longitude = $longitude;
     }
 
@@ -469,7 +472,8 @@ class Photo implements ResourceInterface
      *
      * @param float $latitude
      */
-    public function setLatitude($latitude) {
+    public function setLatitude($latitude)
+    {
         $this->latitude = $latitude;
     }
 

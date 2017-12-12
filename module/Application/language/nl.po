@@ -2,12 +2,12 @@
 # Copyright (C) 2014 GEWIS
 # This file is distributed under the same license as the GEWISweb package.
 # Pieter Kokx <pieter@kokx.nl>, 2014.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-26 11:54+0200\n"
+"POT-Creation-Date: 2017-12-12 18:17+0100\n"
 "PO-Revision-Date: 2017-07-11 14:46+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: Dutch\n"
@@ -18,13 +18,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.1\n"
 
+#: module/Activity/view/activity/activity/archive.phtml:7
+#: module/Photo/view/photo/photo/index.phtml:17
+msgid "Older"
+msgstr "Ouder"
+
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:71
 msgid "Create activity"
 msgstr "Create activity"
 
 #: module/Activity/view/activity/activity/create.phtml:17
-#: module/Application/view/partial/main-nav.phtml:170
+#: module/Application/view/partial/main-nav.phtml:173
 msgid "Create an activity"
 msgstr "Maak een activiteit"
 
@@ -104,6 +109,7 @@ msgstr "Einde"
 #: module/Activity/view/activity/admin-approval/view.phtml:31
 #: module/Activity/view/partial/create.phtml:97
 #: module/Activity/view/partial/create.phtml:153
+#: module/Photo/view/partial/metadata.phtml:70
 #: module/Company/src/Company/Form/EditCompany.php:78
 msgid "Location"
 msgstr "Locatie"
@@ -939,10 +945,10 @@ msgid "News"
 msgstr "Nieuws"
 
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:183
-#: module/Application/view/partial/main-nav.phtml:187
-#: module/Application/view/partial/main-nav.phtml:191
-#: module/Application/view/partial/main-nav.phtml:198
+#: module/Application/view/partial/main-nav.phtml:186
+#: module/Application/view/partial/main-nav.phtml:190
+#: module/Application/view/partial/main-nav.phtml:194
+#: module/Application/view/partial/main-nav.phtml:201
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
@@ -1116,25 +1122,31 @@ msgstr "Uitgelicht"
 msgid "Jobs"
 msgstr "Vacatures"
 
-#: module/Application/view/partial/main-nav.phtml:173
+#: module/Application/view/partial/main-nav.phtml:170
+#, fuzzy
+msgid "Activity Archive"
+msgstr "Activiteit id"
+
+#: module/Application/view/partial/main-nav.phtml:176
+#, fuzzy
 msgid ""
-"Option\n"
+"Option\r\n"
 "                            calendar"
 msgstr ""
 "Optie\n"
 "Kalender"
 
-#: module/Application/view/partial/main-nav.phtml:176
+#: module/Application/view/partial/main-nav.phtml:179
 msgid "Career related"
 msgstr "Carri&egrave;re gerelateerd"
 
-#: module/Application/view/partial/main-nav.phtml:201
+#: module/Application/view/partial/main-nav.phtml:204
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 #: module/Photo/view/photo/photo/view.phtml:89
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
-#: module/Application/view/partial/main-nav.phtml:208
+#: module/Application/view/partial/main-nav.phtml:211
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:6
@@ -1445,8 +1457,9 @@ msgid "Upload"
 msgstr "Upload"
 
 #: module/Decision/view/decision/decision/authorizations.phtml:9
+#, fuzzy
 msgid ""
-"There are no upcoming meetings for which you can authorize someone.\n"
+"There are no upcoming meetings for which you can authorize someone.\r\n"
 "You may still be able to authorize someone or revoke an authorization by "
 "contacting the board."
 msgstr ""
@@ -1936,8 +1949,10 @@ msgid "Welkom op de website van Studievereniging GEWIS."
 msgstr "Welkom op de website van Studievereniging GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:14
+#, fuzzy
 msgid ""
-"Welcome to the website of Study association GEWIS, the study association of\n"
+"Welcome to the website of Study association GEWIS, the study association of"
+"\r\n"
 "                    the department of Mathematics & Computer Science of the "
 "Eindhoven University of Technology."
 msgstr ""
@@ -1945,11 +1960,11 @@ msgstr ""
 "faculteit Wiskunde & Informatica aan de Technische Universiteit Eindhoven."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:18
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"GEWIS means Community of Mathematics and Computer Science Students\n"
+"GEWIS means Community of Mathematics and Computer Science Students\r\n"
 "                    (or in Dutch: GEmeenschap van Wiskunde en Informatica "
-"Studenten) and was founded in 1982.\n"
+"Studenten) and was founded in 1982.\r\n"
 "                    On this website you can find out %s and %s."
 msgstr ""
 "GEWIS betekent GEmeenschap van Wiskunde en Informatica Studenten en was "
@@ -2251,6 +2266,7 @@ msgstr "Artiest"
 #: module/Photo/view/partial/metadata.phtml:51
 #: module/Photo/view/partial/metadata.phtml:58
 #: module/Photo/view/partial/metadata.phtml:65
+#: module/Photo/view/partial/metadata.phtml:74
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -2285,6 +2301,10 @@ msgstr "Aperture"
 #: module/Photo/view/partial/metadata.phtml:63
 msgid "ISO"
 msgstr "ISO"
+
+#: module/Photo/view/partial/metadata.phtml:76
+msgid "View on map"
+msgstr "Toon op kaart"
 
 #: module/Photo/view/partial/tags.phtml:7
 msgid "People in this photo"
@@ -2425,10 +2445,6 @@ msgstr "Selecteer een nieuwe bovenliggende album"
 #: module/Photo/view/photo/album-admin/index.phtml:251
 msgid "The photos have been moved"
 msgstr "De foto's zijn verplaatst"
-
-#: module/Photo/view/photo/photo/index.phtml:17
-msgid "Older"
-msgstr "Ouder"
 
 #: module/Photo/view/photo/photo/view.phtml:3
 #: module/Photo/view/photo/photo/view.phtml:62
@@ -2770,8 +2786,9 @@ msgstr ""
 "Je hebt niet de juiste rechten om een optie aan te maken voor dit orgaan"
 
 #: module/Activity/src/Activity/Service/ActivityCalendar.php:113
+#, fuzzy
 msgid ""
-"Maximum number of options which you can create has been exceeded.\n"
+"Maximum number of options which you can create has been exceeded.\r\n"
 "                Delete some options before adding more."
 msgstr ""
 "Het maximum aantal opties voor deze activiteit is overschreden. Verwijder "
@@ -2781,26 +2798,27 @@ msgstr ""
 msgid "You are not allowed to delete this option"
 msgstr "Je hebt niet de rechten om deze optie te verwijderen"
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:46
-#: module/Activity/src/Activity/Service/ActivityQuery.php:106
-#: module/Activity/src/Activity/Service/ActivityQuery.php:122
+#: module/Activity/src/Activity/Service/ActivityQuery.php:53
+#: module/Activity/src/Activity/Service/ActivityQuery.php:113
+#: module/Activity/src/Activity/Service/ActivityQuery.php:129
+#: module/Activity/src/Activity/Service/ActivityQuery.php:302
 #: module/Activity/src/Activity/Service/Signup.php:142
 msgid "You are not allowed to view the activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:142
+#: module/Activity/src/Activity/Service/ActivityQuery.php:149
 msgid "You are not allowed to view unapproved activities"
 msgstr "Je hebt niet de rechten om niet goedgekeurde activiteiten in te zien"
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:160
+#: module/Activity/src/Activity/Service/ActivityQuery.php:167
 msgid "You are not allowed to view activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:191
+#: module/Activity/src/Activity/Service/ActivityQuery.php:198
 msgid "You are not allowed to view the disapproved activities"
 msgstr "Je hebt niet de rechten om afgekeurde activiteitn in te zien"
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:209
+#: module/Activity/src/Activity/Service/ActivityQuery.php:216
 msgid "You are not allowed to view upcoming the activities"
 msgstr "Je hebt niet de rechten om aankomende activiteiten te zien"
 
@@ -3438,19 +3456,19 @@ msgstr "Activatiecode voor je account op de GEWIS Website"
 msgid "Password reset code for the GEWIS Website"
 msgstr "Wachtwoord reset code voor de GEWIS Website"
 
-#: module/User/src/User/Service/User.php:185
+#: module/User/src/User/Service/User.php:191
 msgid "Password incorrect"
 msgstr "Wachtwoord incorrect"
 
-#: module/User/src/User/Service/User.php:253
+#: module/User/src/User/Service/User.php:259
 msgid "You are not allowed to login using pin codes"
 msgstr "Het is niet toegestaan in te loggen."
 
-#: module/User/src/User/Service/User.php:294
+#: module/User/src/User/Service/User.php:300
 msgid "You need to log in to perform this action"
 msgstr "Je moet ingelogd zijn om dit te doen"
 
-#: module/User/src/User/Service/User.php:399
+#: module/User/src/User/Service/User.php:405
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 

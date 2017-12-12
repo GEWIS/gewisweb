@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR GEWIS
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GEWISweb package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-26 11:54+0200\n"
+"POT-Creation-Date: 2017-12-12 18:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: module/Activity/view/activity/activity/archive.phtml:7
+#: module/Photo/view/photo/photo/index.phtml:17
+msgid "Older"
+msgstr ""
+
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:71
 msgid "Create activity"
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:17
-#: module/Application/view/partial/main-nav.phtml:170
+#: module/Application/view/partial/main-nav.phtml:173
 msgid "Create an activity"
 msgstr ""
 
@@ -102,6 +107,7 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:31
 #: module/Activity/view/partial/create.phtml:97
 #: module/Activity/view/partial/create.phtml:153
+#: module/Photo/view/partial/metadata.phtml:70
 #: module/Company/src/Company/Form/EditCompany.php:78
 msgid "Location"
 msgstr ""
@@ -906,10 +912,10 @@ msgid "News"
 msgstr ""
 
 #: module/Application/view/partial/admin-nav.phtml:79
-#: module/Application/view/partial/main-nav.phtml:183
-#: module/Application/view/partial/main-nav.phtml:187
-#: module/Application/view/partial/main-nav.phtml:191
-#: module/Application/view/partial/main-nav.phtml:198
+#: module/Application/view/partial/main-nav.phtml:186
+#: module/Application/view/partial/main-nav.phtml:190
+#: module/Application/view/partial/main-nav.phtml:194
+#: module/Application/view/partial/main-nav.phtml:201
 #: module/Decision/view/partial/photos.phtml:1
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20
@@ -1083,23 +1089,27 @@ msgstr ""
 msgid "Jobs"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:173
-msgid ""
-"Option\n"
-"                            calendar"
+#: module/Application/view/partial/main-nav.phtml:170
+msgid "Activity Archive"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:176
+msgid ""
+"Option\r\n"
+"                            calendar"
+msgstr ""
+
+#: module/Application/view/partial/main-nav.phtml:179
 msgid "Career related"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:201
+#: module/Application/view/partial/main-nav.phtml:204
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:178
 #: module/Photo/view/photo/photo/view.phtml:89
 msgid "Photo of the week"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:208
+#: module/Application/view/partial/main-nav.phtml:211
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:6
@@ -1411,7 +1421,7 @@ msgstr ""
 
 #: module/Decision/view/decision/decision/authorizations.phtml:9
 msgid ""
-"There are no upcoming meetings for which you can authorize someone.\n"
+"There are no upcoming meetings for which you can authorize someone.\r\n"
 "You may still be able to authorize someone or revoke an authorization by "
 "contacting the board."
 msgstr ""
@@ -1880,7 +1890,8 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:14
 msgid ""
-"Welcome to the website of Study association GEWIS, the study association of\n"
+"Welcome to the website of Study association GEWIS, the study association of"
+"\r\n"
 "                    the department of Mathematics & Computer Science of the "
 "Eindhoven University of Technology."
 msgstr ""
@@ -1888,9 +1899,9 @@ msgstr ""
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:18
 #, php-format
 msgid ""
-"GEWIS means Community of Mathematics and Computer Science Students\n"
+"GEWIS means Community of Mathematics and Computer Science Students\r\n"
 "                    (or in Dutch: GEmeenschap van Wiskunde en Informatica "
-"Studenten) and was founded in 1982.\n"
+"Studenten) and was founded in 1982.\r\n"
 "                    On this website you can find out %s and %s."
 msgstr ""
 
@@ -2183,6 +2194,7 @@ msgstr ""
 #: module/Photo/view/partial/metadata.phtml:51
 #: module/Photo/view/partial/metadata.phtml:58
 #: module/Photo/view/partial/metadata.phtml:65
+#: module/Photo/view/partial/metadata.phtml:74
 msgid "Unknown"
 msgstr ""
 
@@ -2216,6 +2228,10 @@ msgstr ""
 
 #: module/Photo/view/partial/metadata.phtml:63
 msgid "ISO"
+msgstr ""
+
+#: module/Photo/view/partial/metadata.phtml:76
+msgid "View on map"
 msgstr ""
 
 #: module/Photo/view/partial/tags.phtml:7
@@ -2352,10 +2368,6 @@ msgstr ""
 
 #: module/Photo/view/photo/album-admin/index.phtml:251
 msgid "The photos have been moved"
-msgstr ""
-
-#: module/Photo/view/photo/photo/index.phtml:17
-msgid "Older"
 msgstr ""
 
 #: module/Photo/view/photo/photo/view.phtml:3
@@ -2686,7 +2698,7 @@ msgstr ""
 
 #: module/Activity/src/Activity/Service/ActivityCalendar.php:113
 msgid ""
-"Maximum number of options which you can create has been exceeded.\n"
+"Maximum number of options which you can create has been exceeded.\r\n"
 "                Delete some options before adding more."
 msgstr ""
 
@@ -2694,26 +2706,27 @@ msgstr ""
 msgid "You are not allowed to delete this option"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:46
-#: module/Activity/src/Activity/Service/ActivityQuery.php:106
-#: module/Activity/src/Activity/Service/ActivityQuery.php:122
+#: module/Activity/src/Activity/Service/ActivityQuery.php:53
+#: module/Activity/src/Activity/Service/ActivityQuery.php:113
+#: module/Activity/src/Activity/Service/ActivityQuery.php:129
+#: module/Activity/src/Activity/Service/ActivityQuery.php:302
 #: module/Activity/src/Activity/Service/Signup.php:142
 msgid "You are not allowed to view the activities"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:142
+#: module/Activity/src/Activity/Service/ActivityQuery.php:149
 msgid "You are not allowed to view unapproved activities"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:160
+#: module/Activity/src/Activity/Service/ActivityQuery.php:167
 msgid "You are not allowed to view activities"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:191
+#: module/Activity/src/Activity/Service/ActivityQuery.php:198
 msgid "You are not allowed to view the disapproved activities"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/ActivityQuery.php:209
+#: module/Activity/src/Activity/Service/ActivityQuery.php:216
 msgid "You are not allowed to view upcoming the activities"
 msgstr ""
 
@@ -3343,19 +3356,19 @@ msgstr ""
 msgid "Password reset code for the GEWIS Website"
 msgstr ""
 
-#: module/User/src/User/Service/User.php:185
+#: module/User/src/User/Service/User.php:191
 msgid "Password incorrect"
 msgstr ""
 
-#: module/User/src/User/Service/User.php:253
+#: module/User/src/User/Service/User.php:259
 msgid "You are not allowed to login using pin codes"
 msgstr ""
 
-#: module/User/src/User/Service/User.php:294
+#: module/User/src/User/Service/User.php:300
 msgid "You need to log in to perform this action"
 msgstr ""
 
-#: module/User/src/User/Service/User.php:399
+#: module/User/src/User/Service/User.php:405
 msgid "You are not allowed to change your password"
 msgstr ""
 

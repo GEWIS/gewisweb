@@ -117,8 +117,9 @@ class Metadata extends AbstractService
      * @param string $hemisphere
      * @return float
      */
-    private function exifGpsToCoordinate($coordinate, $hemisphere) {
-        if(empty($coordinate)) {
+    private function exifGpsToCoordinate($coordinate, $hemisphere)
+    {
+        if (empty($coordinate)) {
             return null;
         }
 
@@ -130,13 +131,13 @@ class Metadata extends AbstractService
             if (count($part) == 1) {
                 $coordinate[$i] = $part[0];
             } else if (count($part) == 2) {
-                $coordinate[$i] = floatval($part[0])/floatval($part[1]);
+                $coordinate[$i] = floatval($part[0]) / floatval($part[1]);
             } else {
                 $coordinate[$i] = 0;
             }
         }
         list($degrees, $minutes, $seconds) = $coordinate;
         $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
-        return $sign * ($degrees + $minutes/60 + $seconds/3600);
+        return $sign * ($degrees + $minutes / 60 + $seconds / 3600);
     }
 }
