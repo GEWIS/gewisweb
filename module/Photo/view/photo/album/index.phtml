@@ -20,7 +20,7 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
-            <?php if (!$currentAlbum instanceof \Photo\Model\VirtualAlbum): ?>
+            <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
             <li>
                 <?php
                 // determine association year
@@ -54,7 +54,7 @@ $this->headTitle($this->translate('Photos'));
                 </li>
             <?php endforeach; ?>
             <li class="active">
-                <?php if ($album instanceof \Photo\Model\VirtualAlbum): ?>
+                <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
                     <span class="glyphicon glyphicon-user"></span>
                     &nbsp;
                 <?php endif; ?>
@@ -71,8 +71,8 @@ $this->headTitle($this->translate('Photos'));
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
                     <small>
-                        <?php if ($album instanceof \Photo\Model\VirtualAlbum): ?>
-                            <a href="<?= $this->url('member/view', ['lidnr' => $album->getId()]) ?>">
+                        <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                            <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
                                 <?= strtolower($this->translate("View user profile")) ?>
                             </a>
                         <?php else: ?>
@@ -83,10 +83,10 @@ $this->headTitle($this->translate('Photos'));
         </div>
         <?php
         $path = '';
-        if ($album instanceof \Photo\Model\VirtualAlbum) {
-            $this->url('photo/member', ['lidnr' => $album->getId()]);
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
         } else {
-            $this->url('photo/album', ['album_id' => $album->getId()]);
+            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
         }
         $this->paginationControl(
             $this->paginator,
@@ -114,9 +114,9 @@ $this->headTitle($this->translate('Photos'));
                 <?php else: ?>
                     <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                         <a href="<?php
-                        if ($album instanceof \Photo\Model\VirtualAlbum) {
+                        if ($album instanceof \Photo\Model\MemberAlbum) {
                             echo $this->url('photo/member/photo', [
-                                'lidnr' => $album->getId(),
+                                'lidnr' => $album->getMember()->getLidnr(),
                                 'page' => isset($paginator->current) ? $paginator->current : 0,
                                 'photo_id' => $item->getId()]);
                         } else {

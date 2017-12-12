@@ -4,68 +4,48 @@ namespace Photo\Model;
 
 /**
  * VirtualAlbum.
- *
- * @ORM\HasLifecycleCallbacks
- *
+ * Album that will never be stored in the database as such.
  */
 class VirtualAlbum extends Album
 {
     /**
      * Album ID.
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
     protected $id;
     
     /**
      * First date of photos in album
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $startDateTime = null;
 
     /**
      * End date of photos in album
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $endDateTime = null;
 
     /**
      * Name of the album.
-     *
-     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
      * Parent album, null if there is no parent album.
-     *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
      */
     protected $parent;
 
     /**
      * all the subalbums
-     * Note: These are fetched extra lazy so we can efficiently retrieve an album count
-     * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $children;
 
     /**
      * all the photo's in this album.
-     * Note: These are fetched extra lazy so we can efficiently retrieve an photo count
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $photos;
 
     /**
      * The cover photo to display with the album.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
 
@@ -231,34 +211,9 @@ class VirtualAlbum extends Album
         $this->photos[] = $photo;
     }
     
-    public function sortPhotos() {
-        $iterator = $this->photos->getIterator();
-        $iterator->uasort(function (\Photo\Model\Photo $a, \Photo\Model\Photo $b) {
-            return ($a->getDateTime() < $b->getDateTime()) ? -1 : 1;
-        });
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator));
-    }
-    
-    public function next(\Photo\Model\Photo $current) {
-        $array = $this->photos->toArray();
-        $currentKey = key($array);
-        while ($currentKey !== null && $array[$currentKey]->getId() !== $current->getId()) {
-            next($array);
-            $currentKey = key($array);
-        }
-        $next = next($array);
-        return $next == false ? null : $next;
-    }
-    
-    public function previous(\Photo\Model\Photo $current) {
-        $array = $this->photos->toArray();
-        $currentKey = key($array);
-        while ($currentKey !== null && $array[$currentKey]->getId() !== $current->getId()) {
-            next($array);
-            $currentKey = key($array);
-        }
-        $prev = prev($array);
-        return $prev == false ? null : $prev;
+    public function addPhotos(array $photos)
+    {
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection(array_merge($this->photos->toArray(), $photos));
     }
     
     /**

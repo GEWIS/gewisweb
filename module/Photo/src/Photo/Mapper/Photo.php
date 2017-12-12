@@ -37,25 +37,28 @@ class Photo
      * @param integer $maxResults max amount of results to return, null for infinite
      * @return array of photo's
      */
-    public function getAlbumPhotos($album, $start = 0, $maxResults = null)
+    public function getAlbumPhotos(\Photo\Model\Album $album, $start = 0, $maxResults = null)
     {
-        if ($album instanceof \Photo\Model\VirtualAlbum) {
-            return $album->getPhotos();
+    
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a');
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $qb->innerJoin('a.tags', 't')
+                ->where('t.member = ?1')
+                ->setParameter(1, $album->getMember());
         } else {
-            $qb = $this->em->createQueryBuilder();
-    
-            $qb->select('a')
-                ->from('Photo\Model\Photo', 'a')
-                ->where('a.album = ?1')
-                ->setParameter(1, $album)
-                ->setFirstResult($start)
-                ->orderBy('a.dateTime', 'ASC');
-            if (!is_null($maxResults)) {
-                $qb->setMaxResults($maxResults);
-            }
-    
-            return $qb->getQuery()->getResult();
+            $qb->where('a.album = ?1')
+                ->setParameter(1, $album);
         }
+        $qb->setFirstResult($start)
+           ->orderBy('a.dateTime', 'ASC');
+        if (!is_null($maxResults)) {
+            $qb->setMaxResults($maxResults);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -86,19 +89,28 @@ class Photo
      * Returns the next photo in the album to display
      *
      * @param \Photo\Model\Photo $photo
-     * @return \Photo\Model\Album|null Photo if there is a next
+     * @param \Photo\Model\Album $album
+     * @return \Photo\Model\Photo|null Photo if there is a next
      * photo, null otherwise
      */
-    public function getNextPhoto($photo)
+    public function getNextPhoto(\Photo\Model\Photo $photo, \Photo\Model\Album $album)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.dateTime > ?1 AND a.album = ?2')
-            ->setParameter(1, $photo->getDateTime())
-            ->setParameter(2, $photo->getAlbum())
-            ->orderBy('a.dateTime', 'ASC')
+            ->from('Photo\Model\Photo', 'a');
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $qb->innerJoin('a.tags', 't')
+                ->where('t.member = ?1 AND a.dateTime > ?2')
+                ->setParameter(1, $album->getMember())
+                ->setParameter(2, $photo->getDateTime());
+        } else {
+            $qb->where('a.dateTime > ?1 AND a.album = ?2')
+                ->setParameter(1, $photo->getDateTime())
+                ->setParameter(2, $photo->getAlbum());
+        }
+        
+        $qb->orderBy('a.dateTime', 'ASC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 
@@ -110,22 +122,30 @@ class Photo
      *
      * @param \Photo\Model\Photo $photo
      *
-     * @return \Photo\Model\Album|null Photo if there is a previous
+     * @return \Photo\Model\Photo|null Photo if there is a previous
      * photo, null otherwise
      */
-    public function getPreviousPhoto($photo)
+    public function getPreviousPhoto(\Photo\Model\Photo $photo, \Photo\Model\Album $album)
     {
         $qb = $this->em->createQueryBuilder();
-
+    
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
-            ->where('a.dateTime < ?1 AND a.album = ?2')
-            ->setParameter(1, $photo->getDateTime())
-            ->setParameter(2, $photo->getAlbum())
-            ->orderBy('a.dateTime', 'DESC')
+            ->from('Photo\Model\Photo', 'a');
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $qb->innerJoin('a.tags', 't')
+                ->where('t.member = ?1 AND a.dateTime < ?2')
+                ->setParameter(1, $album->getMember())
+                ->setParameter(2, $photo->getDateTime());
+        } else {
+            $qb->where('a.dateTime < ?1 AND a.album = ?2')
+                ->setParameter(1, $photo->getDateTime())
+                ->setParameter(2, $photo->getAlbum());
+        }
+    
+        $qb->orderBy('a.dateTime', 'DESC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
-
+    
         return empty($res) ? null : $res[0];
     }
 

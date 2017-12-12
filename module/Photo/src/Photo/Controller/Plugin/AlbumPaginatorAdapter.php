@@ -33,6 +33,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
      * Constructor.
      *
      * @param \Photo\Model\Album $album Album to paginate
+     * @param \Zend\ServiceManager\ServiceManager $sm
      */
     public function __construct($album, $sm)
     {

@@ -343,16 +343,11 @@ class Album extends AbstractAclService
         if ($member == null) {
             return null;
         }
-        $tags = $this->getPhotoService()->getTagsForMember($member);
-        
-        $album = new \Photo\Model\VirtualAlbum($lidNr);
+        $album = new \Photo\Model\MemberAlbum($lidNr, $member);
         $album->setName($member->getFullName());
         $album->setStartDateTime($member->getBirth()); // ugly fix
         $album->setEndDateTime(new \DateTime());
-        foreach ($tags as $tag) {
-            $album->addPhoto($tag->getPhoto());
-        }
-        $album->sortPhotos();
+        $album->addPhotos($this->getPhotoService()->getPhotos($album));
         return $album;
     }
 

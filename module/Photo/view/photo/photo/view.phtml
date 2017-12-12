@@ -96,8 +96,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 <ul class="pager">
                     <?php if (isset($memberAlbum)): ?>
                     <li class="previous">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getId(), 'page' =>
-                            $memberAlbumPage]); ?>">
+                        <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getMember()->getLidnr(), 'page' => $memberAlbumPage]); ?>">
                             <span aria-hidden="true">&larr;</span>
                             <?= $this->translate('Return to album') ?>
                         </a>
@@ -126,11 +125,13 @@ $this->scriptUrl()->requireUrl('member/search');
                                 $urlNext = is_null($next) ? '#' : $this->url('photo/photo', ['photo_id' => $next->getId()]);
                                 $urlPrevious = is_null($previous) ? '#' : $this->url('photo/photo', ['photo_id' => $previous->getId()]);
                                 if (isset($memberAlbum)) {
-                                    $urlNext = is_null($memberNext) ? '#' : $this->url('photo/member/photo', [
-                                        'photo_id' => $memberNext->getId(), 'lidnr' => $memberAlbum->getId(), 'page' => $memberAlbumPage
+                                    $urlNext = is_null($next) ? '#' : $this->url('photo/member/photo', [
+                                        'photo_id' => $next->getId(), 'lidnr' => $memberAlbum->getMember()->getLidnr(),
+                                        'page' => $memberAlbumPage
                                     ]);
-                                    $urlPrevious = is_null($memberPrevious) ? '#' : $this->url('photo/member/photo', [
-                                        'photo_id' => $memberPrevious->getId(), 'lidnr' => $memberAlbum->getId(), 'page' => $memberAlbumPage
+                                    $urlPrevious = is_null($previous) ? '#' : $this->url('photo/member/photo', [
+                                        'photo_id' => $previous->getId(), 'lidnr' => $memberAlbum->getMember()
+                                            ->getLidnr(), 'page' => $memberAlbumPage
                                     ]);
                                 }
                                 ?>
@@ -153,7 +154,7 @@ $this->scriptUrl()->requireUrl('member/search');
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <?php if ($urlPrevious != '#'): ?>
+                        <?php if (!is_null($urlPrevious)): ?>
                             <a
                                 id="previous"
                                 class="left carousel-control"
@@ -169,7 +170,7 @@ $this->scriptUrl()->requireUrl('member/search');
                             </a>
                             <?php
                         endif;
-                        if ($urlNext != '#'): ?>
+                        if (!is_null($next)): ?>
                             <a
                                 id="next"
                                 class="right carousel-control"

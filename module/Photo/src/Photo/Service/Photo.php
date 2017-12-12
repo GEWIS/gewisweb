@@ -36,7 +36,7 @@ class Photo extends AbstractAclService
      *
      * @return \Photo\Model\Photo The next photo.
      */
-    public function getNextPhoto($photo)
+    public function getNextPhoto(\Photo\Model\Photo $photo, \Photo\Model\Album $album)
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
@@ -44,7 +44,7 @@ class Photo extends AbstractAclService
             );
         }
 
-        return $this->getPhotoMapper()->getNextPhoto($photo);
+        return $this->getPhotoMapper()->getNextPhoto($photo, $album);
     }
 
     /**
@@ -54,7 +54,7 @@ class Photo extends AbstractAclService
      *
      * @return \Photo\Model\Photo The next photo.
      */
-    public function getPreviousPhoto($photo)
+    public function getPreviousPhoto(\Photo\Model\Photo $photo, \Photo\Model\Album $album)
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
@@ -62,7 +62,7 @@ class Photo extends AbstractAclService
             );
         }
 
-        return $this->getPhotoMapper()->getPreviousPhoto($photo);
+        return $this->getPhotoMapper()->getPreviousPhoto($photo, $album);
     }
 
     /**
@@ -137,7 +137,7 @@ class Photo extends AbstractAclService
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
      */
-    public function getPhotoData($photoId)
+    public function getPhotoData($photoId, \Photo\Model\Album $album = null)
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
@@ -151,9 +151,14 @@ class Photo extends AbstractAclService
         if (is_null($photo)) {
             return null;
         }
+        
+        if (is_null($album)) {
+            // Default type for albums is Album.
+            $album = new \Photo\Model\Album();
+        }
 
-        $next = $this->getNextPhoto($photo);
-        $previous = $this->getPreviousPhoto($photo);
+        $next = $this->getNextPhoto($photo, $album);
+        $previous = $this->getPreviousPhoto($photo, $album);
 
         return [
             'photo' => $photo,
