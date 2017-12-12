@@ -195,6 +195,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $isMyFuture;
 
     /**
+     * Whether this activity needs a GEFLITST photographer
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $requireGEFLITST;
+
+    /**
      * Is this a food subscription list
      *
      * @ORM\Column(type="boolean")
@@ -618,6 +625,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'canSignUp' => $this->getCanSignUp(),
             'isFood' => $this->getIsFood(),
             'isMyFuture' => $this->getIsMyFuture(),
+            'requireGEFLITST' => $this->getRequireGEFLITST(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'attendees' => $attendees,
             'fields' => $fields,
@@ -651,5 +659,21 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function getResourceCreator()
     {
         return $this->getCreator();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequireGEFLITST()
+    {
+        return $this->requireGEFLITST;
+    }
+
+    /**
+     * @param mixed $requireGEFLITST
+     */
+    public function setRequireGEFLITST($requireGEFLITST)
+    {
+        $this->requireGEFLITST = $requireGEFLITST;
     }
 }

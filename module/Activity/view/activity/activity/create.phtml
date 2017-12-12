@@ -10,74 +10,76 @@ $this->headScript()
 
 $form->prepare();
 ?>
-<div class="container">
-    <?= $this->form()->openTag($form) ?>
-    <div class="row">
-        <div class="col-md-12">
-            <h1><?= $this->translate('Create an activity') ?></h1>
-            <hr>
-            <?= $this->partial('partial/create', [
-                'form' => $form
-            ])
-            ?>
-            <?php
-            $organ = $form->get('organ');
-            $organ->setAttribute('class', 'form-control');
-            $organ->setAttribute('id', 'organizing-organ');
-            ?>
-            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
-                    <?= $this->translate('Organizing committee / fraternity') ?>
-                </label>
-                <div class="col-sm-10">
-                    <?= $this->formSelect($organ) ?>
-                    <?= $this->formElementErrors($organ) ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <?php
-            /* render template for fields */
-            $fs = $form->get('fields')->getTemplateElement();
-            ob_start();
-            echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
-            $tpl = trim(ob_get_clean())
-            ?>
-            <h3><?= $this->translate('Additional signup fields') ?></h3>
-            <fieldset id="additionalFields">
-                <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
-                <?php
-                $index = 0;
-                foreach ($form->get('fields')->getIterator() as $fs){
-                    echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
-                    $index++;
-                }
+<section class="section">
+    <div class="container">
+        <?= $this->form()->openTag($form) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Create an activity') ?></h1>
+                <hr>
+                <?= $this->partial('partial/create', [
+                    'form' => $form
+                ])
                 ?>
-                <div class="form-group add-field">
-                    <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
-                        <span class="glyphicon glyphicon-minus"></span>
-                        <?= $this->translate('Remove the last field') ?>
-                    </button>
-                    <button class="btn btn-success" type="button" onclick="return Activity.addField()">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        <?= $this->translate('Add a field') ?>
-                    </button>
+                <?php
+                $organ = $form->get('organ');
+                $organ->setAttribute('class', 'form-control');
+                $organ->setAttribute('id', 'organizing-organ');
+                ?>
+                <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
+                        <?= $this->translate('Organizing committee / fraternity') ?>
+                    </label>
+                    <div class="col-sm-10">
+                        <?= $this->formSelect($organ) ?>
+                        <?= $this->formElementErrors($organ) ?>
+                    </div>
                 </div>
-            </fieldset>
-        </div>
-        <div class="col-md-12">
-            <?php
-            $submit = $form->get('submit');
-            $submit->setLabel($this->translate('Create activity'));
-            $submit->setAttribute('class', 'btn btn-primary');
-            ?>
-            <div class="form-group">
-                <?= $this->formButton($submit) ?>
             </div>
+            <div class="col-md-12">
+                <?php
+                /* render template for fields */
+                $fs = $form->get('fields')->getTemplateElement();
+                ob_start();
+                echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
+                $tpl = trim(ob_get_clean())
+                ?>
+                <h3><?= $this->translate('Additional signup fields') ?></h3>
+                <fieldset id="additionalFields">
+                    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                    <?php
+                    $index = 0;
+                    foreach ($form->get('fields')->getIterator() as $fs){
+                        echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
+                        $index++;
+                    }
+                    ?>
+                    <div class="form-group add-field">
+                        <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                            <?= $this->translate('Remove the last field') ?>
+                        </button>
+                        <button class="btn btn-success" type="button" onclick="return Activity.addField()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <?= $this->translate('Add a field') ?>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit');
+                $submit->setLabel($this->translate('Create activity'));
+                $submit->setAttribute('class', 'btn btn-primary');
+                ?>
+                <div class="form-group">
+                    <?= $this->formButton($submit) ?>
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
         </div>
-        <?= $this->form()->closeTag(); ?>
     </div>
-</div>
+</section>
 
 <script>
     $('[name="beginTime"]').datetimepicker();

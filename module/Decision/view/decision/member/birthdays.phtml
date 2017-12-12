@@ -1,37 +1,39 @@
 <?php
 // set title
 $this->headTitle($this->translate('Birthdays'));
-$this->headTitle($this->translate('Members'));?>
+$this->headTitle($this->translate('Members')); ?>
 
-<div class="container">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th><?= $this->translate('Date') ?></th>
-            <th><?= $this->translate('Name') ?></th>
-            <th><?= $this->translate('Age') ?></th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($members as $member): ?>
-            <?php
-            $now = new DateTime();
-            $diff = $now->diff($member->getBirth());
-            $years = $diff->y;
-            if ($diff->m > 0)
-                $years++;
-            ?>
+<section class="section">
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td><?= $this->dateFormat(
-                        $member->getBirth(),
-                        \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::NONE,
-                        'nl_NL'
-                    ) ?></td>
-                <td><?= $member->getFullName() ?></td>
-                <td><?= $years ?> <?= $this->translate('years') ?></td>
+                <th><?= $this->translate('Date') ?></th>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Age') ?></th>
             </tr>
-        <?php endforeach ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            <?php foreach ($members as $member): ?>
+                <?php
+                $now = new DateTime();
+                $diff = $now->diff($member->getBirth());
+                $years = $diff->y;
+                if ($diff->m > 0)
+                    $years++;
+                ?>
+                <tr>
+                    <td><?= $this->dateFormat(
+                            $member->getBirth(),
+                            \IntlDateFormatter::LONG,
+                            \IntlDateFormatter::NONE,
+                            'nl_NL'
+                        ) ?></td>
+                    <td><?= $member->getFullName() ?></td>
+                    <td><?= $years ?> <?= $this->translate('years') ?></td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</section>

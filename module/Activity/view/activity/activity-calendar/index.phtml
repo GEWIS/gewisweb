@@ -9,165 +9,169 @@ $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $form->prepare();
 ?>
-<div class="container option-calendar">
-    <div class="row">
-        <h1><?= $this->translate('Option calendar') ?></h1>
-        <?= $this->translate('Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, so it is clear what the option is for.') ?>
-        <br/>
-        <?= $this->translate('There are a few rules:') ?>
-        <ul>
-            <li><?= $this->translate('It is not allowed to put more than 3 options for the same activity in the calendar.') ?></li>
-            <li><?= $this->translate('The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for two more weeks. In case the entity involved does not present their budget within these two weeks nontheless, the option lapses and the next one in line gets the chance to use this date for an activity.') ?></li>
-            <li><?= $this->translate('The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very big activities or weekends.') ?></li>
-        </ul>
-    </div>
-    <hr>
-    <?php if($success): ?>
-        <div class="alert alert-success">
-            <?= $this->translate('Your option has been added successfully'); ?>
-        </div>
-    <?php endif; ?>
-    <div class="row">
-        <div class="pull-left">
-            <div class="btn-group">
-                <button class="btn btn-primary" data-calendar-nav="prev">
-                    <i class="glyphicon glyphicon-chevron-left"></i>
-                </button>
-                <button class="btn btn-default" data-calendar-nav="today">
-                    <?= $this->translate("Today") ?>
-                </button>
-                <button class="btn btn-primary" data-calendar-nav="next">
-                    <i class="glyphicon glyphicon-chevron-right"></i>
-                </button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-default" data-calendar-view="year">
-                    <?= $this->translate("Year") ?>
-                </button>
-                <button class="btn btn-default active" data-calendar-view="month">
-                    <?= $this->translate("Month") ?>
-                </button>
-            </div>
 
-            <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
+<section class="section">
+    <div class="container option-calendar">
+        <div class="row">
+            <h1><?= $this->translate('Option calendar') ?></h1>
+            <?= $this->translate('Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, so it is clear what the option is for.') ?>
+            <br/>
+            <?= $this->translate('There are a few rules:') ?>
+            <ul>
+                <li><?= $this->translate('It is not allowed to put more than 3 options for the same activity in the calendar.') ?></li>
+                <li><?= $this->translate('The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for two more weeks. In case the entity involved does not present their budget within these two weeks nontheless, the option lapses and the next one in line gets the chance to use this date for an activity.') ?></li>
+                <li><?= $this->translate('The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very big activities or weekends.') ?></li>
+            </ul>
         </div>
-        <div class="pull-right">
-            <div class="dropdown pull-right<?= $optionError ? ' open' : '' ?>">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
-                </button>
-                <div class="dropdown-menu">
-                    <form class="form" action="<?= $this->url('activity_calendar') ?>" method="post">
-                        <?php
-                        $name = $form->get('name');
-                        $name->setAttribute('class', 'form-control');
-                        $name->setAttribute('id', 'cal-name');
-                        ?>
-                        <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
-                            <label for="<?= $name->getAttribute('id') ?>">
-                                <?= $this->translate('Name') ?>
-                            </label>
-                            <?= $this->formInput($name) ?>
-                            <?= $this->formElementErrors($name) ?>
-                        </div>
-                        <?php
-                        $beginTime = $form->get('beginTime');
-                        $beginTime->setAttribute('class', 'form-control datepicker');
-                        $beginTime->setAttribute('id', 'cal-begin');
-                        $endTime = $form->get('endTime');
-                        $endTime->setAttribute('class', 'form-control datepicker');
-                        $endTime->setAttribute('id', 'cal-end');
-                        ?>
-                        <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                            <label for="<?= $beginTime->getAttribute('id') ?>"><?= $this->translate('From') ?></label>
-                            <?= $this->formInput($beginTime) ?>
-                            <?= $this->formElementErrors($beginTime) ?>
-                        </div>
+        <hr>
+        <?php if($success): ?>
+            <div class="alert alert-success">
+                <?= $this->translate('Your option has been added successfully'); ?>
+            </div>
+        <?php endif; ?>
+        <div class="row">
+            <div class="pull-left">
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-calendar-nav="prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </button>
+                    <button class="btn btn-default" data-calendar-nav="today">
+                        <?= $this->translate("Today") ?>
+                    </button>
+                    <button class="btn btn-primary" data-calendar-nav="next">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-default" data-calendar-view="year">
+                        <?= $this->translate("Year") ?>
+                    </button>
+                    <button class="btn btn-default active" data-calendar-view="month">
+                        <?= $this->translate("Month") ?>
+                    </button>
+                </div>
 
-                        <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                            <label for="<?= $endTime->getAttribute('id') ?>"><?= $this->translate('Until') ?></label>
-                            <?= $this->formInput($endTime) ?>
-                            <?= $this->formElementErrors($endTime) ?>
-                        </div>
-                        <?php
-                        $organ = $form->get('organ');
-                        $organ->setAttribute('class', 'form-control');
-                        $organ->setAttribute('id', 'cal-organ');
-                        ?>
-                        <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                            <label for="<?= $organ->getAttribute('id'); ?>">
-                                <?= $this->translate('Organizing committee / fraternity') ?>
-                            </label>
-                            <?= $this->formSelect($organ) ?>
-                            <?= $this->formElementErrors($organ) ?>
-                        </div>
-                        <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
-                    </form>
+                <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
+            </div>
+            <div class="pull-right">
+                <div class="dropdown pull-right<?= $optionError ? ' open' : '' ?>">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <form class="form" action="<?= $this->url('activity_calendar') ?>" method="post">
+                            <?php
+                            $name = $form->get('name');
+                            $name->setAttribute('class', 'form-control');
+                            $name->setAttribute('id', 'cal-name');
+                            ?>
+                            <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $name->getAttribute('id') ?>">
+                                    <?= $this->translate('Name') ?>
+                                </label>
+                                <?= $this->formInput($name) ?>
+                                <?= $this->formElementErrors($name) ?>
+                            </div>
+                            <?php
+                            $beginTime = $form->get('beginTime');
+                            $beginTime->setAttribute('class', 'form-control datepicker');
+                            $beginTime->setAttribute('id', 'cal-begin');
+                            $endTime = $form->get('endTime');
+                            $endTime->setAttribute('class', 'form-control datepicker');
+                            $endTime->setAttribute('id', 'cal-end');
+                            ?>
+                            <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $beginTime->getAttribute('id') ?>"><?= $this->translate('From') ?></label>
+                                <?= $this->formInput($beginTime) ?>
+                                <?= $this->formElementErrors($beginTime) ?>
+                            </div>
+
+                            <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $endTime->getAttribute('id') ?>"><?= $this->translate('Until') ?></label>
+                                <?= $this->formInput($endTime) ?>
+                                <?= $this->formElementErrors($endTime) ?>
+                            </div>
+                            <?php
+                            $organ = $form->get('organ');
+                            $organ->setAttribute('class', 'form-control');
+                            $organ->setAttribute('id', 'cal-organ');
+                            ?>
+                            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $organ->getAttribute('id'); ?>">
+                                    <?= $this->translate('Organizing committee / fraternity') ?>
+                                </label>
+                                <?= $this->formSelect($organ) ?>
+                                <?= $this->formElementErrors($organ) ?>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div id="calendar" class="calendar-control"></div>
-    </div>
-    <div class="row">
-        <h2><?= $this->translate('My options') ?></h2>
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th><?= $this->translate('Creator') ?></th>
-                <th><?= $this->translate('Name') ?></th>
-                <th><?= $this->translate('Created at') ?></th>
-                <th><?= $this->translate('Start') ?></th>
-                <th><?= $this->translate('End') ?></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach($editableOptions as $option): ?>
-                <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
-
-                    <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
-                    <td><?= $this->escapeHtml($option->getName()) ?></td>
-                    <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
-                    <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
-                    <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
-                    <td>
-                        <?php if($option->getDeletedBy() === null): ?>
-                            <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
-                                <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
-                            </a>
-                        <?php else: ?>
-                            <strong><?= $this->translate('Deleted by') ?> <?= $option->getDeletedBy()->getMember()->getFullName() ?></strong>
-                        <?php endif ?>
-                    </td>
+        <div class="row">
+            <div id="calendar" class="calendar-control"></div>
+        </div>
+        <div class="row">
+            <h2><?= $this->translate('My options') ?></h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th><?= $this->translate('Creator') ?></th>
+                    <th><?= $this->translate('Name') ?></th>
+                    <th><?= $this->translate('Created at') ?></th>
+                    <th><?= $this->translate('Start') ?></th>
+                    <th><?= $this->translate('End') ?></th>
+                    <th></th>
                 </tr>
-            <?php endforeach ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><?= $this->translate('Delete option') ?></h4>
-                </div>
-                <div class="modal-body">
-                    <p><?= $this->translate('Are you sure you want to delete this option?') ?></p>
-                </div>
-                <div class="modal-footer">
-                    <form method="post" action="delete" class="form form-inline form-delete">
-                        <input type="hidden" name="option_id" id="deleteOptionId"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                        <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?></button>
-                    </form>
+                </thead>
+                <tbody>
+                <?php foreach($editableOptions as $option): ?>
+                    <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
+
+                        <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
+                        <td><?= $this->escapeHtml($option->getName()) ?></td>
+                        <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
+                        <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
+                        <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
+                        <td>
+                            <?php if($option->getDeletedBy() === null): ?>
+                                <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
+                                    <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
+                                </a>
+                            <?php else: ?>
+                                <strong><?= $this->translate('Deleted by') ?> <?= $option->getDeletedBy()->getMember()->getFullName() ?></strong>
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><?= $this->translate('Delete option') ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><?= $this->translate('Are you sure you want to delete this option?') ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <form method="post" action="delete" class="form form-inline form-delete">
+                            <input type="hidden" name="option_id" id="deleteOptionId"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 <script type="text/javascript">
     $('.datepicker').datetimepicker();
     var calendar;

@@ -22,10 +22,6 @@ p {
     line-height: 1.8;
 }
 
-p.lead {
-    line-height: 1.6;
-}
-
 a[href^='mailto:klachten@gewis.nl'] .panel-special {
     overflow: hidden;
     position: relative;
@@ -64,4 +60,8 @@ a[href^='mailto:klachten@gewis.nl'] .panel-special {
     0%  { transform: translateY(-2em) }
     50% { transform: translateY(0); }
     80% { transform: rotate(360deg) scale(1.4) }
+}
+
+.no-pad {
+    padding: 0;
 }

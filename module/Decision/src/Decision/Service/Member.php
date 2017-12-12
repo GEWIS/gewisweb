@@ -138,6 +138,19 @@ class Member extends AbstractAclService
         return $response->getBody();
     }
 
+    public function getRegulationDownload($regulation)
+    {
+        if (!$this->isAllowed('edit', 'organ')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to download regulations.')
+            );
+        }
+
+        $service = $this->getFileStorageService();
+        return $service->downloadFile("regulations/$regulation.pdf", "$regulation.pdf");
+    }
+
     /**
      * Get the members of which their birthday falls in the next $days days.
      *
@@ -222,6 +235,17 @@ class Member extends AbstractAclService
     public function getPhotoService()
     {
         return $this->sm->get('photo_service_photo');
+    }
+
+
+    /**
+     * Get the photo service.
+     *
+     * @return \Application\Service\FileStorage
+     */
+    public function getFileStorageService()
+    {
+        return $this->sm->get('application_service_storage');
     }
 
     /**

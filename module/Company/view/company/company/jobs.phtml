@@ -33,37 +33,51 @@ $this->headTitle($this->translate('Jobs'));
         </ol>
     </div>
 </section>
-<div class="container">
-    <div class="job-list">
-
-        <div class="job-list-item list-item" id="<?= $escaper->escapeHtmlAttr($job->getName()) ?>">
-            <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
-                    ['slugCompanyName' => $company->getSlugName(),
-                     'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
-                <small><?= $this->translate('job_at_company') ?> <a href="<?= $this->url('company/companyItem',
-                        ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a></small>
-            </h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                        <img class="company-logo img-responsive center-block" src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
-                    </a>
-                    <div class="">
-                        <h4><?= $this->translate('Contact') ?></h4>
-                        <p class="job-contactName"><?= $job->getContactName() ?></p>
-                        <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
-                        <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
-                        <?php if ($job->getAttachment() !== ''): ?>
-                        <p class="job-vacancy"><a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a></p>
-                        <?php endif;?>
-                        <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a></p>
+<section class="section">
+    <div class="container">
+        <div class="job-list">
+            <div class="job-list-item list-item"
+                id="<?= $escaper->escapeHtmlAttr($job->getName()) ?>">
+                <h1 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
+                        ['slugCompanyName' => $company->getSlugName(),
+                            'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
+                    <small><?= $this->translate('job_at_company') ?>
+                        <a href="<?= $this->url('company/companyItem',
+                            ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a>
+                    </small>
+                </h1>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                            <img class="company-logo img-responsive center-block"
+                                src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>"
+                                alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
+                        </a>
+                        <div class="">
+                            <h4><?= $this->translate('Contact') ?></h4>
+                            <p class="job-contactName"><?= $job->getContactName() ?></p>
+                            <p class="job-phone">
+                                <a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a>
+                            </p>
+                            <p class="job-email">
+                                <a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a>
+                            </p>
+                            <?php if ($job->getAttachment() !== ''): ?>
+                                <p class="job-vacancy">
+                                    <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a>
+                                </p>
+                            <?php endif; ?>
+                            <p class="job-website">
+                                <a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <h4><?= $this->translate('Description') ?></h4>
-                    <div class="job-description text-justify markdown"><?= $this->markdown($job->getDescription()) ?></div>
+                    <div class="col-md-9">
+                        <h4><?= $this->translate('Description') ?></h4>
+                        <div class="job-description text-justify markdown"><?= $this->markdown($job->getDescription()) ?></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

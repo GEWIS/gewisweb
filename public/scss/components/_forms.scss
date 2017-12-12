@@ -1,10 +1,6 @@
 input {
     font-family: $font-family-base;
     font-weight: normal;
-
-    &[type="radio"] {
-        margin: 1px 0;
-    }
 }
 
 .form-control {

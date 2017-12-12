@@ -36,6 +36,7 @@ $link-color-hover: darken($link-color, 15%);
 // Fonts
 $font-family-base: "Lato", "Arial", sans-serif;
 $font-family-alt: "Raleway", sans-serif;
+$font-size-base: 15px; // 1.5rem
 
 $headings-font-family: $font-family-alt;
 
@@ -77,3 +78,4 @@ $btn-danger-border: $brand-danger;
 
 /* Collapse navbar on medium */
 $grid-float-breakpoint: $screen-md-min;
+$grid-gutter-width: 50px;

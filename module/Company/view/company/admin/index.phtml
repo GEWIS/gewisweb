@@ -5,10 +5,11 @@
         ['slugCompanyName']
     );
 ?>
+<?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
 <div class="row">
-    <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
     <div class="col-md-9">
     <?php endif ?>
+
         <div class="row">
             <div class="col-md-10">
                 <div class="form-group">
@@ -63,7 +64,7 @@
             <tbody class="company-list">
                 <?php
                     foreach ($companyList as $company):
-                        $editUrl = $this->url('admin_company/editCompany', 
+                        $editUrl = $this->url('admin_company/editCompany',
                         ['slugCompanyName' => $company->getSlugName()]);
                    ?>
                    <tr class="company-list-item
@@ -77,7 +78,7 @@
                        <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                        <td>
                            <button type="button" class="btn btn-danger btn-xs"
-                                                 onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')" 
+                                                 onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')"
                                                  data-toggle="modal"
                                                  data-target="#deleteModal">
                                <?= $this->translate('Delete') ?>
@@ -124,84 +125,82 @@
                 </div>
             </div>
         </div>
-    <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
+
+<?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
     </div>
-    <?php endif ?>
-    <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
-        <div class="col-md-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <?= $this->translate("Package changes next month") ?>
-                </div>
-                <div class="panel-body">
-                    <?php foreach ($packageFuture[0] as $package): ?>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <?= $package->getCompany()->getName() ?>
-                            </div>
-                            <div class="panel-body">
-                            <?php 
-                            $type = $package->getType();
-                                switch ($type){
-                                    case "banner":
-                                        $packageType = $this->translate("Banner Package");
-                                        break;
-                                    case "featured":
-                                        $packageType = $this->translate("Featured Package");
-                                        break;
-                                    case "job":
-                                        $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
-                                        break;
-                                }
-                                $company = $package->getCompany();
-                                $companySlugName = $company->getSlugName();
-                                $companyName = $company->getName();
-                            ?>
-                            <?= sprintf(
-                                $this->translate("%s for company %s will start at %s"), 
-                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
-                                $package->getStartingDate()->format("l d M")) 
-                            ?>
-                            </div>
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <?= $this->translate("Package changes next month") ?>
+            </div>
+            <div class="panel-body">
+                <?php foreach ($packageFuture[0] as $package): ?>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <?= $package->getCompany()->getName() ?>
                         </div>
-                    <?php endforeach ?>
-                    <?php foreach ($packageFuture[1] as $package): ?>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <?= $package->getCompany()->getName() ?>
-                            </div>
-                            <div class="panel-body">
-                            <?php 
-                            $type = $package->getType();
-                                switch ($type){
-                                    case "banner":
-                                        $packageType = $this->translate("Banner Package");
-                                        break;
-                                    case "featured":
-                                        $packageType = $this->translate("Featured Package");
-                                        break;
-                                    case "job":
-                                        $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
-                                        break;
-                                }
-                                $company = $package->getCompany();
-                                $companySlugName = $company->getSlugName();
-                                $companyName = $company->getName();
-                            ?>
-                            <?= sprintf(
-                                $this->translate("%s for company %s will expire at %s"), 
-                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
-                                $package->getExpirationDate()->format("l d M")) 
-                            ?>
-                            </div>
+                        <div class="panel-body">
+                        <?php
+                        $type = $package->getType();
+                            switch ($type){
+                                case "banner":
+                                    $packageType = $this->translate("Banner Package");
+                                    break;
+                                case "featured":
+                                    $packageType = $this->translate("Featured Package");
+                                    break;
+                                case "job":
+                                    $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
+                                    break;
+                            }
+                            $company = $package->getCompany();
+                            $companySlugName = $company->getSlugName();
+                            $companyName = $company->getName();
+                        ?>
+                        <?= sprintf(
+                            $this->translate("%s for company %s will start at %s"),
+                            "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
+                            "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                            $package->getStartingDate()->format("l d M"))
+                        ?>
                         </div>
-                    <?php endforeach ?>
-                </div>
+                    </div>
+                <?php endforeach ?>
+                <?php foreach ($packageFuture[1] as $package): ?>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <?= $package->getCompany()->getName() ?>
+                        </div>
+                        <div class="panel-body">
+                        <?php
+                        $type = $package->getType();
+                            switch ($type){
+                                case "banner":
+                                    $packageType = $this->translate("Banner Package");
+                                    break;
+                                case "featured":
+                                    $packageType = $this->translate("Featured Package");
+                                    break;
+                                case "job":
+                                    $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
+                                    break;
+                            }
+                            $company = $package->getCompany();
+                            $companySlugName = $company->getSlugName();
+                            $companyName = $company->getName();
+                        ?>
+                        <?= sprintf(
+                            $this->translate("%s for company %s will expire at %s"),
+                            "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
+                            "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                            $package->getExpirationDate()->format("l d M"))
+                        ?>
+                        </div>
+                    </div>
+                <?php endforeach ?>
             </div>
         </div>
-    <?php endif ?>
+    </div>
 </div>
-</div>
+<?php endif ?>
 

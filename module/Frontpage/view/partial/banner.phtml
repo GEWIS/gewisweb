@@ -1,0 +1,6 @@
+<div class="banner">
+    <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $banner->getCompany()->getSlugName()]); ?>">
+        <img src="<?= $this->fileUrl($banner->getImage()) ?>" class="banner__image" />
+    </a>
+    <div class="banner__message">Sponsor</div>
+</div>

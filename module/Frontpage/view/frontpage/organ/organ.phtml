@@ -55,7 +55,8 @@ function getOrganDescription($organInformation, $lang)
         </div>
     </section>
 <?php endif; ?>
-<div class="container">
+<section class="section">
+    <div class="container">
     <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
         <div class="col-md-12 organ-banner"
              style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
@@ -91,25 +92,21 @@ function getOrganDescription($organInformation, $lang)
             </table>
             <div class="panel panel-default agenda">
                 <div class="panel-heading">
-                    <h4><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h4>
+                    <h3><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h3>
                 </div>
-                <div class="panel-body">
-                    <div class="list-group">
-                        <?php foreach($activities as $activity): ?>
-                            <a class="list-group-item agenda-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                <span class="badge">
-                                    <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?>&nbsp;</span>
-                                    <span><?= $activity->getBeginTime()->format('d') ?></span>
-                                </span>
-                                <?= $activity->getName(); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
+                <div class="list-group">
+                    <?php foreach($activities as $activity): ?>
+                        <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+
+                            <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
+                            <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+                            <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
                 <div class="panel-footer">
-                    <a href="<?= $this->url('activity') ?>">
+                    <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
                         <?= $this->translate('Complete agenda') ?>
-                        <span class="glyphicon glyphicon-arrow-right"></span>
                     </a>
                 </div>
             </div>
@@ -136,4 +133,4 @@ function getOrganDescription($organInformation, $lang)
             <?php endif; ?>
         </div>
     </div>
-</div>
+</div></section>

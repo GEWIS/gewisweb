@@ -1,12 +1,21 @@
 <?php
 // set title
 $this->headTitle($this->translate('Current poll')); ?>
-<div class="container">
-    <div class="row">
-        <h1><?= $this->translate('Current poll') ?></h1>
-    </div>
+<section class="section">
+    <div class="container">
+        <div class="page-header">
+            <div class="btn-toolbar pull-right">
+                <a href="<?= $this->url('poll/history') ?>" class="btn btn-default">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    <?= $this->translate('Old polls') ?>
+                </a>
+                <?= sprintf($this->translate('%sRequest a poll%s'), '<a href="' . $this->url('poll/request') . '" class="btn btn-primary">', '</a>') ?>
+            </div>
+            <h1>
+                <?= $this->translate('Current poll') ?>
+            </h1>
+        </div>
 
-    <div class="row">
         <?php if (isset($poll)): ?>
             <?= $this->partial('partial/poll.phtml', [
                 'poll' => $poll,
@@ -17,93 +26,73 @@ $this->headTitle($this->translate('Current poll')); ?>
         <?php else: ?>
             <p class="lead"><?= $this->translate('Unfortunately there currently is no poll :('); ?></p>
         <?php endif; ?>
-    </div>
 
-    <div class="row">
-    <p>
-        <?= sprintf($this->translate('%sRequest a poll%s'), '<a href="' . $this->url('poll/request') . '">', '</a>') ?>
-    </p>
-    </div>
-
-    <div class="row">
-        <a href="<?= $this->url('poll/history') ?>" class="pull-left text-uppercase">
-             <i class="glyphicon glyphicon-arrow-left" /></i>
-            <?= $this->translate('Old polls') ?>
-        </a>
-    </div>
-
-    <?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
-        <h2><?= $this->translate('Comments') ?></h2>
-        <?php if (count($poll->getComments()) == 0): ?>
-            <?= $this->translate('This poll has no comments') ?>
-        <?php else: ?>
-        <?php foreach ($poll->getComments() as $comment): ?>
-    <div class="row">
-        <div class="col-sm-2">
-            <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
-            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
-                <?php $lidnr = $comment->getUser()->getLidnr() ?>
-                (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
-                <br>
-                <?= $comment->getCreatedOn()->format('Y-m-d H:M:s') ?>
+        <?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
+            <hr>
+            <h2><?= $this->translate('Comments') ?></h2>
+            <?php if (count($poll->getComments()) == 0): ?>
+                <?= $this->translate('This poll has no comments') ?>
+            <?php else: ?>
+                <?php foreach ($poll->getComments() as $comment): ?>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
+                            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
+                                <?php $lidnr = $comment->getUser()->getLidnr() ?>
+                                (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
+                                <br>
+                                <?= $comment->getCreatedOn()->format('Y-m-d H:M:s') ?>
+                            <?php endif ?>
+                        </div>
+                        <div class="col-sm-10">
+                            <?= $this->escapeHtml($comment->getContent()) ?>
+                        </div>
+                    </div>
+                <?php endforeach ?>
             <?php endif ?>
-        </div>
-        <div class="col-sm-10">
-            <?= $this->escapeHtml($comment->getContent()) ?>
-        </div>
-    </div>
-        <?php endforeach ?>
-        <?php endif ?>
-    <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
-    <div class="row">
-        <h3><?= $this->translate('Comment on this poll') ?></h3>
-<?php
-$commentForm->prepare();
-
-$commentForm->setAttribute('action', $this->url('poll/comment', ['poll_id' => $poll->getId()]));
-$commentForm->setAttribute('class', 'form-horizontal');
-?>
-
-        <?= $this->form()->openTag($commentForm) ?>
-
-<?php
-$element = $commentForm->get('author');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-            <div class="col-sm-10">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
-
-<?php
-$element = $commentForm->get('content');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-            <div class="col-sm-10">
-                <?= $this->formTextarea($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
+                <hr>
+                <h3><?= $this->translate('Comment on this poll') ?></h3>
                 <?php
-                $submit = $commentForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-primary');
-                ?>
-                <?= $this->formButton($submit) ?>
-            </div>
-        </div>
+                $commentForm->prepare();
 
-        <?= $this->form()->closeTag() ?>
+                $commentForm->setAttribute('action', $this->url('poll/comment', ['poll_id' => $poll->getId()]));
+                ?>
+
+                <?= $this->form()->openTag($commentForm) ?>
+
+                <?php
+                $element = $commentForm->get('author');
+                $element->setAttribute('class', 'form-control');
+                $element->setAttribute('placeholder', $element->getLabel());
+                ?>
+                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $element->getName() ?>" class="control-label"><?= $element->getLabel() ?></label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+
+                <?php
+                $element = $commentForm->get('content');
+                $element->setAttribute('class', 'form-control');
+                $element->setAttribute('placeholder', $element->getLabel());
+                ?>
+                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label for="<?= $element->getName() ?>" class="control-label"><?= $element->getLabel() ?></label>
+                    <?= $this->formTextarea($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+
+                <div class="form-group">
+                    <?php
+                    $submit = $commentForm->get('submit');
+                    $submit->setAttribute('class', 'btn btn-primary');
+                    ?>
+                    <?= $this->formButton($submit) ?>
+                </div>
+
+                <?= $this->form()->closeTag() ?>
+            <?php endif ?>
+        <?php endif ?>
     </div>
-    <?php endif ?>
-    <?php endif ?>
-</div>
+</section>

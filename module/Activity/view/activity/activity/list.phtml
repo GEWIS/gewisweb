@@ -1,77 +1,81 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <ul class="list-group">
-<?php if ($activities instanceof \Zend\Paginator\Paginator):?>
-    <li class="list-group-item agenda-item row">
-        <?=$this->paginationControl($activities,
+    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
+        <li class="list-group-item agenda-item">
+            <?= $this->paginationControl($activities,
                 'Elastic',
                 'paginator/default', ['path' => $this->url($route)]); ?>
-    </li>
-<?php endif; ?>
-<?php foreach($activities as $activity):?>
-    <li class="list-group-item agenda-item row">
-        <div class="agenda-item-heading col-md-2">
-            <span class="badge badge-large">
-                <span class="text-lowercase small"><?= $activity->getBeginTime()->format('M') ?></span>
-                <?= $activity->getBeginTime()->format('d') ?>
-            </span>
-        </div>
-        <div class="agenda-item-body col-md-10">
+        </li>
+    <?php endif; ?>
+    <?php foreach ($activities as $activity): ?>
+        <li class="list-group-item agenda-item">
             <div class="row">
-                <div class="col-md-12">
-                    <h4>
-                        <?php if (!isset($proposals)): ?>
-                        <a href="<?php echo $this->url((isset($admin) ? 'activity_admin_approval' : 'activity'). '/view', ['id' => $activity->getId()])?>">
-                            <?= $this->escapeHtml($activity->getName() === null ? $activity->getNameEn() : $activity->getName()) ?>
-                        </a>
-                        <?php else: ?>
-                        <?php $proposal = $proposals[$activity->getId()] ?>
-                        <a href="<?php echo $this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()]) ?>">
-                            <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()) ?>
-                        </a>
-                        <?php endif;?>
-                    </h4>
+                <div class="agenda-item-heading col-md-2">
+                    <span class="badge badge-large">
+                        <span class="small">
+                            <?= $activity->getBeginTime()->format('M') ?><br>
+                            <?= $activity->getBeginTime()->format('d') ?>
+                        </span>
+                    </span>
                 </div>
-                <div class="col-md-8 reveal reveal-10">
-                    <p><?= strip_tags($this->markdown($activity->getDescription())) ?></p>
-                    <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
-                </div>
-                <div class="col-md-4">
-                    <dl>
-                        <dt><?= $this->translate('Start') ?></dt>
-                        <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
-                        <dt><?= $this->translate('End') ?></dt>
-                        <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                <div class="agenda-item-body col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>
+                                <?php if (!isset($proposals)): ?>
+                                    <a href="<?php echo $this->url((isset($admin) ? 'activity_admin_approval' : 'activity') . '/view', ['id' => $activity->getId()]) ?>">
+                                        <?= $this->escapeHtml($activity->getName() === null ? $activity->getNameEn() : $activity->getName()) ?>
+                                    </a>
+                                <?php else: ?>
+                                    <?php $proposal = $proposals[$activity->getId()] ?>
+                                    <a href="<?php echo $this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()]) ?>">
+                                        <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()) ?>
+                                    </a>
+                                <?php endif; ?>
+                            </h4>
+                        </div>
+                        <div class="col-md-8 reveal reveal-10">
+                            <p><?= strip_tags($this->markdown($activity->getDescription())) ?></p>
+                            <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
+                        </div>
+                        <div class="col-md-4">
+                            <dl>
+                                <dt><?= $this->translate('Start') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                <dt><?= $this->translate('End') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
-                        <dt><?= $this->translate('Location') ?></dt>
-                        <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
-                        <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
-                            <dt><?= $this->translate('Subscribe before') ?></dt>
-                            <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
-                        <?php endif; ?>
-                        <dt><?= $this->translate('Costs') ?></dt>
-                        <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
-                    </dl>
+                                <dt><?= $this->translate('Location') ?></dt>
+                                <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
+                                <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
+                                    <dt><?= $this->translate('Subscribe before') ?></dt>
+                                    <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                <?php endif; ?>
+                                <dt><?= $this->translate('Costs') ?></dt>
+                                <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
+                            </dl>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </li>
-<?php endforeach;?>
+        </li>
+    <?php endforeach; ?>
     <?php if (isset($moreLink)): ?>
-    <li class="list-group-item agenda-item row">
-        <h4><a href="<?= $moreLink;?>"><?=$this->translate('More');?></a></h4>
-    </li>
-    <?php endif;?>
+        <li class="list-group-item agenda-item">
+            <h4><a href="<?= $moreLink; ?>"><?= $this->translate('More'); ?></a></h4>
+        </li>
+    <?php endif; ?>
 
-    <?php if ($activities instanceof \Zend\Paginator\Paginator):?>
-    <li class="list-group-item agenda-item row">
-        <?=$this->paginationControl($activities,
+    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
+        <li class="list-group-item agenda-item">
+            <?= $this->paginationControl($activities,
                 'Elastic',
                 'paginator/default', ['path' => $this->url($route)]); ?>
-    </li>
+        </li>
     <?php endif; ?>
 </ul>
 <script type="application/javascript">
-    $(".reveal-button").click(function() {
-      $(this).parent().addClass("revealed");
+    $(".reveal-button").click(function () {
+        $(this).parent().addClass("revealed");
     });
 </script>

@@ -1,0 +1,5 @@
+-----BEGIN PUBLIC KEY-----
+1) Generate an RSA keypair
+2) Put the public key in this file
+3) Rename it to jwt-key.pub (without the .dist part)
+-----END PUBLIC KEY-----

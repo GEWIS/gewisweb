@@ -1,39 +1,41 @@
 <?php
 // set title
 $this->headTitle($organ->getName()); ?>
-<div class="container">
-    <div class="row">
-        <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
-        <div class="col-md-4">
-            <h2><?= $this->translate('Current members') ?></h2>
-            <ul>
-                <?php foreach ($currentMembers as $membership): ?>
-                    <li>
-                        <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
-                            <?= $membership['member']->getFullName() ?>
-                        </a>
-                        <?php if (!empty($membership['functions'])): ?>
-                            (<?= implode(', ', $membership['functions']) ?>)
-                        <?php endif ?></li>
-                <?php endforeach ?>
-            </ul>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
+            <div class="col-md-4">
+                <h2><?= $this->translate('Current members') ?></h2>
+                <ul>
+                    <?php foreach ($currentMembers as $membership): ?>
+                        <li>
+                            <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
+                                <?= $membership['member']->getFullName() ?>
+                            </a>
+                            <?php if (!empty($membership['functions'])): ?>
+                                (<?= implode(', ', $membership['functions']) ?>)
+                            <?php endif ?></li>
+                    <?php endforeach ?>
+                </ul>
 
-            <h2><?= $this->translate('Old members') ?></h2>
-            <ul>
-                <?php foreach ($oldMembers as $member): ?>
-                    <li><?= $member->getFullName() ?></li>
-                <?php endforeach ?>
-            </ul>
+                <h2><?= $this->translate('Old members') ?></h2>
+                <ul>
+                    <?php foreach ($oldMembers as $member): ?>
+                        <li><?= $member->getFullName() ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+
+            <div class="col-md-8">
+                <h2><?= $this->translate('Organ mutations') ?></h2>
+                <ul>
+                    <?php foreach ($organ->getSubdecisions() as $subdecision): ?>
+                        <li><?= $subdecision->getContent() ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+
         </div>
-
-        <div class="col-md-8">
-            <h2><?= $this->translate('Organ mutations') ?></h2>
-            <ul>
-                <?php foreach ($organ->getSubdecisions() as $subdecision): ?>
-                    <li><?= $subdecision->getContent() ?></li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-
     </div>
-</div>
+</section>

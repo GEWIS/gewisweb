@@ -271,7 +271,17 @@ class Poll extends AbstractAclService
         }
 
         $pollMapper = $this->getPollMapper();
-        $pollMapper->remove($poll);
+
+        // Check to see if poll is approved
+        if ($poll->isApproved()) {
+            // Instead of removing, set expiry date to 'now' to hide poll.
+            $poll->setExpiryDate(new \DateTime());
+        } else {
+            // If not approved, just remove the junk from the database.
+            $pollMapper->remove($poll);
+        }
+
+
         $pollMapper->flush();
     }
 

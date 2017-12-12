@@ -32,67 +32,85 @@ $this->headTitle($this->translate('Jobs'));
     </div>
 </section>
 
-<div class="container">
+<section class="section">
+    <div class="container">
 
-    <div class="job-list">
+        <div class="job-list">
 
-        <div class="row">
-            <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $this->translate('Jobs') ?>
-                <?php if (isset($this->company)): ?>
-                    <small>
-                        <?= $this->translate('at') ?>
-                        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
-                            <?= $this->company->getName(); ?>
-                        </a>
-                    </small>
-                <?php endif; ?>
-            </h1>
+            <div class="row">
+                <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $this->translate('Jobs') ?>
+                    <?php if (isset($this->company)): ?>
+                        <small>
+                            <?= $this->translate('at') ?>
+                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
+                                <?= $this->company->getName(); ?>
+                            </a>
+                        </small>
+                    <?php endif; ?>
+                </h1>
 
-            <fieldset class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
-                <div class="form-group">
-                    <label for="filter-all"><?= $this->translate('Search') ?></label>
-                    <input type="text" class="form-control" id="filter-all" placeholder="<?= $this->translate('Filter results') ?>">
-                </div>
-            </fieldset>
-        </div>
+                <fieldset class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
+                    <div class="form-group">
+                        <label for="filter-all"><?= $this->translate('Search') ?></label>
+                        <input type="text"
+                            class="form-control"
+                            id="filter-all"
+                            placeholder="<?= $this->translate('Filter results') ?>">
+                    </div>
+                </fieldset>
+            </div>
 
-        <?php
+            <?php
             // Randomize the order of jobs
-            if ($randomize){
+            if ($randomize) {
                 shuffle($jobList);
             }
-        ?>
-        <?php foreach ($jobList as $job):?>
-            <?php if ($job->isActive()):?>
-                <?php $company = $job->getPackage()->getCompany(); ?>
+            ?>
+            <?php foreach ($jobList as $job): ?>
+                <?php if ($job->isActive()): ?>
+                    <?php $company = $job->getPackage()->getCompany(); ?>
 
-                <div class="job-list-item list-item" id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
-                <h2 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
-                        ['slugCompanyName' => $company->getSlugName(),
-                        'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
-                    <small><?= $this->translate('at') ?> <a href="<?= $this->url('company/companyItem',
-                            ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a></small>
-                </h2>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                                <img class="company-logo img-responsive center-block" src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>" alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()); ?>" />
-                            </a>
-                            <div class="">
-                                <h4><?= $this->translate('Contact') ?></h4>
-                                <p class="job-contactName"><?= $job->getContactName() ?></p>
-                                <p class="job-phone"><a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a></p>
-                                <p class="job-email"><a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a></p>
-                                <?php if ($job->getAttachment() !== ''): ?>
-                                <p class="job-vacancy"><a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a></p>
-                                <?php endif; ?>
-                                <p class="job-website"><a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a></p>
+                    <div class="job-list-item list-item"
+                        id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
+                        <h1 class="job-name">
+                            <a href="<?= $this->url('company/companyItem/joblist/job_item',
+                                ['slugCompanyName' => $company->getSlugName(),
+                                    'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
+                            <small><?= $this->translate('at') ?>
+                                <a href="<?= $this->url('company/companyItem',
+                                    ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a>
+                            </small>
+                        </h1>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
+                                    <img class="company-logo img-responsive center-block"
+                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>"
+                                        alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()); ?>" />
+                                </a>
+                                <div class="">
+                                    <h4><?= $this->translate('Contact') ?></h4>
+                                    <p class="job-contactName"><?= $job->getContactName() ?></p>
+                                    <p class="job-phone">
+                                        <a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a>
+                                    </p>
+                                    <p class="job-email">
+                                        <a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a>
+                                    </p>
+                                    <?php if ($job->getAttachment() !== ''): ?>
+                                        <p class="job-vacancy">
+                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a>
+                                        </p>
+                                    <?php endif; ?>
+                                    <p class="job-website">
+                                        <a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-9">
-                            <h4><?= $this->translate('Description') ?></h4>
-                            <div class="job-description text-justify markdown">
-                                <?php
+                            <div class="col-md-9">
+                                <h2><?= $this->translate('Description') ?></h2>
+                                <div class="job-description text-justify markdown">
+                                    <?php
                                     if (isset($this->company)) { // do not truncate
                                         echo $this->markdown($job->getDescription());
                                     } else { // do truncate
@@ -103,40 +121,42 @@ $this->headTitle($this->translate('Jobs'));
                                         echo $this->markdown($truncatedDescription);
                                         if (strlen($truncatedDescription) < strlen($job->getDescription())) {
                                             ?>
-                                                <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                                    ['slugCompanyName' => $company->getSlugName(),
-                                                     'slugJobName' => $job->getSlugName()]) ?>">
-                                                    <?= $this->translate("Read more"); ?>&nbsp;&raquo;</a>
+                                            <a href="<?= $this->url('company/companyItem/joblist/job_item',
+                                                ['slugCompanyName' => $company->getSlugName(),
+                                                    'slugJobName' => $job->getSlugName()]) ?>">
+                                                <?= $this->translate("Read more"); ?>
+                                                &nbsp;&raquo;</a>
                                             <?php
                                         }
                                     }
-                                ?>
+                                    ?>
+                                </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <hr>
-                </div>
-                <?php endif?>
-        <?php endforeach ?>
+                <?php endif ?>
+            <?php endforeach ?>
 
-        <script type="text/javascript">
-            /* FILTERING */
+            <script type="text/javascript">
+                /* FILTERING */
 
-            function filter_all(term) {
-                $(".job-list-item").each(function() {
-                    if ($(this).text().toLowerCase().indexOf(term.toLowerCase())==-1) {
-                        $(this).css({display: "none"});
-                    } else {
-                        $(this).css({display: "block"});
-                    }
+                function filter_all(term) {
+                    $(".job-list-item").each(function () {
+                        if ($(this).text().toLowerCase().indexOf(term.toLowerCase()) == -1) {
+                            $(this).css({display: "none"});
+                        } else {
+                            $(this).css({display: "block"});
+                        }
+                    });
+                }
+
+                $("#filter-all").keyup(function () {
+                    filter_all($(this).val());
                 });
-            }
 
-            $("#filter-all").keyup(function() {
-                filter_all($(this).val());
-            });
+            </script>
+        </div>
 
-        </script>
     </div>
-
-</div>
+</section>

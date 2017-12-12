@@ -131,6 +131,10 @@ class Module
                     // Users are allowed to download photos
                     $acl->allow('user', 'photo', ['download', 'view_metadata']);
 
+                    $acl->allow('photo_guest', 'photo', 'view');
+                    $acl->allow('photo_guest', 'album', 'view');
+                    $acl->allow('photo_guest', 'photo', ['download', 'view_metadata']);
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
