@@ -159,17 +159,23 @@ $this->headTitle($this->translate('Activities')); ?>
             <div>
                 <?= $this->translate('You have already signed up for this activity!') ?>
             </div>
-            <div>
-                <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
-                $signoffForm->prepare();
-                echo $this->form()->openTag($signoffForm);
-                echo $this->formElement($signoffForm->get('security'));
-                $submit = $signoffForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </div>
+            <?php if ($subscriptionDeadLinePassed) : ?>
+                <div>
+                    <?= $this->translate('You are not allowed to unsubscribe after the deadline!') ?>
+                </div>
+            <?php else : ?>
+                <div>
+                    <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
+                    $signoffForm->prepare();
+                    echo $this->form()->openTag($signoffForm);
+                    echo $this->formElement($signoffForm->get('security'));
+                    $submit = $signoffForm->get('submit');
+                    $submit->setAttribute('class', 'btn btn-default');
+                    echo $this->formSubmit($submit);
+                    echo $this->form()->closeTag();
+                    ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <?php if ($signupOpen && !$isAllowedToSubscribe): ?>
             <a href="<?= $this->url('user') ?>">
