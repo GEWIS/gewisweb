@@ -21,7 +21,7 @@ class Metadata extends AbstractService
      */
     public function populateMetadata($photo, $path)
     {
-        $exif = read_exif_data($path, 'EXIF');
+        $exif = exif_read_data($path, 'EXIF');
 
         if ($exif) {
             $photo->setArtist($exif['Artist']);
@@ -37,6 +37,8 @@ class Metadata extends AbstractService
                 $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
             }
             $photo->setIso($exif['ISOSpeedRatings']);
+            $photo->setLongitude($this->exifGpsToCoordinate($exif["GPSLongitude"], $exif['GPSLongitudeRef']));
+            $photo->setLatitude($this->exifGpsToCoordinate($exif["GPSLatitude"], $exif['GPSLatitudeRef']));
         } else {
             // We must have a date/time for a photo
             // Since no date is known, we use the current one
@@ -47,7 +49,7 @@ class Metadata extends AbstractService
     }
 
     /*
-     * NOTE: Most code in the following part is copied from 
+     * NOTE: Most code in the following part is copied from
      * the old site, mostly because I lack knowledge in photography.
      */
 
@@ -108,4 +110,33 @@ class Metadata extends AbstractService
         return 'f/' . sprintf("%01.1f", $fstop);
     }
 
+    /**
+     * Computes the coordinate for a given exif GPS location.
+     *
+     * @param string $coordinate
+     * @param string $hemisphere
+     * @return float
+     */
+    private function exifGpsToCoordinate($coordinate, $hemisphere) {
+        if(empty($coordinate)) {
+            return null;
+        }
+
+        if (is_string($coordinate)) {
+            $coordinate = array_map("trim", explode(",", $coordinate));
+        }
+        for ($i = 0; $i < 3; $i++) {
+            $part = explode('/', $coordinate[$i]);
+            if (count($part) == 1) {
+                $coordinate[$i] = $part[0];
+            } else if (count($part) == 2) {
+                $coordinate[$i] = floatval($part[0])/floatval($part[1]);
+            } else {
+                $coordinate[$i] = 0;
+            }
+        }
+        list($degrees, $minutes, $seconds) = $coordinate;
+        $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
+        return $sign * ($degrees + $minutes/60 + $seconds/3600);
+    }
 }
