@@ -26,7 +26,7 @@ class FixedKeyDictionaryCollection extends Collection
         $collection = [];
         foreach ($values as $name => $value) {
             if (array_key_exists("active", $value)) {
-                if($value["active"] == "0") {
+                if ($value["active"] == "0") {
                     continue;
                 }
             }

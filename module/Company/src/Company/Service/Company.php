@@ -139,7 +139,8 @@ class Company extends AbstractACLService
         return $category;
     }
 
-    private function filterCategories($categories) {
+    private function filterCategories($categories)
+    {
         $nonemptyCategories = [];
         foreach ($categories as $category) {
             if (count(
@@ -149,7 +150,6 @@ class Company extends AbstractACLService
             }
         }
         return $nonemptyCategories;
-
     }
     public function getCategoryList($visible)
     {
@@ -175,7 +175,8 @@ class Company extends AbstractACLService
                 return $el->getSlug() == "jobs";
             })) ;
             if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
-                $filteredCategories[] = $this->getCategoryMapper()->createNullCategory($translator->getLocale(), $translator);
+                $filteredCategories[] = $this->getCategoryMapper()
+                    ->createNullCategory($translator->getLocale(), $translator);
             }
             return $filteredCategories;
         }
@@ -307,10 +308,9 @@ class Company extends AbstractACLService
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
+                    continue;
                 }
-                else {
-                    $translation->setLogo("");
-                }
+                $translation->setLogo("");
             }
             $this->saveCompany();
             return true;
@@ -687,7 +687,8 @@ class Company extends AbstractACLService
         if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] == null) {
             $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
             foreach ($jobs as $job) {
-                $job->setCategory($this->getCategoryMapper()->createNullCategory($translator->getLocale(), $translator));
+                $job->setCategory($this->getCategoryMapper()
+                    ->createNullCategory($translator->getLocale(), $translator));
             }
             return $jobs;
         }

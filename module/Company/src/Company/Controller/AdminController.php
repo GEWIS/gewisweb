@@ -261,7 +261,7 @@ class AdminController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $languages = $companyService->getLanguages();
         $languageDictionary = [];
-        foreach($languages as $key) {
+        foreach ($languages as $key) {
             $languageDictionary[$key] = $companyService->getLanguageDescription($key);
         }
         return $languageDictionary;
@@ -403,7 +403,6 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobForm();
 
         // Get the parameters
-        $companyName = $this->params('slugCompanyName');
         $languageNeutralId = $this->params('languageNeutralJobId');
 
         // Find the specified jobs
@@ -411,7 +410,6 @@ class AdminController extends AbstractActionController
 
         // Check the job is found. If not, throw 404
         if (empty($jobs)) {
-            $company = null;
             return $this->notFoundAction();
         }
 

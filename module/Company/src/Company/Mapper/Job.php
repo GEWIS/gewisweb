@@ -79,7 +79,8 @@ class Job
         return $job;
     }
 
-    public function findJobsWithoutCategory($lang) {
+    public function findJobsWithoutCategory($lang)
+    {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j');
         $qb->where('j.category is NULL');

@@ -166,7 +166,6 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => false,
             ]);
             $rootFilter->add($filter, $lang);
-
         }
         $parentFilter->add($rootFilter, $this->baseFieldset->getName());
         $this->extraInputFilter = $parentFilter;

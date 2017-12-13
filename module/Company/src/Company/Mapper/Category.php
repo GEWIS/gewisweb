@@ -60,7 +60,8 @@ class Category
         return $categories;
     }
 
-    public function createNullCategory($lang, $translator) {
+    public function createNullCategory($lang, $translator)
+    {
         $categoryForJobsWithoutCategory =  new CategoryModel();
         $categoryForJobsWithoutCategory->setHidden(false);
         $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
@@ -68,8 +69,8 @@ class Category
         $categoryForJobsWithoutCategory->setSlug("jobs");
         $categoryForJobsWithoutCategory->setName($translator->translate("Job"));
         $categoryForJobsWithoutCategory->setPluralName($translator->translate("Jobs"));
-        return $categoryForJobsWithoutCategory;
 
+        return $categoryForJobsWithoutCategory;
     }
 
     /**
