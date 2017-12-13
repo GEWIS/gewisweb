@@ -1,8 +1,9 @@
 <div class="row">
-    <?php foreach( $languages as $lang):?>
+    <?php foreach( $form->getLanguages() as $lang):?>
+    <?php $langDesc = $languages[$lang]?>
         <div class="col-md-6">
-            <h1><?= $this->translate($lang[1])?></h1>
-            <?php $fieldset = $this->form->get("categories")->get($lang[0]); ?>
+            <h1><?= $this->translate($langDesc)?></h1>
+            <?php $fieldset = $this->form->get("categories")->get($lang); ?>
             <?php
                 $element = $fieldset->get('name');
                 $element->setAttribute('class', 'form-control');

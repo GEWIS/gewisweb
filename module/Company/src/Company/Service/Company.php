@@ -128,10 +128,15 @@ class Company extends AbstractACLService
         $mapper = $this->getCategoryMapper();
         $category = $mapper->findCategory($slug);
         $locale = $translator->getLocale();
+
+        if ($category == null && $slug == "jobs") {
+            $category = $mapper->createNullCategory($translator->getLocale(), $translator);
+        }
         if ($category == null || $category->getLanguage() == $locale) {
             return $category;
         }
-        return $mapper->siblingCategory($category, $locale);
+        $category = $mapper->siblingCategory($category, $locale);
+        return $category;
     }
 
     private function filterCategories($categories) {
@@ -164,7 +169,15 @@ class Company extends AbstractACLService
         }
         if ($visible) {
             $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
-            return $this->filterCategories($categories);
+            $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
+            $filteredCategories =  $this->filterCategories($categories);
+            $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
+                return $el->getSlug() == "jobs";
+            })) ;
+            if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
+                $filteredCategories[] = $this->getCategoryMapper()->createNullCategory($translator->getLocale(), $translator);
+            }
+            return $filteredCategories;
         }
         return $this->getCategoryMapper()->findAll();
     }
@@ -469,6 +482,9 @@ class Company extends AbstractACLService
         $id = -1;
 
         foreach ($jobs as $lang => $job) {
+            if ($job->getActive() !== '1') {
+                continue;
+            }
             $file = $files['attachment_file'];
 
             if ($file != null && $file['jobs'][$lang]['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -487,8 +503,8 @@ class Company extends AbstractACLService
                 $job->setAttachment($newPath);
             }
 
-            $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $job->setTimeStamp(new \DateTime());
+            $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
         }
@@ -498,7 +514,7 @@ class Company extends AbstractACLService
 
     private function setLanguageNeutralId($id, $job, $languageNeutralId)
     {
-        if ($languageNeutralId != "") {
+        if ($languageNeutralId == "") {
             $job->setLanguageNeutralId($id);
             $this->getJobMapper()->persist($job);
             $this->getJobMapper()->save();
@@ -653,7 +669,8 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        return $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
+        $res = $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
+        return $res;
     }
 
     /**
@@ -667,6 +684,13 @@ class Company extends AbstractACLService
     public function getJobs($dict)
     {
         $translator = $this->getTranslator();
+        if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] == null) {
+            $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
+            foreach ($jobs as $job) {
+                $job->setCategory($this->getCategoryMapper()->createNullCategory($translator->getLocale(), $translator));
+            }
+            return $jobs;
+        }
         $locale = $translator->getLocale();
         $dict["language"] = $locale;
         return $this->getJobMapper()->findJob($dict);

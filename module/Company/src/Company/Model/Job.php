@@ -133,7 +133,11 @@ class Job
      */
     public function getLanguageNeutralId()
     {
-        return $this->languageNeutralId;
+        $id = $this->languageNeutralId;
+        if ($id == 0) {
+            return $this->id;
+        }
+        return $id;
     }
 
     /**

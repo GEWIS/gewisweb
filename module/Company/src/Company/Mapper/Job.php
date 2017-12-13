@@ -79,6 +79,15 @@ class Job
         return $job;
     }
 
+    public function findJobsWithoutCategory($lang) {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.category is NULL');
+        $qb->andWhere('j.language=:lang');
+        $qb->setParameter('lang', $lang);
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName
@@ -90,7 +99,10 @@ class Job
     public function findJob($dict)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->join('j.category', 'cat');
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c');
+        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryID', $dict)) {
+            $qb->join('j.category', 'cat');
+        }
         if (array_key_exists('jobSlug', $dict)) {
             $jobSlugName = $dict['jobSlug'];
             $qb->andWhere('j.slugName=:jobId');
@@ -98,8 +110,9 @@ class Job
         }
         if (array_key_exists('languageNeutralId', $dict)) {
             $languageNeutralId = $dict['languageNeutralId'];
-            $qb->andWhere('j.languageNeutralId=:languageNeutralId');
-            $qb->setParameter('languageNeutralId', $languageNeutralId);
+            $qb->andWhere('j.languageNeutralId=?1 OR j.id=?2');
+            $qb->setParameter(1, $languageNeutralId);
+            $qb->setParameter(2, $languageNeutralId);
         }
 
         if (array_key_exists('jobCategory', $dict)) {

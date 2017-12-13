@@ -21,6 +21,8 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
 
         $this->setAttribute('method', 'post');
 
+        $this->setLanguages($languages);
+
         $this->add(
             [
                 'type' => '\Company\Form\FixedKeyDictionaryCollection',
@@ -42,6 +44,17 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
                 'id' => 'submitbutton',
             ],
         ]);
+    }
+    private $languages;
+
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+    }
+
+    public function getLanguages()
+    {
+        return $this->languages;
     }
 
     public function slugNameUnique($slugName, $context)

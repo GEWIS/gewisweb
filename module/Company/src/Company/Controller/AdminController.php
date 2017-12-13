@@ -3,6 +3,7 @@
 namespace Company\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Company\Service\Company as CompanyService;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
@@ -259,11 +260,11 @@ class AdminController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $languages = $companyService->getLanguages();
-        $f = function ($lang) use ($companyService) {
-            return [$lang, $companyService->getLanguageDescription($lang),];
-        };
-        $languageDescriptions = array_map($f, $languages);
-        return $languageDescriptions;
+        $languageDictionary = [];
+        foreach($languages as $key) {
+            $languageDictionary[$key] = $companyService->getLanguageDescription($key);
+        }
+        return $languageDictionary;
     }
     /**
      * Action that displays a form for editing a company
@@ -405,7 +406,6 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $languageNeutralId = $this->params('languageNeutralJobId');
 
-
         // Find the specified jobs
         $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
 
@@ -432,17 +432,8 @@ class AdminController extends AbstractActionController
         foreach ($jobs as $job) {
             $jobDict[$job->getLanguage()] = $job;
         }
-        $languages = $companyService->getLanguages();
-        foreach ($languages as $lang) {
-            if (!isset($jobDict[$lang])) {
-                $anyJob = current($jobDict);
-                $jobDict[$lang] = $companyService->insertJobIntoPackageID(
-                    $anyJob->getPackage()->getId(),
-                    $lang,
-                    $anyJob->getLanguageNeutralId()
-                );
-            }
-        }
+        $languages = array_keys($jobDict);
+        $jobForm->setLanguages($languages);
         $jobForm->bind($jobDict);
 
         // Initialize the view
@@ -549,7 +540,7 @@ class AdminController extends AbstractActionController
     /**
      * Method that returns the service object for the company module.
      *
-     *
+     * @return CompanyService
      */
     protected function getCompanyService()
     {

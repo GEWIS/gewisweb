@@ -60,6 +60,18 @@ class Category
         return $categories;
     }
 
+    public function createNullCategory($lang, $translator) {
+        $categoryForJobsWithoutCategory =  new CategoryModel();
+        $categoryForJobsWithoutCategory->setHidden(false);
+        $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
+        $categoryForJobsWithoutCategory->setLanguage($lang);
+        $categoryForJobsWithoutCategory->setSlug("jobs");
+        $categoryForJobsWithoutCategory->setName($translator->translate("Job"));
+        $categoryForJobsWithoutCategory->setPluralName($translator->translate("Jobs"));
+        return $categoryForJobsWithoutCategory;
+
+    }
+
     /**
      * Find the same category, but in the given language
      *

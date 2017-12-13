@@ -72,7 +72,7 @@ class CompanyController extends AbstractActionController
 
     /**
      *
-     * Action that displays a list of all jobs (facaturebank)
+     * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company
      *
      */
     public function jobListAction()
@@ -87,7 +87,7 @@ class CompanyController extends AbstractActionController
             // jobs for a single company
             $jobList = $companyService->getActiveJobList([
                     'companySlugName' => $companyName,
-                    'jobCategory' => $category->getSlug()
+                    'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
                 ]);
             if (count($jobList) > 0) {
                 return new ViewModel([
@@ -101,7 +101,7 @@ class CompanyController extends AbstractActionController
             return $this->notFoundAction();
         }
         // all jobs
-        $jobs = $companyService->getActiveJobList(['jobCategory' => $category->getSlug()]);
+        $jobs = $companyService->getActiveJobList(['jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null]);
         if (count($jobs) > 0) {
             return new ViewModel([
                 'jobList' => $jobs,
@@ -128,7 +128,7 @@ class CompanyController extends AbstractActionController
             $jobs = $companyService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
-                'jobCategory' => $category->getSlug()
+                'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
             ]);
             if (count($jobs) > 0) {
                 return new ViewModel([
