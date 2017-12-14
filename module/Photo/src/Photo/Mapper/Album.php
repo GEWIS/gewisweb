@@ -11,14 +11,14 @@ use Doctrine\ORM\EntityManager;
  */
 class Album
 {
-
+    
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
+    
     /**
      * Constructor
      *
@@ -28,7 +28,7 @@ class Album
     {
         $this->em = $em;
     }
-
+    
     /**
      * Retrieves an album by id from the database.
      *
@@ -40,19 +40,32 @@ class Album
     {
         return $this->getRepository()->find($albumId);
     }
-
+    
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Photo\Model\Album');
+    }
+    
     /**
      * Returns all the subalbums of a given album.
      *
-     * @param \Photo\Model\Album $parent the parent album to retrieve the subalbum from
-     * @param integer $start the result to start at
-     * @param integer $maxResults max amount of results to return, null for infinite
+     * @param \Photo\Model\Album $parent     the parent album to retrieve the
+     *                                       subalbum from
+     * @param integer            $start      the result to start at
+     * @param integer            $maxResults max amount of results to return,
+     *                                       null for infinite
+     *
      * @return array of subalbums or null if there are none
      */
     public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent = ?1')
@@ -62,10 +75,10 @@ class Album
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
-
+        
         return $qb->getQuery()->getResult();
     }
-
+    
     /**
      * return all the sub-albums without a parent
      *
@@ -74,27 +87,27 @@ class Album
     public function getRootAlbums()
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
             ->orderBy('a.startDateTime', 'DESC');
-
+        
         return $qb->getQuery()->getResult();
     }
-
+    
     /**
      * Gets all root albums with a start date between the specified dates
      *
      * @param $start \DateTime start date and time
-     * @param $end \DateTime end date and time
+     * @param $end   \DateTime end date and time
      *
      * @return array of \Photo\Model\Album
      */
     public function getAlbumsInDateRange($start, $end)
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
@@ -102,10 +115,10 @@ class Album
             ->setParameter(1, $start)
             ->setParameter(2, $end)
             ->orderBy('a.startDateTime', 'DESC');
-
+        
         return $qb->getQuery()->getResult();
     }
-
+    
     /**
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
@@ -115,15 +128,15 @@ class Album
     public function getAlbumsWithoutDate()
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NULL');
-
+        
         return $qb->getQuery()->getResult();
     }
-
+    
     /**
      * Returns the root album containing the most recent photos
      *
@@ -132,19 +145,19 @@ class Album
     public function getNewestAlbum()
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'DESC');
-
+        
         $res = $qb->getQuery()->getResult();
-
+        
         return empty($res) ? null : $res[0];
     }
-
+    
     /**
      * Returns the root album containing the oldest photos
      *
@@ -153,16 +166,16 @@ class Album
     public function getOldestAlbum()
     {
         $qb = $this->em->createQueryBuilder();
-
+        
         $qb->select('a')
             ->from('Photo\Model\Album', 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'ASC');
-
+        
         $res = $qb->getQuery()->getResult();
-
+        
         return empty($res) ? null : $res[0];
     }
     
@@ -175,7 +188,7 @@ class Album
     {
         $this->em->remove($album);
     }
-
+    
     /**
      * Persist album
      *
@@ -185,7 +198,7 @@ class Album
     {
         $this->em->persist($album);
     }
-
+    
     /**
      * Flush.
      */
@@ -193,15 +206,5 @@ class Album
     {
         $this->em->flush();
     }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\Album');
-    }
-
+    
 }

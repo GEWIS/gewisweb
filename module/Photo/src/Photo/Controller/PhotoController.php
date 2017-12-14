@@ -7,7 +7,7 @@ use Zend\View\Model\ViewModel;
 
 class PhotoController extends AbstractActionController
 {
-
+    
     public function indexAction()
     {
         //add any other special behavior which is required for the main photo page here later
@@ -20,14 +20,24 @@ class PhotoController extends AbstractActionController
             $year = (int)$year;
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
-
+        
         return new ViewModel([
             'activeYear' => $year,
-            'years' => $years,
-            'albums' => $albums
+            'years'      => $years,
+            'albums'     => $albums
         ]);
     }
-
+    
+    /**
+     * Gets the album service.
+     *
+     * @return \Photo\Service\Album
+     */
+    public function getAlbumService()
+    {
+        return $this->getServiceLocator()->get("photo_service_album");
+    }
+    
     /**
      * Called on viewing a photo
      *
@@ -36,14 +46,24 @@ class PhotoController extends AbstractActionController
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $photoData = $this->getPhotoService()->getPhotoData($photoId);
-
+        
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
-
+        
         $this->getPhotoService()->countHit($photoData['photo']);
-
+        
         return new ViewModel($photoData);
+    }
+    
+    /**
+     * Gets the photo service.
+     *
+     * @return \Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceLocator()->get("photo_service_photo");
     }
     
     /**
@@ -61,61 +81,43 @@ class PhotoController extends AbstractActionController
         } catch (\Exception $e) {
             return $this->notFoundAction();
         }
-        $photoData = $this->getPhotoService()->getPhotoData($photoId, $memberAlbum);
+        $photoData = $this->getPhotoService()->getPhotoData($photoId,
+            $memberAlbum);
         
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
         
         $photoData = array_merge($photoData, [
-           'memberAlbum' => $memberAlbum,
-           'memberAlbumPage' => $page,
+            'memberAlbum'     => $memberAlbum,
+            'memberAlbumPage' => $page,
         ]);
         
         $this->getPhotoService()->countHit($photoData['photo']);
-    
+        
         $vm = new ViewModel($photoData);
         $vm->setTemplate('photo/view');
+        
         return $vm;
     }
-
+    
     public function downloadAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-
+        
         return $this->getPhotoService()->getPhotoDownload($photoId);
     }
-
+    
     /**
      * Display the page containing previous pictures of the week.
      */
     public function weeklyAction()
     {
         $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
-
+        
         return new ViewModel([
             'weeklyPhotos' => $weeklyPhotos
         ]);
     }
-
-    /**
-     * Gets the album service.
-     *
-     * @return \Photo\Service\Album
-     */
-    public function getAlbumService()
-    {
-        return $this->getServiceLocator()->get("photo_service_album");
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return \Photo\Service\Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->getServiceLocator()->get("photo_service_photo");
-    }
-
+    
 }

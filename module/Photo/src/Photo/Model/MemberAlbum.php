@@ -13,6 +13,7 @@ class MemberAlbum extends VirtualAlbum
 {
     /**
      * Member that this album is for
+     *
      * @var \Decision\Model\Member
      */
     private $member;
@@ -23,12 +24,14 @@ class MemberAlbum extends VirtualAlbum
      * @param int                    $id it is best to use the member lidnr here
      * @param \Decision\Model\Member $member
      */
-    function __construct($id, \Decision\Model\Member $member) {
+    function __construct($id, \Decision\Model\Member $member)
+    {
         parent::__construct($id);
         $this->member = $member;
     }
     
-    public function getMember() {
+    public function getMember()
+    {
         return $this->member;
     }
     
