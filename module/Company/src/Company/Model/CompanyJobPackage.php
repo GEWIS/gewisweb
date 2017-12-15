@@ -60,6 +60,9 @@ class CompanyJobPackage extends CompanyPackage
             if ($job->getCategory() == null && $category->getLanguageNeutralId() == null) {
                 return true;
             }
+            if ($job->getCategory() == null) {
+                return false;
+            }
             return $job->getCategory()->getLanguageNeutralId() ===  $category->getLanguageNeutralId()
                 && $job->isActive() && $job->getLanguage() === $category->getLanguage();
         };
