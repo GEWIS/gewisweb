@@ -1,6 +1,8 @@
 <?php
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
+date_default_timezone_set('Europe/Amsterdam');
+
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
