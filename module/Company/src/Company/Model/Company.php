@@ -25,7 +25,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
      *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $translations;
 
@@ -309,7 +309,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         return $this->packages;
     }
 
-    
+
     /**
      * Get the number of packages.
      *
@@ -341,10 +341,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      * company.
      *
      */
-    public function getNumberOfActiveJobs()
+    public function getNumberOfActiveJobs($category = null)
     {
-        $jobCount = function ($package) {
-            return $package->getNumberOfActiveJobs();
+        $jobCount = function ($package) use ($category) {
+            return $package->getNumberOfActiveJobs($category);
         };
 
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
@@ -412,7 +412,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->languageNeutralId = $language;
     }
 
-    
+
     /**
      * If this object contains an translation for a given locale, it is returned, otherwise null is returned
      *

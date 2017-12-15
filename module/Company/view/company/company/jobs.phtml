@@ -6,7 +6,7 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 $company = $job->getPackage()->getCompany();
 
 $this->headTitle($job->getName());
-$this->headTitle($this->translate('Jobs'));
+$this->headTitle($category->getPluralName());
 
 ?>
 <section class="section section-breadcrumb">
@@ -23,8 +23,8 @@ $this->headTitle($this->translate('Jobs'));
                 </a>
             </li>
             <li>
-                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                    <?= $this->translate('Jobs') ?>
+                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => $job->getCategory()->getSlug() ]) ?>">
+                    <?= $category->getPluralName() ?>
                 </a>
             </li>
             <li class="active">
@@ -40,7 +40,7 @@ $this->headTitle($this->translate('Jobs'));
                 id="<?= $escaper->escapeHtmlAttr($job->getName()) ?>">
                 <h1 class="job-name"><a href="<?= $this->url('company/companyItem/joblist/job_item',
                         ['slugCompanyName' => $company->getSlugName(),
-                            'slugJobName' => $job->getSlugName()]) ?>"><?= $job->getName() ?></a>
+                         'slugJobName' => $job->getSlugName(), 'category' => $job->getCategory()->getSlug() ]) ?>"><?= $job->getName() ?></a>
                     <small><?= $this->translate('job_at_company') ?>
                         <a href="<?= $this->url('company/companyItem',
                             ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a>
@@ -64,7 +64,7 @@ $this->headTitle($this->translate('Jobs'));
                             </p>
                             <?php if ($job->getAttachment() !== ''): ?>
                                 <p class="job-vacancy">
-                                    <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View vacancy'); ?></a>
+                                    <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View') . " ". $job->getCategory()->getName(); ?></a>
                                 </p>
                             <?php endif; ?>
                             <p class="job-website">

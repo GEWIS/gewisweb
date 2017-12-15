@@ -143,7 +143,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <li><a href="<?= $this->url('company/jobList') ?>"><?= $this->translate('Jobs') ?></a></li>
+                        <?php foreach ($this->jobCategories() as $category ):
+                        ?>
+                            <li>
+                                <li><a href="<?=$this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a></li>
+                            </li>
+                        <?php
+                        endforeach ?>
                     </ul>
                 </li>
                 <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>">

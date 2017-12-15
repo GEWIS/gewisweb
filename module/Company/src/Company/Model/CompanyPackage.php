@@ -124,10 +124,11 @@ abstract class CompanyPackage
 
     /**
      * Get the number of jobs in the package.
+     * This method can be overridden in subclasses
      *
      * @return returns 0
      */
-    public function getNumberOfActiveJobs()
+    public function getNumberOfActiveJobs($category)
     {
         return 0;
     }
