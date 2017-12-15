@@ -7,6 +7,7 @@ $this->headTitle($this->translate('Members')); ?>
 $sections = [];
 $sections[$this->translate('Personal')] = [
     [$this->translate('Profile'), 'user', $this->url('member/self')],
+    [$this->translate('My photo\'s'), 'picture', $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null])],
     [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
     [$this->translate('SuSOS'), 'glass', 'https://gewis.nl/susos/account/websitelogin.php'],
     [$this->translate('Find a member'), 'search', $this->url('member/search')],

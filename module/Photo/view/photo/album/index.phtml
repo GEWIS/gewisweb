@@ -20,6 +20,7 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
+            <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
             <li>
                 <?php
                 // determine association year
@@ -29,6 +30,7 @@ $this->headTitle($this->translate('Photos'));
                     <?= $associationYear->getYearString() ?>
                 </a>
             </li>
+            <?php endif; ?>
             <?php
             // first we need to get all parents
             $crumbs = [];
@@ -52,6 +54,10 @@ $this->headTitle($this->translate('Photos'));
                 </li>
             <?php endforeach; ?>
             <li class="active">
+                <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                    <span class="glyphicon glyphicon-user"></span>
+                    &nbsp;
+                <?php endif; ?>
                 <?= $this->escapeHtml($album->getName()); ?>
             </li>
         </ol>
@@ -62,16 +68,33 @@ $this->headTitle($this->translate('Photos'));
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><?= $this->escapeHtml($album->getName()); ?><small> <?= $album->getStartDateTime()->format('d-m-Y') ?></small></h1>
+                <h1 class="page-header">
+                    <?= $this->escapeHtml($album->getName()); ?>
+                    <small>
+                        <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                            <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
+                                <?= strtolower($this->translate("View user profile")) ?>
+                            </a>
+                        <?php else: ?>
+                            <?= $album->getStartDateTime()->format('d-m-Y') ?>
+                        <?php endif; ?>
+                    </small></h1>
             </div>
         </div>
-        <?= $this->paginationControl(
+        <?php
+        $path = '';
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
+        } else {
+            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
+        }
+        $this->paginationControl(
             $this->paginator,
             // the scrolling style
             'elastic',
             'paginator/default',
             [
-                'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+                'path' => $path
             ]
         )
         ?>
@@ -90,7 +113,16 @@ $this->headTitle($this->translate('Photos'));
                     </div>
                 <?php else: ?>
                     <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?= $this->url('photo/photo', ['photo_id' => $item->getId()]); ?>">
+                        <a href="<?php
+                        if ($album instanceof \Photo\Model\MemberAlbum) {
+                            echo $this->url('photo/member/photo', [
+                                'lidnr' => $album->getMember()->getLidnr(),
+                                'page' => isset($paginator->current) ? $paginator->current : 0,
+                                'photo_id' => $item->getId()]);
+                        } else {
+                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
+                        }
+                        ?>">
                             <?php
                             $image = is_null($item->getWeeklyPhoto()) ?
                                 $item->getSmallThumbPath()
@@ -110,7 +142,7 @@ $this->headTitle($this->translate('Photos'));
                 'elastic',
                 'paginator/default',
                 [
-                    'path' => $this->url('photo/album', ['album_id' => $album->getId()])
+                    'path' => $path
                 ]
             )
             ?>

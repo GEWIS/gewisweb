@@ -8,7 +8,7 @@ namespace Photo\Controller\Plugin;
  */
 class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
 {
-
+    
     /**
      * Album
      *
@@ -21,18 +21,19 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
      * @var int
      */
     protected $count = null;
-
+    
     /**
      * Service manager
      *
      * @var \Zend\ServiceManager\ServiceManager
      */
     protected $sm = null;
-
+    
     /**
      * Constructor.
      *
-     * @param \Photo\Model\Album $album Album to paginate
+     * @param \Photo\Model\Album                  $album Album to paginate
+     * @param \Zend\ServiceManager\ServiceManager $sm
      */
     public function __construct($album, $sm)
     {
@@ -40,11 +41,11 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
         $this->count = $album->getAlbumCount() + $album->getPhotoCount(false);
         $this->sm = $sm;
     }
-
+    
     /**
      * Returns an array of items for a page.
      *
-     * @param  int $offset Page offset
+     * @param  int $offset           Page offset
      * @param  int $itemCountPerPage Number of items per page
      *
      * @return array
@@ -53,28 +54,20 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     {
         $albumService = $this->getAlbumService();
         $photoService = $this->getPhotoService();
-
-        $albums = $albumService->getAlbums($this->album, $offset, $itemCountPerPage);
-
+        
+        $albums = $albumService->getAlbums($this->album, $offset,
+            $itemCountPerPage);
+        
         $photoCount = $itemCountPerPage - count($albums);
         $photoStart = max($offset - $this->album->getAlbumCount(), 0);
-        $photos = $photoService->getPhotos($this->album, $photoStart, $photoCount);
-
+        $photos = $photoService->getPhotos($this->album, $photoStart,
+            $photoCount);
+        
         $items = array_merge($albums, $photos);
-
+        
         return $items;
     }
-
-    /**
-     * Returns the total number of rows in the array.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return $this->count;
-    }
-
+    
     /**
      * Gets the album service.
      *
@@ -84,7 +77,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     {
         return $this->sm->get("photo_service_album");
     }
-
+    
     /**
      * Gets the photo service.
      *
@@ -93,5 +86,15 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     private function getPhotoService()
     {
         return $this->sm->get("photo_service_photo");
+    }
+    
+    /**
+     * Returns the total number of rows in the array.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->count;
     }
 }
