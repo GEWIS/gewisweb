@@ -35,8 +35,10 @@ $form->setAttribute('class', 'form-horizontal');
         ?>
         <div class="form-group">
             <div class="col-sm-offset-5 col-sm-7">
-                <?= $this->formCheckbox($element) ?>
-                <?= $element->getLabel() ?>
+                <label>
+                    <?= $this->formCheckbox($element) ?>
+                    <?= $element->getLabel() ?>
+                </label>
             </div>
         </div>
 
