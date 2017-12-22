@@ -13,64 +13,12 @@ use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 class Photo extends AbstractAclService
 {
     /**
-     * Retrieves a photo by an id.
-     *
-     * @param integer $id the id of the album
-     * @return \Photo\Model\Photo photo matching the given id
-     */
-    public function getPhoto($id)
-    {
-        if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
-            );
-        }
-
-        return $this->getPhotoMapper()->getPhotoById($id);
-    }
-
-    /**
-     * Returns the next photo in the album to display
-     *
-     * @param \Photo\Model\Photo $photo
-     *
-     * @return \Photo\Model\Photo The next photo.
-     */
-    public function getNextPhoto($photo)
-    {
-        if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
-            );
-        }
-
-        return $this->getPhotoMapper()->getNextPhoto($photo);
-    }
-
-    /**
-     * Returns the previous photo in the album to display
-     *
-     * @param \Photo\Model\Photo $photo
-     *
-     * @return \Photo\Model\Photo The next photo.
-     */
-    public function getPreviousPhoto($photo)
-    {
-        if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
-            );
-        }
-
-        return $this->getPhotoMapper()->getPreviousPhoto($photo);
-    }
-
-    /**
      * Get all photos in an album
      *
-     * @param \Photo\Model\Album $album the album to get the photos from
-     * @param integer $start the result to start at
-     * @param integer $maxResults max amount of results to return, null for infinite
+     * @param \Photo\Model\Album $album      the album to get the photos from
+     * @param integer            $start      the result to start at
+     * @param integer            $maxResults max amount of results to return,
+     *                                       null for infinite
      *
      * @return array of Photo\Model\Album
      */
@@ -81,10 +29,62 @@ class Photo extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
-
-        return $this->getPhotoMapper()->getAlbumPhotos($album, $start, $maxResults);
+        
+        return $this->getPhotoMapper()->getAlbumPhotos($album, $start,
+            $maxResults);
     }
-
+    
+    /**
+     * Get the photo mapper.
+     *
+     * @return \Photo\Mapper\Photo
+     */
+    public function getPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_photo');
+    }
+    
+    /**
+     * Returns a zend response to be used for downloading a photo.
+     *
+     * @param integer $photoId
+     *
+     * @return \Zend\Http\Response\Stream
+     */
+    public function getPhotoDownload($photoId)
+    {
+        if (!$this->isAllowed('download')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()
+                    ->translate('Not allowed to download photos')
+            );
+        }
+        
+        $photo = $this->getPhoto($photoId);
+        $path = $photo->getPath();
+        $fileName = $this->getPhotoFileName($photo);
+        
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
+    }
+    
+    /**
+     * Retrieves a photo by an id.
+     *
+     * @param integer $id the id of the album
+     *
+     * @return \Photo\Model\Photo photo matching the given id
+     */
+    public function getPhoto($id)
+    {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+        
+        return $this->getPhotoMapper()->getPhotoById($id);
+    }
+    
     /**
      * Returns a unique file name for a photo.
      *
@@ -97,38 +97,28 @@ class Photo extends AbstractAclService
         // filtering is required to prevent invalid characters in file names.
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $albumName = $filter->filter($photo->getAlbum()->getName());
-
+        
         // don't put spaces in file names
         $albumName = str_replace(' ', '-', $albumName);
-
+        
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
-
-        $photoName = $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . $photo->getId() . $extension;
-
+        
+        $photoName = $albumName . '-' . $photo->getDateTime()->format('Y') . '-'
+            . $photo->getId() . $extension;
+        
         return $photoName;
     }
-
+    
     /**
-     * Returns a zend response to be used for downloading a photo.
+     * Gets the storage service.
      *
-     * @param integer $photoId
-     * @return \Zend\Http\Response\Stream
+     * @return \Application\Service\Storage
      */
-    public function getPhotoDownload($photoId)
+    public function getFileStorageService()
     {
-        if (!$this->isAllowed('download')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to download photos')
-            );
-        }
-
-        $photo = $this->getPhoto($photoId);
-        $path =  $photo->getPath();
-        $fileName = $this->getPhotoFileName($photo);
-
-        return $this->getFileStorageService()->downloadFile($path, $fileName);
+        return $this->sm->get('application_service_storage');
     }
-
+    
     /**
      * Get the photo data belonging to a certain photo
      *
@@ -137,32 +127,76 @@ class Photo extends AbstractAclService
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
      */
-    public function getPhotoData($photoId)
+    public function getPhotoData($photoId, \Photo\Model\Album $album = null)
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
-
+        
         $photo = $this->getPhoto($photoId);
-
+        
         // photo does not exist
         if (is_null($photo)) {
             return null;
         }
-
-        $next = $this->getNextPhoto($photo);
-        $previous = $this->getPreviousPhoto($photo);
-
+        
+        if (is_null($album)) {
+            // Default type for albums is Album.
+            $album = new \Photo\Model\Album();
+        }
+        
+        $next = $this->getNextPhoto($photo, $album);
+        $previous = $this->getPreviousPhoto($photo, $album);
+        
         return [
-            'photo' => $photo,
-            'next' => $next,
+            'photo'    => $photo,
+            'next'     => $next,
             'previous' => $previous
         ];
     }
-
-
+    
+    /**
+     * Returns the next photo in the album to display
+     *
+     * @param \Photo\Model\Photo $photo
+     *
+     * @return \Photo\Model\Photo The next photo.
+     */
+    public function getNextPhoto(
+        \Photo\Model\Photo $photo,
+        \Photo\Model\Album $album
+    ) {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+        
+        return $this->getPhotoMapper()->getNextPhoto($photo, $album);
+    }
+    
+    /**
+     * Returns the previous photo in the album to display
+     *
+     * @param \Photo\Model\Photo $photo
+     *
+     * @return \Photo\Model\Photo The next photo.
+     */
+    public function getPreviousPhoto(
+        \Photo\Model\Photo $photo,
+        \Photo\Model\Album $album
+    ) {
+        if (!$this->isAllowed('view')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view photos')
+            );
+        }
+        
+        return $this->getPhotoMapper()->getPreviousPhoto($photo, $album);
+    }
+    
     /**
      * Removes a photo from the database and deletes its files, including thumbs
      * from the server.
@@ -175,33 +209,22 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('delete')) {
             throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to delete photos.')
+                $this->getTranslator()
+                    ->translate('Not allowed to delete photos.')
             );
         }
-
+        
         $photo = $this->getPhoto($photoId);
         if (is_null($photo)) {
             return false;
         }
         $this->getPhotoMapper()->remove($photo);
         $this->getPhotoMapper()->flush();
-
+        
         return true;
-
+        
     }
-
-    /**
-     * Deletes a stored photo at a given path.
-     *
-     * @param string $path
-     * @return bool indicated whether deleting the photo was successful.
-     */
-    public function deletePhotoFile($path)
-    {
-        return $this->getFileStorageService()->removeFile($path);
-
-    }
-
+    
     /**
      * Deletes all files associated with a photo.
      *
@@ -213,7 +236,20 @@ class Photo extends AbstractAclService
         $this->deletePhotoFile($photo->getLargeThumbPath());
         $this->deletePhotoFile($photo->getSmallThumbPath());
     }
-
+    
+    /**
+     * Deletes a stored photo at a given path.
+     *
+     * @param string $path
+     *
+     * @return bool indicated whether deleting the photo was successful.
+     */
+    public function deletePhotoFile($path)
+    {
+        return $this->getFileStorageService()->removeFile($path);
+        
+    }
+    
     /**
      * Moves a photo to a new album.
      *
@@ -221,6 +257,7 @@ class Photo extends AbstractAclService
      * @param int $albumId the id of the new album
      *
      * @return bool indicating whether move was successful
+     * @throws \Exception
      */
     public function movePhoto($photoId, $albumId)
     {
@@ -229,19 +266,40 @@ class Photo extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to move photos')
             );
         }
-
+        
         $photo = $this->getPhoto($photoId);
         $album = $this->getAlbumService()->getAlbum($albumId);
         if (is_null($photo) || is_null($album)) {
             return false;
         }
-
+        
         $photo->setAlbum($album);
         $this->getAlbumMapper()->flush();
-
+        
         return true;
-
+        
     }
+    
+    /**
+     * Gets the album service.
+     *
+     * @return \Photo\Service\Album
+     */
+    public function getAlbumService()
+    {
+        return $this->sm->get('photo_service_album');
+    }
+    
+    /**
+     * Get the album mapper.
+     *
+     * @return \Photo\Mapper\Album
+     */
+    public function getAlbumMapper()
+    {
+        return $this->sm->get('photo_mapper_album');
+    }
+    
     /**
      * Generates the PhotoOfTheWeek and adds it to the list
      * if at least one photo has been viewed in the specified time.
@@ -254,7 +312,7 @@ class Photo extends AbstractAclService
      */
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
-        if(is_null($begindate) || is_null($enddate)) {
+        if (is_null($begindate) || is_null($enddate)) {
             $begindate = (new \DateTime())->sub(new \DateInterval('P1W'));
             $enddate = new \DateTime();
         }
@@ -268,35 +326,73 @@ class Photo extends AbstractAclService
         $mapper = $this->getWeeklyPhotoMapper();
         $mapper->persist($weeklyPhoto);
         $mapper->flush();
+        
         return $weeklyPhoto;
     }
-
+    
     /**
      * Determine which photo is the photo of the week
      *
      * @param \DateTime $begindate
      * @param \DateTime $enddate
+     *
      * @return \Photo\Model\Photo|null
      */
     public function determinePhotoOfTheWeek($begindate, $enddate)
     {
         $results = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
-        if (empty($results)){
+        if (empty($results)) {
             return null;
         }
         $bestRating = -1;
         $bestPhoto = null;
-        foreach ($results as $res){
+        foreach ($results as $res) {
             $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
             $rating = $this->ratePhoto($photo, $res[2]);
-            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo) && $rating > $bestRating) {
+            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
+                && $rating > $bestRating
+            ) {
                 $bestPhoto = $photo;
                 $bestRating = $rating;
             }
         }
+        
         return $bestPhoto;
     }
-
+    
+    public function getHitMapper()
+    {
+        return $this->sm->get('photo_mapper_hit');
+    }
+    
+    /**
+     * Determine the preference rating of the photo.
+     *
+     * @param \Photo\Model\Photo $photo
+     * @param integer            $occurences
+     *
+     * @return float
+     */
+    public function ratePhoto($photo, $occurences)
+    {
+        $tagged = $photo->getTags()->count() > 0;
+        $now = new \DateTime();
+        $age = $now->diff($photo->getDateTime(), true)->days;
+        $res = $occurences * (1 + 1 / $age);
+        
+        return $tagged ? 1.5 * $res : $res;
+    }
+    
+    /**
+     * Get the weekly photo mapper.
+     *
+     * @return \Photo\Mapper\WeeklyPhoto
+     */
+    public function getWeeklyPhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_weekly_photo');
+    }
+    
     /**
      * Retrieves all WeeklyPhotos
      *
@@ -306,35 +402,22 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view previous photos of the week')
+                $this->getTranslator()
+                    ->translate('Not allowed to view previous photos of the week')
             );
         }
+        
         return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
     }
-
-    /**
-     * Determine the preference rating of the photo.
-     *
-     * @param \Photo\Model\Photo $photo
-     * @param integer $occurences
-     * @return float
-     */
-    public function ratePhoto($photo, $occurences)
-    {
-        $tagged = $photo->getTags()->count() > 0;
-        $now = new \DateTime();
-        $age = $now->diff($photo->getDateTime(), true)->days;
-        $res = $occurences * (1 + 1 / $age);
-        return $tagged ? 1.5 * $res : $res;
-    }
-
+    
     public function getCurrentPhotoOfTheWeek()
     {
         return $this->getWeeklyPhotoMapper()->getCurrentPhotoOfTheWeek();
     }
-
+    
     /**
-     * Count a hit for the specified photo. Should be called whenever a photo is viewed.
+     * Count a hit for the specified photo. Should be called whenever a photo
+     * is viewed.
      *
      * @param \Photo\Model\Photo $photo
      */
@@ -343,29 +426,10 @@ class Photo extends AbstractAclService
         $hit = new HitModel();
         $hit->setDateTime(new \DateTime());
         $photo->addHit($hit);
-
+        
         $this->getPhotoMapper()->flush();
     }
-
-    /**
-     * Retrieves a tag if it exists.
-     *
-     * @param integer $photoId
-     * @param integer $lidnr
-     *
-     * @return \Photo\Model\Tag|null
-     */
-    public function findTag($photoId, $lidnr)
-    {
-        if (!$this->isAllowed('view', 'tag')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view tags.')
-            );
-        }
-
-        return $this->getTagMapper()->findTag($photoId, $lidnr);
-    }
-
+    
     /**
      * Tags a user in the specified photo.
      *
@@ -381,23 +445,62 @@ class Photo extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to add tags.')
             );
         }
-
+        
         if (is_null($this->findTag($photoId, $lidnr))) {
             $photo = $this->getPhoto($photoId);
             $member = $this->getMemberService()->findMemberByLidnr($lidnr);
             $tag = new TagModel();
             $tag->setMember($member);
             $photo->addTag($tag);
-
+            
             $this->getPhotoMapper()->flush();
-
+            
             return $tag;
         } else {
             // Tag exists
             return null;
         }
     }
-
+    
+    /**
+     * Retrieves a tag if it exists.
+     *
+     * @param integer $photoId
+     * @param integer $lidnr
+     *
+     * @return \Photo\Model\Tag|null
+     */
+    public function findTag($photoId, $lidnr)
+    {
+        if (!$this->isAllowed('view', 'tag')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to view tags.')
+            );
+        }
+        
+        return $this->getTagMapper()->findTag($photoId, $lidnr);
+    }
+    
+    /**
+     * Get the tag mapper.
+     *
+     * @return \Photo\Mapper\Tag
+     */
+    public function getTagMapper()
+    {
+        return $this->sm->get('photo_mapper_tag');
+    }
+    
+    /**
+     * Get the member service.
+     *
+     * @return \Decision\Service\Member
+     */
+    public function getMemberService()
+    {
+        return $this->sm->get('decision_service_member');
+    }
+    
     /**
      * Removes a tag
      *
@@ -413,18 +516,18 @@ class Photo extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to remove tags.')
             );
         }
-
+        
         $tag = $this->findTag($photoId, $lidnr);
         if (!is_null($tag)) {
             $this->getTagMapper()->remove($tag);
             $this->getTagMapper()->flush();
-
+            
             return true;
         } else {
             return false;
         }
     }
-
+    
     /**
      * Gets all photos in which a member has been tagged.
      *
@@ -439,10 +542,10 @@ class Photo extends AbstractAclService
                 $this->getTranslator()->translate('Not allowed to view tags.')
             );
         }
-
+        
         return $this->getTagMapper()->getTagsByLidnr($member->getLidnr());
     }
-
+    
     /**
      * Gets the base directory from which the photo paths should be requested
      *
@@ -451,10 +554,10 @@ class Photo extends AbstractAclService
     public function getBaseDirectory()
     {
         $config = $this->getConfig();
-
+        
         return str_replace('public', '', $config['upload_dir']);
     }
-
+    
     /**
      * Get the photo config, as used by this service.
      *
@@ -463,10 +566,10 @@ class Photo extends AbstractAclService
     public function getConfig()
     {
         $config = $this->sm->get('config');
-
+        
         return $config['photo'];
     }
-
+    
     /**
      * Get the storage config, as used by this service.
      *
@@ -475,54 +578,10 @@ class Photo extends AbstractAclService
     public function getStorageConfig()
     {
         $config = $this->sm->get('config');
-
+        
         return $config['storage'];
     }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
-     * Get the tag mapper.
-     *
-     * @return \Photo\Mapper\Tag
-     */
-    public function getTagMapper()
-    {
-        return $this->sm->get('photo_mapper_tag');
-    }
-
-    public function getHitMapper()
-    {
-        return $this->sm->get('photo_mapper_hit');
-    }
-
-    /**
-     * Get the weekly photo mapper.
-     *
-     * @return \Photo\Mapper\WeeklyPhoto
-     */
-    public function getWeeklyPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_weekly_photo');
-    }
+    
     /**
      * Gets the metadata service.
      *
@@ -532,47 +591,7 @@ class Photo extends AbstractAclService
     {
         return $this->sm->get('photo_service_metadata');
     }
-
-    /**
-     * Gets the album service.
-     *
-     * @return \Photo\Service\Album
-     */
-    public function getAlbumService()
-    {
-        return $this->sm->get('photo_service_album');
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return \Decision\Service\Member
-     */
-    public function getMemberService()
-    {
-        return $this->sm->get('decision_service_member');
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return \Application\Service\Storage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'photo';
-    }
-
+    
     /**
      * Get the Acl.
      *
@@ -581,5 +600,15 @@ class Photo extends AbstractAclService
     public function getAcl()
     {
         return $this->sm->get('photo_acl');
+    }
+    
+    /**
+     * Get the default resource ID.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'photo';
     }
 }

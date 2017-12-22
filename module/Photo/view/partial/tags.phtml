@@ -8,7 +8,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     <ul id="tagList">
         <?php foreach ($this->photo->getTags() as $tag): ?>
             <li>
-                <a href="<?= $this->url('member/view', ['lidnr' => $tag->getMember()->getLidnr()]) ?>">
+                <a href="<?= $this->url('photo/member', ['lidnr' => $tag->getMember()->getLidnr(), 'page' => null]) ?>">
                     <?= $tag->getMember()->getFullName() ?>
                 </a>&nbsp;
                 <a href="<?= $this->url('photo/photo/tag/remove',

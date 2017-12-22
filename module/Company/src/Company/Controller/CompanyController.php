@@ -72,33 +72,52 @@ class CompanyController extends AbstractActionController
 
     /**
      *
-     * Action that displays a list of all jobs (facaturebank)
+     * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company
      *
      */
     public function jobListAction()
     {
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
+        $category = $companyService->categoryForSlug($this->params('category'));
+        if ($category == null) {
+            return $this->notFoundAction();
+        }
         if (isset($companyName)) {
             // jobs for a single company
-            return new ViewModel([
-                'company' => $companyService->getCompanyBySlugName($companyName),
-                'jobList' => $companyService->getJobsByCompanyName($companyName),
-                'translator' => $companyService->getTranslator(),
-                'randomize' => false,
-            ]);
+            $jobList = $companyService->getActiveJobList([
+                    'companySlugName' => $companyName,
+                    'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
+                ]);
+            if (count($jobList) > 0) {
+                return new ViewModel([
+                    'company' => $companyService->getCompanyBySlugName($companyName),
+                    'jobList' => $jobList,
+                    'category' => $category,
+                    'translator' => $companyService->getTranslator(),
+                    'randomize' => false,
+                ]);
+            }
+            return $this->notFoundAction();
         }
         // all jobs
-        return new ViewModel([
-            'jobList' => $companyService->getJobList(),
-            'translator' => $companyService->getTranslator(),
-            'randomize' => true,
-        ]);
+        $jobs = $companyService->getActiveJobList(
+            ['jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null]
+        );
+        if (count($jobs) > 0) {
+            return new ViewModel([
+                'jobList' => $jobs,
+                'translator' => $companyService->getTranslator(),
+                'randomize' => true,
+                'category' => $category,
+            ]);
+        }
+        return $this->notFoundAction();
     }
 
     /**
      *
-     * Action to list jobs of a certain company
+     * Action to list a single job of a certain company
      *
      */
     public function jobsAction()
@@ -106,12 +125,18 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
+        $category = $companyService->categoryForSlug($this->params('category'));
         if ($jobName != null) {
-            $jobs = $companyService->getJobsBySlugName($companyName, $jobName);
-            if (count($jobs) != 0) {
+            $jobs = $companyService->getJobs([
+                'companySlugName' => $companyName,
+                'jobSlug' => $jobName,
+                'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
+            ]);
+            if (count($jobs) > 0) {
                 return new ViewModel([
                     'job' => $jobs[0],
                     'translator' => $companyService->getTranslator(),
+                    'category' => $category,
                 ]);
             }
             return $this->notFoundAction();

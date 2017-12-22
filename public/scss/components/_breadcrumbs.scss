@@ -6,3 +6,11 @@ ol.breadcrumb {
     margin: 0 0;
     padding: 8px 0;
 }
+
+ol.breadcrumb li.note {
+    color: #777;
+
+    + li::before {
+        content: " "
+    }
+}

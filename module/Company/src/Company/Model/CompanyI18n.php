@@ -205,4 +205,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
         $this->language = $language;
     }
 
+    public function remove()
+    {
+        $this->company = null;
+    }
+
 }

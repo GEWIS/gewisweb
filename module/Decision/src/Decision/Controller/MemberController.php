@@ -11,7 +11,7 @@ class MemberController extends AbstractActionController
 
     public function indexAction()
     {
-
+        return new ViewModel(['member' => $this->identity()->getMember()]);
     }
 
     /**
