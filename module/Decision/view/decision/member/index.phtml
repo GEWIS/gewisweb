@@ -6,58 +6,143 @@ $this->headTitle($this->translate('Members')); ?>
 
 $sections = [];
 $sections[$this->translate('Personal')] = [
-    [$this->translate('Profile'), 'user', $this->url('member/self')],
-    [$this->translate('My photo\'s'), 'picture', $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null])],
     [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
-    [$this->translate('SuSOS'), 'glass', 'https://gewis.nl/susos/account/websitelogin.php'],
-    [$this->translate('Find a member'), 'search', $this->url('member/search')],
-    [$this->translate('Microsoft Imagine'), 'cd', $this->url('member/dreamspark')],
-    [$this->translate('Links'), 'link', $this->url('home/page', ['category' => 'links'])],
 ];
-
-$sections[$this->translate('Meetings')] = [
-    [$this->translate('Meetings'), 'folder-open', $this->url('decision')],
-    [$this->translate('Decision Search'), 'search', $this->url('decision/search')],
-    [$this->translate('Authorizations'), 'pencil', $this->url('decision/authorizations')],
-    [$this->translate('Organs'), 'heart', $this->url('organ')],
-    [$this->translate('Public Archive'), 'download-alt', $this->url('decision/files', ['path' => ''])]
-];
-
-if ($this->acl('decision_acl')->isAllowed('organ', 'edit')) {
-    $sections[$this->translate('Active members')] = [
-        [$this->translate('Option calendar'), 'calendar', $this->url('activity_calendar')],
-        [$this->translate('Webmail'), 'inbox', '/webmail'],
-        [$this->translate('Website admin'), 'cog', $this->url('admin')],
-    ];
-
-    $sections[$this->translate('Regulations')] = [
-        [$this->translate('Borrelreglement'), 'glass', $this->url('member/regulations', ['regulation' => 'borrel-reglement'])],
-        [$this->translate('Computerreglement'), 'hdd', $this->url('member/regulations', ['regulation' => 'computer-reglement'])],
-        [$this->translate('Posterreglement'), 'file', $this->url('member/regulations', ['regulation' => 'poster-reglement'])],
-        [$this->translate('Sleutelbeleid'), 'lock', $this->url('member/regulations', ['regulation' => 'sleutel-beleid'])],
-    ];
-}
 
 ?>
+<style>
+    .row-spacing-top {
+        margin-top: 2rem;
+    }
+</style>
 
-<section class="section">
-    <div class="container">
-        <h1><?= $this->translate('Members') ?></h1>
 
-        <?php foreach ($sections as $heading => $items): ?>
-            <h2><?= $heading ?></h2>
-            <div class="row">
-                <?php foreach ($items as $item): ?>
-                    <div class="col-sm-3 col-xs-6">
-                        <a href="<?= $item[2] ?>" class="panel panel-image">
-                            <div class="panel-body">
-                                <div class="glyphicon glyphicon-<?= $item[1] ?>"></div>
-                                <h4><?= $item[0] ?></h4>
-                            </div>
+<div class="container">
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Members') ?></h1>
+            </div>
+        </div>
+        <div class="row row-spacing-top">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Personal') ?></h2>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 1rem;">
+                    <a href="<?= $this->url('member/self') ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-user"></div>
+                        <h4><?= $this->translate('Profile') ?></h4>
+                    </a>
+                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-picture"></div>
+                        <h4><?= $this->translate('My photo\'s') ?></h4>
+                    </a>
+                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image">
+                        <div class="glyphicon glyphicon-glass"></div>
+                        <h4><?= $this->translate('SuSOS') ?></h4>
+                    </a>
+                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-search"></div>
+                        <h4><?= $this->translate('Find a member') ?></h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row row-spacing-top" style="margin-top: 5rem;">
+            <div class="col-md-6">
+                <h2><?= $this->translate('Meetings') ?></h2>
+                <p><?= $this->translate('The last five meetings that took place:') ?></p>
+                <ul>
+                    <li><a href="#">AV 160 op 19 december 2017</a></li>
+                    <li><a href="#">BV 1383 op woensdag 13 december 2017</a></li>
+                    <li><a href="#">BV 1382 op woensdag 6 december 2017</a></li>
+                    <li><a href="#">BV 1381 op woensdag 29 november 2017</a></li>
+                    <li><a href="#">BV 1380 op dinsdag 21 november 2017</a></li>
+                </ul>
+                <a href="<?= $this->url('decision') ?>">
+                    <?= $this->translate('View previous meetings') ?>
+                </a>
+                <form method="post" action="<?= $this->url('decision/search') ?>" class="form-inline" style="margin-top: 3rem;">
+                    <input type="text" name="query" class="form-control" placeholder="<?= $this->translate('Search a decision') ?>" />
+                    <button type="submit" class="btn btn-default">
+                        <?= $this->translate('Search') ?>
+                    </button>
+                </form>
+                <hr />
+                <p>
+                    <?=
+                        sprintf(
+                            $this->translate('If you are not able to attend a meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
+                            '<a href="' . $this->url('decision/authorizations') . '">',
+                            '</a>'
+                        )
+                    ?>
+                </p>
+            </div>
+            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+                <div class="col-md-6">
+                    <h2><?= $this->translate('Manage') ?></h2>
+                    <p><?= $this->translate('A list of helpful pages to manage the organ(s) you are part of.') ?></p>
+                    <style>
+                        .panel-image { margin: 0; padding 0; }
+                    </style>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 1rem;">
+                        <a href="<?= $this->url('activity_admin') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-tree-deciduous"></div>
+                            <h4><?= $this->translate('Activities') ?></h4>
+                        </a>
+                        <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-align-left"></div>
+                            <h4><?= $this->translate('Organ page') ?></h4>
+                        </a>
+                        <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-calendar"></div>
+                            <h4><?= $this->translate('Option calendar') ?></h4>
+                        </a>
+                        <a href="/webmail" class="panel panel-image">
+                            <div class="glyphicon glyphicon-inbox"></div>
+                            <h4><?= $this->translate('Webmail') ?></h4>
+                        </a>
+                        <a href="<?= $this->url('organ') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-heart"></div>
+                            <h4><?= $this->translate('Organs') ?></h4>
+                        </a>
+                        <a href="<?= $this->url('admin') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-cog"></div>
+                            <h4><?= $this->translate('Administrator') ?></h4>
                         </a>
                     </div>
-                <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+        <div class="row row-spacing-top">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Regulations') ?></h2>
+                <ul>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
+                            <?= $this->translate('Borrelreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
+                            <?= $this->translate('Computerreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
+                            <?= $this->translate('Posterreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
+                            <?= $this->translate('Sleutelbeleid') ?>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        <?php endforeach; ?>
-    </div>
-</section>
+        </div>
+        <?php endif; ?>
+    </section>
+</div>
+
