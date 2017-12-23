@@ -75,7 +75,8 @@ class Meeting
      * @param int|null $limit The amount of results, default is all
      * @return array Meetings that have taken place
      */
-    public function findPast($limit = null) {
+    public function findPast($limit = null)
+    {
         $qb = $this->em->createQueryBuilder();
 
         // Use yesterday because a meeting might still take place later on the day

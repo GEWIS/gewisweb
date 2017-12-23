@@ -17,7 +17,9 @@ class MemberController extends AbstractActionController
         $meetings = $decisionService->getMeetings(5, false);
 
         // Flatten array
-        $meetings = array_map(function ($item) { return $item[0]; }, $meetings);
+        $meetings = array_map(function ($item) {
+            return $item[0];
+        }, $meetings);
 
         return new ViewModel([
             'member'   => $this->identity()->getMember(),
