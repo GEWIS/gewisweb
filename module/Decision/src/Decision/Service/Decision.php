@@ -10,6 +10,7 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
+use User\Permissions\NotAllowedException;
 
 /**
  * Decision service.
@@ -20,18 +21,27 @@ class Decision extends AbstractAclService
     /**
      * Get all meetings.
      *
+     * @param int|null $limit           The amount of meetings to retrieve, default is all
+     * @param bool     $includeUpcoming Include upcoming meetings, default is true
      * @return array Of all meetings
      */
-    public function getMeetings()
+    public function getMeetings($limit = null, $includeUpcoming = true)
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list meetings.')
             );
         }
 
-        return $this->getMeetingMapper()->findAll();
+        $meetingMapper = $this->getMeetingMapper();
+
+        if (is_bool($includeUpcoming) && !$includeUpcoming) {
+            return $meetingMapper->findPast($limit);
+        }
+
+        return $meetingMapper->findAll($limit);
     }
 
     public function getMeetingsByType($type)

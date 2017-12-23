@@ -27,7 +27,7 @@ $sections[$this->translate('Personal')] = [
         <div class="row row-spacing-top">
             <div class="col-md-12">
                 <h2><?= $this->translate('Personal') ?></h2>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: 1rem;">
                     <a href="<?= $this->url('member/self') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-user"></div>
                         <h4><?= $this->translate('Profile') ?></h4>
@@ -40,6 +40,10 @@ $sections[$this->translate('Personal')] = [
                         <div class="glyphicon glyphicon-glass"></div>
                         <h4><?= $this->translate('SuSOS') ?></h4>
                     </a>
+                    <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon glyphicon-bullhorn"></div>
+                        <h4><?= $this->translate('Authorizations') ?></h4>
+                    </a>
                     <a href="<?= $this->url('member/search') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-search"></div>
                         <h4><?= $this->translate('Find a member') ?></h4>
@@ -50,33 +54,62 @@ $sections[$this->translate('Personal')] = [
         <div class="row row-spacing-top" style="margin-top: 5rem;">
             <div class="col-md-6">
                 <h2><?= $this->translate('Meetings') ?></h2>
+                <?php if (!is_null($this->upcoming)): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><?= $this->translate('Upcoming meeting') ?></strong>
+                        </div>
+                        <div class="panel-body">
+                            <?=
+                                sprintf(
+                                    $this->translate('The next meeting is %s%s %s%s on %s.'),
+                                    '<a href="' . $this->url('decision/meeting', [ 'type' => $this->upcoming->getType(), 'number' => $this->upcoming->getNumber() ]) . '">',
+                                    $this->upcoming->getType(),
+                                    $this->upcoming->getNumber(),
+                                    '</a>',
+                                    $this->upcoming->getDate()->format('l j F Y')
+                                )
+                            ?>
+                        </div>
+                    </div>
+                    <p>
+                        <?=
+                            sprintf(
+                                $this->translate('If you are not able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
+                                '<a href="' . $this->url('decision/authorizations') . '">',
+                                '</a>'
+                            )
+                        ?>
+                    </p>
+                    <hr />
+                <?php endif; ?>
                 <p><?= $this->translate('The last five meetings that took place:') ?></p>
                 <ul>
-                    <li><a href="#">AV 160 op 19 december 2017</a></li>
-                    <li><a href="#">BV 1383 op woensdag 13 december 2017</a></li>
-                    <li><a href="#">BV 1382 op woensdag 6 december 2017</a></li>
-                    <li><a href="#">BV 1381 op woensdag 29 november 2017</a></li>
-                    <li><a href="#">BV 1380 op dinsdag 21 november 2017</a></li>
+                    <?php foreach($this->meetings as $meeting): ?>
+                        <li>
+                            <a href="<?= $this->url('decision/meeting', [ 'type' => $meeting->getType(), 'number' => $meeting->getNumber() ]) ?>">
+                                <?=
+                                    sprintf(
+                                        $this->translate('%s %s on %s'),
+                                        $meeting->getType(),
+                                        $meeting->getNumber(),
+                                        $meeting->getDate()->format('l j F Y')
+                                    )
+                                ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
                 <a href="<?= $this->url('decision') ?>">
-                    <?= $this->translate('View previous meetings') ?>
+                    <?= $this->translate('View all meetings') ?>
                 </a>
+                <hr />
                 <form method="post" action="<?= $this->url('decision/search') ?>" class="form-inline" style="margin-top: 3rem;">
                     <input type="text" name="query" class="form-control" placeholder="<?= $this->translate('Search a decision') ?>" />
                     <button type="submit" class="btn btn-default">
                         <?= $this->translate('Search') ?>
                     </button>
                 </form>
-                <hr />
-                <p>
-                    <?=
-                        sprintf(
-                            $this->translate('If you are not able to attend a meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
-                            '<a href="' . $this->url('decision/authorizations') . '">',
-                            '</a>'
-                        )
-                    ?>
-                </p>
             </div>
             <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
                 <div class="col-md-6">
@@ -101,10 +134,6 @@ $sections[$this->translate('Personal')] = [
                         <a href="/webmail" class="panel panel-image">
                             <div class="glyphicon glyphicon-inbox"></div>
                             <h4><?= $this->translate('Webmail') ?></h4>
-                        </a>
-                        <a href="<?= $this->url('organ') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-heart"></div>
-                            <h4><?= $this->translate('Organs') ?></h4>
                         </a>
                         <a href="<?= $this->url('admin') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-cog"></div>

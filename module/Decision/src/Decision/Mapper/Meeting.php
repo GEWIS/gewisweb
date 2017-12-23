@@ -29,10 +29,10 @@ class Meeting
     /**
      * Find all meetings.
      *
-     *
+     * @param int|null $limit   The amount of results, default is all
      * @return array Of all meetings
      */
-    public function findAll()
+    public function findAll($limit = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -41,6 +41,10 @@ class Meeting
             ->leftJoin('m.decisions', 'd')
             ->groupBy('m')
             ->orderBy('m.date', 'DESC');
+
+        if (is_int($limit) && $limit >= 0) {
+            $qb->setMaxResults($limit);
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -61,6 +65,34 @@ class Meeting
             ->where('m.type = :type')
             ->orderBy('m.date', 'DESC')
             ->setParameter(':type', $type);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all meetings that have taken place
+     *
+     * @param int|null $limit The amount of results, default is all
+     * @return array Meetings that have taken place
+     */
+    public function findPast($limit = null) {
+        $qb = $this->em->createQueryBuilder();
+
+        // Use yesterday because a meeting might still take place later on the day
+        $date = new \DateTime();
+        $date->add(\DateInterval::createFromDateString('yesterday'));
+
+        $qb->select('m, COUNT(d)')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.date <= :date')
+            ->leftJoin('m.decisions', 'd')
+            ->groupBy('m')
+            ->orderBy('m.date', 'DESC')
+            ->setParameter('date', $date);
+
+        if (is_int($limit) && $limit >= 0) {
+            $qb->setMaxResults($limit);
+        }
 
         return $qb->getQuery()->getResult();
     }

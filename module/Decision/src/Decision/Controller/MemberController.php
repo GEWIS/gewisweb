@@ -11,7 +11,19 @@ class MemberController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel(['member' => $this->identity()->getMember()]);
+        $decisionService = $this->getServiceLocator()->get('decision_service_decision');
+
+        // Get the latest 5 meetings that have taken place
+        $meetings = $decisionService->getMeetings(5, false);
+
+        // Flatten array
+        $meetings = array_map(function ($item) { return $item[0]; }, $meetings);
+
+        return new ViewModel([
+            'member'   => $this->identity()->getMember(),
+            'meetings' => $meetings,
+            'upcoming' => $decisionService->getLatestAV()
+        ]);
     }
 
     /**
