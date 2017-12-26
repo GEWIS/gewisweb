@@ -32,23 +32,23 @@ $meetings = $this->meetings;
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: 1rem;">
                     <a href="<?= $this->url('member/self') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-user"></div>
-                        <h4><?= $this->translate('Profile') ?></h4>
+                        <div class="h4"><?= $this->translate('Profile') ?></div>
                     </a>
                     <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-picture"></div>
-                        <h4><?= $this->translate('My photo\'s') ?></h4>
+                        <div class="h4"><?= $this->translate('My photo\'s') ?></div>
                     </a>
                     <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image">
                         <div class="glyphicon glyphicon-glass"></div>
-                        <h4><?= $this->translate('SuSOS') ?></h4>
+                        <div class="h4"><?= $this->translate('SuSOS') ?></div>
                     </a>
                     <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon glyphicon-bullhorn"></div>
-                        <h4><?= $this->translate('Authorizations') ?></h4>
+                        <div class="h4"><?= $this->translate('Authorizations') ?></div>
                     </a>
                     <a href="<?= $this->url('member/search') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-search"></div>
-                        <h4><?= $this->translate('Find a member') ?></h4>
+                        <div class="h4"><?= $this->translate('Find a member') ?></div>
                     </a>
                 </div>
             </div>
@@ -124,23 +124,23 @@ $meetings = $this->meetings;
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 1rem;">
                         <a href="<?= $this->url('activity_admin') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-tree-deciduous"></div>
-                            <h4><?= $this->translate('Activities') ?></h4>
+                            <div class="h4"><?= $this->translate('Activities') ?></div>
                         </a>
                         <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-align-left"></div>
-                            <h4><?= $this->translate('Organ page') ?></h4>
+                            <div class="h4"><?= $this->translate('Organ page') ?></div>
                         </a>
                         <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-calendar"></div>
-                            <h4><?= $this->translate('Option calendar') ?></h4>
+                            <div class="h4"><?= $this->translate('Option calendar') ?></div>
                         </a>
                         <a href="/webmail" class="panel panel-image">
                             <div class="glyphicon glyphicon-inbox"></div>
-                            <h4><?= $this->translate('Webmail') ?></h4>
+                            <div class="h4"><?= $this->translate('Webmail') ?></div>
                         </a>
                         <a href="<?= $this->url('admin') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-cog"></div>
-                            <h4><?= $this->translate('Administrator') ?></h4>
+                            <div class="h4"><?= $this->translate('Administrator') ?></div>
                         </a>
                     </div>
                 </div>
