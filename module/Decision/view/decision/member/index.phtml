@@ -9,6 +9,8 @@ $sections[$this->translate('Personal')] = [
     [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
 ];
 
+/** @var \Decision\Model\Meeting[] $meetings */
+$meetings = $this->meetings;
 ?>
 <style>
     .row-spacing-top {
@@ -83,9 +85,17 @@ $sections[$this->translate('Personal')] = [
                     </p>
                     <hr />
                 <?php endif; ?>
+                <p><?= $this->translate('Search through the list of decisions accumulated from past meetings.') ?></p>
+                <form method="post" action="<?= $this->url('decision/search') ?>" class="form-inline">
+                    <input type="text" name="query" class="form-control" placeholder="<?= $this->translate('Search by keyword or meeting number') ?>" />
+                    <button type="submit" class="btn btn-default">
+                        <?= $this->translate('Search') ?>
+                    </button>
+                </form>
+                <hr />
                 <p><?= $this->translate('The last five meetings that took place:') ?></p>
                 <ul>
-                    <?php foreach($this->meetings as $meeting): ?>
+                    <?php foreach($meetings as $meeting): ?>
                         <li>
                             <a href="<?= $this->url('decision/meeting', [ 'type' => $meeting->getType(), 'number' => $meeting->getNumber() ]) ?>">
                                 <?=
@@ -103,13 +113,6 @@ $sections[$this->translate('Personal')] = [
                 <a href="<?= $this->url('decision') ?>">
                     <?= $this->translate('View all meetings') ?>
                 </a>
-                <hr />
-                <form method="post" action="<?= $this->url('decision/search') ?>" class="form-inline" style="margin-top: 3rem;">
-                    <input type="text" name="query" class="form-control" placeholder="<?= $this->translate('Search a decision') ?>" />
-                    <button type="submit" class="btn btn-default">
-                        <?= $this->translate('Search') ?>
-                    </button>
-                </form>
             </div>
             <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
                 <div class="col-md-6">
