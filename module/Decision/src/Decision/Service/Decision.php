@@ -87,6 +87,16 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Returns the closest upcoming AV
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function getUpcomingAV()
+    {
+        return $this->getMeetingMapper()->findUpcomingAV();
+    }
+
+    /**
      * Get meeting documents corresponding to a certain id.
      *
      * @param $id

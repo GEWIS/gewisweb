@@ -101,6 +101,9 @@ class Meeting
     /**
      * Returns the latest upcoming AV or null if there is none.
      *
+     * Note that if multiple AVs are planned, the one that is planned furthest
+     * away is returned.
+     *
      * @return \Decision\Model\Meeting|null
      */
     public function findLatestAV()
@@ -114,6 +117,29 @@ class Meeting
             ->where('m.type = AV')
             ->where('m.date >= :date')
             ->orderBy('m.date', 'DESC')
+            ->setParameter('date', $maxDate)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Returns the closest upcoming AV
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function findUpcomingAV()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $today = new \DateTime();
+        $maxDate = $today->sub(new \DateInterval('P1D'));
+
+        $qb->select('m')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.type = AV')
+            ->where('m.date >= :date')
+            ->orderBy('m.date', 'ASC')
             ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
