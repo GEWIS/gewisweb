@@ -112,13 +112,13 @@ $meetings = $this->meetings;
                     <h2><?= $this->translate('Manage') ?></h2>
                     <p><?= $this->translate('A list of helpful pages to manage the organ(s) you are part of.') ?></p>
                     <div class="grid grid-col-3">
+                        <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image">
+                            <div class="glyphicon glyphicon-align-left"></div>
+                            <div class="panel-heading"><?= $this->translate('Info') ?></div>
+                        </a>
                         <a href="<?= $this->url('activity_admin') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-tree-deciduous"></div>
                             <div class="panel-heading"><?= $this->translate('Activities') ?></div>
-                        </a>
-                        <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-align-left"></div>
-                            <div class="panel-heading"><?= $this->translate('Organ page') ?></div>
                         </a>
                         <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image">
                             <div class="glyphicon glyphicon-calendar"></div>
