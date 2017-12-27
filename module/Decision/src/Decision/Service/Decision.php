@@ -21,11 +21,10 @@ class Decision extends AbstractAclService
     /**
      * Get all meetings.
      *
-     * @param int|null $limit           The amount of meetings to retrieve, default is all
-     * @param bool     $includeUpcoming Include upcoming meetings, default is true
+     * @param int|null $limit The amount of meetings to retrieve, default is all
      * @return array Of all meetings
      */
-    public function getMeetings($limit = null, $includeUpcoming = true)
+    public function getMeetings($limit = null)
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
@@ -35,13 +34,26 @@ class Decision extends AbstractAclService
             );
         }
 
-        $meetingMapper = $this->getMeetingMapper();
+        return $this->getMeetingMapper()->findAll($limit);
+    }
 
-        if (is_bool($includeUpcoming) && !$includeUpcoming) {
-            return $meetingMapper->findPast($limit);
+    /**
+     * Get past meetings.
+     *
+     * @param int|null $limit The amount of meetings to retrieve, default is all
+     * @return array Of all meetings
+     */
+    public function getPastMeetings($limit = null)
+    {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
         }
 
-        return $meetingMapper->findAll($limit);
+        return $this->getMeetingMapper()->findPast($limit);
     }
 
     public function getMeetingsByType($type)

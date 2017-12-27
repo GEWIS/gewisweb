@@ -14,7 +14,7 @@ class MemberController extends AbstractActionController
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
 
         // Get the latest 5 meetings that have taken place
-        $meetings = $decisionService->getMeetings(5, false);
+        $meetings = $decisionService->getPastMeetings(5);
 
         // Flatten array
         $meetings = array_map(function ($item) {
