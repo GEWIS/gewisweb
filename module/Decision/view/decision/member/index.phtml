@@ -62,7 +62,7 @@ $meetings = $this->meetings;
                                     $this->upcoming->getType(),
                                     $this->upcoming->getNumber(),
                                     '</a>',
-                                    $this->upcoming->getDate()->format('l j F Y')
+                                    strftime('%A %e %B %Y', $this->upcoming->getDate()->getTimestamp())
                                 )
                             ?>
                         </div>
@@ -96,7 +96,7 @@ $meetings = $this->meetings;
                                         $this->translate('%s %s on %s'),
                                         $meeting->getType(),
                                         $meeting->getNumber(),
-                                        $meeting->getDate()->format('l j F Y')
+                                        strftime('%A %e %B %Y', $meeting->getDate()->getTimestamp())
                                     )
                                 ?>
                             </a>
