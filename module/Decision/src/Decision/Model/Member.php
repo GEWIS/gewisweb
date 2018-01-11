@@ -586,7 +586,7 @@ class Member
         $today = new \DateTime();
 
         $boards = $this->getBoardInstallations()->filter(function (BoardMember $boardMember) use ($today) {
-            $dischargeDate= $boardMember->getDischargeDate();
+            $dischargeDate = $boardMember->getDischargeDate();
 
             // Keep installation if not discharged or discharged in the future
             return is_null($dischargeDate) || $dischargeDate >= $today;
