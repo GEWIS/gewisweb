@@ -73,6 +73,24 @@ class Member extends AbstractAclService
     }
 
     /**
+     * Returns is the member is active
+     *
+     * An active member is a member that is part of at least one organ or is part of
+     * the board.
+     *
+     * @param MemberModel $member
+     * @return bool
+     */
+
+    public function isActiveMember(MemberModel $member)
+    {
+        $organs = $member->getCurrentOrganInstallations();
+        $board = $member->getCurrentBoardInstallation();
+
+        return (count($organs) > 0) || !is_null($board);
+    }
+
+    /**
      *
      */
     public function findMemberByLidNr($lidnr)

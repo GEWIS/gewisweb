@@ -554,8 +554,14 @@ class Member
             return new ArrayCollection();
         }
 
-        return $this->getOrganInstallations()->filter(function (OrganMember $organ) {
-            return is_null($organ->getDischargeDate());
+        // Filter out past installations
+        $today = new \DateTime();
+
+        return $this->getOrganInstallations()->filter(function (OrganMember $organ) use ($today) {
+            $dischargeDate = $organ->getDischargeDate();
+
+            // Keep installation if not discharged or discharged in the future
+            return is_null($dischargeDate) || $dischargeDate >= $today;
         });
     }
 
@@ -567,6 +573,31 @@ class Member
     public function getBoardInstallations()
     {
         return $this->boardInstallations;
+    }
+
+    /**
+     * Get the current board the member is part of
+     *
+     * @return BoardMember|null
+     */
+    public function getCurrentBoardInstallation()
+    {
+        // Filter out past board installations
+        $today = new \DateTime();
+
+        $boards = $this->getBoardInstallations()->filter(function (BoardMember $boardMember) use ($today) {
+            $dischargeDate= $boardMember->getDischargeDate();
+
+            // Keep installation if not discharged or discharged in the future
+            return is_null($dischargeDate) || $dischargeDate >= $today;
+        });
+
+        if (count($boards) == 0) {
+            return null;
+        }
+
+        // Assume a member has a single board installation at a time
+        return $boards[0];
     }
 
     /**

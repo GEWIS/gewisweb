@@ -107,7 +107,7 @@ $meetings = $this->meetings;
                     <?= $this->translate('View all meetings') ?>
                 </a>
             </div>
-            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+            <?php if ($isActive): ?>
                 <div class="col-md-6 mt-2">
                     <h2><?= $this->translate('Manage') ?></h2>
                     <p><?= $this->translate('A list of helpful pages to manage the organ(s) you are part of.') ?></p>
