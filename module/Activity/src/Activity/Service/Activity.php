@@ -110,7 +110,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         if ($organ != null) {
             $organInfo = $organ->getApprovedOrganInformation();
-            if ($organInfo->getEmail() != null) {
+            if ($organInfo != null && $organInfo->getEmail() != null) {
                 $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
                     ['activity' => $activity, 'requester' => $organ->getName()], $organInfo);
             } else {
