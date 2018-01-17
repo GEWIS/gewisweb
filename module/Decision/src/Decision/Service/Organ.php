@@ -65,13 +65,13 @@ class Organ extends AbstractAclService
         if ($this->isAllowed('editall')) {
             return array_merge(
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY)
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AV_COMMITTEE)
             );
         }
 
         $user = $this->sm->get('user_service_user')->getIdentity();
 
-        //TODO: filter out avc's
         return $this->getMemberMapper()->findOrgans($user->getMember());
     }
 
