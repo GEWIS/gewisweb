@@ -4,7 +4,7 @@ namespace Application\Service;
 
 use Application\Service\AbstractService;
 
-use Decision\Model\Organ;
+use Decision\Model\OrganInformation;
 use User\Model\NewUser as NewUserModel;
 
 use Decision\Model\Member as MemberModel;
@@ -74,7 +74,7 @@ class Email extends AbstractService
      * @param $view String Template of the email
      * @param $subject String Subject of the email
      * @param $data array Variables that you want to have available in the template.
-     * @param $organ Organ The user as which the email should be sent.
+     * @param $organ OrganInformation The organ as which the email should be sent.
      */
     public function sendEmailAsOrgan($type, $view, $subject, $data, $organ)
     {
@@ -85,7 +85,7 @@ class Email extends AbstractService
         $message->addFrom($config['from']);
         $message->addTo($config['to'][$type]);
         $message->setSubject($subject);
-        $message->setReplyTo($organ->getApprovedOrganInformation()->getEmail());
+        $message->setReplyTo($organ->getEmail());
 
         $this->getTransport()->send($message);
     }

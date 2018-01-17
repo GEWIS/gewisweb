@@ -109,9 +109,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $subject = 'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST';
 
         if ($organ != null) {
-            if ($organ->getApprovedOrganInformation()->getEmail() != null) {
+            $organInfo = $organ->getApprovedOrganInformation();
+            if ($organInfo->getEmail() != null) {
                 $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
-                    ['activity' => $activity, 'requester' => $organ->getName()], $organ);
+                    ['activity' => $activity, 'requester' => $organ->getName()], $organInfo);
             } else {
                 // The organ did not fill in it's email address, so send the email as the requested user.
                 $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
