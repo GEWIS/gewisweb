@@ -79,7 +79,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => 'regex',
                         'options' => [
-                            'pattern' => '/^[a-zA-Z0-9_ ,.-]+\.pdf$/'
+                            'pattern' => '/.+\.pdf$/'
                         ]
                     ],
                     [

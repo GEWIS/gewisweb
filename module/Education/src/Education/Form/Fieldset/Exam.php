@@ -85,7 +85,7 @@ class Exam extends Fieldset
                     [
                         'name' => 'regex',
                         'options' => [
-                            'pattern' => '/^[a-zA-Z0-9_ ,.-]+\.pdf$/'
+                            'pattern' => '/.+\.pdf$/'
                         ]
                     ],
                     [
