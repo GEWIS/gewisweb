@@ -91,14 +91,37 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         // Send email to GEFLITST if user checked checkbox of GEFLITST
         if ($activity->getRequireGEFLITST()) {
-            $this->getEmailService()->sendEmail('activity_creation_require_GEFLITST', 'email/activity_created_require_GEFLITST',
-                'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST',
-                ['activity' => $activity]);
-
-
+            $this->requestGEFLITST($activity, $user, $organ);
         }
 
         return $activity;
+    }
+
+    /**
+     * @param $activity ActivityModel
+     * @param $user \User\Model\User
+     * @param $organ Organ
+     */
+    private function requestGEFLITST($activity, $user, $organ)
+    {
+        $type = 'activity_creation_require_GEFLITST';
+        $view = 'email/activity_created_require_GEFLITST';
+        $subject = 'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST';
+
+        if ($organ != null) {
+            $organInfo = $organ->getApprovedOrganInformation();
+            if ($organInfo != null && $organInfo->getEmail() != null) {
+                $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()], $organInfo);
+            } else {
+                // The organ did not fill in it's email address, so send the email as the requested user.
+                $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()], $user);
+            }
+        } else {
+            $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
+                ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
+        }
     }
 
     /**
