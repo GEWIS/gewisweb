@@ -96,12 +96,11 @@ $this->headTitle($this->category->getPluralName());
                                     </p>
                                     <?php if ($job->getAttachment() !== ''): ?>
                                         <p class="job-vacancy">
-<a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?></a>
+                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>"
+                                                <?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?>
+                                            </a>
                                         </p>
                                     <?php endif; ?>
-                                    <p class="job-website">
-                                        <a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a>
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -120,7 +119,8 @@ $this->headTitle($this->category->getPluralName());
                                             ?>
                                             <a href="<?= $this->url('company/companyItem/joblist/job_item',
                                                 ['slugCompanyName' => $company->getSlugName(),
-                                                    'slugJobName' => $job->getSlugName()]) ?>">
+                                                    'slugJobName' => $job->getSlugName(),
+                                                    'category' => $job->getCategory()->getSlug()]) ?>">
                                                 <?= $this->translate("Read more"); ?>
                                                 &nbsp;&raquo;</a>
                                             <?php
