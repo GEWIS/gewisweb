@@ -485,9 +485,9 @@ class Company extends AbstractACLService
             if ($job->getActive() !== '1') {
                 continue;
             }
-            $file = $files['attachment_file'];
+            $file = $files['jobs'][$lang]['attachment_file'];
 
-            if ($file != null && $file['jobs'][$lang]['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($file != null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
                 $oldPath = $job->getAttachment();
 
                 try {
