@@ -149,11 +149,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                                 if ($value['error'] == 4) {
                                     return true;
                                 }
-                                $extensionValidator = Zend\Validator\File\Extension('pdf');
+                                $extensionValidator = new \Zend\Validator\File\Extension('pdf');
                                 if (!$extensionValidator->isValid($value)) {
                                     return false;
                                 }
-                                $mimeValidator = Zend\Validator\File\MimeType('application/pdf');
+                                $mimeValidator = new \Zend\Validator\File\MimeType('application/pdf');
                                 return $mimeValidator->isValid($value);
 
                             }
