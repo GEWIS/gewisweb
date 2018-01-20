@@ -67,9 +67,6 @@ $this->headTitle($category->getPluralName());
                                     <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View') . " ". $job->getCategory()->getName(); ?></a>
                                 </p>
                             <?php endif; ?>
-                            <p class="job-website">
-                                <a href="<?= $job->getWebsite() ?>"><?= $this->translate('View website') ?></a>
-                            </p>
                         </div>
                     </div>
                     <div class="col-md-9">

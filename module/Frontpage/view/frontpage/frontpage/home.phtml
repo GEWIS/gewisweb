@@ -99,7 +99,7 @@
                         <div class="list-group">
                             <?php foreach ($activities as $activity): ?>
                                 <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
+                                    <h4 class="list-group-item-heading"><?= $activity->getNameEn() ?></h4>
                                     <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
                                     <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
                                 </a>
