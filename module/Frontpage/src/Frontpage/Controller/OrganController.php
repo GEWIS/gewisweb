@@ -37,7 +37,6 @@ class OrganController extends AbstractActionController
         $organService = $this->getOrganService();
         try {
             $organ = $organService->findOrganByAbbr($abbr, $type);
-
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
             $activities = $this->getActivityQueryService()->getOrganActivities($organ, 3);
