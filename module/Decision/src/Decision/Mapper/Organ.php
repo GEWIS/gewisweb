@@ -105,10 +105,11 @@ class Organ
      * Find an organ by its abbreviation
      *
      * @param string $abbr
+     * @param string $type
      *
      * @return \Decision\Model\Organ
      */
-    public function findByAbbr($abbr)
+    public function findByAbbr($abbr, $type = null)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
@@ -116,6 +117,10 @@ class Organ
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
             ->where('o.abbr = :abbr');
+        if (!is_null($type)) {
+            $qb->andWhere('o.type = :type')
+                ->setParameter('type', $type);
+        }
 
         $qb->setParameter('abbr', $abbr);
 

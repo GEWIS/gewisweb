@@ -125,12 +125,13 @@ class Organ extends AbstractAclService
      * Finds an organ by its abbreviation
      *
      * @param $abbr
+     * @param string $type
      *
      * @return OrganModel
      */
-    public function findOrganByAbbr($abbr)
+    public function findOrganByAbbr($abbr, $type = null)
     {
-        return $this->getOrganMapper()->findByAbbr($abbr);
+        return $this->getOrganMapper()->findByAbbr($abbr, $type);
     }
 
     /**
