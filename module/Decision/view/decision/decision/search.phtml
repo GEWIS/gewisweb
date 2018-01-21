@@ -39,14 +39,11 @@ $this->headTitle($this->translate('Search for decision')); ?>
                 <?php foreach ($result as $decision): ?>
                     <?php $type = $decision->getMeeting()->getType() ?>
                     <?php $number = $decision->getMeeting()->getNumber() ?>
-                    <li>
-                        <a href="<?= $this->url('decision/meeting', ['type' => $type, 'number' => $number]) ?>">
+                    <li><a href="<?= $this->url('decision/meeting', ['type' => $type, 'number' => $number]) ?>">
                             <?= $type ?> <?= $number ?>
                             .<?= $decision->getPoint() ?>
                             .<?= $decision->getNumber() ?>
-                        </a>
-                        <?= $decision->getContent() ?>
-                    </li>
+                        </a> <?= $decision->getContent() ?>
                 <?php endforeach ?>
             </ul>
         <?php endif ?>
