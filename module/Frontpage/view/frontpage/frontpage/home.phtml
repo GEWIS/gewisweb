@@ -8,8 +8,7 @@
                 <section class="content-section">
                     <h1><?= $this->translate('Studievereniging GEWIS') ?></h1>
                     <p class="lead">
-                        <?= $this->translate('Welcome to the website of Study association GEWIS, the study association of
-                    the department of Mathematics & Computer Science of the Eindhoven University of Technology.') ?>
+                        <?= $this->translate('Welcome to the website of Study association GEWIS, the study association of the department of Mathematics & Computer Science of the Eindhoven University of Technology.') ?>
                     </p>
                 </section>
 
@@ -100,7 +99,7 @@
                         <div class="list-group">
                             <?php foreach ($activities as $activity): ?>
                                 <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
+                                    <h4 class="list-group-item-heading"><?= $activity->getNameEn() ?></h4>
                                     <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
                                     <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
                                 </a>

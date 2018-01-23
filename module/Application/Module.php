@@ -72,6 +72,11 @@ class Module
                 'application_service_legacy' => 'Application\Service\Legacy',
                 'application_service_email' => 'Application\Service\Email'
             ],
+            'factories' => [
+                'application_get_languages' => function ($sm) {
+                    return ['nl', 'en'];
+                }
+            ],
         ];
     }
 
@@ -97,6 +102,12 @@ class Module
                 'moduleIsActive' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\ModuleIsActive();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
+                'jobCategories' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobCategories();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },

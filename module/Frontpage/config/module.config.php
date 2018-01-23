@@ -48,7 +48,7 @@ return [
                         'options' => [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
-                                'type' => 'committee|fraternity',
+                                'type' => 'committee|fraternity|avc',
                                 'abbr' => '[^/]*',
                             ],
                             'defaults' => [

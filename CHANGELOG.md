@@ -1,3 +1,14 @@
+## [v1.3.1](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-12-23)
+
+* Added ability to browse member photos as an album
+* Added job categories
+* Show GPS location for photos
+* Automatically email GEFLITST for new activities
+* Various UI improvements
+* Various bugfixes
+
+---
+
 ## [v1.3](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-12-09)
 
 * Completely redesigned homepage!

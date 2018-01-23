@@ -71,6 +71,7 @@ class ActivityController extends AbstractActionController
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
             'fields' => $fields,
             'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
+            'subscriptionDeadLinePassed' => $subscriptionDeadLinePassed,
         ];
 
         //Retrieve and clear the request status from the session, if it exists.
@@ -297,6 +298,14 @@ class ActivityController extends AbstractActionController
 
         if (!$signupService->isSignedUp($activity, $user)) {
             $message = $translator->translate('You are not subscribed for this activity!');
+            $this->redirectActivityRequest($id, false, $message);
+            return;
+        }
+
+        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
+
+        if($subscriptionDeadLinePassed) {
+            $message = $translator->translate('You are not allowed to unsubscribe after the deadline!');
             $this->redirectActivityRequest($id, false, $message);
             return;
         }

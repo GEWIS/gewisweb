@@ -279,8 +279,7 @@ class Module
                             $roles = ['user'];
                         }
 
-                        // TODO: change this to getActiveOrganInstalltions() once 529 is fixed
-                        if (count($user->getMember()->getOrganInstallations()) > 0) {
+                        if (count($user->getMember()->getCurrentOrganInstallations()) > 0) {
                             $roles[] = 'active_member';
                         }
 

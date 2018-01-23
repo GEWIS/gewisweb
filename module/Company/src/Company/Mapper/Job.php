@@ -31,16 +31,6 @@ class Job
     }
 
     /**
-     * Find all jobs.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
      * Saves all modified entities that are marked persistant
      *
      */
@@ -57,13 +47,20 @@ class Job
      * @param int $cid The id to ignore
      *
      */
-    public function isSlugNameUnique($companySlug, $slugName, $cid)
+    public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
-        $objects = $this->findJobBySlugName($companySlug, $slugName);
+        // A slug in unique if there is no other slug of the same category and same language
+        $objects = $this->findJob([
+            'companySlugName' => $companySlug,
+            'jobSlug' =>  $slugName,
+            'jobCategoryID' => $category,
+        ]);
         foreach ($objects as $job) {
-            if ($job->getID() != $cid) {
-                return false;
+            // If the current job is in the database under the same slug, we can safely skip it
+            if ($job->getID() == $jid) {
+                continue;
             }
+            return false;
         }
         return true;
     }
@@ -73,14 +70,23 @@ class Job
      *
      * @param mixed $package
      */
-    public function insertIntoPackage($package)
+    public function insertIntoPackage($package, $lang, $languageNeutralId)
     {
         $job = new JobModel($this->em);
-
+        $job->setLanguage($lang);
+        $job->setLanguageNeutralId($languageNeutralId);
         $job->setPackage($package);
-        $this->em->persist($job);
-
         return $job;
+    }
+
+    public function findJobsWithoutCategory($lang)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.category is NULL');
+        $qb->andWhere('j.language=:lang');
+        $qb->setParameter('lang', $lang);
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -89,32 +95,52 @@ class Job
      *
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
+     * @param mixed $category
      */
-    public function findJobBySlugName($companySlugName, $jobSlugName)
+    public function findJob($dict)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('j.slugName=:jobId')
-        ->andWhere('c.slugName=:companySlugName');
-        $qb->setParameter('jobId', $jobSlugName);
-        $qb->setParameter('companySlugName', $companySlugName);
+        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c');
+        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryID', $dict)) {
+            $qb->join('j.category', 'cat');
+        }
+        if (array_key_exists('jobSlug', $dict)) {
+            $jobSlugName = $dict['jobSlug'];
+            $qb->andWhere('j.slugName=:jobId');
+            $qb->setParameter('jobId', $jobSlugName);
+        }
+        if (array_key_exists('languageNeutralId', $dict)) {
+            $languageNeutralId = $dict['languageNeutralId'];
+            $qb->andWhere('j.languageNeutralId=?1 OR j.id=?2');
+            $qb->setParameter(1, $languageNeutralId);
+            $qb->setParameter(2, $languageNeutralId);
+        }
+
+        if (array_key_exists('jobCategory', $dict)) {
+            $category = $dict['jobCategory'];
+            $qb->andWhere('cat.slug=:category');
+            $qb->setParameter('category', $category);
+        }
+        if (array_key_exists('jobCategoryID', $dict)) {
+            $category = $dict['jobCategoryID'];
+            $qb->andWhere('cat.id=:category');
+            $qb->setParameter('category', $category);
+        }
+
+        if (array_key_exists('language', $dict)) {
+            $lang = $dict['language'];
+            $qb->andWhere('j.language=:language');
+            $qb->setParameter('language', $lang);
+        }
+
+        if (array_key_exists('companySlugName', $dict)) {
+            $companySlugName = $dict['companySlugName'];
+            $qb->andWhere('c.slugName=:companySlugName');
+            $qb->setParameter('companySlugName', $companySlugName);
+        }
 
         return $qb->getQuery()->getResult();
     }
-
-    /**
-     * Find all jobs that are owned by a company identified with $companySlugName
-     *
-     * @param mixed $companySlugName
-     */
-    public function findJobByCompanySlugName($companySlugName)
-    {
-        $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c')->where('c.slugName=:companySlugName');
-        $qb->setParameter('companySlugName', $companySlugName);
-
-        return $qb->getQuery()->getResult();
-    }
-
 
     public function persist($job)
     {
@@ -130,5 +156,30 @@ class Job
     public function getRepository()
     {
         return $this->em->getRepository('Company\Model\Job');
+    }
+    public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
+    {
+        return [
+            'name' => $name,
+            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            'options' => [
+                'label' => $label,
+                'object_manager' => $this->em,
+                'target_class' => $targetClass,
+                'property' => $property,
+                'find_method'    => [
+                    'name'   => 'findBy',
+                    'params' => [
+                        'criteria' => ['language' => $locale],
+                        // Use key 'orderBy' if using ORM
+                        //'orderBy'  => ['lastname' => 'ASC'],
+
+                    ],
+                ],
+            ]
+            //'attributes' => [
+            //'class' => 'form-control input-sm'
+            //]
+        ];
     }
 }

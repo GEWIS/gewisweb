@@ -60,7 +60,7 @@ $form->prepare()
                            [
                                "slugCompanyName" => $companyName,
                                "packageID" => $package->getId(),
-                               "jobName" => $job->getSlugName(),
+                               "languageNeutralJobId" => $job->getLanguageNeutralId(),
                            ]
                        ); ?>">
                         <?= $this->translate('edit'); ?>

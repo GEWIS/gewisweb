@@ -36,13 +36,15 @@ $this->headTitle($this->translate('Search for decision')); ?>
 
         <?php if (isset($result)): ?>
             <ul>
-                <?php foreach ($result
-
-                as $decision): ?>
-                <li><?= $decision->getMeeting()->getType() ?> <?= $decision->getMeeting()->getNumber() ?>
-                    .<?= $decision->getPoint() ?>
-                    .<?= $decision->getNumber() ?> <?= $decision->getContent() ?>
-                    <?php endforeach ?>
+                <?php foreach ($result as $decision): ?>
+                    <?php $type = $decision->getMeeting()->getType() ?>
+                    <?php $number = $decision->getMeeting()->getNumber() ?>
+                    <li>
+                        <a href="<?= $this->url('decision/meeting', ['type' => $type, 'number' => $number]) ?>">
+                            <?= $type ?> <?= implode('.', [$number, $decision->getPoint(), $decision->getNumber()]); ?>
+                        </a> <?= $decision->getContent() ?>
+                    </li>
+                <?php endforeach ?>
             </ul>
         <?php endif ?>
     </div>

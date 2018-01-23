@@ -3,6 +3,7 @@
 namespace Company\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Company\Service\Company as CompanyService;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
@@ -20,6 +21,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
+            'categoryList' => $companyService->getCategoryList(false),
             'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
                 new \DateInterval("P1M")
             )),
@@ -56,7 +58,6 @@ class AdminController extends AbstractActionController
         }
 
         // The form was not valid, or we did not get data back
-
         // Initialize the form
         $companyForm->setAttribute(
             'action',
@@ -185,6 +186,7 @@ class AdminController extends AbstractActionController
         // Initialize the view
         $vm = new ViewModel([
             'form' => $companyForm,
+            'languages' => $this->getLanguageDescriptions(),
         ]);
 
         $vm->setTemplate('company/admin/edit-job');
@@ -192,6 +194,78 @@ class AdminController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     * Action that displays a form for editing a category
+     *
+     *
+     */
+    public function editCategoryAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $categoryForm = $companyService->getCategoryForm();
+
+        // Get parameter
+        $categoryId = $this->params('categoryID');
+
+        // Get the specified company
+        $categories = $companyService->getAllCategoriesById($categoryId);
+
+        // If the company is not found, throw 404
+        if (empty($categories)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        // Initialize form
+        $categoriesDict = [];
+        foreach ($categories as $category) {
+            $categoriesDict[$category->getLanguage()] = $category;
+        }
+        $categoryForm->bind($categoriesDict);
+        $categoryForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/editCategory',
+                [
+                    'categoryID' => $categoryId,
+                ]
+            )
+        );
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->saveCategory(
+                $request->getPost()
+            )){
+                return $this->redirect()->toRoute(
+                    'admin_company/editCategory',
+                    [
+                        'categoryID' => $categoryId,
+                    ]
+                );
+
+            }
+        }
+
+        $vm = new ViewModel([
+            'categories' => $categories,
+            'form' => $categoryForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+
+        return $vm;
+    }
+    private function getLanguageDescriptions()
+    {
+        $companyService = $this->getCompanyService();
+        $languages = $companyService->getLanguages();
+        $languageDictionary = [];
+        foreach ($languages as $key) {
+            $languageDictionary[$key] = $companyService->getLanguageDescription($key);
+        }
+        return $languageDictionary;
+    }
     /**
      * Action that displays a form for editing a company
      *
@@ -220,9 +294,10 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $post = $request->getPost();
             if ($companyService->saveCompanyByData(
                 $company,
-                $request->getPost(),
+                $post,
                 $request->getFiles()
             )){
                 $companyName = $request->getPost()['slugName'];
@@ -328,49 +403,42 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobForm();
 
         // Get the parameters
-        $companyName = $this->params('slugCompanyName');
-        $jobName = $this->params('jobName');
-
+        $languageNeutralId = $this->params('languageNeutralJobId');
 
         // Find the specified jobs
-        $jobList = $companyService->getEditableJobsBySlugName($companyName, $jobName);
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
 
         // Check the job is found. If not, throw 404
-        if (empty($jobList)) {
-            $company = null;
+        if (empty($jobs)) {
             return $this->notFoundAction();
         }
-
-        $job = $jobList[0];
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
             $post = $request->getPost();
-            $companyService->saveJobData($jobName, $job, $post, $files);
-            if ($jobName !== $post['slugName']) {
-                // Redirect to new slug name
-                return $this->redirect()->toRoute(
-                    'admin_company/editCompany/editJob',
-                    [
-                        'action' => 'edit',
-                        'slugCompanyName' => $companyName,
-                        'jobName' => $post['slugName'],
-                    ],
-                    [],
-                    false
-                );
+            $jobDict = [];
+            foreach ($jobs as $job) {
+                $jobDict[$job->getLanguage()] = $job;
             }
+            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
         }
 
         // Initialize the form
-        $jobForm->bind($job);
+        $jobDict = [];
+        foreach ($jobs as $job) {
+            $jobDict[$job->getLanguage()] = $job;
+        }
+        $languages = array_keys($jobDict);
+        $jobForm->setLanguages($languages);
+        $jobForm->bind($jobDict);
 
         // Initialize the view
         return new ViewModel([
             'form' => $jobForm,
-            'job' => $job
+            'job' => $job,
+            'languages' => $this->getLanguageDescriptions(),
         ]);
     }
 
@@ -395,6 +463,49 @@ class AdminController extends AbstractActionController
         }
 
         return $this->notFoundAction();
+    }
+
+    public function addCategoryAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $categoryForm = $companyService->getCategoryForm();
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            // Check if data is valid, and insert when it is
+            $categories = $companyService->insertCategoryByData(
+                $request->getPost(),
+                $request->getFiles()
+            );
+            if (!is_null($categories)) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/default',
+                    [
+                        'action' => 'editCategory',
+                        'slugCompanyName' => $categories['nl']->getLanguageNeutralId(),
+                    ]
+                );
+            }
+        }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $categoryForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                ['action' => 'addCategory']
+            )
+        );
+        // Initialize the view
+        return new ViewModel([
+            'form' => $categoryForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
     }
 
     /**
@@ -427,7 +538,7 @@ class AdminController extends AbstractActionController
     /**
      * Method that returns the service object for the company module.
      *
-     *
+     * @return CompanyService
      */
     protected function getCompanyService()
     {
