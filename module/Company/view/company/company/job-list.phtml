@@ -96,7 +96,7 @@ $this->headTitle($this->category->getPluralName());
                                     </p>
                                     <?php if ($job->getAttachment() !== ''): ?>
                                         <p class="job-vacancy">
-                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>">
+                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>"
                                                 <?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?>
                                             </a>
                                         </p>
