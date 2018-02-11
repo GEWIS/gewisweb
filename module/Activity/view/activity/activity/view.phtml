@@ -87,14 +87,33 @@ $this->headTitle($this->translate('Activities')); ?>
                     aria-expanded="false" aria-controls="subscriptionForm">
                 <?= $this->translate('Already subscribed') ?>
             </button>
-        <?php else: ?>
-            <button class="btn btn-primary btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
+        <?php elseif (!$signupOpen || $subscriptionDeadLinePassed): ?>
+            <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
                     aria-expanded="false" aria-controls="subscriptionForm">
+                <?= $this->translate('Subscription closed') ?>
+            </button>
+        <?php elseif (count($activity->getFields()) == 0 && !is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe):
+            // There are no fields hence no need to show the entire form
+            // Just show the subscribe button immediately
+            $submitUrl = $this->url('activity/signup', ['id' => $activity->getId() ]);
+            $submitText = $this->translate('Confirm subscription');
+            $form->setAttribute('action', $submitUrl);
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            $submit = $form->get('submit');
+            $submit->setAttribute('class', 'btn btn-primary btn-lg agenda-subscription-button');
+            $submit->setAttribute('value', $submitText);
+            echo $this->formElement($form->get('security'));
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        <?php else: ?>
+            <button class="btn btn-primary btn-lg agenda-subscription-button collapsed" type="button" data-toggle="collapse" data-target="#subscriptionForm" aria-expanded="false" aria-controls="subscriptionForm">
                 <span class="glyphicon glyphicon-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
             </button>
         <?php endif; ?>
-    <div class="collapse" id="subscriptionForm">
-        <div class="well">
+    <div class="container row collapse" id="subscriptionForm">
+        <div class="well col-md-6">
             <?php if ($isSignedUp) :?>
                 <h2>
                     <?= $this->translate('Subscribe yourself') ?>
