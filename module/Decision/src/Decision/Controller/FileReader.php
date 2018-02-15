@@ -28,4 +28,12 @@ interface FileReader {
      * @return bool
      */
     public function downloadFile($path);
+
+    /**
+     * Returns whether the given $path is valid
+     * and is a directory.
+     * @param string $path
+     * @return bool
+     */
+    public function isDir($path);
 }

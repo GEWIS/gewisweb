@@ -51,4 +51,8 @@ class DummyReader implements FileReader {
         return null;
     }
 
+    public function isDir($path) {
+        return in_array($path, ['', 'myFolder/', 'myFolder/NestedFolder/']);
+    }
+
 }

@@ -135,35 +135,35 @@ class DecisionController extends AbstractActionController
     public function filesAction()
     {
         $path = $this->params()->fromRoute('path');
-        var_dump($path);
+        //var_dump($path);
         if (is_null($path)) {
             $path = '';
         }
         //Manually pick the FileReader for now, DI later.
-        $fileReader = new DummyReader();
-        var_dump($path);
-        if (strlen($path)===0 || $path[strlen($path)-1] === '/'){
+        //$fileReader = new DummyReader();
+        $fileReader =  new LocalFileReader(getcwd() . '/public/webfiles/');
+        //var_dump($path);
+        if ($fileReader->isDir($path)){
             //display the contents of a dir
-            //All dirs, except root, are identified by ending in /
-            //root is simply ''
             $folder = $fileReader->listDir($path);
             if ($folder===null) {
-                var_dump('Ai sjippies');
+                //var_dump('Ai sjippies');
                 //return $this->notFoundAction();
             }
             var_dump(explode('/', $path));
             return new ViewModel([
-                'folderName' => end(explode('/',substr($path, 0, -1))),
+                'folderName' => end(explode('/', $path)),
                 'folder' => $folder,
                 'path' => $path
             ]);
         }
         //download the file
         $result = $fileReader->downloadFile($path);
-        if (!$result){
-            var_dump('file faal');
-            //return $this->notFoundAction();
+        if ($result === null){
+            //var_dump('file faal');
+            return $this->notFoundAction();
         }
+        return $result;
     }
 
     /**
