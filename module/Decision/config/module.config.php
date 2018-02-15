@@ -79,17 +79,13 @@ return [
                         ],
                     ],
                     'files' => [
-                        'type' => 'Segment',
+                        'type' => 'Regex',
                         'options' => [
-                            'route' => '/files[/:path]',
-                            'constraints' => [
-                                //Not sure what constraints there should be 
-                                //We should be careful with special chars in html
-                                'path' => '[a-zA-Z0-9_\-\.]+'
-                            ],
+                            'regex' => '/files/(?<path>[^?*:;{}\\\]+)',
                             'defaults' => [
                                 'action' => 'files'
                             ],
+                            'spec' => '/files/%path%'
                         ],
                     ],
                 ],

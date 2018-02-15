@@ -134,18 +134,17 @@ class DecisionController extends AbstractActionController
      */
     public function filesAction()
     {
-        $url_path = $this->params()->fromRoute('path');
-        if (is_null($url_path)) {
+        $path = $this->params()->fromRoute('path');
+        var_dump($path);
+        if (is_null($path)) {
             $path = '';
         }
         //Manually pick the FileReader for now, DI later.
-        $path = str_replace('_','/',$url_path);
         $fileReader = new DummyReader();
-        //var_dump($path[strlen($path)-1]);
         var_dump($path);
         if (strlen($path)===0 || $path[strlen($path)-1] === '/'){
             //display the contents of a dir
-            //All dirs, except root, are identified by ending in _
+            //All dirs, except root, are identified by ending in /
             //root is simply ''
             $folder = $fileReader->listDir($path);
             if ($folder===null) {
