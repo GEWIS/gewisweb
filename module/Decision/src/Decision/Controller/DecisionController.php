@@ -130,6 +130,44 @@ class DecisionController extends AbstractActionController
     }
 
     /**
+     * Browse/download files from the set FileReader
+     */
+    public function filesAction()
+    {
+        $url_path = $this->params()->fromRoute('path');
+        if (is_null($url_path)) {
+            $path = '';
+        }
+        //Manually pick the FileReader for now, DI later.
+        $path = str_replace('_','/',$url_path);
+        $fileReader = new DummyReader();
+        //var_dump($path[strlen($path)-1]);
+        var_dump($path);
+        if (strlen($path)===0 || $path[strlen($path)-1] === '/'){
+            //display the contents of a dir
+            //All dirs, except root, are identified by ending in _
+            //root is simply ''
+            $folder = $fileReader->listDir($path);
+            if ($folder===null) {
+                var_dump('Ai sjippies');
+                //return $this->notFoundAction();
+            }
+            var_dump(explode('/', $path));
+            return new ViewModel([
+                'folderName' => end(explode('/',substr($path, 0, -1))),
+                'folder' => $folder,
+                'path' => $path
+            ]);
+        }
+        //download the file
+        $result = $fileReader->downloadFile($path);
+        if (!$result){
+            var_dump('file faal');
+            //return $this->notFoundAction();
+        }
+    }
+
+    /**
      * Get the decision service.
      */
     public function getDecisionService()

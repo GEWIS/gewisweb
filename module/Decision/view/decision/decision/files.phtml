@@ -1,0 +1,38 @@
+<?php
+/**
+ * local_vars = [$folderName, $folder, $path]
+ */
+// set title
+$this->headTitle($this->translate('Files')); ?>
+<section class="section">
+    <h2>
+        <?= $this->translate('Viewing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
+    </h2>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Kind') ?></th>
+                <th><?= $this->translate('Filename') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if (empty($folder)): ?>
+                <tr>
+                   <td></td>
+                   <td><?= $this->translate('Empty folder') ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php foreach ($folder as $node): ?>
+                <?php $is_dir = $node->getKind() === 'dir'; $kind_icon = $is_dir ? 'glyphicon-folder-close' : 'glyphicon-file'; ?>
+                <tr>
+                    <td><div class="glyphicon <?= $kind_icon ?>"></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $this->url('decision/files', ['path' => str_replace('/','_', $node->getFullPath()) ]) ?>"><?= $node->getName() ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+

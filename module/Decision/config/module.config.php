@@ -78,6 +78,20 @@ return [
                             ],
                         ],
                     ],
+                    'files' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/files[/:path]',
+                            'constraints' => [
+                                //Not sure what constraints there should be 
+                                //We should be careful with special chars in html
+                                'path' => '[a-zA-Z0-9_\-\.]+'
+                            ],
+                            'defaults' => [
+                                'action' => 'files'
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
