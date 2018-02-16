@@ -462,6 +462,6 @@ class Decision extends AbstractAclService
      */
     public function isAllowedToBrowseFiles()
     {
-        return $this->isAllowed('browse','files');
+        return $this->isAllowed('browse', 'files');
     }
 }
