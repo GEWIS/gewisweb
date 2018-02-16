@@ -122,6 +122,7 @@ class Module
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
                     $acl->addResource('authorization');
+                    $acl->addResource('files');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -144,6 +145,9 @@ class Module
                     $acl->allow('user', 'dreamspark', ['login', 'students']);
 
                     $acl->allow('user', 'authorization', ['create', 'view_own']);
+
+                    // users are allowed to use the filebrowser
+                    $acl->allow('user', 'files', 'browse');
 
                     return $acl;
                 },
