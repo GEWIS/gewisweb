@@ -59,17 +59,27 @@ class LocalFileReader implements FileReader {
         var_dump($dircontents);
         $files = [];
         foreach ($dircontents as $dircontent){
-            if ($dircontent==='.' || $dircontent==='..'){
+            if ($dircontent[0]==='.'){
                 continue;
             }
-            $kind = is_dir($fullPath . '/' . $dircontent) ? 'dir' : 'file';
-            $files[] = new FileNode($kind, $path . $delimiter . $dircontent, $dircontent);
+            if (is_dir($fullPath . '/' . $dircontent)){
+                $kind = 'dir';
+            }
+            elseif (is_file($fullPath . '/' . $dircontent)){
+                $kind = 'file';
+            }
+            else{
+                //Ignore all strange filesystem thingies like symlinks and such
+                continue;
+            }
+
+            $files[] = new FileNode($kind, htmlspecialchars($path . $delimiter . $dircontent), htmlspecialchars($dircontent));
         }
         return $files;
     }
 
     public function isDir($path) {
-        return is_dir($this->root . '/' . $path);
+        return is_dir($this->root . $path);
     }
 
 }

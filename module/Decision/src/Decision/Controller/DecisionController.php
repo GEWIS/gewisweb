@@ -151,10 +151,12 @@ class DecisionController extends AbstractActionController
                 //return $this->notFoundAction();
             }
             var_dump(explode('/', $path));
+            $trailingSlash = (strlen($path)>0 && $path[strlen($path)-1]==='/');
             return new ViewModel([
-                'folderName' => end(explode('/', $path)),
+                'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
                 'folder' => $folder,
-                'path' => $path
+                'path' => $path,
+                'trailingSlash' => $trailingSlash,
             ]);
         }
         //download the file

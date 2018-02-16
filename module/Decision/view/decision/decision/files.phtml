@@ -1,13 +1,55 @@
 <?php
 /**
- * local_vars = [$folderName, $folder, $path]
+ * local_vars = [$folderName, $folder, $path, $trailingSlash]
  */
+//construct breadcrumbs
+$offset = 0;
+$pathPrefixes = [];
+while (($pos = strpos($path, '/', $offset)) !== false){
+    $pathPrefixes[] = substr($path, 0,$pos);
+    $offset = $pos + 1;
+}
+if ($path === '' || $path === '/') {
+    $crumbs = [$this->translate('Root')];
+}
+else {
+    $crumbs = ['<a href="' . $this->url('decision/files', ['path' => '']) . '">' . $this->translate('Root') . '</a>'];
+}
+
+$skipfirst = true;
+foreach($pathPrefixes as $prefix){
+    if ($skipfirst) {
+        $skipfirst = false;
+        continue;
+    }
+    $crumburl = $this->url('decision/files', ['path' => '']) . $prefix;
+    $crumburl = preg_replace('#[/]+#','/', $crumburl);
+    $crumbtext = end(explode('/', $prefix));
+    $crumbs[] = '<a href="' . $crumburl . '">' . $crumbtext . '</a>';
+}
+if ($trailingSlash && !($path === '/' || $path === '')){
+    array_pop($crumbs);
+}
+$crumbs[] = $folderName;
 // set title
 $this->headTitle($this->translate('Files')); ?>
 <section class="section">
-    <h2>
-        <?= $this->translate('Viewing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
-    </h2>
+    <div class="container">
+        <h2>
+            <?= $this->translate('Viewing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
+        </h2>
+    </div>
+    <section class="section section-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <?php foreach($crumbs as $crumb): ?>
+                <li>
+                    <?= $crumb ?>
+                </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+    </section>
     <div class="container">
         <table class="table table-hover">
             <thead>
@@ -17,30 +59,32 @@ $this->headTitle($this->translate('Files')); ?>
             </tr>
             </thead>
             <tbody>
+            <?php if ($folderName!=='') : ?>
+            <?php $parentPath = substr($path, 0, strrpos($path, '/'));
+                  $parentUrl = $this->url('decision/files', ['path' => '']) . $parentPath;
+                  $parentUrl = preg_replace('#[/]+#','/', $parentUrl);
+            ?>
+                <tr>
+                    <td><div class="glyphicon glyphicon-arrow-left"></div></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                           href="<?= $parentUrl ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
+                </tr>
+            <?php endif;?>
             <?php if (empty($folder)): ?>
                 <tr>
-                   <td></td>
+                    <td><div class="glyphicon glyphicon-ban-circle"></div></td>
                    <td><?= $this->translate('Empty folder') ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($folderName!=='') : ?>
-            <?php $parentPath = substr($path, 0, strrpos($path, '/')); ?>
-                <tr>
-                    <td><div class="glyphicon glyphicon-arrow-left"></td>
-                    <td><a style="display: block; height: 100%; width: 100%"
-                           href="<?= $this->url('decision/files', ['path' => '']) . $parentPath ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
-                </tr>
-            <?php endif;?>
             <?php foreach ($folder as $node): ?>
                 <?php if ($node->getKind() === 'dir'): ?>
                 <?php $kind_icon = 'glyphicon-folder-close';
                 //directly putting the path in the url helper html-escapes the '/', which we don't want.
                 $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
-                $url = str_replace('///', '/', $url);
-                $url = str_replace('//', '/', $url);
+                $url = preg_replace('#[/]+#','/', $url);
                 ?>
                 <tr>
-                    <td><div class="glyphicon <?= $kind_icon ?>"></td>
+                    <td><div class="glyphicon <?= $kind_icon ?>"></div></td>
                     <td><a style="display: block; height: 100%; width: 100%"
                             href="<?= $url ?>"><?= $node->getName() ?></a></td>
                 </tr>
@@ -51,11 +95,10 @@ $this->headTitle($this->translate('Files')); ?>
                 <?php $kind_icon = 'glyphicon-file';
                 //directly putting the path in the url helper html-escapes the '/', which we don't want.
                 $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
-                $url = str_replace('///', '/', $url);
-                $url = str_replace('//', '/', $url);
+                $url = preg_replace('#[/]+#','/', $url);
                 ?>
                 <tr>
-                    <td><div class="glyphicon <?= $kind_icon ?>"></td>
+                    <td><div class="glyphicon <?= $kind_icon ?>"></div></td>
                     <td><a style="display: block; height: 100%; width: 100%"
                             href="<?= $url ?>"><?= $node->getName() ?></a></td>
                 </tr>
