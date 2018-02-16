@@ -145,7 +145,7 @@ return [
             'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController',
         ],
         'factories' => [
-            ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,,
+            ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
         ]
     ],
     'view_manager' => [
