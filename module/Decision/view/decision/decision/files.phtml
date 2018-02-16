@@ -23,16 +23,43 @@ $this->headTitle($this->translate('Files')); ?>
                    <td><?= $this->translate('Empty folder') ?></td>
                 </tr>
             <?php endif; ?>
+            <?php if ($folderName!=='') : ?>
+            <?php $parentPath = substr($path, 0, strrpos($path, '/')); ?>
+                <tr>
+                    <td><div class="glyphicon glyphicon-arrow-left"></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                           href="<?= $this->url('decision/files', ['path' => '']) . $parentPath ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
+                </tr>
+            <?php endif;?>
             <?php foreach ($folder as $node): ?>
-                <?php $is_dir = $node->getKind() === 'dir'; $kind_icon = $is_dir ? 'glyphicon-folder-close' : 'glyphicon-file';
-                //directly putting the path in the url helper url-escapes the '/', which we don't want.
-                $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath()
+                <?php if ($node->getKind() === 'dir'): ?>
+                <?php $kind_icon = 'glyphicon-folder-close';
+                //directly putting the path in the url helper html-escapes the '/', which we don't want.
+                $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
+                $url = str_replace('///', '/', $url);
+                $url = str_replace('//', '/', $url);
                 ?>
                 <tr>
                     <td><div class="glyphicon <?= $kind_icon ?>"></td>
                     <td><a style="display: block; height: 100%; width: 100%"
                             href="<?= $url ?>"><?= $node->getName() ?></a></td>
                 </tr>
+                <?php endif;?>
+            <?php endforeach; ?>
+            <?php foreach ($folder as $node): ?>
+                <?php if ($node->getKind() === 'file'): ?>
+                <?php $kind_icon = 'glyphicon-file';
+                //directly putting the path in the url helper html-escapes the '/', which we don't want.
+                $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
+                $url = str_replace('///', '/', $url);
+                $url = str_replace('//', '/', $url);
+                ?>
+                <tr>
+                    <td><div class="glyphicon <?= $kind_icon ?>"></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $url ?>"><?= $node->getName() ?></a></td>
+                </tr>
+                <?php endif; ?>
             <?php endforeach; ?>
             </tbody>
         </table>

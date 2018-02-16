@@ -81,7 +81,7 @@ return [
                     'files' => [
                         'type' => 'Regex',
                         'options' => [
-                            'regex' => '/files/(?<path>[^?*:;{}\\\]+)',
+                            'regex' => '/files(?<path>[^?*:;{}\\\]*)',
                             'defaults' => [
                                 'action' => 'files'
                             ],
