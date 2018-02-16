@@ -41,7 +41,7 @@ class ApiApp extends AbstractService
             'lidnr' => $user->getLidnr(),
             'exp' => (new \DateTime('+5 min'))->getTimestamp(),
             'iat' => (new \DateTime())->getTimestamp(),
-            'nonce' => bin2hex(random_bytes(16))
+            'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
         ];
 
         return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
