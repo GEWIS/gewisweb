@@ -4,6 +4,7 @@ namespace Decision\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
@@ -140,17 +141,13 @@ class DecisionController extends AbstractActionController
             $path = '';
         }
         //Manually pick the FileReader for now, DI later.
-        //$fileReader = new DummyReader();
         $fileReader =  new LocalFileReader(getcwd() . '/public/webfiles/');
-        //var_dump($path);
-        if ($fileReader->isDir($path)){
+        if ($fileReader->isDir($path)) {
             //display the contents of a dir
             $folder = $fileReader->listDir($path);
             if ($folder===null) {
-                //var_dump('Ai sjippies');
-                //return $this->notFoundAction();
+                return $this->notFoundAction();
             }
-            var_dump(explode('/', $path));
             $trailingSlash = (strlen($path)>0 && $path[strlen($path)-1]==='/');
             return new ViewModel([
                 'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
@@ -161,8 +158,7 @@ class DecisionController extends AbstractActionController
         }
         //download the file
         $result = $fileReader->downloadFile($path);
-        if ($result === null){
-            //var_dump('file faal');
+        if ($result === null) {
             return $this->notFoundAction();
         }
         return $result;

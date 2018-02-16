@@ -1,12 +1,13 @@
 <?php
 
-namespace Decision\Controller;
+namespace Decision\Controller\FileBrowser;
 
 /**
  * Represents a node in a filesystem, which is either a file, or a directory.
  * Immutable.
  */
-class FileNode {
+class FileNode
+{
 
     /**
      * Whether the node represents a file or a directory
@@ -26,7 +27,8 @@ class FileNode {
      */
     protected $name;
 
-    public function __construct($kind, $fullPath, $name) {
+    public function __construct($kind, $fullPath, $name)
+    {
         if (!($kind==='dir' ||  $kind==='file')) {
             //invalid kind
             return false;
@@ -40,7 +42,8 @@ class FileNode {
      * Gets kind
      * @return string either 'file' or 'dir'
      */
-    public function getKind() {
+    public function getKind()
+    {
         return $this->kind;
     }
 
@@ -48,7 +51,8 @@ class FileNode {
      * Gets path of parent
      * @return string valid path
      */
-    public function getFullPath() {
+    public function getFullPath()
+    {
         return $this->fullPath;
     }
 
@@ -56,7 +60,8 @@ class FileNode {
      * Name of file or dir
      * @return string valid name
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 }

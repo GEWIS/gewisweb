@@ -1,13 +1,14 @@
 <?php
 
 
-namespace Decision\Controller;
+namespace Decision\Controller\FileBrowser;
 
 /**
  * Interface describing the operations required for reading browsing files (read-only).
  * Different implementations can fetch files from different locations.
  */
-interface FileReader {
+interface FileReader
+{
 
     /**
      * Return an array of all files and subdirectories in the given directory.
