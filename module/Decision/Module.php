@@ -112,6 +112,10 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_fileReader' => function ($sm) {
+                    //NB: The returned object should implement the FileReader Interface.
+                    return new \Decision\Controller\FileBrowser\LocalFileReader(getcwd() . '/public/webfiles/');
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 

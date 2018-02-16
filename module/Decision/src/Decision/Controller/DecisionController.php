@@ -146,8 +146,8 @@ class DecisionController extends AbstractActionController
         if (is_null($path)) {
             $path = '';
         }
-        //Manually pick the FileReader for now, DI later.
-        $fileReader =  new LocalFileReader(getcwd() . '/public/webfiles/');
+        //$fileReader =  new LocalFileReader(getcwd() . '/public/webfiles/');
+        $fileReader = $this->getServiceLocator()->get('decision_fileReader');
         if ($fileReader->isDir($path)) {
             //display the contents of a dir
             $folder = $fileReader->listDir($path);

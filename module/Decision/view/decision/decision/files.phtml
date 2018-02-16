@@ -30,13 +30,12 @@ foreach($pathPrefixes as $prefix){
 if ($trailingSlash && !($path === '/' || $path === '')){
     array_pop($crumbs);
 }
-$crumbs[] = $folderName;
 // set title
-$this->headTitle($this->translate('Files')); ?>
+$this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this->translate('Root') : $folderName ) . ']'); ?>
 <section class="section">
     <div class="container">
         <h2>
-            <?= $this->translate('Viewing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
+            <?= $this->translate('Browsing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
         </h2>
     </div>
     <section class="section section-breadcrumb">
@@ -47,14 +46,18 @@ $this->headTitle($this->translate('Files')); ?>
                     <?= $crumb ?>
                 </li>
                 <?php endforeach; ?>
+                <li class="active">
+                    <?= $folderName ?>
+                </li>
             </ol>
         </div>
     </section>
+    <p/>
     <div class="container">
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><?= $this->translate('Kind') ?></th>
+                <th><div class="glyphicon glyphicon-folder-close"></div> / <div class="glyphicon glyphicon-file"></div></th>
                 <th><?= $this->translate('Filename') ?></th>
             </tr>
             </thead>
