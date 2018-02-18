@@ -112,6 +112,10 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_fileReader' => function ($sm) {
+                    //NB: The returned object should implement the FileReader Interface.
+                    return new \Decision\Controller\FileBrowser\LocalFileReader(getcwd() . '/public/webfiles/');
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
@@ -122,6 +126,7 @@ class Module
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
                     $acl->addResource('authorization');
+                    $acl->addResource('files');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -144,6 +149,9 @@ class Module
                     $acl->allow('user', 'dreamspark', ['login', 'students']);
 
                     $acl->allow('user', 'authorization', ['create', 'view_own']);
+
+                    // users are allowed to use the filebrowser
+                    $acl->allow('user', 'files', 'browse');
 
                     return $acl;
                 },
