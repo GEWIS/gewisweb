@@ -69,8 +69,8 @@ class LocalFileReader implements FileReader
             }
             $files[] = new FileNode(
                 $kind,
-                htmlspecialchars($path . $delimiter . $dircontent),
-                htmlspecialchars($dircontent)
+                $path . $delimiter . $dircontent,
+                $dircontent
             );
         }
         return $files;

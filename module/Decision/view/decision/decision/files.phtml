@@ -2,6 +2,7 @@
 /**
  * local_vars = [$folderName, $folder, $path, $trailingSlash]
  */
+$escaper = new Zend\Escaper\Escaper('utf-8');
 //construct breadcrumbs
 $offset = 0;
 $pathPrefixes = [];
@@ -25,17 +26,17 @@ foreach($pathPrefixes as $prefix){
     $crumburl = $this->url('decision/files', ['path' => '']) . $prefix;
     $crumburl = preg_replace('#[/]+#','/', $crumburl);
     $crumbtext = end(explode('/', $prefix));
-    $crumbs[] = '<a href="' . $crumburl . '">' . $crumbtext . '</a>';
+    $crumbs[] = '<a href="' . $escaper->escapeHtmlAttr($crumburl) . '">' . $escaper->escapeHtml($crumbtext) . '</a>';
 }
 if ($trailingSlash && !($path === '/' || $path === '')){
     array_pop($crumbs);
 }
 // set title
-$this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this->translate('Root') : $folderName ) . ']'); ?>
+$this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName==='' ? $this->translate('Root') : $escaper->escapeHtml($folderName) ) . ']'); ?>
 <section class="section">
     <div class="container">
         <h2>
-            <?= $this->translate('Browsing directory: ') . ($folderName==='' ? $this->translate('Root') : $folderName ) ?>
+            <?= $this->translate('Browsing directory: ') . ($folderName==='' ? $this->translate('Root') : $escaper->escapeHtml($folderName) ) ?>
         </h2>
     </div>
     <section class="section section-breadcrumb">
@@ -47,7 +48,7 @@ $this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this-
                 </li>
                 <?php endforeach; ?>
                 <li class="active">
-                    <?= $folderName ?>
+                    <?= $escaper->escapeHtml($folderName) ?>
                 </li>
             </ol>
         </div>
@@ -70,7 +71,7 @@ $this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this-
                 <tr>
                     <td><div class="glyphicon glyphicon-arrow-left"></div></td>
                     <td><a style="display: block; height: 100%; width: 100%"
-                           href="<?= $parentUrl ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
+                           href="<?= $escaper->escapeHtmlAttr($parentUrl) ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
                 </tr>
             <?php endif;?>
             <?php if (empty($folder)): ?>
@@ -82,14 +83,14 @@ $this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this-
             <?php foreach ($folder as $node): ?>
                 <?php if ($node->getKind() === 'dir'): ?>
                 <?php $kind_icon = 'glyphicon-folder-close';
-                //directly putting the path in the url helper html-escapes the '/', which we don't want.
+                //directly putting the path in the url helper filters the '/', which we don't want.
                 $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
                 $url = preg_replace('#[/]+#','/', $url);
                 ?>
                 <tr>
                     <td><div class="glyphicon <?= $kind_icon ?>"></div></td>
                     <td><a style="display: block; height: 100%; width: 100%"
-                            href="<?= $url ?>"><?= $node->getName() ?></a></td>
+                           href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a></td>
                 </tr>
                 <?php endif;?>
             <?php endforeach; ?>
@@ -103,7 +104,7 @@ $this->headTitle($this->translate('Files') . ' - [' . ($folderName==='' ? $this-
                 <tr>
                     <td><div class="glyphicon <?= $kind_icon ?>"></div></td>
                     <td><a style="display: block; height: 100%; width: 100%"
-                            href="<?= $url ?>"><?= $node->getName() ?></a></td>
+                           href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a></td>
                 </tr>
                 <?php endif; ?>
             <?php endforeach; ?>
