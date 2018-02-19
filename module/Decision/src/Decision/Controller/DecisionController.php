@@ -145,13 +145,11 @@ class DecisionController extends AbstractActionController
         if (is_null($path)) {
             $path = '';
         }
-        if (preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
-            //Path contains /../ or /.. at the end.
-            //This is illegal for security reasons
-            return $this->notFoundAction();
-        }
+
         $fileReader = $this->getServiceLocator()->get('decision_fileReader');
-        if (!$fileReader->isAllowed($path)){
+        if (!$fileReader->isAllowed($path) || preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
+            //File location isn't legal or path contains /../ or /.. at the end.
+            //This is illegal for security reasons
             return $this->notFoundAction();
         }
         if ($fileReader->isDir($path)) {
@@ -170,10 +168,7 @@ class DecisionController extends AbstractActionController
         }
         //download the file
         $result = $fileReader->downloadFile($path);
-        if (is_null($result)) {
-            return $this->notFoundAction();
-        }
-        return $result;
+        return is_null($result) ? $this->notFoundAction() : $result;
     }
 
     /**
