@@ -114,7 +114,8 @@ class Module
                 },
                 'decision_fileReader' => function ($sm) {
                     //NB: The returned object should implement the FileReader Interface.
-                    return new \Decision\Controller\FileBrowser\LocalFileReader(getcwd() . '/public/webfiles/');
+                    $config = $sm->get('config');
+                    return new \Decision\Controller\FileBrowser\LocalFileReader($config['filebrowser_folder']);
                 },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');

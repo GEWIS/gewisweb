@@ -37,8 +37,8 @@ class LocalFileReader implements FileReader
         $response->setStream(fopen('file://' . $fullPath, 'r'));
         $response->setStatusCode(200);
         $headers = new \Zend\Http\Headers();
-        $headers->addHeaderLine('Content-Type', 'application/octet-stream')
-                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . end(explode('/', $fullPath)) . '"')
+        $headers->addHeaderLine('Content-Type', 'octet-stream')
+                ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
                 ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
         return $response;
@@ -52,7 +52,7 @@ class LocalFileReader implements FileReader
             return null;
         }
         //We can insert an additional /, except when when $path is the root
-        $delimiter = $path !== '' ? '/': '';
+        $delimiter = $path !== '' ? '/' : '';
         $dircontents = scandir($fullPath);
         $files = [];
         foreach ($dircontents as $dircontent) {
@@ -79,5 +79,20 @@ class LocalFileReader implements FileReader
     public function isDir($path)
     {
         return is_dir($this->root . $path);
+    }
+
+    public function isAllowed($path)
+    {
+        $fullPath = $this->root . $path;
+        if (!is_readable($fullPath)) {
+            return false;
+        }
+        $realFullPath = realpath($fullPath);
+        $realRoot = realpath($this->root);
+        //Check whether the real location of fullPath is in a subdir of our 'root'.
+        if (substr($realFullPath, 0, strlen($realRoot)) !== $realRoot) {
+            return false;
+        }
+        return true;
     }
 }
