@@ -19,7 +19,7 @@ $sections[$this->translate('Meetings')] = [
     [$this->translate('Decision Search'), 'search', $this->url('decision/search')],
     [$this->translate('Authorizations'), 'pencil', $this->url('decision/authorizations')],
     [$this->translate('Organs'), 'heart', $this->url('organ')],
-    [$this->translate('Files'), 'download-alt', $this->url('decision/files', ['path' => ''])]
+    [$this->translate('Public Archive'), 'download-alt', $this->url('decision/files', ['path' => ''])]
 ];
 
 if ($this->acl('decision_acl')->isAllowed('organ', 'edit')) {
