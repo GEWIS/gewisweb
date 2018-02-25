@@ -116,7 +116,10 @@ class Module
                     //NB: The returned object should implement the FileReader Interface.
                     $config = $sm->get('config');
                     $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
-                    return new \Decision\Controller\FileBrowser\LocalFileReader($config['filebrowser_folder'], $validFile);
+                    return new \Decision\Controller\FileBrowser\LocalFileReader(
+                        $config['filebrowser_folder'],
+                        $validFile
+                    );
                 },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
@@ -166,7 +169,7 @@ class Module
             /*
              * Regex pattern matching filenames viewable in the browser
              */
-           'filebrowser_valid_file' => '[^?*:;{}\\\]*'
+            'filebrowser_valid_file' => '[^?*:;{}\\\]*'
         ];
     }
 }

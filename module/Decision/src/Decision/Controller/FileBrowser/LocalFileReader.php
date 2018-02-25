@@ -40,15 +40,15 @@ class LocalFileReader implements FileReader
         if (!is_file($fullPath) || !$this->isValidPathName($fullPath)) {
             return null;
         }
-        $content_type = 'octet-stream';
+        $contentType = 'octet-stream';
         if (mime_content_type($fullPath)==='text/plain') {
-            $content_type = 'text/plain';
+            $contentType = 'text/plain';
         }
         $response = new \Zend\Http\Response\Stream();
         $response->setStream(fopen('file://' . $fullPath, 'r'));
         $response->setStatusCode(200);
         $headers = new \Zend\Http\Headers();
-        $headers->addHeaderLine('Content-Type', $content_type)
+        $headers->addHeaderLine('Content-Type', $contentType)
                 ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
                 ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
@@ -80,7 +80,8 @@ class LocalFileReader implements FileReader
         return $files;
     }
 
-    protected function interpretDircontent($dircontent, $fullPath) {
+    protected function interpretDircontent($dircontent, $fullPath)
+    {
         if ($dircontent[0] === '.') {
             return false;
         }
