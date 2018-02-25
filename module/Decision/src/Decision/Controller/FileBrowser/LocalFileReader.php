@@ -67,19 +67,8 @@ class LocalFileReader implements FileReader
         $dircontents = scandir($fullPath);
         $files = [];
         foreach ($dircontents as $dircontent) {
-            if ($dircontent[0]==='.') {
-                continue;
-            }
-            if (is_dir($fullPath . '/' . $dircontent)) {
-                $kind = 'dir';
-            } elseif (is_file($fullPath . '/' . $dircontent)) {
-                $kind = 'file';
-            } else {
-                //Ignore all strange filesystem thingies like symlinks and such
-                continue;
-            }
-            if (!$this->isValidPathName($fullPath . '/' . $dircontent)) {
-                //don't display invalid pathnames
+            $kind = $this->interpretDircontent($dircontent, $fullPath . '/' . $dircontent);
+            if ($kind === false) {
                 continue;
             }
             $files[] = new FileNode(
@@ -90,6 +79,32 @@ class LocalFileReader implements FileReader
         }
         return $files;
     }
+
+    protected function interpretDircontent($dircontent, $fullPath) {
+        if ($dircontent[0] === '.') {
+            return false;
+        }
+        if (!$this->isValidPathName($fullPath)) {
+            return false;
+        }
+        if (is_link($fullPath)) {
+            //symlink could point to illegal location, we must check this
+            if (!$this->isAllowed(substr($fullPath, strlen($this->root)))) {
+                return false;
+            }
+            return $this->interpretDircontent($dircontent, realpath($fullPath));
+        }
+        if (is_dir($fullPath)) {
+            return 'dir';
+        }
+        if (is_file($fullPath)) {
+            return 'file';
+        }
+        //Unknown filesystem entity
+        //(likely, the path doesn't resolve to a valid entry in the filesystem at all)
+        return false;
+    }
+
 
     public function isDir($path)
     {
