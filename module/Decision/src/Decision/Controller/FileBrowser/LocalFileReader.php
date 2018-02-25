@@ -22,15 +22,22 @@ class LocalFileReader implements FileReader
      */
     static private $root;
 
-    public function __construct($root)
+    /**
+     * A regex pattern matching all valid filepaths.
+     * @var string
+     */
+    static private $validFilepath;
+
+    public function __construct($root, $validFilepath)
     {
         $this->root = $root;
+        $this->validFilepath = $validFilepath;
     }
 
     public function downloadFile($path)
     {
         $fullPath = $this->root . $path;
-        if (!is_file($fullPath)) {
+        if (!is_file($fullPath) || !$this->isValidPathName($fullPath)) {
             return null;
         }
         $response = new \Zend\Http\Response\Stream();
@@ -67,6 +74,10 @@ class LocalFileReader implements FileReader
                 //Ignore all strange filesystem thingies like symlinks and such
                 continue;
             }
+            if (!$this->isValidPathName($fullPath . '/' . $dircontent)) {
+                //don't display invalid pathnames
+                continue;
+            }
             $files[] = new FileNode(
                 $kind,
                 $path . $delimiter . $dircontent,
@@ -84,7 +95,7 @@ class LocalFileReader implements FileReader
     public function isAllowed($path)
     {
         $fullPath = $this->root . $path;
-        if (!is_readable($fullPath)) {
+        if (!is_readable($fullPath) || !$this->isValidPathName($path)) {
             return false;
         }
         $realFullPath = realpath($fullPath);
@@ -94,5 +105,11 @@ class LocalFileReader implements FileReader
             return false;
         }
         return true;
+    }
+
+    protected function isValidPathName($path)
+    {
+        $res = preg_match('#^' . $this->validFilepath . '$#', $path) === 1;
+        return $res;
     }
 }
