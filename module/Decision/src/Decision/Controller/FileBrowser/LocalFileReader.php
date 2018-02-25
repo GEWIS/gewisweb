@@ -41,7 +41,7 @@ class LocalFileReader implements FileReader
             return null;
         }
         $contentType = 'octet-stream';
-        if (mime_content_type($fullPath)==='text/plain') {
+        if (substr(mime_content_type($fullPath),0, strlen('text'))==='text') {
             $contentType = 'text/plain';
         }
         $response = new \Zend\Http\Response\Stream();
