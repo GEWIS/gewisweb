@@ -40,8 +40,8 @@ class LocalFileReader implements FileReader
         if (!is_file($fullPath) || !$this->isValidPathName($fullPath)) {
             return null;
         }
-        $contentType = 'octet-stream';
-        if (substr(mime_content_type($fullPath),0, strlen('text'))==='text') {
+        $contentType = mime_content_type($fullPath);
+        if (substr($contentType,0, strlen('text')) === 'text') {
             $contentType = 'text/plain';
         }
         $response = new \Zend\Http\Response\Stream();
