@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-22 23:02+0100\n"
+"POT-Creation-Date: 2018-03-02 20:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgid "Proposal to update into: "
 msgstr ""
 
 #: module/Activity/view/activity/activity/list.phtml:39
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:43
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:42
 msgid "Continue reading"
 msgstr ""
 
@@ -312,7 +312,7 @@ msgid "Or subscribe without a GEWIS membership: "
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:16
-#: module/Decision/view/decision/member/index.phtml:26
+#: module/Decision/view/decision/member/index.phtml:27
 msgid "Option calendar"
 msgstr ""
 
@@ -681,8 +681,8 @@ msgstr ""
 
 #: module/Activity/view/partial/create.phtml:124
 #: module/Activity/view/partial/create.phtml:180
-#: module/Company/view/company/company/job-list.phtml:108
-#: module/Company/view/company/company/jobs.phtml:76
+#: module/Company/view/company/company/job-list.phtml:107
+#: module/Company/view/company/company/jobs.phtml:73
 #: module/Company/view/partial/company/company/list/company.phtml:56
 #: module/Company/src/Company/Form/EditCompany.php:170
 #: module/Company/src/Company/Form/EditCompany.php:180
@@ -926,7 +926,7 @@ msgid "Pages"
 msgstr ""
 
 #: module/Application/view/partial/admin-nav.phtml:75
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:17
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:16
 msgid "News"
 msgstr ""
 
@@ -953,7 +953,7 @@ msgid "API Users"
 msgstr ""
 
 #: module/Application/view/partial/footer.phtml:10
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:155
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:154
 msgid "Infima"
 msgstr ""
 
@@ -1068,7 +1068,7 @@ msgid "GEWIS song"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:119
-#: module/Decision/view/decision/member/index.phtml:31
+#: module/Decision/view/decision/member/index.phtml:32
 msgid "Regulations"
 msgstr ""
 
@@ -1106,7 +1106,7 @@ msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:184
 msgid ""
-"Option\n"
+"Option\r\n"
 "                            calendar"
 msgstr ""
 
@@ -1115,7 +1115,7 @@ msgid "Career related"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:212
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:137
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:136
 #: module/Photo/view/photo/photo/view.phtml:151
 msgid "Photo of the week"
 msgstr ""
@@ -1129,7 +1129,7 @@ msgstr ""
 #: module/Application/view/partial/main-nav.phtml:226
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:3
-#: module/Decision/view/decision/member/index.phtml:43
+#: module/Decision/view/decision/member/index.phtml:44
 #: module/Decision/view/decision/member/search.phtml:4
 #: module/Decision/view/decision/member/view.phtml:4
 msgid "Members"
@@ -1384,14 +1384,9 @@ msgstr ""
 msgid "Filter results"
 msgstr ""
 
-#: module/Company/view/company/company/job-list.phtml:99
+#: module/Company/view/company/company/job-list.phtml:100
 #: module/Company/view/company/company/jobs.phtml:67
 msgid "View"
-msgstr ""
-
-#: module/Company/view/company/company/job-list.phtml:103
-#: module/Company/view/company/company/jobs.phtml:71
-msgid "View website"
 msgstr ""
 
 #: module/Company/view/company/company/job-list.phtml:124
@@ -1453,7 +1448,7 @@ msgstr ""
 
 #: module/Decision/view/decision/decision/authorizations.phtml:10
 msgid ""
-"There are no upcoming meetings for which you can authorize someone.\n"
+"There are no upcoming meetings for which you can authorize someone.\r\n"
 "You may still be able to authorize someone or revoke an authorization by "
 "contacting the board."
 msgstr ""
@@ -1492,6 +1487,34 @@ msgstr ""
 #: module/Decision/view/decision/decision/authorizations.phtml:66
 #: module/Decision/src/Decision/Form/Authorization.php:33
 msgid "Authorize"
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:14
+#: module/Decision/view/decision/decision/files.phtml:17
+#: module/Decision/view/decision/decision/files.phtml:35
+#: module/Decision/view/decision/decision/files.phtml:39
+msgid "Root"
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:35
+#: module/Decision/view/decision/member/index.phtml:22
+msgid "Public Archive"
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:39
+msgid "Browsing directory: "
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:62
+msgid "Filename"
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:74
+msgid ".. Move up a folder"
+msgstr ""
+
+#: module/Decision/view/decision/decision/files.phtml:80
+msgid "Empty folder"
 msgstr ""
 
 #: module/Decision/view/decision/decision/index.phtml:10
@@ -1555,31 +1578,31 @@ msgstr ""
 msgid "Decision Search"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:25
+#: module/Decision/view/decision/member/index.phtml:26
 msgid "Active members"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:27
+#: module/Decision/view/decision/member/index.phtml:28
 msgid "Webmail"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:28
+#: module/Decision/view/decision/member/index.phtml:29
 msgid "Website admin"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:32
+#: module/Decision/view/decision/member/index.phtml:33
 msgid "Borrelreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:33
+#: module/Decision/view/decision/member/index.phtml:34
 msgid "Computerreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:34
+#: module/Decision/view/decision/member/index.phtml:35
 msgid "Posterreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:35
+#: module/Decision/view/decision/member/index.phtml:36
 msgid "Sleutelbeleid"
 msgstr ""
 
@@ -1998,56 +2021,56 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:11
 msgid ""
-"Welcome to the website of Study association GEWIS, the study association of\n"
-"                    the department of Mathematics & Computer Science of the "
-"Eindhoven University of Technology."
+"Welcome to the website of Study association GEWIS, the study association of "
+"the department of Mathematics & Computer Science of the Eindhoven University "
+"of Technology."
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:77
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:76
 msgid "Verjaardagen"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:82
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:81
 #, php-format
 msgid "%s wil be %s years old today!"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:97
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:96
 msgid "Agenda"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:113
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:112
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:122
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:121
 #: module/Frontpage/view/frontpage/organ/organ.phtml:109
 msgid "Complete agenda"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:126
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:125
 msgid "Google Calendar"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:163
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:162
 msgid "Poll"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:176
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:175
 msgid "View the results"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:181
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:180
 msgid "There currently is no poll."
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:185
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:184
 #: module/Frontpage/view/frontpage/poll/request.phtml:165
 msgid "Request poll"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:188
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:187
 #: module/Frontpage/view/frontpage/poll/index.phtml:10
 msgid "Old polls"
 msgstr ""
@@ -2768,17 +2791,17 @@ msgstr ""
 msgid "You are not allowed to create an activity"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/Activity.php:120
+#: module/Activity/src/Activity/Service/Activity.php:143
 msgid "You are not allowed to update this activity"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/Activity.php:320
+#: module/Activity/src/Activity/Service/Activity.php:343
 msgid "You are not allowed to create an activity for this organ"
 msgstr ""
 
-#: module/Activity/src/Activity/Service/Activity.php:442
-#: module/Activity/src/Activity/Service/Activity.php:461
-#: module/Activity/src/Activity/Service/Activity.php:481
+#: module/Activity/src/Activity/Service/Activity.php:465
+#: module/Activity/src/Activity/Service/Activity.php:484
+#: module/Activity/src/Activity/Service/Activity.php:504
 msgid "You are not allowed to change the status of the activity"
 msgstr ""
 
@@ -2792,7 +2815,7 @@ msgstr ""
 
 #: module/Activity/src/Activity/Service/ActivityCalendar.php:113
 msgid ""
-"Maximum number of options which you can create has been exceeded.\n"
+"Maximum number of options which you can create has been exceeded.\r\n"
 "                Delete some options before adding more."
 msgstr ""
 
@@ -3002,6 +3025,10 @@ msgstr ""
 msgid "You are not allowed to edit jobs"
 msgstr ""
 
+#: module/Decision/src/Decision/Controller/DecisionController.php:141
+msgid "You are not allowed to browse files."
+msgstr ""
+
 #: module/Decision/src/Decision/Form/Document.php:32
 msgid "Document name"
 msgstr ""
@@ -3147,7 +3174,7 @@ msgstr ""
 msgid "You are not allowed to edit organ information"
 msgstr ""
 
-#: module/Decision/src/Decision/Service/Organ.php:252
+#: module/Decision/src/Decision/Service/Organ.php:253
 msgid "You are not allowed to edit this organ's information"
 msgstr ""
 
