@@ -1,3 +1,11 @@
+## [v1.3.2](https://github.com/GEWIS/gewisweb/tree/v1.3.2) (2018-03-02)
+
+* Added page to browse the Public Archive to the website
+* Various UI improvements
+* Various bugfixes
+
+---
+
 ## [v1.3.1](https://github.com/GEWIS/gewisweb/tree/v1.2.3) (2017-12-23)
 
 * Added ability to browse member photos as an album
