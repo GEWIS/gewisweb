@@ -455,4 +455,13 @@ class Decision extends AbstractAclService
     {
         return $this->sm->get('decision_acl');
     }
+
+    /**
+     * Returns whether the current role is allowed to view files.
+     * @return bool
+     */
+    public function isAllowedToBrowseFiles()
+    {
+        return $this->isAllowed('browse', 'files');
+    }
 }

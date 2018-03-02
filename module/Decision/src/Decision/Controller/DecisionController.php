@@ -4,6 +4,7 @@ namespace Decision\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
@@ -127,6 +128,47 @@ class DecisionController extends AbstractActionController
             'authorization' => $authorization,
             'form' => $form
         ]);
+    }
+
+    /**
+     * Browse/download files from the set FileReader
+     */
+    public function filesAction()
+    {
+        if (!$this->getDecisionService()->isAllowedToBrowseFiles()) {
+            $translator = $this->getDecisionService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to browse files.')
+            );
+        }
+        $path = $this->params()->fromRoute('path');
+        if (is_null($path)) {
+            $path = '';
+        }
+
+        $fileReader = $this->getServiceLocator()->get('decision_fileReader');
+        if (!$fileReader->isAllowed($path) || preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
+            //File location isn't legal or path contains /../ or /.. at the end.
+            //This is illegal for security reasons
+            return $this->notFoundAction();
+        }
+        if ($fileReader->isDir($path)) {
+            //display the contents of a dir
+            $folder = $fileReader->listDir($path);
+            if (is_null($folder)) {
+                return $this->notFoundAction();
+            }
+            $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
+            return new ViewModel([
+                'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
+                'folder' => $folder,
+                'path' => $path,
+                'trailingSlash' => $trailingSlash,
+            ]);
+        }
+        //download the file
+        $result = $fileReader->downloadFile($path);
+        return is_null($result) ? $this->notFoundAction() : $result;
     }
 
     /**

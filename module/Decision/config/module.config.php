@@ -78,6 +78,16 @@ return [
                             ],
                         ],
                     ],
+                    'files' => [
+                        'type' => 'Regex',
+                        'options' => [
+                            'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
+                            'defaults' => [
+                                'action' => 'files'
+                            ],
+                            'spec' => '/files/%path%'
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
