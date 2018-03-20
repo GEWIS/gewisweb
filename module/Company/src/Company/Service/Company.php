@@ -498,9 +498,6 @@ class Company extends AbstractACLService
         $id = -1;
 
         foreach ($jobs as $lang => $job) {
-            if ($job->getActive() !== '1') {
-                continue;
-            }
             $file = $files['jobs'][$lang]['attachment_file'];
 
             if ($file != null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
