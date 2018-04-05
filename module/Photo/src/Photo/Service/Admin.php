@@ -90,9 +90,10 @@ class Admin extends AbstractAclService
     {
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
-        $image->setimageformat("png");
+        $image->setimageformat("jpeg");
+        $image->setImageCompressionQuality(90);
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
         $image->writeImage($tempFileName);
         $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
