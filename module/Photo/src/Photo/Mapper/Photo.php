@@ -54,12 +54,16 @@ class Photo
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1')
                 ->setParameter(1, $album->getMember());
+            // We want to display the photos in a member's album in reversed
+            // chronological order
+            $qb->setFirstResult($start)
+                ->orderBy('a.dateTime', 'DESC');
         } else {
             $qb->where('a.album = ?1')
                 ->setParameter(1, $album);
+            $qb->setFirstResult($start)
+                ->orderBy('a.dateTime', 'ASC');
         }
-        $qb->setFirstResult($start)
-            ->orderBy('a.dateTime', 'ASC');
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
