@@ -39,6 +39,7 @@ class ApiApp extends AbstractService
         $token = [
             'iss' => 'https://gewis.nl/',
             'lidnr' => $user->getLidnr(),
+            'email' => $user->getEmail(),
             'exp' => (new \DateTime('+5 min'))->getTimestamp(),
             'iat' => (new \DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
