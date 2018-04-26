@@ -54,14 +54,14 @@ class Job
      * @ORM\Column(type="string", nullable=true)
      */
     protected $attachment;
-    
+
     /**
      * The job's contact's name.
      *
      * @ORM\Column(type="string")
      */
     protected $contactName;
-    
+
     /**
      * The job's phone.
      *
