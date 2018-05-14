@@ -22,7 +22,7 @@ services:
             - gewisweb
 
     webmysql:
-        image: mysql:5.5.44
+        image: mysql:5.5
         volumes:
             - .mysql/dev:/var/lib/mysql
         environment:
@@ -30,12 +30,14 @@ services:
             MYSQL_DATABASE: gewis
             MYSQL_USER: gewis
             MYSQL_PASSWORD: gewis
-            MYSQL_ALLOW_EMPTY_PASSWORD: gewis
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         networks:
             - gewisweb
 
     myadmin:
         image: phpmyadmin/phpmyadmin
+        depends_on:
+            - webmysql
         environment:
             PMA_HOST: webmysql
             PMA_USER: gewis
