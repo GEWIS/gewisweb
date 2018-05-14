@@ -34,7 +34,8 @@ class Module
         AbstractValidator::setDefaultTranslator($translator, 'validate');
     }
 
-    public function logError(MvCEvent $e) {
+    public function logError(MvCEvent $e)
+    {
         $sm = $e->getApplication()->getServiceManager();
         $logger = $sm->get('application_logger');
 
@@ -98,7 +99,8 @@ class Module
                     $config = $sm->get('config')['logging'];
 
                     $handler = new StreamHandler(
-                        $config['logfile_path'], $config['log_level']
+                        $config['logfile_path'],
+                        $config['log_level']
                     );
                     $logger->pushHandler($handler);
 
