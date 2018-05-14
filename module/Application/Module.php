@@ -9,6 +9,8 @@
 
 namespace Application;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
@@ -25,8 +27,23 @@ class Module
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator->setlocale($this->determineLocale($e));
 
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
+        $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
+
         // enable Zend\Validate default translator
         AbstractValidator::setDefaultTranslator($translator, 'validate');
+    }
+
+    public function logError(MvCEvent $e) {
+        $sm = $e->getApplication()->getServiceManager();
+        $logger = $sm->get('application_logger');
+
+        if ($e->getError() === 'error-exception') {
+            $ex = $e->getParam('exception');
+            $logger->error($ex);
+            return;
+        }
+        $logger->error($e->getError());
     }
 
     protected function determineLocale(MvcEvent $e)
@@ -75,6 +92,17 @@ class Module
             'factories' => [
                 'application_get_languages' => function ($sm) {
                     return ['nl', 'en'];
+                },
+                'application_logger' => function ($sm) {
+                    $logger = new Logger("gewisweb");
+                    $config = $sm->get('config')['logging'];
+
+                    $handler = new StreamHandler(
+                        $config['logfile_path'], $config['log_level']
+                    );
+                    $logger->pushHandler($handler);
+
+                    return $logger;
                 }
             ],
         ];
