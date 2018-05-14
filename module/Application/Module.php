@@ -37,7 +37,7 @@ class Module
     public function logError(MvCEvent $e)
     {
         $sm = $e->getApplication()->getServiceManager();
-        $logger = $sm->get('application_logger');
+        $logger = $sm->get('logger');
 
         if ($e->getError() === 'error-exception') {
             $ex = $e->getParam('exception');
@@ -94,13 +94,13 @@ class Module
                 'application_get_languages' => function ($sm) {
                     return ['nl', 'en'];
                 },
-                'application_logger' => function ($sm) {
+                'logger' => function ($sm) {
                     $logger = new Logger("gewisweb");
                     $config = $sm->get('config')['logging'];
 
                     $handler = new StreamHandler(
                         $config['logfile_path'],
-                        $config['log_level']
+                        $config['minimal_log_level']
                     );
                     $logger->pushHandler($handler);
 

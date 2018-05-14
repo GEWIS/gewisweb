@@ -97,7 +97,7 @@ return [
      */
     'logging' => [
         'logfile_path' => 'data/logs/gewisweb.log',
-        'log_level' => 'INFO',
+        'minimal_log_level' => 'INFO',
     ],
 
     /**
