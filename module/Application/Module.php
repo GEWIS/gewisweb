@@ -9,7 +9,7 @@
 
 namespace Application;
 
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -98,8 +98,9 @@ class Module
                     $logger = new Logger("gewisweb");
                     $config = $sm->get('config')['logging'];
 
-                    $handler = new StreamHandler(
+                    $handler = new RotatingFileHandler(
                         $config['logfile_path'],
+                        $config['max_rotate_file_count'],
                         $config['minimal_log_level']
                     );
                     $logger->pushHandler($handler);

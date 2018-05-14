@@ -97,6 +97,7 @@ return [
      */
     'logging' => [
         'logfile_path' => 'data/logs/gewisweb.log',
+        'max_rotate_file_count' => 10,
         'minimal_log_level' => 'INFO',
     ],
 
