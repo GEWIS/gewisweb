@@ -26,6 +26,7 @@
         "maglnet/magl-markdown":"^1.4",
         "dino/dompdf-module": "0.2.0",
         "firebase/php-jwt": "^5.0",
-        "paragonie/random_compat": "^2.0"
+        "paragonie/random_compat": "^2.0",
+        "monolog/monolog": "^1.23"
     }
 }

@@ -93,6 +93,15 @@ return [
     'jwt_pub_key_path' => 'data/keys/jwt-key.pub',
 
     /**
+     * Settings for Monolog logger
+     */
+    'logging' => [
+        'logfile_path' => 'data/logs/gewisweb.log',
+        'max_rotate_file_count' => 10,
+        'minimal_log_level' => 'INFO',
+    ],
+
+    /**
      * Photo's upload directory configuration
      */
     'photo' => [
