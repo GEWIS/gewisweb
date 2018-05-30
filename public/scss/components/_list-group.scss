@@ -80,7 +80,7 @@ a.agenda-item {
 }
 
 .agenda-subscription-button {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 
     &.collapsed {
         .glyphicon {
@@ -92,5 +92,8 @@ a.agenda-item {
         transform: rotate(90deg);
     }
 
+}
 
+.activity-subscription-form {
+    margin-top: -2rem;
 }

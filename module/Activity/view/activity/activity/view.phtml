@@ -89,7 +89,8 @@ $this->headTitle($this->translate('Activities')); ?>
             </button>
         <?php elseif (!$signupOpen || $subscriptionDeadLinePassed): ?>
             <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
-                    aria-expanded="false" aria-controls="subscriptionForm">
+                    aria-expanded="false" disabled="disabled"
+                    aria-controls="subscriptionForm">
                 <?= $this->translate('Subscription closed') ?>
             </button>
         <?php elseif (count($activity->getFields()) == 0 && !is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe):
@@ -112,7 +113,8 @@ $this->headTitle($this->translate('Activities')); ?>
                 <span class="glyphicon glyphicon-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
             </button>
         <?php endif; ?>
-    <div class="container row collapse" id="subscriptionForm">
+    <div class="container row collapse activity-subscription-form"
+         id="subscriptionForm">
         <div class="well col-md-6">
             <?php if ($isSignedUp) :?>
                 <h2>
