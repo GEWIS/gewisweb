@@ -74,6 +74,27 @@ $this->headTitle($this->translate('Activities')); ?>
                                             />
                                         </a>
                                     <?php endif ?>
+									
+									<?php
+										$pre = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+										
+										$text = "&text=".$activity->getName();
+										
+										$begin = $activity->getBeginTime();
+										$begin = $begin->format('Ymd')."T".$begin->format('His');
+										
+										$end = $activity->getEndTime();
+										$end = $end->format('Ymd')."T".$end->format('His');
+										
+										$dates = "&dates=".$begin."/".$end;
+										
+										$location = "&location=".$activity->getLocation();
+										
+										$link = $pre.$text.$dates.$location;
+									?>
+									
+									 <a class="btn btn-default" target="_blank" href= "<?php echo $link ?>" class="btn"> Google Calendar </a>
+											
                                 </dl>
                             </div>
                         </div>
