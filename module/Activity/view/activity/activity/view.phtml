@@ -76,13 +76,13 @@ $this->headTitle($this->translate('Activities')); ?>
                                     <?php endif ?>
                                     
                                     <?php
-                                        $begin = $activity->getBeginTime()->format('Y-m-d\TH:i:s');
-                                        $end = $activity->getBeginTime()->format('Y-m-d\TH:i:s');
-                                        $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE?';
+                                        $begin = $activity->getBeginTime()->format('Ymd\THis');
+                                        $end = $activity->getBeginTime()->format('Ymd\THis');
+                                        $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE&';
                                         $link .= http_build_query([
                                             'text' =>  $activity->getName(),
                                             'dates' => $begin . '/' . $end,
-                                            'location' = $activity->getLocation(),
+                                            'location' => $activity->getLocation(),
                                         ]);
                                     ?>
                                     
