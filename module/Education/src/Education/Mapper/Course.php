@@ -45,6 +45,17 @@ class Course
     }
 
     /**
+     * Persist course
+     *
+     * @param array $course of CourseModel
+     */
+    public function persist($course)
+    {
+        $this->em->persist($course);
+        $this->flush();
+    }
+
+    /**
      * Flush.
      */
     public function flush()
