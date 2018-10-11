@@ -19,13 +19,14 @@ class AdminController extends AbstractActionController {
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->AddCourse($request->getPost())) {
+            if ($service->addCourse($request->getPost())) {
+                $this->getResponse()->setStatusCode(200);
                 return new ViewModel([
                     'form' => $service->getAddCourseForm(),
                     'success' => true
                 ]);
             }
-            $this->getResponse()->setStatusCode(500);
+            $this->getResponse()->setStatusCode(400);
             return new ViewModel([
                 'form' => $service->getAddCourseForm(),
                 'success' => false

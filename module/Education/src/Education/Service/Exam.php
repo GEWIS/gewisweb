@@ -429,8 +429,6 @@ class Exam extends AbstractAclService
     /**
      * Add a new course.
      *
-     * Will also send an email to the user.
-     *
      * @param array $data Course data
      *
      * @return CourseModel New course. Null when the course could not be added.
