@@ -1,5 +1,5 @@
 /*
- * This script will handle all common javascript functions within the photo
+ * This script will handle all common javascript functions within the course
  * module.
  * Depends: jquery
  */
