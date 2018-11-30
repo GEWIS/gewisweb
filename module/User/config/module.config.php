@@ -136,12 +136,24 @@ return [
                     ]
                 ],
                 'priority' => 100
-            ]
+            ],
+            'test_login' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/api/validateLogin',
+                    'defaults' => [
+                        'controller' => '\User\Controller\Api',
+                        'action' => 'validate'
+                    ],
+                ],
+                'priority' => 100,
+            ],
         ],
     ],
     'controllers' => [
         'invokables' => [
             'User\Controller\User' => 'User\Controller\UserController',
+            'User\Controller\Api' => 'User\Controller\ApiController',
             'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController',
         ],
         'factories' => [

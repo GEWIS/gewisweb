@@ -31,7 +31,10 @@ class UserController extends AbstractActionController
         // show form
         $form = $userService->getLoginForm();
         if(is_null($form->get('redirect')->getValue())) {
-            if (isset($_SERVER['HTTP_REFERER'])) {
+            $redirect = $this->getRequest()->getQuery('redirect');
+            if (isset($redirect)) {
+                $form->get('redirect')->setValue($redirect);
+            } else if (isset($_SERVER['HTTP_REFERER'])) {
                 $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
             } else {
                 $form->get('redirect')->setValue($this->url()->fromRoute('home'));
