@@ -99,6 +99,7 @@ use Decision\Model\Address;
                 <?php endif; ?>
             </div>
             <div class="col-md-6">
+                <?php if ($profilePhoto != null): ?>
                 <div class="row">
                         <div class="col-sm-12 col-xs-12">
                           <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $profilePhoto->getId()]); ?>">
@@ -106,6 +107,7 @@ use Decision\Model\Address;
                           </a>
                         </div>
                 </div>
+            <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
                         <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
