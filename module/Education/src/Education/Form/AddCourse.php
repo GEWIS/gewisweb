@@ -79,7 +79,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         return [
-            'course' => [
+            'code' => [
                 'required' => true,
                 'validators' => [
                     [
