@@ -97,25 +97,25 @@ class Activity
     /**
      * Get upcoming activities sorted by date for member
      *
-     * @param \Decision\Model\Member $member Option member that should relate to activity
+     * @param \User\Model\User $user Option user that should relate to activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesForMember($member)
+    public function getUpcomingActivitiesForMember($user)
     {
         // Get subscriptions (not including non-approved)
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->from('Activity\Model\ActivitySignUp', 'b')
+            ->from('Activity\Model\UserActivitySignup', 'b')
             ->where('a.endTime > :now')
             ->setParameter('now', new \DateTime())
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
-            ->andWhere('a.id = b.activity_id')
-            ->andWhere('b.user_lidnr = :lidnr')
-            ->setParameter('lidnr', $member->getLidnr());
-        $query = $qb->getQuery();
+            ->andWhere('a = b.activity')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user);
+        $result = $qb->getQuery()->getResult();
 
         // Get created by member (including non-approved)
         $qb = $this->em->createQueryBuilder();
@@ -123,16 +123,12 @@ class Activity
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
             ->setParameter('now', new \DateTime())
-            ->andWhere('a.creator_id = :lidnr')
-            ->setParameter('lidnr', $member->getLidnr());
-        $query = $this->em->createQueryBuilder();
-            ->select()
-            ->union(array($query, $qb->getQuery()))
-            ->orderBy('beginTime', 'ASC')
-            ->getQuery();
+            ->andWhere('a.creator = :user')
+            ->setParameter('user', $user);
+        $result = array_merge($result, $qb->getQuery()->getResult());
 
         // Get associated with organs (including non-approved)
-        foreach ($member->getCurrentOrganInstallations() as $organ) {
+        foreach ($user->getMember()->getCurrentOrganInstallations() as $organ) {
             $qb = $this->em->createQueryBuilder();
             $qb->select('a')
                 ->from('Activity\Model\Activity', 'a')
@@ -140,14 +136,20 @@ class Activity
                 ->setParameter('now', new \DateTime())
                 ->andWhere('a.organ_id = :organ')
                 ->setParameter('organ', $organ->getId());
-            $query = $this->em->createQueryBuilder();
-                ->select()
-                ->union(array($query, $qb->getQuery()))
-                ->orderBy('beginTime', 'ASC')
-                ->getQuery();
+            $result = array_merge($result, $qb->getQuery()->getResult());
         }
 
-        return $query->getResult();
+        for ($i = 0; $i < count($result)-1; $i++) {
+            for ($j = $i+1; $j < count($result); $j++) {
+                if ($result[$i]->getBeginTime() > $result[$j]->getBeginTime()) {
+                    $temp = $result[$i];
+                    $result[$i] = $result[$j];
+                    $result[$j] = $temp;
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
