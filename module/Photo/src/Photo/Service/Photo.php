@@ -436,7 +436,7 @@ class Photo extends AbstractAclService
         $base_rating = $hits / $tags;
         // Prevent division by zero.
         if ($age == 0) {
-            return $base_rating * 1.5;
+            return $base_rating * 2;
         } else {
             return $base_rating + $base_rating / $age;
         }
