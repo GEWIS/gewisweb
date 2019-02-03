@@ -47,8 +47,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
-                            'max' => 75
+                            'min' => 2,
+                            'max' => 128
                         ]
                     ],
                 ],
@@ -59,8 +59,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
-                            'max' => 75
+                            'min' => 2,
+                            'max' => 128
                         ]
                     ],
                 ],
