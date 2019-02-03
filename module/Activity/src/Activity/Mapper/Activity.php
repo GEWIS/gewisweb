@@ -95,6 +95,62 @@ class Activity
     }
 
     /**
+     * Get upcoming activities sorted by date for member
+     *
+     * @param \Decision\Model\Member $member Option member that should relate to activity
+     *
+     * @return array
+     */
+    public function getUpcomingActivitiesForMember($member)
+    {
+        // Get subscriptions (not including non-approved)
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->from('Activity\Model\ActivitySignUp', 'b')
+            ->where('a.endTime > :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.status = :status')
+            ->setParameter('status', ActivityModel::STATUS_APPROVED)
+            ->andWhere('a.id = b.activity_id')
+            ->andWhere('b.user_lidnr = :lidnr')
+            ->setParameter('lidnr', $member->getLidnr());
+        $query = $qb->getQuery();
+
+        // Get created by member (including non-approved)
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.endTime > :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.creator_id = :lidnr')
+            ->setParameter('lidnr', $member->getLidnr());
+        $query = $this->em->createQueryBuilder();
+            ->select()
+            ->union(array($query, $qb->getQuery()))
+            ->orderBy('beginTime', 'ASC')
+            ->getQuery();
+
+        // Get associated with organs (including non-approved)
+        foreach ($member->getCurrentOrganInstallations() as $organ) {
+            $qb = $this->em->createQueryBuilder();
+            $qb->select('a')
+                ->from('Activity\Model\Activity', 'a')
+                ->where('a.endTime > :now')
+                ->setParameter('now', new \DateTime())
+                ->andWhere('a.organ_id = :organ')
+                ->setParameter('organ', $organ->getId());
+            $query = $this->em->createQueryBuilder();
+                ->select()
+                ->union(array($query, $qb->getQuery()))
+                ->orderBy('beginTime', 'ASC')
+                ->getQuery();
+        }
+
+        return $query->getResult();
+    }
+
+    /**
      * Gets upcoming activities of the given organs or user, sorted by date.
      *
      * @param array|null $organs
