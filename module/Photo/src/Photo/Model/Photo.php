@@ -320,11 +320,19 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Hit
+     * @return int
      */
-    public function getHits()
+    public function getTagCount()
     {
-        return $this->hits;
+        return $this->tags->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getHitCount()
+    {
+        return $this->hits->count();
     }
 
     /**

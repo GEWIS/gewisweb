@@ -384,7 +384,7 @@ class Photo extends AbstractAclService
 
         foreach ($results as $res) {
             $photo = $res->getPhoto();
-            $rating = $this->ratePhotoForMember($photo, $lidnr);
+            $rating = $this->ratePhotoForMember($photo);
             if ($rating > $bestRating) {
                 $bestPhoto = $photo;
                 $bestRating = $rating;
@@ -425,21 +425,20 @@ class Photo extends AbstractAclService
      *
      * @return float
      */
-    public function ratePhotoForMember($photo, $lidnr)
+    public function ratePhotoForMember($photo)
     {
         $now = new \DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
 
-        $hits = count($photo->getHits());
-        $tags = count($photo->getTags());
+        $hits = $photo->getHitCount();
+        $tags = $photo->getTagCount();
 
-        $base_rating = $hits / $tags;
+        $baseRating = $hits / $tags;
         // Prevent division by zero.
         if ($age == 0) {
-            return $base_rating * 5;
-        } else {
-            return $base_rating + $base_rating / $age;
+            return $baseRating * 5;
         }
+        return $baseRating + $baseRating / $age;
     }
 
     /**
