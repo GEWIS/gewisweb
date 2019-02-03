@@ -164,9 +164,10 @@ $this->headTitle($this->translate('Education'));
             <div class="col-md-12">
                 <p>
                     <?=
-                            $this->translate('The exams on the website of GEWIS are provided by Education & Student Affairs of the department of Mathematics and Computer Science of the TU/e. If an exam has been put online without the intention of the author, please let the board of GEWIS know by sending an '),
+                            $this->translate('The exams on the website of GEWIS are provided by Education & Student Affairs of the department of Mathematics and Computer Science of the TU/e.'),
+                            $this->translate('If an exam has been put online without the intention of the author, please let the board of GEWIS know by sending an') . ' ',
                             '<a href="mailto:board@gewis.nl" title="' . $this->translate('Email the board of GEWIS') . '">' . $this->translate('email to the board of GEWIS') . '</a>',
-                            $this->translate(', then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal.')
+                            ', ' . $this->translate('then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal.')
                     ?>
                 </p>
             </div>
