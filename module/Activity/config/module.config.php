@@ -81,6 +81,16 @@ return [
                             ]
                         ]
                     ],
+                    'my' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/my',
+                            'defaults' => [
+                                'action' => 'index',
+                                'category' => 'my'
+                            ]
+                        ]
+                    ],
                     'touch' => [
                         'type' => 'Literal',
                         'options' => [
