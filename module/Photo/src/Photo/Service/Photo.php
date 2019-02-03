@@ -430,7 +430,7 @@ class Photo extends AbstractAclService
         $now = new \DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
 
-        $hits = $this->countHit($photo);
+        $hits = count($photo->getHits());
         $tags = count($photo->getTags());
 
         $base_rating = $hits / $tags;

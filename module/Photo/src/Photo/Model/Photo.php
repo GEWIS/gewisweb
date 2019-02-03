@@ -320,6 +320,14 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * @return \Photo\Model\Hit
+     */
+    public function getHits()
+    {
+        return $this->hits;
+    }
+
+    /**
      * @return \Photo\Model\WeeklyPhoto|null
      */
     public function getWeeklyPhoto()
