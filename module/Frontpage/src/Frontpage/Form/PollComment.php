@@ -55,8 +55,8 @@ class PollComment extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
-                            'max' => 128
+                            'min' => 2,
+                            'max' => 32
                         ]
                     ]
                 ]
