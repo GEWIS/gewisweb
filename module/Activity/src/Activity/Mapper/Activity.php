@@ -104,41 +104,17 @@ class Activity
     public function getUpcomingActivitiesForMember($user)
     {
         // Get subscriptions (not including non-approved)
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->from('Activity\Model\UserActivitySignup', 'b')
-            ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
-            ->andWhere('a.status = :status')
-            ->setParameter('status', ActivityModel::STATUS_APPROVED)
-            ->andWhere('a = b.activity')
-            ->andWhere('b.user = :user')
-            ->setParameter('user', $user);
-        $result = $qb->getQuery()->getResult();
+        $result = getUpcomingActivitiesSubscribedBy($user);
 
         // Get created by member (including non-approved)
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
-            ->andWhere('a.creator = :user')
-            ->setParameter('user', $user);
-        $result = array_merge($result, $qb->getQuery()->getResult());
+        $result = array_merge($result, getUpcomingActivitiesCreatedBy($user));
 
         // Get associated with organs (including non-approved)
         foreach ($user->getMember()->getCurrentOrganInstallations() as $organ) {
-            $qb = $this->em->createQueryBuilder();
-            $qb->select('a')
-                ->from('Activity\Model\Activity', 'a')
-                ->where('a.endTime > :now')
-                ->setParameter('now', new \DateTime())
-                ->andWhere('a.organ_id = :organ')
-                ->setParameter('organ', $organ->getId());
-            $result = array_merge($result, $qb->getQuery()->getResult());
+            $result = array_merge($result, getUpcomingActivitiesByOrgan($organ));
         }
 
+        // Do sorting based on start time
         for ($i = 0; $i < count($result)-1; $i++) {
             for ($j = $i+1; $j < count($result); $j++) {
                 if ($result[$i]->getBeginTime() > $result[$j]->getBeginTime()) {
@@ -150,6 +126,67 @@ class Activity
         }
 
         return $result;
+    }
+
+    /**
+     * Get a query to retrieve upcoming activities sorted by date that a user is subscribed to
+     *
+     * @param \User\Model\User $user Option user that should relate to activity
+     *
+     * @return \Zend\Db\Sql
+     */
+    public function getUpcomingActivitiesSubscribedBy($user) {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->from('Activity\Model\UserActivitySignup', 'b')
+            ->where('a.endTime > :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.status = :status')
+            ->setParameter('status', ActivityModel::STATUS_APPROVED)
+            ->andWhere('a = b.activity')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user);
+        $query = $qb->getQuery();
+        return $query;
+    }
+
+    /**
+     * Get a query to retrieve upcoming activities sorted by date that a user created
+     *
+     * @param \User\Model\User $user Option user that should relate to activity
+     *
+     * @return \Zend\Db\Sql
+     */
+    public function getUpcomingActivitiesCreatedBy($user) {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.endTime > :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.creator = :user')
+            ->setParameter('user', $user);
+        $query = $qb->getQuery();
+        return $query;
+    }
+
+    /**
+     * Get a query to retrieve upcoming activities sorted by date that a organ created
+     *
+     * @param \Decision\Model\Organ $organ Option organ that should relate to activity
+     *
+     * @return \Zend\Db\Sql
+     */
+    public function getUpcomingActivitiesByOrgan($organ) {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->where('a.endTime > :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.organ_id = :organ')
+            ->setParameter('organ', $organ->getId());
+        $query = $qb->getQuery();
+        return $query;
     }
 
     /**
