@@ -115,15 +115,7 @@ class Activity
         }
 
         // Do sorting based on start time
-        for ($i = 0; $i < count($result)-1; $i++) {
-            for ($j = $i+1; $j < count($result); $j++) {
-                if ($result[$i]->getBeginTime() > $result[$j]->getBeginTime()) {
-                    $temp = $result[$i];
-                    $result[$i] = $result[$j];
-                    $result[$j] = $temp;
-                }
-            }
-        }
+        $result = $this->sortMultiArrayByKey($result, 'getBeginTime');
 
         return $result;
     }
@@ -135,7 +127,8 @@ class Activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesSubscribedBy($user) {
+    public function getUpcomingActivitiesSubscribedBy($user)
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
@@ -158,7 +151,8 @@ class Activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesCreatedBy($user) {
+    public function getUpcomingActivitiesCreatedBy($user)
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
@@ -177,7 +171,8 @@ class Activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesByOrgan($organ) {
+    public function getUpcomingActivitiesByOrgan($organ)
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
@@ -187,6 +182,28 @@ class Activity
             ->setParameter('organ', $organ->getId());
         $result = $qb->getQuery()->getResult();
         return $result;
+    }
+
+    /**
+     * Sorts a multidimensional array by a given key
+     *
+     * @param array $array Option array to be sorted by
+     * @param String $key Option String that defines the key (is a function on objects of the array)
+     *
+     * @return array
+     */
+    public function sortMultiArrayByKey($array, $key)
+    {
+        for ($i = 0; $i < count($array)-1; $i++) {
+            for ($j = $i+1; $j < count($array); $j++) {
+                if ($array[$i]->$key() > $array[$j]->$key()) {
+                    $temp = $array[$i];
+                    $array[$i] = $array[$j];
+                    $array[$j] = $temp;
+                }
+            }
+        }
+        return $array;
     }
 
     /**
