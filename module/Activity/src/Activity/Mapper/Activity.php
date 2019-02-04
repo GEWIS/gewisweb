@@ -129,11 +129,11 @@ class Activity
     }
 
     /**
-     * Get a query to retrieve upcoming activities sorted by date that a user is subscribed to
+     * Get upcoming activities sorted by date that a user is subscribed to
      *
      * @param \User\Model\User $user Option user that should relate to activity
      *
-     * @return \Zend\Db\Sql
+     * @return array
      */
     public function getUpcomingActivitiesSubscribedBy($user) {
         $qb = $this->em->createQueryBuilder();
@@ -147,16 +147,16 @@ class Activity
             ->andWhere('a = b.activity')
             ->andWhere('b.user = :user')
             ->setParameter('user', $user);
-        $query = $qb->getQuery();
-        return $query;
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
 
     /**
-     * Get a query to retrieve upcoming activities sorted by date that a user created
+     * Get upcoming activities sorted by date that a user created
      *
      * @param \User\Model\User $user Option user that should relate to activity
      *
-     * @return \Zend\Db\Sql
+     * @return array
      */
     public function getUpcomingActivitiesCreatedBy($user) {
         $qb = $this->em->createQueryBuilder();
@@ -166,16 +166,16 @@ class Activity
             ->setParameter('now', new \DateTime())
             ->andWhere('a.creator = :user')
             ->setParameter('user', $user);
-        $query = $qb->getQuery();
-        return $query;
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
 
     /**
-     * Get a query to retrieve upcoming activities sorted by date that a organ created
+     * Get upcoming activities sorted by date that a organ created
      *
      * @param \Decision\Model\Organ $organ Option organ that should relate to activity
      *
-     * @return \Zend\Db\Sql
+     * @return array
      */
     public function getUpcomingActivitiesByOrgan($organ) {
         $qb = $this->em->createQueryBuilder();
@@ -185,8 +185,8 @@ class Activity
             ->setParameter('now', new \DateTime())
             ->andWhere('a.organ_id = :organ')
             ->setParameter('organ', $organ->getId());
-        $query = $qb->getQuery();
-        return $query;
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
 
     /**
