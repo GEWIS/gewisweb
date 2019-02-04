@@ -104,14 +104,14 @@ class Activity
     public function getUpcomingActivitiesForMember($user)
     {
         // Get subscriptions (not including non-approved)
-        $result = getUpcomingActivitiesSubscribedBy($user);
+        $result = $this->getUpcomingActivitiesSubscribedBy($user);
 
         // Get created by member (including non-approved)
-        $result = array_merge($result, getUpcomingActivitiesCreatedBy($user));
+        $result = array_merge($result, $this->getUpcomingActivitiesCreatedBy($user));
 
         // Get associated with organs (including non-approved)
         foreach ($user->getMember()->getCurrentOrganInstallations() as $organ) {
-            $result = array_merge($result, getUpcomingActivitiesByOrgan($organ));
+            $result = array_merge($result, $this->getUpcomingActivitiesByOrgan($organ));
         }
 
         // Do sorting based on start time
