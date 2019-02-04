@@ -65,7 +65,7 @@ class PhotoAdminController extends AbstractActionController
         $weeklyPhoto = $this->getPhotoService()->generatePhotoOfTheWeek();
 
         if(is_null($weeklyPhoto)) {
-            echo "No photo of the week chosen, where any photos viewed?\n";
+            echo "No photo of the week chosen, were any photos viewed?\n";
         } else {
             echo "Photo of the week set to photo: " . $weeklyPhoto->getPhoto()->getId();
         }

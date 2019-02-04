@@ -1,0 +1,121 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/js/course.js')
+    ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->scriptUrl()->requireUrl('member/search');
+?>
+
+<?php
+$form->prepare();
+
+$form->setAttribute('action', $this->url('admin_education/add_course'));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('class', 'form-horizontal');
+?>
+<?= $this->form()->openTag($form) ?>
+
+<div>
+
+<?php
+$element = $form->get('code');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $form->get('name');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $form->get('parent');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+$element->setAttribute('id', 'parent');
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $form->get('url');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $form->get('year');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+$element->setAttribute('value', $element->getOption('value'));
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+
+<?php
+$element = $form->get('quartile');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('placeholder', $element->getLabel());
+?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formSelect($element); ?>
+            <?= $this->formElementErrors($element); ?>
+        </div>
+    </div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php
+        $submit = $form->get('submit');
+        $submit->setAttribute('class', 'btn btn-primary');
+        ?>
+        <?= $this->formButton($submit) ?>
+    </div>
+</div>
+
+<?= $this->form()->closeTag() ?>
+<hr>
+<?php if (isset($success) && $success): ?>
+<?= $this->translate('The course was added.') ?>
+<?php elseif (isset($success) && !($success)): ?>
+<?= $this->translate('The course was not added. Please check your input.') ?>
+<?php endif ?>
+
+<script>
+    $(document).ready(function () {
+        Course.initCourseAdding();
+    });
+</script>

@@ -74,6 +74,15 @@ return [
                             ],
                         ],
                     ],
+                    'add_course' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/add/course',
+                            'defaults' => [
+                                'action' => 'addCourse'
+                            ]
+                        ]
+                    ],
                     'bulk_upload_exam' => [
                         'type' => 'Literal',
                         'options' => [
