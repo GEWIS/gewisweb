@@ -140,6 +140,6 @@ $('#initialSubmit').click(function () {
             $('#confirmAuthorization').modal('show');
         }
     });
-    $('#authorizationConfirmTitle').text('<?= $this->translate('Are you sure you would like to authorize')?>' + ' ' + memberName);
+    $('#authorizationConfirmTitle').text('<?= $this->translate('Are you sure you would like to authorize %s')?>'.replace('%s', memberName));
 })
 </script>

@@ -243,7 +243,7 @@ class Member extends AbstractAclService
         $authorizationMapper = $this->getAuthorizationMapper();
         $meetingNumber = $meeting->getNumber();
         $lidnr = $member->getLidnr();
-        $authorizations = authorizationMapper()->findRecipientAuthorization($meetingNumber, $lidnr);
+        $authorizations = $authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
         
         if (count($authorizations) < $maxAuthorizations) {
             return true;
