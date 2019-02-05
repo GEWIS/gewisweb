@@ -78,6 +78,31 @@ class MemberController extends AbstractActionController
     }
 
     /**
+     * Determinues whether a member can be authorized without additional confirmation
+     */
+    public function canAuthorizeAction()
+    {
+        $lidnr = $this->params()->fromQuery('q');
+        $meeting = $this->getDecisionService()->getLatestAV();
+
+        if (!empty($lidnr) && !empty($meeting)) {
+            $member = $this->getMemberService()->findMemberByLidNr($lidnr);
+            $canAuthorize = $this->getMemberService()->canAuthorize($member, $meeting);
+
+            if ($canAuthorize) {
+                return new JsonModel([
+                    'value' => true
+                ]);
+            }
+            return new JsonModel([
+                'value' => false
+            ]);
+        }
+
+        return new ViewModel([]);
+    }
+
+    /**
      * Show birthdays of members.
      */
     public function birthdaysAction()
@@ -119,5 +144,13 @@ class MemberController extends AbstractActionController
     public function getMemberService()
     {
         return $this->getServiceLocator()->get('decision_service_member');
+    }
+
+    /**
+     * Get the decision service.
+     */
+    public function getDecisionService()
+    {
+        return $this->getServiceLocator()->get('decision_service_decision');
     }
 }

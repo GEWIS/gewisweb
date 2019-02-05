@@ -206,6 +206,15 @@ return [
                             ],
                         ],
                     ],
+                    'canauth' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/canauth',
+                            'defaults' => [
+                                'action' => 'canAuthorize',
+                            ],
+                        ],
+                    ],
                     'birthdays' => [
                         'type' => 'Literal',
                         'options' => [
