@@ -70,7 +70,7 @@ $meetings = $this->meetings;
                     <p>
                         <?=
                             sprintf(
-                                $this->translate('If you are not able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
+                                $this->translate('If you aren\'t able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
                                 '<a href="' . $this->url('decision/authorizations') . '">',
                                 '</a>'
                             )
@@ -86,7 +86,7 @@ $meetings = $this->meetings;
                     </button>
                 </form>
                 <hr />
-                <p><?= $this->translate('The last five meetings that took place:') ?></p>
+                <p><?= $this->translate('The latest meetings that took place:') ?></p>
                 <ul>
                     <?php foreach($meetings as $meeting): ?>
                         <li>
@@ -137,33 +137,33 @@ $meetings = $this->meetings;
             <?php endif; ?>
         </div>
         <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
-        <div class="row mt-2">
-            <div class="col-md-12">
-                <h2><?= $this->translate('Regulations') ?></h2>
-                <ul>
-                    <li>
-                        <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
-                            <?= $this->translate('Borrelreglement') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
-                            <?= $this->translate('Computerreglement') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
-                            <?= $this->translate('Posterreglement') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
-                            <?= $this->translate('Sleutelbeleid') ?>
-                        </a>
-                    </li>
-                </ul>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Regulations') ?></h2>
+                    <ul>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
+                                <?= $this->translate('Borrelreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
+                                <?= $this->translate('Computerreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
+                                <?= $this->translate('Posterreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
+                                <?= $this->translate('Sleutelbeleid') ?>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
         <?php endif; ?>
     </section>
 </div>
