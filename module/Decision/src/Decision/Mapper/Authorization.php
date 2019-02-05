@@ -64,6 +64,30 @@ class Authorization
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * Find non-revoked authorizations for a meeting for a recipient
+     *
+     * @param integer $meetingNumber
+     * @param integer $recipient
+     *
+     * @return array
+     */
+    public function findRecipientAuthorization($meetingNumber, $recipient)
+    {
+
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Decision\Model\Authorization', 'a')
+            ->where('a.meetingNumber = :meetingNumber')
+            ->andWhere('a.recipient = :recipient')
+            ->andWhere('a.revoked = 0')
+            ->setParameter('meetingNumber', $meetingNumber)
+            ->setParameter('recipient', $recipient);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function persist($authorization)
     {
         $this->em->persist($authorization);
