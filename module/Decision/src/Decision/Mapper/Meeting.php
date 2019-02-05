@@ -112,19 +112,7 @@ class Meeting
      */
     public function findLatestAV()
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $today = new \DateTime();
-        $maxDate = $today->sub(new \DateInterval('P1D'));
-        $qb->select('m')
-            ->from('Decision\Model\Meeting', 'm')
-            ->where('m.type = AV')
-            ->where('m.date >= :date')
-            ->orderBy('m.date', 'DESC')
-            ->setParameter('date', $maxDate)
-            ->setMaxResults(1);
-
-        return $qb->getQuery()->getOneOrNullResult();
+        return $this->findFutureAV('DESC');
     }
 
     /**
@@ -134,20 +122,7 @@ class Meeting
      */
     public function findUpcomingAV()
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $today = new \DateTime();
-        $maxDate = $today->sub(new \DateInterval('P1D'));
-
-        $qb->select('m')
-            ->from('Decision\Model\Meeting', 'm')
-            ->where('m.type = AV')
-            ->where('m.date >= :date')
-            ->orderBy('m.date', 'ASC')
-            ->setParameter('date', $maxDate)
-            ->setMaxResults(1);
-
-        return $qb->getQuery()->getOneOrNullResult();
+        return $this->findFutureAV('ASC');
     }
 
     /**
@@ -223,5 +198,29 @@ class Meeting
     public function getRepository()
     {
         return $this->em->getRepository('Decision\Model\Meeting');
+    }
+
+    /**
+     * Finds an AV planned in the future
+     *
+     * @param string $order Order of the future AV's
+     * @return \Decision\Model\Meeting|null
+     */
+    private function findFutureAV($order)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $today = new \DateTime();
+        $maxDate = $today->sub(new \DateInterval('P1D'));
+
+        $qb->select('m')
+            ->from('Decision\Model\Meeting', 'm')
+            ->where('m.type = AV')
+            ->where('m.date >= :date')
+            ->orderBy('m.date', $order)
+            ->setParameter('date', $maxDate)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

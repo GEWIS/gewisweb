@@ -79,7 +79,7 @@ class Member extends AbstractAclService
      * @return bool
      */
 
-    public function isActiveMember(MemberModel $member)
+    public function isActiveMember()
     {
         return $this->isAllowed('edit', 'organ');
     }
