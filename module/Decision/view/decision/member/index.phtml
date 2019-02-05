@@ -1,8 +1,7 @@
 <?php
 // set title
-$this->headTitle($this->translate('Members')); ?>
-
-<?php
+$this->headTitle($this->translate('Members'));
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $sections = [];
 $sections[$this->translate('Personal')] = [
@@ -89,7 +88,7 @@ $meetings = $this->meetings;
                                     $this->upcoming->getType(),
                                     $this->upcoming->getNumber(),
                                     '</a>',
-                                    strftime('%A %e %B %Y', $this->upcoming->getDate()->getTimestamp())
+                                    $this->dateFormat($this->upcoming->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE, $lang)
                                 )
                             ?>
                         </div>
@@ -124,7 +123,7 @@ $meetings = $this->meetings;
                                             $this->translate('%s %s on %s'),
                                             $meeting->getType(),
                                             $meeting->getNumber(),
-                                            strftime('%A %e %B %Y', $meeting->getDate()->getTimestamp())
+                                            $this->dateFormat($meeting->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE, $lang)
                                         )
                                     ?>
                                 </a>
