@@ -214,4 +214,32 @@ class Meeting
         }
     }
 
+    /**
+     * Sorts document list
+     */
+    public function sortDocuments()
+    {
+        foreach ($this->documents as $document) {
+            $temp[] = $document;
+        }
+        usort($temp, function ($a, $b) {
+            $aa = preg_split("/(\.|\s)/", $a->getName());
+            $bb = preg_split("/(\.|\s)/", $b->getName());
+            if (!is_numeric($aa[0]) || !is_numeric($bb[0])) {
+                return strcmp($aa[0], $bb[0]);
+            }
+            for ($i = 0; $i < min(count($aa), count($bb)); $i++) {
+                if (!is_numeric($aa[$i])) {
+                    return -1;
+                } else if (!is_numeric($bb[$i])) {
+                    return 1;
+                } else if ($aa[$i] != $bb[$i]) {
+                    return $aa[$i] < $bb[$i] ? -1 : 1;
+                }
+            }
+            return 0;
+        });
+        $this->documents = $temp;
+    }
+
 }
