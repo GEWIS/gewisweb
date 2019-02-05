@@ -226,15 +226,17 @@ class Member extends AbstractAclService
      */
     public function canAuthorize($member, $meeting)
     {
-        $MAX_AUTHORIZATIONS = 2;
+        $maxAuthorizations = 2;
 
-        $authorizations = $this->getAuthorizationMapper()->findRecipientAuthorization($meeting->getNumber(), $member->getLidnr());
+        $authorizationMapper = $this->getAuthorizationMapper();
+        $meetingNumber = $meeting->getNumber();
+        $lidnr = $member->getLidnr();
+        $authorizations = authorizationMapper()->findRecipientAuthorization($meetingNumber, $lidnr);
         
-        if (count($authorizations) < $MAX_AUTHORIZATIONS) {
+        if (count($authorizations) < $maxAuthorizations) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

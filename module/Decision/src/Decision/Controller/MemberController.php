@@ -67,22 +67,20 @@ class MemberController extends AbstractActionController
     public function canAuthorizeAction()
     {
         $lidnr = $this->params()->fromQuery('q');
+        $meeting = $this->getDecisionService()->getLatestAV();
 
-        if (!empty($lidnr)) {
+        if (!empty($lidnr) && !empty($meeting)) {
             $member = $this->getMemberService()->findMemberByLidNr($lidnr);
-            $meeting = $this->getDecisionService()->getLatestAV();
-            if (!empty($meeting)) {
-                $canAuthorize = $this->getMemberService()->canAuthorize($member, $meeting);
-                if ($canAuthorize) {
-                    return new JsonModel([
-                        'value' => true
-                    ]);
-                } else {
-                    return new JsonModel([
-                        'value' => false
-                    ]);
-                }
+            $canAuthorize = $this->getMemberService()->canAuthorize($member, $meeting);
+
+            if ($canAuthorize) {
+                return new JsonModel([
+                    'value' => true
+                ]);
             }
+            return new JsonModel([
+                'value' => false
+            ]);
         }
 
         return new ViewModel([]);
