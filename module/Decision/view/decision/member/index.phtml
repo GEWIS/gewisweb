@@ -27,6 +27,10 @@ $meetings = $this->meetings;
                         <div class="glyphicon glyphicon-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
+                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-lock"></div>
+                        <div class="panel-heading"><?= $this->translate('Change password') ?></div>
+                    </a>
                     <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-picture"></div>
                         <div class="panel-heading"><?= $this->translate('My photo\'s') ?></div>
@@ -39,9 +43,32 @@ $meetings = $this->meetings;
                         <div class="glyphicon glyphicon glyphicon-bullhorn"></div>
                         <div class="panel-heading"><?= $this->translate('Authorizations') ?></div>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Association') ?></h2>
+                <div class="grid grid-col-5">
+                    <a href="<?= $this->url('organ') ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-heart"></div>
+                        <div class="panel-heading"><?= $this->translate('Organs') ?></div>
+                    </a>
+                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-download-alt"></div>
+                        <div class="panel-heading"><?= $this->translate('Public archive') ?></div>
+                    </a>
                     <a href="<?= $this->url('member/search') ?>" class="panel panel-image">
                         <div class="glyphicon glyphicon-search"></div>
                         <div class="panel-heading"><?= $this->translate('Find a member') ?></div>
+                    </a>
+                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-cd"></div>
+                        <div class="panel-heading"><?= $this->translate('Microsoft Imagine') ?></div>
+                    </a>
+                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>" class="panel panel-image">
+                        <div class="glyphicon glyphicon-link"></div>
+                        <div class="panel-heading"><?= $this->translate('Links') ?></div>
                     </a>
                 </div>
             </div>
@@ -136,35 +163,33 @@ $meetings = $this->meetings;
                 </div>
             <?php endif; ?>
         </div>
-        <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
-            <div class="row mt-2">
-                <div class="col-md-12">
-                    <h2><?= $this->translate('Regulations') ?></h2>
-                    <ul>
-                        <li>
-                            <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
-                                <?= $this->translate('Borrelreglement') ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
-                                <?= $this->translate('Computerreglement') ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
-                                <?= $this->translate('Posterreglement') ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
-                                <?= $this->translate('Sleutelbeleid') ?>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Regulations') ?></h2>
+                <ul>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
+                            <?= $this->translate('Borrelreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
+                            <?= $this->translate('Computerreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
+                            <?= $this->translate('Posterreglement') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
+                            <?= $this->translate('Sleutelbeleid') ?>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        <?php endif; ?>
+        </div>
     </section>
 </div>
 
