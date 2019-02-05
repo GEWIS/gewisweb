@@ -93,6 +93,15 @@ $this->headTitle($member->getFullName());
                         <td><?= $member->getExpiration()->format('l j F Y') ?></td>
                     </tr>
                 </table>
+
+                <p>
+                    <?=
+                    $this->translate('If your information is no longer up to date and you would like to change it, you can contact the secretary of GEWIS.') . ' ',
+                    $this->translate('Also for data removal requests, you can contact') . ' ',
+                    '<a href="mailto:secretary@gewis.nl" title="' . $this->translate('Email the secretary of GEWIS') . '">' . $this->translate('the secretary of GEWIS') . '</a>'
+                    ?>
+                </p>
+
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
                     <?php foreach ($memberships as $abbr => $install): ?>
