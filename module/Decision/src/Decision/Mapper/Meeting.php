@@ -215,9 +215,10 @@ class Meeting
 
         $qb->select('m')
             ->from('Decision\Model\Meeting', 'm')
-            ->where('m.type = AV')
-            ->where('m.date >= :date')
+            ->where('m.type = :type')
+            ->andWhere('m.date >= :date')
             ->orderBy('m.date', $order)
+            ->setParameter('type', 'AV')
             ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
