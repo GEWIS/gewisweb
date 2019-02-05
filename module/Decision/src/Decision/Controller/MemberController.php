@@ -13,21 +13,20 @@ class MemberController extends AbstractActionController
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
 
-        // Get the latest 5 meetings that have taken place
-        $meetings = $decisionService->getPastMeetings(5);
-
-        // Flatten array
-        $meetings = array_map(function ($item) {
-            return $item[0];
-        }, $meetings);
+        // Get the latest 3 meetings of each type and flatten result
+        $meetingsCollection = [
+            'AV' => array_column($decisionService->getPastMeetings(3, 'AV'), 0),
+            'BV' => array_column($decisionService->getPastMeetings(3, 'BV'), 0),
+            'VV' => array_column($decisionService->getPastMeetings(3, 'VV'), 0),
+        ];
 
         $member = $this->identity()->getMember();
 
         return new ViewModel([
-            'member'   => $member,
-            'isActive' => $this->getMemberService()->isActiveMember($member),
-            'meetings' => $meetings,
-            'upcoming' => $decisionService->getUpcomingAV()
+            'member'             => $member,
+            'isActive'           => $this->getMemberService()->isActiveMember($member),
+            'upcoming'           => $decisionService->getUpcomingAV(),
+            'meetingsCollection' => $meetingsCollection,
         ]);
     }
 

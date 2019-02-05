@@ -41,9 +41,10 @@ class Decision extends AbstractAclService
      * Get past meetings.
      *
      * @param int|null $limit The amount of meetings to retrieve, default is all
+     * @param string|null $type Constraint on the type of the meeting, default is none
      * @return array Of all meetings
      */
-    public function getPastMeetings($limit = null)
+    public function getPastMeetings($limit = null, $type = null)
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
@@ -53,7 +54,7 @@ class Decision extends AbstractAclService
             );
         }
 
-        return $this->getMeetingMapper()->findPast($limit);
+        return $this->getMeetingMapper()->findPast($limit, $type);
     }
 
     public function getMeetingsByType($type)

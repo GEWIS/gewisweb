@@ -113,23 +113,25 @@ $meetings = $this->meetings;
                     </button>
                 </form>
                 <hr />
-                <p><?= $this->translate('The latest meetings that took place:') ?></p>
-                <ul>
-                    <?php foreach($meetings as $meeting): ?>
-                        <li>
-                            <a href="<?= $this->url('decision/meeting', [ 'type' => $meeting->getType(), 'number' => $meeting->getNumber() ]) ?>">
-                                <?=
-                                    sprintf(
-                                        $this->translate('%s %s on %s'),
-                                        $meeting->getType(),
-                                        $meeting->getNumber(),
-                                        strftime('%A %e %B %Y', $meeting->getDate()->getTimestamp())
-                                    )
-                                ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                <?php foreach($meetingsCollection as $type => $meetings): ?>
+                    <p><?= sprintf($this->translate('The latest %s meetings that took place:'), $type) ?></p>
+                    <ul>
+                        <?php foreach($meetings as $meeting): ?>
+                            <li>
+                                <a href="<?= $this->url('decision/meeting', [ 'type' => $meeting->getType(), 'number' => $meeting->getNumber() ]) ?>">
+                                    <?=
+                                        sprintf(
+                                            $this->translate('%s %s on %s'),
+                                            $meeting->getType(),
+                                            $meeting->getNumber(),
+                                            strftime('%A %e %B %Y', $meeting->getDate()->getTimestamp())
+                                        )
+                                    ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endforeach; ?>
                 <a href="<?= $this->url('decision') ?>">
                     <?= $this->translate('View all meetings') ?>
                 </a>

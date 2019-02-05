@@ -75,7 +75,7 @@ class Meeting
      * @param int|null $limit The amount of results, default is all
      * @return array Meetings that have taken place
      */
-    public function findPast($limit = null)
+    public function findPast($limit = null, $type = null)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -93,6 +93,10 @@ class Meeting
 
         if (is_int($limit) && $limit >= 0) {
             $qb->setMaxResults($limit);
+        }
+
+        if (is_string($type)) {
+            $qb->andWhere('m.type = :type')->setParameter('type', $type);
         }
 
         return $qb->getQuery()->getResult();
