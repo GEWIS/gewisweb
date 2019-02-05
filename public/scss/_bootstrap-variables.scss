@@ -19,6 +19,7 @@ $gray-light: lighten($gray-base, 46.7%);
 $gray-lighter: lighten($gray-base, 93.5%);
 
 $brand-primary: #D40026;
+$brand-secondary: #720013;
 $brand-success: #6BBE1E;
 $brand-warning: #E88C12;
 $brand-danger: #D40026;
@@ -63,6 +64,10 @@ $btn-darker-border: $btn-darker-bg;
 $btn-primary-color: #fff;
 $btn-primary-bg: $brand-primary;
 $btn-primary-border: $btn-primary-bg;
+
+$btn-secondary-color: #fff;
+$btn-secondary-bg: $brand-secondary;
+$btn-secondary-border: $btn-secondary-bg;
 
 $btn-success-color: #fff;
 $btn-success-bg: $brand-success;
