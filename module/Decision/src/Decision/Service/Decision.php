@@ -10,6 +10,7 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
+use User\Permissions\NotAllowedException;
 
 /**
  * Decision service.
@@ -20,18 +21,40 @@ class Decision extends AbstractAclService
     /**
      * Get all meetings.
      *
+     * @param int|null $limit The amount of meetings to retrieve, default is all
      * @return array Of all meetings
      */
-    public function getMeetings()
+    public function getMeetings($limit = null)
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list meetings.')
             );
         }
 
-        return $this->getMeetingMapper()->findAll();
+        return $this->getMeetingMapper()->findAll($limit);
+    }
+
+    /**
+     * Get past meetings.
+     *
+     * @param int|null $limit The amount of meetings to retrieve, default is all
+     * @param string|null $type Constraint on the type of the meeting, default is none
+     * @return array Of all meetings
+     */
+    public function getPastMeetings($limit = null, $type = null)
+    {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
+        }
+
+        return $this->getMeetingMapper()->findPast($limit, $type);
     }
 
     public function getMeetingsByType($type)
@@ -74,6 +97,16 @@ class Decision extends AbstractAclService
     public function getLatestAV()
     {
         return $this->getMeetingMapper()->findLatestAV();
+    }
+
+    /**
+     * Returns the closest upcoming AV
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function getUpcomingAV()
+    {
+        return $this->getMeetingMapper()->findUpcomingAV();
     }
 
     /**

@@ -193,8 +193,15 @@ a {
     box-shadow: none;
     border: none;
 
-    h4 {
+    h4, .h4 {
         margin-bottom: 0;
+    }
+
+    .panel-heading {
+        padding: 0;
+        border: none;
+        font-size: 1.6rem;
+        font-weight: 500;
     }
 
     .glyphicon {

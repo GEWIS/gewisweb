@@ -73,6 +73,18 @@ class Member extends AbstractAclService
     }
 
     /**
+     * Returns is the member is active
+     *
+     * @param MemberModel $member
+     * @return bool
+     */
+
+    public function isActiveMember()
+    {
+        return $this->isAllowed('edit', 'organ');
+    }
+
+    /**
      *
      */
     public function findMemberByLidNr($lidnr)

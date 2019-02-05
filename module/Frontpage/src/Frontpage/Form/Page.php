@@ -110,7 +110,7 @@ class Page extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 2,
+                            'min' => 3,
                             'max' => 25
                         ]
                     ],
@@ -145,7 +145,7 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => 'string_length',
                         'options' => [
                             'min' => 3,
-                            'max' => 75
+                            'max' => 64
                         ]
                     ],
                 ],
@@ -158,7 +158,7 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => 'string_length',
                         'options' => [
                             'min' => 3,
-                            'max' => 75
+                            'max' => 64
                         ]
                     ],
                 ],
