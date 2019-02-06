@@ -4,8 +4,6 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
-use Decision\Form\Notes;
-use Decision\Mapper\Authorization;
 use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
@@ -354,6 +352,24 @@ class Decision extends AbstractAclService
         $authorization->setMeetingNumber($meeting->getNumber());
         $this->getAuthorizationMapper()->persist($authorization);
 
+        // Send an email to the recipient
+        $this->getEmailService()->sendEmailAsUserToUser(
+            $recipient,
+            'email/authorization_received',
+            'Machtiging ontvangen | Authorization received',
+            ['authorization' => $authorization],
+            $authorizer
+        );
+
+        // Send a confirmation email to the authorizing member
+        $this->getEmailService()->sendEmailAsUserToUser(
+            $authorizer,
+            'email/authorization_sent',
+            'Machtiging verstuurd | Authorization sent',
+            ['authorization' => $authorization],
+            $recipient
+        );
+
         return $authorization;
 
     }
@@ -447,6 +463,16 @@ class Decision extends AbstractAclService
     public function getAuthorizationMapper()
     {
         return $this->sm->get('decision_mapper_authorization');
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return \Application\Service\Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('application_service_email');
     }
 
     /**

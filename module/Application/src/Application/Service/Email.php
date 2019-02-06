@@ -4,6 +4,7 @@ namespace Application\Service;
 
 use Application\Service\AbstractService;
 
+use Decision\Model\Member;
 use Decision\Model\OrganInformation;
 use User\Model\NewUser as NewUserModel;
 
@@ -61,6 +62,29 @@ class Email extends AbstractService
 
         $message->addFrom($config['from']);
         $message->addTo($config['to'][$type]);
+        $message->setSubject($subject);
+        $message->setReplyTo($user->getEmail());
+
+        $this->getTransport()->send($message);
+    }
+
+    /**
+     * Send an email as a given user. The user will be added as reply-to header to the email.
+     *
+     * @param $recipient Member The receiver of this email.
+     * @param $view String Template of the email
+     * @param $subject String Subject of the email
+     * @param $data array Variables that you want to have available in the template.
+     * @param $user Member The user as which the email should be sent.
+     */
+    public function sendEmailAsUserToUser($recipient, $view, $subject, $data, $user)
+    {
+        $message = $this->createMessageFromView($view, $data);
+
+        $config = $this->getConfig();
+
+        $message->addFrom($config['from']);
+        $message->addTo($recipient->getEmail());
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
