@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-06 00:18+0100\n"
+"POT-Creation-Date: 2019-02-06 01:34+0100\n"
 "PO-Revision-Date: 2019-01-29 17:31+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
@@ -1183,51 +1183,69 @@ msgstr "Last membership change"
 msgid "End date of membership"
 msgstr "End date of membership"
 
-#: module/Decision/view/decision/member/self.phtml:96
+#: module/Decision/view/decision/member/self.phtml:99
+msgid ""
+"If your information is no longer up to date and you would like to change it, "
+"you can contact the secretary of GEWIS."
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:100
+msgid "Also for data removal requests, you can contact"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:101
+msgid "Email the secretary of GEWIS"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:101
+msgid "the secretary of GEWIS"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:105
 #: module/Decision/view/decision/member/view.phtml:54
 msgid "Membership of committees and fraternities"
 msgstr "Membership of committees and fraternities"
 
-#: module/Decision/view/decision/member/self.phtml:106
+#: module/Decision/view/decision/member/self.phtml:115
 #: module/Decision/view/decision/member/view.phtml:69
 msgid "Adresses"
 msgstr "Adresses"
 
-#: module/Decision/view/decision/member/self.phtml:111
+#: module/Decision/view/decision/member/self.phtml:120
 #: module/Decision/view/decision/member/view.phtml:74
 msgid "Home address (parents)"
 msgstr "Home address (parents)"
 
-#: module/Decision/view/decision/member/self.phtml:114
+#: module/Decision/view/decision/member/self.phtml:123
 #: module/Decision/view/decision/member/view.phtml:77
 msgid "Student address"
 msgstr "Student address"
 
-#: module/Decision/view/decision/member/self.phtml:117
+#: module/Decision/view/decision/member/self.phtml:126
 #: module/Decision/view/decision/member/view.phtml:80
 msgid "Mail address"
 msgstr "Mail address"
 
-#: module/Decision/view/decision/member/self.phtml:123
+#: module/Decision/view/decision/member/self.phtml:132
 #: module/Decision/view/decision/member/view.phtml:86
 msgid "Country"
 msgstr "Country"
 
-#: module/Decision/view/decision/member/self.phtml:127
+#: module/Decision/view/decision/member/self.phtml:136
 #: module/Decision/view/decision/member/view.phtml:90
 msgid "Street and number"
 msgstr "Street and number"
 
-#: module/Decision/view/decision/member/self.phtml:131
+#: module/Decision/view/decision/member/self.phtml:140
 #: module/Decision/view/decision/member/view.phtml:94
 msgid "City and postal code"
 msgstr "City and postal code"
 
-#: module/Decision/view/decision/member/self.phtml:135
+#: module/Decision/view/decision/member/self.phtml:144
 msgid "Phone number"
 msgstr "Phone number"
 
-#: module/Decision/view/decision/member/self.phtml:147
+#: module/Decision/view/decision/member/self.phtml:156
 #: module/Decision/view/decision/member/index.phtml:35
 #: module/Application/view/partial/main-nav.phtml:216
 msgid "My photo's"
@@ -3316,49 +3334,49 @@ msgstr "Name must be at least "
 msgid "Not allowed to search for members."
 msgstr "Not allowed to search for members."
 
-#: module/Decision/src/Decision/Service/Decision.php:33
-#: module/Decision/src/Decision/Service/Decision.php:53
-#: module/Decision/src/Decision/Service/Decision.php:65
+#: module/Decision/src/Decision/Service/Decision.php:31
+#: module/Decision/src/Decision/Service/Decision.php:51
+#: module/Decision/src/Decision/Service/Decision.php:63
 msgid "You are not allowed to list meetings."
 msgstr "You are not allowed to list meetings."
 
-#: module/Decision/src/Decision/Service/Decision.php:85
+#: module/Decision/src/Decision/Service/Decision.php:83
 msgid "You are not allowed to view meetings."
 msgstr "You are not allowed to view meetings."
 
-#: module/Decision/src/Decision/Service/Decision.php:135
+#: module/Decision/src/Decision/Service/Decision.php:133
 msgid "You are not allowed to view meeting documents."
 msgstr "You are not allowed to view meeting documents."
 
-#: module/Decision/src/Decision/Service/Decision.php:162
+#: module/Decision/src/Decision/Service/Decision.php:160
 msgid "You are not allowed to view meeting notes."
 msgstr "You are not allowed to view meeting notes."
 
-#: module/Decision/src/Decision/Service/Decision.php:255
+#: module/Decision/src/Decision/Service/Decision.php:253
 msgid "You are not allowed to delete meeting documents."
 msgstr "You are not allowed to delete meeting documents."
 
-#: module/Decision/src/Decision/Service/Decision.php:274
+#: module/Decision/src/Decision/Service/Decision.php:272
 msgid "You are not allowed to search decisions."
 msgstr "You are not allowed to search decisions."
 
-#: module/Decision/src/Decision/Service/Decision.php:303
+#: module/Decision/src/Decision/Service/Decision.php:301
 msgid "You are not allowed to view all authorizations."
 msgstr "You are not allowed to view all authorizations."
 
-#: module/Decision/src/Decision/Service/Decision.php:322
+#: module/Decision/src/Decision/Service/Decision.php:320
 msgid "You are not allowed to view authorizations."
 msgstr "You are not allowed to view authorizations."
 
-#: module/Decision/src/Decision/Service/Decision.php:371
+#: module/Decision/src/Decision/Service/Decision.php:387
 msgid "You are not allowed to upload notes."
 msgstr "You are not allowed to upload notes."
 
-#: module/Decision/src/Decision/Service/Decision.php:388
+#: module/Decision/src/Decision/Service/Decision.php:404
 msgid "You are not allowed to upload meeting documents."
 msgstr "You are not allowed to upload meeting documents."
 
-#: module/Decision/src/Decision/Service/Decision.php:415
+#: module/Decision/src/Decision/Service/Decision.php:431
 msgid "You are not authorize people."
 msgstr "You are not authorize people."
 
