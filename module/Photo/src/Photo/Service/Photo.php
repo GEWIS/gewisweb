@@ -369,6 +369,11 @@ class Photo extends AbstractAclService
      */
     public function determineProfilePhoto($lidnr)
     {
+        $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
+        if ($profilePhoto != null) {
+            return $profilePhoto;
+        }
+
         if (!$this->isAllowed('view', 'tag')) {
             return null;
         }
@@ -547,6 +552,16 @@ class Photo extends AbstractAclService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
+     * Get the tag mapper.
+     *
+     * @return \Photo\Mapper\ProfilePhoto
+     */
+    public function getProfilePhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_profile_photo');
     }
 
     /**

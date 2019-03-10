@@ -98,6 +98,11 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_mapper_profile_photo' => function ($sm) {
+                    return new Mapper\ProfilePhoto(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
                 'photo_mapper_tag' => function ($sm) {
                     return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
