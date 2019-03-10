@@ -115,7 +115,9 @@ class Activity
         }
 
         // Do sorting based on start time
-        $result = $this->sortMultiArrayByKey($result, 'getBeginTime');
+        usort($result, function($a, $b) {
+            return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
+        });
 
         return $result;
     }
@@ -182,28 +184,6 @@ class Activity
             ->setParameter('organ', $organ->getId());
         $result = $qb->getQuery()->getResult();
         return $result;
-    }
-
-    /**
-     * Sorts a multidimensional array by a given key
-     *
-     * @param array $array Option array to be sorted by
-     * @param String $key Option String that defines the key (is a function on objects of the array)
-     *
-     * @return array
-     */
-    public function sortMultiArrayByKey($array, $key)
-    {
-        for ($i = 0; $i < count($array)-1; $i++) {
-            for ($j = $i+1; $j < count($array); $j++) {
-                if ($array[$i]->$key() > $array[$j]->$key()) {
-                    $temp = $array[$i];
-                    $array[$i] = $array[$j];
-                    $array[$j] = $temp;
-                }
-            }
-        }
-        return $array;
     }
 
     /**
