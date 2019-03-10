@@ -222,15 +222,9 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         if ($category === 'my') {
-            $activity = $activityMapper->getUpcomingActivitiesForMember($user);
-        } else {
-            $activity = $activityMapper->getUpcomingActivities(null, null, $category);
-        if ($category === 'my') {
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
         return $activityMapper->getUpcomingActivities(null, null, $category);
-
-        return $activity;
     }
 
     /**
