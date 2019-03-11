@@ -118,12 +118,12 @@ class Activity
         usort($result, function ($a, $b) {
             return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
         });
-        
+
         for ($i = 0; $i < count($result); $i++) {
             $j = $i + 1;
-            while ($result[i]->getId() == $result[j]->getId()) {
-                \unset($array[j]);
-                j++;
+            while ($j < count($result) && $result[$i]->getId() == $result[$j]->getId()) {
+                unset($result[$j]);
+                $j++;
             }
         }
 
