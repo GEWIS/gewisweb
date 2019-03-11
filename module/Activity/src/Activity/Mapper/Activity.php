@@ -117,7 +117,7 @@ class Activity
         $result = array_unique($result);
 
         // Do sorting based on start time
-        usort($result, function($a, $b) {
+        usort($result, function ($a, $b) {
             return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
         });
 
