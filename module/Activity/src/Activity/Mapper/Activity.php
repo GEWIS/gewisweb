@@ -116,14 +116,21 @@ class Activity
 
         // Do sorting based on start time
         usort($result, function ($a, $b) {
-            return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
+            $beginA = $a->getBeginTime();
+            $beginB = $b->getBeginTime();
+            return $beginA < $beginB ? -1 : 1;
         });
 
-        for ($i = 0; $i < count($result); $i++) {
+        $size = count($result);
+
+        for ($i = 0; $i < $size; $i++) {
             $j = $i + 1;
-            while ($j < count($result) && $result[$i]->getId() == $result[$j]->getId()) {
-                unset($result[$j]);
-                $j++;
+            for ($i = $i; $j < $size; $j++) {
+                if (array_key_exists($i, $result) && array_key_exists($j, $result)) {
+                    if ($result[$i]->getId() == $result[$j]->getId()) {
+                        unset($result[$j]);
+                    }
+                }
             }
         }
 
