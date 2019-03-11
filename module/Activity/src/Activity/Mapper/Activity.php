@@ -113,6 +113,8 @@ class Activity
         foreach ($user->getMember()->getCurrentOrganInstallations() as $organ) {
             $result = array_merge($result, $this->getUpcomingActivitiesByOrgan($organ));
         }
+        
+        $result = array_unique($result);
 
         // Do sorting based on start time
         usort($result, function($a, $b) {
