@@ -90,12 +90,12 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      * the provided $activity
      *
      * @param ActivityModel $activity
-     * @return string
+     * @return array
      */
     public function getAvailableLanguages($activity)
     {
-        return ['nl' => !is_null($activity->getName()),
-                'en' => !is_null($activity->getNameEn())];
+        return ['nl' => !is_null($activity->getName()->getValueNL()),
+                'en' => !is_null($activity->getName()->getValueEN())];
     }
 
     /**

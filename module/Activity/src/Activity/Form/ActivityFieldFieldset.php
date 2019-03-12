@@ -152,6 +152,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                             ],
                             'callback' => function ($value, $context=null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
+                                    || !((new NotEmpty())->isValid($context['name']))
                                     || substr_count($context['options'],",") === substr_count($value,",");
                             }
                         ]

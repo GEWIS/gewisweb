@@ -31,16 +31,10 @@ class ActivityField
     /**
      * The name of the field.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $name;
 
-    /**
-     * The name of the field, in English.
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $nameEn;
 
     /**
      * The type of the field.
@@ -75,14 +69,12 @@ class ActivityField
         $this->activity = $activity;
     }
 
+    /**
+     * @param LocalisedText $name
+     */
     public function setName($name)
     {
-        $this->name = $name;
-    }
-
-    public function setNameEn($nameEn)
-    {
-        $this->nameEn = $nameEn;
+        $this->name = $name->copy();
     }
 
     public function setType($type)
@@ -105,14 +97,12 @@ class ActivityField
         return $this->id;
     }
 
+    /**
+     * @return LocalisedText
+     */
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getNameEn()
-    {
-        return $this->nameEn;
     }
 
     public function getType()
@@ -155,7 +145,6 @@ class ActivityField
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'nameEn' => $this->getNameEn(),
             'type' => $this->getType(),
             'minimumValue' => $this->getMinimumValue(),
             'maximumValue' => $this->getMaximumValue(),

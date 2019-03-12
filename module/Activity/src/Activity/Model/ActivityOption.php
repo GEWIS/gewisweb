@@ -32,16 +32,9 @@ class ActivityOption
     /**
      * The value of the option.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $value;
-
-    /**
-     * The value of the option, in English.
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $valueEn;
 
     /**
      * Set the field the option belongs to.
@@ -56,18 +49,12 @@ class ActivityOption
     /**
      * Set the value of the option.
      *
-     * @param string $value
+     * @param LocalisedText $value
      */
     public function setValue($value)
     {
-        $this->value = $value;
+        $this->value = $value->copy();
     }
-
-    public function setValueEn($valueEn)
-    {
-        $this->valueEn = $valueEn;
-    }
-
 
     public function getId()
     {
@@ -79,14 +66,12 @@ class ActivityOption
         return $this->field;
     }
 
+    /**
+     * @return LocalisedText
+     */
     public function getValue()
     {
         return $this->value;
-    }
-
-    public function getValueEn()
-    {
-        return $this->valueEn;
     }
 
     /**
@@ -98,8 +83,7 @@ class ActivityOption
     {
         return [
             'id' => $this->getId(),
-            'value' => $this->getValue(),
-            'valueEn' => $this->getValueEn()
+            'value' => $this->getValue()
         ];
     }
 }

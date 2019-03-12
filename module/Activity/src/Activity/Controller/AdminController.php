@@ -29,14 +29,11 @@ class AdminController extends AbstractActionController
     {
         $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $langSession = new SessionContainer('lang');
         $translator = $this->getServiceLocator()->get('activity_service_activity')->getTranslator();
         $signupRequestSession = new SessionContainer('signupRequest');
 
         /** @var $activity Activity */
         $activity = $queryService->getActivityWithDetails($id);
-        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
 
         if (is_null($activity)) {
             return $this->notFoundAction();
@@ -51,8 +48,8 @@ class AdminController extends AbstractActionController
         }
 
         $result = [
-            'activity' => $translatedActivity,
-            'signupData' => $translatorService->getTranslatedSignedUpData($activity, $langSession->lang),
+            'activity' => $activity,
+            'signupData' => $signupService->getSignedUpData($activity),
             'externalSignupForm' => $externalSignupForm,
             'externalSignoffForm' => new RequestForm('activityExternalSignoff', $translator->translate('Remove')),
         ];

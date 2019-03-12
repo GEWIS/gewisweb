@@ -19,14 +19,8 @@ class ActivityController extends AbstractActionController
     {
 
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $langSession = new SessionContainer('lang');
         $activities = $queryService->getUpcomingActivities($this->params('category'));
-        $translatedActivities = [];
-        foreach ($activities as $activity){
-            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
-        }
-        return ['activities' => $translatedActivities, 'category' => $this->params('category')];
+        return ['activities' => $activities, 'category' => $this->params('category')];
     }
 
     /**
@@ -36,36 +30,33 @@ class ActivityController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $langSession = new SessionContainer('lang');
         $activitySession = new SessionContainer('activityRequest');
         $externalSession = new SessionContainer('externalActivityRequest');
         /** @var $activity Activity*/
         $activity = $queryService->getActivity($id);
 
-        $translatedActivity = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         $identity = $this->getServiceLocator()->get('user_role');
         /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $isAllowedToSubscribe = $signupService->isAllowedToSubscribe();
 
-        $fields = $translatedActivity->getFields();
+        $fields = $activity->getFields();
         $form = $this->prepareSignupForm($fields, $activitySession, $externalSession);
         $isSignedUp = false;
         if ($signupService->isAllowedToInternalSubscribe()) {
             $isSignedUp = $isAllowedToSubscribe
-                && $signupService->isSignedUp($translatedActivity, $identity->getMember());
+                && $signupService->isSignedUp($activity, $identity->getMember());
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
         $result = [
-            'activity' => $translatedActivity,
+            'activity' => $activity,
             'signupOpen' => $activity->getCanSignUp() &&
             !$subscriptionDeadLinePassed &&
             $activity->getStatus() === Activity::STATUS_APPROVED,
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isSignedUp,
             'signupData' => $signupService->isAllowedToViewSubscriptions() ?
-                $translatorService->getTranslatedSignedUpData($activity, $langSession->lang) :
+                $signupService->getSignedUpData($activity) :
                 null,
             'form' => $form,
             'signoffForm' => new RequestForm('activitysignoff', 'Unsubscribe'),
@@ -354,10 +345,7 @@ class ActivityController extends AbstractActionController
      */
     public function archiveAction()
     {
-
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
-        $langSession = new SessionContainer('lang');
 
         $years = $queryService->getActivityArchiveYears();
         $year = $this->params()->fromRoute('year');
@@ -365,18 +353,10 @@ class ActivityController extends AbstractActionController
         if (is_null($year)) {
             $year = max($years);
         }
-
-        $activities = $queryService->getFinishedActivitiesByYear($year);
-        $translatedActivities = [];
-        foreach ($activities as $activity){
-            $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
-        }
-
-
         return new ViewModel([
             'activeYear' => $year,
             'years' => $years,
-            'activities' => $translatedActivities
+            'activities' => $queryService->getFinishedActivitiesByYear($year)
         ]);
     }
 }

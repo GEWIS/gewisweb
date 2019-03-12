@@ -1,7 +1,7 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()));
+$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Activities')); ?>
 
 
@@ -15,7 +15,7 @@ $this->headTitle($this->translate('Activities')); ?>
                 </a>
             </li>
             <li class="active">
-                <?= $this->escapeHtml($activity->getName()) ?>
+                <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
             </li>
         </ol>
     </div>
@@ -32,7 +32,7 @@ $this->headTitle($this->translate('Activities')); ?>
 
 <section class="section">
     <div class="container">
-        <h1><?= $this->escapeHtml($activity->getName()) ?></h1>
+        <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
         <ul class="list-group">
             <li class="list-group-item agenda-item">
                 <div class="row">
@@ -47,7 +47,7 @@ $this->headTitle($this->translate('Activities')); ?>
                     <div class="agenda-item-body col-md-10">
                         <div class="row">
                             <div class="col-md-8">
-                                <p><?= $this->markdown($activity->getDescription()) ?></p>
+                                <p><?= $this->markdown($activity->getDescription()->getText($lang)) ?></p>
                             </div>
                             <div class="col-md-4">
                                 <dl>
@@ -58,13 +58,13 @@ $this->headTitle($this->translate('Activities')); ?>
                                     <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
                                 
                                     <dt><?= $this->translate('Location') ?></dt>
-                                    <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
+                                    <dd><?= $this->escapeHtml($activity->getLocation()->getText($lang)) ?></dd>
                                     <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
                                         <dt><?= $this->translate('Subscribe before') ?></dt>
                                         <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
                                     <?php endif; ?>
                                     <dt><?= $this->translate('Costs') ?></dt>
-                                    <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
+                                    <dd><?= $this->escapeHtml($activity->getCosts()->getText($lang)) ?></dd>
                                     <?php if ($activity->getIsMyFuture()): ?>
                                         <a href="https://myfuture.tue.nl/">
                                             <img
@@ -80,14 +80,13 @@ $this->headTitle($this->translate('Activities')); ?>
                                         $end = $activity->getEndTime()->format('Ymd\THis');
                                         $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE&';
                                         $link .= http_build_query([
-                                            'text' =>  $activity->getName(),
+                                            'text' =>  $activity->getName()->getText($lang),
                                             'dates' => $begin . '/' . $end,
-                                            'location' => $activity->getLocation(),
+                                            'location' => $activity->getLocation()->getText($lang),
                                         ]);
                                     ?>
                                     
                                      <a class="btn btn-default" target="_blank" href= "<?php echo $link ?>"> Google Calendar </a>
-                                            
                                 </dl>
                             </div>
                         </div>
@@ -193,7 +192,7 @@ $this->headTitle($this->translate('Activities')); ?>
                         <th></th>
                         <th><?= $this->translate('Name') ?> </th>
                         <?php foreach ($fields as $field): ?>
-                            <th><?= $this->escapeHtml($field->getName()) ?></th>
+                            <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
                         <?php endforeach; ?>
                     </tr>
                 </thead>
@@ -233,11 +232,7 @@ $this->headTitle($this->translate('Activities')); ?>
                                                     echo $fieldValue->getValue();
                                                     break;
                                                 case 3:
-                                                    if ($lang === 'nl') {
-                                                        echo $fieldValue->getOption()->getValue();
-                                                    } else {
-                                                        echo $fieldValue->getOption()->getValueEn();
-                                                    }
+                                                    echo $fieldValue->getOption()->getValue()->getText($lang);
                                                     break;
                                             }
                                             ?>

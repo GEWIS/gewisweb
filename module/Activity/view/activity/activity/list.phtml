@@ -24,18 +24,18 @@
                             <h4>
                                 <?php if (!isset($proposals)): ?>
                                     <a href="<?php echo $this->url((isset($admin) ? 'activity_admin_approval' : 'activity') . '/view', ['id' => $activity->getId()]) ?>">
-                                        <?= $this->escapeHtml($activity->getName() === null ? $activity->getNameEn() : $activity->getName()) ?>
+                                        <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
                                     </a>
                                 <?php else: ?>
                                     <?php $proposal = $proposals[$activity->getId()] ?>
                                     <a href="<?php echo $this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()]) ?>">
-                                        <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()) ?>
+                                        <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()->getText($lang)) ?>
                                     </a>
                                 <?php endif; ?>
                             </h4>
                         </div>
                         <div class="col-md-8 reveal reveal-10">
-                            <p><?= strip_tags($this->markdown($activity->getDescription())) ?></p>
+                            <p><?= strip_tags($this->markdown($activity->getDescription()->getText($lang))) ?></p>
                             <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
                         </div>
                         <div class="col-md-4">
@@ -46,13 +46,13 @@
                                 <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
 
                                 <dt><?= $this->translate('Location') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
+                                <dd><?= $this->escapeHtml($activity->getLocation()->getText($lang)) ?></dd>
                                 <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
                                     <dt><?= $this->translate('Subscribe before') ?></dt>
                                     <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
                                 <?php endif; ?>
                                 <dt><?= $this->translate('Costs') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
+                                <dd><?= $this->escapeHtml($activity->getCosts()->getText($lang)) ?></dd>
                             </dl>
                         </div>
                     </div>

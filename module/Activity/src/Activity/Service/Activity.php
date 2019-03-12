@@ -2,6 +2,7 @@
 
 namespace Activity\Service;
 
+use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
@@ -233,16 +234,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     protected function copyActivity(ActivityModel $old, ActivityModel $new)
     {
         $old->setName($new->getName());
-        $old->setNameEn($new->getNameEn());
         $old->setBeginTime($new->getBeginTime());
         $old->setEndTime($new->getEndTime());
         $old->setSubscriptionDeadline($new->getSubscriptionDeadline());
         $old->setLocation($new->getLocation());
-        $old->setLocationEn($new->getLocationEn());
         $old->setCosts($new->getCosts());
-        $old->setCostsEn($new->getCostsEn());
         $old->setDescription($new->getDescription());
-        $old->setDescriptionEn($new->getDescriptionEn());
         $old->setCreator($new->getCreator());
         $old->setCanSignUp($new->getCanSignUp());
         $old->setOnlyGEWIS($new->getOnlyGEWIS());
@@ -289,7 +286,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 new \DateTime($params['subscriptionDeadline'])
         );
 
-        $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
+        $activity->setName(self::createLocalized($params, $dutch, $english, 'nameEn', 'name'));
+        $activity->setLocation(self::createLocalized($params, $dutch, $english, 'locationEn', 'location'));
+        $activity->setCosts(self::createLocalized($params, $dutch, $english, 'costsEn', 'costs'));
+        $activity->setDescription(self::createLocalized($params, $dutch, $english, 'descriptionEn', 'description'));
+
         $activity->setCanSignUp($params['canSignUp']);
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
@@ -347,28 +348,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $organ;
     }
 
-    /**
-     * Set the language specific (dutch and english) parameters of an activity
-     *
-     * @param type $activity
-     * @param type $params
-     * @param type $dutch
-     * @param type $english
-     */
-    protected function setLanguageSpecificParameters(ActivityModel $activity, $params, $dutch, $english)
-    {
-        if ($dutch) {
-            $activity->setName($params['name']);
-            $activity->setLocation($params['location']);
-            $activity->setCosts($params['costs']);
-            $activity->setDescription($params['description']);
-        }
-        if ($english) {
-            $activity->setNameEn($params['nameEn']);
-            $activity->setLocationEn($params['locationEn']);
-            $activity->setCostsEn($params['costsEn']);
-            $activity->setDescriptionEn($params['descriptionEn']);
-        }
+    private static function createLocalized($params, $dutch, $english, $nameEn, $name) {
+        return new LocalisedText($english ? $params[$nameEn] : null, $dutch ? $params[$name] : null);
     }
 
     /**
@@ -389,12 +370,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $field = new ActivityFieldModel();
 
         $field->setActivity($activity);
-        if ($dutch) {
-            $field->setName($params['name']);
-        }
-        if ($english) {
-            $field->setNameEn($params['nameEn']);
-        }
+        $field->setName(self::createLocalized($params, $dutch, $english, 'nameEn', 'name'));
         $field->setType($params['type']);
 
         if ($params['type'] === '2') {
@@ -440,12 +416,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         for ($i = 0; $i < $numOptions; $i++) {
             $option = new ActivityOptionModel();
-            if ($createDutchOptions) {
-                $option->setValue($options[$i]);
-            }
-            if ($createEnglishOptions) {
-                $option->setValueEn($optionsEn[$i]);
-            }
+            $option->setValue(new LocalisedText(
+                $createEnglishOptions ? $optionsEn[$i] : null,
+                $createDutchOptions ? $options[$i] : null
+            ));
             $option->setField($field);
             $em->persist($option);
         }

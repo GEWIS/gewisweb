@@ -36,16 +36,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Name for the activity.
      *
-     * @Orm\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $name;
-
-    /**
-     * English name for the activity
-     *
-     * @Orm\Column(type="string", nullable=true)
-     */
-    protected $nameEn;
 
     /**
      * The date and time the activity starts.
@@ -72,30 +65,16 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The location the activity is held at.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $location;
 
     /**
-     * English string to denote what location the activity is held on
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $locationEn;
-
-    /**
      * How much does it cost.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $costs;
-
-    /**
-     * English string to denote how much the activity cost
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $costsEn;
 
     /**
      * Are people able to sign up for this activity?
@@ -153,16 +132,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Activity description.
      *
-     * @Orm\Column(type="text", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
      */
     protected $description;
-
-    /**
-     * Activity description.
-     *
-     * @Orm\Column(type="text", nullable=true)
-     */
-    protected $descriptionEn;
 
     /**
      * all the people who signed up for this activity
@@ -222,7 +194,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return string
+     * @return LocalisedText
      */
     public function getName()
     {
@@ -230,27 +202,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $name
+     * @param LocalisedText $name
      */
     public function setName($name)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNameEn()
-    {
-        return $this->nameEn;
-    }
-
-    /**
-     * @param string $nameEn
-     */
-    public function setNameEn($nameEn)
-    {
-        $this->nameEn = $nameEn;
+        $this->name = $name->copy();
     }
 
     /**
@@ -303,7 +259,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
 
     /**
-     * @return string
+     * @return LocalisedText
      */
     public function getLocation()
     {
@@ -311,33 +267,15 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $location
+     * @param LocalisedText $location
      */
     public function setLocation($location)
     {
-        {
-            $this->location = $location;
-        }
+        $this->location = $location->copy();
     }
 
     /**
-     * @return string
-     */
-    public function getLocationEn()
-    {
-        return $this->locationEn;
-    }
-
-    /**
-     * @param string $locationEn
-     */
-    public function setLocationEn($locationEn)
-    {
-        $this->locationEn = $locationEn;
-    }
-
-    /**
-     * @return string
+     * @return LocalisedText
      */
     public function getCosts()
     {
@@ -345,27 +283,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $costs
+     * @param LocalisedText $costs
      */
     public function setCosts($costs)
     {
-        $this->costs = $costs;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCostsEn()
-    {
-        return $this->costsEn;
-    }
-
-    /**
-     * @param string $costsEn
-     */
-    public function setCostsEn($costsEn)
-    {
-        $this->costsEn = $costsEn;
+        $this->costs = $costs->copy();
     }
 
     /**
@@ -472,7 +394,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         return $this->updateProposal;
     }
     /**
-     * @return string
+     * @return LocalisedText
      */
     public function getDescription()
     {
@@ -480,27 +402,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $description
+     * @param LocalisedText $description
      */
     public function setDescription($description)
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescriptionEn()
-    {
-        return $this->descriptionEn;
-    }
-
-    /**
-     * @param string $descriptionEn
-     */
-    public function setDescriptionEn($descriptionEn)
-    {
-        $this->descriptionEn = $descriptionEn;
+        $this->description = $description->copy();
     }
 
     /**
@@ -611,17 +517,17 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'nameEn' => $this->getNameEn(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
             'beginTime' => $this->getBeginTime(),
             'endTime' => $this->getEndTime(),
             'subscriptionDeadline' => $this->getSubscriptionDeadline(),
-            'location' => $this->getLocation(),
-            'LocationEn' => $this->getLocationEn(),
-            'costs' => $this->getCosts(),
-            'costsEn' => $this->getCostsEn(),
-            'description' => $this->getDescription(),
-            'descriptionEn' => $this->getDescriptionEn(),
+            'location' => $this->getLocation()->getValueNL(),
+            'LocationEn' => $this->getLocation()->getValueEN(),
+            'costs' => $this->getCosts()->getValueNL(),
+            'costsEn' => $this->getCosts()->getValueEN(),
+            'description' => $this->getDescription()->getValueNL(),
+            'descriptionEn' => $this->getDescription()->getValueEN(),
             'canSignUp' => $this->getCanSignUp(),
             'isFood' => $this->getIsFood(),
             'isMyFuture' => $this->getIsMyFuture(),

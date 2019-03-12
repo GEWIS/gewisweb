@@ -150,7 +150,6 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
      * to be used by the factory.
      *
      * @param \Activity\Model\ActivityField $field
-     * @param bool $setEnglish
      * @return array
      */
     protected function createFieldElementArray($field){
@@ -182,7 +181,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             case 3: //'Choice'
                 $values = [];
                 foreach($field->getOptions() as $option){
-                    $values[$option->getId()] =  $option->getValue();
+                    $values[$option->getId()] =  $option->getValue()->getText();
                 }
                 $result['type'] = 'Zend\Form\Element\Select';
                 $result['options'] = [
