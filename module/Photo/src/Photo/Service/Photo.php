@@ -438,12 +438,12 @@ class Photo extends AbstractAclService
         $hits = $photo->getHitCount();
         $tags = $photo->getTagCount();
 
-        $baseRating = $hits / $tags;
+        $baseRating = $hits /  pow($tags, 1.25);
         // Prevent division by zero.
         if ($age < 14) {
             return $baseRating * (14 - $age);
         }
-        return $baseRating / $age;
+        return $baseRating /$age;
     }
 
     /**
