@@ -219,6 +219,7 @@ class Meeting
      */
     public function sortDocuments()
     {
+        $temp = [];
         foreach ($this->documents as $document) {
             $temp[] = $document;
         }
