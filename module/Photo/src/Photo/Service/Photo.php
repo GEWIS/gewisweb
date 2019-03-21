@@ -443,7 +443,7 @@ class Photo extends AbstractAclService
         if ($age == 0) {
             return $baseRating * 5;
         }
-        return $baseRating + $baseRating / $age;
+        return $baseRating / $age;
     }
 
     /**
