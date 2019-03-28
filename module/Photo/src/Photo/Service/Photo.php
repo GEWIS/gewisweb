@@ -369,6 +369,11 @@ class Photo extends AbstractAclService
      */
     public function determineProfilePhoto($lidnr)
     {
+        $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
+        if ($profilePhoto != null) {
+            return $profilePhoto;
+        }
+
         if (!$this->isAllowed('view', 'tag')) {
             return null;
         }
@@ -433,12 +438,12 @@ class Photo extends AbstractAclService
         $hits = $photo->getHitCount();
         $tags = $photo->getTagCount();
 
-        $baseRating = $hits / $tags;
+        $baseRating = $hits /  pow($tags, 1.25);
         // Prevent division by zero.
-        if ($age == 0) {
-            return $baseRating * 5;
+        if ($age < 14) {
+            return $baseRating * (14 - $age);
         }
-        return $baseRating + $baseRating / $age;
+        return $baseRating /$age;
     }
 
     /**
@@ -547,6 +552,16 @@ class Photo extends AbstractAclService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
+     * Get the tag mapper.
+     *
+     * @return \Photo\Mapper\ProfilePhoto
+     */
+    public function getProfilePhotoMapper()
+    {
+        return $this->sm->get('photo_mapper_profile_photo');
     }
 
     /**
