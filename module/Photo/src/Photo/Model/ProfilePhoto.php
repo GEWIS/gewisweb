@@ -91,7 +91,7 @@ class ProfilePhoto implements ResourceInterface
      *
      * @return bool
      */
-    public function getExplicit()
+    public function isExplicit()
     {
         return $this->explicit;
     }

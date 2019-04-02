@@ -10,9 +10,13 @@ use Decision\Model\Member;
 use Exception;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
-use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use Photo\Mapper\Tag as TagMapper;
 use Photo\Model\Photo as PhotoModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
+use Photo\Model\Album as AlbumModel;
 use User\Permissions\NotAllowedException;
 use Zend\Http\Response\Stream;
 use Zend\I18n\Filter\Alnum;
@@ -26,7 +30,7 @@ class Photo extends AbstractAclService
     /**
      * Get all photos in an album
      *
-     * @param \Photo\Model\Album $album the album to get the photos from
+     * @param AlbumModel $album the album to get the photos from
      * @param integer $start the result to start at
      * @param integer $maxResults max amount of results to return,
      *                                       null for infinite
@@ -135,11 +139,12 @@ class Photo extends AbstractAclService
      *
      * @param int $photoId the id of the photo to retrieve
      *
+     * @param AlbumModel|null $album
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
      * @throws Exception
      */
-    public function getPhotoData($photoId, \Photo\Model\Album $album = null)
+    public function getPhotoData($photoId, AlbumModel $album = null)
     {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
@@ -156,7 +161,7 @@ class Photo extends AbstractAclService
 
         if (is_null($album)) {
             // Default type for albums is Album.
-            $album = new \Photo\Model\Album();
+            $album = new AlbumModel();
         }
 
         $next = $this->getNextPhoto($photo, $album);
@@ -168,7 +173,7 @@ class Photo extends AbstractAclService
         $isProfilePhoto = false;
         $isExplicitProfilePhoto = false;
         if ($profilePhoto != null) {
-            $isExplicitProfilePhoto = $profilePhoto->getExplicit();
+            $isExplicitProfilePhoto = $profilePhoto->isExplicit();
             if ($photoId == $profilePhoto->getPhoto()->getId()) {
                 $isProfilePhoto = true;
             }
@@ -189,13 +194,13 @@ class Photo extends AbstractAclService
      *
      * @param PhotoModel $photo
      *
+     * @param AlbumModel $album
      * @return PhotoModel The next photo.
      */
     public function getNextPhoto(
         PhotoModel $photo,
-        \Photo\Model\Album $album
-    )
-    {
+        AlbumModel $album
+    ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
@@ -210,13 +215,13 @@ class Photo extends AbstractAclService
      *
      * @param PhotoModel $photo
      *
+     * @param AlbumModel $album
      * @return PhotoModel The next photo.
      */
     public function getPreviousPhoto(
         PhotoModel $photo,
-        \Photo\Model\Album $album
-    )
-    {
+        AlbumModel $album
+    ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
@@ -546,7 +551,7 @@ class Photo extends AbstractAclService
     {
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         if ($profilePhoto != null) {
-            return $profilePhoto->getExplicit();
+            return $profilePhoto->isExplicit();
         }
         return false;
     }
@@ -602,7 +607,7 @@ class Photo extends AbstractAclService
     /**
      * Get the weekly photo mapper.
      *
-     * @return \Photo\Mapper\WeeklyPhoto
+     * @return WeeklyPhotoMapper
      */
     public function getWeeklyPhotoMapper()
     {
@@ -718,7 +723,7 @@ class Photo extends AbstractAclService
     /**
      * Get the tag mapper.
      *
-     * @return \Photo\Mapper\Tag
+     * @return TagMapper
      */
     public function getTagMapper()
     {
@@ -728,7 +733,7 @@ class Photo extends AbstractAclService
     /**
      * Get the tag mapper.
      *
-     * @return \Photo\Mapper\ProfilePhoto
+     * @return ProfilePhotoMapper
      */
     public function getProfilePhotoMapper()
     {
