@@ -191,7 +191,7 @@ $this->scriptUrl()->requireUrl('member/search');
                     <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
                     <?php if ($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
                         <a
-                            class="btn btn-default" href="<?= $this->url('photo/photo_download',
+                                class="btn btn-default" href="<?= $this->url('photo/photo_download',
                             ['photo_id' => $photo->getId()]); ?>"
                         >
                             <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
@@ -199,6 +199,11 @@ $this->scriptUrl()->requireUrl('member/search');
                         </a>
                     <?php endif; ?>
                     <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
+                </div>
+                <div class="col-lg-3">
+                    <?php if ($isTagged && !$isProfilePicture): ?>
+                        <p>Set profile picture</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

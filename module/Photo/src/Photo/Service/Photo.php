@@ -155,10 +155,20 @@ class Photo extends AbstractAclService
         $next = $this->getNextPhoto($photo, $album);
         $previous = $this->getPreviousPhoto($photo, $album);
 
+        $lidnr = $this->getMemberService()->getRole()->getLidnr();
+        $isTagged = $this->isTaggedIn($photoId, $lidnr);
+        $profilePicture = $this->getStoredProfilePhoto($lidnr);
+        $isProfilePicture = false;
+        if ($photoId == $profilePicture->getPhoto()->getId()) {
+            $isProfilePicture = true;
+        }
+
         return [
             'photo' => $photo,
             'next' => $next,
-            'previous' => $previous
+            'previous' => $previous,
+            'isTagged' => $isTagged,
+            'isProfilePicture' => $isProfilePicture
         ];
     }
 
