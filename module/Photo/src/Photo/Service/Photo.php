@@ -526,6 +526,18 @@ class Photo extends AbstractAclService
         $this->storeProfilePhoto($photo, $member, $dateTime, true);
     }
 
+    /**
+     * @param int $lidnr
+     */
+    public function hasExplicitProfilePhoto($lidnr)
+    {
+        $profilePhoto = $this->getStoredProfilePhoto($lidnr);
+        if ($profilePhoto != null) {
+            return $profilePhoto->getExplicit();
+        }
+        return false;
+    }
+
     public function getHitMapper()
     {
         return $this->sm->get('photo_mapper_hit');

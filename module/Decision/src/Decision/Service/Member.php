@@ -65,13 +65,16 @@ class Member extends AbstractAclService
         // Base directory for retrieving photos
         $basedir = $this->getPhotoService()->getBaseDirectory();
 
-        $profilePhoto = $this->getPhotoService()->getProfilePhoto($lidnr);
+        $photoService = $this->getPhotoService();
+        $profilePhoto = $photoService->getProfilePhoto($lidnr);
+        $isExplicitProfilePhoto = $photoService->hasExplicitProfilePhoto($lidnr);
 
         return [
             'member' => $member,
             'memberships' => $memberships,
             'tags' => $tags,
             'profilePhoto' => $profilePhoto,
+            'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir
         ];
     }
