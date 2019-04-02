@@ -159,8 +159,10 @@ class Photo extends AbstractAclService
         $isTagged = $this->isTaggedIn($photoId, $lidnr);
         $profilePicture = $this->getStoredProfilePhoto($lidnr);
         $isProfilePicture = false;
-        if ($photoId == $profilePicture->getPhoto()->getId()) {
-            $isProfilePicture = true;
+        if ($profilePicture != null) {
+            if ($photoId == $profilePicture->getPhoto()->getId()) {
+                $isProfilePicture = true;
+            }
         }
 
         return [
@@ -426,8 +428,9 @@ class Photo extends AbstractAclService
      */
     private function removeProfilePhoto(ProfilePhotoModel $profilePhoto)
     {
-        $this->remove($profilePhoto);
-        $this->flush();
+        $mapper = $this->getProfilePhotoMapper();
+        $mapper->remove($profilePhoto);
+        $mapper->flush();
     }
 
     /**
@@ -495,6 +498,22 @@ class Photo extends AbstractAclService
         $mapper = $this->getProfilePhotoMapper();
         $mapper->persist($profilePhotoModel);
         $mapper->flush();
+    }
+
+    /**
+     * @param int $photoId
+     */
+    public function setProfilePhoto($photoId)
+    {
+        $photo = $this->getPhoto($photoId);
+        $member = $this->getMemberService()->getRole()->getMember();
+        $lidnr = $member->getLidnr();
+        $profilePhoto = $this->getStoredProfilePhoto($lidnr);
+        if ($profilePhoto != null) {
+            $this->removeProfilePhoto($profilePhoto);
+        }
+        $dateTime = (new DateTime())->add(new DateInterval('P1Y'));
+        $this->storeProfilePhoto($photo, $member, $dateTime);
     }
 
     public function getHitMapper()

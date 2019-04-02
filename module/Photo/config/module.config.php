@@ -145,6 +145,19 @@ return [
                             ],
                         ],
                     ],
+                    'setprofilepicture' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/setprofilepicture/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'setProfilePicture',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],

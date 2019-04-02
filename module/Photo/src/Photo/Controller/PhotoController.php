@@ -107,16 +107,29 @@ class PhotoController extends AbstractActionController
         
         return $this->getPhotoService()->getPhotoDownload($photoId);
     }
-    
+
     /**
      * Display the page containing previous pictures of the week.
      */
     public function weeklyAction()
     {
         $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
-        
+
         return new ViewModel([
             'weeklyPhotos' => $weeklyPhotos
+        ]);
+    }
+
+    /**
+     * For setting a profile picture
+     */
+    public function setProfilePictureAction()
+    {
+        $photoId = $this->params()->fromRoute('photo_id');
+        $this->getPhotoService()->setProfilePhoto($photoId);
+
+        $this->redirect()->toRoute('photo/photo', [
+            'photo_id' => $photoId,
         ]);
     }
     

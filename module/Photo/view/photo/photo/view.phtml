@@ -186,6 +186,13 @@ $this->scriptUrl()->requireUrl('member/search');
                             </a>
                         <?php endif; ?>
                     </div>
+                    <hr>
+                    <?php if ($isTagged && !$isProfilePicture): ?>
+                        <a type="button" class="btn btn-primary" href=<?= $this->url('photo/setprofilepicture', ['photo_id' => $photo->getId()]); ?>>
+                            <?= $this->translate('Set this picture as your profile picture') ?>
+                        </a>
+                        <p><?= $this->translate('Your preference will be stored for one year.') ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="col-lg-3">
                     <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
@@ -199,11 +206,6 @@ $this->scriptUrl()->requireUrl('member/search');
                         </a>
                     <?php endif; ?>
                     <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
-                </div>
-                <div class="col-lg-3">
-                    <?php if ($isTagged && !$isProfilePicture): ?>
-                        <p>Set profile picture</p>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
