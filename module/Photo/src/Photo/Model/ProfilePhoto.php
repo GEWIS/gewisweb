@@ -2,6 +2,8 @@
 
 namespace Photo\Model;
 
+use DateTime;
+use Decision\Model\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -44,6 +46,13 @@ class ProfilePhoto implements ResourceInterface
     protected $dateTime;
 
     /**
+     * Date and time when the photo was taken.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $explicit;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -52,7 +61,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Photo
+     * @return Photo
      */
     public function getPhoto()
     {
@@ -60,7 +69,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getMember()
     {
@@ -70,11 +79,21 @@ class ProfilePhoto implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
         return $this->dateTime;
+    }
+
+    /**
+     * Get the explicit bool
+     *
+     * @return bool
+     */
+    public function getExplicit()
+    {
+        return $this->explicit;
     }
 
     /**
@@ -86,7 +105,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function setPhoto($photo)
     {
@@ -94,7 +113,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param \Decision\Model\Member $member
+     * @param Member $member
      */
     public function setMember($member)
     {
@@ -102,11 +121,19 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param \DateTime
+     * @param DateTime
      */
     public function setDateTime($dateTime)
     {
         $this->dateTime = $dateTime;
+    }
+
+    /**
+     * @param bool
+     */
+    public function setExplicit($explicit)
+    {
+        $this->explicit = $explicit;
     }
 
     /**

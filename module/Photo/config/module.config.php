@@ -145,16 +145,29 @@ return [
                             ],
                         ],
                     ],
-                    'setprofilepicture' => [
+                    'setprofilephoto' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/setprofilepicture/:photo_id',
+                            'route' => '/setprofilephoto/:photo_id',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'controller' => 'Photo',
-                                'action' => 'setProfilePicture',
+                                'action' => 'setProfilePhoto',
+                            ],
+                        ],
+                    ],
+                    'removeprofilephoto' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/removeprofilephoto/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'removeProfilePhoto',
                             ],
                         ],
                     ],
