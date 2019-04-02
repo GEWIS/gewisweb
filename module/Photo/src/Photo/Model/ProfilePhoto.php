@@ -39,7 +39,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * Date and time when the photo was taken.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 

@@ -44,15 +44,7 @@ class ProfilePhoto
         $profilePhoto = $this->getRepository()->findOneBy([
             'member' => $lidnr
         ]);
-        if ($profilePhoto != null) {
-            if ($profilePhoto->getDateTime() > new DateTime()) {
-                echo "Wow, the date times match out";
-                return $profilePhoto;
-            }
-            $this->remove($profilePhoto);
-            $this->flush();
-        }
-        return null;
+        return $profilePhoto;
     }
 
     /**

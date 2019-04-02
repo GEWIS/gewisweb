@@ -9,6 +9,7 @@ use Decision\Model\Member;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use Photo\Model\Photo as PhotoModel;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 
 /**
@@ -76,7 +77,7 @@ class Photo extends AbstractAclService
      *
      * @param integer $id the id of the album
      *
-     * @return \Photo\Model\Photo photo matching the given id
+     * @return PhotoModel photo matching the given id
      */
     public function getPhoto($id)
     {
@@ -92,7 +93,7 @@ class Photo extends AbstractAclService
     /**
      * Returns a unique file name for a photo.
      *
-     * @param \Photo\Model\Photo $photo the photo to get a name for
+     * @param PhotoModel $photo the photo to get a name for
      *
      * @return string
      */
@@ -164,12 +165,12 @@ class Photo extends AbstractAclService
     /**
      * Returns the next photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      *
-     * @return \Photo\Model\Photo The next photo.
+     * @return PhotoModel The next photo.
      */
     public function getNextPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     )
     {
@@ -185,12 +186,12 @@ class Photo extends AbstractAclService
     /**
      * Returns the previous photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      *
-     * @return \Photo\Model\Photo The next photo.
+     * @return PhotoModel The next photo.
      */
     public function getPreviousPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     )
     {
@@ -234,7 +235,7 @@ class Photo extends AbstractAclService
     /**
      * Deletes all files associated with a photo.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function deletePhotoFiles($photo)
     {
@@ -314,7 +315,7 @@ class Photo extends AbstractAclService
      * @param DateTime $begindate
      * @param DateTime $enddate
      *
-     * @return \Photo\Model\Photo|null
+     * @return PhotoModel|null
      */
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
@@ -342,7 +343,7 @@ class Photo extends AbstractAclService
      * @param DateTime $begindate
      * @param DateTime $enddate
      *
-     * @return \Photo\Model\Photo|null
+     * @return PhotoModel|null
      */
     public function determinePhotoOfTheWeek($begindate, $enddate)
     {
@@ -369,14 +370,14 @@ class Photo extends AbstractAclService
     /**
      * Determine which photo is best suited as profile picture
      *
-     * @param \int $lidnr
+     * @param int $lidnr
      *
-     * @return \Photo\Model\Photo|null
+     * @return PhotoModel|null
      * @throws \Exception
      */
     public function getProfilePhoto($lidnr)
     {
-        $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
+        $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         if ($profilePhoto != null) {
             return $profilePhoto->getPhoto();
         }
@@ -385,8 +386,43 @@ class Photo extends AbstractAclService
     }
 
     /**
-     * @param $lidnr
-     * @return |null
+     * Determine which photo is best suited as profile picture
+     *
+     * @param int $lidnr
+     *
+     * @return ProfilePhotoModel|null
+     * @throws \Exception
+     */
+    private function getStoredProfilePhoto($lidnr)
+    {
+        $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
+        if ($profilePhoto != null) {
+            if ($profilePhoto->getDateTime() < new DateTime()) {
+                $this->removeProfilePhoto($profilePhoto);
+                return null;
+            }
+            if (!$this->isTaggedIn($profilePhoto->getPhoto()->getId(), $lidnr)) {
+                $this->removeProfilePhoto($profilePhoto);
+                return null;
+            }
+            return $profilePhoto;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param ProfilePhotoModel $profilePhoto
+     */
+    private function removeProfilePhoto(ProfilePhotoModel $profilePhoto)
+    {
+        $this->remove($profilePhoto);
+        $this->flush();
+    }
+
+    /**
+     * @param int $lidnr
+     * @return PhotoModel|null
      * @throws \Exception
      */
     private function determineProfilePhoto($lidnr)
@@ -415,11 +451,11 @@ class Photo extends AbstractAclService
     }
 
     /**
-     * @param $lidnr
-     * @param $bestPhoto
+     * @param int $lidnr
+     * @param PhotoModel $photo
      * @throws \Exception
      */
-    private function cacheProfilePhoto($lidnr, $bestPhoto)
+    private function cacheProfilePhoto($lidnr, PhotoModel $photo)
     {
         $member = $this->getMemberService()->findMemberByLidnr($lidnr);
         $now = new DateTime();
@@ -429,19 +465,22 @@ class Photo extends AbstractAclService
             $dateTime = $now->add(new DateInterval('P5D'));
         }
 
-        $this->storeProfilePhoto($bestPhoto, $member, $dateTime);
+        $this->storeProfilePhoto($photo, $member, $dateTime);
     }
 
     /**
-     * @param $bestPhoto
+     * @param PhotoModel $photo
      * @param Member $member
-     * @param static $dateTime
+     * @param $dateTime
      */
-    private function storeProfilePhoto($bestPhoto, Member $member, $dateTime)
+    private function storeProfilePhoto(PhotoModel $photo, Member $member, $dateTime)
     {
+        if (!$this->isTaggedIn($photo->getId(), $member->getLidnr())) {
+            return;
+        }
         $profilePhotoModel = new ProfilePhotoModel();
         $profilePhotoModel->setMember($member);
-        $profilePhotoModel->setPhoto($bestPhoto);
+        $profilePhotoModel->setPhoto($photo);
         $profilePhotoModel->setDatetime($dateTime);
         $mapper = $this->getProfilePhotoMapper();
         $mapper->persist($profilePhotoModel);
@@ -456,7 +495,7 @@ class Photo extends AbstractAclService
     /**
      * Determine the preference rating of the photo.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      * @param integer $occurences
      *
      * @return float
@@ -475,7 +514,7 @@ class Photo extends AbstractAclService
     /**
      * Determine the preference rating of the photo.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      * @param int $lidnr
      *
      * @return float
@@ -533,7 +572,7 @@ class Photo extends AbstractAclService
      * Count a hit for the specified photo. Should be called whenever a photo
      * is viewed.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function countHit($photo)
     {
@@ -595,6 +634,24 @@ class Photo extends AbstractAclService
         return $this->getTagMapper()->findTag($photoId, $lidnr);
     }
 
+
+    /**
+     * Checks whether a user is tagged in a photo
+     *
+     * @param integer $photoId
+     * @param integer $lidnr
+     *
+     * @return bool
+     */
+    public function isTaggedIn($photoId, $lidnr)
+    {
+        $tag = $this->findTag($photoId, $lidnr);
+        if ($tag != null) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Get the tag mapper.
      *
@@ -645,7 +702,6 @@ class Photo extends AbstractAclService
         if (!is_null($tag)) {
             $this->getTagMapper()->remove($tag);
             $this->getTagMapper()->flush();
-
             return true;
         } else {
             return false;
