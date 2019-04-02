@@ -62,10 +62,10 @@ class Member extends AbstractAclService
 
         $tags = $this->getPhotoService()->getTagsForMember($member);
 
-        $profilePhoto = $this->getPhotoService()->determineProfilePhoto($lidnr);
-
         // Base directory for retrieving photos
         $basedir = $this->getPhotoService()->getBaseDirectory();
+
+        $profilePhoto = $this->getPhotoService()->getProfilePhoto($lidnr);
 
         return [
             'member' => $member,

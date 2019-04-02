@@ -2,6 +2,7 @@
 
 namespace Photo\Mapper;
 
+use DateTime;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 use Doctrine\ORM\EntityManager;
 
@@ -33,15 +34,25 @@ class ProfilePhoto
      * Checks if the specified photo exists in the database already and returns
      * it if it does.
      *
-     * @param int   $lidnr     The Id of the user to which the photo is assigned
+     * @param int $lidnr The Id of the user to which the photo is assigned
      *
      * @return \Photo\Model\ProfilePhoto|null
+     * @throws \Exception
      */
     public function getProfilePhotoByLidnr($lidnr)
     {
-        return $this->getRepository()->findOneBy([
+        $profilePhoto = $this->getRepository()->findOneBy([
             'member' => $lidnr
         ]);
+        if ($profilePhoto != null) {
+            if ($profilePhoto->getDateTime() > new DateTime()) {
+                echo "Wow, the date times match out";
+                return $profilePhoto;
+            }
+            $this->remove($profilePhoto);
+            $this->flush();
+        }
+        return null;
     }
 
     /**
@@ -59,7 +70,7 @@ class ProfilePhoto
      *
      * @param \Photo\Model\ProfilePhoto $profilePhoto
      */
-    public function remove(PhotoModel $profilePhoto)
+    public function remove(ProfilePhotoModel $profilePhoto)
     {
         $this->em->remove($profilePhoto);
     }
@@ -69,7 +80,7 @@ class ProfilePhoto
      *
      * @param \Photo\Model\ProfilePhoto $profilePhoto
      */
-    public function persist(PhotoModel $profilePhoto)
+    public function persist(ProfilePhotoModel $profilePhoto)
     {
         $this->em->persist($profilePhoto);
     }

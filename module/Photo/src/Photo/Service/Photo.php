@@ -3,9 +3,13 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
+use DateTime;
+use DateInterval;
+use Decision\Model\Member;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 
 /**
  * Photo service.
@@ -15,9 +19,9 @@ class Photo extends AbstractAclService
     /**
      * Get all photos in an album
      *
-     * @param \Photo\Model\Album $album      the album to get the photos from
-     * @param integer            $start      the result to start at
-     * @param integer            $maxResults max amount of results to return,
+     * @param \Photo\Model\Album $album the album to get the photos from
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return,
      *                                       null for infinite
      *
      * @return array of Photo\Model\Album
@@ -151,8 +155,8 @@ class Photo extends AbstractAclService
         $previous = $this->getPreviousPhoto($photo, $album);
 
         return [
-            'photo'    => $photo,
-            'next'     => $next,
+            'photo' => $photo,
+            'next' => $next,
             'previous' => $previous
         ];
     }
@@ -167,7 +171,8 @@ class Photo extends AbstractAclService
     public function getNextPhoto(
         \Photo\Model\Photo $photo,
         \Photo\Model\Album $album
-    ) {
+    )
+    {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
@@ -187,7 +192,8 @@ class Photo extends AbstractAclService
     public function getPreviousPhoto(
         \Photo\Model\Photo $photo,
         \Photo\Model\Album $album
-    ) {
+    )
+    {
         if (!$this->isAllowed('view')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
@@ -305,16 +311,16 @@ class Photo extends AbstractAclService
      * if at least one photo has been viewed in the specified time.
      * The parameters determine the week to check the photos of.
      *
-     * @param \DateTime $begindate
-     * @param \DateTime $enddate
+     * @param DateTime $begindate
+     * @param DateTime $enddate
      *
      * @return \Photo\Model\Photo|null
      */
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
         if (is_null($begindate) || is_null($enddate)) {
-            $begindate = (new \DateTime())->sub(new \DateInterval('P1W'));
-            $enddate = new \DateTime();
+            $begindate = (new DateTime())->sub(new \DateInterval('P1W'));
+            $enddate = new DateTime();
         }
         $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
         if (is_null($bestPhoto)) {
@@ -333,8 +339,8 @@ class Photo extends AbstractAclService
     /**
      * Determine which photo is the photo of the week
      *
-     * @param \DateTime $begindate
-     * @param \DateTime $enddate
+     * @param DateTime $begindate
+     * @param DateTime $enddate
      *
      * @return \Photo\Model\Photo|null
      */
@@ -366,18 +372,25 @@ class Photo extends AbstractAclService
      * @param \int $lidnr
      *
      * @return \Photo\Model\Photo|null
+     * @throws \Exception
      */
-    public function determineProfilePhoto($lidnr)
+    public function getProfilePhoto($lidnr)
     {
         $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
         if ($profilePhoto != null) {
-            return $profilePhoto;
+            return $profilePhoto->getPhoto();
         }
 
-        if (!$this->isAllowed('view', 'tag')) {
-            return null;
-        }
+        return $this->determineProfilePhoto($lidnr);
+    }
 
+    /**
+     * @param $lidnr
+     * @return |null
+     * @throws \Exception
+     */
+    private function determineProfilePhoto($lidnr)
+    {
         $results = $this->getTagMapper()->getTagsByLidnr($lidnr);
 
         if (empty($results)) {
@@ -396,7 +409,43 @@ class Photo extends AbstractAclService
             }
         }
 
+        $this->cacheProfilePhoto($lidnr, $bestPhoto);
+
         return $bestPhoto;
+    }
+
+    /**
+     * @param $lidnr
+     * @param $bestPhoto
+     * @throws \Exception
+     */
+    private function cacheProfilePhoto($lidnr, $bestPhoto)
+    {
+        $member = $this->getMemberService()->findMemberByLidnr($lidnr);
+        $now = new DateTime();
+        if ($member->isActive()) {
+            $dateTime = $now->add(new DateInterval('P1D'));
+        } else {
+            $dateTime = $now->add(new DateInterval('P5D'));
+        }
+
+        $this->storeProfilePhoto($bestPhoto, $member, $dateTime);
+    }
+
+    /**
+     * @param $bestPhoto
+     * @param Member $member
+     * @param static $dateTime
+     */
+    private function storeProfilePhoto($bestPhoto, Member $member, $dateTime)
+    {
+        $profilePhotoModel = new ProfilePhotoModel();
+        $profilePhotoModel->setMember($member);
+        $profilePhotoModel->setPhoto($bestPhoto);
+        $profilePhotoModel->setDatetime($dateTime);
+        $mapper = $this->getProfilePhotoMapper();
+        $mapper->persist($profilePhotoModel);
+        $mapper->flush();
     }
 
     public function getHitMapper()
@@ -408,14 +457,15 @@ class Photo extends AbstractAclService
      * Determine the preference rating of the photo.
      *
      * @param \Photo\Model\Photo $photo
-     * @param integer            $occurences
+     * @param integer $occurences
      *
      * @return float
+     * @throws \Exception
      */
     public function ratePhoto($photo, $occurences)
     {
         $tagged = $photo->getTags()->count() > 0;
-        $now = new \DateTime();
+        $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
         $res = $occurences * (1 + 1 / $age);
 
@@ -426,24 +476,25 @@ class Photo extends AbstractAclService
      * Determine the preference rating of the photo.
      *
      * @param \Photo\Model\Photo $photo
-     * @param int                $lidnr
+     * @param int $lidnr
      *
      * @return float
+     * @throws \Exception
      */
     public function ratePhotoForMember($photo)
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
 
         $hits = $photo->getHitCount();
         $tags = $photo->getTagCount();
 
-        $baseRating = $hits /  pow($tags, 1.25);
+        $baseRating = $hits / pow($tags, 1.25);
         // Prevent division by zero.
         if ($age < 14) {
             return $baseRating * (14 - $age);
         }
-        return $baseRating /$age;
+        return $baseRating / $age;
     }
 
     /**
@@ -487,7 +538,7 @@ class Photo extends AbstractAclService
     public function countHit($photo)
     {
         $hit = new HitModel();
-        $hit->setDateTime(new \DateTime());
+        $hit->setDateTime(new DateTime());
         $photo->addHit($hit);
 
         $this->getPhotoMapper()->flush();
@@ -604,7 +655,7 @@ class Photo extends AbstractAclService
     /**
      * Gets all photos in which a member has been tagged.
      *
-     * @param \Decision\Model\Member $member
+     * @param Member $member
      *
      * @return array
      */

@@ -2,13 +2,17 @@
 
 namespace Photo\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * ProfilePhoto.
  *
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ *
  */
-class ProfilePhoto
+class ProfilePhoto implements ResourceInterface
 {
 
     /**
@@ -27,10 +31,17 @@ class ProfilePhoto
     protected $photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
+     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
      * @ORM\JoinColumn(name="member_id",referencedColumnName="lidnr")
      */
     protected $member;
+
+    /**
+     * Date and time when the photo was taken.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $dateTime;
 
     /**
      * @return integer
@@ -57,6 +68,16 @@ class ProfilePhoto
     }
 
     /**
+     * Get the date.
+     *
+     * @return \DateTime
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
      * @param integer $id
      */
     public function setId($id)
@@ -78,6 +99,14 @@ class ProfilePhoto
     public function setMember($member)
     {
         $this->member = $member;
+    }
+
+    /**
+     * @param \DateTime
+     */
+    public function setDateTime($dateTime)
+    {
+        $this->dateTime = $dateTime;
     }
 
     /**
