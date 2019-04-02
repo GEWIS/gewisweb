@@ -3,14 +3,20 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\Storage;
 use DateTime;
 use DateInterval;
 use Decision\Model\Member;
+use Exception;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use User\Permissions\NotAllowedException;
+use Zend\Http\Response\Stream;
+use Zend\I18n\Filter\Alnum;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * Photo service.
@@ -30,7 +36,7 @@ class Photo extends AbstractAclService
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
@@ -54,12 +60,12 @@ class Photo extends AbstractAclService
      *
      * @param integer $photoId
      *
-     * @return \Zend\Http\Response\Stream
+     * @return Stream
      */
     public function getPhotoDownload($photoId)
     {
         if (!$this->isAllowed('download')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()
                     ->translate('Not allowed to download photos')
             );
@@ -82,7 +88,7 @@ class Photo extends AbstractAclService
     public function getPhoto($id)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
@@ -100,7 +106,7 @@ class Photo extends AbstractAclService
     public function getPhotoFileName($photo)
     {
         // filtering is required to prevent invalid characters in file names.
-        $filter = new \Zend\I18n\Filter\Alnum(true);
+        $filter = new Alnum(true);
         $albumName = $filter->filter($photo->getAlbum()->getName());
 
         // don't put spaces in file names
@@ -117,7 +123,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return Storage
      */
     public function getFileStorageService()
     {
@@ -131,11 +137,12 @@ class Photo extends AbstractAclService
      *
      * @return array|null of data about the photo, which is useful inside a view
      *          or null if the photo was not found
+     * @throws Exception
      */
     public function getPhotoData($photoId, \Photo\Model\Album $album = null)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
@@ -190,7 +197,7 @@ class Photo extends AbstractAclService
     )
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
@@ -211,7 +218,7 @@ class Photo extends AbstractAclService
     )
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view photos')
             );
         }
@@ -230,7 +237,7 @@ class Photo extends AbstractAclService
     public function deletePhoto($photoId)
     {
         if (!$this->isAllowed('delete')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()
                     ->translate('Not allowed to delete photos.')
             );
@@ -279,12 +286,12 @@ class Photo extends AbstractAclService
      * @param int $albumId the id of the new album
      *
      * @return bool indicating whether move was successful
-     * @throws \Exception
+     * @throws Exception
      */
     public function movePhoto($photoId, $albumId)
     {
         if (!$this->isAllowed('move')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to move photos')
             );
         }
@@ -305,7 +312,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the album service.
      *
-     * @return \Photo\Service\Album
+     * @return Photo\Service\Album
      */
     public function getAlbumService()
     {
@@ -335,7 +342,7 @@ class Photo extends AbstractAclService
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
         if (is_null($begindate) || is_null($enddate)) {
-            $begindate = (new DateTime())->sub(new \DateInterval('P1W'));
+            $begindate = (new DateTime())->sub(new DateInterval('P1W'));
             $enddate = new DateTime();
         }
         $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
@@ -388,7 +395,7 @@ class Photo extends AbstractAclService
      * @param int $lidnr
      *
      * @return PhotoModel|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getProfilePhoto($lidnr)
     {
@@ -406,7 +413,7 @@ class Photo extends AbstractAclService
      * @param int $lidnr
      *
      * @return ProfilePhotoModel|null
-     * @throws \Exception
+     * @throws Exception
      */
     private function getStoredProfilePhoto($lidnr)
     {
@@ -428,23 +435,26 @@ class Photo extends AbstractAclService
 
     /**
      * @param ProfilePhotoModel $profilePhoto
+     * @throws Exception
      */
-    public function removeProfilePhoto(ProfilePhotoModel $profilePhoto=null)
+    public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null)
     {
         if ($profilePhoto == null) {
             $member = $this->getMemberService()->getRole()->getMember();
             $lidnr = $member->getLidnr();
             $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         }
-        $mapper = $this->getProfilePhotoMapper();
-        $mapper->remove($profilePhoto);
-        $mapper->flush();
+        if ($profilePhoto != null) {
+            $mapper = $this->getProfilePhotoMapper();
+            $mapper->remove($profilePhoto);
+            $mapper->flush();
+        }
     }
 
     /**
      * @param int $lidnr
      * @return PhotoModel|null
-     * @throws \Exception
+     * @throws Exception
      */
     private function determineProfilePhoto($lidnr)
     {
@@ -474,7 +484,7 @@ class Photo extends AbstractAclService
     /**
      * @param int $lidnr
      * @param PhotoModel $photo
-     * @throws \Exception
+     * @throws Exception
      */
     private function cacheProfilePhoto($lidnr, PhotoModel $photo)
     {
@@ -495,7 +505,7 @@ class Photo extends AbstractAclService
      * @param DateTime $dateTime
      * @param bool $explicit
      */
-    private function storeProfilePhoto(PhotoModel $photo, Member $member, $dateTime, $explicit=false)
+    private function storeProfilePhoto(PhotoModel $photo, Member $member, $dateTime, $explicit = false)
     {
         if (!$this->isTaggedIn($photo->getId(), $member->getLidnr())) {
             return;
@@ -512,6 +522,7 @@ class Photo extends AbstractAclService
 
     /**
      * @param int $photoId
+     * @throws Exception
      */
     public function setProfilePhoto($photoId)
     {
@@ -528,6 +539,8 @@ class Photo extends AbstractAclService
 
     /**
      * @param int $lidnr
+     * @return bool
+     * @throws Exception
      */
     public function hasExplicitProfilePhoto($lidnr)
     {
@@ -550,7 +563,7 @@ class Photo extends AbstractAclService
      * @param integer $occurences
      *
      * @return float
-     * @throws \Exception
+     * @throws Exception
      */
     public function ratePhoto($photo, $occurences)
     {
@@ -566,10 +579,9 @@ class Photo extends AbstractAclService
      * Determine the preference rating of the photo.
      *
      * @param PhotoModel $photo
-     * @param int $lidnr
      *
      * @return float
-     * @throws \Exception
+     * @throws Exception
      */
     public function ratePhotoForMember($photo)
     {
@@ -605,7 +617,7 @@ class Photo extends AbstractAclService
     public function getPhotosOfTheWeek()
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()
                     ->translate('Not allowed to view previous photos of the week')
             );
@@ -640,12 +652,12 @@ class Photo extends AbstractAclService
      * @param integer $photoId
      * @param integer $lidnr
      *
-     * @return \Photo\Model\Tag|null
+     * @return Photo\Model\Tag|null
      */
     public function addTag($photoId, $lidnr)
     {
         if (!$this->isAllowed('add', 'tag')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to add tags.')
             );
         }
@@ -672,12 +684,12 @@ class Photo extends AbstractAclService
      * @param integer $photoId
      * @param integer $lidnr
      *
-     * @return \Photo\Model\Tag|null
+     * @return Photo\Model\Tag|null
      */
     public function findTag($photoId, $lidnr)
     {
         if (!$this->isAllowed('view', 'tag')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view tags.')
             );
         }
@@ -744,7 +756,7 @@ class Photo extends AbstractAclService
     public function removeTag($photoId, $lidnr)
     {
         if (!$this->isAllowed('remove', 'tag')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to remove tags.')
             );
         }
@@ -769,7 +781,7 @@ class Photo extends AbstractAclService
     public function getTagsForMember($member)
     {
         if (!$this->isAllowed('view', 'tag')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view tags.')
             );
         }
@@ -816,7 +828,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the metadata service.
      *
-     * @return \Photo\Service\Metadata
+     * @return Photo\Service\Metadata
      */
     public function getMetadataService()
     {
@@ -826,7 +838,7 @@ class Photo extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

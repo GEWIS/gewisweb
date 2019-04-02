@@ -145,5 +145,4 @@ class ProfilePhoto implements ResourceInterface
     {
         return 'profilePhoto';
     }
-
 }

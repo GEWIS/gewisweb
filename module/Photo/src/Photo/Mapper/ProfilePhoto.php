@@ -3,6 +3,9 @@
 namespace Photo\Mapper;
 
 use DateTime;
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityRepository;
+use Exception;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 use Doctrine\ORM\EntityManager;
 
@@ -36,8 +39,8 @@ class ProfilePhoto
      *
      * @param int $lidnr The Id of the user to which the photo is assigned
      *
-     * @return \Photo\Model\ProfilePhoto|null
-     * @throws \Exception
+     * @return Photo\Model\ProfilePhoto|null
+     * @throws Exception
      */
     public function getProfilePhotoByLidnr($lidnr)
     {
@@ -50,7 +53,7 @@ class ProfilePhoto
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
@@ -60,7 +63,7 @@ class ProfilePhoto
     /**
      * Removes a photo
      *
-     * @param \Photo\Model\ProfilePhoto $profilePhoto
+     * @param Photo\Model\ProfilePhoto $profilePhoto
      */
     public function remove(ProfilePhotoModel $profilePhoto)
     {
@@ -70,7 +73,7 @@ class ProfilePhoto
     /**
      * Persist photo
      *
-     * @param \Photo\Model\ProfilePhoto $profilePhoto
+     * @param Photo\Model\ProfilePhoto $profilePhoto
      */
     public function persist(ProfilePhotoModel $profilePhoto)
     {
@@ -88,11 +91,10 @@ class ProfilePhoto
     /**
      * Get the entity manager connection.
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function getConnection()
     {
         return $this->em->getConnection();
     }
-
 }
