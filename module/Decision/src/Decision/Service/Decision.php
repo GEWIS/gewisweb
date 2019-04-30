@@ -98,13 +98,13 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Returns the closest upcoming AV
+     * Returns the closest upcoming meeting for members
      *
      * @return \Decision\Model\Meeting|null
      */
-    public function getUpcomingAV()
+    public function getUpcomingMeeting()
     {
-        return $this->getMeetingMapper()->findUpcomingAV();
+        return $this->getMeetingMapper()->findUpcomingMeeting();
     }
 
     /**
