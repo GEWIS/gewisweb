@@ -92,22 +92,12 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
         } else {
             $path = $this->url('photo/album', ['album_id' => $album->getId()]);
         }
-        $this->paginationControl(
-            $this->paginator,
-            // the scrolling style
-            'elastic',
-            'paginator/default',
-            [
-                'path' => $path
-            ]
-        )
         ?>
 
         <div class="photo-grid">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-            <?php foreach ($paginator as $item): ?>
-                <?php if ($item instanceof \Photo\Model\Album): ?>
+            <?php foreach ($album->getChildren() as $item): ?>
                     <!-- we'll fix this later -->
                    <!-- <div class="photo-grid-item photo-grid-item-album">
                         <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
@@ -117,7 +107,8 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                             </div>
                         </a>
                     </div> -->
-                <?php else: ?>
+            <?php endforeach ?>
+            <?php foreach ($album->getPhotos() as $item): ?>
                     <?php
                     $size = getimagesize('public/data/' . $item->getSmallThumbPath());
                     $sizel = $size = getimagesize('public/data/' . $item->getLargeThumbPath())
@@ -132,21 +123,11 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                             ?>
                             <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>" alt="" data-size="<?= $size[0] . 'x' . $size[1] ?>">
                         </a>
+                        <figcaption style="display:none">
+                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                        </figcaption>
                     </figure>
-                <?php endif; ?>
             <?php endforeach; ?>
-        </div>
-        <div class="pull-right">
-            <?= $this->paginationControl(
-                $this->paginator,
-                // the scrolling style
-                'elastic',
-                'paginator/default',
-                [
-                    'path' => $path
-                ]
-            )
-            ?>
         </div>
     </div>
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -180,6 +161,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                     <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 
                     <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--info" title="Info"></button>
 
                     <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 
@@ -318,7 +300,8 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
             if(index >= 0) {
                 // open PhotoSwipe if valid index found
-                openPhotoSwipe( index, clickedGallery );
+                // TODO: figure out why we need -2 here
+                openPhotoSwipe( index-2, clickedGallery );
             }
             return false;
         };
