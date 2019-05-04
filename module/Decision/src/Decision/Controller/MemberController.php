@@ -25,7 +25,7 @@ class MemberController extends AbstractActionController
         return new ViewModel([
             'member'             => $member,
             'isActive'           => $this->getMemberService()->isActiveMember(),
-            'upcoming'           => $decisionService->getUpcomingAV(),
+            'upcoming'           => $decisionService->getUpcomingMeeting(),
             'meetingsCollection' => $meetingsCollection,
         ]);
     }
