@@ -567,8 +567,7 @@ class Member
     public function isActive()
     {
         $installations = $this->getCurrentOrganInstallations();
-        $bool = !empty($installations);
-        return $bool;
+        return !empty($installations);
     }
 
     /**
