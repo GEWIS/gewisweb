@@ -25,5 +25,16 @@ $this->headTitle($this->translate('Poll history')); ?>
                 ]) ?>
             <?php endforeach; ?>
         <?php endif; ?>
+        <hr>
+        <?= $this->paginationControl(
+            $paginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $this->url('poll/history')
+            ]
+        )
+        ?>
     </div>
 </section>

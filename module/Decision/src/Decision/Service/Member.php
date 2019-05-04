@@ -61,15 +61,34 @@ class Member extends AbstractAclService
         }
 
         $tags = $this->getPhotoService()->getTagsForMember($member);
+
         // Base directory for retrieving photos
         $basedir = $this->getPhotoService()->getBaseDirectory();
+
+        $photoService = $this->getPhotoService();
+        $profilePhoto = $photoService->getProfilePhoto($lidnr);
+        $isExplicitProfilePhoto = $photoService->hasExplicitProfilePhoto($lidnr);
 
         return [
             'member' => $member,
             'memberships' => $memberships,
             'tags' => $tags,
+            'profilePhoto' => $profilePhoto,
+            'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir
         ];
+    }
+
+    /**
+     * Returns is the member is active
+     *
+     * @param MemberModel $member
+     * @return bool
+     */
+
+    public function isActiveMember()
+    {
+        return $this->isAllowed('edit', 'organ');
     }
 
     /**
@@ -217,6 +236,29 @@ class Member extends AbstractAclService
     }
 
     /**
+     * Find a member by (part of) its name.
+     *
+     * @param string $query (part of) the full name of a member
+     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
+     *
+     * @return array|null
+     */
+    public function canAuthorize($member, $meeting)
+    {
+        $maxAuthorizations = 2;
+
+        $authorizationMapper = $this->getAuthorizationMapper();
+        $meetingNumber = $meeting->getNumber();
+        $lidnr = $member->getLidnr();
+        $authorizations = $authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
+        
+        if (count($authorizations) < $maxAuthorizations) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get the member mapper.
      *
      * @return \Decision\Mapper\Member
@@ -266,5 +308,15 @@ class Member extends AbstractAclService
     public function getAcl()
     {
         return $this->sm->get('decision_acl');
+    }
+
+    /**
+     * Get the authorization mapper.
+     *
+     * @return \Decision\Mapper\Authorization
+     */
+    public function getAuthorizationMapper()
+    {
+        return $this->sm->get('decision_mapper_authorization');
     }
 }

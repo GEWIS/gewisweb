@@ -78,3 +78,22 @@ a.agenda-item {
         width: 25px;
     }
 }
+
+.agenda-subscription-button {
+    margin-bottom: 2rem;
+
+    &.collapsed {
+        .glyphicon {
+            transform: rotate(0deg);
+        }
+    }
+
+    .glyphicon {
+        transform: rotate(90deg);
+    }
+
+}
+
+.activity-subscription-form {
+    margin-top: -2rem;
+}

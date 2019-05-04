@@ -41,6 +41,14 @@ Styleguide: buttons.styles
     }
 }
 
+.btn-secondary {
+    @include button-variant($btn-secondary-color, $btn-secondary-bg, $btn-secondary-border);
+
+    &.inverse {
+        @include button-variant-inverse($btn-secondary-color, $btn-secondary-bg, $btn-secondary-border);
+    }
+}
+
 .btn-success {
     @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
 }

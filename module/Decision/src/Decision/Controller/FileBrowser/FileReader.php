@@ -37,4 +37,11 @@ interface FileReader
      * @return bool
      */
     public function isDir($path);
+
+    /**
+     * Returns whether the given $path is allowed to be accessed.
+     * @param string $path
+     * @return bool
+     */
+    public function isAllowed($path);
 }

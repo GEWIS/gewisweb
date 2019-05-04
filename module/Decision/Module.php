@@ -114,7 +114,12 @@ class Module
                 },
                 'decision_fileReader' => function ($sm) {
                     //NB: The returned object should implement the FileReader Interface.
-                    return new \Decision\Controller\FileBrowser\LocalFileReader(getcwd() . '/public/webfiles/');
+                    $config = $sm->get('config');
+                    $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
+                    return new \Decision\Controller\FileBrowser\LocalFileReader(
+                        $config['filebrowser_folder'],
+                        $validFile
+                    );
                 },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
@@ -160,7 +165,11 @@ class Module
                 'decision_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            ]
+            ],
+            /*
+             * Regex pattern matching filenames viewable in the browser
+             */
+            'filebrowser_valid_file' => '[^?*:;{}\\\]*'
         ];
     }
 }

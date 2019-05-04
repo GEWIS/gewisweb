@@ -44,5 +44,9 @@ return [
     'calendar' => [
         'google_api_key' => '',
         'google_calendar_key' => ''
-    ]
+    ],
+	/*
+     * Path to folder in local filesystem available for browsing
+     */
+    'filebrowser_folder' => getcwd() . '/public/webfiles/'
 ];

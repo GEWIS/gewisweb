@@ -182,14 +182,14 @@ class Member
      *
      * @ORM\OneToMany(targetEntity="OrganMember", mappedBy="member")
      */
-     protected $organInstallations;
+    protected $organInstallations;
 
     /**
      * Board memberships.
      *
      * @ORM\OneToMany(targetEntity="BoardMember", mappedBy="member")
      */
-     protected $boardInstallations;
+    protected $boardInstallations;
 
     /**
      * Static method to get available genders.
@@ -554,9 +554,26 @@ class Member
             return new ArrayCollection();
         }
 
-        return $this->getOrganInstallations()->filter(function (OrganMember $organ) {
-            return is_null($organ->getDischargeDate());
+        // Filter out past installations
+        $today = new \DateTime();
+
+        return $this->getOrganInstallations()->filter(function (OrganMember $organ) use ($today) {
+            $dischargeDate = $organ->getDischargeDate();
+
+            // Keep installation if not discharged or discharged in the future
+            return is_null($dischargeDate) || $dischargeDate >= $today;
         });
+    }
+
+    /**
+     * Returns whether the member is currently part of any organs
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        $installations = $this->getCurrentOrganInstallations();
+        return !empty($installations);
     }
 
     /**
@@ -567,6 +584,31 @@ class Member
     public function getBoardInstallations()
     {
         return $this->boardInstallations;
+    }
+
+    /**
+     * Get the current board the member is part of
+     *
+     * @return BoardMember|null
+     */
+    public function getCurrentBoardInstallation()
+    {
+        // Filter out past board installations
+        $today = new \DateTime();
+
+        $boards = $this->getBoardInstallations()->filter(function (BoardMember $boardMember) use ($today) {
+            $dischargeDate = $boardMember->getDischargeDate();
+
+            // Keep installation if not discharged or discharged in the future
+            return is_null($dischargeDate) || $dischargeDate >= $today;
+        });
+
+        if (count($boards) == 0) {
+            return null;
+        }
+
+        // Assume a member has a single board installation at a time
+        return $boards[0];
     }
 
     /**
@@ -628,7 +670,8 @@ class Member
      *
      * @param array $addresses
      */
-    public function addAddresses($addresses) {
+    public function addAddresses($addresses)
+    {
         foreach ($addresses as $address) {
             $this->addAddress($address);
         }

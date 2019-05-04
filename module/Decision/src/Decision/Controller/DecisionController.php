@@ -69,6 +69,7 @@ class DecisionController extends AbstractActionController
 
         try {
             $meeting = $service->getMeeting($type, $number);
+            $meeting->sortDocuments();
 
             return new ViewModel([
                 'meeting' => $meeting
@@ -142,19 +143,23 @@ class DecisionController extends AbstractActionController
             );
         }
         $path = $this->params()->fromRoute('path');
-        //var_dump($path);
         if (is_null($path)) {
             $path = '';
         }
-        //$fileReader =  new LocalFileReader(getcwd() . '/public/webfiles/');
+
         $fileReader = $this->getServiceLocator()->get('decision_fileReader');
+        if (!$fileReader->isAllowed($path) || preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
+            //File location isn't legal or path contains /../ or /.. at the end.
+            //This is illegal for security reasons
+            return $this->notFoundAction();
+        }
         if ($fileReader->isDir($path)) {
             //display the contents of a dir
             $folder = $fileReader->listDir($path);
-            if ($folder===null) {
+            if (is_null($folder)) {
                 return $this->notFoundAction();
             }
-            $trailingSlash = (strlen($path)>0 && $path[strlen($path)-1]==='/');
+            $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
             return new ViewModel([
                 'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
                 'folder' => $folder,
@@ -164,10 +169,7 @@ class DecisionController extends AbstractActionController
         }
         //download the file
         $result = $fileReader->downloadFile($path);
-        if ($result === null) {
-            return $this->notFoundAction();
-        }
-        return $result;
+        return is_null($result) ? $this->notFoundAction() : $result;
     }
 
     /**

@@ -12,6 +12,32 @@ class AdminController extends AbstractActionController {
     {
     }
 
+    public function addCourseAction()
+    {
+        $service = $this->getExamService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            // try uploading
+            if ($service->addCourse($request->getPost())) {
+                $this->getResponse()->setStatusCode(200);
+                return new ViewModel([
+                    'form' => $service->getAddCourseForm(),
+                    'success' => true
+                ]);
+            }
+            $this->getResponse()->setStatusCode(400);
+            return new ViewModel([
+                'form' => $service->getAddCourseForm(),
+                'success' => false
+            ]);
+        }
+
+        return new ViewModel([
+            'form' => $service->getAddCourseForm()
+        ]);
+    }
+
     public function bulkExamAction()
     {
         $service = $this->getExamService();

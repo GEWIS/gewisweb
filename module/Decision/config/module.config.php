@@ -81,7 +81,7 @@ return [
                     'files' => [
                         'type' => 'Regex',
                         'options' => [
-                            'regex' => '/files(?<path>[^?*:;{}\\\]*)',
+                            'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
                             'defaults' => [
                                 'action' => 'files'
                             ],
@@ -203,6 +203,15 @@ return [
                             'route' => '/search',
                             'defaults' => [
                                 'action' => 'search',
+                            ],
+                        ],
+                    ],
+                    'canauth' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/canauth',
+                            'defaults' => [
+                                'action' => 'canAuthorize',
                             ],
                         ],
                     ],
