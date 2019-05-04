@@ -21,7 +21,8 @@ class ActivityController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-        $activities = $queryService->getUpcomingActivities($this->params('category'));
+        $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+        $activities = $queryService->getUpcomingActivities($this->params('category'), $user);
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);

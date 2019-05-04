@@ -175,6 +175,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                         </li>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+                            <li><a href="<?= $this->url('activity/my') ?>"> <?= $this->translate('My activities') ?></a></li>
+                        <?php endif; ?>
+                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
                             <li><a href="<?= $this->url('activity/archive') ?>"> <?= $this->translate('Activity Archive') ?></a></li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>

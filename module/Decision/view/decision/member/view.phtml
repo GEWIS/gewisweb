@@ -99,6 +99,15 @@ use Decision\Model\Address;
                 <?php endif; ?>
             </div>
             <div class="col-md-6">
+                <?php if ($profilePhoto != null): ?>
+                    <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                              <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $profilePhoto->getId()]); ?>">
+                                  <img class="img-responsive" src="<?= $this->fileUrl($profilePhoto->getLargeThumbPath()) ?>" alt="">
+                              </a>
+                            </div>
+                    </div>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
                         <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
