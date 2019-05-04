@@ -111,12 +111,17 @@ class Activity
 
         // Get associated with organs (including non-approved)
 <<<<<<< HEAD
+<<<<<<< HEAD
         foreach ($user->getMember()->getCurrentOrganInstallations() as $organMember) {
             $result = array_merge($result, $this->getUpcomingActivitiesByOrgan($organMember->getOrgan()));
 =======
         foreach ($user->getMember()->getCurrentOrganInstallations() as $organ) {
             $result = array_merge($result, $this->getUpcomingActivitiesByOrgan($organ));
 >>>>>>> temp
+=======
+        foreach ($user->getMember()->getCurrentOrganInstallations() as $organMember) {
+            $result = array_merge($result, $this->getUpcomingActivitiesByOrgan($organMember->getOrgan()));
+>>>>>>> master
         }
 
         // Do sorting based on start time
@@ -200,10 +205,14 @@ class Activity
             ->where('a.endTime > :now')
             ->setParameter('now', new \DateTime())
 <<<<<<< HEAD
+<<<<<<< HEAD
             ->andWhere('a.organ = :organ')
 =======
             ->andWhere('a.organ_id = :organ')
 >>>>>>> temp
+=======
+            ->andWhere('a.organ = :organ')
+>>>>>>> master
             ->setParameter('organ', $organ->getId());
         $result = $qb->getQuery()->getResult();
         return $result;
