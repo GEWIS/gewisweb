@@ -16,13 +16,31 @@ class AlbumController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage,
+      /*  $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage,
             'album');
         if (is_null($albumPage)) {
             return $this->notFoundAction();
+        }*/
+        $albumService = $this->getServiceLocator()
+            ->get('photo_service_album');
+
+        $album = $albumService->getAlbum($albumId, 'album');
+        if ($album === null) {
+            return $this->notFoundAction();
         }
-        
-        return new ViewModel($albumPage);
+        /*$albums = $albumService->getAlbums($this->album, $offset,
+            $itemCountPerPage);
+
+        $photoCount = $itemCountPerPage - count($albums);
+        $photoStart = max($offset - $this->album->getAlbumCount(), 0);
+        $photos = $photoService->getPhotos($this->album, $photoStart,
+            $photoCount);
+
+        $items = array_merge($albums, $photos);*/
+        return new ViewModel([
+            'album'     => $album,
+            'basedir'   => '/',
+        ]);
     }
     
     /**
