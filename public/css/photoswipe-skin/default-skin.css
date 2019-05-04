@@ -51,7 +51,7 @@
 .pswp__button,
 .pswp__button--arrow--left:before,
 .pswp__button--arrow--right:before {
-  background: url(default-skin.png) 0 0 no-repeat;
+  background: url(default-skin-2.png) 0 0 no-repeat;
   background-size: 264px 88px;
   width: 44px;
   height: 44px; }
@@ -71,6 +71,9 @@
 
 .pswp__button--share {
   background-position: -44px -44px; }
+
+.pswp__button--info {
+  background-position: -170px 0px; }
 
 .pswp__button--fs {
   display: none; }

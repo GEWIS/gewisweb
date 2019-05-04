@@ -104,7 +104,7 @@ class AlbumPlugin extends AbstractPlugin
             'albums'  => $albums
         ];
     }
-    
+
     /**
      * Retrieves all data needed to display a page of an album
      *
@@ -129,13 +129,50 @@ class AlbumPlugin extends AbstractPlugin
             )
         );
         $paginator->setCurrentPageNumber($activePage);
-        
+
         $config = $albumService->getConfig();
         $paginator->setItemCountPerPage($config['max_photos_page']);
-        
+
         $photoService = $this->getPhotoService();
         $basedir = $photoService->getBaseDirectory();
-        
+
+        return [
+            'album'     => $album,
+            'basedir'   => $basedir,
+            'paginator' => $paginator,
+        ];
+    }
+
+    /**
+     * Retrieves all data needed to display the entire album
+     *
+     * @param int    $albumId    the id of the album
+     * @param string $type       "album"|"member"|"year"
+     *
+     * @return array|null Array with data or null if the page does not exist
+     * @throws \Exception
+     */
+    public function getAlbum($albumId, $type = 'album')
+    {
+        $albumService = $this->getAlbumService();
+        $album = $albumService->getAlbum($albumId, $type);
+        if (is_null($album)) {
+            return null;
+        }
+        $paginator = new Paginator\Paginator(
+            new AlbumPaginatorAdapter(
+                $album,
+                $this->getController()->getServiceLocator()
+            )
+        );
+        $paginator->setCurrentPageNumber($activePage);
+
+        $config = $albumService->getConfig();
+        $paginator->setItemCountPerPage($config['max_photos_page']);
+
+        $photoService = $this->getPhotoService();
+        $basedir = $photoService->getBaseDirectory();
+
         return [
             'album'     => $album,
             'basedir'   => $basedir,
