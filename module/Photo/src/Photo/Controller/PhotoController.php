@@ -145,9 +145,10 @@ class PhotoController extends AbstractActionController
             $this->redirect()->toRoute('photo/photo', [
                 'photo_id' => $photoId,
             ]);
+        } else{
+            $this->redirect()->toRoute('member/self');
         }
 
-        $this->redirect()->toRoute('member/self');
     }
 
 }
