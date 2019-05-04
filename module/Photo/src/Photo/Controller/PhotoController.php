@@ -138,7 +138,7 @@ class PhotoController extends AbstractActionController
      */
     public function removeProfilePhotoAction()
     {
-        $photoId = $this->params()->fromRoute('photo_id', null);
+        $photoId = $this->params()->fromRoute('photo_id');
         $this->getPhotoService()->removeProfilePhoto();
 
         if ($photoId != null) {
