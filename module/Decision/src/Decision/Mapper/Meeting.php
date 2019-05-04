@@ -112,7 +112,7 @@ class Meeting
      */
     public function findLatestAV()
     {
-        return $this->findFutureAV('DESC');
+        return $this->findFutureMeeting('DESC');
     }
 
     /**
@@ -120,9 +120,9 @@ class Meeting
      *
      * @return \Decision\Model\Meeting|null
      */
-    public function findUpcomingAV()
+    public function findUpcomingMeeting()
     {
-        return $this->findFutureAV('ASC');
+        return $this->findFutureMeeting('ASC', true);
     }
 
     /**
@@ -201,12 +201,13 @@ class Meeting
     }
 
     /**
-     * Finds an AV planned in the future
+     * Finds an AV or VV planned in the future
      *
      * @param string $order Order of the future AV's
+     * @param bool $vvs If VV's are included in this
      * @return \Decision\Model\Meeting|null
      */
-    private function findFutureAV($order)
+    private function findFutureMeeting($order, $vvs = false)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -216,12 +217,17 @@ class Meeting
         $qb->select('m')
             ->from('Decision\Model\Meeting', 'm')
             ->where('m.type = :type')
-            ->andWhere('m.date >= :date')
+            ->where('m.date >= :date')
             ->orderBy('m.date', $order)
-            ->setParameter('type', 'AV')
             ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
+        if ($vvs) {
+            $qb->andWhere("m.type = 'AV' OR m.type = 'VV'");
+            return $qb->getQuery()->getOneOrNullResult();
+        }
+
+        $qb->andWhere("m.type = 'AV'");
         return $qb->getQuery()->getOneOrNullResult();
     }
 }
