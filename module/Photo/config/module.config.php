@@ -145,7 +145,7 @@ return [
                             ],
                         ],
                     ],
-                    'setprofilephoto' => [
+                    'set_profile_photo' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/setprofilephoto/:photo_id',
@@ -158,7 +158,7 @@ return [
                             ],
                         ],
                     ],
-                    'removeprofilephoto' => [
+                    'remove_profile_photo' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/removeprofilephoto/:photo_id',
