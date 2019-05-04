@@ -147,7 +147,7 @@ class PhotoController extends AbstractActionController
             ]);
         }
 
-//        $this->redirect()->toRoute('member/self');
+        $this->redirect()->toRoute('member/self');
     }
 
 }
