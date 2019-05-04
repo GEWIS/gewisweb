@@ -157,7 +157,7 @@ $this->headTitle($member->getFullName());
                             </div>
                     </div>
                     <?php if ($isExplicitProfilePhoto): ?>
-                        <a type="button" class="btn btn-primary" href=<?= $this->url('photo/removeprofilephoto', ['photo_id' => 0]); ?>>
+                        <a type="button" class="btn btn-danger" href=<?= $this->url('photo/removeprofilephoto', ['photo_id' => 0]); ?>>
                             <?= $this->translate('Remove this picture as your profile picture') ?>
                         </a>
                         <p><?= $this->translate('Your profile picture will be chosen automatically instead.') ?></p>
