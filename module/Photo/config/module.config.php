@@ -161,7 +161,7 @@ return [
                     'remove_profile_photo' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/removeprofilephoto[/:photo_id]',
+                            'route' => '/removeprofilephoto/:photo_id',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],
