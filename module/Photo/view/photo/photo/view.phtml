@@ -188,13 +188,13 @@ $this->scriptUrl()->requireUrl('member/search');
                     </div>
                     <hr>
                     <?php if ($isTagged && (!$isProfilePhoto ||  !$isExplicitProfilePhoto)): ?>
-                        <a type="button" class="btn btn-primary" href=<?= $this->url('photo/set-profile-photo', ['photo_id' => $photo->getId()]); ?>>
+                        <a type="button" class="btn btn-primary" href=<?= $this->url('photo/set_profile_photo', ['photo_id' => $photo->getId()]); ?>>
                             <?= $this->translate('Set this picture as your profile picture') ?>
                         </a>
                         <p><?= $this->translate('Your preference will be stored for one year.') ?></p>
                     <?php endif; ?>
                     <?php if ($isProfilePhoto && $isExplicitProfilePhoto): ?>
-                        <a type="button" class="btn btn-danger" href=<?= $this->url('photo/remove-profile-photo', ['photo_id' => $photo->getId()]); ?>>
+                        <a type="button" class="btn btn-danger" href=<?= $this->url('photo/remove_profile_photo', ['photo_id' => $photo->getId()]); ?>>
                             <?= $this->translate('Remove this picture as your profile picture') ?>
                         </a>
                         <p><?= $this->translate('Your profile picture will be chosen automatically instead.') ?></p>
