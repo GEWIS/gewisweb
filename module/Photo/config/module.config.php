@@ -145,6 +145,32 @@ return [
                             ],
                         ],
                     ],
+                    'setprofilephoto' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/setprofilephoto/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'setProfilePhoto',
+                            ],
+                        ],
+                    ],
+                    'removeprofilephoto' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/removeprofilephoto/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'removeProfilePhoto',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
