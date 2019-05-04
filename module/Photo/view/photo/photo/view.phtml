@@ -187,7 +187,7 @@ $this->scriptUrl()->requireUrl('member/search');
                         <?php endif; ?>
                     </div>
                     <hr>
-                    <?php if ($isTagged && !$isProfilePhoto): ?>
+                    <?php if ($isTagged && (!$isProfilePhoto ||  !$isExplicitProfilePhoto)): ?>
                         <a type="button" class="btn btn-primary" href=<?= $this->url('photo/setprofilephoto', ['photo_id' => $photo->getId()]); ?>>
                             <?= $this->translate('Set this picture as your profile picture') ?>
                         </a>
