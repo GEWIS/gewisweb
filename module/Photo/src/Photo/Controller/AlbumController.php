@@ -38,6 +38,7 @@ class AlbumController extends AbstractActionController
 
         $items = array_merge($albums, $photos);*/
         return new ViewModel([
+            'cache' => $this->getServiceLocator()->get('album_page_cache'),
             'album'     => $album,
             'basedir'   => '/',
         ]);

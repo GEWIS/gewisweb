@@ -141,7 +141,7 @@ class Photo implements ResourceInterface
     /**
      * All the tags for this photo.
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"}, fetch="EAGER")
      */
     protected $tags;
 

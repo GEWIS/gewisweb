@@ -122,6 +122,12 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         </a>
                     </div> -->
             <?php endforeach ?>
+            <?php
+            $key = 'album-page-' . $album->getId();
+            $data = $cache->getItem($key, $success);
+            if (!$success) {
+                ob_start();
+            ?>
             <?php foreach ($album->getPhotos() as $item): ?>
                     <?php
                     $ar = $item->getAspectRatio();
@@ -142,13 +148,19 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                             <img data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
-                            <?= '-'//$this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                         </figcaption>
                         <figtags style="display:none">
-                            <?= '-'//$this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                            <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                         </figtags>
                     </figure>
             <?php endforeach; ?>
+            <?php
+            $data = ob_get_clean();
+                $cache->setItem($key, $data);
+            }
+            echo $data;
+            ?>
         </div>
     </div>
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
