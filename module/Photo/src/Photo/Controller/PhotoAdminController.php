@@ -64,12 +64,48 @@ class PhotoAdminController extends AbstractActionController
     {
         $weeklyPhoto = $this->getPhotoService()->generatePhotoOfTheWeek();
 
-        if(is_null($weeklyPhoto)) {
+        if (is_null($weeklyPhoto)) {
             echo "No photo of the week chosen, were any photos viewed?\n";
         } else {
             echo "Photo of the week set to photo: " . $weeklyPhoto->getPhoto()->getId();
         }
     }
+
+    /**
+     * Temp function to migrate to new storage format
+     */
+    public function migrateAspectRatiosAction()
+    {
+        printf("Migrating aspect ratios\n");
+        $em = $this->getServiceLocator()->get('photo_doctrine_em');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Photo\Model\Photo', 'a')
+            ->where('a.aspectRatio is NULL')
+            ->orderBy('a.dateTime', 'DESC');
+
+       $photos = $qb->getQuery()->getResult();
+        $i=0;
+        foreach ($photos as $photo) {
+            $i++;
+            $ratio = 0;
+            if (!file_exists('public/data/' . $photo->getSmallThumbPath())) {
+                printf("Missing file: %s\n", $photo->getSmallThumbPath());
+                continue;
+            }
+            $size = getimagesize('public/data/' . $photo->getSmallThumbPath());
+            if ($size[0] > 0) {
+                $ratio = $size[1] / $size[0];
+            }
+            $photo->setAspectRatio($ratio);
+            if ($i % 1000 == 0) {
+                $em->flush();
+            }
+        }
+        $em->flush();
+    }
+
     /**
      * Get the photo service.
      *
