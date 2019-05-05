@@ -141,7 +141,7 @@ class Photo implements ResourceInterface
     /**
      * All the tags for this photo.
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"})
      */
     protected $tags;
 
@@ -549,7 +549,7 @@ class Photo implements ResourceInterface
     {
         $array = [
             'id' => $this->getId(),
-            'dateTime' => $this->getDateTime()->format('Y-m-d H:i:s'),
+            'dateTime' => $this->getDateTime(),
             'artist' => $this->getArtist(),
             'camera' => $this->getCamera(),
             'flash' => $this->getFlash(),
@@ -564,8 +564,6 @@ class Photo implements ResourceInterface
             'largeThumbPath' => $this->getLargeThumbPath(),
             'longitude' => $this->getLongitude(),
             'latitude' => $this->getLatitude(),
-            'aspectRatio' => $this->getAspectRatio(),
-            'tags' => $this->getTags()->toArray()
         ];
 
         return $array;
