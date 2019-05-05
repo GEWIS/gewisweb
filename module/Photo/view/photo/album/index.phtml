@@ -122,8 +122,9 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         </a>
                     </div> -->
             <?php endforeach ?>
-            <?php foreach ($album->getPhotos() as $item): ?>
+            <?php for ($i = 0; $i < 25; $i++): ?>
                     <?php
+                    $item = $album->getPhotos()[$i];
                     $ar = $item->getAspectRatio();
                     if ($ar === null) {
                         $ar = 0.75;
@@ -137,20 +138,31 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         'h' => 1920 * $ar
                     ];
                     ?>
-                    <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>" data-photo-id="<?= $i ?>">
                         <a href="<?= $this->fileUrl($item->getLargeThumbPath()) ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
-                            <img data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
+                            <img id="thumb-<?= $i ?>" data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
-                            <?= '-'//$this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                         </figcaption>
                         <figtags style="display:none">
-                            <?= '-'//$this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                            <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                         </figtags>
                     </figure>
-            <?php endforeach; ?>
+            <?php endfor; ?>
+        </div>
+        <div class="page-load-status">
+            <div class="loader-ellips infinite-scroll-request">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+            <p class="infinite-scroll-last">End of content</p>
+            <p class="infinite-scroll-error">No more photos to load</p>
         </div>
     </div>
+
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
@@ -218,58 +230,117 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
         </div>
 
     </div>
+    <div class="info-template" style="display:none">
+        <table class="table table-condensed">
+            <tbody>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <?= $this->translate('Artist') ?>
+                </td>
+                <td>{{artist}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+                    <?= $this->translate('Camera') ?>
+                </td>
+                <td>{{camera}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    <?= $this->translate('Date/time') ?>
+                </td>
+                <td>{{dateTime}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                    <?= $this->translate('Flash') ?>
+                </td>
+                <td>{{flash}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    <?= $this->translate('Focal length') ?>
+                </td>
+                <td>{{focalLength}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <?= $this->translate('Shutter speed') ?>
+                </td>
+                <td>{{shutterSpeed}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    <?= $this->translate('Aperture') ?>
+                </td>
+                <td>{{aperture}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span>
+                    <?= $this->translate('ISO') ?>
+                </td>
+                <td>{{iso}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <?= $this->translate('Location') ?>
+                </td>
+                <td>
+                    {{location}}<a target='_blank' href="https://www.google.com/maps/?q=0,0"><?= $this->translate("View on map")?></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 
 
 <script>
-    var initPhotoSwipeFromDOM = function(gallerySelector) {
+    var initPhotoSwipeFromDOM = function(gallerySelector, album) {
 
         // parse slide data (url, title, size ...) from DOM elements
         // (children of gallerySelector)
-        var parseThumbnailElements = function(el) {
-            var thumbElements = el.childNodes,
-                numNodes = thumbElements.length,
-                items = [],
-                figureEl,
-                linkEl,
-                size,
+        var parseAlbumElements = function() {
+            var items = [],
                 item;
 
-            for(var i = 0; i < numNodes; i++) {
+            infoHTML = document.getElementsByClassName('info-template')[0].innerHTML;
+            infoItems = ['artist', 'camera', 'dateTime', 'flash', 'focalLength', 'shutterSpeed', 'aperture', 'iso'];
+            for (var i = 0; i < album.photos.length; i++) {
+                // Tags
+                titleHTML = '<strong>' + album.name + '</strong>';
 
-                figureEl = thumbElements[i]; // <figure> element
-                console.log(figureEl);
-                // include only element nodes
-                if(figureEl.nodeType !== 1 || figureEl.tagName !== 'FIGURE') {
-                    continue;
+                // Metadata
+                for (var j = 0; j < infoItems.length; j++) {
+                    val = album.photos[i][infoItems[j]];
+                    if (val == null) {
+                        val = '<?= $this->translate("Unknown") ?>';
+                    }
+                    infoHTML = infoHTML.replace('{{' + infoItems[j] + '}}', val);
                 }
-
-                linkEl = figureEl.children[0]; // <a> element
-
-                size = linkEl.getAttribute('data-size').split('x');
 
                 // create slide object
                 item = {
-                    src: linkEl.getAttribute('href'),
-                    w: parseInt(size[0], 10),
-                    h: parseInt(size[1], 10)
+                    src: '/data/' + album.photos[i].largeThumbPath,
+                    msrc: '/data/' + album.photos[i].smallThumbPath,
+                    w: 1920,
+                    h: Math.round(1920*album.photos[i].aspectRatio),
+                    title: titleHTML,
+                    info: infoHTML
                 };
 
-
-
-                if(figureEl.children.length > 1) {
-                    // <figcaption> content
-                    item.info = figureEl.children[1].innerHTML;
-                    item.title = figureEl.children[2].innerHTML;
-                }
-
-                if(linkEl.children.length > 0) {
-                    // <img> thumbnail element, retrieving thumbnail url
-                    item.msrc = linkEl.children[0].getAttribute('src');
-                }
-
-                item.el = figureEl; // save link to element for getThumbBoundsFn
+  //              item.info = figureEl.children[1].innerHTML;
+//                item.title = figureEl.children[2].innerHTML;
                 items.push(item);
             }
 
@@ -293,11 +364,11 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                 return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
             });
 
-            console.log(eTarget.tagName);
+            console.log(clickedListItem.dataset.photoId);
             if(!clickedListItem) {
                 return;
             }
-
+/*
             // find index of clicked item by looping through all child nodes
             // alternatively, you may define index via data- attribute
             var clickedGallery = clickedListItem.parentNode,
@@ -316,14 +387,14 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                     break;
                 }
                 nodeIndex++;
-            }
+            }*/
 
 
 
-            if(index >= 0) {
+            if(clickedListItem.dataset.photoId >= 0) {
                 // open PhotoSwipe if valid index found
                 // TODO: figure out why we need -2 here
-                openPhotoSwipe( index-2, clickedGallery );
+                openPhotoSwipe( clickedListItem.dataset.photoId, clickedListItem.parentNode );
             }
             return false;
         };
@@ -362,7 +433,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                 options,
                 items;
             console.log(pswpElement);
-            items = parseThumbnailElements(galleryElement);
+            items = parseAlbumElements(galleryElement);
 
             // define options (if needed)
             options = {
@@ -372,7 +443,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
                 getThumbBoundsFn: function(index) {
                     // See Options -> getThumbBoundsFn section of documentation for more info
-                    var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                    var thumbnail = document.getElementById('thumb-' + index), // find thumbnail
                         pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
                         rect = thumbnail.getBoundingClientRect();
 
@@ -416,7 +487,6 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
         // loop through all gallery elements and bind events
         var galleryElements = document.querySelectorAll( gallerySelector );
-        console.log(galleryElements);
         for(var i = 0, l = galleryElements.length; i < l; i++) {
             galleryElements[i].setAttribute('data-pswp-uid', i+1);
             galleryElements[i].onclick = onThumbnailsClick;
@@ -435,7 +505,10 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
         Photo.initGrid();
     });
-        initPhotoSwipeFromDOM('.photo-grid');
+    var album =
+        <?= json_encode($album->toArrayWithChildren()); ?>
+    ;
+        initPhotoSwipeFromDOM('.photo-grid', album);
 </script>
 
 
