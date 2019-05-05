@@ -145,6 +145,23 @@ class Module
                 // reused code from the eduction module
                 'photo_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
+                },
+                'album_page_cache' => function() {
+                    return \Zend\Cache\StorageFactory::factory(
+                        array(
+                            'adapter' => array(
+                                'name' => 'filesystem',
+                                'options' => array(
+                                    'dirLevel' => 2,
+                                    'cacheDir' => 'data/cache',
+                                    'dirPermission' => 0755,
+                                    'filePermission' => 0666,
+                                    'namespaceSeparator' => '-db-'
+                                ),
+                            ),
+                            'plugins' => array('serializer'),
+                        )
+                    );
                 }
             ]
         ];
