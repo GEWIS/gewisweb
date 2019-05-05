@@ -162,6 +162,13 @@ class Module
                             'plugins' => array('serializer'),
                         )
                     );
+                },
+                'photo_glide_server' => function($sm) {
+                    $config = $sm->get('config');
+                    return \League\Glide\ServerFactory::create([
+                        'source' => $config['storage']['storage_dir'],
+                        'cache' => $config['storage']['cache_dir'],
+                    ]);
                 }
             ]
         ];

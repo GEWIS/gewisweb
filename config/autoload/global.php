@@ -49,6 +49,7 @@ return [
     'storage' => [
         'storage_dir' => 'public/data',
         'public_dir' => 'data',
+        'cache_dir' => 'data/cache',
         'dir_mode' => 0777, // rwx by default
     ],
 

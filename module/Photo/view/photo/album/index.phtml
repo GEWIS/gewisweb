@@ -136,17 +136,19 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         $ar = 0.75;
                     }
                     $size = [
-                        'w' => 640,
-                        'h' => 640*$ar
+                        'w' => 300,
+                        'h' => round(300*$ar)
                     ];
                     $sizel = [
                         'w' => 1920,
-                        'h' => 1920 * $ar
+                        'h' => round(1920 * $ar)
                     ];
                     ?>
                     <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?= $this->fileUrl($item->getLargeThumbPath()) ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
-                            <img class="lazy-load" data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" data-src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
+                        <a href="<?= $this->url('photo/photo_download',
+                            ['photo_id' => $item->getId()], ['query' => $sizel]); ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
+                            <img class="lazy-load" data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" data-src="<?= $this->url('photo/photo_download',
+                                ['photo_id' => $item->getId()], ['query' => $size]); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
                             <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>

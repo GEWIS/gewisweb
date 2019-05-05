@@ -51,7 +51,7 @@ class Photo extends AbstractAclService
      *
      * @return \Zend\Http\Response\Stream
      */
-    public function getPhotoDownload($photoId)
+    public function getPhotoDownload($photoId, $options)
     {
         if (!$this->isAllowed('download')) {
             throw new \User\Permissions\NotAllowedException(
@@ -63,8 +63,9 @@ class Photo extends AbstractAclService
         $photo = $this->getPhoto($photoId);
         $path = $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
+        $server = $this->sm->get('photo_glide_server');
 
-        return $this->getFileStorageService()->downloadFile($path, $fileName);
+        return $server->outputImage($path, $options);
     }
 
     /**
