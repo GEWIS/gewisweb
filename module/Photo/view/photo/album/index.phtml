@@ -142,10 +142,10 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                             <img data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
-                            <?= //$this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                            <?= '-'//$this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                         </figcaption>
                         <figtags style="display:none">
-                            <?= //$this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                            <?= '-'//$this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                         </figtags>
                     </figure>
             <?php endforeach; ?>
