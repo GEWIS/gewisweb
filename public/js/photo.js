@@ -96,7 +96,8 @@ Photo = {
             columnWidth: '.grid-sizer',
             percentPosition: true,
             gutter: '.gutter-sizer',
-            transitionDuration: 0
+            transitionDuration: 0,
+            resize: true
         });
     },
     removeTag: function (e) {
