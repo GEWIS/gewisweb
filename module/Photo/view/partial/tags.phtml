@@ -4,10 +4,10 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
 ?>
 <?php if($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
 <div>
-    <h4><?= $this->translate('People in this photo') ?></h4>
-    <ul id="tagList">
+    <strong><?= $this->photo->getAlbum()->getName() ?></strong>
+    <?= $this->photo->getTags()->count() ? 'with' : '' ?>
         <?php foreach ($this->photo->getTags() as $tag): ?>
-            <li>
+
                 <a href="<?= $this->url('photo/member', ['lidnr' => $tag->getMember()->getLidnr(), 'page' => null]) ?>">
                     <?= $tag->getMember()->getFullName() ?>
                 </a>&nbsp;
@@ -15,13 +15,13 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                     ['photo_id' => $this->photo->getId(), 'lidnr' => $tag->getMember()->getLidnr()]); ?>"
                    class="remove-tag">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </a>
-            </li>
+                </a>,
+
         <?php endforeach; ?>
     </ul>
 </div>
 <?php endif; ?>
-<?php if($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
+<?php if(false && $this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
 <div>
     <form action="<?= $this->url('photo/photo/tag/add',
         ['photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr']); ?>" id="tagForm" class="form-inline">
