@@ -16,6 +16,20 @@ $this->headTitle($this->translate('Photos'));
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 ->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
 ?>
+<style>
+    .grid-sizer, .photo-grid-item {
+        width: 49%;
+        margin-bottom: 0.5%; }
+    @media (min-width: 768px) {
+        .grid-sizer, .photo-grid-item {
+            width: 33%; } }
+    @media (min-width: 992px) {
+        .grid-sizer, .photo-grid-item {
+            width: 24.5%; } }
+    @media (min-width: 1200px) {
+        .grid-sizer, .photo-grid-item {
+            width: 16.2%; } }
+</style>
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
@@ -126,6 +140,9 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         <figcaption style="display:none">
                             <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                         </figcaption>
+                        <figtags style="display:none">
+                            <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                        </figtags>
                     </figure>
             <?php endforeach; ?>
         </div>
@@ -239,7 +256,8 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
                 if(figureEl.children.length > 1) {
                     // <figcaption> content
-                    item.title = figureEl.children[1].innerHTML;
+                    item.info = figureEl.children[1].innerHTML;
+                    item.title = figureEl.children[2].innerHTML;
                 }
 
                 if(linkEl.children.length > 0) {
