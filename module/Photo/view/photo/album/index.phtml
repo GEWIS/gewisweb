@@ -11,6 +11,7 @@ $this->headTitle($this->translate('Photos'));
 <?php $this->headScript()->appendFile($this->basePath() . '/js/photo.js')
         ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
         ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+        ->appendFile($this->basePath() . '/js/lazyload.min.js')
         ->appendFile($this->basePath() . '/js/photoswipe.min.js')
         ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js');
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
@@ -145,7 +146,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                     ?>
                     <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                         <a href="<?= $this->fileUrl($item->getLargeThumbPath()) ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
-                            <img data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
+                            <img class="lazy-load" data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" data-src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
                             <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
@@ -447,7 +448,10 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 
         Photo.initGrid();
     });
-        initPhotoSwipeFromDOM('.photo-grid');
+    initPhotoSwipeFromDOM('.photo-grid');
+    var lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy-load"
+    });
 </script>
 
 
