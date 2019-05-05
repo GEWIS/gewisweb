@@ -453,6 +453,15 @@ return [
                         ]
                     ]
                 ],
+                'migrate_aspect_ratio' => [
+                    'options' => [
+                        'route' => 'photo aspectratio',
+                        'defaults' => [
+                            'controller' => 'Photo\Controller\PhotoAdmin',
+                            'action' => 'migrateAspectRatios'
+                        ]
+                    ]
+                ],
             ]
         ]
     ]

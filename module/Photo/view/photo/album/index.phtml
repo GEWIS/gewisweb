@@ -124,18 +124,22 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
             <?php endforeach ?>
             <?php foreach ($album->getPhotos() as $item): ?>
                     <?php
-                    $size = getimagesize('public/data/' . $item->getSmallThumbPath());
-                    $sizel = $size = getimagesize('public/data/' . $item->getLargeThumbPath())
+                    $ar = $item->getAspectRatio();
+                    if ($ar === null) {
+                        $ar = 1.333;
+                    }
+                    $size = [
+                        'w' => 640,
+                        'h' => 640*$ar
+                    ];
+                    $sizel = [
+                        'w' => 1920,
+                        'h' => 1920 * $ar
+                    ];
                     ?>
                     <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?= $this->fileUrl($item->getLargeThumbPath()) ?>" data-size="<?= $sizel[0] . 'x' . $sizel[1] ?>" data-author="GEWIS" class="gallery-image">
-                            <?php
-                            $image = is_null($item->getWeeklyPhoto()) ?
-                                $item->getSmallThumbPath()
-                                : $item->getLargeThumbPath();
-                            $size = getimagesize('public/data/' . $image);
-                            ?>
-                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>" alt="" data-size="<?= $size[0] . 'x' . $size[1] ?>">
+                        <a href="<?= $this->fileUrl($item->getLargeThumbPath()) ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
+                            <img data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" src="<?= $this->fileUrl($item->getSmallThumbPath()); ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
                         </a>
                         <figcaption style="display:none">
                             <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>

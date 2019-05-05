@@ -152,6 +152,13 @@ class Photo implements ResourceInterface
     protected $weeklyPhoto;
 
     /**
+     * The aspect ratio of the photo width/height
+     *
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $aspectRatio;
+
+    /**
      * Get the ID.
      *
      * @return int
@@ -344,6 +351,14 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * @return float
+     */
+    public function getAspectRatio()
+    {
+        return $this->aspectRatio;
+    }
+
+    /**
      * Set the dateTime.
      *
      * @param \DateTime $dateTime
@@ -491,6 +506,16 @@ class Photo implements ResourceInterface
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+    }
+
+    /**
+     * Sets the aspect ratio
+     *
+     * @param float $ratio
+     */
+    public function setAspectRatio($ratio)
+    {
+        $this->aspectRatio = $ratio;
     }
 
     /**
