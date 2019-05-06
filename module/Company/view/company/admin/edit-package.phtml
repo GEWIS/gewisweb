@@ -46,7 +46,14 @@ $form->prepare()
         </tr>
         </thead>
 
+        <?php $lniDoneList = []?>
         <?php foreach ($package->getJobs() as $job): ?>
+            <?php
+               if(array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                   continue;
+               }
+               $lniDoneList[$job->getLanguageNeutralId()] = $job;
+            ?>
             <tr>
                 <td>
                     <?= $job->getName() ?>

@@ -1,4 +1,12 @@
-## [v1.4.0](https://github.com/GEWIS/gewisweb/tree/v1.3.3) (2019-02-06)
+## [v1.4.1](https://github.com/GEWIS/gewisweb/tree/v1.4.1) (2019-03-21)
+
+* Sort meeting documents on number
+* Add profile picture to user profile
+* Add overview of users subscribed activities
+* Various UI improvements
+* Various bugfixes
+
+## [v1.4.0](https://github.com/GEWIS/gewisweb/tree/v1.4.0) (2019-02-06)
 
 * Redesigned the members page!
 * Authorizations now send confirmation emails

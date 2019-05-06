@@ -151,6 +151,19 @@ class Company extends AbstractACLService
         }
         return $nonemptyCategories;
     }
+
+    private function getUniqueInArray($array, $callback) {
+        $tempResults = [];
+        $resultArray = [];
+        foreach ($array as $x) {
+            $newVar = $callback($x);
+            if (!array_key_exists($newVar, $tempResults)) {
+                $resultArray[] = $x;
+                $tempResults[$newVar] = $x;
+            }
+        }
+        return $resultArray;
+    }
     public function getCategoryList($visible)
     {
         $translator = $this->getTranslator();
@@ -160,7 +173,10 @@ class Company extends AbstractACLService
                     $translator->translate('You are not allowed to access the admin interface')
                 );
             }
-            return $this->getCategoryMapper()->findAll();
+            $results = $this->getCategoryMapper()->findAll();
+            return $this->getUniqueInArray($results, function ($a) {
+                return $a->getLanguageNeutralId();
+            });
         }
         if (!$this->isAllowed('listVisibleCategories')) {
             throw new \User\Permissions\NotAllowedException(

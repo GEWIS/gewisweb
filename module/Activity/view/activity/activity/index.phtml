@@ -16,6 +16,9 @@ $this->headTitle($this->translate('Activities'));
                     <li role="presentation" class="<?= $category === 'career' ? 'active' : '' ?>">
                         <a href="<?= $this->url('activity/career') ?>"><?= $this->translate('Career Activities') ?></a>
                     </li>
+                    <li role="presentation" class="<?= $category === 'my' ? 'active' : '' ?>">
+                        <a href="<?= $this->url('activity/my') ?>"><?= $this->translate('My Activities') ?></a>
+                    </li>
                 </ul>
             </div>
 
