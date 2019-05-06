@@ -310,11 +310,7 @@ class User extends AbstractAclService
     public function hasIdentity()
     {
         $authService = $this->getServiceManager()->get('user_auth_service');
-        if (!$authService->hasIdentity()) {
-            $translator = $this->getServiceManager()->get('translator');
-            return false;
-        }
-        return true;
+        return $authService->hasIdentity();
     }
 
     public function detachUser($user)

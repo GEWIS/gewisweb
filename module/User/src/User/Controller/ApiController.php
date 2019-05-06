@@ -23,23 +23,19 @@ class ApiController extends AbstractActionController
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $headers = $response->getHeaders();
-            $headers->addHeaderLine('X-GEWIS-MemberNr', $identity->getLidnr()); 
+            $headers->addHeaderLine('X-GEWIS-MemberNr', $identity->getLidnr());
             if ($identity->getMember() != null) {
                 $member = $identity->getMember();
                 $name = $member->getFullName();
                 $headers->addHeaderLine('X-GEWIS-MemberName', $name);
+                return $response;
             }
-            else {
-                $headers->addHeaderLine('X-GEWIS-MemberName', '');
-            }
-            return $response;
-            //NotAllowedException
-        }
-        else {
-            $response = $this->getResponse();
-            $response->setStatusCode(401);
+            $headers->addHeaderLine('X-GEWIS-MemberName', '');
             return $response;
         }
+        $response = $this->getResponse();
+        $response->setStatusCode(401);
+        return $response;
     }
     /**
      * Get a user service.
