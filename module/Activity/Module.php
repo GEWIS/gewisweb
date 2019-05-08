@@ -143,6 +143,7 @@ class Module
                 'activity_acl' => function ($sm) {
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
+                    $acl->addResource('myActivities');
                     $acl->addResource('activitySignup');
                     $acl->addResource('model');
                     $acl->addResource('activity_calendar_option');
@@ -152,6 +153,7 @@ class Module
                     $acl->allow('guest', 'activitySignup', 'externalSignup');
 
                     $acl->allow('user', 'activity', 'create');
+                    $acl->allow('user', 'myActivities', 'view');
                     $acl->allow('user', 'activitySignup', ['view', 'signup', 'signoff', 'checkUserSignedUp']);
 
                     $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
