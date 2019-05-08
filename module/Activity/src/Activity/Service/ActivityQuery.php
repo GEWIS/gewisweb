@@ -207,11 +207,10 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      * Get all activities that are approved by the board and which occur in the future
      *
      * @param String $category Type of activities requested
-     * @param Decision/Model/Member $user User for which activities are selected if category === 'my'
      *
      * @return array Array of activities
      */
-    public function getUpcomingActivities($category = null, $user = null)
+    public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
@@ -222,6 +221,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         if ($category === 'my') {
+            $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
         return $activityMapper->getUpcomingActivities(null, null, $category);
