@@ -221,6 +221,12 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
         if ($category === 'my') {
+            if (!$this->getRole() === 'guest') {
+                $translator = $this->getTranslator();
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to view upcoming activities coupled to a member account')
+                );
+            }
             $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
