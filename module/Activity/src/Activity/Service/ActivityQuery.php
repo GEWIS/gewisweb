@@ -227,7 +227,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
                     $translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
             }
-            $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+            $user = $this->getUserService()->getIdentity();
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
         return $activityMapper->getUpcomingActivities(null, null, $category);
@@ -318,5 +318,15 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
+    }
+    
+     /**
+     * Gets the user service.
+     *
+     * @return \User\Service\User
+     */
+    public function getUserService()
+    {
+        return $this->sm->get('user_service_user');
     }
 }
