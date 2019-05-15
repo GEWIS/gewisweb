@@ -27,7 +27,7 @@ class Module
         if (APP_ENV === 'production') {
             return [
                 'Zend\Loader\ClassMapAutoloader' => [
-                __DIR__ . '/autoload_classmap.php',
+                    __DIR__ . '/autoload_classmap.php',
                 ]
             ];
         }
@@ -95,6 +95,11 @@ class Module
                 },
                 'photo_mapper_photo' => function ($sm) {
                     return new Mapper\Photo(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
+                'photo_mapper_profile_photo' => function ($sm) {
+                    return new Mapper\ProfilePhoto(
                         $sm->get('photo_doctrine_em')
                     );
                 },
