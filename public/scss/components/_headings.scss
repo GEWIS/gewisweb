@@ -3,9 +3,9 @@ h1, h2, h3, h4, h5, h6 {
         border-bottom: 1px solid #ddd;
         padding-bottom: 0.5em;
     }
-}
 
-// Adding this class will wrap words if they are too long
-.wrap {
-    word-wrap: break-word;
+    // Adding this class will wrap words if they are too long
+    &.h-wrap {
+        word-wrap: break-word;
+    }
 }
