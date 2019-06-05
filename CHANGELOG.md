@@ -1,3 +1,12 @@
+## [v1.4.2](https://github.com/GEWIS/gewisweb/tree/v1.4.2) (2019-05-10)
+
+* Added ability to add documents to VV's
+* Addded option for users to select profile pictures
+* Profile pictures are now cached
+* Automatic profile picture selection has been improved
+* Various UI improvements
+* Various bugfixes
+
 ## [v1.4.1](https://github.com/GEWIS/gewisweb/tree/v1.4.1) (2019-03-21)
 
 * Sort meeting documents on number

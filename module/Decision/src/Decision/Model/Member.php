@@ -182,14 +182,14 @@ class Member
      *
      * @ORM\OneToMany(targetEntity="OrganMember", mappedBy="member")
      */
-     protected $organInstallations;
+    protected $organInstallations;
 
     /**
      * Board memberships.
      *
      * @ORM\OneToMany(targetEntity="BoardMember", mappedBy="member")
      */
-     protected $boardInstallations;
+    protected $boardInstallations;
 
     /**
      * Static method to get available genders.
@@ -566,6 +566,17 @@ class Member
     }
 
     /**
+     * Returns whether the member is currently part of any organs
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        $installations = $this->getCurrentOrganInstallations();
+        return !empty($installations);
+    }
+
+    /**
      * Get the board installations.
      *
      * @return ArrayCollection
@@ -659,7 +670,8 @@ class Member
      *
      * @param array $addresses
      */
-    public function addAddresses($addresses) {
+    public function addAddresses($addresses)
+    {
         foreach ($addresses as $address) {
             $this->addAddress($address);
         }
