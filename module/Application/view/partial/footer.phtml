@@ -7,10 +7,12 @@
             <div class="col-sm-10 col-md-7">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3><?= $this->translate('Infima') ?></h3>
-                        <p>
-                            <?= $this->infima() ?>
-                        </p>
+                        <?php if($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                            <h3><?= $this->translate('Infima') ?></h3>
+                            <p>
+                                <?= $this->infima() ?>
+                            </p>
+                        <?php endif ?>
                         <p>&copy; 2013
                             - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
                     </div>
