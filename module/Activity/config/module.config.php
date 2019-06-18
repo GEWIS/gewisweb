@@ -225,6 +225,15 @@ return [
                             ]
                         ]
                     ],
+                    'create' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'create',
+                            'defaults' => [
+                                'action' => 'create'
+                            ]
+                        ]
+                    ],
                 ]
 
             ],
