@@ -24,7 +24,8 @@
                 <h2><?= $this->translate('Plan an activity') ?></h2>
             </div>
         </div>
-        <div class="row spacing-top--lg">
+        <?= $this->form()->openTag($form) ?>
+        <div class="row spacing-top--md">
             <div class="col-md-12">
                 <h3><?= $this->translate('Details') ?></h3>
             </div>
@@ -87,7 +88,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <button class="btn btn-default">
+                <button type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?>
                 </button>
             </div>
@@ -97,4 +98,5 @@
                 <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>" />
             </div>
         </div>
+        <?= $this->form()->closeTag(); ?>
 </section>
