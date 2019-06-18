@@ -11,7 +11,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *
  * @ORM\Entity
  */
-class ActivityCalendarOption implements ResourceInterface
+class ActivityCalendarOption
 {
     /**
      * ID for the option.
