@@ -132,6 +132,37 @@ class ActivityCalendarOption
     }
 
     /**
+     * Get activity options sorted by creation date within a given period and associated with given organ
+     *
+     * @param \DateTime $begin the date to get the options after
+     * @param \DateTime $end the date to get the options before
+     * @param int $organ_id the organ options have to be associated with
+     * @param string $status retrieve only options with this status, optional
+     * @return array
+     */
+    public function getOptionsWithinPeriodAndOrgan($begin, $end, $organ_id, $status = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->join('Activity\Model\ActivityOptionProposal', 'b')
+            ->where('a.beginTime > :begin')
+            ->where('a.beginTime < :end')
+            ->where('b.organ = :organ')
+            ->orderBy('a.creationTime', 'ASC')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+            ->setParameter('organ', $organ_id);
+
+        if ($status) {
+            $qb->andWhere('a.status = :status')
+                ->setParameter('status', $status);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Retrieves upcoming, non-deleted options by name
      *
      * @param $name
@@ -151,6 +182,45 @@ class ActivityCalendarOption
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Retrieves options associated with a proposal
+     *
+     * @param int $proposal
+     *
+     * @return array
+     */
+    public function findOptionsByProposal($proposal_id)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->andWhere('a.proposal = :proposal')
+            ->setParameter('proposal', $proposal_id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Retrieves options associated with a proposal and associated with given organ
+     *
+     * @param int $proposal
+     * @param int $organ_id the organ proposals have to be associated with
+     *
+     * @return array
+     */
+    public function findOptionsByProposalAndOrgan($proposal_id, $organ_id)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->andWhere('a.proposal = :proposal')
+            ->setParameter('proposal', $proposal_id)
+            ->setParameter('organ', $organ_id);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Persist an option
      *

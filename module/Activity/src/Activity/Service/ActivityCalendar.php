@@ -198,30 +198,11 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Returns whether a member may create more options for a certain activity proposal
-     *
-     * @param  \Activity\Model\ActivityOptionProposal
-     * @return bool
-     */
-    protected function canCreateOption($proposal)
-    {
-        if (!$this->isAllowed('create')) {
-            return false;
-        }
-
-        $period = $this->getCurrentPeriod();
-        if ($period == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Returns whether a member may create a new activity proposal
      *
-     * @param  int $organ_id
+     * @param int $organ_id
      * @return bool
+     * @throws \Exception
      */
     protected function canCreateProposal($organ_id)
     {
@@ -239,7 +220,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $max = $this->getMaxActivities($organ_id, $period->getId());
-        $count = $this->getCurrentProposalCount($period);
+        $count = $this->getCurrentProposalCount($period, $organ_id);
 
         if ($count > $max) {
             return false;
@@ -260,14 +241,29 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Get the current ActivityOptionCreationPeriod
+     * Get the current proposal count of an organ for the given period
      *
      * @param \Activity\Model\ActivityOptionCreationPeriod
      * @return int
      */
-    protected function getCurrentProposalCount($period) {
+    protected function getCurrentProposalCount($period, $organ_id) {
         $mapper = $this->getActivityCalendarOptionMapper();
-        $options = $mapper->getOptionsWithinPeriod($period->getBeginPlanningTime(), $period->getEndPlanningTime());
+        $begin = $period->getBeginPlanningTime();
+        $end = $period->getEndPlanningTime();
+        $options = $mapper->getOptionsWithinPeriodAndOrgan($begin, $end, $organ_id);
+        return len($options);
+    }
+
+    /**
+     * Get the current ActivityOptionCreationPeriod
+     *
+     * @param int $proposal_id
+     * @param int $organ_id
+     * @return int
+     */
+    protected function getCurrentProposalOptionCount($proposal_id, $organ_id) {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $options = $mapper->findOptionsByProposalAndOrgan($proposal_id, $organ_id);
         return len($options);
     }
 
