@@ -12,7 +12,7 @@ class ActivityCalendarController extends AbstractActionController
     {
         $service = $this->getActivityCalendarService();
         $config = $service->getConfig();
-        
+
         return new ViewModel([
             'options'         => $service->getUpcomingOptions(),
             'editableOptions' => $service->getEditableUpcomingOptions(),
