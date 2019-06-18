@@ -159,10 +159,10 @@ class ActivityCalendar extends AbstractAclService
         return false;
     }
 
-    public function deleteOption($data)
+    public function deleteOption($id)
     {
         $mapper = $this->getActivityCalendarOptionMapper();
-        $option = $mapper->find($data['option_id']);
+        $option = $mapper->find($id);
         if (!$this->canDeleteOption($option)) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to delete this option')
@@ -170,8 +170,35 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $em = $this->getEntityManager();
-        $option->setmodifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setStatus('deleted');
         $em->flush();
+    }
+
+    public function approveOption($id)
+    {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $option = $mapper->find($id);
+        if (!$this->canDeleteOption($option)) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to approve this option')
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setStatus('approved');
+        $em->flush();
+
+        $proposal = $option->getProposal();
+        $options = $mapper->findOptionsByProposal($proposal);
+
+        foreach ($options as $option) {
+            // Can't add two options at the same time
+            if ($option->getStatus() == null) {
+                $this->deleteOption($option->getId());
+            }
+        }
     }
 
     protected function canDeleteOption($option)

@@ -178,6 +178,22 @@ class ActivityCalendarOption
     }
 
     /**
+     * @return int
+     */
+    public function getProposal()
+    {
+        return $this->proposal;
+    }
+
+    /**
+     * @param int $proposal
+     */
+    public function setProposal($proposal)
+    {
+        $this->proposal = $proposal;
+    }
+
+    /**
      * Returns the string identifier of the Resource
      *
      * @return string
