@@ -57,6 +57,7 @@ class ActivityController extends AbstractActionController
                 && $signupService->isSignedUp($translatedActivity, $identity->getMember());
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
+        $isArchived = $activity->getEndTime() < new \DateTime();
         $result = [
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() &&
@@ -72,6 +73,7 @@ class ActivityController extends AbstractActionController
             'fields' => $fields,
             'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
             'subscriptionDeadLinePassed' => $subscriptionDeadLinePassed,
+            'isArchived' => $isArchived,
         ];
 
         //Retrieve and clear the request status from the session, if it exists.
