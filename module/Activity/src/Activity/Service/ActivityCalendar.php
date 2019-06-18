@@ -3,8 +3,9 @@
 namespace Activity\Service;
 
 use Activity\Model\ActivityCalendarOption;
-use Application\Service\AbstractAclService;
 use Activity\Model\ActivityCalendarOption as OptionModel;
+use Application\Service\AbstractAclService;
+use Activity\Model\ActivityOptionProposal as ProposalModel;
 
 class ActivityCalendar extends AbstractAclService
 {
@@ -73,11 +74,11 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Retrieves the form for creating a new calendar option.
+     * Retrieves the form for creating a new calendar activity option proposal.
      *
      * @return \Activity\Form\ActivityCalendarProposal
      */
-    public function getCreateOptionForm()
+    public function getCreateProposalForm()
     {
         if (!$this->isAllowed('create')) {
             throw new \User\Permissions\NotAllowedException(
@@ -88,14 +89,40 @@ class ActivityCalendar extends AbstractAclService
         return $this->sm->get('activity_form_calendar_proposal');
     }
 
+    /**
+     * @param $data
+     * @return ProposalModel|bool
+     * @throws \Exception
+     */
+    public function createProposal($data)
+    {
+        $form = $this->getCreateActivityCalendarProposalForm();
+        $proposal = new ProposalModel();
+        $form->bind($proposal);
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $proposal->setCreationTime(new \DateTime());
+        $em = $this->getEntityManager();
+        $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
+        $em->persist($proposal);
+        $em->flush();
+
+        return $proposal;
+    }
 
     /**
      * @param $data
      * @return OptionModel|bool
+     * @throws \Exception
      */
     public function createOption($data)
     {
-        $form = $this->getCreateOptionForm();
+        $proposal = null;
+        $form = $this->getCreateActivityCalendarProposalForm();
         $option = new OptionModel();
         $form->bind($option);
         $form->setData($data);
@@ -103,60 +130,13 @@ class ActivityCalendar extends AbstractAclService
         if (!$form->isValid()) {
             return false;
         }
-        if ($option->getOrgan() !== null && !$this->getOrganService()->canEditOrgan($option->getOrgan())) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to create options for this organ')
-            );
-        }
-        if ($this->optionLimitsExceeded($option)) {
-            $form->get('name')->setMessages([
-                $this->getTranslator()->translate('Maximum number of options which you can create has been exceeded.
-                Delete some options before adding more.')
-            ]);
 
-            return false;
-        }
-        $option->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
-        $option->setCreator($this->sm->get('user_service_user')->getIdentity());
+        $option->setProposal($proposal);
         $em->persist($option);
         $em->flush();
 
         return $option;
-    }
-
-    /**
-     * Check if not too many options have been created
-     * @param ActivityCalendarOption $newOption the new option to be created
-     * @return bool indicating whether too many options have been created.
-     */
-    protected function optionLimitsExceeded($newOption)
-    {
-        // Do some basic fuzzy matching of names
-        $fuzzyName = strtolower($newOption->getName());
-        if (stristr($fuzzyName, 'option')) {
-            $fuzzyName = explode('option', $fuzzyName)[0];
-        }
-
-        if (stristr($fuzzyName, 'optie')) {
-            $fuzzyName = explode('optie', $fuzzyName)[0];
-        }
-
-        $options = $this->getActivityCalendarOptionMapper()->findOptionsByName($fuzzyName);
-        if (count($options) >= 3) {
-            return true;
-        }
-
-        foreach ($options as $option) {
-            // Can't add two options at the same time
-            if ($option->getBeginTime() == $newOption->getBeginTime()
-                || $option->getEndTime() == $newOption->getEndTime()
-            ) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function deleteOption($id)
