@@ -50,7 +50,7 @@ class ActivityCalendarOption
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
             ->andWhere('a.creator = :user OR a.organ IN (:organs)')
-            ->orderBy('a.creationTime', 'ASC');
+            ->orderBy('a.beginTime', 'ASC');
 
         $qb->setParameter('now', new \DateTime())
             ->setParameter('user', $user)
@@ -60,7 +60,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get upcoming activity options sorted by creation date
+     * Get upcoming activity options sorted by begin date
      *
      * @param bool $withDeleted whether to include deleted results
      * @return array
@@ -71,7 +71,7 @@ class ActivityCalendarOption
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
-            ->orderBy('a.creationTime', 'ASC');
+            ->orderBy('a.beginTime', 'ASC');
 
         if (!$withDeleted) {
             $qb->andWhere('a.modifiedBy IS NULL');
@@ -82,7 +82,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get upcoming activity options sorted by creation date
+     * Get upcoming activity options sorted by begin date
      *
      * @param \DateTime $before the date to get the options before
      * @param bool $withDeleted Whether to include deleted options
@@ -93,8 +93,8 @@ class ActivityCalendarOption
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.creationTime < :before')
-            ->orderBy('a.creationTime', 'ASC');
+            ->where('a.beginTime < :before')
+            ->orderBy('a.beginTime', 'ASC');
 
         if (!$withDeleted) {
             $qb->andWhere('a.modifiedBy IS NULL');
@@ -105,7 +105,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get activity options sorted by creation date within a given period
+     * Get activity options sorted by begin date within a given period
      *
      * @param \DateTime $begin the date to get the options after
      * @param \DateTime $end the date to get the options before
@@ -119,7 +119,7 @@ class ActivityCalendarOption
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.beginTime > :begin')
             ->where('a.beginTime < :end')
-            ->orderBy('a.creationTime', 'ASC')
+            ->orderBy('a.beginTime', 'ASC')
             ->setParameter('begin', $begin)
             ->setParameter('end', $end);
 
@@ -132,7 +132,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get activity options sorted by creation date within a given period and associated with given organ
+     * Get activity options sorted by begin date within a given period and associated with given organ
      *
      * @param \DateTime $begin the date to get the options after
      * @param \DateTime $end the date to get the options before
@@ -149,7 +149,7 @@ class ActivityCalendarOption
             ->where('a.beginTime > :begin')
             ->where('a.beginTime < :end')
             ->where('b.organ = :organ')
-            ->orderBy('a.creationTime', 'ASC')
+            ->orderBy('a.beginTime', 'ASC')
             ->setParameter('begin', $begin)
             ->setParameter('end', $end)
             ->setParameter('organ', $organ_id);

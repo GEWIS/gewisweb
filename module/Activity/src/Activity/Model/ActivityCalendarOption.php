@@ -59,13 +59,6 @@ class ActivityCalendarOption
     protected $proposal;
 
     /**
-     * The date and time the activity option was created.
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $creationTime;
-
-    /**
      * Who modified this activity option, if null then the option is not modified
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
@@ -111,22 +104,6 @@ class ActivityCalendarOption
     public function setEndTime($endTime)
     {
         $this->endTime = $endTime;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreationTime()
-    {
-        return $this->creationTime;
-    }
-
-    /**
-     * @param mixed $creationTime
-     */
-    public function setCreationTime($creationTime)
-    {
-        $this->creationTime = $creationTime;
     }
 
     /**
