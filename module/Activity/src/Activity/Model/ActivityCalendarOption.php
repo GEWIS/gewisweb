@@ -23,11 +23,18 @@ class ActivityCalendarOption implements OrganResourceInterface
     protected $id;
 
     /**
-     * Name for the activity option.
+     * Type for the option.
      *
-     * @Orm\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
-    protected $name;
+    protected $type;
+
+    /**
+     * Status for the option.
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $status;
 
     /**
      * The date and time the activity starts.
@@ -44,12 +51,12 @@ class ActivityCalendarOption implements OrganResourceInterface
     protected $endTime;
 
     /**
-     * Who created this activity option.
+     * To what activity proposal does the option belong
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
+     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
-    protected $creator;
+    protected $proposal;
 
     /**
      * The date and time the activity option was created.
@@ -59,20 +66,12 @@ class ActivityCalendarOption implements OrganResourceInterface
     protected $creationTime;
 
     /**
-     * Who deleted this activity option, if null then the option is not deleted
+     * Who modified this activity option, if null then the option is not modified
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
      */
-    protected $deletedBy;
-
-    /**
-     * Who created this option.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
-     */
-    protected $organ;
+    protected $modifiedBy;
 
     /**
      * @return mixed
@@ -80,22 +79,6 @@ class ActivityCalendarOption implements OrganResourceInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -133,22 +116,6 @@ class ActivityCalendarOption implements OrganResourceInterface
     /**
      * @return mixed
      */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param mixed $creator
-     */
-    public function setCreator($creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getCreationTime()
     {
         return $this->creationTime;
@@ -165,44 +132,49 @@ class ActivityCalendarOption implements OrganResourceInterface
     /**
      * @return mixed
      */
-    public function getDeletedBy()
+    public function getModifiedBy()
     {
-        return $this->deletedBy;
+        return $this->modifiedBy;
     }
 
     /**
-     * @param mixed $deletedBy
+     * @param mixed $modifiedBy
      */
-    public function setDeletedBy($deletedBy)
+    public function setModifiedBy($modifiedBy)
     {
-        $this->deletedBy = $deletedBy;
+        $this->modifiedBy = $modifiedBy;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getOrgan()
+    public function getStatus()
     {
-        return $this->organ;
+        return $this->status;
     }
 
     /**
-     * @param mixed $organ
+     * @param string $status
      */
-    public function setOrgan($organ)
+    public function setStatus($status)
     {
-        $this->organ = $organ;
+        $this->status = $status;
     }
 
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
     /**
-     * Get the organ of this resource.
-     *
-     * @return Organ
+     * @param string $type
      */
-    public function getResourceOrgan()
+    public function setType($type)
     {
-        return $this->getOrgan();
+        $this->type = $type;
     }
 
     /**
