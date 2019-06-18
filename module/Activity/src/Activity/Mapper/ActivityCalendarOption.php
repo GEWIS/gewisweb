@@ -74,7 +74,7 @@ class ActivityCalendarOption
             ->orderBy('a.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere('a.deletedBy IS NULL');
+            $qb->andWhere('a.modifiedBy IS NULL');
         }
         $qb->setParameter('now', new \DateTime());
 
@@ -97,7 +97,7 @@ class ActivityCalendarOption
             ->orderBy('a.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere('a.deletedBy IS NULL');
+            $qb->andWhere('a.modifiedBy IS NULL');
         }
         $qb->setParameter('before', $before);
 
@@ -118,7 +118,7 @@ class ActivityCalendarOption
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
             ->andWhere('a.name LIKE :name')
-            ->andWhere('a.deletedBy IS NULL')
+            ->andWhere('a.modifiedBy IS NULL')
             ->setParameter('now', new \DateTime())
             ->setParameter('name', '%' . $name . '%');
 

@@ -128,7 +128,7 @@ $form->prepare();
                 </thead>
                 <tbody>
                 <?php foreach($editableOptions as $option): ?>
-                    <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
+                    <tr<?= $option->getmodifiedBy() === null ? '' : ' class="danger"' ?>>
 
                         <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
                         <td><?= $this->escapeHtml($option->getName()) ?></td>
@@ -136,12 +136,12 @@ $form->prepare();
                         <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
                         <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
                         <td>
-                            <?php if($option->getDeletedBy() === null): ?>
+                            <?php if($option->getmodifiedBy() === null): ?>
                                 <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
                             <?php else: ?>
-                                <strong><?= $this->translate('Deleted by') ?> <?= $option->getDeletedBy()->getMember()->getFullName() ?></strong>
+                                <strong><?= $this->translate('Modified by') ?> <?= $option->getmodifiedBy()->getMember()->getFullName() ?></strong>
                             <?php endif ?>
                         </td>
                     </tr>

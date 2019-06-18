@@ -170,7 +170,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $em = $this->getEntityManager();
-        $option->setDeletedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setmodifiedBy($this->sm->get('user_service_user')->getIdentity());
         $em->flush();
     }
 
