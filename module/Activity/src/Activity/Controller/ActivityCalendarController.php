@@ -55,6 +55,15 @@ class ActivityCalendarController extends AbstractActionController
         }
     }
 
+    public function createAction()
+    {
+        $service = $this->getActivityCalendarService();
+
+        return new ViewModel([
+            'form' => $service->getCreateOptionForm(),
+        ]);
+    }
+
     public function sendNotificationsAction()
     {
         $this->getActivityCalendarService()->sendOverdueNotifications();

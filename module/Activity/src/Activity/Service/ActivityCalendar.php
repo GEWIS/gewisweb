@@ -75,7 +75,7 @@ class ActivityCalendar extends AbstractAclService
     /**
      * Retrieves the form for creating a new calendar option.
      *
-     * @return \Activity\Form\ActivityCalendarOption
+     * @return \Activity\Form\ActivityCalendarProposal
      */
     public function getCreateOptionForm()
     {
@@ -85,7 +85,7 @@ class ActivityCalendar extends AbstractAclService
             );
         }
 
-        return $this->sm->get('activity_form_calendar_option');
+        return $this->sm->get('activity_form_calendar_proposal');
     }
 
 
@@ -371,7 +371,7 @@ class ActivityCalendar extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'activity_calendar_option';
+        return 'activity_calendar_proposal';
     }
 
     /**

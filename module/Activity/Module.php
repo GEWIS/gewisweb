@@ -74,14 +74,14 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
-                'activity_form_calendar_option' => function ($sm) {
+                'activity_form_calendar_proposal' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
-                    $form = new Form\ActivityCalendarOption($organs, $sm->get('translator'));
-                    $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
+                    $form = new Form\ActivityCalendarProposal($organs, $sm->get('translator'));
+                    $form->setHydrator($sm->get('activity_hydrator_calendar_proposal'));
                     return $form;
                 },
-                'activity_hydrator_calendar_option' => function ($sm) {
+                'activity_hydrator_calendar_proposal' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('activity_doctrine_em'),
                         'Activity\Model\ActivityCalendarOption'
@@ -156,7 +156,7 @@ class Module
                     $acl->addResource('myActivities');
                     $acl->addResource('activitySignup');
                     $acl->addResource('model');
-                    $acl->addResource('activity_calendar_option');
+                    $acl->addResource('activity_calendar_proposal');
 
                     $acl->allow('guest', 'activity', 'view');
 
@@ -177,7 +177,7 @@ class Module
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
-                    $acl->allow('user', 'activity_calendar_option', ['create', 'delete_own']);
+                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
                     return $acl;
                 },
             ]
