@@ -24,6 +24,7 @@
                 <h2><?= $this->translate('Plan an activity') ?></h2>
             </div>
         </div>
+        <?= $this->form()->openTag($form) ?>
         <div class="row spacing-top--lg">
             <div class="col-md-12">
                 <h3><?= $this->translate('Details') ?></h3>
@@ -97,4 +98,5 @@
                 <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>" />
             </div>
         </div>
+        <?= $this->form()->closeTag(); ?>
 </section>
