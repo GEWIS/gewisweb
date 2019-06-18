@@ -140,6 +140,9 @@ $form->prepare();
                                 <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
+                                <a class="btn btn-xs btn-succes" href="javascript:showApproveModal(<?= $option->getId() ?>)">
+                                    <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
+                                </a>
                             <?php else: ?>
                                 <strong><?= $this->translate('Modified by') ?> <?= $option->getmodifiedBy()->getMember()->getFullName() ?></strong>
                             <?php endif ?>
@@ -164,6 +167,26 @@ $form->prepare();
                             <input type="hidden" name="option_id" id="deleteOptionId"/>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
                             <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="approveModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><?= $this->translate('Approve option') ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><?= $this->translate('Are you sure you want to approve this option?') ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <form method="post" action="approve" class="form form-inline form-approve">
+                            <input type="hidden" name="option_id" id="approveOptionId"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check" aria-hidden="true"></i>&nbsp;<?= $this->translate('Approve') ?></button>
                         </form>
                     </div>
                 </div>
@@ -247,6 +270,11 @@ $form->prepare();
     function showDeleteModal(optionId) {
         $('#deleteOptionId').val(optionId);
         $('#deleteModal').modal('show');
+    }
+
+    function showApproveeModal(optionId) {
+        $('#approveOptionId').val(optionId);
+        $('#approveModal').modal('show');
     }
 
     $('.btn-group button[data-calendar-nav]').each(function() {
