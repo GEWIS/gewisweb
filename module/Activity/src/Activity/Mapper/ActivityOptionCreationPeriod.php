@@ -45,8 +45,8 @@ class ActivityOptionCreationPeriod
         $today = new DateTime();
         $qb->select('x')
             ->from('AcitivityOption\Model\ActivityOptionCreationPeriod', 'x')
-            ->where('x.beginTime < :today')
-            ->where('x.endTime > :today')
+            ->where('x.beginPlanningTime < :today')
+            ->where('x.endPlanningTime > :today')
             ->orderBy('x.beginTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);
@@ -64,8 +64,8 @@ class ActivityOptionCreationPeriod
         $today = new DateTime();
         $qb->select('x')
             ->from('AcitivityOption\Model\ActivityOptionCreationPeriod', 'x')
-            ->where('x.beginTime > :today')
-            ->orderBy('x.beginTime', 'ASC')
+            ->where('x.beginPlanningTime > :today')
+            ->orderBy('x.beginPlanningTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();

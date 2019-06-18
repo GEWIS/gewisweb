@@ -105,6 +105,33 @@ class ActivityCalendarOption
     }
 
     /**
+     * Get activity options sorted by creation date within a given period
+     *
+     * @param \DateTime $begin the date to get the options after
+     * @param \DateTime $end the date to get the options before
+     * @param string $status retrieve only options with this status, optional
+     * @return array
+     */
+    public function getOptionsWithinPeriod($begin, $end, $status = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->where('a.beginTime > :begin')
+            ->where('a.beginTime < :end')
+            ->orderBy('a.creationTime', 'ASC')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end);
+
+        if ($status) {
+            $qb->andWhere('a.status = :status')
+                ->setParameter('status', $status);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Retrieves upcoming, non-deleted options by name
      *
      * @param $name

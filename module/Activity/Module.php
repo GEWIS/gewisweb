@@ -115,6 +115,16 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
+                'activity_mapper_period' => function ($sm) {
+                    return new \Activity\Mapper\ActivityOptionCreationPeriod(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_max_activities' => function ($sm) {
+                    return new \Activity\Mapper\MaxActivities(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
                 'activity_mapper_activity_field_value' => function ($sm) {
                     return new \Activity\Mapper\ActivityFieldValue(
                         $sm->get('activity_doctrine_em')

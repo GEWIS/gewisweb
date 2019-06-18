@@ -198,6 +198,112 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
+     * Returns whether a member may create more options for a certain activity proposal
+     *
+     * @param  \Activity\Model\ActivityOptionProposal
+     * @return bool
+     */
+    protected function canCreateOption($proposal)
+    {
+        if (!$this->isAllowed('create')) {
+            return false;
+        }
+
+        $period = $this->getCurrentPeriod();
+        if ($period == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns whether a member may create a new activity proposal
+     *
+     * @param  int $organ_id
+     * @return bool
+     */
+    protected function canCreateProposal($organ_id)
+    {
+        if (!$this->isAllowed('create')) {
+            return false;
+        }
+
+        $period = $this->getCurrentPeriod();
+        if ($period == null) {
+            return false;
+        }
+
+        if ($organ_id == null) {
+            return false;
+        }
+
+        $max = $this->getMaxActivities($organ_id, $period->getId());
+        $count = $this->getCurrentProposalCount($period);
+
+        if ($count > $max) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the current ActivityOptionCreationPeriod
+     *
+     * @return \Activity\Model\ActivityOptionCreationPeriod
+     * @throws \Exception
+     */
+    protected function getCurrentPeriod() {
+        $mapper = $this->getActivityOptionCreationPeriodMapper();
+        return $mapper->getCurrentActivityOptionCreationPeriod();
+    }
+
+    /**
+     * Get the current ActivityOptionCreationPeriod
+     *
+     * @param \Activity\Model\ActivityOptionCreationPeriod
+     * @return int
+     */
+    protected function getCurrentProposalCount($period) {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $options = $mapper->getOptionsWithinPeriod($period->getBeginPlanningTime(), $period->getEndPlanningTime());
+        return len($options);
+    }
+
+    /**
+     * Get the max number of activity options an organ can create
+     *
+     * @param \Decision\Service\Organ $organ
+     * @return int
+     * @throws \Exception
+     */
+    protected function getMaxActivities($organ) {
+        $mapper = $this->getActivityOptionCreationPeriodMapper();
+        return $mapper->getCurrentActivityOptionCreationPeriod();
+    }
+
+    /**
+     * Get the period mapper
+     *
+     * @return \Activity\Mapper\ActivityOptionCreationPeriod
+     */
+    public function getActivityOptionCreationPeriodMapper()
+    {
+        return $this->sm->get('activity_mapper_period');
+    }
+
+    /**
+     * Get the max activities mapper
+     *
+     * @return \Activity\Mapper\MaxActivities
+     */
+    public function getMaxActivitiesMapper()
+    {
+        return $this->sm->get('activity_mapper_max_activities');
+    }
+
+    /**
      * Get the entity manager
      */
     public function getEntityManager()
