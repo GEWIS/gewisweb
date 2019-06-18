@@ -79,6 +79,6 @@ class ActivityOptionCreationPeriod
      */
     public function getRepository()
     {
-        return $this->em->getRepository('AcitivityOption\Model\MaxActivityOptions');
+        return $this->em->getRepository('AcitivityOption\Model\ActivityOptionCreationPeriod');
     }
 }
