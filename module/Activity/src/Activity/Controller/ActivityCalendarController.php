@@ -11,27 +11,15 @@ class ActivityCalendarController extends AbstractActionController
     public function indexAction()
     {
         $service = $this->getActivityCalendarService();
-        $createdOption = null;
-        $optionError = false;
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $createdOption = $service->createOption($request->getPost());
-            if ($createdOption) {
-                return $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
-
-            }
-            $optionError = true;
-        }
         $config = $service->getConfig();
+        
         return new ViewModel([
-            'options' => $service->getUpcomingOptions(),
+            'options'         => $service->getUpcomingOptions(),
             'editableOptions' => $service->getEditableUpcomingOptions(),
-            'APIKey' => $config['google_api_key'],
-            'calendarKey' => $config['google_calendar_key'],
-            'form' => $service->getCreateOptionForm(),
-            'optionError' => $optionError,
-            'createdOption' => $createdOption,
-            'success' => $request->getQuery('success', false)
+            'APIKey'          => $config['google_api_key'],
+            'calendarKey'     => $config['google_calendar_key'],
+            'form'            => $service->getCreateOptionForm(),
+            'success'         => $this->getRequest()->getQuery('success', false)
         ]);
     }
 

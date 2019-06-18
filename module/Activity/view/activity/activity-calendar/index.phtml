@@ -54,59 +54,10 @@ $form->prepare();
                 <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
             </div>
             <div class="pull-right">
-                <div class="dropdown pull-right<?= $optionError ? ' open' : '' ?>">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <form class="form" action="<?= $this->url('activity_calendar') ?>" method="post">
-                            <?php
-                            $name = $form->get('name');
-                            $name->setAttribute('class', 'form-control');
-                            $name->setAttribute('id', 'cal-name');
-                            ?>
-                            <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $name->getAttribute('id') ?>">
-                                    <?= $this->translate('Name') ?>
-                                </label>
-                                <?= $this->formInput($name) ?>
-                                <?= $this->formElementErrors($name) ?>
-                            </div>
-                            <?php
-                            $beginTime = $form->get('beginTime');
-                            $beginTime->setAttribute('class', 'form-control datepicker');
-                            $beginTime->setAttribute('id', 'cal-begin');
-                            $endTime = $form->get('endTime');
-                            $endTime->setAttribute('class', 'form-control datepicker');
-                            $endTime->setAttribute('id', 'cal-end');
-                            ?>
-                            <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $beginTime->getAttribute('id') ?>"><?= $this->translate('From') ?></label>
-                                <?= $this->formInput($beginTime) ?>
-                                <?= $this->formElementErrors($beginTime) ?>
-                            </div>
-
-                            <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $endTime->getAttribute('id') ?>"><?= $this->translate('Until') ?></label>
-                                <?= $this->formInput($endTime) ?>
-                                <?= $this->formElementErrors($endTime) ?>
-                            </div>
-                            <?php
-                            $organ = $form->get('organ');
-                            $organ->setAttribute('class', 'form-control');
-                            $organ->setAttribute('id', 'cal-organ');
-                            ?>
-                            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $organ->getAttribute('id'); ?>">
-                                    <?= $this->translate('Organizing committee / fraternity') ?>
-                                </label>
-                                <?= $this->formSelect($organ) ?>
-                                <?= $this->formElementErrors($organ) ?>
-                            </div>
-                            <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
-                        </form>
-                    </div>
+                <div class="dropdown pull-right">
+                    <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span> <span class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
+                    </a>
                 </div>
             </div>
         </div>
