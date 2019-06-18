@@ -47,8 +47,16 @@ class ActivityCalendarController extends AbstractActionController
     {
         $service = $this->getActivityCalendarService();
 
+        $feedback = null;
+
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $feedback = $service->createProposal($postData);
+        }
+
         return new ViewModel([
-            'form' => $service->getCreateOptionForm(),
+            'form' => $service->getCreateProposalForm(),
+            'feedback' => $feedback,
         ]);
     }
 

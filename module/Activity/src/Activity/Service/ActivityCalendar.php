@@ -112,7 +112,7 @@ class ActivityCalendar extends AbstractAclService
      */
     public function createProposal($data)
     {
-        $form = $this->getCreateActivityCalendarProposalForm();
+        $form = $this->getCreateProposalForm();
         $proposal = new ProposalModel();
         $form->bind($proposal);
         $form->setData($data);
@@ -124,6 +124,7 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
+        $proposal->setOrgan($form->get('organ'));
         $em->persist($proposal);
         $em->flush();
 
@@ -138,7 +139,7 @@ class ActivityCalendar extends AbstractAclService
     public function createOption($data)
     {
         $proposal = null;
-        $form = $this->getCreateActivityCalendarProposalForm();
+        $form = $this->getCreateOptionForm();
         $option = new OptionModel();
         $form->bind($option);
         $form->setData($data);
