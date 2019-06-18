@@ -51,6 +51,17 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'type' => 'text',
             ],
         ]);
+
+        $this->add([
+            'name' => 'options',
+            'type' => 'Zend\Form\Element\Collection',
+            'options' => [
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => new ActivityCalendarOption($translator)
+            ]
+        ]);
     }
 
     /**
