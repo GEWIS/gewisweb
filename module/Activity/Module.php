@@ -84,6 +84,19 @@ class Module
                 'activity_hydrator_calendar_proposal' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('activity_doctrine_em'),
+                        'Activity\Model\ActivityCalendarProposal'
+                    );
+                },
+                'activity_form_calendar_option' => function ($sm) {
+                    $organService = $sm->get('decision_service_organ');
+                    $organs = $organService->getEditableOrgans();
+                    $form = new Form\ActivityCalendarProposal($organs, $sm->get('translator'));
+                    $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
+                    return $form;
+                },
+                'activity_hydrator_calendar_option' => function ($sm) {
+                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                        $sm->get('activity_doctrine_em'),
                         'Activity\Model\ActivityCalendarOption'
                     );
                 },
