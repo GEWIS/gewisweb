@@ -82,11 +82,27 @@ class ActivityCalendar extends AbstractAclService
     {
         if (!$this->isAllowed('create')) {
             throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to create activity options.')
+                $this->getTranslator()->translate('Not allowed to create activity proposals.')
             );
         }
 
         return $this->sm->get('activity_form_calendar_proposal');
+    }
+
+    /**
+     * Retrieves the form for creating a new calendar activity option proposal.
+     *
+     * @return \Activity\Form\ActivityCalendarOption
+     */
+    public function getCreateOptionForm()
+    {
+        if (!$this->isAllowed('create')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('Not allowed to create activity options.')
+            );
+        }
+
+        return $this->sm->get('activity_form_calendar_form');
     }
 
     /**
