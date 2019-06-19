@@ -19,7 +19,7 @@ class ActivityCalendarController extends AbstractActionController
             'APIKey'          => $config['google_api_key'],
             'calendarKey'     => $config['google_calendar_key'],
             'success'         => $this->getRequest()->getQuery('success', false),
-            'canCreate'         => $service->canCreateProposal()
+            'canCreate'       => $service->canCreateProposal()
         ]);
     }
 
