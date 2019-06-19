@@ -104,14 +104,13 @@ class ActivityCalendar extends AbstractAclService
     {
         $form = $this->getCreateProposalForm();
         $proposal = new ProposalModel();
-        $form->bind($proposal);
         $form->setData($data);
 
         if (!$form->isValid()) {
             return false;
         }
 
-        $organ = $form->get('organ');
+        $organ = $form->getData()['organ'];
         if (!$this->canOrganCreateProposal($organ)) {
             return false;
         }
@@ -119,11 +118,15 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
-        $proposal->setOrgan($organ);
+        $name = $form->getData()['name'];
+        $proposal->setName($name);
+        $description = $form->getData()['description'];
+        $proposal->setDescription($description);
+        $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
         $em->persist($proposal);
         $em->flush();
 
-        $options = $form->get('options');
+        $options = $form->getData()['options'];
         foreach ($options as $option) {
             $result = $this->createOption($option, $proposal->getId());
             if ($result == false) {
@@ -144,7 +147,6 @@ class ActivityCalendar extends AbstractAclService
     {
         $form = $this->getCreateOptionForm();
         $option = new OptionModel();
-        $form->bind($option);
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -153,6 +155,12 @@ class ActivityCalendar extends AbstractAclService
 
         $em = $this->getEntityManager();
         $option->setProposal($proposal_id);
+        $beginTime = $form->getData()['beginTime'];
+        $option->setBeginTime($beginTime);
+        $endTime = $form->getData()['endTime'];
+        $option->setEndTime($endTime);
+        $type = $form->getData()['type'];
+        $option->setType($type);
         $em->persist($option);
         $em->flush();
 
@@ -295,11 +303,14 @@ class ActivityCalendar extends AbstractAclService
         $begin = $period->getBeginOptionTime();
         $end = $period->getEndOptionTime();
 
-        if ($begin < $start_time AND $start_time < $end) {
-            return true;
+        if ($begin > $start_time) {
+            return false;
+        }
+        if ($start_time > $end) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

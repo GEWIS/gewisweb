@@ -54,15 +54,15 @@ $form->prepare();
                 <h2><?= $this->translate('Plan an activity') ?></h2>
             </div>
         </div>
-        <?php if ($period != null): ?>
-            <div class="row spacing-top--lg">
-                <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">
-                        <?= sprintf($this->translate('You can create proposals and options between %s and %s.'), $period->getBeginOptionTime(), $period->getEndOptionTime()) ?>
-                    </div>
-                </div>
-            </div>
-        <?php endif ?>
+<!--        --><?php //if ($period === true): ?>
+<!--            <div class="row spacing-top--lg">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="alert alert-info" role="alert">-->
+<!--                        --><?//= sprintf($this->translate('You can create proposals and options between %s and %s.'), $begin, $end) ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        --><?php //endif ?>
         <?= $this->form()->openTag($form) ?>
         <?php if ($feedback === true): ?>
             <div class="row spacing-top--lg">

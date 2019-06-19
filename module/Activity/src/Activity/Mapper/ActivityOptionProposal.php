@@ -47,8 +47,8 @@ class ActivityOptionProposal
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->join('Activity\Model\ActivityOptionProposal', 'b')
             ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->andWhere('b.organ = :organ')
+            ->where('a.beginTime < :end')
+            ->where('b.organ = :organ')
             ->setParameter('begin', $begin)
             ->setParameter('end', $end)
             ->setParameter('organ', $organ_id);
@@ -76,9 +76,9 @@ class ActivityOptionProposal
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->join('Activity\Model\ActivityOptionProposal', 'b')
             ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->andWhere('b.organ = :organ')
-            ->andWhere("a.status != 'deleted'")
+            ->where('a.beginTime < :end')
+            ->where('b.organ = :organ')
+            ->where("a.status != 'deleted'")
             ->setParameter('begin', $begin)
             ->setParameter('end', $end)
             ->setParameter('organ', $organ_id);

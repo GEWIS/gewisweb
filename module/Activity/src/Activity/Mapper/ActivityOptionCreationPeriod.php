@@ -2,7 +2,6 @@
 namespace Activity\Mapper;
 use Option\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 use DateTime;
-use Decision\Model\Organ;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
@@ -47,7 +46,7 @@ class ActivityOptionCreationPeriod
             ->from('Activity\Model\ActivityOptionCreationPeriod', 'x')
             ->where('x.beginPlanningTime < :today')
             ->where('x.endPlanningTime > :today')
-            ->orderBy('x.beginTime', 'ASC')
+            ->orderBy('x.beginPlanningTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
