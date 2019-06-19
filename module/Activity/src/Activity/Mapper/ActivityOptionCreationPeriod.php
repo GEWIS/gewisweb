@@ -46,7 +46,7 @@ class ActivityOptionCreationPeriod
         $qb->select('x')
             ->from('AcitivityOption\Model\ActivityOptionCreationPeriod', 'x')
             ->where('x.beginPlanningTime < :today')
-            ->where('x.endPlanningTime > :today')
+            ->andWhere('x.endPlanningTime > :today')
             ->orderBy('x.beginTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);

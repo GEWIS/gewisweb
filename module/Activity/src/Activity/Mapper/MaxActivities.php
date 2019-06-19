@@ -44,7 +44,7 @@ class MaxActivities
         $qb->select('x')
             ->from('AcitivityOption\Model\ActivityOptionCreationPeriod', 'x')
             ->where('x.organ = :organ_')
-            ->where('x.period = :period')
+            ->andWhere('x.period = :period')
             ->setParameter('organ', $organ_id)
             ->setParameter('period', $period_id)
             ->setMaxResults(1);

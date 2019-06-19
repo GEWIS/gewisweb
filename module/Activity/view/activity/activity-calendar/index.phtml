@@ -52,13 +52,15 @@ $this->headLink()
 
                 <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
             </div>
-            <div class="pull-right">
-                <div class="dropdown pull-right">
-                    <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-plus"></span> <span class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
-                    </a>
+            <?php if ($canCreate): ?>
+                <div class="pull-right">
+                    <div class="dropdown pull-right">
+                        <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus"></span> <span class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            <?php endif ?>
         </div>
         <div class="row">
             <div id="calendar" class="calendar-control"></div>

@@ -233,7 +233,7 @@ class ActivityCalendar extends AbstractAclService
         $all_organs = $this->getOrganService()->getEditableOrgans();
         $organs = array();
         foreach ($all_organs as $organ) {
-            if ($this->canCreateProposal($organ->getId())) {
+            if ($this->canOrganCreateProposal($organ->getId())) {
                 $organs.append($organ);
             }
         }
@@ -241,13 +241,13 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Returns whether a member may create a new activity proposal
+     * Returns whether an organ may create a new activity proposal
      *
      * @param int $organ_id
      * @return bool
      * @throws \Exception
      */
-    protected function canCreateProposal($organ_id)
+    protected function canOrganCreateProposal($organ_id)
     {
         if (!$this->isAllowed('create_always')) {
             return true;
@@ -277,6 +277,19 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
+     * Returns whether a member may create a new activity proposal
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function canCreateProposal()
+    {
+        $organs = $this->getEditableOrgans();
+
+        return !empty($organs);
+    }
+
+    /**
      * Get the current ActivityOptionCreationPeriod
      *
      * @return \Activity\Model\ActivityOptionCreationPeriod
@@ -294,10 +307,10 @@ class ActivityCalendar extends AbstractAclService
      * @return int
      */
     protected function getCurrentProposalCount($period, $organ_id) {
-        $mapper = $this->getActivityCalendarOptionMapper();
+        $mapper = $this->getActivityCalendarProposalMapper();
         $begin = $period->getBeginPlanningTime();
         $end = $period->getEndPlanningTime();
-        $options = $mapper->getOptionsWithinPeriodAndOrgan($begin, $end, $organ_id);
+        $options = $mapper->getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organ_id);
         return len($options);
     }
 
