@@ -72,7 +72,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                     $this->translator->translate('The activity must start before it ends'),
                             ],
                             'callback' => function ($value, $context = []) {
-                                $this->beforeEndTime($value, $context);
+                                return $this->beforeEndTime($value, $context);
                             }
                         ],
                     ],
@@ -84,7 +84,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                     $this->translator->translate('The activity must start after today'),
                             ],
                             'callback' => function ($value, $context = []) {
-                                $this->isFutureTime($value, $context);
+                                return $this->isFutureTime($value, $context);
                             }
                         ],
                     ],
@@ -96,7 +96,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                     $this->translator->translate('The activity must be within the given period'),
                             ],
                             'callback' => function ($value, $context = []) {
-                                $this->cannotPlanInPeriod($value, $context);
+                                return $this->cannotPlanInPeriod($value, $context);
                             }
                         ],
                     ],
