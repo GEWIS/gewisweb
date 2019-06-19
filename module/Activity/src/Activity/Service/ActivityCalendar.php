@@ -121,13 +121,16 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
         $proposal->setOrgan($organ);
         $em->persist($proposal);
-        $em->flush();
 
         $options = $form->get('options');
-
         foreach ($options as $option) {
-            $this->createOption($option, $proposal->getId());
+            $result = $this->createOption($option, $proposal->getId());
+            if ($result == false) {
+                return false;
+            }
         }
+
+        $em->flush();
 
         return $proposal;
     }
@@ -152,7 +155,6 @@ class ActivityCalendar extends AbstractAclService
         $em = $this->getEntityManager();
         $option->setProposal($proposal_id);
         $em->persist($option);
-        $em->flush();
 
         return $option;
     }
@@ -274,6 +276,30 @@ class ActivityCalendar extends AbstractAclService
         }
 
         return true;
+    }
+
+    /**
+     * Returns whether a user may create an option with given start time
+     *
+     * @param \DateTime $start_time
+     * @return bool
+     * @throws \Exception
+     */
+    public function canCreateOption($start_time)
+    {
+        if ($this->isAllowed('create_always')) {
+            return true;
+        }
+
+        $period = $this->getCurrentPeriod();
+        $begin = $period->getBeginPlanningTime();
+        $end = $period->getEndPlanningTime();
+
+        if ($begin < $start_time AND $start_time < $end) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

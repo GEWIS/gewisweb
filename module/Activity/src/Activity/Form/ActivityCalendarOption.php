@@ -74,9 +74,19 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must after today'),
+                                    $this->translator->translate('The activity must start after today'),
                             ],
                             'callback' => ['Activity\Form\ActivityCalendarOption', 'isFutureTime']
+                        ],
+                    ],
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity must be within the given period.'),
+                            ],
+                            'callback' => ['Activity\Form\ActivityCalendarOption', 'cannotPlanInPeriod']
                         ],
                     ],
                 ]
@@ -125,5 +135,30 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Check if a certain date is within the current planning period
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     * @throws \Exception
+     */
+    public function cannotPlanInPeriod($value, $context = [])
+    {
+        $service = $this->getActivityCalendarService();
+        $result = $service->canCreateOption($value);
+        return $result;
+    }
+
+    /**
+     * Get the activity calendar service
+     *
+     * @return \Activity\Service\ActivityCalendar
+     */
+    private function getActivityCalendarService()
+    {
+        return $this->getServiceLocator()->get('activity_service_calendar');
     }
 }
