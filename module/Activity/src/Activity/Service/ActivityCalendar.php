@@ -35,9 +35,8 @@ class ActivityCalendar extends AbstractAclService
         }
         $user = $this->sm->get('user_service_user')->getIdentity();
 
-        return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrganOrUser(
-            $this->getMemberMapper()->findOrgans($user->getMember()),
-            $user
+        return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrgans(
+            $this->getMemberMapper()->findOrgans($user->getMember())
         );
     }
 
@@ -62,16 +61,6 @@ class ActivityCalendar extends AbstractAclService
         $config = $this->sm->get('config');
 
         return $config['calendar'];
-    }
-
-    /**
-     * Get the activity calendar option mapper.
-     *
-     * @return \Activity\Mapper\ActivityCalendarOption
-     */
-    public function getActivityCalendarOptionMapper()
-    {
-        return $this->sm->get('activity_mapper_calendar_option');
     }
 
     /**
@@ -240,7 +229,7 @@ class ActivityCalendar extends AbstractAclService
         $organs = array();
         foreach ($all_organs as $organ) {
             if ($this->canOrganCreateProposal($organ->getId())) {
-                $organs.append($organ);
+                array_push($organs, $organ);
             }
         }
         return $organs;
@@ -255,7 +244,7 @@ class ActivityCalendar extends AbstractAclService
      */
     protected function canOrganCreateProposal($organ_id)
     {
-        if (!$this->isAllowed('create_always')) {
+        if ($this->isAllowed('create_always')) {
             return true;
         }
 
@@ -292,7 +281,7 @@ class ActivityCalendar extends AbstractAclService
     {
         $organs = $this->getEditableOrgans();
 
-        return !empty($organs);
+        return (!empty($organs));
     }
 
     /**
@@ -313,11 +302,11 @@ class ActivityCalendar extends AbstractAclService
      * @return int
      */
     protected function getCurrentProposalCount($period, $organ_id) {
-        $mapper = $this->getActivityCalendarProposalMapper();
+        $mapper = $this->getActivityOptionProposalMapper();
         $begin = $period->getBeginPlanningTime();
         $end = $period->getEndPlanningTime();
         $options = $mapper->getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organ_id);
-        return len($options);
+        return count($options);
     }
 
     /**
@@ -330,19 +319,45 @@ class ActivityCalendar extends AbstractAclService
     protected function getCurrentProposalOptionCount($proposal_id, $organ_id) {
         $mapper = $this->getActivityCalendarOptionMapper();
         $options = $mapper->findOptionsByProposalAndOrgan($proposal_id, $organ_id);
-        return len($options);
+        return count($options);
     }
 
     /**
      * Get the max number of activity options an organ can create
      *
-     * @param \Decision\Service\Organ $organ
+     * @param int $organ_id
+     * @param int $period_id
      * @return int
      * @throws \Exception
      */
-    protected function getMaxActivities($organ) {
-        $mapper = $this->getActivityOptionCreationPeriodMapper();
-        return $mapper->getCurrentActivityOptionCreationPeriod();
+    protected function getMaxActivities($organ_id, $period_id) {
+        $mapper = $this->getMaxActivitiesMapper();
+        $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organ_id, $period_id);
+        $max = 0;
+        if ($maxActivities != null) {
+            $max = $maxActivities->getValue();
+        }
+        return $max;
+    }
+
+    /**
+     * Get the activity calendar option mapper.
+     *
+     * @return \Activity\Mapper\ActivityCalendarOption
+     */
+    public function getActivityCalendarOptionMapper()
+    {
+        return $this->sm->get('activity_mapper_calendar_option');
+    }
+
+    /**
+     * Get the period mapper
+     *
+     * @return \Activity\Mapper\ActivityOptionProposal
+     */
+    public function getActivityOptionProposalMapper()
+    {
+        return $this->sm->get('activity_mapper_option_proposal');
     }
 
     /**

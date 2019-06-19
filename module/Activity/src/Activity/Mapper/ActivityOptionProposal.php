@@ -69,7 +69,7 @@ class ActivityOptionProposal
      * @param int $organ_id the organ options have to be associated with
      * @return array
      */
-    public function getNonClosedOptionsWithinPeriodAndOrgan($begin, $end, $organ_id)
+    public function getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organ_id)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('b')
@@ -78,7 +78,7 @@ class ActivityOptionProposal
             ->where('a.beginTime > :begin')
             ->andWhere('a.beginTime < :end')
             ->andWhere('b.organ = :organ')
-            ->andWhere('a.status != deleted')
+            ->andWhere("a.status != 'deleted'")
             ->setParameter('begin', $begin)
             ->setParameter('end', $end)
             ->setParameter('organ', $organ_id);
@@ -93,6 +93,6 @@ class ActivityOptionProposal
      */
     public function getRepository()
     {
-        return $this->em->getRepository('AcitivityOption\Model\ActivityOptionProposal');
+        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
     }
 }
