@@ -30,7 +30,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
             'type' => 'select',
             'options' => [
                 'empty_option' => [
-                    'label'    => $translator->translate('Please select an option'),
+                    'label'    => $translator->translate('Select an option'),
                     'selected' => 'selected',
                     'disabled' => 'disabled',
                 ],

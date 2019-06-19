@@ -54,33 +54,24 @@ $form->prepare();
                 <h2><?= $this->translate('Plan an activity') ?></h2>
             </div>
         </div>
-<!--        --><?php //if ($period === true): ?>
-<!--            <div class="row spacing-top--lg">-->
-<!--                <div class="col-md-12">-->
-<!--                    <div class="alert alert-info" role="alert">-->
-<!--                        --><?//= sprintf($this->translate('You can create proposals and options between %s and %s.'), $begin, $end) ?>
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        --><?php //endif ?>
         <?= $this->form()->openTag($form) ?>
-        <?php if ($feedback === true): ?>
-            <div class="row spacing-top--lg">
-                <div class="col-md-12">
-                    <div class="alert alert-success" role="alert">
-                        <?= $this->translate('Your proposal has been sent in!') ?>
-                    </div>
+        <?php if ($success === true): ?>
+        <div class="row spacing-top--md">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    <p><span class="glyphicon glyphicon-ok"></span> <?= $this->translate('The activity has been saved') ?></p>
                 </div>
             </div>
+        </div>
         <?php endif ?>
-        <?php if ($feedback === false): ?>
-            <div class="row spacing-top--lg">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert">
-                        <?= $this->translate('Invalid input!') ?>
-                    </div>
+        <?php if ($success === false): ?>
+        <div class="row spacing-top--md">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> <?= $this->translate('The activity could not be saved. Check and correct your input data.') ?>
                 </div>
             </div>
+        </div>
         <?php endif ?>
         <div class="row spacing-top--md">
             <div class="col-md-12">
@@ -89,8 +80,7 @@ $form->prepare();
         </div>
         <div class="row">
             <div class="col-md-4">
-                <?php
-                $organ = $form->get('organ')
+                <?php $organ = $form->get('organ')
                     ->setAttribute('class', 'form-control')
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
@@ -161,7 +151,7 @@ $form->prepare();
                         $index++;
                     }
                     ?>
-                    <div class="form-group add-option">
+                    <div class="form-group add-option spacing-top--md">
                         <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
                             <span class="glyphicon glyphicon-plus"></span>
                             <?= $this->translate('Add an option') ?>

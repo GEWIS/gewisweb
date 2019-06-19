@@ -48,12 +48,12 @@ class ActivityCalendarController extends AbstractActionController
         $service = $this->getActivityCalendarService();
 
         $form = $service->getCreateProposalForm();
-        $feedback = null;
+        $success = null;
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
-            $feedback = $service->createProposal($postData);
-            if ($feedback === false) {
+            $success = $service->createProposal($postData);
+            if ($success === false) {
                 $form->setData($postData);
             }
         }
@@ -62,17 +62,18 @@ class ActivityCalendarController extends AbstractActionController
 
         if ($period != null) {
             return new ViewModel([
-                'period' => true,
-                'begin' => $period->getBeginOptionTime(),
-                'end' => $period->getEndOptionTime(),
-                'form' => $form,
-                'feedback' => $feedback,
+                'period'  => true,
+                'begin'   => $period->getBeginOptionTime(),
+                'end'     => $period->getEndOptionTime(),
+                'form'    => $form,
+                'success' => $success,
             ]);
         }
+
         return new ViewModel([
-            'period' => false,
-            'form' => $form,
-            'feedback' => $feedback,
+            'period'  => false,
+            'form'    => $form,
+            'success' => $success,
         ]);
     }
 
