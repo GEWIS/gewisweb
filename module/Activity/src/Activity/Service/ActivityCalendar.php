@@ -129,17 +129,23 @@ class ActivityCalendar extends AbstractAclService
         $em->persist($proposal);
         $em->flush();
 
+        $options = $form->get('options');
+
+        foreach ($options as $option) {
+            $this->createOption($option, $proposal->getId());
+        }
+
         return $proposal;
     }
 
     /**
      * @param $data
+     * @param int $proposal_id
      * @return OptionModel|bool
      * @throws \Exception
      */
-    public function createOption($data)
+    public function createOption($data, $proposal_id)
     {
-        $proposal = null;
         $form = $this->getCreateOptionForm();
         $option = new OptionModel();
         $form->bind($option);
@@ -150,7 +156,7 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $em = $this->getEntityManager();
-        $option->setProposal($proposal);
+        $option->setProposal($proposal_id);
         $em->persist($option);
         $em->flush();
 

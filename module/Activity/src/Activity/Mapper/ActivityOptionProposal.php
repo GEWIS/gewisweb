@@ -83,10 +83,6 @@ class ActivityOptionProposal
             ->setParameter('end', $end)
             ->setParameter('organ', $organ_id);
 
-        if ($status) {
-            $qb
-        }
-
         return $qb->getQuery()->getResult();
     }
 
