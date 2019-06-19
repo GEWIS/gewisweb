@@ -1,19 +1,49 @@
+<?php
+$this->headTitle($this->translate('Create activity proposal'));
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/proposal-create.js')
+    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
+
+$form->prepare();
+?>
 <style>
-    label { cursor: pointer;}
-    label input[type=checkbox] { margin-right: 1.5rem; }
+    label {
+        cursor: pointer;
+    }
 
-    .label-required:after { content: "*"; color: #d40026; }
+    label input[type=checkbox] {
+        margin-right: 1.5rem;
+    }
 
-    .spacing-top--lg { margin-top: 4rem; }
-    .spacing-top--md { margin-top: 2.5rem; }
-    .spacing-top--sm { margin-top: 1rem; }
+    .label-required:after {
+        content: "*";
+        color: #d40026;
+    }
+
+    .spacing-top--lg {
+        margin-top: 4rem;
+    }
+
+    .spacing-top--md {
+        margin-top: 2.5rem;
+    }
+
+    .spacing-top--sm {
+        margin-top: 1rem;
+    }
 
     @media (max-width: 992px) {
-        .spacing-top-sm--sm { margin-top: 1rem; }
+        .spacing-top-sm--sm {
+            margin-top: 1rem;
+        }
     }
 
     @media (min-width: 992px) {
-        .spacing-top-sm--sm { margin-top: 0; }
+        .spacing-top-sm--sm {
+            margin-top: 0;
+        }
     }
 </style>
 <section class="section">
@@ -33,13 +63,13 @@
         <div class="row">
             <div class="col-md-4">
                 <?php
-                    $organ = $form->get('organ')
-                        ->setAttribute('class', 'form-control')
+                $organ = $form->get('organ')
+                    ->setAttribute('class', 'form-control')
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
                     <label
-                        for="<?= $organ->getAttribute('id') ?>"
-                        class="control-label<?= $form->getInputFilter()->get('organ')->isRequired() ? ' label-required' : '' ?>">
+                            for="<?= $organ->getAttribute('id') ?>"
+                            class="control-label<?= $form->getInputFilter()->get('organ')->isRequired() ? ' label-required' : '' ?>">
                         <?= $this->translate('Committee / fraternity') ?>
                     </label>
                     <?= $this->formSelect($organ) ?>
@@ -55,8 +85,8 @@
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($inputName) ?>">
                     <label
-                        for="<?= $inputName->getAttribute('id') ?>"
-                        class="control-label<?= $form->getInputFilter()->get('name')->isRequired() ? ' label-required' : '' ?>">
+                            for="<?= $inputName->getAttribute('id') ?>"
+                            class="control-label<?= $form->getInputFilter()->get('name')->isRequired() ? ' label-required' : '' ?>">
                         <?= $this->translate('Name') ?>
                     </label>
                     <?= $this->formInput($inputName) ?>
@@ -72,8 +102,8 @@
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($inputDescription) ?>">
                     <label
-                        for="<?= $inputDescription->getAttribute('id') ?>"
-                        class="control-label<?= $form->getInputFilter()->get('description')->isRequired() ? ' label-required' : '' ?>">
+                            for="<?= $inputDescription->getAttribute('id') ?>"
+                            class="control-label<?= $form->getInputFilter()->get('description')->isRequired() ? ' label-required' : '' ?>">
                         <?= $this->translate('Description') ?>
                     </label>
                     <?= $this->formTextarea($inputDescription) ?>
@@ -87,16 +117,52 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?>
-                </button>
+            <div class="col-md-12">
+                <?php
+                /* render template for options */
+                $fs = $form->get('options')->getTemplateElement();
+                ob_start();
+                echo $this->partial('partial/option.phtml', ['fs' => $fs, 'index' => '__index__']);
+                $tpl = trim(ob_get_clean())
+                ?>
+                <h3><?= $this->translate('Additional options') ?></h3>
+                <fieldset id="additionalOptions">
+                    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                    <?php
+                    $index = 0;
+                    foreach ($form->get('options')->getIterator() as $fs) {
+                        echo $this->partial('partial/option.phtml', ['fs' => $fs, 'index' => $index]);
+                        $index++;
+                    }
+                    ?>
+                    <div class="form-group remove-option">
+                        <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                            <?= $this->translate('Remove the last option') ?>
+                        </button>
+                    </div>
+                    <div class="form-group add-option">
+                        <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <?= $this->translate('Add an option') ?>
+                        </button>
+                    </div>
             </div>
         </div>
         <div class="row spacing-top--lg">
             <div class="col-md-12">
-                <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>" />
+                <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>"/>
             </div>
         </div>
         <?= $this->form()->closeTag(); ?>
 </section>
+
+<script>
+    Proposal.updateForm();
+    for (var i = 0; i < <?= $index ?>; i++) {
+        Proposal.updateOption(i);
+    }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
