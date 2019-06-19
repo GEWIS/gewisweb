@@ -153,6 +153,24 @@ $form->prepare();
                 <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>"/>
             </div>
         </div>
+        <?php if ($feedback == true): ?>
+            <div class="row spacing-top--lg">
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert">
+                        <?= $this->translate('Your proposal has been sent in!') ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
+        <?php if ($feedback == false): ?>
+            <div class="row spacing-top--lg">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <?= $this->translate('Invalid input!') ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
         <?= $this->form()->closeTag(); ?>
 </section>
 

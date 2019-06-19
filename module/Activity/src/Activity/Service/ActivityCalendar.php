@@ -111,10 +111,15 @@ class ActivityCalendar extends AbstractAclService
             return false;
         }
 
+        $organ = $form->get('organ');
+        if (!$this->canOrganCreateProposal($organ)) {
+            return false;
+        }
+
         $proposal->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
-        $proposal->setOrgan($form->get('organ'));
+        $proposal->setOrgan($organ);
         $em->persist($proposal);
         $em->flush();
 
