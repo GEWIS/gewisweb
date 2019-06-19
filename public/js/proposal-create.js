@@ -2,17 +2,22 @@
  * This script handles all javascript functions for the proposal creation form
  */
 
+const maxCount = 3;
+
 Proposal = {
+
     /**
      * Adds an optional option to the proposal form, at the end of the list.
      */
     addOption: function () {
         var currentCount = $('#additionalOptions > div.option').length;
-        var template = $('#additionalOptions span.template').data('template');
-        template = template.replace(/__index__/g, currentCount);
-        $(template).insertBefore('#additionalOptions div.add-option');
-        Proposal.updateForm();
-        return false;
+        if (currentCount < maxCount) {
+            var template = $('#additionalOptions span.template').data('template');
+            template = template.replace(/__index__/g, currentCount);
+            $(template).insertBefore('#additionalOptions div.add-option');
+            Proposal.updateForm();
+            return false;
+        }
     },
 
     /**

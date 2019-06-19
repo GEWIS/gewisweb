@@ -88,6 +88,18 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
             'description' => [
                 'required' => false
             ],
+            'options' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 2,
+                            'max' => 128
+                        ]
+                    ]
+                ]
+            ],
         ];
     }
 }
