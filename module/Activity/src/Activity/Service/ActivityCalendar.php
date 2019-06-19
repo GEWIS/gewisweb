@@ -292,8 +292,8 @@ class ActivityCalendar extends AbstractAclService
         }
 
         $period = $this->getCurrentPeriod();
-        $begin = $period->getBeginPlanningTime();
-        $end = $period->getEndPlanningTime();
+        $begin = $period->getBeginOptionTime();
+        $end = $period->getEndOptionTime();
 
         if ($begin < $start_time AND $start_time < $end) {
             return true;
@@ -321,7 +321,7 @@ class ActivityCalendar extends AbstractAclService
      * @return \Activity\Model\ActivityOptionCreationPeriod
      * @throws \Exception
      */
-    protected function getCurrentPeriod() {
+    public function getCurrentPeriod() {
         $mapper = $this->getActivityOptionCreationPeriodMapper();
         return $mapper->getCurrentActivityOptionCreationPeriod();
     }
