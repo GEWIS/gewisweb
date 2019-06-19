@@ -4,9 +4,9 @@
         <div class="form-group form-inline">
             <?php
             $beginTime = $this->fs->get('beginTime');
-            $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
+            $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time' . $this->index);
             $endTime = $this->fs->get('endTime');
-            $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
+            $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time' . $this->index);
             ?>
             <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
                 <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label col-sm-2">
@@ -28,12 +28,12 @@
                 </div>
             </div>
         </div>
-        <hr>
+    </div>
+    <div class="form-group form-inline">
         <?php
         $element = $this->fs->get('type');
         $element->setAttribute('class', 'form-control');
         $element->setAttribute('id', 'type-field');
-        $element->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index. ')');
         $element->setAttribute('placeholder', $element->getLabel());
         ?>
         <div class="form-group">
@@ -45,18 +45,12 @@
             </div>
         </div>
     </div>
+    <hr>
 </div>
 
 <script>
-    $('[name="beginTime"]').datetimepicker();
-    $('[name="endTime"]').datetimepicker();
-    $('.markdown-editor').each(function () {
-        $(this).markdown();
-    });
-    Proposal.updateForm();
-    for (var i = 0; i < <?= $index ?>; i++) {
-        Proposal.updateOption(i);
-    }
+    $("#begin-time<?= $this->index ?>").datetimepicker();
+    $("#end-time<?= $this->index ?>").datetimepicker();
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })

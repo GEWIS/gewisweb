@@ -26,27 +26,7 @@ Proposal = {
         return false;
     },
 
-    /**
-     * Toggles the availability of some dependent options.
-     */
-    toggleExternal: function () {
-        if ($('[name="onlyGEWIS"]').is(':checked')) {
-            $('[name="canSignUp"]').attr('checked', true);
-        }
-    },
-
     updateForm: function () {
-        if ($('[name="language_dutch"]').is(':checked')) {
-            $('.form-control-dutch').removeAttr('disabled');
-        } else {
-            $('.form-control-dutch').attr('disabled', 'disabled');
-        }
-
-        if ($('[name="language_english"]').is(':checked')) {
-            $('.form-control-english').removeAttr('disabled');
-        } else {
-            $('.form-control-english').attr('disabled', 'disabled');
-        }
     },
 
     updateOption: function (index) {

@@ -125,7 +125,6 @@ $form->prepare();
                 echo $this->partial('partial/option.phtml', ['fs' => $fs, 'index' => '__index__']);
                 $tpl = trim(ob_get_clean())
                 ?>
-                <h3><?= $this->translate('Additional options') ?></h3>
                 <fieldset id="additionalOptions">
                     <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
                     <?php
@@ -135,16 +134,16 @@ $form->prepare();
                         $index++;
                     }
                     ?>
-                    <div class="form-group remove-option">
-                        <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
-                            <span class="glyphicon glyphicon-minus"></span>
-                            <?= $this->translate('Remove the last option') ?>
-                        </button>
-                    </div>
                     <div class="form-group add-option">
                         <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
                             <span class="glyphicon glyphicon-plus"></span>
                             <?= $this->translate('Add an option') ?>
+                        </button>
+                    </div>
+                    <div class="form-group remove-option">
+                        <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                            <?= $this->translate('Remove the last option') ?>
                         </button>
                     </div>
             </div>

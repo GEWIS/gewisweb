@@ -20,7 +20,12 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         parent::__construct();
         $this->translator = $translator;
 
-        $typeOptions = [];
+        $typeOptions = [$translator->translate('Lunch Lecture'),
+            $translator->translate('Morning'),
+            $translator->translate('Afternoon'),
+            $translator->translate('Evening'),
+            $translator->translate('Weekend'),
+            ];
 
         $this->add([
             'name' => 'beginTime',
