@@ -121,6 +121,7 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
         $proposal->setOrgan($organ);
         $em->persist($proposal);
+        $em->flush();
 
         $options = $form->get('options');
         foreach ($options as $option) {
@@ -129,8 +130,6 @@ class ActivityCalendar extends AbstractAclService
                 return false;
             }
         }
-
-        $em->flush();
 
         return $proposal;
     }
@@ -155,6 +154,7 @@ class ActivityCalendar extends AbstractAclService
         $em = $this->getEntityManager();
         $option->setProposal($proposal_id);
         $em->persist($option);
+        $em->flush();
 
         return $option;
     }

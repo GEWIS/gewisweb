@@ -149,7 +149,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         try {
             $service = $this->getActivityCalendarService();
             $result = $service->canCreateOption($value);
-            return $result;
+            return !$result;
         } catch (\Exception $e) {
             return false;
         }
