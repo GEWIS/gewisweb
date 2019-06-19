@@ -75,8 +75,8 @@ class Module
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function ($sm) {
-                    $organService = $sm->get('decision_service_organ');
-                    $organs = $organService->getEditableOrgans();
+                    $service = $sm->get('activity_service_calendar');
+                    $organs = $service->getEditableOrgans();
                     $form = new Form\ActivityCalendarProposal($organs, $sm->get('translator'));
                     $form->setHydrator($sm->get('activity_hydrator_option_proposal'));
                     return $form;
@@ -195,6 +195,7 @@ class Module
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always']);
                     return $acl;
                 },
             ]

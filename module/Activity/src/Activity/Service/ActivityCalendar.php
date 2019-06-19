@@ -6,6 +6,7 @@ use Activity\Model\ActivityCalendarOption;
 use Activity\Model\ActivityCalendarOption as OptionModel;
 use Application\Service\AbstractAclService;
 use Activity\Model\ActivityOptionProposal as ProposalModel;
+use Decision\Model\Organ as OrganModel;
 
 class ActivityCalendar extends AbstractAclService
 {
@@ -222,6 +223,24 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
+     * Retrieves all organs which the current user is allowed to edit and for which the organs can still create proposals
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getEditableOrgans()
+    {
+        $all_organs = $this->getOrganService()->getEditableOrgans();
+        $organs = array();
+        foreach ($all_organs as $organ) {
+            if ($this->canCreateProposal($organ->getId())) {
+                $organs.append($organ);
+            }
+        }
+        return $organs;
+    }
+
+    /**
      * Returns whether a member may create a new activity proposal
      *
      * @param int $organ_id
@@ -230,6 +249,10 @@ class ActivityCalendar extends AbstractAclService
      */
     protected function canCreateProposal($organ_id)
     {
+        if (!$this->isAllowed('create_always')) {
+            return true;
+        }
+
         if (!$this->isAllowed('create')) {
             return false;
         }
