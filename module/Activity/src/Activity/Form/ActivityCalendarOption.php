@@ -20,12 +20,13 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         parent::__construct();
         $this->translator = $translator;
 
-        $typeOptions = [$translator->translate('Lunch Lecture'),
+        $typeOptions = [
+            $translator->translate('Lunch lecture'),
             $translator->translate('Morning'),
             $translator->translate('Afternoon'),
             $translator->translate('Evening'),
             $translator->translate('Weekend'),
-            ];
+        ];
 
         $this->add([
             'name' => 'beginTime',
@@ -47,7 +48,11 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'name' => 'type',
             'type' => 'select',
             'options' => [
-                'empty_option' => $translator->translate('Please select a type'),
+                'empty_option' => [
+                    'label'    => $translator->translate('Select a type'),
+                    'selected' => 'selected',
+                    'disabled' => 'disabled',
+                ],
                 'value_options' => $typeOptions
             ]
         ]);
@@ -66,7 +71,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                 \Zend\Validator\Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start before it ends'),
                             ],
-                            'callback' => ['Activity\Form\ActivityCalendarOption', 'beforeEndTime']
+                            'callback' => function ($value, $context = []) {
+                                $this->beforeEndTime($value, $context);
+                            }
                         ],
                     ],
                     [
@@ -76,7 +83,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                 \Zend\Validator\Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start after today'),
                             ],
-                            'callback' => ['Activity\Form\ActivityCalendarOption', 'isFutureTime']
+                            'callback' => function ($value, $context = []) {
+                                $this->isFutureTime($value, $context);
+                            }
                         ],
                     ],
                     [
@@ -84,9 +93,11 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must be within the given period.'),
+                                    $this->translator->translate('The activity must be within the given period'),
                             ],
-                            'callback' => ['Activity\Form\ActivityCalendarOption', 'cannotPlanInPeriod']
+                            'callback' => function ($value, $context = []) {
+                                $this->cannotPlanInPeriod($value, $context);
+                            }
                         ],
                     ],
                 ]
@@ -111,9 +122,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     public function beforeEndTime($value, $context = [])
     {
         try {
-            $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
+            $endTime = isset($context['endTime']) ? $this->toDateTime($context['endTime']) : new \DateTime('now');
 
-            return (new \DateTime($value)) <= $endTime;
+            return $this->toDateTime($value) <= $endTime;
         } catch (\Exception $e) {
             return false;
         }
@@ -131,7 +142,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         try {
             $today = new \DateTime();
 
-            return (new \DateTime($value)) > $today;
+            return $this->toDateTime($value) > $today;
         } catch (\Exception $e) {
             return false;
         }
@@ -163,5 +174,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     private function getActivityCalendarService()
     {
         return $this->getServiceLocator()->get('activity_service_calendar');
+    }
+
+    private function toDateTime($value, $format = 'd/m/Y')
+    {
+        return \DateTime::createFromFormat($format, $value);
     }
 }
