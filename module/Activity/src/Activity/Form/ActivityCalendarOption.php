@@ -31,7 +31,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'Morning' => $translator->translate('Morning'),
             'Afternoon' => $translator->translate('Afternoon'),
             'Evening' => $translator->translate('Evening'),
-            'Weekend' => $translator->translate('Weekend'),
+            'Day' => $translator->translate('Day'),
+            'Multiple days' => $translator->translate('Multiple days'),
         ];
 
         $this->add([
