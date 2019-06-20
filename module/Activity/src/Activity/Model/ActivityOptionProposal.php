@@ -80,7 +80,7 @@ class ActivityOptionProposal implements OrganResourceInterface
      */
     public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**

@@ -82,12 +82,13 @@ $this->headLink()
                 </thead>
                 <tbody>
                 <?php foreach ($editableOptions as $option): ?>
-                    <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>>
+                    <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>
+                        data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
 
                         <td>
                             <?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>
                         </td>
-                        <td data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
+                        <td>
                             <?= $this->escapeHtml($option->getProposal()->getName()) ?>
                         </td>
                         <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
@@ -267,4 +268,8 @@ $this->headLink()
             calendar.view($this.data('calendar-view'));
         });
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
