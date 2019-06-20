@@ -17,7 +17,7 @@ class ActivityCalendar extends AbstractAclService
      */
     public function getUpcomingOptions()
     {
-        return $this->getActivityCalendarOptionMapper()->getUpcomingOptions();
+        return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(true);
     }
 
     /**

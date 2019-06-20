@@ -225,6 +225,15 @@ return [
                             ]
                         ]
                     ],
+                    'approve' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'approve',
+                            'defaults' => [
+                                'action' => 'approve',
+                            ]
+                        ]
+                    ],
                     'create' => [
                         'type' => 'Literal',
                         'options' => [
