@@ -109,8 +109,9 @@ class ActivityCalendar extends AbstractAclService
         if (!$form->isValid()) {
             return false;
         }
+        $validatedData = $form->getData();
 
-        $organ = $form->getData()['organ'];
+        $organ = $validatedData['organ'];
         if (!$this->canOrganCreateProposal($organ)) {
             return false;
         }
@@ -118,17 +119,17 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setCreationTime(new \DateTime());
         $em = $this->getEntityManager();
         $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
-        $name = $form->getData()['name'];
+        $name = $validatedData['name'];
         $proposal->setName($name);
-        $description = $form->getData()['description'];
+        $description = $validatedData['description'];
         $proposal->setDescription($description);
         $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
         $em->persist($proposal);
         $em->flush();
 
-        $options = $form->getData()['options'];
+        $options = $validatedData['options'];
         foreach ($options as $option) {
-            $result = $this->createOption($option, $proposal->getId());
+            $result = $this->createOption($option, $proposal);
             if ($result == false) {
                 return false;
             }
@@ -143,23 +144,25 @@ class ActivityCalendar extends AbstractAclService
      * @return OptionModel|bool
      * @throws \Exception
      */
-    public function createOption($data, $proposal_id)
+    public function createOption($data, $proposal)
     {
-        $form = $this->getCreateOptionForm();
+//        $form = $this->getCreateOptionForm();
         $option = new OptionModel();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
+//        $form->setData($data);
+//
+//        if (!$form->isValid()) {
+//            return false;
+//        }
+//        $validatedData = $form->getData();
+        $validatedData = $data;
 
         $em = $this->getEntityManager();
-        $option->setProposal($proposal_id);
-        $beginTime = $form->getData()['beginTime'];
+        $option->setProposal($proposal);
+        $beginTime = $this->toDateTime($validatedData['beginTime']);
         $option->setBeginTime($beginTime);
-        $endTime = $form->getData()['endTime'];
+        $endTime = $this->toDateTime($validatedData['endTime']);
         $option->setEndTime($endTime);
-        $type = $form->getData()['type'];
+        $type = $validatedData['type'];
         $option->setType($type);
         $em->persist($option);
         $em->flush();
@@ -289,11 +292,11 @@ class ActivityCalendar extends AbstractAclService
     /**
      * Returns whether a user may create an option with given start time
      *
-     * @param \DateTime $start_time
+     * @param \DateTime $begin_time
      * @return bool
      * @throws \Exception
      */
-    public function canCreateOption($start_time)
+    public function canCreateOption($begin_time)
     {
         if ($this->isAllowed('create_always')) {
             return true;
@@ -303,10 +306,10 @@ class ActivityCalendar extends AbstractAclService
         $begin = $period->getBeginOptionTime();
         $end = $period->getEndOptionTime();
 
-        if ($begin > $start_time) {
+        if ($begin > $begin_time) {
             return false;
         }
-        if ($start_time > $end) {
+        if ($begin_time > $end) {
             return false;
         }
 
@@ -478,5 +481,10 @@ class ActivityCalendar extends AbstractAclService
     public function getAcl()
     {
         return $this->sm->get('activity_acl');
+    }
+
+    public function toDateTime($value, $format = 'd/m/Y')
+    {
+        return \DateTime::createFromFormat($format, $value);
     }
 }

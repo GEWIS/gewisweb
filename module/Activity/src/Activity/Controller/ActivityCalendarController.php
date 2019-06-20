@@ -54,6 +54,7 @@ class ActivityCalendarController extends AbstractActionController
             $postData = $this->getRequest()->getPost();
             $success = $service->createProposal($postData);
             if ($success === false) {
+                $this->getResponse()->setStatusCode(400);
                 $form->setData($postData);
             }
         }

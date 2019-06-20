@@ -155,7 +155,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * @return int
+     * @return \Activity\Model\ActivityOptionProposal
      */
     public function getProposal()
     {
@@ -163,7 +163,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * @param int $proposal
+     * @param \Activity\Model\ActivityOptionProposal $proposal
      */
     public function setProposal($proposal)
     {
