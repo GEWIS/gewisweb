@@ -23,6 +23,18 @@ return [
                 ],
                 'priority' => 100
             ],
+            'teapot' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/teapot',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'teapot',
+                    ]
+                ],
+                'priority' => 100
+            ],
         ],
     ],
     'service_manager' => [
@@ -65,8 +77,10 @@ return [
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'application/index/teapot' => __DIR__ . '/../view/application/index/418.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/403'               => __DIR__ . '/../view/error/403.phtml',
+            'error/418'               => __DIR__ . '/../view/error/418.phtml',
             'error/500'             => __DIR__ . '/../view/error/500.phtml',
             'error/debug/404'               => __DIR__ . '/../view/error/debug/404.phtml',
             'error/debug/403'               => __DIR__ . '/../view/error/debug/403.phtml',
