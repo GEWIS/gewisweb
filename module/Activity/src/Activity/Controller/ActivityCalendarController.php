@@ -67,8 +67,9 @@ class ActivityCalendarController extends AbstractActionController
             if ($success === false) {
                 $this->getResponse()->setStatusCode(400);
                 $form->setData($postData);
+            } else {
+                $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
             }
-            $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
         }
 
         $period = $service->getCurrentPeriod();

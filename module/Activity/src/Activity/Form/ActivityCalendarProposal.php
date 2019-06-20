@@ -117,7 +117,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
 
 
     /**
-     * Check if a certain date is in the future
+     * Check if the amount of options is acceptable
      *
      * @param $value
      * @param array $context
