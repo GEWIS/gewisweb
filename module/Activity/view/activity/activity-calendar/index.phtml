@@ -84,8 +84,12 @@ $this->headLink()
                 <?php foreach ($editableOptions as $option): ?>
                     <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>>
 
-                        <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
-                        <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
+                        <td>
+                            <?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>
+                        </td>
+                        <td data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
+                            <?= $this->escapeHtml($option->getProposal()->getName()) ?>
+                        </td>
                         <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
                         <!--                        <td>-->
                         <? //= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
