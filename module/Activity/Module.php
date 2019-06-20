@@ -75,13 +75,14 @@ class Module
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function ($sm) {
-                    $service = $sm->get('activity_service_calendar');
-                    $organs = $service->getEditableOrgans();
-                    $form = new Form\ActivityCalendarProposal($organs, $sm->get('translator'));
+                    $calendarService = $sm->get('activity_service_calendar');
+                    $form = new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                     return $form;
                 },
                 'activity_form_calendar_option' => function ($sm) {
-                    $form = new Form\ActivityCalendarOption($sm->get('translator'));
+                    $translator = $sm->get('translator');
+                    $calendarService = $sm->get('activity_service_calendar');
+                    $form = new Form\ActivityCalendarOption($translator, $calendarService);
                     return $form;
                 },
                 'activity_hydrator' => function ($sm) {

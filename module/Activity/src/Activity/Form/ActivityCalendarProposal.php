@@ -15,11 +15,13 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, Translator $translator)
+    public function __construct(Translator $translator, $calendarService)
     {
         parent::__construct();
         $this->translator = $translator;
+        $this->calendarService = $calendarService;
 
+        $organs = $calendarService->getEditableOrgans();
         $organOptions = [];
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
@@ -59,7 +61,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'count' => 1,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => new ActivityCalendarOption($translator)
+                'target_element' => new ActivityCalendarOption($translator, $calendarService)
             ]
         ]);
     }

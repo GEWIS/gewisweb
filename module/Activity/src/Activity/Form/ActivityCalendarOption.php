@@ -14,11 +14,13 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      * ActivityCalendarOption constructor.
      *
      * @param Translator $translator
+     * @param \Activity\Service\ActivityCalendar $calendarService
      */
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, $calendarService)
     {
         parent::__construct();
         $this->translator = $translator;
+        $this->calendarService = $calendarService;
 
         $typeOptions = [
             $translator->translate('Lunch lecture'),
@@ -153,27 +155,17 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @param $value
      * @param array $context
+     * @param \Activity\Service\ActivityCalendar $calendarService
      * @return bool
      */
     public function cannotPlanInPeriod($value, $context = [])
     {
         try {
-            $service = $this->getActivityCalendarService();
-            $result = $service->canCreateOption($value);
+            $result = $this->calendarService->canCreateOption($value);
             return !$result;
         } catch (\Exception $e) {
             return false;
         }
-    }
-
-    /**
-     * Get the activity calendar service
-     *
-     * @return \Activity\Service\ActivityCalendar
-     */
-    private function getActivityCalendarService()
-    {
-        return $this->getServiceLocator()->get('activity_service_calendar');
     }
 
     private function toDateTime($value, $format = 'd/m/Y')
