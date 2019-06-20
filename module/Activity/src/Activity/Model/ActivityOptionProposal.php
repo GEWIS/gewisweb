@@ -62,14 +62,6 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
@@ -132,6 +124,16 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
+     * Get the organ of this resource.
+     *
+     * @return Organ
+     */
+    public function getResourceOrgan()
+    {
+        return $this->getOrgan();
+    }
+
+    /**
      * @return mixed
      */
     public function getOrgan()
@@ -148,16 +150,6 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * Get the organ of this resource.
-     *
-     * @return Organ
-     */
-    public function getResourceOrgan()
-    {
-        return $this->getOrgan();
-    }
-
-    /**
      * Returns the string identifier of the Resource
      *
      * @return string
@@ -165,5 +157,13 @@ class ActivityOptionProposal implements OrganResourceInterface
     public function getResourceId()
     {
         return $this->getId();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

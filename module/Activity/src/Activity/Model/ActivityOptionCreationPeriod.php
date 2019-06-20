@@ -1,7 +1,10 @@
 <?php
+
 namespace Activity\Model;
+
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Activity Options Creation Period
  * Contains a period during which options may be created
@@ -42,66 +45,7 @@ class ActivityOptionCreationPeriod
      * @ORM\Column(type="datetime")
      */
     protected $endOptionTime;
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @return DateTime
-     */
-    public function getBeginPlanningTime()
-    {
-        return $this->beginPlanningTime;
-    }
-    /**
-     * @return DateTime
-     */
-    public function getEndPlanningTime()
-    {
-        return $this->endPlanningTime;
-    }
-    /**
-     * @return DateTime
-     */
-    public function getBeginOptionTime()
-    {
-        return $this->beginOptionTime;
-    }
-    /**
-     * @return DateTime
-     */
-    public function getEndOptionTime()
-    {
-        return $this->endOptionTime;
-    }
-    /**
-     * @param DateTime $beginPlanningTime
-     */
-    public function setBeginPlanningTime($beginPlanningTime)
-    {
-        $this->beginPlanningTime = $beginPlanningTime;
-    }
-    /**
-     * @param DateTime $endPlanningTime
-     */
-    public function setEndPlanningTime($endPlanningTime)
-    {
-        $this->endPlanningTime = $endPlanningTime;
-    }
-    /**
-     * @param DateTime $beginOptionTime
-     */
-    public function setBeginOptionTime($beginOptionTime)
-    {
-        $this->beginOptionTime = $beginOptionTime;
-    }
-    /**
-     * @param DateTime $endTime
-     */
-    public function setEndOptionTime($endOptionTime)
-    {
-        $this->endOptionTime = $endOptionTime;
-    }
+
     /**
      * Returns an associative array representation of this object.
      *
@@ -116,5 +60,74 @@ class ActivityOptionCreationPeriod
             'beginOptionTime' => $this->getBeginOptionTime(),
             'endOptionTime' => $this->getEndOptionTime(),
         ];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getBeginPlanningTime()
+    {
+        return $this->beginPlanningTime;
+    }
+
+    /**
+     * @param DateTime $beginPlanningTime
+     */
+    public function setBeginPlanningTime($beginPlanningTime)
+    {
+        $this->beginPlanningTime = $beginPlanningTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndPlanningTime()
+    {
+        return $this->endPlanningTime;
+    }
+
+    /**
+     * @param DateTime $endPlanningTime
+     */
+    public function setEndPlanningTime($endPlanningTime)
+    {
+        $this->endPlanningTime = $endPlanningTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getBeginOptionTime()
+    {
+        return $this->beginOptionTime;
+    }
+
+    /**
+     * @param DateTime $beginOptionTime
+     */
+    public function setBeginOptionTime($beginOptionTime)
+    {
+        $this->beginOptionTime = $beginOptionTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndOptionTime()
+    {
+        return $this->endOptionTime;
+    }
+
+    /**
+     * @param DateTime $endTime
+     */
+    public function setEndOptionTime($endOptionTime)
+    {
+        $this->endOptionTime = $endOptionTime;
     }
 }

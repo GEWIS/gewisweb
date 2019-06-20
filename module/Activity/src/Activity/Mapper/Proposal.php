@@ -2,7 +2,9 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivityUpdateProposal;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class Proposal
 {
@@ -27,11 +29,21 @@ class Proposal
      * Finds the proposal of with the given id.
      *
      * @param int $id
-     * @return \Activity\Model\ActivityUpdateProposal
+     * @return ActivityUpdateProposal
      */
     public function getProposalById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Activity\Model\ActivityUpdateProposal');
     }
 
     /**
@@ -45,15 +57,5 @@ class Proposal
         $qb->select('a')
             ->from('Activity\Model\ActivityUpdateProposal', 'a');
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityUpdateProposal');
     }
 }

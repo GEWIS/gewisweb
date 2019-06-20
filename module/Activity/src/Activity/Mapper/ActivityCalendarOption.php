@@ -2,7 +2,9 @@
 
 namespace Activity\Mapper;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class ActivityCalendarOption
 {
@@ -36,6 +38,16 @@ class ActivityCalendarOption
     }
 
     /**
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Activity\Model\ActivityCalendarOption');
+    }
+
+    /**
      * Gets all options created by the given organs
      *
      * @param $organs
@@ -54,7 +66,7 @@ class ActivityCalendarOption
             ->andWhere('b.organ IN (:organs)')
             ->orderBy('a.beginTime', 'ASC');
 
-        $qb->setParameter('now', new \DateTime())
+        $qb->setParameter('now', new DateTime())
             ->setParameter('organs', $organs);
 
         return $qb->getQuery()->getResult();
@@ -77,7 +89,7 @@ class ActivityCalendarOption
         if (!$withDeleted) {
             $qb->andWhere("a.status != 'deleted'");
         }
-        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
@@ -85,7 +97,7 @@ class ActivityCalendarOption
     /**
      * Get upcoming activity options sorted by begin date
      *
-     * @param \DateTime $before the date to get the options before
+     * @param DateTime $before the date to get the options before
      * @param bool $withDeleted Whether to include deleted options
      * @return array
      */
@@ -108,8 +120,8 @@ class ActivityCalendarOption
     /**
      * Get activity options sorted by begin date within a given period
      *
-     * @param \DateTime $begin the date to get the options after
-     * @param \DateTime $end the date to get the options before
+     * @param DateTime $begin the date to get the options after
+     * @param DateTime $end the date to get the options before
      * @param string $status retrieve only options with this status, optional
      * @return array
      */
@@ -135,8 +147,8 @@ class ActivityCalendarOption
     /**
      * Get activity options sorted by begin date within a given period and associated with given organ
      *
-     * @param \DateTime $begin the date to get the options after
-     * @param \DateTime $end the date to get the options before
+     * @param DateTime $begin the date to get the options after
+     * @param DateTime $end the date to get the options before
      * @param int $organ_id the organ options have to be associated with
      * @param string $status retrieve only options with this status, optional
      * @return array
@@ -218,15 +230,5 @@ class ActivityCalendarOption
     public function flush()
     {
         $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityCalendarOption');
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Activity\Model;
 
-use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
-use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity calendar option model.
@@ -65,14 +63,6 @@ class ActivityCalendarOption
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
      */
     protected $modifiedBy;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return mixed
@@ -155,7 +145,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * @return \Activity\Model\ActivityOptionProposal
+     * @return ActivityOptionProposal
      */
     public function getProposal()
     {
@@ -163,7 +153,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * @param \Activity\Model\ActivityOptionProposal $proposal
+     * @param ActivityOptionProposal $proposal
      */
     public function setProposal($proposal)
     {
@@ -178,5 +168,13 @@ class ActivityCalendarOption
     public function getResourceId()
     {
         return $this->getId();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

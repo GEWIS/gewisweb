@@ -23,7 +23,7 @@ $this->headLink()
             </ul>
         </div>
         <hr>
-        <?php if($success): ?>
+        <?php if ($success): ?>
             <div class="alert alert-success">
                 <?= $this->translate('Your option has been added successfully'); ?>
             </div>
@@ -56,7 +56,8 @@ $this->headLink()
                 <div class="pull-right">
                     <div class="dropdown pull-right">
                         <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> <span class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
+                            <span class="glyphicon glyphicon-plus"></span> <span
+                                class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
                         </a>
                     </div>
                 </div>
@@ -73,28 +74,31 @@ $this->headLink()
                     <th><?= $this->translate('Creator') ?></th>
                     <th><?= $this->translate('Name') ?></th>
                     <th><?= $this->translate('Type') ?></th>
-<!--                    <th>--><?//= $this->translate('Created at') ?><!--</th>-->
+                    <!--                    <th>--><? //= $this->translate('Created at') ?><!--</th>-->
                     <th><?= $this->translate('Start') ?></th>
                     <th><?= $this->translate('End') ?></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($editableOptions as $option): ?>
+                <?php foreach ($editableOptions as $option): ?>
                     <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>>
 
                         <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
                         <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
                         <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
-<!--                        <td>--><?//= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
+                        <!--                        <td>-->
+                        <? //= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
                         <td><?= $option->getBeginTime()->format('d-m-Y') ?></td>
                         <td><?= $option->getEndTime()->format('d-m-Y') ?></td>
                         <td>
-                            <?php if($option->getModifiedBy() === null): ?>
-                                <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
+                            <?php if ($option->getModifiedBy() === null): ?>
+                                <a class="btn btn-xs btn-delete btn-danger"
+                                   href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
-                                <a class="btn btn-xs btn-succes" href="javascript:showApproveModal(<?= $option->getId() ?>)">
+                                <a class="btn btn-xs btn-succes"
+                                   href="javascript:showApproveModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
                                 </a>
                             <?php else: ?>
@@ -110,7 +114,8 @@ $this->headLink()
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?= $this->translate('Delete option') ?></h4>
                     </div>
                     <div class="modal-body">
@@ -119,8 +124,11 @@ $this->headLink()
                     <div class="modal-footer">
                         <form method="post" action="delete" class="form form-inline form-delete">
                             <input type="hidden" name="option_id" id="deleteOptionId"/>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?></button>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"
+                                                                            aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -130,7 +138,8 @@ $this->headLink()
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?= $this->translate('Approve option') ?></h4>
                     </div>
                     <div class="modal-body">
@@ -139,8 +148,11 @@ $this->headLink()
                     <div class="modal-footer">
                         <form method="post" action="approve" class="form form-inline form-approve">
                             <input type="hidden" name="option_id" id="approveOptionId"/>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check" aria-hidden="true"></i>&nbsp;<?= $this->translate('Approve') ?></button>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check"
+                                                                             aria-hidden="true"></i>&nbsp;<?= $this->translate('Approve') ?>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -157,23 +169,23 @@ $this->headLink()
     timeMinString = timeMin.toISOString();
     var calendarItems = [
         <?php foreach($options as $option): ?>
-            <?php if($option->getStatus() !== 'deleted'): ?>
-            {
-                "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
-                "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
-                "id": "<?= $option->getId() ?>",
-                "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
-                "organizer": "<?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>",
-                "url": "#",
-                "class": "event-info",
-                "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-                "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>,
-            },
-            <?php endif ?>
+        <?php if($option->getStatus() !== 'deleted'): ?>
+        {
+            "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
+            "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
+            "id": "<?= $option->getId() ?>",
+            "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
+            "organizer": "<?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>",
+            "url": "#",
+            "class": "event-info",
+            "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
+            "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>,
+        },
+        <?php endif ?>
         <?php endforeach ?>
     ];
-    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
-        $.each( data.items, function( key, item ) {
+    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function (data) {
+        $.each(data.items, function (key, item) {
             if (item.status != 'cancelled') {
                 calendarItems.push({
                     "isPlanned": "true",
@@ -188,7 +200,9 @@ $this->headLink()
             }
         });
         initCalendar();
-    }).error(function() { initCalendar() });
+    }).error(function () {
+        initCalendar()
+    });
 
 
     function initCalendar() {
@@ -196,7 +210,9 @@ $this->headLink()
             {
                 tmpl_path: "<?= $this->basePath() ?>/tmpls/",
                 tmpl_cache: false,
-                events_source: function () { return calendarItems; },
+                events_source: function () {
+                    return calendarItems;
+                },
                 views: {
                     year: {
                         slide_events: 1,
@@ -213,7 +229,7 @@ $this->headLink()
                         enable: 0
                     }
                 },
-                onAfterViewLoad: function(view) {
+                onAfterViewLoad: function (view) {
                     $('#calendarTitle').text(this.getTitle());
                 },
             });
@@ -233,15 +249,15 @@ $this->headLink()
         $('#approveModal').modal('show');
     }
 
-    $('.btn-group button[data-calendar-nav]').each(function() {
+    $('.btn-group button[data-calendar-nav]').each(function () {
         var $this = $(this);
-        $this.click(function() {
+        $this.click(function () {
             calendar.navigate($this.data('calendar-nav'));
         });
     });
-    $('.btn-group button[data-calendar-view]').each(function() {
+    $('.btn-group button[data-calendar-view]').each(function () {
         var $this = $(this);
-        $this.click(function() {
+        $this.click(function () {
             $('.active').removeClass('active');
             $this.addClass('active');
             calendar.view($this.data('calendar-view'));

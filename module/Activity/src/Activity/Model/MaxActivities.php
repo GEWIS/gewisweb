@@ -1,7 +1,10 @@
 <?php
+
 namespace Activity\Model;
+
 use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Max Activities model.
  * Contains the max amount of activities an organ may create options for
@@ -38,13 +41,7 @@ class MaxActivities
      * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionCreationPeriod")
      */
     protected $period;
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+
     /**
      * @return ActivityOptionCreationPeriod
      */
@@ -52,38 +49,7 @@ class MaxActivities
     {
         return $this->period;
     }
-    /**
-     * @return Organ
-     */
-    public function getOrgan()
-    {
-        return $this->organ;
-    }
-    /**
-     * @return int
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-    /**
-     * Set the organ
-     *
-     * @param Organ $organ
-     */
-    public function setOrgan($organ)
-    {
-        $this->organ = $organ;
-    }
-    /**
-     * Set the value
-     *
-     * @param int $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
+
     /**
      * Set the period
      *
@@ -93,6 +59,7 @@ class MaxActivities
     {
         $this->period = $period;
     }
+
     /**
      * Returns an associative array representation of this object.
      *
@@ -105,5 +72,49 @@ class MaxActivities
             'organ' => $this->getOrgan(),
             'value' => $this->getValue()
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Organ
+     */
+    public function getOrgan()
+    {
+        return $this->organ;
+    }
+
+    /**
+     * Set the organ
+     *
+     * @param Organ $organ
+     */
+    public function setOrgan($organ)
+    {
+        $this->organ = $organ;
+    }
+
+    /**
+     * @return int
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set the value
+     *
+     * @param int $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
     }
 }

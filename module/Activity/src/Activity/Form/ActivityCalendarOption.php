@@ -2,9 +2,13 @@
 
 namespace Activity\Form;
 
+use Activity\Service\ActivityCalendar;
+use DateTime;
+use Exception;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
+use Zend\Validator\Callback;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {
@@ -14,7 +18,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      * ActivityCalendarOption constructor.
      *
      * @param Translator $translator
-     * @param \Activity\Service\ActivityCalendar $calendarService
+     * @param ActivityCalendar $calendarService
      */
     public function __construct(Translator $translator, $calendarService)
     {
@@ -51,7 +55,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'type' => 'select',
             'options' => [
                 'empty_option' => [
-                    'label'    => $translator->translate('Select a type'),
+                    'label' => $translator->translate('Select a type'),
                     'selected' => 'selected',
                     'disabled' => 'disabled',
                 ],
@@ -70,7 +74,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start before it ends'),
                             ],
                             'callback' => function ($value, $context = []) {
@@ -82,7 +86,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start after today'),
                             ],
                             'callback' => function ($value, $context = []) {
@@ -124,10 +128,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     public function beforeEndTime($value, $context = [])
     {
         try {
-            $endTime = isset($context['endTime']) ? $this->calendarService->toDateTime($context['endTime']) : new \DateTime('now');
+            $endTime = isset($context['endTime']) ? $this->calendarService->toDateTime($context['endTime']) : new DateTime('now');
 
             return $this->calendarService->toDateTime($value) <= $endTime;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -142,10 +146,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     public function isFutureTime($value, $context = [])
     {
         try {
-            $today = new \DateTime();
+            $today = new DateTime();
 
             return $this->calendarService->toDateTime($value) > $today;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -155,7 +159,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @param $value
      * @param array $context
-     * @param \Activity\Service\ActivityCalendar $calendarService
+     * @param ActivityCalendar $calendarService
      * @return bool
      */
     public function cannotPlanInPeriod($value, $context = [])
@@ -164,7 +168,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             $begin_time = $this->calendarService->toDateTime($value);
             $result = $this->calendarService->canCreateOption($begin_time);
             return !$result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
