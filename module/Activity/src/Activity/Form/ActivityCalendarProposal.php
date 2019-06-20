@@ -12,8 +12,9 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     protected $translator;
 
     /**
-     * @param Organ[] $organs
      * @param Translator $translator
+     * @param \Activity\Service\ActivityCalendar $calendarService
+     * @throws \Exception
      */
     public function __construct(Translator $translator, $calendarService)
     {
@@ -26,6 +27,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
+
+        $this->maxOptions = 3;
 
         $this->add([
             'name' => 'organ',
@@ -90,6 +93,42 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
             'description' => [
                 'required' => false
             ],
+            'options' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity does now have an acceptable amount of options'),
+                            ],
+                            'callback' => function ($value, $context = []) {
+                                return $this->isGoodOptionCount($value, $context);
+                            }
+                        ],
+                    ],
+                ],
+            ],
         ];
+    }
+
+
+    /**
+     * Check if a certain date is in the future
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public function isGoodOptionCount($value, $context = [])
+    {
+        if (count($value) < 1) {
+            return false;
+        }
+        if (count($value) > $this->maxOptions) {
+            return false;
+        }
+        return true;
     }
 }
