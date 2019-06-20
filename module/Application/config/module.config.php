@@ -26,7 +26,7 @@ return [
             'teapot' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/teapot',
+                    'route' => '/coffee',
                     'defaults' => [
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Index',
