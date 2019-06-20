@@ -73,18 +73,8 @@ class ActivityCalendarController extends AbstractActionController
 
         $period = $service->getCurrentPeriod();
 
-        if ($period != null) {
-            return new ViewModel([
-                'period' => true,
-                'begin' => $period->getBeginOptionTime(),
-                'end' => $period->getEndOptionTime(),
-                'form' => $form,
-                'success' => $success,
-            ]);
-        }
-
         return new ViewModel([
-            'period' => false,
+            'period' => $period,
             'form' => $form,
             'success' => $success,
         ]);

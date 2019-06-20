@@ -54,18 +54,20 @@ $form->prepare();
                 <h2><?= $this->translate('Plan an activity') ?></h2>
             </div>
         </div>
-        <?= $this->form()->openTag($form) ?>
-        <?php if ($success === true): ?>
+        <?php if ($period): ?>
             <div class="row spacing-top--md">
                 <div class="col-md-12">
-                    <div class="alert alert-success" role="alert">
-                        <p><span
-                                class="glyphicon glyphicon-ok"></span> <?= $this->translate('The activity has been saved') ?>
+                    <div class="alert alert-info" role="alert">
+                        <p>
+                            <?= sprintf($this->translate('You can currently plan options between %s and %s.'),
+                                $period->getBeginOptionTime()->format('Y-m-d'),
+                                $period->getEndOptionTime()->format('Y-m-d')) ?>
                         </p>
                     </div>
                 </div>
             </div>
         <?php endif ?>
+        <?= $this->form()->openTag($form) ?>
         <?php if ($success === false): ?>
             <div class="row spacing-top--md">
                 <div class="col-md-12">
