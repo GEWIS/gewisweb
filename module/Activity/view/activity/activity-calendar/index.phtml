@@ -80,7 +80,7 @@ $this->headLink()
                 </thead>
                 <tbody>
                 <?php foreach($editableOptions as $option): ?>
-                    <tr<?= $option->getmodifiedBy() === null ? '' : ' class="danger"' ?>>
+                    <tr<?= $option->getModifiedBy() === null ? '' : ' class="danger"' ?>>
 
                         <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
                         <td><?= $this->escapeHtml($option->getName()) ?></td>
@@ -88,7 +88,7 @@ $this->headLink()
                         <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
                         <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
                         <td>
-                            <?php if($option->getmodifiedBy() === null): ?>
+                            <?php if($option->getModifiedBy() === null): ?>
                                 <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
@@ -96,7 +96,7 @@ $this->headLink()
                                     <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
                                 </a>
                             <?php else: ?>
-                                <strong><?= $this->translate('Modified by') ?> <?= $option->getmodifiedBy()->getMember()->getFullName() ?></strong>
+                                <strong><?= $this->translate('Modified by') ?> <?= $option->getModifiedBy()->getMember()->getFullName() ?></strong>
                             <?php endif ?>
                         </td>
                     </tr>
