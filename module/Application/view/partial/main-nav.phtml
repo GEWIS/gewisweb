@@ -1,32 +1,36 @@
 <?php
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<style>
-    .rainbow {
-        background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
-        background-size: 600% 600%;
+<?php if($this->identity()): ?>
+    <?php if(in_array($this->identity()->getMember()->getLidnr(), [8465])): ?>
+        <style>
+            .rainbow {
+                background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+                background-size: 600% 600%;
 
-        -webkit-animation: AnimationName 30s ease infinite;
-        -moz-animation: AnimationName 30s ease infinite;
-        animation: AnimationName 30s ease infinite;
-    }
+                -webkit-animation: AnimationName 1s ease infinite;
+                -moz-animation: AnimationName 1s ease infinite;
+                animation: AnimationName 1s ease infinite;
+            }
 
-    @-webkit-keyframes AnimationName {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
-    }
-    @-moz-keyframes AnimationName {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
-    }
-    @keyframes AnimationName {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
-    }
-</style>
+            @-webkit-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+            @-moz-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+            @keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+        </style>
+    <?php endif ?>
+<?php endif ?>
 <nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
