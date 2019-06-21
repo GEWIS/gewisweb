@@ -1,7 +1,33 @@
 <?php
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<nav class="navbar navbar-gewis navbar-static-top" role="navigation">
+<style>
+    .rainbow {
+        background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+        background-size: 600% 600%;
+
+        -webkit-animation: AnimationName 30s ease infinite;
+        -moz-animation: AnimationName 30s ease infinite;
+        animation: AnimationName 30s ease infinite;
+    }
+
+    @-webkit-keyframes AnimationName {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @-moz-keyframes AnimationName {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @keyframes AnimationName {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+</style>
+<nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
             <a href="<?= $this->url('home') ?>" class="navbar-brand">
