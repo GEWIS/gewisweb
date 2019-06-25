@@ -174,19 +174,19 @@ $this->headLink()
     timeMinString = timeMin.toISOString();
     var calendarItems = [
         <?php foreach($options as $option): ?>
-        <?php if($option->getStatus() !== 'deleted'): ?>
-        {
-            "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
-            "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
-            "id": "<?= $option->getId() ?>",
-            "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
-            "organizer": "<?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>",
-            "url": "#",
-            "class": "event-info",
-            "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-            "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>,
-        },
-        <?php endif ?>
+            <?php if($option->getStatus() !== 'deleted'): ?>
+            {
+                "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
+                "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
+                "id": "<?= $option->getId() ?>",
+                "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
+                "organizer": "<?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>",
+                "url": "#",
+                "class": "event-info",
+                "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
+                "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
+            },
+            <?php endif ?>
         <?php endforeach ?>
     ];
     $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function (data) {
