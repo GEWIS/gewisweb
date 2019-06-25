@@ -1,3 +1,11 @@
+## [v1.5.0](https://github.com/GEWIS/gewisweb/tree/v1.5.0) (2019-06-25)
+
+* Revised the option calendar system
+* Addded option for users to select profile pictures
+* Added social media references
+* Various UI improvements
+* Various bugfixes
+
 ## [v1.4.2](https://github.com/GEWIS/gewisweb/tree/v1.4.2) (2019-05-10)
 
 * Added ability to add documents to VV's
