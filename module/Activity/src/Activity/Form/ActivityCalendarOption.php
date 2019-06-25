@@ -2,51 +2,44 @@
 
 namespace Activity\Form;
 
-use Decision\Model\Organ;
-use Zend\Form\Form;
-use Zend\Mvc\I18n\Translator;
+use Activity\Service\ActivityCalendar;
+use DateTime;
+use Exception;
+use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Mvc\I18n\Translator;
+use Zend\Validator\Callback;
 
-class ActivityCalendarOption extends Form implements InputFilterProviderInterface
+class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {
     protected $translator;
 
     /**
-     * @param Organ[] $organs
+     * ActivityCalendarOption constructor.
+     *
      * @param Translator $translator
+     * @param ActivityCalendar $calendarService
      */
-    public function __construct(array $organs, Translator $translator)
+    public function __construct(Translator $translator, $calendarService)
     {
         parent::__construct();
         $this->translator = $translator;
+        $this->calendarService = $calendarService;
 
-        // all the organs that the user belongs to in organId => name pairs
-        $organOptions = [0 => $translator->translate('No organ')];
-
-        foreach ($organs as $organ) {
-            $organOptions[$organ->getId()] = $organ->getAbbr();
-        }
-
-        $this->add([
-            'name' => 'name',
-            'attributes' => [
-                'type' => 'text',
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'organ',
-            'type' => 'select',
-            'options' => [
-                'value_options' => $organOptions
-            ]
-        ]);
+        $typeOptions = [
+            'Lunch Lecture' => $translator->translate('Lunch lecture'),
+            'Morning' => $translator->translate('Morning'),
+            'Afternoon' => $translator->translate('Afternoon'),
+            'Evening' => $translator->translate('Evening'),
+            'Day' => $translator->translate('Day'),
+            'Multiple days' => $translator->translate('Multiple days'),
+        ];
 
         $this->add([
             'name' => 'beginTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d'
             ],
         ]);
 
@@ -54,14 +47,24 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
             'name' => 'endTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d'
             ],
+        ]);
+
+        $this->add([
+            'name' => 'type',
+            'type' => 'select',
+            'options' => [
+                'empty_option' => [
+                    'label' => $translator->translate('Select a type'),
+                    'selected' => 'selected',
+                    'disabled' => 'disabled',
+                ],
+                'value_options' => $typeOptions
+            ]
         ]);
     }
 
-    /**
-     * Input filter specification.
-     */
     public function getInputFilterSpecification()
     {
         return [
@@ -72,10 +75,24 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start before it ends'),
                             ],
-                            'callback' => ['Activity\Form\ActivityCalendarOption', 'beforeEndTime']
+                            'callback' => function ($value, $context = []) {
+                                return $this->beforeEndTime($value, $context);
+                            }
+                        ],
+                    ],
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity must start after today'),
+                            ],
+                            'callback' => function ($value, $context = []) {
+                                return $this->isFutureTime($value, $context);
+                            }
                         ],
                     ],
                     [
@@ -83,9 +100,11 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must after today'),
+                                    $this->translator->translate('The activity must be within the given period'),
                             ],
-                            'callback' => ['Activity\Form\ActivityCalendarOption', 'isFutureTime']
+                            'callback' => function ($value, $context = []) {
+                                return $this->cannotPlanInPeriod($value, $context);
+                            }
                         ],
                     ],
                 ]
@@ -93,20 +112,9 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
             'endTime' => [
                 'required' => true,
             ],
-            'organ' => [
+
+            'type' => [
                 'required' => true
-            ],
-            'name' => [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => 'string_length',
-                        'options' => [
-                            'min' => 2,
-                            'max' => 128
-                        ]
-                    ]
-                ]
             ],
         ];
     }
@@ -121,11 +129,10 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
     public function beforeEndTime($value, $context = [])
     {
         try {
-            $thisTime = new \DateTime($value);
-            $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
-            return $thisTime <= $endTime;
-        } catch (\Exception $e) {
-            // An exception is an indication that one of the times was not valid
+            $endTime = isset($context['endTime']) ? $this->calendarService->toDateTime($context['endTime']) : new DateTime('now');
+
+            return $this->calendarService->toDateTime($value) <= $endTime;
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -140,11 +147,29 @@ class ActivityCalendarOption extends Form implements InputFilterProviderInterfac
     public function isFutureTime($value, $context = [])
     {
         try {
-            $time = new \DateTime($value);
-            $now = new \DateTime();
-            return $time > $now;
-        } catch (\Exception $e) {
-            // An exception is an indication that one of the times was not valid
+            $today = new DateTime();
+
+            return $this->calendarService->toDateTime($value) > $today;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if a certain date is within the current planning period
+     *
+     * @param $value
+     * @param array $context
+     * @param ActivityCalendar $calendarService
+     * @return bool
+     */
+    public function cannotPlanInPeriod($value, $context = [])
+    {
+        try {
+            $beginTime = $this->calendarService->toDateTime($value);
+            $result = $this->calendarService->canCreateOption($beginTime);
+            return !$result;
+        } catch (Exception $e) {
             return false;
         }
     }

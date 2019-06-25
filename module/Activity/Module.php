@@ -1,8 +1,20 @@
 <?php
+
 namespace Activity;
 
-use User\Permissions\Assertion\IsOrganMember;
+use Activity\Form\ActivityFieldFieldSet;
+use Activity\Mapper\Activity;
+use Activity\Mapper\ActivityCalendarOption;
+use Activity\Mapper\ActivityFieldValue;
+use Activity\Mapper\ActivityOption;
+use Activity\Mapper\ActivityOptionCreationPeriod;
+use Activity\Mapper\ActivityOptionCreationProposal;
+use Activity\Mapper\MaxActivities;
+use Activity\Mapper\Proposal;
+use Activity\Mapper\Signup;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreator;
+use User\Permissions\Assertion\IsOrganMember;
 
 class Module
 {
@@ -62,7 +74,7 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'activity_form_activityfield_fieldset' => function ($sm) {
-                    $form = new \Activity\Form\ActivityFieldFieldSet();
+                    $form = new ActivityFieldFieldSet();
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -74,21 +86,19 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
-                'activity_form_calendar_option' => function ($sm) {
-                    $organService = $sm->get('decision_service_organ');
-                    $organs = $organService->getEditableOrgans();
-                    $form = new Form\ActivityCalendarOption($organs, $sm->get('translator'));
-                    $form->setHydrator($sm->get('activity_hydrator_calendar_option'));
+                'activity_form_calendar_proposal' => function ($sm) {
+                    $calendarService = $sm->get('activity_service_calendar');
+                    $form = new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                     return $form;
                 },
-                'activity_hydrator_calendar_option' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
-                        $sm->get('activity_doctrine_em'),
-                        'Activity\Model\ActivityCalendarOption'
-                    );
+                'activity_form_calendar_option' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $calendarService = $sm->get('activity_service_calendar');
+                    $form = new Form\ActivityCalendarOption($translator, $calendarService);
+                    return $form;
                 },
                 'activity_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('activity_doctrine_em')
                     );
                 },
@@ -111,32 +121,47 @@ class Module
                     return $ac;
                 },
                 'activity_mapper_activity' => function ($sm) {
-                    return new \Activity\Mapper\Activity(
+                    return new Activity(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_period' => function ($sm) {
+                    return new ActivityOptionCreationPeriod(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_max_activities' => function ($sm) {
+                    return new MaxActivities(
                         $sm->get('activity_doctrine_em')
                     );
                 },
                 'activity_mapper_activity_field_value' => function ($sm) {
-                    return new \Activity\Mapper\ActivityFieldValue(
+                    return new ActivityFieldValue(
                         $sm->get('activity_doctrine_em')
                     );
                 },
                 'activity_mapper_activity_option' => function ($sm) {
-                    return new \Activity\Mapper\ActivityOption(
+                    return new ActivityOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
                 'activity_mapper_proposal' => function ($sm) {
-                    return new \Activity\Mapper\Proposal(
+                    return new Proposal(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_option_proposal' => function ($sm) {
+                    return new ActivityOptionCreationProposal(
                         $sm->get('activity_doctrine_em')
                     );
                 },
                 'activity_mapper_signup' => function ($sm) {
-                    return new \Activity\Mapper\Signup(
+                    return new Signup(
                         $sm->get('activity_doctrine_em')
                     );
                 },
                 'activity_mapper_calendar_option' => function ($sm) {
-                    return new \Activity\Mapper\ActivityCalendarOption(
+                    return new ActivityCalendarOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
@@ -146,7 +171,7 @@ class Module
                     $acl->addResource('myActivities');
                     $acl->addResource('activitySignup');
                     $acl->addResource('model');
-                    $acl->addResource('activity_calendar_option');
+                    $acl->addResource('activity_calendar_proposal');
 
                     $acl->allow('guest', 'activity', 'view');
 
@@ -167,7 +192,8 @@ class Module
 
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
-                    $acl->allow('user', 'activity_calendar_option', ['create', 'delete_own']);
+                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always']);
                     return $acl;
                 },
             ]
