@@ -65,6 +65,9 @@ class MaxActivities
             ->setParameter('organ', $organId)
             ->setParameter('period', $periodId)
             ->setMaxResults(1);
-        return $qb->getQuery()->getOneOrNullResult();
+
+        $res = $qb->getQuery()->getResult();
+
+        return empty($res) ? null : $res[0];
     }
 }

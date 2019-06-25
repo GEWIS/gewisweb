@@ -77,6 +77,7 @@ class ActivityCalendarOption
      *
      * @param bool $withDeleted whether to include deleted results
      * @return array
+     * @throws \Exception
      */
     public function getUpcomingOptions($withDeleted = false)
     {
