@@ -38,46 +38,6 @@ class ActivityOptionProposal
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
-    }
-
-    /**
-     * Get activity proposals within a given period and associated with given organ
-     *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param int $organId the organ options have to be associated with
-     * @param string $status retrieve only options with this status, optional
-     * @return array
-     */
-    public function getOptionsWithinPeriodAndOrgan($begin, $end, $organId, $status = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('b')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->join('Activity\Model\ActivityOptionProposal', 'b')
-            ->where('a.beginTime > :begin')
-            ->where('a.beginTime < :end')
-            ->where('b.organ = :organ')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
-            ->setParameter('organ', $organId);
-
-        if ($status) {
-            $qb->andWhere('a.status = :status')
-                ->setParameter('status', $status);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Get activity proposals within a given period and associated with given organ
      *
      * @param DateTime $begin the date to get the options after
@@ -90,15 +50,27 @@ class ActivityOptionProposal
         $qb = $this->em->createQueryBuilder();
         $qb->select('b')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->join('Activity\Model\ActivityOptionProposal', 'b')
-            ->where('a.beginTime > :begin')
-            ->where('a.beginTime < :end')
-            ->where('b.organ = :organ')
-            ->where("a.status != 'deleted'")
+            ->andWhere("a.modifiedBy IS NULL")
+            ->orWhere("a.status = 'approved'")
+            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->andWhere('a.proposal = b.id')
+            ->andWhere('a.beginTime > :begin')
             ->setParameter('begin', $begin)
+            ->andWhere('a.beginTime < :end')
             ->setParameter('end', $end)
+            ->andWhere('b.organ = :organ')
             ->setParameter('organ', $organId);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
     }
 }

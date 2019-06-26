@@ -110,6 +110,18 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                             }
                         ],
                     ],
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The options for this proposal do not fit in the valid range.'),
+                            ],
+                            'callback' => function ($value, $context = []) {
+                                return $this->areGoodOptionDates($value, $context);
+                            }
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -132,5 +144,28 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * Check if the begin times of the options are acceptable
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public function areGoodOptionDates($value, $context = [])
+    {
+        $final = true;
+        foreach ($value as $option) {
+            try {
+                $beginTime = $this->calendarService->toDateTime($option['beginTime']);
+                $result = $this->calendarService->canCreateOption($beginTime);
+                $final = $final && $result;
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+        return $final;
     }
 }

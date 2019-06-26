@@ -250,7 +250,7 @@ class ActivityCalendar extends AbstractAclService
         $mapper = $this->getMaxActivitiesMapper();
         $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
         $max = 0;
-        if ($maxActivities != null) {
+        if ($maxActivities) {
             $max = $maxActivities->getValue();
         }
         return $max;
@@ -269,7 +269,8 @@ class ActivityCalendar extends AbstractAclService
     /**
      * Get the current proposal count of an organ for the given period
      *
-     * @param ActivityOptionCreationPeriod
+     * @param $period
+     * @param $organId
      * @return int
      */
     protected function getCurrentProposalCount($period, $organId)
@@ -364,21 +365,21 @@ class ActivityCalendar extends AbstractAclService
 
     protected function canDeleteOption($option)
     {
-        if (!$this->isAllowed('delete_own')) {
-            return false;
-        }
-
         if ($this->isAllowed('delete_all')) {
             return true;
         }
 
-        if ($option->getOrgan() === null
-            && $option->getCreator()->getLidnr() === $this->sm->get('user_service_user')->getIdentity()->getLidnr()
+        if (!$this->isAllowed('delete_own')) {
+            return false;
+        }
+
+        if ($option->getProposal()->getOrgan() === null
+            && $option->getProposal()->getCreator()->getLidnr() === $this->sm->get('user_service_user')->getIdentity()->getLidnr()
         ) {
             return true;
         }
 
-        if ($this->getOrganService()->canEditOrgan($option->getOrgan())) {
+        if ($this->getOrganService()->canEditOrgan($option->getProposal()->getOrgan())) {
             return true;
         }
 
@@ -462,7 +463,8 @@ class ActivityCalendar extends AbstractAclService
         $allOrgans = $this->getOrganService()->getEditableOrgans();
         $organs = array();
         foreach ($allOrgans as $organ) {
-            if ($this->canOrganCreateProposal($organ->getId())) {
+            $organId = $organ->getId();
+            if ($this->canOrganCreateProposal($organId)) {
                 array_push($organs, $organ);
             }
         }

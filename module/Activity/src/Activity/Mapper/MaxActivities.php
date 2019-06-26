@@ -60,9 +60,9 @@ class MaxActivities
         $qb = $this->em->createQueryBuilder();
         $qb->select('x')
             ->from('Activity\Model\MaxActivities', 'x')
-            ->where('x.organ = :organ')
-            ->where('x.period = :period')
+            ->andWhere('x.organ = :organ')
             ->setParameter('organ', $organId)
+            ->andWhere('x.period = :period')
             ->setParameter('period', $periodId)
             ->setMaxResults(1);
 

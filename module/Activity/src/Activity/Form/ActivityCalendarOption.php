@@ -160,7 +160,6 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @param $value
      * @param array $context
-     * @param ActivityCalendar $calendarService
      * @return bool
      */
     public function cannotPlanInPeriod($value, $context = [])

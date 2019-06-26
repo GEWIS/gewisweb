@@ -8,7 +8,7 @@ use Activity\Mapper\ActivityCalendarOption;
 use Activity\Mapper\ActivityFieldValue;
 use Activity\Mapper\ActivityOption;
 use Activity\Mapper\ActivityOptionCreationPeriod;
-use Activity\Mapper\ActivityOptionCreationProposal;
+use Activity\Mapper\ActivityOptionProposal;
 use Activity\Mapper\MaxActivities;
 use Activity\Mapper\Proposal;
 use Activity\Mapper\Signup;
@@ -151,7 +151,7 @@ class Module
                     );
                 },
                 'activity_mapper_option_proposal' => function ($sm) {
-                    return new ActivityOptionCreationProposal(
+                    return new ActivityOptionProposal(
                         $sm->get('activity_doctrine_em')
                     );
                 },
