@@ -102,10 +102,12 @@ $this->headLink()
                                    href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
-                                <a class="btn btn-xs btn-succes"
-                                   href="javascript:showApproveModal(<?= $option->getId() ?>)">
-                                    <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
-                                </a>
+                                <?php if ($canApprove): ?>
+                                    <a class="btn btn-xs btn-succes"
+                                       href="javascript:showApproveModal(<?= $option->getId() ?>)">
+                                        <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
+                                    </a>
+                                <?php endif ?>
                             <?php else: ?>
                                 <strong><?= $this->translate('Modified by') ?> <?= $option->getModifiedBy()->getMember()->getFullName() ?></strong>
                             <?php endif ?>

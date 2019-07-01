@@ -193,7 +193,7 @@ class Module
                     $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
 
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
-                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always']);
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
                     return $acl;
                 },
             ]
