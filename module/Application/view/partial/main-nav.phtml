@@ -2,15 +2,15 @@
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <?php if($this->identity()): ?>
-    <?php if(in_array($this->identity()->getMember()->getLidnr(), [8465])): ?>
+    <?php if(in_array($this->identity()->getMember()->getLidnr(), [8073, 8284, 8090, 8329, 8032, 7571, 8186])): ?>
         <style>
             .rainbow {
                 background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
-                background-size: 600% 600%;
+                background-size: 5000% 100%;
 
-                -webkit-animation: AnimationName 1s ease infinite;
-                -moz-animation: AnimationName 1s ease infinite;
-                animation: AnimationName 1s ease infinite;
+                -webkit-animation: AnimationName 2s ease infinite;
+                -moz-animation: AnimationName 2s ease infinite;
+                animation: AnimationName 2s ease infinite;
             }
 
             @-webkit-keyframes AnimationName {
