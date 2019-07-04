@@ -137,7 +137,7 @@ return [
                 ],
                 'priority' => 100
             ],
-            'test_login' => [
+            'validate_login' => [
                 'type' => 'segment',
                 'options' => [
                     'route' => '/api/validateLogin',
