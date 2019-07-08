@@ -1,6 +1,7 @@
 <?php
 namespace Activity\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 use Zend\Session\Container as SessionContainer;
 
 /**

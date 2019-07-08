@@ -36,7 +36,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Name for the activity.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $name;
 
@@ -65,14 +65,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The location the activity is held at.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $location;
 
     /**
      * How much does it cost.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $costs;
 
@@ -132,7 +132,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Activity description.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $description;
 
