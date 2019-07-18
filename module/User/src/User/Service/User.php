@@ -302,6 +302,16 @@ class User extends AbstractAclService
         }
         return $authService->getIdentity();
     }
+    /**
+     * Checks whether the user is logged in
+     *
+     * @return Bool true if the user is logged in, false otherwise
+     */
+    public function hasIdentity()
+    {
+        $authService = $this->getServiceManager()->get('user_auth_service');
+        return $authService->hasIdentity();
+    }
 
     public function detachUser($user)
     {
