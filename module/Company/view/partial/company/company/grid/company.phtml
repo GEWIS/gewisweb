@@ -17,11 +17,17 @@ $companyURL = $this->url('company/companyItem', // Route url
             <div class="company-grid-text">
                 <h4 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h4>
                 <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
-                <p>
-                    <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                        <?= $company->getNumberOfActiveJobs() ?> <?= $company->getNumberOfActiveJobs() === 1 ? $this->translate('job') : $this->translate('jobs') ?>
-                    </a>
-                </p>
+                <ul>
+                    <?php foreach ($this->jobCategories() as $category):?>
+                        <?php if ($company->getNumberOfActiveJobs($category) > 0): ?>
+                            <li>
+                                <a href="<?=$this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => $category->getSlug()]) ?>">
+                                    <?= $company->getNumberOfActiveJobs($category) ?> <?= $company->getNumberOfActiveJobs($category) === 1 ? $category->getName() : $category->getPluralName() ?>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                    <?php endforeach;?>
+                </ul>
             </div>
         </div>
     </div>

@@ -24,16 +24,18 @@ $companyURL = $this->url('company/companyItem', // Route url
         </ol>
     </div>
 </section>
-<div class="container">
-    <h1>
-        <a href="<?= $companyURL ?>"><?= $this->company->getName() ?></a>
-        <small><?= $this->translate('in the spotlight') ?></small>
-    </h1>
-    <?=
+<section class="section">
+    <div class="container">
+        <h1>
+            <a href="<?= $companyURL ?>"><?= $this->company->getName() ?></a>
+            <small><?= $this->translate('in the spotlight') ?></small>
+        </h1>
+        <?=
         $this->partial('./companyStory.phtml', [
             'company' => $company,
             'featuredPackage' => $featuredPackage,
             'translator' => $this->translator,
         ]);
-    ?>
-</div>
+        ?>
+    </div>
+</section>

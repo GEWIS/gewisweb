@@ -15,6 +15,36 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'member' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/member/:lidnr[/:page]',
+                            'constraints' => [
+                                'lidnr' => '[0-9]+',
+                                'page' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Album',
+                                'action' => 'member',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'photo' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route' => '/photo/:photo_id',
+                                    'constraints' => [
+                                        'photo_id' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'controller' => 'Photo',
+                                        'action' => 'member',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                     'album' => [
                         'type' => 'Segment',
                         'options' => [
@@ -112,6 +142,32 @@ return [
                             'defaults' => [
                                 'controller' => 'Photo',
                                 'action' => 'weekly',
+                            ],
+                        ],
+                    ],
+                    'set_profile_photo' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/setprofilephoto/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'setProfilePhoto',
+                            ],
+                        ],
+                    ],
+                    'remove_profile_photo' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/removeprofilephoto[/:photo_id]',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'removeProfilePhoto',
                             ],
                         ],
                     ],

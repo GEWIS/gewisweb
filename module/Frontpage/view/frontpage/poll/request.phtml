@@ -1,133 +1,175 @@
 <?php
 // set title
 $this->headTitle($this->translate('Request a poll')); ?>
-<div class="container">
-<div class="row">
-<h1><?= $this->translate('Request a poll') ?></h1>
-<?php if (isset($success)): ?>
-    <?= $this->translate('Your poll request has been received and will be reviewed shortly.') ?>
-<?php else: ?>
-<?php
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/frontpage-poll.js');
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <h1><?= $this->translate('Request a poll') ?></h1>
+            <?php if (isset($success)): ?>
+                <?= $this->translate('Your poll request has been received and will be reviewed shortly.') ?>
+            <?php else: ?>
+                <?php
+                $this->headScript()
+                    ->prependFile($this->basePath() . '/js/frontpage-poll.js');
 
-$form->setAttribute('action', $this->url('poll/request'));
-$form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('action', $this->url('poll/request'));
+                $form->setAttribute('class', 'form-horizontal');
 
-$form->prepare();
-?>
-<?= $this->form()->openTag($form) ?>
+                $form->prepare();
+                ?>
+                <?= $this->form()->openTag($form) ?>
 
-<?php
-$element = $form->get('dutchQuestion');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-        <div class="col-sm-10">
-            <?= $this->formInput($element) ?>
-            <?= $this->formElementErrors($element) ?>
-        </div>
-    </div>
-
-<?php
-$element = $form->get('englishQuestion');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-        <div class="col-sm-10">
-            <?= $this->formInput($element) ?>
-            <?= $this->formElementErrors($element) ?>
-        </div>
-    </div>
-
-<?php
-/* render template for options */
-$fs = $form->get('options')->getTemplateElement();
-ob_start();
-?>
-    <?php
-    $element = $fs->get('dutchText');
-    $element->setAttribute('class', 'form-control');
-    $element->setAttribute('placeholder', $element->getLabel());
-    ?>
-        <div id="option__index__" class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-            <div class="col-sm-4">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-
-    <?php
-    $element = $fs->get('englishText');
-    $element->setAttribute('class', 'form-control');
-    $element->setAttribute('placeholder', $element->getLabel());
-    ?>
-            <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-            <div class="col-sm-4">
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
-<?php $tpl = trim(ob_get_clean()) ?>
-
-<fieldset id="poll-options">
-    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
-    <?php $i = 0; ?>
-    <?php foreach ($form->get('options')->getIterator() as $fs): ?>
-        <?php
-        $element = $fs->get('dutchText');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-            <div id="option<?= $i ?>" class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-                <div class="col-sm-4">
-                    <?= $this->formInput($element) ?>
-                    <?= $this->formElementErrors($element) ?>
+                <?php
+                $element = $form->get('dutchQuestion');
+                $element->setAttribute('class', 'form-control');
+                $element->setAttribute('placeholder', $element->getLabel());
+                ?>
+                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label
+                        for="<?= $element->getName() ?>"
+                        class="control-label col-sm-2"
+                    ><?= $element->getLabel() ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formInput($element) ?>
+                        <?= $this->formElementErrors($element) ?>
+                    </div>
                 </div>
 
-        <?php
-        $element = $fs->get('englishText');
-        $element->setAttribute('class', 'form-control');
-        $element->setAttribute('placeholder', $element->getLabel());
-        ?>
-                <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-                <div class="col-sm-4">
-                    <?= $this->formInput($element) ?>
-                    <?= $this->formElementErrors($element) ?>
+                <?php
+                $element = $form->get('englishQuestion');
+                $element->setAttribute('class', 'form-control');
+                $element->setAttribute('placeholder', $element->getLabel());
+                ?>
+                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                    <label
+                        for="<?= $element->getName() ?>"
+                        class="control-label col-sm-2"
+                    ><?= $element->getLabel() ?></label>
+                    <div class="col-sm-10">
+                        <?= $this->formInput($element) ?>
+                        <?= $this->formElementErrors($element) ?>
+                    </div>
                 </div>
-            </div>
-    <?php
-        $i++;
-        endforeach
-    ?>
 
-    <div class="form-group add-option">
-        <div class="col-sm-offset-8 col-sm-2">
-            <button class="btn btn-danger" id="removeButton" <?= $i < 2 ? 'style="display:none"' : '' ?> type="button" onclick="return removeOption()"><span class="glyphicon glyphicon-minus"></span> <?= $this->translate('Remove option') ?></button>
-        </div>
-        <div class="col-sm-2">
-            <button class="btn btn-success" type="button" onclick="return addOption()"><span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?></button>
+                <?php
+                /* render template for options */
+                $fs = $form->get('options')->getTemplateElement();
+                ob_start();
+                ?>
+                <?php
+                $element = $fs->get('dutchText');
+                $element->setAttribute('class', 'form-control');
+                $element->setAttribute('placeholder', $element->getLabel());
+                ?>
+                <div
+                    id="option__index__"
+                    class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>"
+                >
+                    <label
+                        for="<?= $element->getName() ?>"
+                        class="control-label col-sm-2"
+                    ><?= $element->getLabel() ?></label>
+                    <div class="col-sm-4">
+                        <?= $this->formInput($element) ?>
+                        <?= $this->formElementErrors($element) ?>
+                    </div>
+
+                    <?php
+                    $element = $fs->get('englishText');
+                    $element->setAttribute('class', 'form-control');
+                    $element->setAttribute('placeholder', $element->getLabel());
+                    ?>
+                    <label
+                        for="<?= $element->getName() ?>"
+                        class="control-label col-sm-2"
+                    ><?= $element->getLabel() ?></label>
+                    <div class="col-sm-4">
+                        <?= $this->formInput($element) ?>
+                        <?= $this->formElementErrors($element) ?>
+                    </div>
+                </div>
+                <?php $tpl = trim(ob_get_clean()) ?>
+
+                <fieldset id="poll-options">
+                    <span
+                        class="template"
+                        data-template="<?= $this->escapeHtmlAttr($tpl) ?>"
+                    ></span>
+                    <?php $i = 0; ?>
+                    <?php foreach ($form->get('options')->getIterator() as $fs): ?>
+                        <?php
+                        $element = $fs->get('dutchText');
+                        $element->setAttribute('class', 'form-control');
+                        $element->setAttribute('placeholder', $element->getLabel());
+                        ?>
+                        <div
+                            id="option<?= $i ?>"
+                            class="option form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>"
+                        >
+                            <label
+                                for="<?= $element->getName() ?>"
+                                class="control-label col-sm-2"
+                            ><?= $element->getLabel() ?></label>
+                            <div class="col-sm-4">
+                                <?= $this->formInput($element) ?>
+                                <?= $this->formElementErrors($element) ?>
+                            </div>
+
+                            <?php
+                            $element = $fs->get('englishText');
+                            $element->setAttribute('class', 'form-control');
+                            $element->setAttribute('placeholder', $element->getLabel());
+                            ?>
+                            <label
+                                for="<?= $element->getName() ?>"
+                                class="control-label col-sm-2"
+                            ><?= $element->getLabel() ?></label>
+                            <div class="col-sm-4">
+                                <?= $this->formInput($element) ?>
+                                <?= $this->formElementErrors($element) ?>
+                            </div>
+                        </div>
+                        <?php
+                        $i++;
+                    endforeach
+                    ?>
+
+                    <div class="form-group add-option">
+                        <div class="col-sm-offset-8 col-sm-2">
+                            <button
+                                class="btn btn-danger"
+                                id="removeButton" <?= $i < 2 ? 'style="display:none"' : '' ?>
+                                type="button"
+                                onclick="return removeOption()"
+                            >
+                                <span class="glyphicon glyphicon-minus"></span> <?= $this->translate('Remove option') ?>
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button
+                                class="btn btn-success"
+                                type="button"
+                                onclick="return addOption()"
+                            >
+                                <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add option') ?>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <?php
+                        $submit = $form->get('submit');
+                        $submit->setAttribute('class', 'btn btn-primary');
+                        $submit->setLabel($this->translate('Request poll'));
+                        ?>
+                        <?= $this->formButton($submit) ?>
+                    </div>
+                </div>
+
+                <?= $this->form()->closeTag() ?>
+            <?php endif ?>
         </div>
     </div>
-</fieldset>
-
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <?php
-        $submit = $form->get('submit');
-        $submit->setAttribute('class', 'btn btn-primary');
-        $submit->setLabel($this->translate('Request poll'));
-        ?>
-        <?= $this->formButton($submit) ?>
-    </div>
-</div>
-
-<?= $this->form()->closeTag() ?>
-<?php endif ?>
-</div>
-</div>
+</section>

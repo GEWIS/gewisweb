@@ -112,6 +112,15 @@ class Module
                         $sm->get('decision_doctrine_em')
                     );
                 },
+                'decision_fileReader' => function ($sm) {
+                    //NB: The returned object should implement the FileReader Interface.
+                    $config = $sm->get('config');
+                    $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
+                    return new \Decision\Controller\FileBrowser\LocalFileReader(
+                        $config['filebrowser_folder'],
+                        $validFile
+                    );
+                },
                 'decision_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
@@ -122,13 +131,14 @@ class Module
                     $acl->addResource('decision');
                     $acl->addResource('meeting');
                     $acl->addResource('authorization');
+                    $acl->addResource('files');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
                     $acl->allow('user', 'organ', 'view');
 
                     // Organ members are allowed to edit organ information of their own organs
-                    $acl->allow('user', 'organ', 'edit');
+                    $acl->allow('active_member', 'organ', 'edit');
 
                     // guests are allowed to view birthdays on the homepage
                     $acl->allow('guest', 'member', 'birthdays_today');
@@ -145,6 +155,9 @@ class Module
 
                     $acl->allow('user', 'authorization', ['create', 'view_own']);
 
+                    // users are allowed to use the filebrowser
+                    $acl->allow('user', 'files', 'browse');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
@@ -152,7 +165,11 @@ class Module
                 'decision_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
-            ]
+            ],
+            /*
+             * Regex pattern matching filenames viewable in the browser
+             */
+            'filebrowser_valid_file' => '[^?*:;{}\\\]*'
         ];
     }
 }

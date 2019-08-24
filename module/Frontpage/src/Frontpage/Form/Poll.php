@@ -67,8 +67,8 @@ class Poll extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
-                            'max' => 75
+                            'min' => 5,
+                            'max' => 128
                         ]
                     ],
                 ],
@@ -79,8 +79,8 @@ class Poll extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
-                            'max' => 75
+                            'min' => 5,
+                            'max' => 128
                         ]
                     ],
                 ],

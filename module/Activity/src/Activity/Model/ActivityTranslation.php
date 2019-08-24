@@ -66,6 +66,12 @@ class ActivityTranslation
     protected $onlyGEWIS;
 
     /**
+     * Should the number of subscribed members be displayed
+     * when the user is NOT logged in?
+     */
+    protected $displaySubscribedNumber;
+
+    /**
      * Who did approve this activity.
      */
     protected $approver;
@@ -100,6 +106,8 @@ class ActivityTranslation
 
     protected $isMyFuture;
 
+    protected $requireGEFLITST;
+
     protected $isFood;
 
     /**
@@ -109,7 +117,7 @@ class ActivityTranslation
     {
         return $this->id;
     }
-    
+
     public function setId($id)
     {
         $this->id = $id;
@@ -242,6 +250,22 @@ class ActivityTranslation
     public function setOnlyGEWIS($onlyGEWIS)
     {
         $this->onlyGEWIS = $onlyGEWIS;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDisplaySubscribedNumber()
+    {
+        return $this->displaySubscribedNumber;
+    }
+
+    /**
+     * @param boolean $displaySubscribedNumber
+     */
+    public function setDisplaySubscribedNumber($displaySubscribedNumber)
+    {
+        $this->displaySubscribedNumber = $displaySubscribedNumber;
     }
 
     /**
@@ -392,8 +416,25 @@ class ActivityTranslation
             'costs' => $this->getCosts(),
             'description' => $this->getDescription(),
             'attendees' => $attendees,
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'fields' => $fields,
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequireGEFLITST()
+    {
+        return $this->requireGEFLITST;
+    }
+
+    /**
+     * @param mixed $requireGEFLITST
+     */
+    public function setRequireGEFLITST($requireGEFLITST)
+    {
+        $this->requireGEFLITST = $requireGEFLITST;
     }
 }
 

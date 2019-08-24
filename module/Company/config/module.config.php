@@ -6,7 +6,7 @@ return [
             'company' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/company',
+                    'route' => '/career',
                     'priority' => 2,
                     'defaults' => [
                         '__NAMESPACE__' => 'Company\Controller',
@@ -19,9 +19,12 @@ return [
                 'child_routes' => [
                     'jobList' => [
                         'priority' => 3,
-                        'type' => 'literal',
+                        'type' => 'segment',
                         'options' => [
-                            'route' => '/jobs',
+                            'route' => '/:category',
+                            'constraints' => [
+                                'category' => '[a-zA-Z0-9_\-\.]*',
+                            ],
                             'defaults' => [
                                 '__NAMESPACE__' => 'Company\Controller',
                                 'controller' => 'Company',
@@ -71,7 +74,7 @@ return [
                             // company should give frontpage of company part
                             // company/list should give a list of companies
                             // company/index should give the frontpage
-                            'route' => '/:slugCompanyName',
+                            'route' => '/company/:slugCompanyName',
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
@@ -79,9 +82,9 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'joblist' => [
-                                'type' => 'literal',
+                                'type' => 'segment',
                                 'options' => [
-                                    'route' => '/jobs',
+                                    'route' => '/:category',
                                     'defaults' => [
                                         'controller' => 'Company\Controller\Company',
                                         'action' => 'jobList',
@@ -189,7 +192,7 @@ return [
                                     'editJob' => [
                                         'type' => 'segment',
                                         'options' => [
-                                            'route' => '/job/:jobName',
+                                            'route' => '/job/:languageNeutralJobId',
                                             'defaults' => [
                                                 'action' => 'editJob',
                                             ],
@@ -237,6 +240,20 @@ return [
                                     'may_terminate' => true,
                                 ],
                             ],
+                        ],
+                    ],
+                    'editCategory' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'defaults' => [
+                                'action' => 'editCategory',
+                            ],
+                            'route' => '/editCategory/:categoryID',
+                            'constraints' => [
+                                'categoryID' => '[0-9]*',
+                            ],
+                            'may_terminate' => true,
                         ],
                     ],
                     'default' => [

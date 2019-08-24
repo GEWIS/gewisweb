@@ -1,4 +1,0 @@
-GEWIS Styleguide
-================
-
-Hello, world!

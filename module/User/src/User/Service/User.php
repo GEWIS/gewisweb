@@ -139,6 +139,12 @@ class User extends AbstractAclService
             return null;
         }
 
+        // Check if the e-mail entered and the e-mail in the database match
+        if ($member->getEmail() != $data['email']) {
+            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+            return null;
+        }
+
         // Invalidate all previous password reset codes
         // Makes sure that no double password reset codes are present in the database
         $this->getNewUserMapper()->deleteByMember($member);
@@ -295,6 +301,16 @@ class User extends AbstractAclService
             );
         }
         return $authService->getIdentity();
+    }
+    /**
+     * Checks whether the user is logged in
+     *
+     * @return Bool true if the user is logged in, false otherwise
+     */
+    public function hasIdentity()
+    {
+        $authService = $this->getServiceManager()->get('user_auth_service');
+        return $authService->hasIdentity();
     }
 
     public function detachUser($user)

@@ -145,6 +145,16 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
+            'name' => 'onlyGEWIS',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 0,
+                'unchecked_value' => 1,
+                'use_hidden_element' => true,
+            ]
+        ]);
+
+        $this->add([
             'name' => 'isFood',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -155,6 +165,24 @@ class Activity extends Form implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'isMyFuture',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'requireGEFLITST',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+      
+        $this->add([
+            'name' => 'displaySubscribedNumber',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,

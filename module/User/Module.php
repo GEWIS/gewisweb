@@ -1,6 +1,8 @@
 <?php
 namespace User;
 
+use User\Service\ApiApp;
+use User\Service\Factory\ApiAppFactory;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
@@ -103,6 +105,8 @@ class Module
             ],
 
             'factories' => [
+                ApiApp::class => ApiAppFactory::class,
+                \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {
                     return new \User\Authentication\Storage\Session(
                         $sm
@@ -253,6 +257,7 @@ class Module
                      * - user: GEWIS-member
                      * - apiuser: Automated tool given access by an admin
                      * - admin: Defined administrators
+                     * - photo_guest: Special role for non-members but friends of GEWIS nonetheless
                      */
                     $acl->addRole(new Role('guest'));
                     $acl->addRole(new Role('tueguest'), 'guest');
@@ -262,6 +267,7 @@ class Module
                     $acl->addrole(new Role('active_member'), 'user');
                     $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
+                    $acl->addRole(new Role('photo_guest'), 'guest');
 
                     $user = $sm->get('user_role');
 
@@ -273,8 +279,7 @@ class Module
                             $roles = ['user'];
                         }
 
-                        // TODO: change this to getActiveOrganInstalltions() once 529 is fixed
-                        if (count($user->getMember()->getOrganInstallations()) > 0) {
+                        if (count($user->getMember()->getCurrentOrganInstallations()) > 0) {
                             $roles[] = 'active_member';
                         }
 
@@ -292,6 +297,7 @@ class Module
                     $acl->addResource(new Resource('user'));
 
                     $acl->allow('user', 'user', ['password_change']);
+                    $acl->allow('photo_guest', 'user', ['password_change']);
                     $acl->allow('tueguest', 'user', 'pin_login');
 
                     // sosusers can't do anything

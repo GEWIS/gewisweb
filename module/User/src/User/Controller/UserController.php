@@ -15,32 +15,42 @@ class UserController extends AbstractActionController
     public function indexAction()
     {
         $userService = $this->getUserService();
+        $referer = $this->getRequest()->getHeader('referer');
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->login($data);
-            if (null !== $login) {
+            if (!is_null($login)) {
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
-                    return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
+                    return $this->redirect()->toUrl($referer);
                 }
                 return $this->redirect()->toUrl($data['redirect']);
             }
         }
 
-        // show form
-        $form = $userService->getLoginForm();
-        if(is_null($form->get('redirect')->getValue())) {
-            if (isset($_SERVER['HTTP_REFERER'])) {
-                $form->get('redirect')->setValue($_SERVER['HTTP_REFERER']);
-            } else {
-                $form->get('redirect')->setValue($this->url()->fromRoute('home'));
-            }
-        }
+        $form = $this->handleRedirect($userService, $referer);
 
         return new ViewModel([
             'form' => $form
         ]);
+    }
+    private function handleRedirect($userService, $referer)
+    {
+        $form = $userService->getLoginForm();
+        if(is_null($form->get('redirect')->getValue())) {
+            $redirect = $this->getRequest()->getQuery('redirect');
+            if (isset($redirect)) {
+                $form->get('redirect')->setValue($redirect);
+                return $form;
+            }
+            if (isset($referer)) {
+                $form->get('redirect')->setValue($referer);
+                return $form;
+            }
+            $form->get('redirect')->setValue($this->url()->fromRoute('home'));
+        }
+        return $form;
     }
 
     public function pinLoginAction()

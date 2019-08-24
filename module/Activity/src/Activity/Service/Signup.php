@@ -55,8 +55,21 @@ class Signup extends AbstractAclService
         return $form;
     }
 
+    public function getExternalAdminForm($fields)
+    {
+        $form = new \Activity\Form\ActivitySignup();
+        $form->initialiseExternalAdminForm($fields);
+        return $form;
+    }
+
     public function getExternalForm($fields)
     {
+        if (!$this->isAllowed('externalSignup', 'activitySignup')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to use the external signup')
+            );
+        }
         $form = new \Activity\Form\ActivitySignup();
         $form->initialiseExternalForm($fields);
         return $form;
@@ -300,6 +313,12 @@ class Signup extends AbstractAclService
         $this->removeSignUp($signUp);
     }
 
+    public function getNumberOfSubscribedMembers(ActivityModel $activity)
+    {
+        return $this->getServiceManager()->get('activity_mapper_signup')
+                ->getNumberOfSignedUpMembers($activity->getId())[1];
+    }
+
     public function externalSignOff(ExternalActivitySignup $signup)
     {
         if (!($this->isAllowed('adminSignup', 'activity') ||
@@ -329,6 +348,25 @@ class Signup extends AbstractAclService
         return $this->isAllowed('signup', 'activitySignup');
     }
 
+    /**
+     * Is the (guest) user allowed to use the external signup
+     *
+     * @return bool
+     */
+    public function isAllowedToExternalSubscribe()
+    {
+        return $this->isAllowed('externalSignup', 'activitySignup');
+    }
+
+    public function isAllowedToViewSubscriptions()
+    {
+        return $this->isAllowed('view', 'activitySignup');
+    }
+
+    public function isAllowedToInternalSubscribe()
+    {
+        return $this->isAllowed('signup', 'activitySignup');
+    }
     /**
      * @return \Activity\Mapper\ActivityFieldValue
      */

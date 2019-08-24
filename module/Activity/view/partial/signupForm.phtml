@@ -1,0 +1,73 @@
+<?php
+/** Render a form to sign up for an activity.
+ * Required parameters:
+ * $form,
+ * $activity
+ */
+?>
+
+<?php
+$showCaptcha = false;
+$showName = false;
+switch ($form->getType()) {
+    case Activity\Form\ActivitySignup::USER:
+        $submitUrl = $this->url('activity/signup', ['id' => $activity->getId() ]);
+        $submitText = $this->translate('Confirm subscription');
+        break;
+    case Activity\Form\ActivitySignup::EXTERNAL_USER:
+        $submitUrl = $this->url('activity/externalSignup', ['id' => $activity->getId() ]);
+        $submitText = $this->translate('Subscribe as external participant');
+        $showCaptcha = true;
+        $showName = true;
+        break;
+    case Activity\Form\ActivitySignup::EXTERNAL_ADMIN:
+        $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $activity->getId() ]);
+        $submitText = $this->translate('Subscribe an external participant');
+        $showName = true;
+        break;
+}
+
+function formElementRender($element, $label, $id, $context){
+    $element->setAttribute('id', $id);
+    $elementType = (new \ReflectionClass($element))->getShortName();
+    if (!in_array($elementType, ['Radio','Checkbox'])) {
+        $element->setAttribute('class', 'form-control');
+    }
+    $result = '<div class="form-group' . (count($element->getMessages()) > 0 ? ' has-error' : '') . '">';
+    $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label">' . $label . '</label>';
+    if (in_array($elementType, ['Radio'])) {
+        $context->formRadio()->setSeparator('</div><div class="radio">');
+        $result .= '<div class="radio">'.$context->formRadio($element).'</div>';
+    } else {
+        $result .= $context->formRow($element);
+    }
+    $result .= '</div>';
+    return $result;
+}
+?>
+
+<?php $form->setAttribute('action', $submitUrl);
+      $form->prepare();
+      echo $this->form()->openTag($form);
+?>
+<?php if($showName): ?>
+     <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this)?>
+     <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this)?>
+<?php endif; ?>
+
+<?php if($showCaptcha): ?>
+     <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
+<?php endif; ?>
+
+    <?php foreach($activity->getFields() as $field):?>
+         <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()), $field->getId(), $this) ?>
+    <?php endforeach;?>
+
+<?php
+    $submit = $form->get('submit');
+    $submit->setAttribute('class', 'btn btn-primary');
+    $submit->setAttribute('value', $submitText);
+    echo $this->formElement($form->get('security'));
+    echo $this->formSubmit($submit);
+    echo $this->form()->closeTag();
+?>

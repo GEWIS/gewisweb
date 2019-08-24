@@ -122,6 +122,148 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findAll();
     }
 
+    public function categoryForSlug($slug)
+    {
+        $translator = $this->getTranslator();
+        $mapper = $this->getCategoryMapper();
+        $category = $mapper->findCategory($slug);
+        $locale = $translator->getLocale();
+
+        if ($category == null && $slug == "jobs") {
+            $category = $mapper->createNullCategory($translator->getLocale(), $translator);
+        }
+        if ($category == null || $category->getLanguage() == $locale) {
+            return $category;
+        }
+        $category = $mapper->siblingCategory($category, $locale);
+        return $category;
+    }
+
+    private function filterCategories($categories)
+    {
+        $nonemptyCategories = [];
+        foreach ($categories as $category) {
+            if (count(
+                $this->getActiveJobList(['jobCategoryID' => $category->getId()])
+            ) > 0) {
+                $nonemptyCategories[] = $category;
+            }
+        }
+        return $nonemptyCategories;
+    }
+
+    private function getUniqueInArray($array, $callback) {
+        $tempResults = [];
+        $resultArray = [];
+        foreach ($array as $x) {
+            $newVar = $callback($x);
+            if (!array_key_exists($newVar, $tempResults)) {
+                $resultArray[] = $x;
+                $tempResults[$newVar] = $x;
+            }
+        }
+        return $resultArray;
+    }
+    public function getCategoryList($visible)
+    {
+        $translator = $this->getTranslator();
+        if (!$visible) {
+            if (!$this->isAllowed('listAllCategories')) {
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to access the admin interface')
+                );
+            }
+            $results = $this->getCategoryMapper()->findAll();
+            return $this->getUniqueInArray($results, function ($a) {
+                return $a->getLanguageNeutralId();
+            });
+        }
+        if (!$this->isAllowed('listVisibleCategories')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list all categories')
+            );
+        }
+        if ($visible) {
+            $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
+            $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
+            $filteredCategories =  $this->filterCategories($categories);
+            $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
+                return $el->getSlug() == "jobs";
+            })) ;
+            if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
+                $filteredCategories[] = $this->getCategoryMapper()
+                    ->createNullCategory($translator->getLocale(), $translator);
+            }
+            return $filteredCategories;
+        }
+        return $this->getCategoryMapper()->findAll();
+    }
+
+    /**
+     * Inserts a category, and binds it to the given package
+     *
+     * @param mixed $packageID
+     */
+    public function insertCategory($lang, $id, $cat = null)
+    {
+        if (!$this->isAllowed('insert')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to insert a job')
+            );
+        }
+        $result = $this->getCategoryMapper()->insert($lang, $id, $cat);
+        return $result;
+    }
+    /**
+     * Checks if the data is valid, and if it is, inserts the category, and sets
+     * all data
+     *
+     * @param mixed $data
+     */
+    public function insertCategoryByData($data, $files)
+    {
+        $categoryForm = $this->getCategoryForm();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $categoryForm->setData($mergedData);
+        $arr = [];
+        $categoryForm->get('categories')->setObject($arr);
+        $valid = $categoryForm->isValid();
+        if ($valid) {
+            $newCategories = $categoryForm->getObject();
+            $id = -1;
+            foreach ($newCategories as $lang => $category) {
+                $arr[$lang] = $this->insertCategory($lang, $id, $category);
+                if ($id == -1) {
+                    $id = current($arr)->getId();
+                }
+            }
+            return $arr;
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the data is valid (if nonnull), and if it is saves the category
+     *
+     * @param array $data The data to validate, and apply to the category
+     */
+    public function saveCategory($data = null)
+    {
+        if ($data != null) {
+            $categoryForm = $this->getCategoryForm();
+            $categoryForm->setData($data);
+            if ($categoryForm->isValid()) {
+                $this->saveCategory();
+                return true;
+            }
+            return;
+        }
+        $this->getCategoryMapper()->save();
+    }
     /**
      * Checks if the data is valid, and if it is saves the package
      *
@@ -132,9 +274,9 @@ class Company extends AbstractACLService
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
-        if ($packageForm->isValid()){
+        if ($packageForm->isValid()) {
             $package->exchangeArray($data);
-            if ($package->getType() == 'banner'){
+            if ($package->getType() == 'banner') {
                 $file = $files['banner'];
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -168,7 +310,7 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-        if ($companyForm->isValid()){
+        if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -182,7 +324,9 @@ class Company extends AbstractACLService
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
+                    continue;
                 }
+                $translation->setLogo("");
             }
             $this->saveCompany();
             return true;
@@ -222,7 +366,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $data
      */
-    public function insertCompanyByData($data,$files)
+    public function insertCompanyByData($data, $files)
     {
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
@@ -235,8 +379,8 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== UPLOAD_ERR_NO_FILE){
-                    if ($file['error'] !== UPLOAD_ERR_OK){
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
@@ -317,9 +461,14 @@ class Company extends AbstractACLService
     public function createJob($packageID, $data, $files)
     {
         $package = $this->getPackageMapper()->findPackage($packageID);
-        $job = new JobModel();
-        $job->setPackage($package);
-        return $this->saveJobData("", $job, $data, $files);
+        $jobs = [];
+        foreach ($this->getLanguages() as $lang) {
+            $job = new JobModel();
+            $job->setPackage($package);
+            $job->setLanguage($lang);
+            $jobs[$lang] = $job;
+        }
+        return $this->saveJobData("", $jobs, $data, $files);
     }
 
     /**
@@ -331,41 +480,68 @@ class Company extends AbstractACLService
      *
      * @return JobModel|bool
      */
-    public function saveJobData($currentSlug, $job, $data, $files)
+    public function saveJobData($languageNeutralId, $jobs, $data, $files)
     {
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
-        $jobForm->setCompanySlug($job->getCompany()->getSlugName());
-        $jobForm->setCurrentSlug($currentSlug);
-        $jobForm->bind($job);
+        $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
+        $jobForm->setCurrentSlug($data['slugName']);
+        $jobForm->bind($jobs);
         $jobForm->setData($mergedData);
 
         if (!$jobForm->isValid()) {
             return false;
         }
+        $id = -1;
 
-        $file = $files['attachment_file'];
-        if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-            $oldPath = $job->getAttachment();
-            try {
-                $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-            } catch (\Exception $e) {
-                return false;
+        foreach ($jobs as $lang => $job) {
+            if ($job->getActive() !== '1') {
+                continue;
+            }
+            $file = $files['jobs'][$lang]['attachment_file'];
+
+            if ($file != null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+                $oldPath = $job->getAttachment();
+
+                try {
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                } catch (\Exception $e) {
+                    return false;
+                }
+
+                if (!is_null($oldPath) && $oldPath != $newPath) {
+                    $this->getFileStorageService()->removeFile($oldPath);
+                }
+
+                $job->setAttachment($newPath);
             }
 
-            if (!is_null($oldPath) && $oldPath != $newPath) {
-                $this->getFileStorageService()->removeFile($oldPath);
-            }
-
-            $job->setAttachment($newPath);
+            $job->setTimeStamp(new \DateTime());
+            $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
+            $this->getJobMapper()->persist($job);
+            $this->saveJob();
         }
 
-        $job->setTimeStamp(new \DateTime());
-        $this->getJobMapper()->persist($job);
-        return $job;
+        return true;
+    }
+
+    private function setLanguageNeutralId($id, $job, $languageNeutralId)
+    {
+        if ($languageNeutralId == "") {
+            $job->setLanguageNeutralId($id);
+            $this->getJobMapper()->persist($job);
+            $this->getJobMapper()->save();
+            if ($id == -1) {
+                $id = $job->getId();
+            }
+            $job->setLanguageNeutralId($id);
+            return $id;
+        }
+        $job->setLanguageNeutralId($languageNeutralId);
+        return $id;
     }
 
     /**
@@ -373,7 +549,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $packageID
      */
-    public function insertJobIntoPackageID($packageID)
+    public function insertJobIntoPackageID($packageID, $lang, $languageNeutralId)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -382,7 +558,7 @@ class Company extends AbstractACLService
             );
         }
         $package = $this->getEditablePackage($packageID);
-        $result = $this->getJobMapper()->insertIntoPackage($package);
+        $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
 
         return $result;
     }
@@ -432,6 +608,26 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns a persistent category
+     *
+     * @param mixed $categoryID
+     */
+    public function getAllCategoriesById($categoryID)
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit packages')
+            );
+        }
+        if (is_null($categoryID)) {
+            throw new \Exception('Invalid argument');
+        }
+        $package = $this->getCategoryMapper()->findAllCategoriesById($categoryID);
+
+        return $package;
+    }
+    /**
      * Returns a persistent package
      *
      * @param mixed $packageID
@@ -444,7 +640,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit packages')
             );
         }
-        if (is_null($packageID)){
+        if (is_null($packageID)) {
             throw new \Exception('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
@@ -481,7 +677,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
      */
-    public function getEditableJobsBySlugName($companySlugName, $jobSlugName)
+    public function getEditableJobsByLanguageNeutralId($languageNeutralId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -489,39 +685,32 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
+        $res = $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
+        return $res;
     }
 
     /**
      * Returns all jobs with a $jobSlugName, owned by a company with a
-     * $companySlugName
+     * $companySlugName, and a specific $category
      *
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
+     * @param mixed $category
      */
-    public function getJobsBySlugName($companySlugName, $jobSlugName)
+    public function getJobs($dict)
     {
-        return $this->getJobMapper()->findJobBySlugName($companySlugName, $jobSlugName);
-    }
-
-    /**
-     * Returns all jobs with owned by a company with a
-     * $companySlugName
-     *
-     * @param mixed $companySlugName
-     */
-    public function getJobsByCompanyName($companySlugName)
-    {
-        return $this->getJobMapper()->findJobByCompanySlugName($companySlugName);
-    }
-
-    /**
-     * Returns all jobs in the database
-     *
-     */
-    public function getJobList()
-    {
-        return $this->getJobMapper()->findAll();
+        $translator = $this->getTranslator();
+        if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] == null) {
+            $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
+            foreach ($jobs as $job) {
+                $job->setCategory($this->getCategoryMapper()
+                    ->createNullCategory($translator->getLocale(), $translator));
+            }
+            return $jobs;
+        }
+        $locale = $translator->getLocale();
+        $dict["language"] = $locale;
+        return $this->getJobMapper()->findJob($dict);
     }
 
     /**
@@ -532,6 +721,22 @@ class Company extends AbstractACLService
     public function getCompanyForm()
     {
         return $this->sm->get('company_admin_edit_company_form');
+    }
+
+    /**
+     * Get the Category Edit form.
+     *
+     * @return Category Edit form
+     */
+    public function getCategoryForm()
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit jobs')
+            );
+        }
+        return $this->sm->get('company_admin_edit_category_form');
     }
 
     /**
@@ -569,9 +774,9 @@ class Company extends AbstractACLService
      * Returns all jobs that are active
      *
      */
-    public function getActiveJobList()
+    public function getActiveJobList($dict = [])
     {
-        $jobList = $this->getJobList();
+        $jobList = $this->getJobs($dict);
         $array = [];
         foreach ($jobList as $job) {
             if ($job->isActive()) {
@@ -586,7 +791,7 @@ class Company extends AbstractACLService
      * Returns the companyMapper
      *
      */
-    public function getCompanyMapper()
+    private function getCompanyMapper()
     {
         return $this->sm->get('company_mapper_company');
     }
@@ -595,7 +800,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    public function getPackageMapper()
+    private function getPackageMapper()
     {
         return $this->sm->get('company_mapper_package');
     }
@@ -604,7 +809,7 @@ class Company extends AbstractACLService
      * Returns the packageMapper
      *
      */
-    public function getBannerPackageMapper()
+    private function getBannerPackageMapper()
     {
         return $this->sm->get('company_mapper_bannerpackage');
     }
@@ -625,6 +830,15 @@ class Company extends AbstractACLService
     public function getJobMapper()
     {
         return $this->sm->get('company_mapper_job');
+    }
+
+    /**
+     * Returns the category mapper
+     *
+     */
+    public function getCategoryMapper()
+    {
+        return $this->sm->get('company_mapper_category');
     }
 
     /**
@@ -655,5 +869,21 @@ class Company extends AbstractACLService
     public function getFileStorageService()
     {
         return $this->sm->get('application_service_storage');
+    }
+    /**
+     * Gets the storage service.
+     *
+     * @return \Application\Service\Storage
+     */
+    public function getLanguages()
+    {
+        return $this->sm->get('application_get_languages');
+    }
+    public function getLanguageDescription($lang)
+    {
+        if ($lang === 'en') {
+            return 'English';
+        }
+        return 'Dutch';
     }
 }

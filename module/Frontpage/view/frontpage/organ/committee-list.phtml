@@ -2,10 +2,11 @@
 // set title
 $this->headTitle($this->translate('Committees')); ?>
 
-<div class="container">
-<h1><?= $this->translate('Committees') ?></h1>
-    <?= $this->translate('GEWIS has many different committees, learn more about them below!') ?>
-    <div class="row">
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate('Committees') ?></h1>
+        <?= $this->translate('GEWIS has many different committees, learn more about them below!') ?>
+        <div class="row">
 
             <?php foreach ($committees as $committee) {
                 echo $this->partial('partial/organ-card.phtml', [
@@ -15,6 +16,6 @@ $this->headTitle($this->translate('Committees')); ?>
             }
 
             ?>
+        </div>
     </div>
-</div>
-
+</section>

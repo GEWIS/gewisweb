@@ -14,8 +14,8 @@
     <?php $i = 1; $mailAllString = ''; ?>
     <?php foreach($activity->getSignUps() as $signup): ?>
         <tr>
-            <td><?php echo $i; $i = $i + 1; $email = $signup->getEmail(); $mailAllString .= $email . '; '; ?></td>
-            <td><?= $signup->getFullName() ?></td>
+            <td><?php echo $i; $i = $i + 1; $email = $this->escapeHtml($signup->getEmail()); $mailAllString .= $email . '; '; ?></td>
+            <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
             <td>
                 <a href="mailto:<?= $email ?>">
                     <?= $email ?>
@@ -77,7 +77,7 @@
         <td></td>
         <td></td>
         <td>
-            <a href="mailto:<?= substr($mailAllString, 0, -2) ?>">
+            <a href="mailto:?bcc=<?= substr($mailAllString, 0, -2) ?>">
                 <?= $this->translate('Mail everybody') ?>
             </a>
         </td>

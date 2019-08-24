@@ -1,0 +1,54 @@
+<div class="option spacing-top--sm" id="additionalOption<?= $this->index ?>">
+    <div class="row">
+        <div class="col-md-3">
+            <?php $inputType = $this->fs->get('type')
+                ->setAttribute('class', 'form-control')
+                ->setAttribute('id', 'type-field-' . $this->index);
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($inputType) ?>">
+                <label for="<?= $inputType->getAttribute('id') ?>" class="control-label label-required">
+                    <?= $this->translate('Type') ?>
+                </label>
+                <?= $this->formSelect($inputType) ?>
+                <?= $this->formElementErrors($inputType) ?>
+            </div>
+        </div>
+        <div class="col-md-3 spacing-top-sm--sm">
+            <?php $inputBeginTime = $this->fs->get('beginTime')
+                ->setAttribute('class', 'form-control')
+                ->setAttribute('id', 'begin-time-' . $this->index);
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($inputBeginTime) ?>">
+                <label for="<?= $inputBeginTime->getAttribute('id') ?>" class="control-label label-required">
+                    <?= $this->translate('From') ?>
+                </label>
+                <?= $this->formInput($inputBeginTime) ?>
+                <?= $this->formElementErrors($inputBeginTime) ?>
+            </div>
+        </div>
+        <div class="col-md-3 spacing-top-sm--sm">
+            <?php $inputEndTime = $this->fs->get('endTime')
+                ->setAttribute('class', 'form-control')
+                ->setAttribute('id', 'end-time-' . $this->index);
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($inputEndTime) ?>">
+                <label for="<?= $inputEndTime->getAttribute('id') ?>" class="control-label label-required">
+                    <?= $this->translate('Until') ?>
+                </label>
+                <?= $this->formInput($inputEndTime) ?>
+                <?= $this->formElementErrors($inputEndTime) ?>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+
+<script>
+    var options = {
+        timepicker: false,
+        format: 'd/m/Y',
+    };
+
+    $("#begin-time-<?= $this->index ?>").datetimepicker(options);
+    $("#end-time-<?= $this->index ?>").datetimepicker(options);
+</script>

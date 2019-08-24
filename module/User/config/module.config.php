@@ -1,4 +1,7 @@
 <?php
+use User\Controller\ApiAuthenticationController;
+use User\Controller\Factory\ApiAuthenticationControllerFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -122,13 +125,39 @@ return [
                     ]
                 ],
                 'priority' => 100
-            ]
+            ],
+            'user_token' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/token/:appId',
+                    'defaults' => [
+                        'controller' => '\User\Controller\ApiAuthenticationController',
+                        'action' => 'token',
+                    ]
+                ],
+                'priority' => 100
+            ],
+            'validate_login' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/api/validateLogin',
+                    'defaults' => [
+                        'controller' => '\User\Controller\Api',
+                        'action' => 'validate'
+                    ],
+                ],
+                'priority' => 100,
+            ],
         ],
     ],
     'controllers' => [
         'invokables' => [
             'User\Controller\User' => 'User\Controller\UserController',
-            'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController'
+            'User\Controller\Api' => 'User\Controller\ApiController',
+            'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController',
+        ],
+        'factories' => [
+            ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
         ]
     ],
     'view_manager' => [

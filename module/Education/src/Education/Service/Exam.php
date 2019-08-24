@@ -409,6 +409,73 @@ class Exam extends AbstractAclService
     }
 
     /**
+     * Get the add course form.
+     *
+     * @return \Education\Form\AddCourse
+     *
+     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     */
+    public function getAddCourseForm()
+    {
+        if (!$this->isAllowed('upload')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to add courses')
+            );
+        }
+        return $this->sm->get('education_form_add_course');
+    }
+
+    /**
+     * Add a new course.
+     *
+     * @param array $data Course data
+     *
+     * @return CourseModel New course. Null when the course could not be added.
+     */
+    public function addCourse($data)
+    {
+        $form = $this->getAddCourseForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        // get the course
+        $data = $form->getData();
+
+        // check if course already exists
+        $existingCourse = $this->getCourse($data['code']);
+        if ($existingCourse !== null) {
+            return null;
+        }
+
+        // check if parent course exists
+        if (strlen($data['parent']) > 0) {
+            $existingCourse = $this->getCourse($data['parent']);
+            if ($existingCourse === null) {
+                return null;
+            }
+        }
+
+        // save the data
+        $newCourse = new CourseModel($this->getCourseMapper());
+        $newCourse->setCode($data['code']);
+        $newCourse->setName($data['name']);
+        if (strlen($data['parent']) > 0) {
+            $newCourse->setParent($this->getCourse($data['parent']));
+        }
+        $newCourse->setUrl($data['url']);
+        $newCourse->setYear($data['year']);
+        $newCourse->setQuartile($data['quartile']);
+
+        $this->getCourseMapper()->persist($newCourse);
+
+        return $newCourse;
+    }
+
+    /**
      * Get the storage service.
      *
      * @return \Application\Service\FileStorage

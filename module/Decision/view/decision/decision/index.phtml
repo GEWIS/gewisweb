@@ -1,33 +1,38 @@
 <?php
 // set title
 $this->headTitle($this->translate('Meetings')); ?>
-
-<div class="container">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th><?= $this->translate('Type') ?></th>
-            <th><?= $this->translate('Meeting number') ?></th>
-            <th><?= $this->translate('Date') ?></th>
-            <th><?= $this->translate('# Decisions') ?></th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($meetings as $info): ?>
-            <?php $meeting = $info[0] ?>
-            <?php $url = $this->url('decision/meeting', ['type' => $meeting->getType(), 'number' => $meeting->getNumber()]) ?>
+<section class="section">
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td><a style="display: block; height: 100%; width: 100%" href="<?= $url ?>"><?= $meeting->getType() ?></a></td>
-                <td><a style="display: block; height: 100%; width: 100%" href="<?= $url ?>"><?= $meeting->getNumber() ?></a></td>
-                <td><a style="display: block; height: 100%; width: 100%" href="<?= $url ?>"><?= $this->dateFormat(
-                        $meeting->getDate(),
-                        \IntlDateFormatter::FULL,
-                        \IntlDateFormatter::NONE,
-                        'nl_NL'
-                    ) ?></td>
-                <td><a style="display: block; height: 100%; width: 100%" href="<?= $url ?>"><?= $info[1] ?></a></td>
+                <th><?= $this->translate('Type') ?></th>
+                <th><?= $this->translate('Meeting number') ?></th>
+                <th><?= $this->translate('Date') ?></th>
+                <th><?= $this->translate('# Decisions') ?></th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            <?php foreach ($meetings as $info): ?>
+                <?php $meeting = $info[0] ?>
+                <?php $url = $this->url('decision/meeting', ['type' => $meeting->getType(), 'number' => $meeting->getNumber()]) ?>
+                <tr>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $url ?>"><?= $meeting->getType() ?></a></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $url ?>"><?= $meeting->getNumber() ?></a></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $url ?>"><?= $this->dateFormat(
+                            $meeting->getDate(),
+                            \IntlDateFormatter::FULL,
+                            \IntlDateFormatter::NONE,
+                            'nl_NL'
+                        ) ?></td>
+                    <td><a style="display: block; height: 100%; width: 100%"
+                            href="<?= $url ?>"><?= $info[1] ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>

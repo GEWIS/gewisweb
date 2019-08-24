@@ -27,7 +27,7 @@ class Module
         if (APP_ENV === 'production') {
             return [
                 'Zend\Loader\ClassMapAutoloader' => [
-                __DIR__ . '/autoload_classmap.php',
+                    __DIR__ . '/autoload_classmap.php',
                 ]
             ];
         }
@@ -98,6 +98,11 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_mapper_profile_photo' => function ($sm) {
+                    return new Mapper\ProfilePhoto(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
                 'photo_mapper_tag' => function ($sm) {
                     return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
@@ -121,15 +126,22 @@ class Module
                     $acl->addResource('album');
                     $acl->addResource('tag');
 
-                    // Guests are allowed to view photos and albums
-                    $acl->allow('guest', 'photo', 'view');
-                    $acl->allow('guest', 'album', 'view');
+                    // Only users and 'the screen' are allowed to view photos and albums
+                    $acl->allow('user', 'photo', 'view');
+                    $acl->allow('user', 'album', 'view');
+
+                    $acl->allow('apiuser', 'photo', 'view');
+                    $acl->allow('apiuser', 'album', 'view');
 
                     // Users are allowed to view, remove and add tags
                     $acl->allow('user', 'tag', ['view', 'add', 'remove']);
 
                     // Users are allowed to download photos
                     $acl->allow('user', 'photo', ['download', 'view_metadata']);
+
+                    $acl->allow('photo_guest', 'photo', 'view');
+                    $acl->allow('photo_guest', 'album', 'view');
+                    $acl->allow('photo_guest', 'photo', ['download', 'view_metadata']);
 
                     return $acl;
                 },

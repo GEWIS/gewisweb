@@ -14,58 +14,43 @@ foreach ($poll->getOptions() as $option) {
 }
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<div class="row">
-<h4>
+<h4 style="margin-top: 0; margin-bottom: 15px;">
+    <?php $question = $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()); ?>
     <?php if (isset($viewLink) && $viewLink): ?>
-    <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>">
-    <?php endif ?>
-        <?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?>
-    <?php if (isset($viewLink) && $viewLink): ?>
-    </a>
+        <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>"><?= $question ?></a>
+    <?php else: ?>
+        <?= $question ?>
     <?php endif ?>
 </h4>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
-        <div class="form-group">
-            <div class="<?= ($showResults || !$canVote) ? 'col-md-6 col-lg-4' : 'col-md-12' ?>">
-                <?php if ($canVote): ?>
-                <div class="radio">
-                    <label>
-                        <input type="radio" value="<?= $option->getId() ?>" name="option" />
-                        <?php endif; ?>
-                        <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
-                        <?= $voted ? '<strong>' : '' ?>
-                        <?= $this->escapeHtml(($lang === 'en') ? $option->getEnglishText() : $option->getDutchText()) ?>
-                        <?= $voted ? '</strong>' : '' ?>
-                        <?php if ($canVote): ?>
-                    </label>
-                </div>
-                <?php endif ?>
-            </div>
+        <?php $text = $this->escapeHtml(($lang === 'en') ? $option->getEnglishText() : $option->getDutchText()); ?>
+        <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
 
-            <?php if($showResults || !$canVote): ?>
-            <div class="col-md-5 col-lg-7">
-                <div class="progress">
-                    <div class="progress-bar poll-bar" role="progressbar"
-                         aria-valuenow="<?= $percentages[$option->getId()] ?>"
-                         aria-valuemin="0" aria-valuemax="100"
-                         style="min-width: 2em; width: <?= $percentages[$option->getId()] ?>%;">
-                        <?= $percentages[$option->getId()] ?>%
-                    </div>
+        <?php if ($showResults || !$canVote): ?>
+            <div>
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                    <?= $text ?>
+                    <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                </h5>
+
+                <div class="progress progress--poll">
+                    <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
                 </div>
             </div>
-            <div class="col-md-1 col-lg-1 text-right">
-                <?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?>
+        <?php else: ?>
+            <div class="radio">
+                <label>
+                    <input type="radio" value="<?= $option->getId() ?>" name="option">
+                    <?= $text ?>
+                </label>
             </div>
-            <?php endif ?>
-        </div>
+        <?php endif; ?>
     <?php endforeach ?>
-    <div class="form-group">
-        <div class="col-md-12">
-            <?php if ($canVote): ?>
-                <button type="submit" class="btn btn-large btn-primary">Vote</button>
-            <?php endif ?>
+
+    <?php if ($canVote): ?>
+        <div class="form-group" style="margin-top: 15px;">
+            <button type="submit" class="btn btn-primary">Vote</button>
         </div>
-    </div>
+    <?php endif ?>
 </form>
-</div>

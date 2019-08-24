@@ -9,6 +9,8 @@
 
 namespace Application;
 
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
@@ -25,8 +27,24 @@ class Module
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator->setlocale($this->determineLocale($e));
 
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
+        $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
+
         // enable Zend\Validate default translator
         AbstractValidator::setDefaultTranslator($translator, 'validate');
+    }
+
+    public function logError(MvCEvent $e)
+    {
+        $sm = $e->getApplication()->getServiceManager();
+        $logger = $sm->get('logger');
+
+        if ($e->getError() === 'error-exception') {
+            $ex = $e->getParam('exception');
+            $logger->error($ex);
+            return;
+        }
+        $logger->error($e->getError());
     }
 
     protected function determineLocale(MvcEvent $e)
@@ -72,6 +90,24 @@ class Module
                 'application_service_legacy' => 'Application\Service\Legacy',
                 'application_service_email' => 'Application\Service\Email'
             ],
+            'factories' => [
+                'application_get_languages' => function ($sm) {
+                    return ['nl', 'en'];
+                },
+                'logger' => function ($sm) {
+                    $logger = new Logger("gewisweb");
+                    $config = $sm->get('config')['logging'];
+
+                    $handler = new RotatingFileHandler(
+                        $config['logfile_path'],
+                        $config['max_rotate_file_count'],
+                        $config['minimal_log_level']
+                    );
+                    $logger->pushHandler($handler);
+
+                    return $logger;
+                }
+            ],
         ];
     }
 
@@ -97,6 +133,12 @@ class Module
                 'moduleIsActive' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\ModuleIsActive();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
+                'jobCategories' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobCategories();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },

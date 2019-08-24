@@ -3,8 +3,8 @@
 $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 
 ?>
-<div class="company-list-item list-item" id="company-<?= $company->getId(); ?>">
-<h2 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h2>
+<div id="company-<?= $company->getId(); ?>">
+<h1 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h1>
     <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
     <div class="row">
         <div class="col-md-3">
@@ -13,7 +13,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
             </a>
             <div class="">
                 <h4><?= $this->translate('Contact') ?></h4>
-                <?php if (!empty($company->getContactName())): ?>
+                <?php if ($company->getContactName()): ?>
                     <p class="company-contactName"><?= $company->getContactName() ?></p>
                 <?php endif ?>
                 <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
@@ -22,23 +22,29 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
                 <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()) ?>"><?= $company->getEmail() ?></a></p>
             </div>
             <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs() ?>">
-                <?php if ($company->getNumberOfJobs() > 0) { ?>
-                    <h4><?= $this->translate('Jobs') ?></h4>
-                <?php } ?>
                 <ul class="company-jobs-list">
                     <?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
                     foreach ($company->getPackages() as $package):
                         if ($package->getType() === 'job'):
-                            foreach($package->getJobs() as $job):
-                                if ($job->isActive()): ?>
-                                <li class="company-jobs-job">
-                                <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                    ['slugCompanyName' => $company->getSlugName(),
-                                    'slugJobName' => $job->getSlugName()
-                                ], [], true) ?>"><?= $job->getName(); ?></a>
-                                </li>
-                                <?php
+                            $categories = $this->jobCategories();
+                            foreach($categories as $category):
+                                $jobs = $package->getJobsInCategory($category);
+                                if (count($jobs) > 0):
+                                ?> 
+                                    <h4><?= $category->getPluralName()?></h4>
+                                    <?php
                                 endif;
+                                foreach($jobs as $job):
+                                    ?>
+                                    <li class="company-jobs-job">
+                                    <a href="<?= $this->url('company/companyItem/joblist/job_item',
+                                        ['slugCompanyName' => $company->getSlugName(),
+                                        'slugJobName' => $job->getSlugName(),
+                                        'category' => $category->getSlug(),
+                                    ], [], true) ?>"><?= $job->getName(); ?></a>
+                                    </li>
+                                    <?php
+                                endforeach;
                             endforeach;
                         endif;
                     endforeach;
@@ -47,7 +53,7 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
             </div>
         </div>
         <div class="col-md-9">
-            <h4><?= $this->translate('Description') ?></h4>
+            <h2><?= $this->translate('Description') ?></h2>
             <div class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
         </div>
     </div>

@@ -5,49 +5,30 @@ $this->headTitle($this->escapeHtml($activity->getName()));
 $this->headTitle($this->translate('Participants')); ?>
 
 <?php if (isset($success)): // Display the signup/signoff message. ?>
-    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
         <div class="container">
-            <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+            <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove'; ?>"></span>&nbsp;<?= $message ?>
         </div>
     </div>
-<?php endif;?>
+<?php endif; ?>
 
-<div class="container">
-    <?= $this->partial('activity/admin/participantsTable.phtml', [
+<section class="section">
+    <div class="container">
+        <?= $this->partial('activity/admin/participantsTable.phtml', [
             'activity' => $activity,
             'signupData' => $signupData,
             'externalSignoffForm' => $externalSignoffForm,
-    ]);?>
+        ]); ?>
 
-    <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()])?>"><?= $this->translate('Download as pdf');?></a>
+        <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
 
-    <?php if (!is_null($externalSignupForm)): //display the external signup form ?>
-        <?php $externalSignupForm->setAttribute('action', $this->url('activity_admin/adminSignup', ['id' => $activity->getId()]));
-        $externalSignupForm->prepare();
-        echo $this->form()->openTag($externalSignupForm); ?>
-            <table>
-                <tr>
-                    <td><?= $this->translate('Full name:'); ?></td>
-                    <td><?= $this->formRow($externalSignupForm->get('fullName')) ?></td>
-                </tr>
-                <tr>
-                    <td><?= $this->translate('Email address:'); ?></td>
-                    <td><?= $this->formRow($externalSignupForm->get('email')) ?></td>
-                </tr>
-                <?php foreach($activity->getFields() as $field):?>
-                <tr>
-                    <td><?= $this->escapeHtml($field->getName()) ?>:</td>
-                    <td><?= $this->formRow($externalSignupForm->get($field->getId())) ?></td>
-                </tr>
-                <?php endforeach;?>
-            </table>
-        <?php
-        $submit = $externalSignupForm->get('submit');
-        $submit->setAttribute('class', 'btn btn-primary');
-        $submit->setAttribute('value', $this->translate('Subscribe external participant'));
-        echo $this->formElement($externalSignupForm->get('security'));
-        echo $this->formSubmit($submit);
-        echo $this->form()->closeTag();?>
-    <?php endif; ?>
+        <?php if (!is_null($externalSignupForm)): //display the external signup form ?>
+            <?= $this->partial('partial/signupForm', [
+                'form' => $externalSignupForm,
+                'activity' => $activity,
+            ])
+            ?>
+        <?php endif; ?>
 
-</div>
+    </div>
+</section>

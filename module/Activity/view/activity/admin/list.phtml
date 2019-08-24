@@ -27,12 +27,12 @@
     <?php foreach ($activities as $activity): ?>
         <tr>
             <td><?= $activity->getId() ?></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName() ?></a></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getNameEn() ?></a></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()) ?></a></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getNameEn()) ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
-            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
-            <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr())  ?></td>
+            <td><?= $this->escapeHtml($activity->getCreator()->getMember()->getFullName()) ?></td>
             <?php if($admin): ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' :
                     '<a href="' . $this->url('activity_admin_approval/proposal', ['id' => $activity->getUpdateProposal()->first()->getId()]) .'">' . $this->translate('Update pending') . '</a>' ?></td>

@@ -38,6 +38,7 @@ class AdminController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
         $meetings = $service->getMeetingsByType('AV');
+        $meetings = array_merge($meetings, $service->getMeetingsByType('VV'));
         if (is_null($number) && count($meetings) > 0) {
             $number = $meetings[0]->getNumber();
             $type = $meetings[0]->getType();

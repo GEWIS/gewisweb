@@ -89,7 +89,39 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $activity = $this->generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
 
+        // Send email to GEFLITST if user checked checkbox of GEFLITST
+        if ($activity->getRequireGEFLITST()) {
+            $this->requestGEFLITST($activity, $user, $organ);
+        }
+
         return $activity;
+    }
+
+    /**
+     * @param $activity ActivityModel
+     * @param $user \User\Model\User
+     * @param $organ Organ
+     */
+    private function requestGEFLITST($activity, $user, $organ)
+    {
+        $type = 'activity_creation_require_GEFLITST';
+        $view = 'email/activity_created_require_GEFLITST';
+        $subject = 'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST';
+
+        if ($organ != null) {
+            $organInfo = $organ->getApprovedOrganInformation();
+            if ($organInfo != null && $organInfo->getEmail() != null) {
+                $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()], $organInfo);
+            } else {
+                // The organ did not fill in it's email address, so send the email as the requested user.
+                $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()], $user);
+            }
+        } else {
+            $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
+                ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
+        }
     }
 
     /**
@@ -261,12 +293,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCanSignUp($params['canSignUp']);
         $activity->setIsFood($params['isFood']);
         $activity->setIsMyFuture($params['isMyFuture']);
+        $activity->setRequireGEFLITST($params['requireGEFLITST']);
+        $activity->setOnlyGEWIS($params['onlyGEWIS']);
+        $activity->setDisplaySubscribedNumber($params['displaySubscribedNumber']);
 
         // Not user provided input
         $activity->setCreator($user);
         $activity->setOrgan($organ);
         $activity->setStatus($initialStatus);
-        $activity->setOnlyGEWIS(true); // Not yet implemented
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
@@ -282,11 +316,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
 
-        //$this->getEmailService()->sendActivityCreationEmail($activity);
+        // Send an email when a new Activity was created.
         $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
             'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
             ['activity' => $activity]);
-
 
         return $activity;
     }

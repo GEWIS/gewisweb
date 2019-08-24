@@ -23,9 +23,19 @@ class PhotoController extends AbstractActionController
 
         return new ViewModel([
             'activeYear' => $year,
-            'years' => $years,
-            'albums' => $albums
+            'years'      => $years,
+            'albums'     => $albums
         ]);
+    }
+
+    /**
+     * Gets the album service.
+     *
+     * @return \Photo\Service\Album
+     */
+    public function getAlbumService()
+    {
+        return $this->getServiceLocator()->get("photo_service_album");
     }
 
     /**
@@ -44,6 +54,51 @@ class PhotoController extends AbstractActionController
         $this->getPhotoService()->countHit($photoData['photo']);
 
         return new ViewModel($photoData);
+    }
+
+    /**
+     * Gets the photo service.
+     *
+     * @return \Photo\Service\Photo
+     */
+    public function getPhotoService()
+    {
+        return $this->getServiceLocator()->get("photo_service_photo");
+    }
+
+    /**
+     * Called on viewing a photo in an album for a member
+     *
+     * @return ViewModel
+     */
+    public function memberAction()
+    {
+        $lidnr = $this->params()->fromRoute('lidnr');
+        $page = $this->params()->fromRoute('page');
+        $photoId = $this->params()->fromRoute('photo_id');
+        try {
+            $memberAlbum = $this->getAlbumService()->getAlbum($lidnr, 'member');
+        } catch (\Exception $e) {
+            return $this->notFoundAction();
+        }
+        $photoData = $this->getPhotoService()->getPhotoData($photoId,
+            $memberAlbum);
+
+        if (is_null($photoData)) {
+            return $this->notFoundAction();
+        }
+
+        $photoData = array_merge($photoData, [
+            'memberAlbum'     => $memberAlbum,
+            'memberAlbumPage' => $page,
+        ]);
+
+        $this->getPhotoService()->countHit($photoData['photo']);
+
+        $vm = new ViewModel($photoData);
+        $vm->setTemplate('photo/view');
+
+        return $vm;
     }
 
     public function downloadAction()
@@ -66,23 +121,33 @@ class PhotoController extends AbstractActionController
     }
 
     /**
-     * Gets the album service.
-     *
-     * @return \Photo\Service\Album
+     * For setting a profile picture
      */
-    public function getAlbumService()
+    public function setProfilePhotoAction()
     {
-        return $this->getServiceLocator()->get("photo_service_album");
+        $photoId = $this->params()->fromRoute('photo_id');
+        $this->getPhotoService()->setProfilePhoto($photoId);
+
+        $this->redirect()->toRoute('photo/photo', [
+            'photo_id' => $photoId,
+        ]);
     }
 
     /**
-     * Gets the photo service.
-     *
-     * @return \Photo\Service\Photo
+     * For removing a profile picture
      */
-    public function getPhotoService()
+    public function removeProfilePhotoAction()
     {
-        return $this->getServiceLocator()->get("photo_service_photo");
-    }
+        $photoId = $this->params()->fromRoute('photo_id', null);
+        $this->getPhotoService()->removeProfilePhoto();
 
+        if ($photoId != null) {
+            $this->redirect()->toRoute('photo/photo', [
+                'photo_id' => $photoId,
+            ]);
+        } else {
+            $this->redirect()->toRoute('member/self');
+        }
+    }
+    
 }

@@ -4,12 +4,11 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
-use Decision\Form\Notes;
-use Decision\Mapper\Authorization;
 use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
+use User\Permissions\NotAllowedException;
 
 /**
  * Decision service.
@@ -20,18 +19,40 @@ class Decision extends AbstractAclService
     /**
      * Get all meetings.
      *
+     * @param int|null $limit The amount of meetings to retrieve, default is all
      * @return array Of all meetings
      */
-    public function getMeetings()
+    public function getMeetings($limit = null)
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list meetings.')
             );
         }
 
-        return $this->getMeetingMapper()->findAll();
+        return $this->getMeetingMapper()->findAll($limit);
+    }
+
+    /**
+     * Get past meetings.
+     *
+     * @param int|null $limit The amount of meetings to retrieve, default is all
+     * @param string|null $type Constraint on the type of the meeting, default is none
+     * @return array Of all meetings
+     */
+    public function getPastMeetings($limit = null, $type = null)
+    {
+        if (!$this->isAllowed('list_meetings')) {
+            $translator = $this->getTranslator();
+
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to list meetings.')
+            );
+        }
+
+        return $this->getMeetingMapper()->findPast($limit, $type);
     }
 
     public function getMeetingsByType($type)
@@ -74,6 +95,16 @@ class Decision extends AbstractAclService
     public function getLatestAV()
     {
         return $this->getMeetingMapper()->findLatestAV();
+    }
+
+    /**
+     * Returns the closest upcoming meeting for members
+     *
+     * @return \Decision\Model\Meeting|null
+     */
+    public function getUpcomingMeeting()
+    {
+        return $this->getMeetingMapper()->findUpcomingMeeting();
     }
 
     /**
@@ -321,6 +352,24 @@ class Decision extends AbstractAclService
         $authorization->setMeetingNumber($meeting->getNumber());
         $this->getAuthorizationMapper()->persist($authorization);
 
+        // Send an email to the recipient
+        $this->getEmailService()->sendEmailAsUserToUser(
+            $recipient,
+            'email/authorization_received',
+            'Machtiging ontvangen | Authorization received',
+            ['authorization' => $authorization],
+            $authorizer
+        );
+
+        // Send a confirmation email to the authorizing member
+        $this->getEmailService()->sendEmailAsUserToUser(
+            $authorizer,
+            'email/authorization_sent',
+            'Machtiging verstuurd | Authorization sent',
+            ['authorization' => $authorization],
+            $recipient
+        );
+
         return $authorization;
 
     }
@@ -417,6 +466,16 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the email service.
+     *
+     * @return \Application\Service\Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('application_service_email');
+    }
+
+    /**
      * Gets the storage service.
      *
      * @return \Application\Service\FileStorage
@@ -454,5 +513,14 @@ class Decision extends AbstractAclService
     public function getAcl()
     {
         return $this->sm->get('decision_acl');
+    }
+
+    /**
+     * Returns whether the current role is allowed to view files.
+     * @return bool
+     */
+    public function isAllowedToBrowseFiles()
+    {
+        return $this->isAllowed('browse', 'files');
     }
 }

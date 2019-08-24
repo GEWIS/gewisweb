@@ -255,4 +255,12 @@ class Poll implements ResourceInterface
     {
         return ($this->getApprover() !== null);
     }
+
+    /**
+     * Check to see if the poll is currently displayed.
+     */
+    public function isActive()
+    {
+        return $this->getExpiryDate() > new \DateTime();
+    }
 }

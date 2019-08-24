@@ -1,34 +1,43 @@
 <?php
 $this->headTitle($this->translate('Picture of the week')); ?>
-<div class="container">
-    <h1><?= $this->translate('Picture of the week') ?></h1>
-    <h4><?= $this->translate('Current picture of the week') ?></h4>
-    <hr>
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <a href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhotos[0]->getPhoto()->getId()]); ?>">
-                <img class="img-responsive" src="<?= $this->fileUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>" alt=""/>
-            </a>
-        </div>
-    </div>
-
-    <h4><?= $this->translate('Old pictures of the week') ?></h4>
-    <hr>
-    <div class="photo-grid">
-        <div class="grid-sizer"></div>
-        <div class="gutter-sizer"></div>
-        <?php foreach ($weeklyPhotos as $weeklyPhoto): ?>
-            <div class="photo-grid-item">
-                <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>">
-                    <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>">
-                    <div class="caption">
-                        <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>
-                    </div>
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate('Picture of the week') ?></h1>
+        <h4><?= $this->translate('Current picture of the week') ?></h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <a href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhotos[0]->getPhoto()->getId()]); ?>">
+                    <img
+                        class="img-responsive"
+                        src="<?= $this->fileUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>"
+                        alt=""
+                    />
                 </a>
             </div>
-        <?php endforeach; ?>
+        </div>
+
+        <h4><?= $this->translate('Old pictures of the week') ?></h4>
+        <hr>
+        <div class="photo-grid">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($weeklyPhotos as $weeklyPhoto): ?>
+                <div class="photo-grid-item">
+                    <a
+                        class="thumbnail"
+                        href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>"
+                    >
+                        <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" >
+                        <div class="caption">
+                            <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
+</section>
 <script>
     $(document).ready(function () {
         Photo.initGrid();

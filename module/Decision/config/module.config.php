@@ -78,6 +78,16 @@ return [
                             ],
                         ],
                     ],
+                    'files' => [
+                        'type' => 'Regex',
+                        'options' => [
+                            'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
+                            'defaults' => [
+                                'action' => 'files'
+                            ],
+                            'spec' => '/files/%path%'
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
@@ -196,6 +206,15 @@ return [
                             ],
                         ],
                     ],
+                    'canauth' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/canauth',
+                            'defaults' => [
+                                'action' => 'canAuthorize',
+                            ],
+                        ],
+                    ],
                     'birthdays' => [
                         'type' => 'Literal',
                         'options' => [
@@ -232,6 +251,18 @@ return [
                             'route' => '/self',
                             'defaults' => [
                                 'action' => 'self'
+                            ]
+                        ]
+                    ],
+                    'regulations' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/regulations/:regulation',
+                            'constraints' => [
+                                'regulation' => '[a-zA-Z_-]+'
+                            ],
+                            'defaults' => [
+                                'action' => 'downloadRegulation'
                             ]
                         ]
                     ]

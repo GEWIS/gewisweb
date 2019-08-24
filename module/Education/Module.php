@@ -63,6 +63,11 @@ class Module
                     $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
                 },
+                'education_form_add_course' => function ($sm) {
+                    return new \Education\Form\AddCourse(
+                        $sm->get('translator')
+                    );
+                },
                 'education_form_bulk_exam' => function ($sm) {
                     return new \Education\Form\Bulk(
                         $sm->get('translator'), $sm->get('education_form_fieldset_exam')

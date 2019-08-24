@@ -54,14 +54,14 @@ class Job
      * @ORM\Column(type="string", nullable=true)
      */
     protected $attachment;
-    
+
     /**
      * The job's contact's name.
      *
      * @ORM\Column(type="string")
      */
     protected $contactName;
-    
+
     /**
      * The job's phone.
      *
@@ -106,11 +106,46 @@ class Job
     protected $package;
 
     /**
+     * The job's category.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory", inversedBy="jobs")
+     */
+    protected $category;
+
+    /**
+     * The category id.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $languageNeutralId;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         // noting to do
+    }
+
+
+    /**
+     * Get's the id
+     */
+    public function getLanguageNeutralId()
+    {
+        $id = $this->languageNeutralId;
+        if ($id == 0) {
+            return $this->id;
+        }
+        return $id;
+    }
+
+    /**
+     * Set's the id
+     */
+    public function setLanguageNeutralId($languageNeutralId)
+    {
+        $this->languageNeutralId = $languageNeutralId;
     }
 
     /**
@@ -144,6 +179,26 @@ class Job
     }
 
     /**
+     * Get the job's category.
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the job's category.
+     *
+     * @param string $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
      * Get the job's slug name.
      *
      * @return string the Jobs slug name
@@ -168,7 +223,7 @@ class Job
      *
      * @return bool
      */
-    protected function getActive()
+    public function getActive()
     {
         return $this->active;
     }
@@ -367,11 +422,6 @@ class Job
         return $this->getPackage()->getCompany();
     }
 
-    /**
-     * Set the job's package.
-     *
-     * @param CompanyPackage $package the job's package
-     */
     public function setPackage(CompanyPackage $package)
     {
         $this->package = $package;

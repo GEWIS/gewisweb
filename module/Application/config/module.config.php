@@ -22,7 +22,7 @@ return [
                     ]
                 ],
                 'priority' => 100
-            ]
+            ],
         ],
     ],
     'service_manager' => [
@@ -79,7 +79,8 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage'
+            'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage',
+            'bootstrapElementError'  => 'Application\View\Helper\BootstrapElementError',
         ],
     ],
 ];

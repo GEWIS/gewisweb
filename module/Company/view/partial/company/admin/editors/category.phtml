@@ -1,0 +1,57 @@
+<div class="row">
+<div class="alert alert-info">
+  <strong>Note:</strong> It is not possible to add vacancies to the &quot;Vacancies&quot; category. To hide it, either add a category with the slug &quot;jobs&quot; in both the English and the Dutch version, or simply assign all jobs to a valid category. If all jobs are assigned to a category, please notify the Web committee, so this message can be removed and the code can be simplified.
+</div>
+    <?php foreach( $form->getLanguages() as $lang):?>
+    <?php $langDesc = $languages[$lang]?>
+        <div class="col-md-6">
+            <h1><?= $this->translate($langDesc)?></h1>
+            <?php $fieldset = $this->form->get("categories")->get($lang); ?>
+            <?php
+                $element = $fieldset->get('name');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('pluralName');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('slug');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('hidden');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formCheckbox($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+
+        </div>
+    <?php endforeach ?>
+</div>

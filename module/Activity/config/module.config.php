@@ -3,23 +3,23 @@ return [
     'router' => [
         'routes' => [
             'activity' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
-                    'route'    => '/activity',
+                    'route' => '/activity',
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
-                        'controller'    => 'Activity',
-                        'action'        => 'index',
+                        'controller' => 'Activity',
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'view' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/view/[:id]',
+                            'route' => '/view/[:id]',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'action' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'view'
@@ -27,23 +27,35 @@ return [
                         ],
                     ],
                     'signup' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/signup/[:id]',
+                            'route' => '/signup/[:id]',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'action' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signup'
                             ]
                         ],
                     ],
-					'signoff' => [
-                        'type'    => 'Segment',
+                    'externalSignup' => [
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/signoff/[:id]',
+                            'route' => '/externalSignup/:id',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'actions' => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                'action' => 'externalSignup'
+                            ],
+                        ],
+                    ],
+                    'signoff' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/signoff/[:id]',
+                            'constraints' => [
+                                'action' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signoff'
@@ -59,6 +71,26 @@ return [
                             ]
                         ]
                     ],
+                    'career' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/career',
+                            'defaults' => [
+                                'action' => 'index',
+                                'category' => 'career'
+                            ]
+                        ]
+                    ],
+                    'my' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/my',
+                            'defaults' => [
+                                'action' => 'index',
+                                'category' => 'my'
+                            ]
+                        ]
+                    ],
                     'touch' => [
                         'type' => 'Literal',
                         'options' => [
@@ -67,6 +99,28 @@ return [
                                 'action' => 'touch'
                             ]
                         ]
+                    ],
+                    'archive' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/archive',
+                            'defaults' => [
+                                'action' => 'archive'
+                            ]
+                        ]
+                    ],
+                    // Route for categorizing activities by association year.
+                    'year' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/archive[/:year]',
+                            'constraints' => [
+                                'year' => '\d{4}',
+                            ],
+                            'defaults' => [
+                                'action' => 'archive',
+                            ],
+                        ],
                     ],
                 ],
                 'priority' => 100
@@ -171,6 +225,24 @@ return [
                             ]
                         ]
                     ],
+                    'approve' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'approve',
+                            'defaults' => [
+                                'action' => 'approve',
+                            ]
+                        ]
+                    ],
+                    'create' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => 'create',
+                            'defaults' => [
+                                'action' => 'create'
+                            ]
+                        ]
+                    ],
                 ]
 
             ],
@@ -259,13 +331,13 @@ return [
                 ],
             ],
             'activity_api' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
-                    'route'    => '/api/activity',
+                    'route' => '/api/activity',
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
-                        'controller'    => 'Api',
-                        'action'        => 'list',
+                        'controller' => 'Api',
+                        'action' => 'list',
                     ],
                 ],
                 'may_terminate' => false,
@@ -280,11 +352,11 @@ return [
                         ]
                     ],
                     'view' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/view/[:id]',
+                            'route' => '/view/[:id]',
                             'constraints' => [
-                                'action'     => '[0-9]*',
+                                'action' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'view'
@@ -292,11 +364,11 @@ return [
                         ],
                     ],
                     'signup' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/signup/[:id]',
+                            'route' => '/signup/[:id]',
                             'constraints' => [
-                                'id'     => '[0-9]*',
+                                'id' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signup'
@@ -304,11 +376,11 @@ return [
                         ],
                     ],
                     'signoff' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/signoff/[:id]',
+                            'route' => '/signoff/[:id]',
                             'constraints' => [
-                                'id'     => '[0-9]*',
+                                'id' => '[0-9]*',
                             ],
                             'defaults' => [
                                 'action' => 'signoff'
@@ -316,9 +388,9 @@ return [
                         ],
                     ],
                     'signedup' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '/signedup',
+                            'route' => '/signedup',
                             'defaults' => [
                                 'action' => 'signedup'
                             ]

@@ -40,7 +40,11 @@ Styleguide: navbar
     @include transition(background $transition-duration ease);
 
     padding: 10px 15px;
-    height: auto;
+    height: 80px;
+
+    img {
+        height: 100%;
+    }
 }
 
 .navbar-default {
@@ -119,14 +123,6 @@ Styleguide: navbar
 
     border-bottom: 0;
 
-    .navbar-brand img {
-        height: 100%;
-    }
-
-    .navbar-brand {
-        height: 80px;
-    }
-
     .navbar-toggle {
         margin: 23px 15px 23px 0;
     }
@@ -162,6 +158,10 @@ Styleguide: navbar
         &:focus {
             background-color: #fff;
             color: $gray;
+        }
+
+        .caret {
+            transform: rotate(180deg);
         }
     }
 

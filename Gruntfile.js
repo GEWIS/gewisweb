@@ -13,7 +13,7 @@ module.exports = function(grunt) {
             },
             styleguide: {
                 files: {
-                    'public/styleguide/public/styleguide.css': 'public/scss/styleguide.scss'
+                    'public/styleguide/public/styleguide.css': 'styleguide/styleguide.scss'
                 }
             }
         },
@@ -41,13 +41,11 @@ module.exports = function(grunt) {
         shell: {
             kss: {
                 command: function () {
-                    return 'kss-node ' + [
+                    return 'kss ' + [
                             '--source public/scss',
                             '--destination public/styleguide',
-                            '--template styleguide/template',
-                            // '--css public/main.css',
+                            '--builder styleguide/custom-builder',
                             '--css public/styleguide.css',
-                            '--helpers styleguide/template/helpers',
                             '--title "GEWIS Styleguide"'
                         ].join(' ');
                 }

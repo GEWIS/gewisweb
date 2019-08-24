@@ -2,32 +2,33 @@
 // set title
 $this->headTitle($this->translate('Fraternities')); ?>
 
-<div class="container">
-    <h1><?= $this->translate('Fraternities') ?></h1>
-    <p><?= $this->translate('Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but luckily new fraternities continue to be founded.') ?></p>
-    <p><?= $this->translate('The currently active fraternities of GEWIS (in arbitrary order)') ?></p>
-    <div class="row">
-        <?php
-        shuffle($activeFraternities);
-        foreach ($activeFraternities as $fraternity) {
-            echo $this->partial('partial/organ-card.phtml', [
-                'organ' => $fraternity,
-                'lang' => $this->plugin('translate')->getTranslator()->getLocale()
-            ]);
-        }
-        ?>
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate('Fraternities') ?></h1>
+        <p><?= $this->translate('Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but luckily new fraternities continue to be founded.') ?></p>
+        <p><?= $this->translate('The currently active fraternities of GEWIS (in arbitrary order)') ?></p>
+        <div class="row">
+            <?php
+            shuffle($activeFraternities);
+            foreach ($activeFraternities as $fraternity) {
+                echo $this->partial('partial/organ-card.phtml', [
+                    'organ' => $fraternity,
+                    'lang' => $this->plugin('translate')->getTranslator()->getLocale()
+                ]);
+            }
+            ?>
+        </div>
+        <hr>
+        <h3><?= $this->translate('Retired fraternities') ?></h3>
+        <p><?= $this->translate('The following fraternities have retired:') ?></p>
+        <div class="row">
+            <?php
+            foreach ($abrogatedFraternities as $fraternity) {
+                echo $this->partial('partial/organ-card.phtml', [
+                    'organ' => $fraternity
+                ]);
+            }
+            ?>
+        </div>
     </div>
-    <hr>
-    <h3><?= $this->translate('Retired fraternities') ?></h3>
-    <p><?= $this->translate('The following fraternities have retired') ?></p>
-    <div class="row">
-        <?php
-        foreach ($abrogatedFraternities as $fraternity) {
-            echo $this->partial('partial/organ-card.phtml', [
-                'organ' => $fraternity
-            ]);
-        }
-        ?>
-    </div>
-</div>
-
+</section>

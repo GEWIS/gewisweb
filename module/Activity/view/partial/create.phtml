@@ -184,6 +184,9 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     </div>
 </div>
 <div class="col-md-12">
+
+    <h3><?= $this->translate('Activity options') ?></h3>
+
     <?php
     $canSignUp = $form->get('canSignUp');
     ?>
@@ -193,6 +196,29 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
             <?= $this->translate('Enable subscriptions') ?>
             <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if people need to subscribe to this activity.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             <?= $this->formElementErrors($canSignUp) ?>
+        </label>
+    </div>
+    <?php
+    $onlyGEWIS = $form->get('onlyGEWIS');
+    $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()');
+    ?>
+    <div class="form-group<?= count($onlyGEWIS->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label>
+            <?= $this->formCheckbox($onlyGEWIS) ?>
+            <?= $this->translate('Allow external participants') ?>
+            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <?= $this->formElementErrors($onlyGEWIS) ?>
+        </label>
+    </div>
+    <?php
+    $displaySubscribedNumber = $form->get('displaySubscribedNumber');
+    ?>
+    <div class="form-group<?= count($displaySubscribedNumber->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label>
+            <?= $this->formCheckbox($displaySubscribedNumber) ?>
+            <?= $this->translate('Display number of subscribed members') ?>
+            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <?= $this->formElementErrors($displaySubscribedNumber) ?>
         </label>
     </div>
     <?php
@@ -212,9 +238,20 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <div class="form-group<?= count($isMyFuture->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label>
             <?= $this->formCheckbox($isMyFuture) ?>
-            <?= $this->translate('This is a My Future related activity') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <?= $this->translate('This is a career related activity') ?>
+            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page and the activity will be included on the career activities page.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             <?= $this->formElementErrors($isMyFuture) ?>
+        </label>
+    </div>
+    <?php
+    $requireGEFLITST = $form->get('requireGEFLITST');
+    ?>
+    <div class="form-group<?= count($requireGEFLITST->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label>
+            <?= $this->formCheckbox($requireGEFLITST) ?>
+            <?= $this->translate('This activity needs a GEFLITST member to take photos') ?>
+            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('When this is checked, GEFLITST will be notified that this activity needs a photographer.') ?>" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <?= $this->formElementErrors($requireGEFLITST) ?>
         </label>
     </div>
 
