@@ -126,65 +126,6 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get activity options sorted by begin date within a given period
-     *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param string $status retrieve only options with this status, optional
-     * @return array
-     */
-    public function getOptionsWithinPeriod($begin, $end, $status = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->orderBy('a.beginTime', 'ASC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end);
-
-        if ($status) {
-            $qb->andWhere('a.status = :status')
-                ->setParameter('status', $status);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get activity options sorted by begin date within a given period and associated with given organ
-     *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param int $organId the organ options have to be associated with
-     * @param string $status retrieve only options with this status, optional
-     * @return array
-     */
-    public function getOptionsWithinPeriodAndOrgan($begin, $end, $organId, $status = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->from('Activity\Model\ActivityOptionProposal', 'b')
-            ->where('a.proposal = b.id')
-            ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->andWhere('b.organ = :organ')
-            ->orderBy('a.beginTime', 'ASC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
-            ->setParameter('organ', $organId);
-
-        if ($status) {
-            $qb->andWhere('a.status = :status')
-                ->setParameter('status', $status);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Retrieves options associated with a proposal
      *
      * @param int $proposal
