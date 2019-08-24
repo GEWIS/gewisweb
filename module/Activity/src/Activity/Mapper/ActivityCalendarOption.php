@@ -62,7 +62,7 @@ class ActivityCalendarOption
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->from('Activity\Model\ActivityOptionProposal', 'b')
             ->where('a.proposal = b.id')
-            ->where('a.endTime > :now')
+            ->andWhere('a.endTime > :now')
             ->andWhere('b.organ IN (:organs)')
             ->orderBy('a.beginTime', 'ASC');
 
