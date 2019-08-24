@@ -119,7 +119,7 @@ class NewUser
      */
     public function setEmail($email)
     {
-        $this->email = strtolower($email);
+        $this->email = $email;
     }
 
     /**
