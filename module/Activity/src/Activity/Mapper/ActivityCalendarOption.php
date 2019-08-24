@@ -108,13 +108,18 @@ class ActivityCalendarOption
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.beginTime < :before')
-            ->orderBy('a.beginTime', 'ASC');
+            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->where('a.proposal = b.id')
+            ->andWhere('a.beginTime > :now')
+            ->andWhere('b.creationTime < :before')
+            ->orderBy('b.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere("a.modifiedBy IS NULL")
-                ->orWhere("a.status = 'approved'");
+            $qb->andWhere("b.modifiedBy IS NULL")
+                ->orWhere("b.status = 'approved'");
         }
+
+        $qb->setParameter('now', new DateTime());
         $qb->setParameter('before', $before);
 
         return $qb->getQuery()->getResult();
