@@ -60,11 +60,11 @@ class User
         if (is_numeric($login)) {
             $qb->where('u.lidnr = ?1');
         } else {
-            $qb->where('m.email WHERE LOWER(m.email) = ?1');
+            $qb->where('LOWER(m.email) = ?1');
         }
 
         // set the parameters
-        $qb->setParameter(1, str_replace('%', '', $login));
+        $qb->setParameter(1, strtolower($login));
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
