@@ -1,7 +1,7 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()));
+$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Participants')); ?>
 
 <?php if (isset($success)): // Display the signup/signoff message. ?>

@@ -34,10 +34,10 @@
     </tr>
     <tr>
         <td><?= $this->translate('Name'); ?></td>
-        <td><?= $this->escapeHtml($old->getName()); ?></td>
-        <?= updateTd($new->getName(), $old->getName(), $this) ?>
-        <td><?= $this->escapeHtml($old->getNameEn(), $this); ?></td>
-        <?= updateTd($new->getNameEn(), $old->getNameEn(), $this) ?>
+        <td><?= $this->escapeHtml($old->getName()->getValueNL()); ?></td>
+        <?= updateTd($new->getName(), $old->getName()->getValueNL(), $this) ?>
+        <td><?= $this->escapeHtml($old->getName()->getValueEN(), $this); ?></td>
+        <?= updateTd($new->getName()->getValueEN(), $old->getName()->getValueEN(), $this) ?>
     </tr>
     <tr>
         <td><?= $this->translate('Start time'); ?></td>
@@ -55,17 +55,17 @@
     </tr>
     <tr>
         <td><?= $this->translate('Location'); ?></td>
-        <td><?= $this->escapeHtml($old->getLocation()); ?></td>
-        <?= updateTd($new->getLocation(), $old->getLocation(), $this) ?>
-        <td><?= $this->escapeHtml($old->getLocationEn()); ?></td>
-        <?= updateTd($new->getLocationEn(), $old->getLocationEn(), $this) ?>
+        <td><?= $this->escapeHtml($old->getLocation()->getValueNL()); ?></td>
+        <?= updateTd($new->getLocation()->getVAlueNL(), $old->getLocation()->getValueNL(), $this) ?>
+        <td><?= $this->escapeHtml($old->getLocation()->getValueEN()); ?></td>
+        <?= updateTd($new->getLocation()->getValueEN(), $old->getLocation()->getValueEN(), $this) ?>
     </tr>
     <tr>
         <td><?= $this->translate('Costs'); ?></td>
-        <td><?= $this->escapeHtml($old->getCosts()); ?></td>
-        <?= updateTd($new->getCosts(), $old->getCosts(), $this) ?>
-        <td><?= $this->escapeHtml($old->getCostsEn()); ?></td>
-        <?= updateTd($new->getCostsEn(), $old->getCostsEn(), $this) ?>
+        <td><?= $this->escapeHtml($old->getCosts()->getValueNL()); ?></td>
+        <?= updateTd($new->getCosts()->getValueNL(), $old->getCosts()->getValueNL(), $this) ?>
+        <td><?= $this->escapeHtml($old->getCosts()->getValueEN()); ?></td>
+        <?= updateTd($new->getCosts()->getValueEN(), $old->getCosts()->getValueEN(), $this) ?>
     </tr>
     <tr>
         <td><?= $this->translate('Subscribe'); ?></td>
@@ -127,17 +127,17 @@
 </table>
 <div class="col-md-8">
     <?= $this->translate('Original Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($old->getDescription())) ?></p>
+    <p><?= nl2br($this->escapeHtml($old->getDescription()->getValueNL())) ?></p>
 </div>
 <div class="col-md-8">
     <?= $this->translate('Updated Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($new->getDescription())) ?></p>
+    <p><?= nl2br($this->escapeHtml($new->getDescription()->getValueNL())) ?></p>
 </div>
 <div class="col-md-8">
     <?= $this->translate('Original English description') ?>
-    <p><?= nl2br($this->escapeHtml($old->getDescriptionEn())) ?></p>
+    <p><?= nl2br($this->escapeHtml($old->getDescription()->getValueEN())) ?></p>
 </div>
 <div class="col-md-8">
     <?= $this->translate('Updated English description') ?>
-    <p><?= nl2br($this->escapeHtml($new->getDescriptionEn())) ?></p>
+    <p><?= nl2br($this->escapeHtml($new->getDescription()->getValueEN())) ?></p>
 </div>

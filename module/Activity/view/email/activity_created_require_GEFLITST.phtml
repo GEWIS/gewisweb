@@ -5,9 +5,9 @@ L.s.<br /><br />
 
 Er is een nieuwe activiteit aangemaakt op de GEWIS website waarvoor een fotograaf van GEFLITST nodig is.
 
-<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
+<h3><?= $this->escapeHtml($activity->getName()->getText("nl")) ?></h3>
 
-<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText("nl")) ?></p>
 
 <br/>
 
@@ -23,9 +23,9 @@ L.s.<br /><br />
 
 A new activity has been created on the GEWIS website that needs a photographer of GEFLITST.
 
-<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
+<h3><?= $this->escapeHtml($activity->getName()->getText("en")) ?></h3>
 
-<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText("en")) ?></p>
 
 <br/>
 

@@ -27,8 +27,8 @@
     <?php foreach ($activities as $activity): ?>
         <tr>
             <td><?= $activity->getId() ?></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()) ?></a></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getNameEn()) ?></a></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()->getValueNL()) ?></a></td>
+            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()->getValueEN()) ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
             <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr())  ?></td>

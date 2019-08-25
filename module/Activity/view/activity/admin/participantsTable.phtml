@@ -7,7 +7,7 @@
             <th><?= $this->translate('Email') ?></th>
             <th><?= $this->translate('Type') ?></th>
             <?php foreach ($activity->getFields() as $field): ?>
-                <th><?= $this->escapeHtml($field->getName()) ?></th>
+                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
             <?php endforeach; ?>
         </tr>
     </thead>

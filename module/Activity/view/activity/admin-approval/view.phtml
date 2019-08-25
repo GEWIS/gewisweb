@@ -14,8 +14,8 @@
     </tr>
     <tr>
         <td><?php echo $this->translate('Name'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getName()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getNameEn()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getName()->getValueNL()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getName()->getValueEN()); ?></td>
     </tr>
     <tr>
         <td><?php echo $this->translate('Start time'); ?></td>
@@ -29,13 +29,13 @@
     </tr>
     <tr>
         <td><?php echo $this->translate('Location'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocation()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocationEn()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getLocation()->getValueNL()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getLocation()->getValueEN()); ?></td>
     </tr>
     <tr>
         <td><?php echo $this->translate('Costs'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCosts()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCostsEn()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getCosts()->getValueNL()); ?></td>
+        <td><?php echo $this->escapeHtml($activity->getCosts()->getValueEN()); ?></td>
     </tr>
     <tr>
         <td><?php echo $this->translate('Subscribe'); ?></td>
@@ -125,9 +125,9 @@
 
 <div class="col-md-8">
     <?= $this->translate('Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescription())) ?></p>
+    <p><?= nl2br($this->escapeHtml($activity->getDescription()->getValueNL())) ?></p>
 </div>
 <div class="col-md-8">
     <?= $this->translate('English description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescriptionEn())) ?></p>
+    <p><?= nl2br($this->escapeHtml($activity->getDescription()->getValueEN())) ?></p>
 </div>

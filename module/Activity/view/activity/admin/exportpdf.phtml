@@ -1,6 +1,6 @@
 <html>
     <body>
-        <h1><?= $this->translate('Details for activity') . ' ' . $activity->getName() ?></h1>
+        <h1><?= $this->translate('Details for activity') . ' ' . $activity->getName()->getText() ?></h1>
         <?= $this->partial('activity/admin/participantsTable.phtml', [
                 'activity' => $activity,
                 'signupData' => $signupData

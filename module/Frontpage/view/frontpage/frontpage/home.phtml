@@ -22,7 +22,7 @@
                                 // TODO: Fix design and URLs
                                 $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 if ($item instanceof \Activity\Model\Activity) {
-                                    echo ($lang === 'en') ? $item->getNameEn() : $item->getName();
+                                    echo ($lang === 'en') ? $item->getName()->getValueEN() : $item->getName()->getValueNL();
                                 } else {
                                     echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
                                 }
@@ -32,7 +32,7 @@
                                 <div class="reveal reveal-10">
                                     <?php
                                     if ($item instanceof \Activity\Model\Activity) {
-                                        $content = ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
+                                        $content = ($lang === 'en') ? $item->getDescription()->getValueEN() : $item->getDescription()->getValueNL();
                                     } else {
                                         $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
                                     }
@@ -99,8 +99,8 @@
                         <div class="list-group">
                             <?php foreach ($activities as $activity): ?>
                                 <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <h4 class="list-group-item-heading"><?= $activity->getNameEn() ?></h4>
                                     <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+                                    <h4 class="list-group-item-heading"><?= $activity->getName()->getText($lang) ?></h4>
                                     <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
                                 </a>
                             <?php endforeach; ?>
