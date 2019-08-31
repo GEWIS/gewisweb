@@ -62,7 +62,7 @@ class ActivityCalendarOption
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->from('Activity\Model\ActivityOptionProposal', 'b')
             ->where('a.proposal = b.id')
-            ->where('a.endTime > :now')
+            ->andWhere('a.endTime > :now')
             ->andWhere('b.organ IN (:organs)')
             ->orderBy('a.beginTime', 'ASC');
 
@@ -108,73 +108,19 @@ class ActivityCalendarOption
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.beginTime < :before')
-            ->orderBy('a.beginTime', 'ASC');
-
-        if (!$withDeleted) {
-            $qb->andWhere("a.modifiedBy IS NULL")
-                ->orWhere("a.status = 'approved'");
-        }
-        $qb->setParameter('before', $before);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get activity options sorted by begin date within a given period
-     *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param string $status retrieve only options with this status, optional
-     * @return array
-     */
-    public function getOptionsWithinPeriod($begin, $end, $status = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->orderBy('a.beginTime', 'ASC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end);
-
-        if ($status) {
-            $qb->andWhere('a.status = :status')
-                ->setParameter('status', $status);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get activity options sorted by begin date within a given period and associated with given organ
-     *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param int $organId the organ options have to be associated with
-     * @param string $status retrieve only options with this status, optional
-     * @return array
-     */
-    public function getOptionsWithinPeriodAndOrgan($begin, $end, $organId, $status = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->from('Activity\Model\ActivityOptionProposal', 'b')
             ->where('a.proposal = b.id')
-            ->where('a.beginTime > :begin')
-            ->andWhere('a.beginTime < :end')
-            ->andWhere('b.organ = :organ')
-            ->orderBy('a.beginTime', 'ASC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
-            ->setParameter('organ', $organId);
+            ->andWhere('a.beginTime > :now')
+            ->andWhere('b.creationTime < :before')
+            ->orderBy('b.creationTime', 'ASC');
 
-        if ($status) {
-            $qb->andWhere('a.status = :status')
-                ->setParameter('status', $status);
+        if (!$withDeleted) {
+            $qb->andWhere("b.modifiedBy IS NULL")
+                ->orWhere("b.status = 'approved'");
         }
+
+        $qb->setParameter('now', new DateTime());
+        $qb->setParameter('before', $before);
 
         return $qb->getQuery()->getResult();
     }

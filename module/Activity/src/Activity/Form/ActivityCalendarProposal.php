@@ -29,6 +29,10 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
+        if ($calendarService->isAllowed('create_always')) {
+            $organOptions[-1] = "Board";
+            $organOptions[-2] = "Other";
+        }
 
         $this->maxOptions = 3;
 
