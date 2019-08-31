@@ -33,10 +33,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <input type="radio" value="<?= $option->getId() ?>" name="option">
                     <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
                         <?= $text ?>
-                        <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
                     </h5>
 
                 </label>
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                    <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                </h5>
                 <div class="progress progress--poll">
                     <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
                 </div>
