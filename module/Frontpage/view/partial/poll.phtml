@@ -44,16 +44,16 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 </div>
             </div>
         <?php elseif ($showResults || !$canVote): ?>
-        <div>
-            <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
-                <?= $text ?>
-                <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
-            </h5>
+            <div>
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                    <?= $text ?>
+                    <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                </h5>
 
-            <div class="progress progress--poll">
-                <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
+                <div class="progress progress--poll">
+                    <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
+                </div>
             </div>
-        </div>
         <?php else: ?>
             <div class="radio">
                 <label>
