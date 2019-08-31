@@ -27,7 +27,23 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <?php $text = $this->escapeHtml(($lang === 'en') ? $option->getEnglishText() : $option->getDutchText()); ?>
         <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
 
-        <?php if ($showResults || !$canVote): ?>
+        <?php if ($showResults && $canVote): ?>
+            <div class="radio">
+                <label>
+                    <input type="radio" value="<?= $option->getId() ?>" name="option">
+                    <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                        <?= $text ?>
+                    </h5>
+
+                </label>
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                    <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                </h5>
+                <div class="progress progress--poll">
+                    <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
+                </div>
+            </div>
+        <?php elseif ($showResults || !$canVote): ?>
             <div>
                 <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
                     <?= $text ?>
