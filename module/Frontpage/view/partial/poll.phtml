@@ -36,10 +36,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <small class="pull-right" style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
                     </h5>
 
-                    <div class="progress progress--poll">
-                        <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
-                    </div>
                 </label>
+                <div class="progress progress--poll">
+                    <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
+                </div>
             </div>
         <?php elseif ($showResults || !$canVote): ?>
         <div>
