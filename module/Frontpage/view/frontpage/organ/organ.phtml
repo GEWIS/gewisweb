@@ -89,6 +89,14 @@ function getOrganDescription($organInformation, $lang)
                         </td>
                     </tr>
                 <?php endif; ?>
+                <tr>
+                    <td><span class="glyphicon glyphicon-link"></span>&nbsp;<?= $this->translate('Details') ?></td>
+                    <td>
+                        <a>
+                            <?= $organInformation?>
+                        </a>
+                    </td>
+                </tr>
             </table>
             <div class="panel panel-default agenda">
                 <div class="panel-heading">
