@@ -89,14 +89,6 @@ function getOrganDescription($organInformation, $lang)
                         </td>
                     </tr>
                 <?php endif; ?>
-                <tr>
-                    <td><span class="glyphicon glyphicon-link"></span>&nbsp;<?= $this->translate('Details') ?></td>
-                    <td>
-                        <a href="<?php $url = $this->url('organ/show', ['organ' => $organ->getId()]) ?>">
-                            <?php $this->url('organ/show', ['organ' => $organ->getId()]) ?>
-                        </a>
-                    </td>
-                </tr>
             </table>
             <div class="panel panel-default agenda">
                 <div class="panel-heading">
