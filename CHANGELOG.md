@@ -1,3 +1,10 @@
+## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-08-31)
+
+* Implemented RFC2324
+* Updated dependencies
+* Various UI improvements
+* Various bugfixes
+
 ## [v1.5.0](https://github.com/GEWIS/gewisweb/tree/v1.5.0) (2019-06-25)
 
 * Revised the option calendar system
