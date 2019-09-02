@@ -115,8 +115,8 @@ class ActivityCalendarOption
             ->orderBy('b.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere("b.modifiedBy IS NULL")
-                ->orWhere("b.status = 'approved'");
+            $qb->andWhere("a.modifiedBy IS NULL")
+                ->orWhere("a.status = 'approved'");
         }
 
         $qb->setParameter('now', new DateTime());
