@@ -104,9 +104,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     private function requestGEFLITST($activity, $user, $organ)
     {
+        $activityTitle = $activity->getNameEn(); // Default to English title
+        if (is_null($activityTitle)) {
+            $activityTitle = $activity->getName(); // Fallback on Dutch title
+        }
+
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
-        $subject = 'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST';
+        $subject = sprintf('%s %s', $organ->getAbbr(), $activityTitle);
 
         if ($organ != null) {
             $organInfo = $organ->getApprovedOrganInformation();
