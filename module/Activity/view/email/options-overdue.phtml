@@ -14,7 +14,16 @@ Er zijn een aantal opties ouder dan drie weken,<br />
     </tr>
     <?php foreach($options as $option): ?>
         <tr>
-            <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
+            <?php
+            if ($option->getProposal()->getOrgan() !== null) {
+                $creator = $option->getProposal()->getOrgan()->getAbbr();
+            } elseif ($option->getProposal->getOrganAlt() !== null) {
+                $creator = $option->getProposal()->getOrganAlt();
+            } else {
+                $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
+            }
+            ?>
+            <td><?= $creator ?></td>
             <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
             <td><?= $option->getProposal()->getCreationTime()->format('d-m-Y') ?></td>
             <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
@@ -40,7 +49,16 @@ There are some options older than 3 weeks,<br />
     </tr>
     <?php foreach($options as $option): ?>
         <tr>
-            <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
+            <?php
+            if ($option->getProposal()->getOrgan() !== null) {
+                $creator = $option->getProposal()->getOrgan()->getAbbr();
+            } elseif ($option->getProposal->getOrganAlt() !== null) {
+                $creator = $option->getProposal()->getOrganAlt();
+            } else {
+                $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
+            }
+            ?>
+            <td><?= $creator ?></td>
             <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
             <td><?= $option->getProposal()->getCreationTime()->format('d-m-Y') ?></td>
             <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>

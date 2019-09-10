@@ -60,6 +60,13 @@ class ActivityOptionProposal implements OrganResourceInterface
     protected $organ;
 
     /**
+     * Who created this activity proposal, if not an organ
+     *
+     * @Orm\Column(type="string",nullable=true)
+     */
+    protected $organAlt;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -142,11 +149,38 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
+     * @return string
+     */
+    public function getOrganAlt()
+    {
+        return $this->organAlt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganOrAlt()
+    {
+        if ($this->organ) {
+            return $this->organ;
+        }
+        return $this->organAlt;
+    }
+
+    /**
      * @param mixed $organ
      */
     public function setOrgan($organ)
     {
         $this->organ = $organ;
+    }
+
+    /**
+     * @param string $organAlt
+     */
+    public function setOrganAlt($organAlt)
+    {
+        $this->organAlt = $organAlt;
     }
 
     /**
