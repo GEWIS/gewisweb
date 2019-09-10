@@ -111,9 +111,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
-        $subject = sprintf('%s %s', $organ->getAbbr(), $activityTitle);
 
         if ($organ != null) {
+            $subject = sprintf('%s: %s', $organ->getAbbr(), $activityTitle);
+
             $organInfo = $organ->getApprovedOrganInformation();
             if ($organInfo != null && $organInfo->getEmail() != null) {
                 $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
@@ -124,6 +125,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                     ['activity' => $activity, 'requester' => $organ->getName()], $user);
             }
         } else {
+            $subject = sprintf('Member Initiative: %s', $activityTitle);
+
             $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
                 ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
         }
