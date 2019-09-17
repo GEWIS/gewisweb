@@ -17,7 +17,7 @@ Er zijn een aantal opties ouder dan drie weken,<br />
             <?php
             if ($option->getProposal()->getOrgan() !== null) {
                 $creator = $option->getProposal()->getOrgan()->getAbbr();
-            } elseif ($option->getProposal->getOrganAlt() !== null) {
+            } elseif ($option->getProposal()->getOrganAlt() !== null) {
                 $creator = $option->getProposal()->getOrganAlt();
             } else {
                 $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
@@ -52,7 +52,7 @@ There are some options older than 3 weeks,<br />
             <?php
             if ($option->getProposal()->getOrgan() !== null) {
                 $creator = $option->getProposal()->getOrgan()->getAbbr();
-            } elseif ($option->getProposal->getOrganAlt() !== null) {
+            } elseif ($option->getProposal()->getOrganAlt() !== null) {
                 $creator = $option->getProposal()->getOrganAlt();
             } else {
                 $creator = $option->getProposal()->getCreator()->getMember()->getFullName();

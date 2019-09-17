@@ -88,7 +88,7 @@ $this->headLink()
                         <?php
                         if ($option->getProposal()->getOrgan() !== null) {
                             $creator = $option->getProposal()->getOrgan()->getAbbr();
-                        } elseif ($option->getProposal->getOrganAlt() !== null) {
+                        } elseif ($option->getProposal()->getOrganAlt() !== null) {
                             $creator = $option->getProposal()->getOrganAlt();
                         } else {
                             $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
@@ -194,7 +194,7 @@ $this->headLink()
                 <?php
                 if ($option->getProposal()->getOrgan() !== null) {
                     $creator = $option->getProposal()->getOrgan()->getAbbr();
-                } elseif ($option->getProposal->getOrganAlt() !== null) {
+                } elseif ($option->getProposal()->getOrganAlt() !== null) {
                     $creator = $option->getProposal()->getOrganAlt();
                 } else {
                     $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
