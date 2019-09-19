@@ -148,7 +148,14 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setName($name);
         $description = $validatedData['description'];
         $proposal->setDescription($description);
-        $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
+//        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
+        if ($organ > -1) {
+            $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
+        } elseif ($organ == -1) {
+            $proposal->setOrganAlt("Board");
+        } elseif ($organ == -2) {
+            $proposal->setOrganAlt("Other");
+        }
         $em->persist($proposal);
         $em->flush();
 
@@ -380,7 +387,8 @@ class ActivityCalendar extends AbstractAclService
             return true;
         }
 
-        if ($this->getOrganService()->canEditOrgan($option->getProposal()->getOrgan())) {
+        $organ = $option->getProposal()->getOrgan();
+        if ($organ !== null && $this->getOrganService()->canEditOrgan($organ)) {
             return true;
         }
 

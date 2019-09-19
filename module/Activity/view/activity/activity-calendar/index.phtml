@@ -84,9 +84,8 @@ $this->headLink()
                 <?php foreach ($editableOptions as $option): ?>
                     <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>
                         data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
-
                         <td>
-                            <?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>
+                            <?= $option->getCreatorAlt() ?>
                         </td>
                         <td>
                             <?= $this->escapeHtml($option->getProposal()->getName()) ?>
@@ -182,7 +181,7 @@ $this->headLink()
                 "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
                 "id": "<?= $option->getId() ?>",
                 "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
-                "organizer": "<?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?>",
+                "organizer": "<?= $option->getCreatorAlt()?>",
                 "url": "#",
                 "class": "event-info",
                 "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
