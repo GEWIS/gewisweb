@@ -84,18 +84,8 @@ $this->headLink()
                 <?php foreach ($editableOptions as $option): ?>
                     <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>
                         data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
-
-                        <?php
-                        if ($option->getProposal()->getOrgan() !== null) {
-                            $creator = $option->getProposal()->getOrgan()->getAbbr();
-                        } elseif ($option->getProposal()->getOrganAlt() !== null) {
-                            $creator = $option->getProposal()->getOrganAlt();
-                        } else {
-                            $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
-                        }
-                        ?>
                         <td>
-                            <?= $creator ?>
+                            <?= $option->getCreatorAlt() ?>
                         </td>
                         <td>
                             <?= $this->escapeHtml($option->getProposal()->getName()) ?>
@@ -191,16 +181,7 @@ $this->headLink()
                 "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
                 "id": "<?= $option->getId() ?>",
                 "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
-                <?php
-                if ($option->getProposal()->getOrgan() !== null) {
-                    $creator = $option->getProposal()->getOrgan()->getAbbr();
-                } elseif ($option->getProposal()->getOrganAlt() !== null) {
-                    $creator = $option->getProposal()->getOrganAlt();
-                } else {
-                    $creator = $option->getProposal()->getCreator()->getMember()->getFullName();
-                }
-                ?>
-                "organizer": "<?= $creator ?>",
+                "organizer": "<?= $option->getCreatorAlt()?>",
                 "url": "#",
                 "class": "event-info",
                 "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,

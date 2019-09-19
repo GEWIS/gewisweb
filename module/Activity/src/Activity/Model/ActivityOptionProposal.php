@@ -200,4 +200,24 @@ class ActivityOptionProposal implements OrganResourceInterface
     {
         return $this->id;
     }
+
+    /**
+     *
+     * Returns in order of presense:
+     * 1. The abbreviation of the related organ
+     * 2. The alternative for an organ, other organising parties
+     * 3. The full name of the member who created the proposal
+     * @return mixed
+     */
+    public function getCreatorAlt()
+    {
+        if ($this->getOrgan() !== null) {
+            $creator = $this->getOrgan()->getAbbr();
+        } elseif ($this->getOrganAlt() !== null) {
+            $creator = $this->getOrganAlt();
+        } else {
+            $creator = $this->getCreator()->getMember()->getFullName();
+        }
+        return $creator;
+    }
 }

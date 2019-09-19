@@ -148,6 +148,7 @@ class ActivityCalendar extends AbstractAclService
         $proposal->setName($name);
         $description = $validatedData['description'];
         $proposal->setDescription($description);
+//        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
         if ($organ > -1) {
             $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
         } elseif ($organ == -1) {
