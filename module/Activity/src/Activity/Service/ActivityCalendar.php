@@ -387,7 +387,8 @@ class ActivityCalendar extends AbstractAclService
             return true;
         }
 
-        if ($option->getProposal()->getOrgan() !== null && $this->getOrganService()->canEditOrgan($option->getProposal()->getOrgan())) {
+        $organ = $option->getProposal()->getOrgan();
+        if ($organ !== null && $this->getOrganService()->canEditOrgan($organ)) {
             return true;
         }
 
