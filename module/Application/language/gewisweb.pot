@@ -2090,7 +2090,7 @@ msgid "API Users"
 msgstr ""
 
 #: module/Application/view/error/403.phtml:3
-msgid "You do not have the required priviliges to view this page"
+msgid "You do not have the required privileges to view this page"
 msgstr ""
 
 #: module/Application/view/error/403.phtml:5
