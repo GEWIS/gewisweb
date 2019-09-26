@@ -19,6 +19,16 @@
     .grid-col-3, .grid-col-5 {
         grid-template-columns: repeat(1, 1fr);
     }
+
+    .grid a.panel-image {
+        display: flex;
+
+        .glyphicon {
+            font-size: 1em;
+            margin-right: 1em;
+            line-height: normal;
+        }
+    }
 }
 
 @media only screen and (min-width: $screen-xs-min) {
