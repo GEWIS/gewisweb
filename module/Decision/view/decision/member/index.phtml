@@ -164,7 +164,7 @@ $meetings = $this->meetings;
                 </div>
             <?php endif; ?>
         </div>
-        <?php if ($this->acl('decision_acl')->isAllowed('list', 'regulations')): ?>
+        <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
           <div class="row mt-2">
               <div class="col-md-12">
                   <h2><?= $this->translate('Regulations') ?></h2>
