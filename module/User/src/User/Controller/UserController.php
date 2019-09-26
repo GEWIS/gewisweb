@@ -15,7 +15,7 @@ class UserController extends AbstractActionController
     public function indexAction()
     {
         $userService = $this->getUserService();
-        $referer = $this->getRequest()->getHeader('referer');
+        $referer = $this->getRequest()->getServer('HTTP_REFERER');
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
