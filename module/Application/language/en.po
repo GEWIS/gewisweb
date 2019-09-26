@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 17:48+0200\n"
-"PO-Revision-Date: 2019-06-25 17:53+0200\n"
+"PO-Revision-Date: 2019-09-25 22:29+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:15
 #: module/Company/view/partial/company/company/list/company.phtml:12
@@ -2142,8 +2141,8 @@ msgid "API Users"
 msgstr "API Users"
 
 #: module/Application/view/error/403.phtml:3
-msgid "You do not have the required priviliges to view this page"
-msgstr "You do not have the required priviliges to view this page"
+msgid "You do not have the required privileges to view this page"
+msgstr "You do not have the required privileges to view this page"
 
 #: module/Application/view/error/403.phtml:5
 msgid "You might be able to view this page by logging in below"
