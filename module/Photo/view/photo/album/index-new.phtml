@@ -1,0 +1,264 @@
+<?php
+// set title
+$this->headTitle($album->getName());
+$currentAlbum = $album;
+while(!is_null($currentAlbum->getParent())) {
+    $this->headTitle($currentAlbum->getParent()->getName());
+    $currentAlbum = $currentAlbum->getParent();
+}
+$this->headTitle($this->translate('Photos'));
+ ?>
+<?php $this->headScript()->appendFile($this->basePath() . '/js/photo-new.js')
+        ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
+        ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+        ->appendFile($this->basePath() . '/js/lazyload.min.js')
+        ->appendFile($this->basePath() . '/js/photoswipe.min.js')
+        ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
+->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
+
+$this->scriptUrl()->requireUrl('member/search');
+?>
+<style>
+    .grid-sizer, .photo-grid-item {
+        width: 49%;
+        margin-bottom: 0.5%; }
+    @media (min-width: 768px) {
+        .grid-sizer, .photo-grid-item {
+            width: 33%; } }
+    @media (min-width: 992px) {
+        .grid-sizer, .photo-grid-item {
+            width: 24.5%; } }
+    @media (min-width: 1200px) {
+        .grid-sizer, .photo-grid-item {
+            width: 16.2%; } }
+    .tagSearch {
+        border: 0;
+        outline: none;
+        box-shadow: none;
+        background: transparent;
+        border-bottom: 1px solid black;
+        background-color: #000;
+        color: #fff;
+        border-color: #FFF;
+    }
+
+    .tagSearch:focus {
+        outline:none;
+    }
+</style>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('photo') ?>">
+                    <?= $this->translate('Photos') ?>
+                </a>
+            </li>
+            <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
+            <li>
+                <?php
+                // determine association year
+                $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                ?>
+                <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                    <?= $associationYear->getYearString() ?>
+                </a>
+            </li>
+            <?php endif; ?>
+            <?php
+            // first we need to get all parents
+            $crumbs = [];
+            if (!is_null($album->getParent())) {
+                $currentAlbum = $album;
+                while(!is_null($currentAlbum->getParent())) {
+                    // prepend parent to array
+                    array_unshift($crumbs, [
+                        'url'  => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
+                        'name' => $currentAlbum->getParent()->getName()
+                    ]);
+                    $currentAlbum = $currentAlbum->getParent();
+                }
+            }
+            // then we print them
+            foreach($crumbs as $crumb): ?>
+                <li>
+                    <a href="<?= $crumb['url'] ?>">
+                        <?= $this->escapeHtml($crumb['name']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+            <li class="active">
+                <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                    <span class="glyphicon glyphicon-user"></span>
+                    &nbsp;
+                <?php endif; ?>
+                <?= $this->escapeHtml($album->getName()); ?>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <?= $this->escapeHtml($album->getName()); ?>
+                    <small>
+                        <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                            <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
+                                <?= strtolower($this->translate("View user profile")) ?>
+                            </a>
+                        <?php else: ?>
+                            <?= $album->getStartDateTime()->format('d-m-Y') ?>
+                        <?php endif; ?>
+                    </small>
+                </h1>
+            </div>
+        </div>
+        <?php
+        $path = '';
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
+        } else {
+            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
+        }
+        ?>
+
+        <div class="photo-grid">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($album->getChildren() as $item): ?>
+                    <!-- TODO: fix this -->
+                   <!-- <div class="photo-grid-item photo-grid-item-album">
+                        <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
+                            <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
+                            <div class="caption">
+                                <?= $this->escapeHtml($item->getName()); ?>
+                            </div>
+                        </a>
+                    </div> -->
+            <?php endforeach ?>
+            <?php foreach ($album->getPhotos() as $item): ?>
+                <?php
+                    $ar = $item->getAspectRatio();
+                    $width = $config['small_thumb_size']['width'];
+                    $smallSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+
+                    $width = $config['large_thumb_size']['width'];
+                    $largeSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+                ?>
+                <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    <a
+                        href="<?=  $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                        data-size="<?= $largeSize['w'] . 'x' . $largeSize['h'] ?>"
+                        data-author="GEWIS"
+                        class="gallery-image"
+                        data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
+                    >
+                        <img
+                            class="lazy-load"
+                            data-width="<?= $smallSize['w'] ?>" data-height="<?= $smallSize['h'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $smallSize) ?>"
+                            alt=""
+                            data-size="<?= $smallSize['w'] . 'x' . $smallSize['h'] ?>"
+                        >
+                    </a>
+                    <figcaption style="display:none">
+                        <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                    </figcaption>
+                    <figtags style="display:none">
+                        <?= $this->partial('partial/tags-new.phtml', ['photo' => $item]) ?>
+                    </figtags>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--download" title="Download"></button>
+                    <button class="pswp__button pswp__button--info" title="Info"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <!-- Preloader -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        Photo.initGrid();
+    });
+    initPhotoSwipeFromDOM('.photo-grid');
+    var lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy-load"
+    });
+</script>
+
+
+

@@ -66,7 +66,7 @@ class Photo extends AbstractAclService
      *
      * @return Stream
      */
-    public function getPhotoDownload($photoId, $options)
+    public function getPhotoDownload($photoId)
     {
         if (!$this->isAllowed('download')) {
             throw new NotAllowedException(
@@ -78,9 +78,8 @@ class Photo extends AbstractAclService
         $photo = $this->getPhoto($photoId);
         $path = $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
-        $server = $this->sm->get('photo_glide_server');
 
-        return $server->outputImage($path, $options);
+        return $this->getFileStorageService()->downloadFile($path, $fileName);
     }
 
     /**

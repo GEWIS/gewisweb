@@ -59,6 +59,19 @@ return [
                             ],
                         ],
                     ],
+                    'album_beta' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/beta/album[/:album_id]',
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Album',
+                                'action' => 'indexNew',
+                            ],
+                        ],
+                    ],
                     'photo' => [
                         'type' => 'Segment',
                         'options' => [
