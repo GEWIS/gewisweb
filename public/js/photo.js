@@ -19,61 +19,54 @@ Photo = {
         }
     },
     initTagging: function () {
-        console.log("Initializing tagging");
-        $('.tagList').find('.remove-tag').each(function () {
+        $('#tagList').find(".remove-tag").each(function () {
             $(this).on('click', Photo.removeTag);
         });
         Photo.initTagSearch();
     },
     initTagSearch: function () {
-        $('.tagSearch').each(function(item) {
-            $(this).autocomplete({
-                lookup: function (query, done) {
-                    if (query.length >= 2) {
-                        $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                            var result = {suggestions: []};
+        $('#tagSearch').autocomplete({
+            lookup: function (query, done) {
+                if (query.length >= 2) {
+                    $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                        var result = {suggestions: []};
 
-                            $.each(data.members, function (i, member) {
-                                result.suggestions.push({
-                                    'value': member.fullName, 'data': member.lidnr
-                                })
+                        $.each(data.members, function (i, member) {
+                            result.suggestions.push({
+                                'value': member.fullName, 'data': member.lidnr
+                            })
+                        });
+
+                        done(result);
+                    });
+                }
+            },
+            onSelect: function (suggestion) {
+                $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
+                    {lidnr: suggestion.data}
+                    , function (data) {
+                        if (data.success) {
+                            var removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                'photo_id': data.tag.photo_id,
+                                'lidnr': data.tag.member_id
                             });
 
-                            done(result);
-                        });
-                    }
-                },
-                orientation: 'top',
-                onSelect: function (suggestion) {
-                    $.post($(this).data('url').replace('lidnr', suggestion.data),
-                        {lidnr: suggestion.data}
-                        , function (data) {
-                            if (data.success) {
-                                var removeURL = URLHelper.url('photo/photo/tag/remove', {
-                                    'photo_id': data.tag.photo_id,
-                                    'lidnr': data.tag.member_id
-                                });
+                            var memberURL = URLHelper.url('member/view', {
+                                'lidnr': data.tag.member_id
+                            });
 
-                                var memberURL = URLHelper.url('member/view', {
-                                    'lidnr': data.tag.member_id
-                                });
-
-                                var id = 'removeTag' + data.tag.id;
-                                // The tag list exists twice, so we need to remove it in each list
-                                $('.tagList-' + data.tag.photo_id).each(function(i) {
-                                    $(this).prepend('<a href="' + memberURL + '">' + suggestion.value + '</a>' +
-                                        '<a href="' + removeURL + '" id="' + id + '">' +
-                                        '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
-                                        '</span></a>, '
-                                    );
-                                });
-                                $('#' + id).on('click', Photo.removeTag);
-                                $('.tagSearch').focus();
-                            }
-                            $('.tagSearch').val('');
-                        });
-                }
-            });
+                            var id = 'removeTag' + data.tag.id;
+                            $('#tagList').append('<li><a href="' + memberURL + '">' + suggestion.value + '</a>' +
+                                '<a href="' + removeURL + '" id="' + id + '">' +
+                                '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
+                                '</span></a></li>'
+                            );
+                            $('#' + id).on('click', Photo.removeTag);
+                            $('#tagSearch').focus();
+                        }
+                        $('#tagSearch').val('');
+                    });
+            }
         });
 
     },
@@ -103,8 +96,7 @@ Photo = {
             columnWidth: '.grid-sizer',
             percentPosition: true,
             gutter: '.gutter-sizer',
-            transitionDuration: 0,
-            resize: true
+            transitionDuration: 0
         });
     },
     removeTag: function (e) {
@@ -127,4 +119,3 @@ $(function () {
         }
     });
 });
-

@@ -355,6 +355,10 @@ class Photo implements ResourceInterface
      */
     public function getAspectRatio()
     {
+        if ($this->aspectRatio === null) {
+            list($width, $height, $type, $attr) = getimagesize('public/data/' . $this->getSmallThumbPath());
+            $this->aspectRatio = $height / $width;
+        }
         return $this->aspectRatio;
     }
 

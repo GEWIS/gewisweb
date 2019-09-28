@@ -122,7 +122,7 @@ return [
             /*
              * Max. width and height which a thumbnail may have.
              */
-            'width' => 960,
+            'width' => 1920,
             'height' => 1920
         ],
         'album_cover' => [
