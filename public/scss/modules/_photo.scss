@@ -94,3 +94,18 @@ Photo
 .pager li > a {
     margin: 5px;
 }
+
+.tagSearch {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  border-bottom: 1px solid black;
+  background-color: #000;
+  color: #fff;
+  border-color: #FFF;
+}
+
+.tagSearch:focus {
+  outline:none;
+}

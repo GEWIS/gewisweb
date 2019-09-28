@@ -40,41 +40,6 @@ class GlideUrl extends AbstractHelper
     }
 
     /**
-     * Gets an URL returning a resized large version of the image
-     *
-     * @param \Photo\Model\Photo $image
-     *
-     * @return string
-     */
-    public function getLargeUrl($image)
-    {
-        $width = $this->config['photo']['large_thumb_size']['width'];
-        $size = [
-            'w' => $width,
-            'h' => round($width * $image->getAspectRatio())
-        ];
-        return $this->getUrl($image->getPath(), $size);
-
-    }
-
-    /**
-     * Gets an URL returning a resized small version of the image
-     *
-     * @param \Photo\Model\Photo $image
-     *
-     * @return string
-     */
-    public function getThumbnailUrl($image)
-    {
-        $width = $this->config['photo']['small_thumb_size']['width'];
-        $size = [
-            'w' => $width,
-            'h' => round($width * $image->getAspectRatio())
-        ];
-        return $this->getUrl($image->getPath(), $size);
-    }
-
-    /**
      * Set the service locator
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface
