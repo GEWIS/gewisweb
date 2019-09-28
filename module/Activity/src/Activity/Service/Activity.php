@@ -104,11 +104,17 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     private function requestGEFLITST($activity, $user, $organ)
     {
+        $activityTitle = $activity->getNameEn(); // Default to English title
+        if (is_null($activityTitle)) {
+            $activityTitle = $activity->getName(); // Fallback on Dutch title
+        }
+
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
-        $subject = 'Er is een fotograaf nodig voor een nieuwe GEWIS activiteit | A GEWIS activity needs a photographer of GEFLITST';
 
         if ($organ != null) {
+            $subject = sprintf('%s: %s', $organ->getAbbr(), $activityTitle);
+
             $organInfo = $organ->getApprovedOrganInformation();
             if ($organInfo != null && $organInfo->getEmail() != null) {
                 $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
@@ -119,6 +125,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                     ['activity' => $activity, 'requester' => $organ->getName()], $user);
             }
         } else {
+            $subject = sprintf('Member Initiative: %s', $activityTitle);
+
             $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
                 ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
         }

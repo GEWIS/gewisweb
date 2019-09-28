@@ -31,7 +31,7 @@ return [
         'from' => 'web@gewis.nl',
         'to' => [
             'activity_creation' => 'secr@gewis.nl',
-            'activity_calendar' => '',
+            'activity_calendar' => 'cib@gewis.nl',
             'poll_creation' => '',
             'organ_update' => ''
         ]

@@ -1,0 +1,186 @@
+<?php
+$this->headTitle($this->translate('Create activity proposal'));
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/proposal-create.js')
+    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
+
+$form->prepare();
+?>
+<style>
+    label {
+        cursor: pointer;
+    }
+
+    label input[type=checkbox] {
+        margin-right: 1.5rem;
+    }
+
+    .label-required:after {
+        content: "*";
+        color: #d40026;
+    }
+
+    .spacing-top--lg {
+        margin-top: 4rem;
+    }
+
+    .spacing-top--md {
+        margin-top: 2.5rem;
+    }
+
+    .spacing-top--sm {
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 992px) {
+        .spacing-top-sm--sm {
+            margin-top: 1rem;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .spacing-top-sm--sm {
+            margin-top: 0;
+        }
+    }
+</style>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Option calendar') ?></h1>
+                <h2><?= $this->translate('Plan an activity') ?></h2>
+            </div>
+        </div>
+        <?php if ($period): ?>
+            <div class="row spacing-top--md">
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <p>
+                            <?= sprintf($this->translate('You can currently plan options between %s and %s.'),
+                                $period->getBeginOptionTime()->format('Y-m-d'),
+                                $period->getEndOptionTime()->format('Y-m-d')) ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
+        <?= $this->form()->openTag($form) ?>
+        <?php if ($success === false): ?>
+            <div class="row spacing-top--md">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <span
+                            class="glyphicon glyphicon-exclamation-sign"></span> <?= $this->translate('The activity could not be saved. Check and correct your input data.') ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
+        <div class="row spacing-top--md">
+            <div class="col-md-12">
+                <h3><?= $this->translate('Details') ?></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?php $organ = $form->get('organ')
+                    ->setAttribute('class', 'form-control')
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
+                    <label
+                        for="<?= $organ->getAttribute('id') ?>"
+                        class="control-label<?= $form->getInputFilter()->get('organ')->isRequired() ? ' label-required' : '' ?>">
+                        <?= $this->translate('Committee / fraternity') ?>
+                    </label>
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
+                </div>
+            </div>
+        </div>
+        <div class="row spacing-top--sm">
+            <div class="col-md-4">
+                <?php $inputName = $form->get('name')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'input-name')
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($inputName) ?>">
+                    <label
+                        for="<?= $inputName->getAttribute('id') ?>"
+                        class="control-label<?= $form->getInputFilter()->get('name')->isRequired() ? ' label-required' : '' ?>">
+                        <?= $this->translate('Name') ?>
+                    </label>
+                    <?= $this->formInput($inputName) ?>
+                    <?= $this->formElementErrors($inputName) ?>
+                </div>
+            </div>
+        </div>
+        <div class="row spacing-top--sm">
+            <div class="col-md-6">
+                <?php $inputDescription = $form->get('description')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'input-description')
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($inputDescription) ?>">
+                    <label
+                        for="<?= $inputDescription->getAttribute('id') ?>"
+                        class="control-label<?= $form->getInputFilter()->get('description')->isRequired() ? ' label-required' : '' ?>">
+                        <?= $this->translate('Description') ?>
+                    </label>
+                    <?= $this->formTextarea($inputDescription) ?>
+                    <?= $this->formElementErrors($inputDescription) ?>
+                </div>
+            </div>
+        </div>
+        <div class="row spacing-top--lg">
+            <div class="col-md-12">
+                <h3><?= $this->translate('Options') ?></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                /* render template for options */
+                $fs = $form->get('options')->getTemplateElement();
+                ob_start();
+                echo $this->partial('partial/option.phtml', ['fs' => $fs, 'index' => '__index__']);
+                $tpl = trim(ob_get_clean())
+                ?>
+                <fieldset id="additionalOptions">
+                    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                    <?php
+                    $index = 0;
+                    foreach ($form->get('options')->getIterator() as $fs) {
+                        echo $this->partial('partial/option.phtml', ['fs' => $fs, 'index' => $index]);
+                        $index++;
+                    }
+                    ?>
+                    <div class="form-group add-option spacing-top--md">
+                        <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <?= $this->translate('Add an option') ?>
+                        </button>
+                    </div>
+                    <div class="form-group remove-option">
+                        <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                            <?= $this->translate('Remove the last option') ?>
+                        </button>
+                    </div>
+            </div>
+        </div>
+        <div class="row spacing-top--lg">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" value="<?= $this->translate('Submit') ?>"/>
+            </div>
+        </div>
+        <?= $this->form()->closeTag(); ?>
+</section>
+
+<script>
+    Proposal.updateForm();
+    for (var i = 0; i < <?= $index ?>; i++) {
+        Proposal.updateOption(i);
+    }
+</script>

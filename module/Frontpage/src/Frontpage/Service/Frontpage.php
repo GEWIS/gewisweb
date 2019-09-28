@@ -2,7 +2,7 @@
 
 namespace Frontpage\Service;
 
-use Activity\Form\ActivityCalendarOption;
+use Activity\Form\ActivityCalendarProposal;
 use Application\Service\AbstractAclService;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Frontpage\Model\NewsItem;

@@ -2,9 +2,9 @@
 
 namespace User\Mapper;
 
-use User\Model\User as UserModel;
-use User\Model\NewUser as NewUserModel;
 use Doctrine\ORM\EntityManager;
+use User\Model\NewUser as NewUserModel;
+use User\Model\User as UserModel;
 
 class User
 {
@@ -60,11 +60,11 @@ class User
         if (is_numeric($login)) {
             $qb->where('u.lidnr = ?1');
         } else {
-            $qb->where('m.email = ?1');
+            $qb->where('LOWER(m.email) = ?1');
         }
 
         // set the parameters
-        $qb->setParameter(1, $login);
+        $qb->setParameter(1, strtolower($login));
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();

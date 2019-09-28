@@ -21,8 +21,7 @@ class ActivityController extends AbstractActionController
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $translatorService = $this->getServiceLocator()->get('activity_service_activityTranslator');
         $langSession = new SessionContainer('lang');
-        $user = $this->getServiceLocator()->get('user_service_user')->getIdentity();
-        $activities = $queryService->getUpcomingActivities($this->params('category'), $user);
+        $activities = $queryService->getUpcomingActivities($this->params('category'));
         $translatedActivities = [];
         foreach ($activities as $activity){
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
@@ -58,6 +57,7 @@ class ActivityController extends AbstractActionController
                 && $signupService->isSignedUp($translatedActivity, $identity->getMember());
         }
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
+        $isArchived = $activity->getEndTime() < new \DateTime();
         $result = [
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() &&
@@ -73,6 +73,7 @@ class ActivityController extends AbstractActionController
             'fields' => $fields,
             'memberSignups' => $signupService->getNumberOfSubscribedMembers($activity),
             'subscriptionDeadLinePassed' => $subscriptionDeadLinePassed,
+            'isArchived' => $isArchived,
         ];
 
         //Retrieve and clear the request status from the session, if it exists.

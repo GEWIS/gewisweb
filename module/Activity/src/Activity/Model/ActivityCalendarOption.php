@@ -2,16 +2,14 @@
 
 namespace Activity\Model;
 
-use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
-use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity calendar option model.
  *
  * @ORM\Entity
  */
-class ActivityCalendarOption implements OrganResourceInterface
+class ActivityCalendarOption
 {
     /**
      * ID for the option.
@@ -23,11 +21,18 @@ class ActivityCalendarOption implements OrganResourceInterface
     protected $id;
 
     /**
-     * Name for the activity option.
+     * Type for the option.
      *
-     * @Orm\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
-    protected $name;
+    protected $type;
+
+    /**
+     * Status for the option.
+     *
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $status;
 
     /**
      * The date and time the activity starts.
@@ -44,59 +49,20 @@ class ActivityCalendarOption implements OrganResourceInterface
     protected $endTime;
 
     /**
-     * Who created this activity option.
+     * To what activity proposal does the option belong
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
+     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
-    protected $creator;
+    protected $proposal;
 
     /**
-     * The date and time the activity option was created.
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $creationTime;
-
-    /**
-     * Who deleted this activity option, if null then the option is not deleted
+     * Who modified this activity option, if null then the option is not modified
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
      */
-    protected $deletedBy;
-
-    /**
-     * Who created this option.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
-     */
-    protected $organ;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+    protected $modifiedBy;
 
     /**
      * @return mixed
@@ -133,76 +99,65 @@ class ActivityCalendarOption implements OrganResourceInterface
     /**
      * @return mixed
      */
-    public function getCreator()
+    public function getModifiedBy()
     {
-        return $this->creator;
+        return $this->modifiedBy;
     }
 
     /**
-     * @param mixed $creator
+     * @param mixed $modifiedBy
      */
-    public function setCreator($creator)
+    public function setModifiedBy($modifiedBy)
     {
-        $this->creator = $creator;
+        $this->modifiedBy = $modifiedBy;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getCreationTime()
+    public function getStatus()
     {
-        return $this->creationTime;
+        return $this->status;
     }
 
     /**
-     * @param mixed $creationTime
+     * @param string $status
      */
-    public function setCreationTime($creationTime)
+    public function setStatus($status)
     {
-        $this->creationTime = $creationTime;
+        $this->status = $status;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDeletedBy()
+    public function getType()
     {
-        return $this->deletedBy;
+        return $this->type;
     }
 
     /**
-     * @param mixed $deletedBy
+     * @param string $type
      */
-    public function setDeletedBy($deletedBy)
+    public function setType($type)
     {
-        $this->deletedBy = $deletedBy;
+        $this->type = $type;
     }
 
     /**
-     * @return mixed
+     * @return ActivityOptionProposal
      */
-    public function getOrgan()
+    public function getProposal()
     {
-        return $this->organ;
+        return $this->proposal;
     }
 
     /**
-     * @param mixed $organ
+     * @param ActivityOptionProposal $proposal
      */
-    public function setOrgan($organ)
+    public function setProposal($proposal)
     {
-        $this->organ = $organ;
-    }
-
-
-    /**
-     * Get the organ of this resource.
-     *
-     * @return Organ
-     */
-    public function getResourceOrgan()
-    {
-        return $this->getOrgan();
+        $this->proposal = $proposal;
     }
 
     /**
@@ -213,5 +168,26 @@ class ActivityCalendarOption implements OrganResourceInterface
     public function getResourceId()
     {
         return $this->getId();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     *
+     * Returns in order of presense:
+     * 1. The abbreviation of the related organ
+     * 2. The alternative for an organ, other organising parties
+     * 3. The full name of the member who created the proposal
+     * @return mixed
+     */
+    public function getCreatorAlt()
+    {
+        return $this->getProposal()->getCreatorAlt();
     }
 }

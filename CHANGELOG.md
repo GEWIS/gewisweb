@@ -1,3 +1,38 @@
+## [v1.5.3](https://github.com/GEWIS/gewisweb/tree/v1.5.3) (2019-09-26)
+
+* Various UI improvements
+* Various bugfixes
+
+## [v1.5.2](https://github.com/GEWIS/gewisweb/tree/v1.5.2) (2019-09-19)
+
+* Improved option calendar
+* Used more informative title for emails to GEFLITST
+* Various bugfixes
+
+## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-08-31)
+
+* Implemented RFC2324
+* Updated dependencies
+* Various UI improvements
+* Various bugfixes
+
+## [v1.5.0](https://github.com/GEWIS/gewisweb/tree/v1.5.0) (2019-06-25)
+
+* Revised the option calendar system
+* Addded option for users to select profile pictures
+* Added social media references
+* Various UI improvements
+* Various bugfixes
+
+## [v1.4.2](https://github.com/GEWIS/gewisweb/tree/v1.4.2) (2019-05-10)
+
+* Added ability to add documents to VV's
+* Addded option for users to select profile pictures
+* Profile pictures are now cached
+* Automatic profile picture selection has been improved
+* Various UI improvements
+* Various bugfixes
+
 ## [v1.4.1](https://github.com/GEWIS/gewisweb/tree/v1.4.1) (2019-03-21)
 
 * Sort meeting documents on number

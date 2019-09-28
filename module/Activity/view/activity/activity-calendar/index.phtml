@@ -7,7 +7,6 @@ $this->headScript()
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/calendar.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
-$form->prepare();
 ?>
 
 <section class="section">
@@ -24,7 +23,7 @@ $form->prepare();
             </ul>
         </div>
         <hr>
-        <?php if($success): ?>
+        <?php if ($success): ?>
             <div class="alert alert-success">
                 <?= $this->translate('Your option has been added successfully'); ?>
             </div>
@@ -53,62 +52,16 @@ $form->prepare();
 
                 <h3 class="calendarTitleHeader"><span id="calendarTitle"></span></h3>
             </div>
-            <div class="pull-right">
-                <div class="dropdown pull-right<?= $optionError ? ' open' : '' ?>">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span class="hidden-xs"><?= $this->translate('Add option') ?></span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <form class="form" action="<?= $this->url('activity_calendar') ?>" method="post">
-                            <?php
-                            $name = $form->get('name');
-                            $name->setAttribute('class', 'form-control');
-                            $name->setAttribute('id', 'cal-name');
-                            ?>
-                            <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $name->getAttribute('id') ?>">
-                                    <?= $this->translate('Name') ?>
-                                </label>
-                                <?= $this->formInput($name) ?>
-                                <?= $this->formElementErrors($name) ?>
-                            </div>
-                            <?php
-                            $beginTime = $form->get('beginTime');
-                            $beginTime->setAttribute('class', 'form-control datepicker');
-                            $beginTime->setAttribute('id', 'cal-begin');
-                            $endTime = $form->get('endTime');
-                            $endTime->setAttribute('class', 'form-control datepicker');
-                            $endTime->setAttribute('id', 'cal-end');
-                            ?>
-                            <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $beginTime->getAttribute('id') ?>"><?= $this->translate('From') ?></label>
-                                <?= $this->formInput($beginTime) ?>
-                                <?= $this->formElementErrors($beginTime) ?>
-                            </div>
-
-                            <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $endTime->getAttribute('id') ?>"><?= $this->translate('Until') ?></label>
-                                <?= $this->formInput($endTime) ?>
-                                <?= $this->formElementErrors($endTime) ?>
-                            </div>
-                            <?php
-                            $organ = $form->get('organ');
-                            $organ->setAttribute('class', 'form-control');
-                            $organ->setAttribute('id', 'cal-organ');
-                            ?>
-                            <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $organ->getAttribute('id'); ?>">
-                                    <?= $this->translate('Organizing committee / fraternity') ?>
-                                </label>
-                                <?= $this->formSelect($organ) ?>
-                                <?= $this->formElementErrors($organ) ?>
-                            </div>
-                            <button type="submit" class="btn btn-primary"><?= $this->translate('Submit') ?></button>
-                        </form>
+            <?php if ($canCreate): ?>
+                <div class="pull-right">
+                    <div class="dropdown pull-right">
+                        <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus"></span> <span
+                                class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
+                        </a>
                     </div>
                 </div>
-            </div>
+            <?php endif ?>
         </div>
         <div class="row">
             <div id="calendar" class="calendar-control"></div>
@@ -120,28 +73,42 @@ $form->prepare();
                 <tr>
                     <th><?= $this->translate('Creator') ?></th>
                     <th><?= $this->translate('Name') ?></th>
-                    <th><?= $this->translate('Created at') ?></th>
+                    <th><?= $this->translate('Type') ?></th>
+                    <!--                    <th>--><? //= $this->translate('Created at') ?><!--</th>-->
                     <th><?= $this->translate('Start') ?></th>
                     <th><?= $this->translate('End') ?></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($editableOptions as $option): ?>
-                    <tr<?= $option->getDeletedBy() === null ? '' : ' class="danger"' ?>>
-
-                        <td><?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?></td>
-                        <td><?= $this->escapeHtml($option->getName()) ?></td>
-                        <td><?= $option->getCreationTime()->format('d-m-Y') ?></td>
-                        <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
-                        <td><?= $option->getEndTime()->format('d-m-Y H:i') ?></td>
+                <?php foreach ($editableOptions as $option): ?>
+                    <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>
+                        data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
                         <td>
-                            <?php if($option->getDeletedBy() === null): ?>
-                                <a class="btn btn-xs btn-delete btn-danger" href="javascript:showDeleteModal(<?= $option->getId() ?>)">
+                            <?= $option->getCreatorAlt() ?>
+                        </td>
+                        <td>
+                            <?= $this->escapeHtml($option->getProposal()->getName()) ?>
+                        </td>
+                        <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
+                        <!--                        <td>-->
+                        <? //= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
+                        <td><?= $option->getBeginTime()->format('d-m-Y') ?></td>
+                        <td><?= $option->getEndTime()->format('d-m-Y') ?></td>
+                        <td>
+                            <?php if ($option->getModifiedBy() === null): ?>
+                                <a class="btn btn-xs btn-delete btn-danger"
+                                   href="javascript:showDeleteModal(<?= $option->getId() ?>)">
                                     <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
+                                <?php if ($canApprove): ?>
+                                    <a class="btn btn-xs btn-succes"
+                                       href="javascript:showApproveModal(<?= $option->getId() ?>)">
+                                        <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
+                                    </a>
+                                <?php endif ?>
                             <?php else: ?>
-                                <strong><?= $this->translate('Deleted by') ?> <?= $option->getDeletedBy()->getMember()->getFullName() ?></strong>
+                                <strong><?= $this->translate('Modified by') ?> <?= $option->getModifiedBy()->getMember()->getFullName() ?></strong>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -153,7 +120,8 @@ $form->prepare();
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?= $this->translate('Delete option') ?></h4>
                     </div>
                     <div class="modal-body">
@@ -162,8 +130,35 @@ $form->prepare();
                     <div class="modal-footer">
                         <form method="post" action="delete" class="form form-inline form-delete">
                             <input type="hidden" name="option_id" id="deleteOptionId"/>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?></button>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"
+                                                                            aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="approveModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><?= $this->translate('Approve option') ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><?= $this->translate('Are you sure you want to approve this option?') ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <form method="post" action="approve" class="form form-inline form-approve">
+                            <input type="hidden" name="option_id" id="approveOptionId"/>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check"
+                                                                             aria-hidden="true"></i>&nbsp;<?= $this->translate('Approve') ?>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -180,21 +175,23 @@ $form->prepare();
     timeMinString = timeMin.toISOString();
     var calendarItems = [
         <?php foreach($options as $option): ?>
-        {
-            "isPlanned": "false",
-            "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
-            "id": "<?= $option->getId() ?>",
-            "title": "<?= $this->escapeHtml($option->getName()) ?>",
-            "organizer": "<?= $option->getOrgan() === null ? $option->getCreator()->getMember()->getFullName() : $option->getOrgan()->getAbbr() ?>",
-            "url": "#",
-            "class": "event-info",
-            "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-            "end": <?= $option->getEndTime()->getTimestamp() * 1000?>
-        },
+            <?php if($option->getStatus() !== 'deleted'): ?>
+            {
+                "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
+                "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
+                "id": "<?= $option->getId() ?>",
+                "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
+                "organizer": "<?= $option->getCreatorAlt()?>",
+                "url": "#",
+                "class": "event-info",
+                "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
+                "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
+            },
+            <?php endif ?>
         <?php endforeach ?>
     ];
-    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function(data) {
-        $.each( data.items, function( key, item ) {
+    $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function (data) {
+        $.each(data.items, function (key, item) {
             if (item.status != 'cancelled') {
                 calendarItems.push({
                     "isPlanned": "true",
@@ -209,7 +206,9 @@ $form->prepare();
             }
         });
         initCalendar();
-    }).error(function() { initCalendar() });
+    }).error(function () {
+        initCalendar()
+    });
 
 
     function initCalendar() {
@@ -217,7 +216,9 @@ $form->prepare();
             {
                 tmpl_path: "<?= $this->basePath() ?>/tmpls/",
                 tmpl_cache: false,
-                events_source: function () { return calendarItems; },
+                events_source: function () {
+                    return calendarItems;
+                },
                 views: {
                     year: {
                         slide_events: 1,
@@ -234,7 +235,7 @@ $form->prepare();
                         enable: 0
                     }
                 },
-                onAfterViewLoad: function(view) {
+                onAfterViewLoad: function (view) {
                     $('#calendarTitle').text(this.getTitle());
                 },
             });
@@ -249,18 +250,27 @@ $form->prepare();
         $('#deleteModal').modal('show');
     }
 
-    $('.btn-group button[data-calendar-nav]').each(function() {
+    function showApproveModal(optionId) {
+        $('#approveOptionId').val(optionId);
+        $('#approveModal').modal('show');
+    }
+
+    $('.btn-group button[data-calendar-nav]').each(function () {
         var $this = $(this);
-        $this.click(function() {
+        $this.click(function () {
             calendar.navigate($this.data('calendar-nav'));
         });
     });
-    $('.btn-group button[data-calendar-view]').each(function() {
+    $('.btn-group button[data-calendar-view]').each(function () {
         var $this = $(this);
-        $this.click(function() {
+        $this.click(function () {
             $('.active').removeClass('active');
             $this.addClass('active');
             calendar.view($this.data('calendar-view'));
         });
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
