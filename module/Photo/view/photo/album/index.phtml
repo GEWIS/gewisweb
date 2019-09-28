@@ -13,9 +13,12 @@ $this->headTitle($this->translate('Photos'));
         ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
         ->appendFile($this->basePath() . '/js/lazyload.min.js')
         ->appendFile($this->basePath() . '/js/photoswipe.min.js')
-        ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js');
+        ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 ->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
+
+$this->scriptUrl()->requireUrl('member/search');
 ?>
 <style>
     .grid-sizer, .photo-grid-item {
@@ -30,6 +33,20 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
     @media (min-width: 1200px) {
         .grid-sizer, .photo-grid-item {
             width: 16.2%; } }
+    .tagSearch {
+        border: 0;
+        outline: none;
+        box-shadow: none;
+        background: transparent;
+        border-bottom: 1px solid black;
+        background-color: #000;
+        color: #fff;
+        border-color: #FFF;
+    }
+
+    .tagSearch:focus {
+        outline:none;
+    }
 </style>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -126,7 +143,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
             <?php
             $key = 'album-page-' . $album->getId();
             $data = $cache->getItem($key, $success);
-            if (!$success) {
+            if (true || !$success) {
                 ob_start();
             ?>
             <?php foreach ($album->getPhotos() as $item): ?>
@@ -236,8 +253,6 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
     </div>
 </section>
 
-
-
 <script>
     var initPhotoSwipeFromDOM = function(gallerySelector) {
 
@@ -334,8 +349,6 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                 nodeIndex++;
             }
 
-
-
             if(index >= 0) {
                 // open PhotoSwipe if valid index found
                 // TODO: figure out why we need -2 here
@@ -393,6 +406,12 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
                         rect = thumbnail.getBoundingClientRect();
 
                     return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+                },
+                closeElClasses: ['item', 'zoom-wrap', 'ui', 'top-bar'],
+                isClickableElement: function(el) {
+                    // TODO: this might break things
+                    // Although this fixes the tagging UI
+                    return true;
                 }
 
             };
@@ -428,11 +447,14 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
             // Pass data to PhotoSwipe and initialize it
             gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
             gallery.init();
+            gallery.listen('afterChange', function() {
+                Photo.initTagging();
+            });
+            Photo.initTagging();
         };
 
         // loop through all gallery elements and bind events
         var galleryElements = document.querySelectorAll( gallerySelector );
-        console.log(galleryElements);
         for(var i = 0, l = galleryElements.length; i < l; i++) {
             galleryElements[i].setAttribute('data-pswp-uid', i+1);
             galleryElements[i].onclick = onThumbnailsClick;
