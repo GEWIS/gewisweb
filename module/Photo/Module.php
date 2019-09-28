@@ -163,15 +163,20 @@ class Module
                         )
                     );
                 },
-                'photo_glide_server' => function($sm) {
-                    $config = $sm->get('config');
-                    return \League\Glide\ServerFactory::create([
-                        'source' => $config['storage']['storage_dir'],
-                        'cache' => $config['storage']['cache_dir'],
-                    ]);
-                }
             ]
         ];
     }
 
+    public function getViewHelperConfig()
+    {
+        return [
+            'factories' => [
+                'glideUrl' => function ($sm) {
+                    $helper = new \Photo\View\Helper\GlideUrl();
+                    $helper->setConfig($sm->getServiceLocator()->get('config'));
+                    return $helper;
+                },
+            ]
+        ];
+    }
 }

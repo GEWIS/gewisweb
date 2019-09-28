@@ -16,11 +16,23 @@ class AlbumController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int)$this->params()->fromRoute('page');
-      /*  $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage,
+        $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage,
             'album');
         if (is_null($albumPage)) {
             return $this->notFoundAction();
-        }*/
+        }
+
+        return new ViewModel($albumPage);
+    }
+
+    /**
+     * Shows a page from the album, or a 404 if this page does not exist
+     *
+     * @return array|ViewModel
+     */
+    public function indexNewAction()
+    {
+        $albumId = $this->params()->fromRoute('album_id');
         $albumService = $this->getServiceLocator()
             ->get('photo_service_album');
 
@@ -28,22 +40,15 @@ class AlbumController extends AbstractActionController
         if ($album === null) {
             return $this->notFoundAction();
         }
-        /*$albums = $albumService->getAlbums($this->album, $offset,
-            $itemCountPerPage);
 
-        $photoCount = $itemCountPerPage - count($albums);
-        $photoStart = max($offset - $this->album->getAlbumCount(), 0);
-        $photos = $photoService->getPhotos($this->album, $photoStart,
-            $photoCount);
-
-        $items = array_merge($albums, $photos);*/
         return new ViewModel([
             'cache' => $this->getServiceLocator()->get('album_page_cache'),
             'album'     => $album,
             'basedir'   => '/',
+            'config' => $this->getServiceLocator()->get('config')['photo']
         ]);
     }
-    
+
     /**
      * Shows a page with photo's of a member, or a 404 if this page does not
      * exist

@@ -7,47 +7,11 @@ while(!is_null($currentAlbum->getParent())) {
     $currentAlbum = $currentAlbum->getParent();
 }
 $this->headTitle($this->translate('Photos'));
- ?>
-<?php $this->headScript()->appendFile($this->basePath() . '/js/photo.js')
-        ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-        ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
-        ->appendFile($this->basePath() . '/js/lazyload.min.js')
-        ->appendFile($this->basePath() . '/js/photoswipe.min.js')
-        ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js')
-        ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
-$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
-->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
-
-$this->scriptUrl()->requireUrl('member/search');
 ?>
-<style>
-    .grid-sizer, .photo-grid-item {
-        width: 49%;
-        margin-bottom: 0.5%; }
-    @media (min-width: 768px) {
-        .grid-sizer, .photo-grid-item {
-            width: 33%; } }
-    @media (min-width: 992px) {
-        .grid-sizer, .photo-grid-item {
-            width: 24.5%; } }
-    @media (min-width: 1200px) {
-        .grid-sizer, .photo-grid-item {
-            width: 16.2%; } }
-    .tagSearch {
-        border: 0;
-        outline: none;
-        box-shadow: none;
-        background: transparent;
-        border-bottom: 1px solid black;
-        background-color: #000;
-        color: #fff;
-        border-color: #FFF;
-    }
-
-    .tagSearch:focus {
-        outline:none;
-    }
-</style>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
+    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+?>
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
@@ -57,15 +21,15 @@ $this->scriptUrl()->requireUrl('member/search');
                 </a>
             </li>
             <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
-            <li>
-                <?php
-                // determine association year
-                $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
-                ?>
-                <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
-                    <?= $associationYear->getYearString() ?>
-                </a>
-            </li>
+                <li>
+                    <?php
+                    // determine association year
+                    $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                    ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                        <?= $associationYear->getYearString() ?>
+                    </a>
+                </li>
             <?php endif; ?>
             <?php
             // first we need to get all parents
@@ -99,9 +63,11 @@ $this->scriptUrl()->requireUrl('member/search');
         </ol>
     </div>
 </section>
-
+<div class="alert alert-danger" role="alert">
+    Wil je meehelpen om de website te testen? Probeer dan <a href="<?= $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) ?>">HIER</a> de nieuwe foto viewer uit!
+</div>
 <section class="section">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
@@ -124,360 +90,70 @@ $this->scriptUrl()->requireUrl('member/search');
         } else {
             $path = $this->url('photo/album', ['album_id' => $album->getId()]);
         }
+        $this->paginationControl(
+            $this->paginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $path
+            ]
+        )
         ?>
-
         <div class="photo-grid">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-            <?php foreach ($album->getChildren() as $item): ?>
-                    <!-- we'll fix this later -->
-                   <!-- <div class="photo-grid-item photo-grid-item-album">
+            <?php foreach ($paginator as $item): ?>
+                <?php if ($item instanceof \Photo\Model\Album): ?>
+                    <div class="photo-grid-item photo-grid-item-album">
                         <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
                             <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
                             <div class="caption">
                                 <?= $this->escapeHtml($item->getName()); ?>
                             </div>
                         </a>
-                    </div> -->
-            <?php endforeach ?>
-            <?php
-            $key = 'album-page-' . $album->getId();
-            $data = $cache->getItem($key, $success);
-            if (true || !$success) {
-                ob_start();
-            ?>
-            <?php foreach ($album->getPhotos() as $item): ?>
-                    <?php
-                    $ar = $item->getAspectRatio();
-                    if (true || $ar === null) {
-                        list($width, $height, $type, $attr) = getimagesize('public/data/' . $item->getSmallThumbPath());
-                        $ar = $height / $width;
-                    }
-                    $size = [
-                        'w' => 300,
-                        'h' => round(300*$ar)
-                    ];
-                    $sizel = [
-                        'w' => 1920,
-                        'h' => round(1920 * $ar)
-                    ];
-                    ?>
-                    <figure class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?= 'https://gewis.nl/~justin/glide/' . $item->getPath()
-                        . '?w=' . $sizel['w'] . '&h=' . $sizel['h'] ?>" data-size="<?= $sizel['w'] . 'x' . $sizel['h'] ?>" data-author="GEWIS" class="gallery-image">
-                            <img class="lazy-load" data-width="<?= $size['w'] ?>" data-height="<?= $size['h'] ?>" data-src="<?= 'https://gewis.nl/~justin/glide/' . $item->getPath()
-                                . '?w=' . $size['w'] . '&h=' . $size['h'] ?>" alt="" data-size="<?= $size['w'] . 'x' . $size['h'] ?>">
-                        </a>
-                        <figcaption style="display:none">
-                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
-                        </figcaption>
-                        <figtags style="display:none">
-                            <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
-                        </figtags>
-                    </figure>
-            <?php endforeach; ?>
-            <?php
-            $data = ob_get_clean();
-                $cache->setItem($key, $data);
-            }
-            echo $data;
-            ?>
-        </div>
-    </div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-
-        <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-                <div class="pswp__top-bar">
-
-                    <!--  Controls are self-explanatory. Order can be changed. -->
-
-                    <div class="pswp__counter"></div>
-
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--info" title="Info"></button>
-
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
                     </div>
-                </div>
-
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-
-            </div>
-
+                <?php else: ?>
+                    <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                        <a href="<?php
+                        if ($album instanceof \Photo\Model\MemberAlbum) {
+                            echo $this->url('photo/member/photo', [
+                                'lidnr' => $album->getMember()->getLidnr(),
+                                'page' => isset($paginator->current) ? $paginator->current : 0,
+                                'photo_id' => $item->getId()]);
+                        } else {
+                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
+                        }
+                        ?>">
+                            <?php
+                            $image = is_null($item->getWeeklyPhoto()) ?
+                                $item->getSmallThumbPath()
+                                : $item->getLargeThumbPath();
+                            $size = getimagesize('public/data/' . $image);
+                            ?>
+                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
+                        </a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
-
+        <div class="pull-right">
+            <?= $this->paginationControl(
+                $this->paginator,
+                // the scrolling style
+                'elastic',
+                'paginator/default',
+                [
+                    'path' => $path
+                ]
+            )
+            ?>
+        </div>
     </div>
 </section>
 
 <script>
-    var initPhotoSwipeFromDOM = function(gallerySelector) {
-
-        // parse slide data (url, title, size ...) from DOM elements
-        // (children of gallerySelector)
-        var parseThumbnailElements = function(el) {
-            var thumbElements = el.childNodes,
-                numNodes = thumbElements.length,
-                items = [],
-                figureEl,
-                linkEl,
-                size,
-                item;
-
-            for(var i = 0; i < numNodes; i++) {
-
-                figureEl = thumbElements[i]; // <figure> element
-                console.log(figureEl);
-                // include only element nodes
-                if(figureEl.nodeType !== 1 || figureEl.tagName !== 'FIGURE') {
-                    continue;
-                }
-
-                linkEl = figureEl.children[0]; // <a> element
-
-                size = linkEl.getAttribute('data-size').split('x');
-
-                // create slide object
-                item = {
-                    src: linkEl.getAttribute('href'),
-                    w: parseInt(size[0], 10),
-                    h: parseInt(size[1], 10)
-                };
-
-
-
-                if(figureEl.children.length > 1) {
-                    // <figcaption> content
-                    item.info = figureEl.children[1].innerHTML;
-                    item.title = figureEl.children[2].innerHTML;
-                }
-
-                if(linkEl.children.length > 0) {
-                    // <img> thumbnail element, retrieving thumbnail url
-                    item.msrc = linkEl.children[0].getAttribute('src');
-                }
-
-                item.el = figureEl; // save link to element for getThumbBoundsFn
-                items.push(item);
-            }
-
-            return items;
-        };
-
-        // find nearest parent element
-        var closest = function closest(el, fn) {
-            return el && ( fn(el) ? el : closest(el.parentNode, fn) );
-        };
-
-        // triggers when user clicks on thumbnail
-        var onThumbnailsClick = function(e) {
-            e = e || window.event;
-            e.preventDefault ? e.preventDefault() : e.returnValue = false;
-
-            var eTarget = e.target || e.srcElement;
-
-            // find root element of slide
-            var clickedListItem = closest(eTarget, function(el) {
-                return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
-            });
-
-            console.log(eTarget.tagName);
-            if(!clickedListItem) {
-                return;
-            }
-
-            // find index of clicked item by looping through all child nodes
-            // alternatively, you may define index via data- attribute
-            var clickedGallery = clickedListItem.parentNode,
-                childNodes = clickedListItem.parentNode.childNodes,
-                numChildNodes = childNodes.length,
-                nodeIndex = 0,
-                index;
-
-            for (var i = 0; i < numChildNodes; i++) {
-                if(childNodes[i].nodeType !== 1) {
-                    continue;
-                }
-
-                if(childNodes[i] === clickedListItem) {
-                    index = nodeIndex;
-                    break;
-                }
-                nodeIndex++;
-            }
-
-            if(index >= 0) {
-                // open PhotoSwipe if valid index found
-                // TODO: figure out why we need -2 here
-                openPhotoSwipe( index-2, clickedGallery );
-            }
-            return false;
-        };
-
-        // parse picture index and gallery index from URL (#&pid=1&gid=2)
-        var photoswipeParseHash = function() {
-            var hash = window.location.hash.substring(1),
-                params = {};
-
-            if(hash.length < 5) {
-                return params;
-            }
-
-            var vars = hash.split('&');
-            for (var i = 0; i < vars.length; i++) {
-                if(!vars[i]) {
-                    continue;
-                }
-                var pair = vars[i].split('=');
-                if(pair.length < 2) {
-                    continue;
-                }
-                params[pair[0]] = pair[1];
-            }
-
-            if(params.gid) {
-                params.gid = parseInt(params.gid, 10);
-            }
-
-            return params;
-        };
-
-        var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
-            var pswpElement = document.querySelectorAll('.pswp')[0],
-                gallery,
-                options,
-                items;
-            console.log(pswpElement);
-            items = parseThumbnailElements(galleryElement);
-
-            // define options (if needed)
-            options = {
-
-                // define gallery index (for URL)
-                galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
-                getThumbBoundsFn: function(index) {
-                    // See Options -> getThumbBoundsFn section of documentation for more info
-                    var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
-                        pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-                        rect = thumbnail.getBoundingClientRect();
-
-                    return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-                },
-                closeElClasses: ['item', 'zoom-wrap', 'ui', 'top-bar'],
-                isClickableElement: function(el) {
-                    // TODO: this might break things
-                    // Although this fixes the tagging UI
-                    return true;
-                }
-
-            };
-
-            // PhotoSwipe opened from URL
-            if(fromURL) {
-                if(options.galleryPIDs) {
-                    // parse real index when custom PIDs are used
-                    // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-                    for(var j = 0; j < items.length; j++) {
-                        if(items[j].pid == index) {
-                            options.index = j;
-                            break;
-                        }
-                    }
-                } else {
-                    // in URL indexes start from 1
-                    options.index = parseInt(index, 10) - 1;
-                }
-            } else {
-                options.index = parseInt(index, 10);
-            }
-
-            // exit if index not found
-            if( isNaN(options.index) ) {
-                return;
-            }
-
-            if(disableAnimation) {
-                options.showAnimationDuration = 0;
-            }
-
-            // Pass data to PhotoSwipe and initialize it
-            gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-            gallery.init();
-            gallery.listen('afterChange', function() {
-                Photo.initTagging();
-            });
-            Photo.initTagging();
-        };
-
-        // loop through all gallery elements and bind events
-        var galleryElements = document.querySelectorAll( gallerySelector );
-        for(var i = 0, l = galleryElements.length; i < l; i++) {
-            galleryElements[i].setAttribute('data-pswp-uid', i+1);
-            galleryElements[i].onclick = onThumbnailsClick;
-        }
-
-        // Parse URL and open gallery if it contains #&pid=3&gid=1
-        var hashData = photoswipeParseHash();
-        if(hashData.pid && hashData.gid) {
-            openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
-        }
-    };
-
-    // execute above function
-
     $(document).ready(function () {
-
         Photo.initGrid();
     });
-    initPhotoSwipeFromDOM('.photo-grid');
-    var lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy-load"
-    });
 </script>
-
-
-
