@@ -132,8 +132,9 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
             <?php foreach ($album->getPhotos() as $item): ?>
                     <?php
                     $ar = $item->getAspectRatio();
-                    if ($ar === null) {
-                        $ar = 0.75;
+                    if (true || $ar === null) {
+                        list($width, $height, $type, $attr) = getimagesize('public/data/' . $item->getSmallThumbPath());
+                        $ar = $height / $width;
                     }
                     $size = [
                         'w' => 300,
