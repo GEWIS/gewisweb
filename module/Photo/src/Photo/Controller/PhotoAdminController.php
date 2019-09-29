@@ -85,7 +85,7 @@ class PhotoAdminController extends AbstractActionController
             ->where('a.aspectRatio is NULL')
             ->orderBy('a.dateTime', 'DESC');
 
-       $photos = $qb->getQuery()->getResult();
+        $photos = $qb->getQuery()->getResult();
         $i=0;
         foreach ($photos as $photo) {
             $i++;
