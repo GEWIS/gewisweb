@@ -43,6 +43,43 @@
   .pswp__button::-moz-focus-inner {
     padding: 0;
     border: 0; }
+.pswp__button_glyph {
+  position: relative;
+  top: 1px;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+
+  width: 44px;
+  height: 44px;
+
+  background: none;
+  cursor: pointer;
+  overflow: visible;
+  -webkit-appearance: none;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  float: right;
+  opacity: 0.75;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+  }
+  .pswp__button_glyph:focus, .pswp__button_glyph:hover {
+  opacity: 1; }
+  .pswp__button_glyph:active {
+  outline: none;
+  opacity: 0.9; }
+  .pswp__button_glyph::-moz-focus-inner {
+  padding: 0;
+  border: 0; }
 
 /* pswp__ui--over-close class it added when mouse is over element that should close gallery */
 .pswp__ui--over-close .pswp__button--close {
@@ -71,12 +108,6 @@
 
 .pswp__button--share {
   background-position: -44px -44px; }
-
-.pswp__button--info {
-  background-position: -170px 0px; }
-
-.pswp__button--download {
-  background-position: -176px 0px; }
 
 .pswp__button--like {
   background-position: -176px -44px; }
