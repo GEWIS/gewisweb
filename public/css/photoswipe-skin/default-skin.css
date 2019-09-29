@@ -75,6 +75,12 @@
 .pswp__button--info {
   background-position: -170px 0px; }
 
+.pswp__button--download {
+  background-position: -176px 0px; }
+
+.pswp__button--like {
+  background-position: -176px -44px; }
+
 .pswp__button--fs {
   display: none; }
 
