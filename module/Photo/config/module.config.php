@@ -119,6 +119,15 @@ return [
                                     ],
                                 ],
                             ],
+                            'vote' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/vote',
+                                    'defaults' => [
+                                        'action' => 'vote',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'photo_download' => [

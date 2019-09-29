@@ -3,6 +3,7 @@
 namespace Photo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class PhotoController extends AbstractActionController
@@ -120,6 +121,7 @@ class PhotoController extends AbstractActionController
     }
 
     /**
+<<<<<<< HEAD
      * For setting a profile picture
      */
     public function setProfilePhotoAction()
@@ -146,6 +148,19 @@ class PhotoController extends AbstractActionController
             ]);
         } else {
             $this->redirect()->toRoute('member/self');
+        }
+    }
+
+    /**
+     * Store a vote for a photo
+     */
+    public function voteAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $photoId = $this->params()->fromRoute('photo_id');
+            $this->getPhotoService()->countVote($photoId);
+            return new JsonModel(['success' => true]);
         }
     }
     

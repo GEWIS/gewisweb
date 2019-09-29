@@ -18,7 +18,8 @@ $this->headTitle($this->translate('Photos'));
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
 ->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
 
-$this->scriptUrl()->requireUrl('member/search');
+$this->scriptUrl()->requireUrl('member/search')
+        ->requireUrl('photo/photo/vote', ['photo_id']);
 ?>
 <style>
     .grid-sizer, .photo-grid-item {
@@ -164,6 +165,7 @@ $this->scriptUrl()->requireUrl('member/search');
                         data-author="GEWIS"
                         class="gallery-image"
                         data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
+                        data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
                     >
                         <img
                             class="lazy-load"
@@ -209,17 +211,14 @@ $this->scriptUrl()->requireUrl('member/search');
 
                     <div class="pswp__counter"></div>
 
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                    <button class="pswp__button pswp__button--download" title="Download"></button>
-                    <button class="pswp__button pswp__button--like" title="Vote"></button>
-                    <button class="pswp__button pswp__button--info" title="Info"></button>
-
+                    <button class="pswp__button_glyph pswp__button--close glyphicon-remove" title="Close (Esc)"></button>
                     <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
                     <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button_glyph pswp__button--download glyphicon-download-alt" title="<?= $this->translate('Download') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+                    <button class="pswp__button_glyph pswp__button--like glyphicon glyphicon-thumbs-up" title="<?= $this->translate('Vote for photo of the week') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+                    <button class="pswp__button_glyph pswp__button--share glyphicon-info-sign" title="<?= $this->translate('Metadata') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+
                     <!-- Preloader -->
                     <!-- element will get class pswp__preloader--active when preloader is running -->
                     <div class="pswp__preloader">

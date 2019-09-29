@@ -5,6 +5,20 @@
  */
 
 Photo = {
+    vote: function(item) {
+        if (item.voted) {
+            return;
+        }
+
+        var url = $('a[href="' + item.src + '"]').data('vote-url');
+        $.post(url, function(data) {
+            $('.pswp__button--like')
+                .attr('title', 'Voted!')
+                .tooltip('fixTitle')
+                .tooltip('show');
+        });
+        item.voted = true;
+    },
     initTagging: function () {
         $('.tagList').find('.remove-tag').each(function () {
             $(this).on('click', Photo.removeTag);
@@ -302,8 +316,19 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             // Allow the captions to hide again (in case tagging made them permanent)
             //$('.pswp__caption').attr('style', '')
             Photo.initTagging();
+            // Reset the like button
+            $('.pswp__button--like')
+                .attr('title', 'Vote for photo of the week')
+                .tooltip()
+                .tooltip('fixTitle');
         });
         Photo.initTagging();
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        gallery.listen('likeButtonClicked', function(item) {
+            Photo.vote(item);
+        });
     };
 
     // loop through all gallery elements and bind events
