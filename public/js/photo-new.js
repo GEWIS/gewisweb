@@ -60,6 +60,11 @@ Photo = {
                         });
                 }
             });
+            $(this).focus(function(e) {
+                // Prevent the textbox from hiding while we're tagging
+                console.log(' xxx');
+                $('.pswp__caption').attr('style', 'opacity: 1 !important')
+            });
         });
 
     },
@@ -119,7 +124,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         for(var i = 0; i < numNodes; i++) {
 
             figureEl = thumbElements[i]; // <figure> element
-            console.log(figureEl);
             // include only element nodes
             if(figureEl.nodeType !== 1 || figureEl.tagName !== 'FIGURE') {
                 continue;
@@ -173,7 +177,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
         });
 
-        console.log(eTarget.tagName);
         if(!clickedListItem) {
             return;
         }
@@ -239,7 +242,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             gallery,
             options,
             items;
-        console.log(pswpElement);
         items = parseThumbnailElements(galleryElement);
 
         // define options (if needed)
@@ -295,9 +297,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         // Pass data to PhotoSwipe and initialize it
         gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-        console.log(gallery._uiElements);
         gallery.init();
         gallery.listen('afterChange', function() {
+            // Allow the captions to hide again (in case tagging made them permanent)
+            //$('.pswp__caption').attr('style', '')
             Photo.initTagging();
         });
         Photo.initTagging();
