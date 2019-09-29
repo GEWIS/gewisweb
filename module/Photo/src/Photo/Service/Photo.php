@@ -4,6 +4,7 @@ namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
 use Photo\Model\Hit as HitModel;
+use Photo\Model\Vote as VoteModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
@@ -489,6 +490,24 @@ class Photo extends AbstractAclService
     }
 
     /**
+     * Count a vote for the specified photo.
+     *
+     * @param int $photoId
+     */
+    public function countVote($photoId)
+    {
+        $member = $this->sm->get('user_role')->getMember();
+        if ($this->getVoteMapper()->findVote($photoId, $member->getLidnr()) !== null) {
+            // Already voted
+            return;
+        }
+        $photo = $this->getPhoto($photoId);
+        $vote = new VoteModel($photo, $member);
+        $this->getVoteMapper()->persist($vote);
+        $this->getVoteMapper()->flush();
+    }
+
+    /**
      * Tags a user in the specified photo.
      *
      * @param integer $photoId
@@ -547,6 +566,16 @@ class Photo extends AbstractAclService
     public function getTagMapper()
     {
         return $this->sm->get('photo_mapper_tag');
+    }
+
+    /**
+     * Get the vote mapper.
+     *
+     * @return \Photo\Mapper\Vote
+     */
+    public function getVoteMapper()
+    {
+        return $this->sm->get('photo_mapper_vote');
     }
 
     /**

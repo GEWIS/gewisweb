@@ -113,6 +113,11 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_mapper_vote' => function ($sm) {
+                    return new Mapper\Vote(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
                 'photo_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
