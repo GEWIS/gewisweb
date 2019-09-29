@@ -319,7 +319,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             // Reset the like button
             $('.pswp__button--like')
                 .attr('title', 'Vote for photo of the week')
-                .tooltip()
+                .tooltip('hide')
                 .tooltip('fixTitle');
         });
         Photo.initTagging();
