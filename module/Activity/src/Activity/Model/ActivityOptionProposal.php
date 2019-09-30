@@ -60,6 +60,13 @@ class ActivityOptionProposal implements OrganResourceInterface
     protected $organ;
 
     /**
+     * Who created this activity proposal, if not an organ
+     *
+     * @Orm\Column(type="string",nullable=true)
+     */
+    protected $organAlt;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -142,11 +149,38 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
+     * @return string
+     */
+    public function getOrganAlt()
+    {
+        return $this->organAlt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganOrAlt()
+    {
+        if ($this->organ) {
+            return $this->organ;
+        }
+        return $this->organAlt;
+    }
+
+    /**
      * @param mixed $organ
      */
     public function setOrgan($organ)
     {
         $this->organ = $organ;
+    }
+
+    /**
+     * @param string $organAlt
+     */
+    public function setOrganAlt($organAlt)
+    {
+        $this->organAlt = $organAlt;
     }
 
     /**
@@ -165,5 +199,24 @@ class ActivityOptionProposal implements OrganResourceInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     *
+     * Returns in order of presense:
+     * 1. The abbreviation of the related organ
+     * 2. The alternative for an organ, other organising parties
+     * 3. The full name of the member who created the proposal
+     * @return mixed
+     */
+    public function getCreatorAlt()
+    {
+        if ($this->getOrgan() !== null) {
+            return  $this->getOrgan()->getAbbr();
+        }
+        if ($this->getOrganAlt() !== null) {
+            return $this->getOrganAlt();
+        }
+        return $this->getCreator()->getMember()->getFullName();
     }
 }

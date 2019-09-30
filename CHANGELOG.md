@@ -1,3 +1,14 @@
+## [v1.5.3](https://github.com/GEWIS/gewisweb/tree/v1.5.3) (2019-09-26)
+
+* Various UI improvements
+* Various bugfixes
+
+## [v1.5.2](https://github.com/GEWIS/gewisweb/tree/v1.5.2) (2019-09-19)
+
+* Improved option calendar
+* Used more informative title for emails to GEFLITST
+* Various bugfixes
+
 ## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-08-31)
 
 * Implemented RFC2324

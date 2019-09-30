@@ -159,7 +159,7 @@ class Member extends AbstractAclService
 
     public function getRegulationDownload($regulation)
     {
-        if (!$this->isAllowed('edit', 'organ')) {
+        if (!$this->isAllowed('download', 'regulations')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to download regulations.')

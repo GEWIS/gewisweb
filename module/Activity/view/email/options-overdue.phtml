@@ -14,7 +14,7 @@ Er zijn een aantal opties ouder dan drie weken,<br />
     </tr>
     <?php foreach($options as $option): ?>
         <tr>
-            <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
+            <td><?= $option->getCreatorAlt() ?></td>
             <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
             <td><?= $option->getProposal()->getCreationTime()->format('d-m-Y') ?></td>
             <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
@@ -40,7 +40,7 @@ There are some options older than 3 weeks,<br />
     </tr>
     <?php foreach($options as $option): ?>
         <tr>
-            <td><?= $option->getProposal()->getOrgan() === null ? $option->getProposal()->getCreator()->getMember()->getFullName() : $option->getProposal()->getOrgan()->getAbbr() ?></td>
+            <td><?= $option->getCreatorAlt() ?></td>
             <td><?= $this->escapeHtml($option->getProposal()->getName()) ?></td>
             <td><?= $option->getProposal()->getCreationTime()->format('d-m-Y') ?></td>
             <td><?= $option->getBeginTime()->format('d-m-Y H:i') ?></td>
