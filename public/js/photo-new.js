@@ -87,7 +87,6 @@ Photo = {
             });
             $(this).focus(function(e) {
                 // Prevent the textbox from hiding while we're tagging
-                console.log(' xxx');
                 $('.pswp__caption').attr('style', 'opacity: 1 !important')
             });
         });

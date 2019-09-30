@@ -8,7 +8,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     <?= $tagCount ? $this->translate(', in this photo:') : '' ?>
     <div class="tagList tagList-<?= $this->photo->getId() ?>">
         <?php foreach ($this->photo->getTags() as $tag): ?>
-            <span>
+            <span style="display:block">
                 <a href="<?= $this->url('photo/member', ['lidnr' => $tag->getMember()->getLidnr(), 'page' => null]) ?>">
                     <?= $tag->getMember()->getFullName() ?>
                 </a>&nbsp;
@@ -24,7 +24,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                     if ($i == $tagCount)
                         echo 'and';
                 ?>
-                </span>
+            </span>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
