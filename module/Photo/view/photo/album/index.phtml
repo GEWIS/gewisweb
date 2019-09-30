@@ -63,13 +63,15 @@ $this->headTitle($this->translate('Photos'));
         </ol>
     </div>
 </section>
-<div class="alert alert-danger" role="alert">
-    Wil je meehelpen om de website te testen? Probeer dan <a href="<?= $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) ?>">HIER</a> de nieuwe foto viewer uit!
-</div>
+
 <section class="section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    <?= $this->translate('Do you want to help test new features of the website?')?>
+                    <?= sprintf($this->translate('Then try the new photo editor %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) . '">', '</a>' ) ?>
+                </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
                     <small>
