@@ -114,11 +114,11 @@ class Signup extends AbstractAclService
 
         $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
         $result = [];
-        foreach($activity->getSignUps() as $signup){
+        foreach($activity->getSignUps() as $signup) {
             $entry = [];
             $entry['member'] = $signup->getFullName();
             $entry['values'] = [];
-            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
+            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue) {
                 //If there is an option type, get the option object as a 'value'.
                 $isOption = $fieldValue->getField()->getType() === 3;
                 $value = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
@@ -265,7 +265,7 @@ class Signup extends AbstractAclService
         $signup->setActivity($activity);
         $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        foreach ($activity->getFields() as $field){
+        foreach ($activity->getFields() as $field) {
             $fieldValue = new \Activity\Model\ActivityFieldValue();
             $fieldValue->setField($field);
             $value = $fieldResults[$field->getId()];
@@ -373,7 +373,7 @@ class Signup extends AbstractAclService
     /**
      * @return ActivityFieldValue
      */
-    public function getActivityFieldValueMapper(){
+    public function getActivityFieldValueMapper() {
 
         return $this->getServiceManager()->get('activity_mapper_activity_field_value');
     }

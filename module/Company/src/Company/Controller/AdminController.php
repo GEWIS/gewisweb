@@ -239,7 +239,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             if ($companyService->saveCategory(
                 $request->getPost()
-            )){
+            )) {
                 return $this->redirect()->toRoute(
                     'admin_company/editCategory',
                     [
@@ -301,7 +301,7 @@ class AdminController extends AbstractActionController
                 $company,
                 $post,
                 $request->getFiles()
-            )){
+            )) {
                 $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
                     'admin_company/default',

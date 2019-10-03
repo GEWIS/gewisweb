@@ -174,7 +174,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
      */
     protected function fieldDependantRequired($value, $context, $child, $testvalue) {
 
-        if ($value === $testvalue){
+        if ($value === $testvalue) {
             return (new NotEmpty())->isValid($context[$child]);
         }
 

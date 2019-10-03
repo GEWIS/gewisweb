@@ -25,7 +25,7 @@ class ActivityController extends AbstractActionController
         $langSession = new SessionContainer('lang');
         $activities = $queryService->getUpcomingActivities($this->params('category'));
         $translatedActivities = [];
-        foreach ($activities as $activity){
+        foreach ($activities as $activity) {
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         }
         return ['activities' => $translatedActivities, 'category' => $this->params('category')];
@@ -170,7 +170,7 @@ class ActivityController extends AbstractActionController
         $translator = $activityService->getTranslator();
 
         //Assure the form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             $error = $translator->translate('Use the form to subscribe');
             $this->redirectActivityRequest($id, false, $error);
             return;
@@ -196,7 +196,7 @@ class ActivityController extends AbstractActionController
         $form->setData($postData);
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             $error = $translator->translate('Invalid form');
             $activityRequestSession = new SessionContainer('activityRequest');
             $activityRequestSession->signupData = $postData->toArray();
@@ -275,7 +275,7 @@ class ActivityController extends AbstractActionController
         $translator = $activityService->getTranslator();
 
         //Assure a form is used
-        if (!$this->getRequest()->isPost()){
+        if (!$this->getRequest()->isPost()) {
             $message = $translator->translate('Use the form to unsubscribe');
             $this->redirectActivityRequest($id, false, $message);
             return;
@@ -285,7 +285,7 @@ class ActivityController extends AbstractActionController
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()){
+        if (!$form->isValid()) {
             $message = $translator->translate('Wrong form');
             $this->redirectActivityRequest($id, false, $message);
             return;
@@ -308,7 +308,7 @@ class ActivityController extends AbstractActionController
 
         $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new DateTime();
 
-        if($subscriptionDeadLinePassed) {
+        if ($subscriptionDeadLinePassed) {
             $message = $translator->translate('You are not allowed to unsubscribe after the deadline!');
             $this->redirectActivityRequest($id, false, $message);
             return;
@@ -372,7 +372,7 @@ class ActivityController extends AbstractActionController
 
         $activities = $queryService->getFinishedActivitiesByYear($year);
         $translatedActivities = [];
-        foreach ($activities as $activity){
+        foreach ($activities as $activity) {
             $translatedActivities[] = $translatorService->getTranslatedActivity($activity, $langSession->lang);
         }
 

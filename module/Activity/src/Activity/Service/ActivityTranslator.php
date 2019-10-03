@@ -60,9 +60,9 @@ class ActivityTranslator extends AbstractService
             ($preferredLanguage === 'en' && is_null($activity->getNameEn())) ? 'nl':'en';
         $signupService = $this->getServiceManager()->get('activity_service_signup');
         $translatedSignupData = $signupService->getSignedUpData($activity);
-        for ($i=0; $i<count($translatedSignupData); $i++){
-            foreach ($activity->getFields() as $field){
-                if ($field->getType() === 3){
+        for ($i=0; $i<count($translatedSignupData); $i++) {
+            foreach ($activity->getFields() as $field) {
+                if ($field->getType() === 3) {
                     if (count($translatedSignupData[$i]['values']) != 1) {
                         continue;
                     }
@@ -106,20 +106,20 @@ class ActivityTranslator extends AbstractService
         //TODO: add organ when relevant.
 
 
-        if ($language === 'en'){
+        if ($language === 'en') {
             $activityTranslation->setName($activity->getNameEn());
             $activityTranslation->setLocation($activity->getLocationEn());
             $activityTranslation->setCosts($activity->getCostsEn());
             $activityTranslation->setDescription($activity->getDescriptionEn());
         }
-        if ($language === 'nl'){
+        if ($language === 'nl') {
             $activityTranslation->setName($activity->getName());
             $activityTranslation->setLocation($activity->getLocation());
             $activityTranslation->setCosts($activity->getCosts());
             $activityTranslation->setDescription($activity->getDescription());
         }
         $fieldTranslations = [];
-        foreach ($activity->getFields() as $field){
+        foreach ($activity->getFields() as $field) {
             $fieldTranslations[] = $this->createActivityFieldTranslation($field, $language);
         }
         $activityTranslation->setFields($fieldTranslations);
@@ -138,14 +138,14 @@ class ActivityTranslator extends AbstractService
         $fieldTranslation->setMaximumValue($field->getMaximumValue());
         $fieldTranslation->setType($field->getType());
 
-        if ($language === 'en'){
+        if ($language === 'en') {
             $fieldTranslation->setName($field->getNameEn());
         }
-        if ($language === 'nl'){
+        if ($language === 'nl') {
             $fieldTranslation->setName($field->getName());
         }
         $optionTranslations = [];
-        foreach ($field->getOptions() as $option){
+        foreach ($field->getOptions() as $option) {
             $optionTranslations[] = $this->createActivityOptionTranslation($option, $language);
         }
         $fieldTranslation->setOptions($optionTranslations);
@@ -167,10 +167,10 @@ class ActivityTranslator extends AbstractService
         $optionTranslation->setField($option->getField());
         $optionTranslation->setId($option->getId());
 
-        if ($language === 'en'){
+        if ($language === 'en') {
             $optionTranslation->setValue($option->getValueEn());
         }
-        if ($language === 'nl'){
+        if ($language === 'nl') {
             $optionTranslation->setValue($option->getValue());
         }
 

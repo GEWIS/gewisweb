@@ -39,7 +39,7 @@ class UserController extends AbstractActionController
     private function handleRedirect($userService, $referer)
     {
         $form = $userService->getLoginForm();
-        if(is_null($form->get('redirect')->getValue())) {
+        if (is_null($form->get('redirect')->getValue())) {
             $redirect = $this->getRequest()->getQuery('redirect');
             if (isset($redirect)) {
                 $form->get('redirect')->setValue($redirect);

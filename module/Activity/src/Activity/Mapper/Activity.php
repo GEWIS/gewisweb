@@ -78,11 +78,11 @@ class Activity
             ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
 
-        if(!is_null($count)) {
+        if (!is_null($count)) {
             $qb->setMaxResults($count);
         }
 
-        if(!is_null($organ)) {
+        if (!is_null($organ)) {
             $qb->andWhere('a.organ = :organ')
                 ->setParameter('organ', $organ);
         }

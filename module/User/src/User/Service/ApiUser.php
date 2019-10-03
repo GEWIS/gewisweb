@@ -3,13 +3,11 @@
 namespace User\Service;
 
 use Application\Service\AbstractAclService;
-
 use User\Form\ApiToken;
-use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
+use User\Model\ApiUser as ApiUserModel;
 use User\Permissions\NotAllowedException;
 use Zend\Permissions\Acl\Acl;
-
 
 /**
  * API User service.
@@ -39,6 +37,16 @@ class ApiUser extends AbstractAclService
             );
         }
         return $this->getApiUserMapper()->findAll();
+    }
+
+    /**
+     * Get the API User mapper.
+     *
+     * @return ApiUserMapper
+     */
+    public function getApiUserMapper()
+    {
+        return $this->getServiceManager()->get('user_mapper_apiuser');
     }
 
     /**
@@ -101,38 +109,6 @@ class ApiUser extends AbstractAclService
     }
 
     /**
-     * Verify and save an API token.
-     *
-     * @param string $token
-     */
-    public function verifyToken($token)
-    {
-        $mapper = $this->getApiUserMapper();
-
-        $this->identity = $mapper->findByToken($token);
-    }
-
-    /**
-     * Generate a token.
-     *
-     * @return string
-     */
-    public function generateToken()
-    {
-        return base64_encode(openssl_random_pseudo_bytes(32));
-    }
-
-    /**
-     * Check if this service has an identity.
-     *
-     * @return boolean
-     */
-    public function hasIdentity()
-    {
-        return null !== $this->identity;
-    }
-
-    /**
      * Get the API token form
      *
      * @return ApiToken
@@ -149,13 +125,35 @@ class ApiUser extends AbstractAclService
     }
 
     /**
-     * Get the API User mapper.
+     * Generate a token.
      *
-     * @return ApiUserMapper
+     * @return string
      */
-    public function getApiUserMapper()
+    public function generateToken()
     {
-        return $this->getServiceManager()->get('user_mapper_apiuser');
+        return base64_encode(openssl_random_pseudo_bytes(32));
+    }
+
+    /**
+     * Verify and save an API token.
+     *
+     * @param string $token
+     */
+    public function verifyToken($token)
+    {
+        $mapper = $this->getApiUserMapper();
+
+        $this->identity = $mapper->findByToken($token);
+    }
+
+    /**
+     * Check if this service has an identity.
+     *
+     * @return boolean
+     */
+    public function hasIdentity()
+    {
+        return null !== $this->identity;
     }
 
     /**
