@@ -3,6 +3,7 @@
 namespace Photo\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+
 /**
  * Url view helper for generating (signed) glide url's
  * Usage: $this->scriptUrl()->requireUrl('/url/route');
