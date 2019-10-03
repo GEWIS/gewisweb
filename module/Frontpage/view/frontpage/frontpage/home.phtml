@@ -1,3 +1,8 @@
+<?php
+
+use Activity\Model\Activity;
+
+?>
 <div class="jumbotron jumbotron--panorama"></div>
 
 <section class="section">
@@ -21,7 +26,7 @@
                                 <?php
                                 // TODO: Fix design and URLs
                                 $lang = $this->plugin('translate')->getTranslator()->getLocale();
-                                if ($item instanceof \Activity\Model\Activity) {
+                                if ($item instanceof Activity) {
                                     echo ($lang === 'en') ? $item->getNameEn() : $item->getName();
                                 } else {
                                     echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
@@ -31,7 +36,7 @@
                             <div style="position: relative; overflow: hidden;">
                                 <div class="reveal reveal-10">
                                     <?php
-                                    if ($item instanceof \Activity\Model\Activity) {
+                                    if ($item instanceof Activity) {
                                         $content = ($lang === 'en') ? $item->getDescriptionEn() : $item->getDescription();
                                     } else {
                                         $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();

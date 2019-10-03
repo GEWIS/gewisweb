@@ -5,6 +5,10 @@ namespace Company\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator as Translator;
+use Zend\Validator\Callback;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\MimeType;
+use Zend\Validator\Regex;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
@@ -72,11 +76,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'name' => 'slugName',
                 'required' => true,
                 'validators' => [
-                    new \Zend\Validator\Callback([
+                    new Callback([
                         'callback' => [$this,'slugNameUnique'],
                         'message' => $this->translator->translate('This slug is already taken'),
                     ]),
-                    new \Zend\Validator\Regex([
+                    new Regex([
                         'message' => $this->translator->translate('This slug contains invalid characters') ,
                         'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                     ]),
@@ -149,11 +153,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                                 if ($value['error'] == 4) {
                                     return true;
                                 }
-                                $extensionValidator = new \Zend\Validator\File\Extension('pdf');
+                                $extensionValidator = new Extension('pdf');
                                 if (!$extensionValidator->isValid($value)) {
                                     return false;
                                 }
-                                $mimeValidator = new \Zend\Validator\File\MimeType('application/pdf');
+                                $mimeValidator = new MimeType('application/pdf');
                                 return $mimeValidator->isValid($value);
 
                             }

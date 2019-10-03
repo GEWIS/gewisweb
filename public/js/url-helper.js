@@ -1,4 +1,4 @@
-URLHelper = {}
+URLHelper = {};
 URLHelper.urls = [];
 
 URLHelper.url = function (name, params) {
@@ -21,4 +21,4 @@ URLHelper.url = function (name, params) {
 
 URLHelper.addUrl = function (name, url) {
     this.urls[name] = url;
-}
+};

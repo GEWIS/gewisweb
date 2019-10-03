@@ -2,6 +2,7 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\Member;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -24,7 +25,7 @@ class MemberApiController extends AbstractActionController
     /**
      * Get the member service.
      *
-     * @return \Decision\Service\Member
+     * @return Member
      */
     public function getMemberService()
     {

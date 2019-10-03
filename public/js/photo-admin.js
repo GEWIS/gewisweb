@@ -79,7 +79,7 @@ Photo.Admin.loadPage = function (resource) {
         $("#btnEdit").attr('href', URLHelper.url('admin_photo/album_edit', {'album_id': data.album.id}));
         $("#btnCreate").attr('href', URLHelper.url('admin_photo/album_create', {'album_id': data.album.id}));
     });
-}
+};
 
 Photo.Admin.regenerateCover = function () {
     $("#coverPreview").hide();
@@ -91,7 +91,7 @@ Photo.Admin.regenerateCover = function () {
             $("#coverSpinner").hide();
         });
     });
-}
+};
 
 Photo.Admin.deleteAlbum = function () {
     $("#deleteConfirm").hide();
@@ -101,7 +101,7 @@ Photo.Admin.deleteAlbum = function () {
     });
     $("#deleteProgress").hide();
     $("#deleteDone").show();
-}
+};
 
 Photo.Admin.deletePhoto = function () {
     $("#deleteConfirm").hide();
@@ -111,7 +111,7 @@ Photo.Admin.deletePhoto = function () {
     });
     $("#deleteProgress").hide();
     $("#deleteDone").show();
-}
+};
 
 Photo.Admin.deleteMultiple = function () {
     $("#multipleDeleteConfirm").hide();
@@ -130,14 +130,14 @@ Photo.Admin.deleteMultiple = function () {
             }
         });
     });
-}
+};
 
 Photo.Admin.resetDeleteMultiple = function() {
     $('#multipleDeleteModal').modal('hide');
     $('#multipleDeleteConfirm').show();
     $('#multipleDeleteProgress').hide();
     Photo.Admin.clearSelection();
-}
+};
 
 Photo.Admin.moveMultiple = function () {
     $("#multipleMoveConfirm").hide();
@@ -157,14 +157,14 @@ Photo.Admin.moveMultiple = function () {
             }
         });
     });
-}
+};
 
 Photo.Admin.resetMoveMultiple = function() {
     $('#multipleMoveModal').modal('hide');
     $('#multipleMoveConfirm').show();
     $('#multipleMoveProgress').hide();
     Photo.Admin.clearSelection();
-}
+};
 
 Photo.Admin.moveAlbum = function () {
     $("#albumMoveSelect").hide();
@@ -176,7 +176,7 @@ Photo.Admin.moveAlbum = function () {
             location.reload(); //reload to update album tree (TODO: update album tree dynamically)
     });
 
-}
+};
 
 Photo.Admin.movePhoto = function () {
     $("#photoMoveSelect").hide();
@@ -190,11 +190,11 @@ Photo.Admin.movePhoto = function () {
     $("#photoMoveProgress").hide();
     $("#photoMoveDone").show();
 
-}
+};
 
 Photo.Admin.init = function () {
     $("#albumControls").hide();
-    var COUNT_SPAN = '<span class="selectedCount"></span>'
+    var COUNT_SPAN = '<span class="selectedCount"></span>';
     $("#btnMultipleMove").html($("#btnMultipleMove").html().replace('%i', COUNT_SPAN));
     $("#btnMultipleDelete").html($("#btnMultipleDelete").html().replace('%i', COUNT_SPAN));
     //we use class instead of id here to get the button since there are multiple instances
@@ -208,12 +208,12 @@ Photo.Admin.init = function () {
         $(location.hash).click();
         //$(location.hash).parent().parent().children().toggle();
     }
-}
+};
 
 Photo.Admin.initPhoto = function() {
     $("#deletePhotoButton").on('click', Photo.Admin.deletePhoto);
     $("#movePhotoButton").on('click', Photo.Admin.movePhoto);
-}
+};
 
 Photo.Admin.itemSelected = function () {
     if (this.checked) {
@@ -230,14 +230,14 @@ Photo.Admin.itemSelected = function () {
         $("#btnMultipleDelete").addClass("btn-hidden");
         $("#btnMultipleMove").addClass("btn-hidden");
     }
-}
+};
 
 Photo.Admin.clearSelection = function() {
     Photo.Admin.selectedCount = 0;
     $(".selectedCount").html(0);
     $("#btnMultipleDelete").addClass("btn-hidden");
     $("#btnMultipleMove").addClass("btn-hidden");
-}
+};
 
 Photo.Admin.updateBreadCrumb = function (target) {
 
@@ -263,7 +263,7 @@ Photo.Admin.updateBreadCrumb = function (target) {
             target = target.parent();
         }
     }
-}
+};
 Photo.Admin.albumClicked = function (e) {
     e.preventDefault();
     //workaround for preventing page from jumping when changing hash
@@ -279,7 +279,7 @@ Photo.Admin.albumClicked = function (e) {
     Photo.Admin.updateBreadCrumb($(this));
     Photo.Admin.loadPage(e.target.href);
 
-}
+};
 
 $.fn.extend({
     treed: function () {
@@ -296,7 +296,7 @@ $.fn.extend({
                     icon.toggleClass("glyphicon-minus-sign glyphicon-plus-sign");
                     $(this).children().children().toggle();
                 }
-            })
+            });
             branch.children().children().toggle();
         });
         //fire event from the dynamically added icon

@@ -2,6 +2,8 @@
 
 namespace Photo\Mapper;
 
+use DateTime;
+use Doctrine\ORM\EntityRepository;
 use Photo\Model\Album as AlbumModel;
 use Doctrine\ORM\EntityManager;
 
@@ -34,7 +36,7 @@ class Album
      *
      * @param integer $albumId the id of the album
      *
-     * @return \Photo\Model\Album|null
+     * @return AlbumModel|null
      */
     public function getAlbumById($albumId)
     {
@@ -44,7 +46,7 @@ class Album
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
@@ -54,7 +56,7 @@ class Album
     /**
      * Returns all the subalbums of a given album.
      *
-     * @param \Photo\Model\Album $parent     the parent album to retrieve the
+     * @param AlbumModel $parent     the parent album to retrieve the
      *                                       subalbum from
      * @param integer            $start      the result to start at
      * @param integer            $maxResults max amount of results to return,
@@ -99,8 +101,8 @@ class Album
     /**
      * Gets all root albums with a start date between the specified dates
      *
-     * @param $start \DateTime start date and time
-     * @param $end   \DateTime end date and time
+     * @param $start DateTime start date and time
+     * @param $end   DateTime end date and time
      *
      * @return array of \Photo\Model\Album
      */
@@ -140,7 +142,7 @@ class Album
     /**
      * Returns the root album containing the most recent photos
      *
-     * @return \Photo\Model\Album
+     * @return AlbumModel
      */
     public function getNewestAlbum()
     {
@@ -161,7 +163,7 @@ class Album
     /**
      * Returns the root album containing the oldest photos
      *
-     * @return \Photo\Model\Album
+     * @return AlbumModel
      */
     public function getOldestAlbum()
     {

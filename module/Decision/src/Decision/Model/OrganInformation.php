@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 
 /**
  * Organ information.
@@ -212,7 +213,7 @@ class OrganInformation
     }
 
     /**
-     * @return \User\Model\User
+     * @return User
      */
     public function getApprover()
     {
@@ -220,7 +221,7 @@ class OrganInformation
     }
 
     /**
-     * @param \User\Model\User $approver
+     * @param User $approver
      */
     public function setApprover($approver)
     {

@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Page;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
@@ -29,7 +30,7 @@ class PageController extends AbstractActionController
     /**
      * Get the Page service.
      *
-     * @return \Frontpage\Service\Page
+     * @return Page
      */
     protected function getPageService()
     {

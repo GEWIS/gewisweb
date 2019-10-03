@@ -4,6 +4,10 @@ namespace Education\Service;
 
 use Application\Service\AbstractService;
 
+use DateInterval;
+use DateTime;
+use Education\Oase\Service\Course;
+use Education\Oase\Service\Study;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Soap\Client as SoapClient;
@@ -22,8 +26,8 @@ class Oase extends AbstractService
     public function update()
     {
         // determine the year to obtain the study in
-        $date = new \DateTime();
-        $date = $date->sub(new \DateInterval('P8M'));
+        $date = new DateTime();
+        $date = $date->sub(new DateInterval('P8M'));
         $year = $date->format('Y');
 
         $studies = $this->getOaseStudyService()->getStudies($year);
@@ -88,7 +92,7 @@ class Oase extends AbstractService
     /**
      * Get the OASE course service.
      *
-     * @return \Education\Oase\Service\Course
+     * @return Course
      */
     public function getOaseCourseService()
     {
@@ -98,7 +102,7 @@ class Oase extends AbstractService
     /**
      * Get the OASE study service.
      *
-     * @return \Education\Oase\Service\Study
+     * @return Study
      */
     public function getOaseStudyService()
     {

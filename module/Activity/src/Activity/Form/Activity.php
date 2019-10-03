@@ -2,13 +2,16 @@
 
 namespace Activity\Form;
 
+use DateTime;
 use Decision\Model\Organ;
+use Exception;
 use Zend\Form\Form;
 use Zend\Mvc\I18n\Translator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\Callback;
 use Zend\Validator\NotEmpty;
 
 class Activity extends Form implements InputFilterProviderInterface
@@ -352,7 +355,7 @@ class Activity extends Form implements InputFilterProviderInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
-        throw new \Exception('Not used');
+        throw new Exception('Not used');
     }
 
     /**
@@ -370,7 +373,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must start before it ends'),
                             ],
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
@@ -392,7 +395,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The subscription must stop before the activity ends'),
                             ],
                             'callback' => ['Activity\Form\Activity', 'beforeEndTime']
@@ -443,10 +446,10 @@ class Activity extends Form implements InputFilterProviderInterface
     public function beforeEndTime($value, $context = [])
     {
         try {
-            $thisTime = new \DateTime($value);
-            $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
+            $thisTime = new DateTime($value);
+            $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
             return $thisTime <= $endTime;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // An exception is an indication that one of the times was not valid
             return false;
         }

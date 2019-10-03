@@ -2,6 +2,8 @@
 
 namespace Company\Controller;
 
+use DateInterval;
+use DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
 use Zend\View\Model\ViewModel;
@@ -22,8 +24,8 @@ class AdminController extends AbstractActionController
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
             'categoryList' => $companyService->getCategoryList(false),
-            'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
-                new \DateInterval("P1M")
+            'packageFuture' => $companyService->getPackageChangeEvents((new DateTime())->add(
+                new DateInterval("P1M")
             )),
         ]);
     }

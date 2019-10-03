@@ -2,6 +2,9 @@
 
 namespace Photo\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+
 /**
  * VirtualAlbum.
  * Album that will never be stored in the database as such.
@@ -17,7 +20,7 @@ class VirtualAlbum extends Album
     /**
      * Get the parent album.
      *
-     * @return \Photo\Model\Album $parent
+     * @return Album $parent
      */
     public function getParent()
     {
@@ -29,11 +32,11 @@ class VirtualAlbum extends Album
      *
      * @param album $parent
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setParent($parent)
     {
-        throw new \Exception("Method is not implemented");
+        throw new Exception("Method is not implemented");
     }
     
     /**
@@ -54,7 +57,7 @@ class VirtualAlbum extends Album
     /**
      * Add a photo to an album.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function addPhoto($photo)
     {
@@ -64,20 +67,20 @@ class VirtualAlbum extends Album
     public function addPhotos(array $photos)
     {
         $this->photos
-            = new \Doctrine\Common\Collections\ArrayCollection(array_merge($this->photos->toArray(),
+            = new ArrayCollection(array_merge($this->photos->toArray(),
             $photos));
     }
     
     /**
      * Add a sub album to an album.
      *
-     * @param \Photo\Model\Album $album
+     * @param Album $album
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addAlbum($album)
     {
-        throw new \Exception("Method is not implemented");
+        throw new Exception("Method is not implemented");
     }
     
     /**

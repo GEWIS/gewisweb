@@ -6,8 +6,8 @@ $this->headTitle(sprintf('%s %d', $meeting->getType(), $meeting->getNumber())); 
         <h1><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
             <small><?= $this->dateFormat(
                     $meeting->getDate(),
-                    \IntlDateFormatter::FULL,
-                    \IntlDateFormatter::NONE,
+                    IntlDateFormatter::FULL,
+                    IntlDateFormatter::NONE,
                     'nl_NL'
                 ) ?></small>
         </h1>

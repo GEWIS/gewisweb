@@ -4,6 +4,7 @@
 namespace User\Service;
 
 use Application\Service\AbstractService;
+use DateTime;
 use Firebase\JWT\JWT;
 use User\Mapper\ApiApp as ApiAppMapper;
 use User\Model\User as UserModel;
@@ -39,8 +40,8 @@ class ApiApp extends AbstractService
         $token = [
             'iss' => 'https://gewis.nl/',
             'lidnr' => $user->getLidnr(),
-            'exp' => (new \DateTime('+5 min'))->getTimestamp(),
-            'iat' => (new \DateTime())->getTimestamp(),
+            'exp' => (new DateTime('+5 min'))->getTimestamp(),
+            'iat' => (new DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
         ];
 

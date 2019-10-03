@@ -4,6 +4,8 @@ namespace Activity\Controller;
 
 use Activity\Model\Activity;
 use Activity\Service\Signup;
+use DateTime;
+use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
@@ -56,8 +58,8 @@ class ActivityController extends AbstractActionController
             $isSignedUp = $isAllowedToSubscribe
                 && $signupService->isSignedUp($translatedActivity, $identity->getMember());
         }
-        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
-        $isArchived = $activity->getEndTime() < new \DateTime();
+        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new DateTime();
+        $isArchived = $activity->getEndTime() < new DateTime();
         $result = [
             'activity' => $translatedActivity,
             'signupOpen' => $activity->getCanSignUp() &&
@@ -138,7 +140,7 @@ class ActivityController extends AbstractActionController
 
             if ($form->isValid()) {
                 $activityService->createActivity(
-                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $form->getData(FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
@@ -159,7 +161,7 @@ class ActivityController extends AbstractActionController
         $id = (int) $this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        /** @var \Activity\Service\Signup $signupService */
+        /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
         /** @var  $activity Activity */
@@ -174,7 +176,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
+        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new DateTime();
 
         // Assure you can sign up for this activity
         if (!$activity->getCanSignup() || $subscriptionDeadLinePassed || $activity->getStatus()!==Activity::STATUS_APPROVED) {
@@ -211,7 +213,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+        $signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
         $message = $translator->translate('Successfully subscribed');
         $this->redirectActivityRequest($id, true, $message);
     }
@@ -247,7 +249,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+        $formData = $form->getData(FormInterface::VALUES_AS_ARRAY);
         $fullName = $formData['fullName'];
         unset($formData['fullName']);
         $email = $formData['email'];
@@ -265,7 +267,7 @@ class ActivityController extends AbstractActionController
         $id = (int) $this->params('id');
         /** @var \Activity\Service\Activity $activityService */
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        /** @var \Activity\Service\SignUp $signupService */
+        /** @var Signup $signupService */
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
@@ -304,7 +306,7 @@ class ActivityController extends AbstractActionController
             return;
         }
 
-        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new \DateTime();
+        $subscriptionDeadLinePassed = $activity->getSubscriptionDeadline() < new DateTime();
 
         if($subscriptionDeadLinePassed) {
             $message = $translator->translate('You are not allowed to unsubscribe after the deadline!');

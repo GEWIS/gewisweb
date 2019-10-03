@@ -82,7 +82,7 @@ class Module
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $translator, $sm->get('activity_doctrine_em'));
+                    $form = new Form\Activity($organs, $translator, $sm->get('activity_doctrine_em'));
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },

@@ -4,6 +4,10 @@ namespace User\Service;
 
 use Application\Service\AbstractAclService;
 
+use DateInterval;
+use DateTime;
+use User\Mapper\LoginAttempt;
+use User\Mapper\Session;
 use User\Model\User as UserModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
@@ -11,6 +15,7 @@ use User\Mapper\User as UserMapper;
 use User\Model\Session as SessionModel;
 use User\Permissions\NotAllowedException;
 use User\Form\Register as RegisterForm;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * User service.
@@ -255,7 +260,7 @@ class User extends AbstractAclService
     public function pinLogin($data)
     {
         if (!$this->isAllowed('pin_login')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to login using pin codes')
             );
         }
@@ -329,7 +334,7 @@ class User extends AbstractAclService
     {
         $attempt = new LoginAttemptModel();
         $attempt->setIp($this->sm->get('user_remoteaddress'));
-        $attempt->setTime(new \DateTime());
+        $attempt->setTime(new DateTime());
         $attempt->setType($type);
         $user = $this->detachUser($user);
         $attempt->setUser($user);
@@ -340,7 +345,7 @@ class User extends AbstractAclService
     {
         $config = $this->getRateLimitConfig();
         $ip = $this->sm->get('user_remoteaddress');
-        $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
+        $since = (new DateTime())->sub(new DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
         if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
             return true;
@@ -411,7 +416,7 @@ class User extends AbstractAclService
     public function getPasswordForm()
     {
         if (!$this->isAllowed('password_change')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate("You are not allowed to change your password")
             );
         }
@@ -478,7 +483,7 @@ class User extends AbstractAclService
     /**
      * Get the session mapper.
      *
-     * @return \User\Mapper\Session
+     * @return Session
      */
     public function getSessionMapper()
     {
@@ -488,7 +493,7 @@ class User extends AbstractAclService
     /**
      * Get the login attempt mapper.
      *
-     * @return \User\Mapper\LoginAttempt
+     * @return LoginAttempt
      */
     public function getLoginAttemptMapper()
     {
@@ -530,7 +535,7 @@ class User extends AbstractAclService
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

@@ -2,6 +2,9 @@
 
 namespace Photo\Controller;
 
+use Exception;
+use Photo\Service\Admin;
+use Photo\Service\Album;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -112,7 +115,7 @@ class AlbumAdminController extends AbstractActionController
             try {
                 $this->getAdminService()->upload($request->getFiles(), $album);
                 $result['success'] = true;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->getResponse()->setStatusCode(500);
                 $result['error'] = $e->getMessage();
             }
@@ -135,7 +138,7 @@ class AlbumAdminController extends AbstractActionController
             try {
                 $this->getAdminService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
                 $result['success'] = true;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->getResponse()->setStatusCode(500);
                 $result['error'] = $e->getMessage();
             }
@@ -190,7 +193,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Get the album service.
      *
-     * @return \Photo\Service\Album
+     * @return Album
      */
     public function getAlbumService()
     {
@@ -200,7 +203,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Get the photo admin service.
      *
-     * @return \Photo\Service\Admin
+     * @return Admin
      */
     public function getAdminService()
     {

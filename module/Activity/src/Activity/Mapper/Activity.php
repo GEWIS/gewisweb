@@ -2,11 +2,14 @@
 
 namespace Activity\Mapper;
 
+use DateTime;
+use Decision\Model\Organ;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use \Activity\Model\Activity as ActivityModel;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use User\Model\User;
 
 class Activity
 {
@@ -88,7 +91,7 @@ class Activity
         if ($category === 'career') {
             $qb->andWhere('a.isMyFuture = 1');
         }
-        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('now', new DateTime());
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
         return $qb->getQuery()->getResult();
@@ -97,7 +100,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date for member
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -139,7 +142,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date that a user is subscribed to
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -150,7 +153,7 @@ class Activity
             ->from('Activity\Model\Activity', 'a')
             ->from('Activity\Model\UserActivitySignup', 'b')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->andWhere('a = b.activity')
@@ -163,7 +166,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date that a user created
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -173,7 +176,7 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.creator = :user')
             ->setParameter('user', $user);
         $result = $qb->getQuery()->getResult();
@@ -183,7 +186,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date that a organ created
      *
-     * @param \Decision\Model\Organ $organ Option organ that should relate to activity
+     * @param Organ $organ Option organ that should relate to activity
      *
      * @return array
      */
@@ -193,7 +196,7 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
             ->setParameter('organ', $organ->getId());
         $result = $qb->getQuery()->getResult();
@@ -256,7 +259,7 @@ class Activity
 
         if (!is_null($filter)) {
             $qb->andWhere($filter)
-                ->setParameter('now', new \DateTime());
+                ->setParameter('now', new DateTime());
         }
 
         $qb->join('a.creator', 'u');
@@ -278,7 +281,7 @@ class Activity
     /**
      * Returns the newest activity that has taken place
      *
-     * @return \Activity\Model\Activity
+     * @return ActivityModel
      */
     public function getNewestActivity()
     {
@@ -296,7 +299,7 @@ class Activity
     /**
      * Returns the oldest activity that has taken place
      *
-     * @return \Activity\Model\Activity
+     * @return ActivityModel
      */
     public function getOldestActivity()
     {

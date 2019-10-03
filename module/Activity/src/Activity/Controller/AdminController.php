@@ -4,6 +4,8 @@ namespace Activity\Controller;
 
 use Activity\Model\Activity;
 use Activity\Service\Signup;
+use User\Permissions\NotAllowedException;
+use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
@@ -79,7 +81,7 @@ class AdminController extends AbstractActionController
             if (!$acl->isAllowed($user, 'activity', 'update')) {
                 //Only admins may update old activities
                 $translator = $this->getServiceLocator()->get('translator');
-                throw new \User\Permissions\NotAllowedException(
+                throw new NotAllowedException(
                     $translator->translate('You are not allowed to update old activities')
                 );
             }
@@ -95,7 +97,7 @@ class AdminController extends AbstractActionController
             if ($form->isValid()) {
                 $updated = $activityService->createUpdateProposal(
                     $activity,
-                    $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY),
+                    $form->getData(FormInterface::VALUES_AS_ARRAY),
                     $postData['language_dutch'],
                     $postData['language_english']
                 );
@@ -156,7 +158,7 @@ class AdminController extends AbstractActionController
             return;
         }
 
-        $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+        $formData = $form->getData(FormInterface::VALUES_AS_ARRAY);
         $fullName = $formData['fullName'];
         unset($formData['fullName']);
         $email = $formData['email'];

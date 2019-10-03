@@ -1,3 +1,8 @@
+<?php
+
+use Activity\Model\Activity;
+
+?>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -48,7 +53,7 @@
         <td></td>
     </tr>
 
-    <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
+    <?php if ($activity->getStatus() === Activity::STATUS_TO_APPROVE): ?>
         <tr>
             <td>
                 <?php $approvalForm->setAttribute('action', $this->url('activity_admin_approval/approve', ['id' => $activity->getId()]));
@@ -75,7 +80,7 @@
             <td></td>
         </tr>
 
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED): ?>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_APPROVED): ?>
         <tr>
             <td>
             </td>
@@ -93,7 +98,7 @@
             <td></td>
         </tr>
 
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_DISAPPROVED): ?>
         <tr>
             <td>
             </td>

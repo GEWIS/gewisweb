@@ -1,6 +1,7 @@
 <?php
 namespace Company\Form;
 
+use Company\Model\JobCategory;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
@@ -73,7 +74,7 @@ class CategoryFieldset extends Fieldset
     }
     public function setLanguage($lang)
     {
-        $jc = new \Company\Model\JobCategory();
+        $jc = new JobCategory();
         $jc->setLanguage($lang);
         $this->setObject($jc);
     }

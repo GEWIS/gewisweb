@@ -4,8 +4,14 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Application\Service\FileStorage;
+use Decision\Mapper\Authorization;
 use Decision\Model\Member as MemberModel;
 
+use Exception;
+use Photo\Service\Photo;
+use User\Permissions\NotAllowedException;
+use Zend\Code\Exception\InvalidArgumentException;
 use Zend\Http\Client as HttpClient;
 
 /**
@@ -19,18 +25,18 @@ class Member extends AbstractAclService
     /**
      * Obtain information about the current user.
      *
-     * @return \Decision\Model\Member
+     * @return MemberModel
      */
     public function getMembershipInfo($lidnr = null)
     {
         if (null === $lidnr && !$this->isAllowed('view_self')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view membership info.')
             );
         } else if (null !== $lidnr && !$this->isAllowed('view')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view members.')
             );
         }
@@ -98,7 +104,7 @@ class Member extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view members.')
             );
         }
@@ -113,7 +119,7 @@ class Member extends AbstractAclService
     {
         if (!$this->isAllowed('login', 'dreamspark')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed login into Microsoft Imagine.')
             );
         }
@@ -149,7 +155,7 @@ class Member extends AbstractAclService
 
         if ($response->getStatusCode() != 200) {
             $translator = $this->getTranslator();
-            throw new \Exception(
+            throw new Exception(
                 $translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
             );
         }
@@ -161,7 +167,7 @@ class Member extends AbstractAclService
     {
         if (!$this->isAllowed('download', 'regulations')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to download regulations.')
             );
         }
@@ -183,14 +189,14 @@ class Member extends AbstractAclService
     {
         if ($days == 0 && !$this->isAllowed('birthdays_today')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the list of today\'s birthdays.')
             );
         }
 
         if ($days > 0 && !$this->isAllowed('birthdays')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the list of birthdays.')
             );
         }
@@ -220,13 +226,13 @@ class Member extends AbstractAclService
     public function searchMembersByName($query)
     {
         if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
-            throw new \Zend\Code\Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 $this->getTranslator()->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
             );
         }
 
         if (!$this->isAllowed('search')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to search for members.')
             );
         }
@@ -272,7 +278,7 @@ class Member extends AbstractAclService
     /**
      * Get the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
@@ -283,7 +289,7 @@ class Member extends AbstractAclService
     /**
      * Get the photo service.
      *
-     * @return \Application\Service\FileStorage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -313,7 +319,7 @@ class Member extends AbstractAclService
     /**
      * Get the authorization mapper.
      *
-     * @return \Decision\Mapper\Authorization
+     * @return Authorization
      */
     public function getAuthorizationMapper()
     {

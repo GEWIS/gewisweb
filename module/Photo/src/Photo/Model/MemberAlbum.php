@@ -2,6 +2,8 @@
 
 namespace Photo\Model;
 
+use Decision\Model\Member;
+
 /**
  * Class MemberAlbum
  * Contains all photos with tags of a member.
@@ -14,7 +16,7 @@ class MemberAlbum extends VirtualAlbum
     /**
      * Member that this album is for
      *
-     * @var \Decision\Model\Member
+     * @var Member
      */
     private $member;
     
@@ -22,9 +24,9 @@ class MemberAlbum extends VirtualAlbum
      * MemberAlbum constructor.
      *
      * @param int                    $id it is best to use the member lidnr here
-     * @param \Decision\Model\Member $member
+     * @param Member $member
      */
-    function __construct($id, \Decision\Model\Member $member)
+    function __construct($id, Member $member)
     {
         parent::__construct($id);
         $this->member = $member;

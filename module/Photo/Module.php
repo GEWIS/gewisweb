@@ -2,6 +2,8 @@
 
 namespace Photo;
 
+use Doctrine\ORM\Events;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\Mvc\MvcEvent;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
@@ -13,8 +15,8 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $em = $sm->get('photo_doctrine_em');
         $dem = $em->getEventManager();
-        $dem->addEventListener([\Doctrine\ORM\Events::prePersist], new AlbumDateListener());
-        $dem->addEventListener([\Doctrine\ORM\Events::preRemove], new RemoveListener($sm));
+        $dem->addEventListener([Events::prePersist], new AlbumDateListener());
+        $dem->addEventListener([Events::preRemove], new RemoveListener($sm));
     }
 
     /**
@@ -84,7 +86,7 @@ class Module
                     return $form;
                 },
                 'photo_hydrator_album' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
                     );
                 },

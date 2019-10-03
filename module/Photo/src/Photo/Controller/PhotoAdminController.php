@@ -2,6 +2,8 @@
 
 namespace Photo\Controller;
 
+use Photo\Service\Admin;
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -73,7 +75,7 @@ class PhotoAdminController extends AbstractActionController
     /**
      * Get the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
@@ -83,7 +85,7 @@ class PhotoAdminController extends AbstractActionController
     /**
      * Get the photo admin service.
      *
-     * @return \Photo\Service\Admin
+     * @return Admin
      */
     public function getAdminService()
     {

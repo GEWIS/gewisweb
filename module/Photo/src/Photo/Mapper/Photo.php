@@ -2,6 +2,9 @@
 
 namespace Photo\Mapper;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityRepository;
+use Photo\Model\MemberAlbum;
 use Photo\Model\Photo as PhotoModel;
 use Doctrine\ORM\EntityManager;
 
@@ -50,7 +53,7 @@ class Photo
         
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1')
                 ->setParameter(1, $album->getMember());
@@ -99,21 +102,21 @@ class Photo
     /**
      * Returns the next photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      * @param \Photo\Model\Album $album
      *
-     * @return \Photo\Model\Photo|null Photo if there is a next
+     * @return PhotoModel|null Photo if there is a next
      * photo, null otherwise
      */
     public function getNextPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     ) {
         $qb = $this->em->createQueryBuilder();
         
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime > ?2')
                 ->setParameter(1, $album->getMember())
@@ -134,20 +137,20 @@ class Photo
     /**
      * Returns the previous photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      *
-     * @return \Photo\Model\Photo|null Photo if there is a previous
+     * @return PhotoModel|null Photo if there is a previous
      * photo, null otherwise
      */
     public function getPreviousPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     ) {
         $qb = $this->em->createQueryBuilder();
         
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime < ?2')
                 ->setParameter(1, $album->getMember())
@@ -172,7 +175,7 @@ class Photo
      * @param string             $path  The storage path of the photo
      * @param \Photo\Model\Album $album the album the photo is in
      *
-     * @return \Photo\Model\Photo|null
+     * @return PhotoModel|null
      */
     public function getPhotoByData($path, $album)
     {
@@ -185,7 +188,7 @@ class Photo
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
@@ -197,7 +200,7 @@ class Photo
      *
      * @param integer $photoId the id of the photo
      *
-     * @return \Photo\Model\Photo
+     * @return PhotoModel
      */
     public function getPhotoById($photoId)
     {
@@ -207,7 +210,7 @@ class Photo
     /**
      * Removes a photo
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function remove(PhotoModel $photo)
     {
@@ -217,7 +220,7 @@ class Photo
     /**
      * Persist photo
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function persist(PhotoModel $photo)
     {
@@ -235,7 +238,7 @@ class Photo
     /**
      * Get the entity manager connection.
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function getConnection()
     {

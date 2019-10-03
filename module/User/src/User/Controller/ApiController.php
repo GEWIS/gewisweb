@@ -9,6 +9,7 @@
 
 namespace User\Controller;
 
+use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 
@@ -40,7 +41,7 @@ class ApiController extends AbstractActionController
     /**
      * Get a user service.
      *
-     * @return \User\Service\User
+     * @return User
      */
     protected function getUserService()
     {

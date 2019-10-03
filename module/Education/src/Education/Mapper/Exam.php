@@ -2,6 +2,7 @@
 
 namespace Education\Mapper;
 
+use Closure;
 use Education\Model\Exam as ExamModel;
 use Doctrine\ORM\EntityManager;
 
@@ -37,7 +38,7 @@ class Exam
      *
      * @param Closure $func
      */
-    public function transactional(\Closure $func)
+    public function transactional(Closure $func)
     {
         return $this->em->transactional(function ($em) use ($func) {
             return $func($this);

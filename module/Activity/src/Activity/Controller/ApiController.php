@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Model\Activity;
 use Activity\Service\Signup;
+use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Form\Activity as ActivityForm;
 use Activity\Form\ActivitySignup as SignupForm;
@@ -45,7 +46,7 @@ class ApiController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
 
             if ($activity->getCanSignup() && $form->isValid()) {
-                $signupService->signUp($activity, $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY));
+                $signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
                 $params['success'] = true;
             }
         }
@@ -104,7 +105,7 @@ class ApiController extends AbstractActionController
     /**
      * Get the signup service
      *
-     * @return \Activity\Service\Signup
+     * @return Signup
      */
     private function getSignupService()
     {

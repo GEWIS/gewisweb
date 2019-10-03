@@ -2,11 +2,16 @@
 
 namespace Photo\Controller\Plugin;
 
+use Photo\Service\Album;
+use Photo\Service\Photo;
+use Zend\Paginator\Adapter\AdapterInterface;
+use Zend\ServiceManager\ServiceManager;
+
 /**
  * Paginator for album pages
  *
  */
-class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
+class AlbumPaginatorAdapter implements AdapterInterface
 {
     
     /**
@@ -25,7 +30,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     /**
      * Service manager
      *
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var ServiceManager
      */
     protected $sm = null;
     
@@ -33,7 +38,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
      * Constructor.
      *
      * @param \Photo\Model\Album                  $album Album to paginate
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param ServiceManager $sm
      */
     public function __construct($album, $sm)
     {
@@ -71,7 +76,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     /**
      * Gets the album service.
      *
-     * @return \Photo\Service\Album
+     * @return Album
      */
     private function getAlbumService()
     {
@@ -81,7 +86,7 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
     /**
      * Gets the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     private function getPhotoService()
     {

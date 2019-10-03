@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -231,7 +232,7 @@ class Organ
      *
      * @param DateTime $foundationDate
      */
-    public function setFoundationDate(\DateTime $foundationDate)
+    public function setFoundationDate(DateTime $foundationDate)
     {
         $this->foundationDate = $foundationDate;
     }
@@ -251,7 +252,7 @@ class Organ
      *
      * @param DateTime $abrogationDate
      */
-    public function setAbrogationDate(\DateTime $abrogationDate)
+    public function setAbrogationDate(DateTime $abrogationDate)
     {
         $this->abrogationDate = $abrogationDate;
     }
@@ -313,7 +314,7 @@ class Organ
     /**
      * Returns the approved information for an organ
      *
-     * @return \Decision\Model\OrganInformation
+     * @return OrganInformation
      */
     public function getApprovedOrganInformation()
     {

@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Poll;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Zend\Paginator\Paginator;
@@ -123,7 +124,7 @@ class PollController extends AbstractActionController
     /**
      * Get the poll service.
      *
-     * @return \Frontpage\Service\Poll
+     * @return Poll
      */
     protected function getPollService()
     {

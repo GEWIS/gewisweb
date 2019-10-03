@@ -1,6 +1,19 @@
 <?php
 namespace Education;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Education\Form\AddCourse;
+use Education\Form\Bulk;
+use Education\Form\SearchCourse;
+use Education\Form\SummaryUpload;
+use Education\Form\TempUpload;
+use Education\Mapper\Exam;
+use Education\Model\Summary;
+use Education\Oase\Client;
+use Education\Oase\Service\Course;
+use Education\Oase\Service\Study;
+use Education\View\Helper\ExamUrl;
+
 class Module
 {
 
@@ -52,89 +65,89 @@ class Module
             ],
             'factories' => [
                 'education_form_tempupload' => function ($sm) {
-                    return new \Education\Form\TempUpload(
+                    return new TempUpload(
                         $sm->get('translator')
                     );
                 },
                 'education_form_summaryupload' => function ($sm) {
-                    $form = new \Education\Form\SummaryUpload(
+                    $form = new SummaryUpload(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('education_hydrator'));
                     return $form;
                 },
                 'education_form_add_course' => function ($sm) {
-                    return new \Education\Form\AddCourse(
+                    return new AddCourse(
                         $sm->get('translator')
                     );
                 },
                 'education_form_bulk_exam' => function ($sm) {
-                    return new \Education\Form\Bulk(
+                    return new Bulk(
                         $sm->get('translator'), $sm->get('education_form_fieldset_exam')
                     );
                 },
                 'education_form_bulk_summary' => function ($sm) {
-                    return new \Education\Form\Bulk(
+                    return new Bulk(
                         $sm->get('translator'), $sm->get('education_form_fieldset_summary')
                     );
                 },
                 'education_form_searchcourse' => function ($sm) {
-                    return new \Education\Form\SearchCourse(
+                    return new SearchCourse(
                         $sm->get('translator')
                     );
                 },
                 'education_form_fieldset_exam' => function ($sm) {
-                    $fieldset = new \Education\Form\Fieldset\Exam(
+                    $fieldset = new Form\Fieldset\Exam(
                         $sm->get('translator')
                     );
                     $fieldset->setConfig($sm->get('config'));
-                    $fieldset->setObject(new \Education\Model\Exam());
+                    $fieldset->setObject(new Model\Exam());
                     $fieldset->setHydrator($sm->get('education_hydrator_exam'));
                     return $fieldset;
                 },
                 'education_form_fieldset_summary' => function ($sm) {
-                    $fieldset = new \Education\Form\Fieldset\Summary(
+                    $fieldset = new Form\Fieldset\Summary(
                         $sm->get('translator')
                     );
                     $fieldset->setConfig($sm->get('config'));
-                    $fieldset->setObject(new \Education\Model\Summary());
+                    $fieldset->setObject(new Summary());
                     $fieldset->setHydrator($sm->get('education_hydrator'));
                     return $fieldset;
                 },
                 'education_mapper_exam' => function ($sm) {
-                    return new \Education\Mapper\Exam(
+                    return new Exam(
                         $sm->get('education_doctrine_em')
                     );
                 },
                 'education_mapper_course' => function ($sm) {
-                    return new \Education\Mapper\Course(
+                    return new Mapper\Course(
                         $sm->get('education_doctrine_em')
                     );
                 },
                 'education_mapper_study' => function ($sm) {
-                    return new \Education\Mapper\Study(
+                    return new Mapper\Study(
                         $sm->get('education_doctrine_em')
                     );
                 },
                 'education_hydrator_study' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Study'
                     );
                 },
                 'education_hydrator_course' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Course'
                     );
                 },
                 'education_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('education_doctrine_em')
                     );
                 },
                 'education_hydrator_exam' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Exam'
                     );
@@ -147,19 +160,19 @@ class Module
                     );
                 },
                 'education_oase_client' => function ($sm) {
-                    return new \Education\Oase\Client(
+                    return new Client(
                         $sm->get('education_oase_soapclient')
                     );
                 },
                 'education_oase_service_course' => function ($sm) {
-                    $service = new \Education\Oase\Service\Course(
+                    $service = new Course(
                         $sm->get('education_oase_client')
                     );
                     $service->setHydrator($sm->get('education_hydrator_course'));
                     return $service;
                 },
                 'education_oase_service_study' => function ($sm) {
-                    $service = new \Education\Oase\Service\Study(
+                    $service = new Study(
                         $sm->get('education_oase_client')
                     );
                     $config = $sm->get('config');
@@ -206,7 +219,7 @@ class Module
                 'examUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $config = $locator->get('config');
-                    $helper = new \Education\View\Helper\ExamUrl();
+                    $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);
                     $helper->setExamService($locator->get('education_service_exam'));
                     return $helper;

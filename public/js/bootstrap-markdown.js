@@ -679,7 +679,7 @@
         ('selectionStart' in e && function() {
           e.selectionStart = start;
           e.selectionEnd = end;
-          return;
+
         }) ||
 
         /* browser not supported */
@@ -743,7 +743,7 @@
         this.setSelection(oldSelection.start, oldSelection.end);
       }
 
-      return;
+
     },
     __parseButtonNameParam: function(names) {
       return typeof names == 'string' ?

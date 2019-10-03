@@ -146,7 +146,7 @@ class Company
      *
      * @param string $slugName the slugname to find
      *
-     * @return \Company\Model\Company | null
+     * @return CompanyModel | null
      */
     public function findCompanyBySlugName($slugName)
     {

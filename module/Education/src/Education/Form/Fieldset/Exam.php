@@ -6,6 +6,7 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use zend\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
+use Zend\Validator\File\Exists;
 
 class Exam extends Fieldset
     implements InputFilterProviderInterface
@@ -92,7 +93,7 @@ class Exam extends Fieldset
                         'name' => 'callback',
                         'options' => [
                             'callback' => function ($value) use ($dir) {
-                                $validator = new \Zend\Validator\File\Exists([
+                                $validator = new Exists([
                                     'directory' => $dir
                                 ]);
                                 return $validator->isValid($value);

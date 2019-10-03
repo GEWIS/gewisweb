@@ -1,6 +1,8 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+<?php use Zend\Paginator\Paginator;
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <ul class="list-group">
-    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
+    <?php if ($activities instanceof Paginator): ?>
         <li class="list-group-item agenda-item">
             <?= $this->paginationControl($activities,
                 'Elastic',
@@ -66,7 +68,7 @@
         </li>
     <?php endif; ?>
 
-    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
+    <?php if ($activities instanceof Paginator): ?>
         <li class="list-group-item agenda-item">
             <?= $this->paginationControl($activities,
                 'Elastic',

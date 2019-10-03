@@ -2,6 +2,9 @@
 
 namespace Activity\Form;
 
+use Activity\Model\ActivityField;
+use Activity\Model\UserActivitySignup;
+use Exception;
 use Zend\Form\Form;
 //input filter
 use Zend\InputFilter\InputFilterInterface;
@@ -23,7 +26,7 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new \Activity\Model\UserActivitySignup());
+            ->setObject(new UserActivitySignup());
 
         $this->add([
             'name' => 'security',
@@ -142,14 +145,14 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
-        throw new \Exception('Not used');
+        throw new Exception('Not used');
     }
 
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
      *
-     * @param \Activity\Model\ActivityField $field
+     * @param ActivityField $field
      * @param bool $setEnglish
      * @return array
      */

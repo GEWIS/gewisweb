@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\News;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
@@ -91,7 +92,7 @@ class NewsAdminController extends AbstractActionController
     /**
      * Get the News service.
      *
-     * @return \Frontpage\Service\News
+     * @return News
      */
     protected function getNewsService()
     {

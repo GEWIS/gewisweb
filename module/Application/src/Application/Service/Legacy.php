@@ -2,6 +2,10 @@
 
 namespace Application\Service;
 
+use Exception;
+use User\Model\User;
+use Zend\Crypt\Password\Bcrypt;
+
 /**
  * This service contains all bindings to legacy systems such as SuSOS and the old website.
  * Hopefully this service will no longer be needed in the future. For that reason ugly code is
@@ -13,9 +17,9 @@ class Legacy extends AbstractService
     /**
      * Checks if a SuSOS pincode is correct.
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @param \User\Model\User $user
+     * @param User $user
      * @param string $pincode
      *
      * @return bool indicating whether the pincode was correct.
@@ -28,11 +32,11 @@ class Legacy extends AbstractService
     /**
      * Checks a password against the old website's database and saves it in the new database if corrrect
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @param \User\Model\User $user
+     * @param User $user
      * @param string $password
-     * @param \Zend\Crypt\Password\Bcrypt $bcrypt
+     * @param Bcrypt $bcrypt
      *
      * @return bool indicating if password was correct
      */

@@ -2,9 +2,12 @@
 
 namespace Decision\Model\SubDecision\Board;
 
+use function date_default_timezone_get;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use Decision\Model\SubDecision;
+use IntlDateFormatter;
 
 /**
  * Release from board duties.
@@ -62,7 +65,7 @@ class Release extends SubDecision
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -72,7 +75,7 @@ class Release extends SubDecision
     /**
      * Set the date.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      */
     public function setDate($date)
     {
@@ -106,13 +109,13 @@ class Release extends SubDecision
      *
      * @return string Formatted date
      */
-    protected function formatDate(\DateTime $date)
+    protected function formatDate(DateTime $date)
     {
-        $formatter = new \IntlDateFormatter(
+        $formatter = new IntlDateFormatter(
             'nl_NL', // yes, hardcoded :D
-            \IntlDateFormatter::NONE,
-            \IntlDateFormatter::NONE,
-            \date_default_timezone_get(),
+            IntlDateFormatter::NONE,
+            IntlDateFormatter::NONE,
+            date_default_timezone_get(),
             null,
             'd MMMM Y'
         );

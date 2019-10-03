@@ -61,7 +61,7 @@ class Authorization
     }
 
     /**
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getAuthorizer()
     {
@@ -69,7 +69,7 @@ class Authorization
     }
 
     /**
-     * @param \Decision\Model\Member $authorizer
+     * @param Member $authorizer
      */
     public function setAuthorizer($authorizer)
     {
@@ -77,7 +77,7 @@ class Authorization
     }
 
     /**
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getRecipient()
     {
@@ -85,7 +85,7 @@ class Authorization
     }
 
     /**
-     * @param \Decision\Model\Member $recipient
+     * @param Member $recipient
      */
     public function setRecipient($recipient)
     {

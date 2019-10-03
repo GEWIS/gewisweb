@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -48,7 +49,7 @@ class Hit implements ResourceInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
@@ -56,7 +57,7 @@ class Hit implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Photo
+     * @return Photo
      */
     public function getPhoto()
     {
@@ -72,7 +73,7 @@ class Hit implements ResourceInterface
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      */
     public function setDateTime($dateTime)
     {
@@ -80,7 +81,7 @@ class Hit implements ResourceInterface
     }
 
     /**
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function setPhoto($photo)
     {

@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Frontpage;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
@@ -17,7 +18,7 @@ class FrontpageController extends AbstractActionController
     /**
      * Get the frontpage service.
      *
-     * @return \Frontpage\Service\Frontpage
+     * @return Frontpage
      */
     protected function getFrontpageService()
     {

@@ -1,4 +1,6 @@
-<?php require_once '../include.php'; ?>
+<?php use User\Model\User;
+
+require_once '../include.php'; ?>
 
 <?php
 // Set a title
@@ -8,7 +10,7 @@ $this->headTitle('My awesome page - GEWIS');
 $user = $this->identity();
 
 $userLoggedIn = false;
-if ($user instanceof \User\Model\User) {
+if ($user instanceof User) {
     $userLoggedIn = true;
 }
 

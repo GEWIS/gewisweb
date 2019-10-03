@@ -4,6 +4,7 @@ namespace Education\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use InvalidArgumentException;
 
 /**
  * Study.
@@ -144,7 +145,7 @@ class Study
             self::PHASE_BACHELOR,
             self::PHASE_MASTER
         ])) {
-            throw new \InvalidArgumentException("Invalid phase given.");
+            throw new InvalidArgumentException("Invalid phase given.");
         }
         $this->phase = $phase;
     }

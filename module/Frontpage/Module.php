@@ -2,6 +2,13 @@
 
 namespace Frontpage;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Frontpage\Form\NewsItem;
+use Frontpage\Form\Page;
+use Frontpage\Form\Poll;
+use Frontpage\Form\PollApproval;
+use Frontpage\Form\PollComment;
+
 class Module
 {
     /**
@@ -54,7 +61,7 @@ class Module
             ],
             'factories' => [
                 'frontpage_form_page' => function ($sm) {
-                    $form = new \Frontpage\Form\Page(
+                    $form = new Page(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -62,7 +69,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll' => function ($sm) {
-                    $form = new \Frontpage\Form\Poll(
+                    $form = new Poll(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -70,14 +77,14 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll_comment' => function ($sm) {
-                    $form = new \Frontpage\Form\PollComment(
+                    $form = new PollComment(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
                     return $form;
                 },
                 'frontpage_form_poll_approval' => function ($sm) {
-                    $form = new \Frontpage\Form\PollApproval(
+                    $form = new PollApproval(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -85,7 +92,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_news_item' => function ($sm) {
-                    $form = new \Frontpage\Form\NewsItem(
+                    $form = new NewsItem(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -93,7 +100,7 @@ class Module
                     return $form;
                 },
                 'frontpage_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },

@@ -82,7 +82,7 @@ class ActivityTranslator extends AbstractService
      *
      * @param ActivityModel $activity
      * @param type $language
-     * @return \Activity\Model\ActivityTranslation
+     * @return ActivityTranslationModel
      */
     protected function createActivityTranslation(ActivityModel $activity, $language)
     {
@@ -157,7 +157,7 @@ class ActivityTranslator extends AbstractService
      * Create an option translation of the specified language
      * @param ActivityOptionModel $option
      * @param string $language 'nl' or 'en'
-     * @return \Activity\Model\ActivityOptionTranslation
+     * @return OptionTranslationModel
      */
     protected function createActivityOptionTranslation(ActivityOptionModel $option, $language) {
 

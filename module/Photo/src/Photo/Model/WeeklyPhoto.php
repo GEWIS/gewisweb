@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -47,7 +48,7 @@ class WeeklyPhoto implements ResourceInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getWeek()
     {
@@ -55,7 +56,7 @@ class WeeklyPhoto implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Photo
+     * @return Photo
      */
     public function getPhoto()
     {
@@ -71,7 +72,7 @@ class WeeklyPhoto implements ResourceInterface
     }
 
     /**
-     * @param \DateTime $week
+     * @param DateTime $week
      */
     public function setWeek($week)
     {
@@ -79,7 +80,7 @@ class WeeklyPhoto implements ResourceInterface
     }
 
     /**
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function setPhoto($photo)
     {

@@ -64,7 +64,7 @@ class PollOption implements ResourceInterface
     }
 
     /**
-     * @return \Frontpage\Model\Poll
+     * @return Poll
      */
     public function getPoll()
     {
@@ -90,7 +90,7 @@ class PollOption implements ResourceInterface
     /**
      * Adds a new vote for this poll option
      *
-     * @param \Frontpage\Model\PollVote $pollVote
+     * @param PollVote $pollVote
      */
     public function addVote($pollVote)
     {

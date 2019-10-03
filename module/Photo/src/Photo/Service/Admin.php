@@ -3,8 +3,16 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\Storage;
+use Decision\Service\Member;
+use Exception;
+use Photo\Mapper\Tag;
 use Photo\Model\Photo as PhotoModel;
 use Imagick;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\IsImage;
 
 /**
  * Admin service for all photo admin related functions.
@@ -20,12 +28,12 @@ class Admin extends AbstractAclService
      * @param \Photo\Model\Album $targetAlbum the album to save the photo in
      * @param boolean $move whether to move the photo instead of copying it
      *
-     * @return \Photo\Model\Photo|boolean
+     * @return PhotoModel|boolean
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
         if (!$this->isAllowed('add', 'photo')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to add photos.')
             );
         }
@@ -108,18 +116,18 @@ class Admin extends AbstractAclService
      * @param string $path The path of the directory.
      * @param \Photo\Model\Album $targetAlbum album The album to store the photos.
      *
-     * @throws \Exception on invalid path
+     * @throws Exception on invalid path
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
         if (!$this->isAllowed('import', 'photo')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to import photos.')
             );
         }
 
         $albumService = $this->getAlbumService();
-        $image = new \Zend\Validator\File\IsImage(['magicFile' => false]);
+        $image = new IsImage(['magicFile' => false]);
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
@@ -137,7 +145,7 @@ class Admin extends AbstractAclService
             closedir($handle);
         } else {
             $translator = $this->getTranslator();
-            throw new \Exception(
+            throw new Exception(
                 $translator->translate('The specified path is not valid')
             );
         }
@@ -147,16 +155,16 @@ class Admin extends AbstractAclService
     {
         $this->checkUploadAllowed();
 
-        $imageValidator = new \Zend\Validator\File\IsImage(
+        $imageValidator = new IsImage(
             ['magicFile' => false]
         );
-        $extensionValidator = new \Zend\Validator\File\Extension(
+        $extensionValidator = new Extension(
             ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
         $translator = $this->getTranslator();
 
         if ($files['file']['error'] !== 0) {
-            throw new \Exception(
+            throw new Exception(
                 $translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
             );
         }
@@ -172,12 +180,12 @@ class Admin extends AbstractAclService
             if ($extensionValidator->isValid($path)) {
                 $this->storeUploadedPhoto($path, $album, true);
             } else {
-                throw new \Exception(
+                throw new Exception(
                     $translator->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
-            throw new \Exception(
+            throw new Exception(
                 sprintf(
                     $translator->translate("The uploaded file is not a valid image \nError: %s"),
                     implode(',', array_values($imageValidator->getMessages()))
@@ -192,7 +200,7 @@ class Admin extends AbstractAclService
     public function checkUploadAllowed()
     {
         if (!$this->isAllowed('upload', 'photo')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to upload photos.')
             );
         }
@@ -233,7 +241,7 @@ class Admin extends AbstractAclService
     /**
      * Get the tag mapper.
      *
-     * @return \Photo\Mapper\Tag
+     * @return Tag
      */
     public function getTagMapper()
     {
@@ -243,7 +251,7 @@ class Admin extends AbstractAclService
     /**
      * Gets the metadata service.
      *
-     * @return \Photo\Service\Metadata
+     * @return Metadata
      */
     public function getMetadataService()
     {
@@ -253,7 +261,7 @@ class Admin extends AbstractAclService
     /**
      * Gets the album service.
      *
-     * @return \Photo\Service\Album
+     * @return Album
      */
     public function getAlbumService()
     {
@@ -263,7 +271,7 @@ class Admin extends AbstractAclService
     /**
      * Get the member service.
      *
-     * @return \Decision\Service\Member
+     * @return Member
      */
     public function getMemberService()
     {
@@ -273,7 +281,7 @@ class Admin extends AbstractAclService
     /**
      * Gets the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
@@ -283,7 +291,7 @@ class Admin extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return Storage
      */
     public function getFileStorageService()
     {
@@ -303,7 +311,7 @@ class Admin extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

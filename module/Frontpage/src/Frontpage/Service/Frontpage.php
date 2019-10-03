@@ -4,9 +4,16 @@ namespace Frontpage\Service;
 
 use Activity\Form\ActivityCalendarProposal;
 use Application\Service\AbstractAclService;
+use Company\Service\Company;
+use DateTime;
+use Decision\Service\Member;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
+use Doctrine\ORM\NoResultException;
 use Frontpage\Model\NewsItem;
 use Activity\Model\Activity;
+use Photo\Mapper\Tag;
+use Photo\Service\Photo;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * Frontpage service.
@@ -49,7 +56,7 @@ class Frontpage extends AbstractAclService
     public function getBirthdayInfo()
     {
         $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
-        $today = new \DateTime();
+        $today = new DateTime();
         $birthdays = [];
         $members = [];
         foreach ($birthdayMembers as $member) {
@@ -61,7 +68,7 @@ class Frontpage extends AbstractAclService
 
         try {
             $tag = $this->getTagMapper()->getMostActiveMemberTag($members);
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             $tag = null;
         }
 
@@ -110,12 +117,12 @@ class Frontpage extends AbstractAclService
      */
     public function getItemTimestamp($item)
     {
-        $now = (new \DateTime())->getTimestamp();
-        if ($item instanceof \Activity\Model\Activity) {
+        $now = (new DateTime())->getTimestamp();
+        if ($item instanceof Activity) {
             return abs($item->getBeginTime()->getTimestamp() - $now);
         }
 
-        if ($item instanceof \Frontpage\Model\NewsItem) {
+        if ($item instanceof NewsItem) {
             return abs($item->getDate()->getTimeStamp() - $now);
         }
 
@@ -146,7 +153,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the photo module's tag mapper.
      *
-     * @return \Photo\Mapper\Tag
+     * @return Tag
      */
     public function getTagMapper()
     {
@@ -166,7 +173,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
@@ -176,7 +183,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the member service.
      *
-     * @return \Decision\Service\Member
+     * @return Member
      */
     public function getMemberService()
     {
@@ -186,7 +193,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the poll service.
      *
-     * @return \Frontpage\Service\Poll
+     * @return Poll
      */
     public function getPollService()
     {
@@ -196,7 +203,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the news service.
      *
-     * @return \Frontpage\Service\News
+     * @return News
      */
     public function getNewsService()
     {
@@ -206,7 +213,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the company service.
      *
-     * @return \Company\Service\Company
+     * @return Company
      */
     public function getCompanyService()
     {
@@ -216,7 +223,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

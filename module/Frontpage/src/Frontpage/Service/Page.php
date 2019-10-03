@@ -3,7 +3,14 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\Storage;
+use Exception;
 use Frontpage\Model\Page as PageModel;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\IsImage;
 
 /**
  * Page service, used for content management.
@@ -17,13 +24,13 @@ class Page extends AbstractAclService
      * @param string $category
      * @param string $subCategory
      * @param string $name
-     * @return \Frontpage\Model\Page|null
+     * @return PageModel|null
      */
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->getPageMapper()->findPage($category, $subCategory, $name);
         if (!(is_null($page) || $this->isPageAllowed($page))) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to view this page.')
             );
         }
@@ -34,7 +41,7 @@ class Page extends AbstractAclService
     /**
      * Returns the parent pages of a page if those exist.
      *
-     * @param \Frontpage\Model\Page $page
+     * @param PageModel $page
      * @return array
      */
     public function getPageParents($page)
@@ -57,7 +64,7 @@ class Page extends AbstractAclService
      * Returns a single page by its id
      *
      * @param integer $pageId
-     * @return \Frontpage\Model\Page|null
+     * @return PageModel|null
      */
     public function getPageById($pageId)
     {
@@ -67,7 +74,7 @@ class Page extends AbstractAclService
     /**
      * Checks if the current user is allowed to view the given page
      *
-     * @param \Frontpage\Model\Page $page
+     * @param PageModel $page
      *
      * @return bool
      */
@@ -90,7 +97,7 @@ class Page extends AbstractAclService
     public function getPages()
     {
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to view the list of pages.')
             );
         }
@@ -148,7 +155,7 @@ class Page extends AbstractAclService
     public function updatePage($pageId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit pages.')
             );
         }
@@ -181,16 +188,16 @@ class Page extends AbstractAclService
      *
      * @param array $files
      *
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
     public function uploadImage($files)
     {
-        $imageValidator = new \Zend\Validator\File\IsImage(
+        $imageValidator = new IsImage(
             ['magicFile' => false]
         );
 
-        $extensionValidator = new \Zend\Validator\File\Extension(
+        $extensionValidator = new Extension(
             ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
 
@@ -200,12 +207,12 @@ class Page extends AbstractAclService
                 $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
                 return $config['public_dir'] . '/' . $fileName;
             } else {
-                throw new \Exception(
+                throw new Exception(
                     $this->getTranslator()->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
-            throw new \Exception(
+            throw new Exception(
                 $this->getTranslator()->translate('The uploaded file is not a valid image')
             );
         }
@@ -221,7 +228,7 @@ class Page extends AbstractAclService
     public function getPageForm($pageId = null)
     {
         if (!$this->isAllowed('create')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to create new pages.')
             );
         }
@@ -238,7 +245,7 @@ class Page extends AbstractAclService
     /**
      * Get the role of the current user.
      *
-     * @return \User\Model\User|string
+     * @return User|string
      */
     public function getRole()
     {
@@ -269,7 +276,7 @@ class Page extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return Storage
      */
     public function getFileStorageService()
     {
@@ -279,7 +286,7 @@ class Page extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

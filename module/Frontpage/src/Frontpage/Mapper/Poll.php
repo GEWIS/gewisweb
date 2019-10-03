@@ -3,8 +3,11 @@
 namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Frontpage\Model\PollOption;
+use Frontpage\Model\PollVote;
 
 /**
  * Mappers for Polls.
@@ -45,7 +48,7 @@ class Poll
      * Returns a poll based on its id.
      *
      * @param integer $optionId
-     * @return \Frontpage\Model\PollOption|null
+     * @return PollOption|null
      */
     public function findPollOptionById($optionId)
     {
@@ -58,7 +61,7 @@ class Poll
      * @param integer $pollId
      * @param integer $lidnr
      *
-     * @return \Frontpage\Model\PollVote|null
+     * @return PollVote|null
      */
     public function findVote($pollId, $lidnr)
     {
@@ -146,7 +149,7 @@ class Poll
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

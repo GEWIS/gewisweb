@@ -2,6 +2,7 @@
 
 namespace Education\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -85,7 +86,7 @@ class Exam implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -135,9 +136,9 @@ class Exam implements ResourceInterface
     /**
      * Set the date.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
     }

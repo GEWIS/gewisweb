@@ -2,6 +2,7 @@
 
 namespace Decision\Model\SubDecision;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use Decision\Model\SubDecision;
@@ -121,7 +122,7 @@ class Budget extends SubDecision
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -131,9 +132,9 @@ class Budget extends SubDecision
     /**
      * Set the date.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
     }

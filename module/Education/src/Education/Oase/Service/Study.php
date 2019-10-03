@@ -5,6 +5,7 @@ namespace Education\Oase\Service;
 use Education\Oase\Client;
 use Education\Model\Study as StudyModel;
 
+use SimpleXMLElement;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Study
@@ -129,11 +130,11 @@ class Study
     /**
      * Filter if a given 'doelgroep' is a W&I study.
      *
-     * @param \SimpleXMLElement $doelgroep
+     * @param SimpleXMLElement $doelgroep
      *
      * @return boolen If it is a W&I study
      */
-    protected function filterDoelgroep(\SimpleXMLElement $doelgroep)
+    protected function filterDoelgroep(SimpleXMLElement $doelgroep)
     {
         // first do simple checks
         if (!in_array($doelgroep->Opleidingstype, $this->educationTypes)
@@ -159,11 +160,11 @@ class Study
     /**
      * Create a study from a doelgroep.
      *
-     * @param \SimpleXMLElement $doelgroep
+     * @param SimpleXMLElement $doelgroep
      *
      * @return StudyModel
      */
-    public function createStudy(\SimpleXMLElement $doelgroep)
+    public function createStudy(SimpleXMLElement $doelgroep)
     {
         $data = [
             'id' => (int) $doelgroep->Id->__toString(),

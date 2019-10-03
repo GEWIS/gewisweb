@@ -2,6 +2,8 @@
 
 namespace Frontpage\Controller;
 
+use Exception;
+use Frontpage\Service\Page;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -80,7 +82,7 @@ class PageAdminController extends AbstractActionController
                 $result['url'] = $request->getBasePath() . '/' . $path;
                 $result['fileName'] = $path;
                 $result['uploaded'] = 1;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $result['error']['message'] = $e->getMessage();
             }
         }
@@ -90,7 +92,7 @@ class PageAdminController extends AbstractActionController
     /**
      * Get the Page service.
      *
-     * @return \Frontpage\Service\Page
+     * @return Page
      */
     protected function getPageService()
     {

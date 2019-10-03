@@ -6,6 +6,7 @@ use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Doctrine\Common\Persistence\ObjectManager;
+use Zend\Validator\Callback;
 use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -117,7 +118,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                            \Zend\Validator\Callback::INVALID_VALUE =>
+                            Callback::INVALID_VALUE =>
                                 'Some of the required fields for this type are empty'
                             ],
                             'callback' => function($value, $context=null) {
@@ -147,7 +148,7 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     'The number of English options must equal the number of Dutch options'
                             ],
                             'callback' => function ($value, $context=null) {

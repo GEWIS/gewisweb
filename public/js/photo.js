@@ -100,7 +100,7 @@ Photo = {
         });
     },
     removeTag: function (e) {
-        e.preventDefault()
+        e.preventDefault();
         parent = $(this).parent();
         $.post($(this).attr('href'), function (data) {
             if (data.success) {
@@ -108,7 +108,7 @@ Photo = {
             }
         });
     }
-}
+};
 
 $(function () {
     $('html').keydown(function (e) {

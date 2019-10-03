@@ -2,6 +2,10 @@
 
 namespace Application\Service;
 
+use Exception;
+use Zend\Http\Headers;
+use use Zend\Http\Response\Stream;
+
 /**
  * File storage service. This service can be used to safely store files without
  * having to worry about file names.
@@ -41,13 +45,13 @@ class FileStorage extends AbstractService
      * @param array $file
      *
      * @return string The CFS path at which the file was stored
-     * @throws \Exception
+     * @throws Exception
      */
     public function storeUploadedFile($file)
     {
         $config = $this->getConfig();
         if ($file['error'] !== 0) {
-            throw new \Exception(
+            throw new Exception(
                 sprintf(
                     $this->getTranslator()->translate('An unknown error occurred during uploading (%i)'),
                     $file['error']
@@ -122,7 +126,7 @@ class FileStorage extends AbstractService
      * @param string $path The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
      *
-     * @return \Zend\Http\Response\|null If the given file is not found, null is returned
+     * @return |null If the given file is not found, null is returned
      */
     public function downloadFile($path, $fileName)
     {
@@ -138,11 +142,11 @@ class FileStorage extends AbstractService
         $type = finfo_file($finfo, $file);
         finfo_close($finfo);
 
-        $response = new \Zend\Http\Response\Stream();
+        $response = new Stream();
         $response->setStream(fopen($file, 'r'));
         $response->setStatusCode(200);
         $response->setStreamName($fileName);
-        $headers = new \Zend\Http\Headers();
+        $headers = new Headers();
         $headers->addHeaders([
             // Suggests to the browser to display the file instead of saving
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',

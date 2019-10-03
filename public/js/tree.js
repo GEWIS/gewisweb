@@ -13,7 +13,7 @@ $.fn.extend({
                     icon.toggleClass("glyphicon-minus-sign glyphicon-plus-sign");
                     $(this).children().children().toggle();
                 }
-            })
+            });
             branch.children().children().toggle();
         });
         //fire event from the dynamically added icon

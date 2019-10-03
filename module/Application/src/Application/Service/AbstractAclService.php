@@ -3,6 +3,7 @@
 namespace Application\Service;
 
 use User\Model\User;
+use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 abstract class AbstractAclService extends AbstractService
@@ -11,7 +12,7 @@ abstract class AbstractAclService extends AbstractService
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     abstract public function getAcl();
 

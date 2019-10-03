@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * Address model.
@@ -133,12 +134,12 @@ class Address
      *
      * @param string $type
      *
-     * @throws \InvalidArgumentException When the type is incorrect
+     * @throws InvalidArgumentException When the type is incorrect
      */
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new \InvalidArgumentException("Non-existing type.");
+            throw new InvalidArgumentException("Non-existing type.");
         }
         $this->type = $type;
     }

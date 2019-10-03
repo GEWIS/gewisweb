@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use Decision\Model\SubDecision\Installation;
@@ -139,9 +140,9 @@ class OrganMember
     /**
      * Set the installation date.
      *
-     * @param \DateTime $installDate
+     * @param DateTime $installDate
      */
-    public function setInstallDate(\DateTime $installDate)
+    public function setInstallDate(DateTime $installDate)
     {
         $this->installDate = $installDate;
     }
@@ -149,7 +150,7 @@ class OrganMember
     /**
      * Get the installation date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getInstallDate()
     {
@@ -179,9 +180,9 @@ class OrganMember
     /**
      * Set the discharge date.
      *
-     * @param \DateTime $dischargeDate
+     * @param DateTime $dischargeDate
      */
-    public function setDischargeDate(\DateTime $dischargeDate)
+    public function setDischargeDate(DateTime $dischargeDate)
     {
         $this->dischargeDate = $dischargeDate;
     }
@@ -189,7 +190,7 @@ class OrganMember
     /**
      * Get the discharge date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDischargeDate()
     {

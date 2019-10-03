@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use Decision\Model\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -44,7 +45,7 @@ class Tag implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Photo
+     * @return Photo
      */
     public function getPhoto()
     {
@@ -52,7 +53,7 @@ class Tag implements ResourceInterface
     }
 
     /**
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getMember()
     {
@@ -68,7 +69,7 @@ class Tag implements ResourceInterface
     }
 
     /**
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function setPhoto($photo)
     {
@@ -76,7 +77,7 @@ class Tag implements ResourceInterface
     }
 
     /**
-     * @param \Decision\Model\Member $member
+     * @param Member $member
      */
     public function setMember($member)
     {

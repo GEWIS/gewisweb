@@ -56,7 +56,7 @@ class ActivityFieldValue
      *
      * @param \Activity\Model\Activity\Model\ActivityField $field
      */
-    public function setField(\Activity\Model\ActivityField $field)
+    public function setField(ActivityField $field)
     {
         $this->field = $field;
     }
@@ -66,7 +66,7 @@ class ActivityFieldValue
      *
      * @param \Activity\Model\Activity\Model\ActivitySignup $signup
      */
-    public function setSignup(\Activity\Model\ActivitySignup $signup)
+    public function setSignup(ActivitySignup $signup)
     {
         $this->signup = $signup;
     }

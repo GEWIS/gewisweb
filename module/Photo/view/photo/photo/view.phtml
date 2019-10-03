@@ -1,5 +1,7 @@
 <?php
 // set title
+use Decision\Model\AssociationYear;
+
 $this->headTitle($this->translate('Photo'));
 $album = $photo->getAlbum();
 $currentAlbum = $album;
@@ -53,7 +55,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 <li>
                     <?php
                     // determine association year
-                    $associationYear = \Decision\Model\AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
+                    $associationYear = AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
                     ?>
                     <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
                         <?= $associationYear->getYearString() ?>

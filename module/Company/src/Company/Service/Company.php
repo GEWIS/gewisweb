@@ -4,8 +4,12 @@ namespace Company\Service;
 
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
+use Application\Service\Storage;
 use Company\Model\Job as JobModel;
 use Company\Model\Job;
+use DateTime;
+use Exception;
+use User\Permissions\NotAllowedException;
 
 /**
  * Company service.
@@ -20,7 +24,7 @@ class Company extends AbstractACLService
     {
         $translator = $this->getTranslator();
         if (!$this->isAllowed('showBanner')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the banner')
             );
         }
@@ -31,7 +35,7 @@ class Company extends AbstractACLService
     {
         $translator = $this->getTranslator();
         if (!$this->isAllowed('viewFeaturedCompany')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the featured company')
             );
         }
@@ -84,7 +88,7 @@ class Company extends AbstractACLService
     {
         $translator = $this->getTranslator();
         if (!$this->isAllowed('listall')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list the companies')
             );
         }
@@ -100,7 +104,7 @@ class Company extends AbstractACLService
     {
         $translator = $this->getTranslator();
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list the companies')
             );
         }
@@ -115,7 +119,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('listall')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to access the admin interface')
             );
         }
@@ -169,7 +173,7 @@ class Company extends AbstractACLService
         $translator = $this->getTranslator();
         if (!$visible) {
             if (!$this->isAllowed('listAllCategories')) {
-                throw new \User\Permissions\NotAllowedException(
+                throw new NotAllowedException(
                     $translator->translate('You are not allowed to access the admin interface')
                 );
             }
@@ -179,7 +183,7 @@ class Company extends AbstractACLService
             });
         }
         if (!$this->isAllowed('listVisibleCategories')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list all categories')
             );
         }
@@ -208,7 +212,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to insert a job')
             );
         }
@@ -402,7 +406,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to insert a company')
             );
         }
@@ -441,7 +445,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to insert a package')
             );
         }
@@ -508,7 +512,7 @@ class Company extends AbstractACLService
 
                 try {
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return false;
                 }
 
@@ -519,7 +523,7 @@ class Company extends AbstractACLService
                 $job->setAttachment($newPath);
             }
 
-            $job->setTimeStamp(new \DateTime());
+            $job->setTimeStamp(new DateTime());
             $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
@@ -553,7 +557,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to insert a job')
             );
         }
@@ -572,7 +576,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to delete packages')
             );
         }
@@ -589,7 +593,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to delete companies')
             );
         }
@@ -616,12 +620,12 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit packages')
             );
         }
         if (is_null($categoryID)) {
-            throw new \Exception('Invalid argument');
+            throw new Exception('Invalid argument');
         }
         $package = $this->getCategoryMapper()->findAllCategoriesById($categoryID);
 
@@ -636,12 +640,12 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit packages')
             );
         }
         if (is_null($packageID)) {
-            throw new \Exception('Invalid argument');
+            throw new Exception('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageID);
         if (is_null($package)) {
@@ -663,7 +667,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit companies')
             );
         }
@@ -681,7 +685,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
@@ -732,7 +736,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
@@ -763,7 +767,7 @@ class Company extends AbstractACLService
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
@@ -864,7 +868,7 @@ class Company extends AbstractACLService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return Storage
      */
     public function getFileStorageService()
     {
@@ -873,7 +877,7 @@ class Company extends AbstractACLService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return Storage
      */
     public function getLanguages()
     {

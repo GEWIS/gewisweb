@@ -24,7 +24,7 @@ class PinMapper implements AdapterInterface
     /**
      * Legacy service.
      *
-     * @var \Application\Service\Legacy
+     * @var LegacyService
      */
     protected $legacyService;
 
@@ -54,7 +54,7 @@ class PinMapper implements AdapterInterface
     /**
      * Constructor.
      *
-     * @param \Application\Service\Legacy
+     * @param LegacyService
      */
     public function __construct(LegacyService $legacyService, UserService $userService)
     {

@@ -4,10 +4,13 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Application\Service\Email;
+use Application\Service\FileStorage;
 use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\OrganInformation;
 use Imagick;
+use User\Permissions\NotAllowedException;
 
 /**
  * User service.
@@ -23,7 +26,7 @@ class Organ extends AbstractAclService
     public function getOrgans()
     {
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view the list of organs.')
             );
         }
@@ -41,7 +44,7 @@ class Organ extends AbstractAclService
     public function getOrgan($id)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('Not allowed to view organ information')
             );
         }
@@ -57,7 +60,7 @@ class Organ extends AbstractAclService
     public function getEditableOrgans()
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit organ information')
             );
         }
@@ -242,14 +245,14 @@ class Organ extends AbstractAclService
     /**
      * Get the OrganInformation form.
      *
-     * @param \Decision\Model\OrganInformation $organInformation
+     * @param OrganInformation $organInformation
      *
      * @return \Decision\Form\OrganInformation|bool
      */
     public function getOrganInformationForm($organInformation)
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit this organ\'s information')
             );
         }
@@ -373,7 +376,7 @@ class Organ extends AbstractAclService
     /**
      * Gets the file storage service.
      *
-     * @return \Application\Service\FileStorage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -423,7 +426,7 @@ class Organ extends AbstractAclService
     /**
      * Get the email service.
      *
-     * @return \Application\Service\Email
+     * @return Email
      */
     public function getEmailService()
     {

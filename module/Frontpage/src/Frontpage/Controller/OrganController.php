@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Decision\Model\Organ;
 use Zend\View\Model\ViewModel;
@@ -46,7 +47,7 @@ class OrganController extends AbstractActionController
                 'activities' => $activities
             ], $organMemberInformation));
 
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }

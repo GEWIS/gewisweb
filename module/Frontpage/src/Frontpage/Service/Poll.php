@@ -3,9 +3,17 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\Email;
+use DateTime;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
+use Frontpage\Form\PollApproval;
+use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote as PollVoteModel;
 use Frontpage\Model\PollComment;
 use Frontpage\Model\Poll as PollModel;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * Poll service.
@@ -26,14 +34,14 @@ class Poll extends AbstractAclService
      * @param int $pollId the id of the poll to retrieve
      * @return PollModel|null
      *
-     * @throws \User\Permissions\NotAllowedException if the user isn't allowed to see unapproved polls
+     * @throws NotAllowedException if the user isn't allowed to see unapproved polls
      */
     public function getPoll($pollId)
     {
         $poll = $this->getPollMapper()->findPollById($pollId);
         if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view unnapproved polls')
             );
         }
@@ -43,7 +51,7 @@ class Poll extends AbstractAclService
     /**
      * Retrieves a poll option by its id
      * @param int $optionId The id of the poll option to retrieve
-     * @return \Frontpage\Model\PollOption|null
+     * @return PollOption|null
      */
     public function getPollOption($optionId)
     {
@@ -53,7 +61,7 @@ class Poll extends AbstractAclService
     /**
      * Returns a paginator adapter for paging through polls.
      *
-     * @return \DoctrineORMModule\Paginator\Adapter\DoctrinePaginator
+     * @return DoctrinePaginator
      */
     public function getPaginatorAdapter()
     {
@@ -73,7 +81,7 @@ class Poll extends AbstractAclService
     /**
      * Returns details about a poll.
      *
-     * @param \Frontpage\Model\Poll $poll
+     * @param PollModel $poll
      * @return array
      */
     public function getPollDetails($poll)
@@ -94,7 +102,7 @@ class Poll extends AbstractAclService
     /**
      * Determines whether the current user can vote on the given poll.
      *
-     * @param \Frontpage\Model\Poll $poll
+     * @param PollModel $poll
      *
      * @return boolean
      */
@@ -105,7 +113,7 @@ class Poll extends AbstractAclService
         }
 
         // Check if poll expires after today
-        if ($poll->getExpiryDate() <= (new \DateTime())) {
+        if ($poll->getExpiryDate() <= (new DateTime())) {
             return false;
         }
 
@@ -120,14 +128,14 @@ class Poll extends AbstractAclService
     /**
      * Retrieves the current user's vote for a given poll.
      * Returns null if the user hasn't voted on the poll.
-     * @param \Frontpage\Model\Poll $poll
+     * @param PollModel $poll
      *
-     * @return \Frontpage\Model\PollVote | null
+     * @return PollVoteModel | null
      */
     public function getVote($poll)
     {
         $user = $this->getUser();
-        if ($user instanceof \User\Model\User) {
+        if ($user instanceof User) {
             return $this->getPollMapper()->findVote($poll->getId(), $user->getLidnr());
         }
 
@@ -137,7 +145,7 @@ class Poll extends AbstractAclService
     /**
      * Stores a vote for the current user.
      *
-     * @param \Frontpage\Model\PollOption $pollOption The option to vote on
+     * @param PollOption $pollOption The option to vote on
      * @return bool indicating whether the vote was submitted
      */
     public function submitVote($pollOption)
@@ -148,7 +156,7 @@ class Poll extends AbstractAclService
         }
 
         if (!$this->canVote($poll)) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to vote on this poll.')
             );
         }
@@ -172,7 +180,7 @@ class Poll extends AbstractAclService
     {
         if (!$this->isAllowed('create', 'poll_comment')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create comments on this poll')
             );
         }
@@ -190,7 +198,7 @@ class Poll extends AbstractAclService
 
         $comment = $form->getData();
         $comment->setUser($this->getUser());
-        $comment->setCreatedOn(new \DateTime());
+        $comment->setCreatedOn(new DateTime());
 
         $poll->addComment($comment);
 
@@ -217,7 +225,7 @@ class Poll extends AbstractAclService
             return false;
         }
 
-        $poll->setExpiryDate(new \DateTime());
+        $poll->setExpiryDate(new DateTime());
         $poll->setCreator($this->getUser());
         $pollMapper = $this->getPollMapper();
         $pollMapper->persist($poll);
@@ -238,7 +246,7 @@ class Poll extends AbstractAclService
     {
         if (!$this->isAllowed('request')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to request polls')
             );
         }
@@ -259,13 +267,13 @@ class Poll extends AbstractAclService
     /**
      * Deletes the given poll.
      *
-     * @param \Frontpage\Model\Poll $poll The poll to delete
+     * @param PollModel $poll The poll to delete
      */
     public function deletePoll($poll)
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to delete polls')
             );
         }
@@ -275,7 +283,7 @@ class Poll extends AbstractAclService
         // Check to see if poll is approved
         if ($poll->isApproved()) {
             // Instead of removing, set expiry date to 'now' to hide poll.
-            $poll->setExpiryDate(new \DateTime());
+            $poll->setExpiryDate(new DateTime());
         } else {
             // If not approved, just remove the junk from the database.
             $pollMapper->remove($poll);
@@ -288,7 +296,7 @@ class Poll extends AbstractAclService
     /**
      * Approves the given poll.
      *
-     * @param \Frontpage\Model\Poll $poll The poll to approve
+     * @param PollModel $poll The poll to approve
      * @param array $data The data from the poll approval form
      * @return bool indicating whether the approval succeeded
      */
@@ -308,13 +316,13 @@ class Poll extends AbstractAclService
     /**
      * Returns the poll approval form.
      *
-     * @return \Frontpage\Form\PollApproval
+     * @return PollApproval
      */
     public function getPollApprovalForm()
     {
         if (!$this->isAllowed('approve')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to approve polls')
             );
         }
@@ -335,7 +343,7 @@ class Poll extends AbstractAclService
     /**
      * Retrieves the currently logged in user.
      *
-     * @return \User\Model\User|string
+     * @return User|string
      */
     public function getUser()
     {
@@ -347,7 +355,7 @@ class Poll extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -367,7 +375,7 @@ class Poll extends AbstractAclService
     /**
      * Get the email service
      *
-     * @return \Application\Service\Email
+     * @return Email
      */
     public function getEmailService()
     {

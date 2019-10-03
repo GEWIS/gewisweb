@@ -29,7 +29,7 @@ switch ($form->getType()) {
 
 function formElementRender($element, $label, $id, $context){
     $element->setAttribute('id', $id);
-    $elementType = (new \ReflectionClass($element))->getShortName();
+    $elementType = (new ReflectionClass($element))->getShortName();
     if (!in_array($elementType, ['Radio','Checkbox'])) {
         $element->setAttribute('class', 'form-control');
     }

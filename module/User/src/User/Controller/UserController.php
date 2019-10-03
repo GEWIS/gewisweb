@@ -2,6 +2,7 @@
 
 namespace User\Controller;
 
+use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController,
     Zend\View\Model\ViewModel,
     Zend\View\Model\JsonModel;
@@ -190,7 +191,7 @@ class UserController extends AbstractActionController
     /**
      * Get a user service.
      *
-     * @return \User\Service\User
+     * @return User
      */
     protected function getUserService()
     {

@@ -107,7 +107,7 @@ class Organ
      * @param string $abbr
      * @param string $type
      *
-     * @return \Decision\Model\Organ
+     * @return OrganModel
      */
     public function findByAbbr($abbr, $type = null)
     {

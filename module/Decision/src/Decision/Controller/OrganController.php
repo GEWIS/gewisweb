@@ -2,6 +2,7 @@
 
 namespace Decision\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -31,7 +32,7 @@ class OrganController extends AbstractActionController
             return new ViewModel(array_merge([
                 'organ' => $organ
             ], $organMemberInformation));
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }

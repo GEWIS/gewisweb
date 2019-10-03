@@ -2,6 +2,8 @@
 
 namespace Application\View\Helper;
 
+use Zend\Code\Exception\InvalidArgumentException;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
 
 
@@ -11,7 +13,7 @@ class Acl extends AbstractHelper
     /**
      * Service locator
      *
-     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     * @var ServiceLocatorInterface
      */
     protected $locator;
 
@@ -44,7 +46,7 @@ class Acl extends AbstractHelper
      *
      * @param string $factory Acl factory to load
      *
-     * @return \Application\View\Helper\Acl
+     * @return Acl
      */
     public function __invoke($factory)
     {
@@ -52,7 +54,7 @@ class Acl extends AbstractHelper
         if($this->acl instanceof \Zend\Permissions\Acl\Acl) {
             return $this;
         } else {
-            throw new \Zend\Code\Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Provided factory does not exist or does not return an Acl instance'
             );
         }
@@ -61,7 +63,7 @@ class Acl extends AbstractHelper
     /**
      * Get the service locator.
      *
-     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     * @return ServiceLocatorInterface
      */
     public function getServiceLocator()
     {
@@ -71,7 +73,7 @@ class Acl extends AbstractHelper
     /**
      * Set the service locator
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface
+     * @param ServiceLocatorInterface
      */
     public function setServiceLocator($locator)
     {

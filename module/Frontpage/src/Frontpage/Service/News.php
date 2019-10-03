@@ -3,7 +3,12 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use DateTime;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
+use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * News service
@@ -15,7 +20,7 @@ class News extends AbstractAclService
      * Returns a single NewsItem by its id
      *
      * @param integer $newsItem
-     * @return \Frontpage\Model\NewsItem|null
+     * @return NewsItemModel|null
      */
     public function getNewsItemById($newsItem)
     {
@@ -25,12 +30,12 @@ class News extends AbstractAclService
     /**
      * Returns a paginator adapter for paging through news items.
      *
-     * @return \DoctrineORMModule\Paginator\Adapter\DoctrinePaginator
+     * @return DoctrinePaginator
      */
     public function getPaginatorAdapter()
     {
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to list all news items.')
             );
         }
@@ -67,7 +72,7 @@ class News extends AbstractAclService
             return false;
         }
 
-        $newsItem->setDate(new \DateTime());
+        $newsItem->setDate(new DateTime());
         $this->getNewsItemMapper()->persist($newsItem);
         $this->getNewsItemMapper()->flush();
 
@@ -82,7 +87,7 @@ class News extends AbstractAclService
     public function updateNewsItem($newsItemId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit news items.')
             );
         }
@@ -120,7 +125,7 @@ class News extends AbstractAclService
     public function getNewsItemForm($newsItemId = null)
     {
         if (!$this->isAllowed('create')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to create news items.')
             );
         }
@@ -137,7 +142,7 @@ class News extends AbstractAclService
     /**
      * Get the news item mapper.
      *
-     * @return \Frontpage\Mapper\NewsItem
+     * @return NewsItem
      */
     public function getNewsItemMapper()
     {
@@ -147,7 +152,7 @@ class News extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

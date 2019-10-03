@@ -2,9 +2,11 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Decision\Model\SubDecision\Installation;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use InvalidArgumentException;
 
 /**
  * Member model.
@@ -386,12 +388,12 @@ class Member
      *
      * @param string $gender
      *
-     * @throws \InvalidArgumentException when the gender does not have correct value
+     * @throws InvalidArgumentException when the gender does not have correct value
      */
     public function setGender($gender)
     {
         if (!in_array($gender, self::getGenders())) {
-            throw new \InvalidArgumentException("Invalid gender value");
+            throw new InvalidArgumentException("Invalid gender value");
         }
         $this->gender = $gender;
     }
@@ -431,12 +433,12 @@ class Member
      *
      * @param string $type
      *
-     * @throws \InvalidArgumentException When the type is incorrect.
+     * @throws InvalidArgumentException When the type is incorrect.
      */
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new \InvalidArgumentException("Nonexisting type given.");
+            throw new InvalidArgumentException("Nonexisting type given.");
         }
         $this->type = $type;
     }
@@ -446,7 +448,7 @@ class Member
      *
      * The information comes from the statuten and HR.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getExpiration()
     {
@@ -456,7 +458,7 @@ class Member
     /**
      * Set the expiration date.
      *
-     * @param \DateTime $expiration
+     * @param DateTime $expiration
      */
     public function setExpiration($expiration)
     {
@@ -466,7 +468,7 @@ class Member
     /**
      * Get the birth date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBirth()
     {
@@ -476,9 +478,9 @@ class Member
     /**
      * Set the birthdate.
      *
-     * @param \DateTime $birth
+     * @param DateTime $birth
      */
-    public function setBirth(\DateTime $birth)
+    public function setBirth(DateTime $birth)
     {
         $this->birth = $birth;
     }
@@ -486,7 +488,7 @@ class Member
     /**
      * Get the date of the last membership change.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getChangedOn()
     {
@@ -496,7 +498,7 @@ class Member
     /**
      * Set the date of the last membership change.
      *
-     * @param \DateTime $changedOn
+     * @param DateTime $changedOn
      */
     public function setChangedOn($changedOn)
     {
@@ -555,7 +557,7 @@ class Member
         }
 
         // Filter out past installations
-        $today = new \DateTime();
+        $today = new DateTime();
 
         return $this->getOrganInstallations()->filter(function (OrganMember $organ) use ($today) {
             $dischargeDate = $organ->getDischargeDate();
@@ -594,7 +596,7 @@ class Member
     public function getCurrentBoardInstallation()
     {
         // Filter out past board installations
-        $today = new \DateTime();
+        $today = new DateTime();
 
         $boards = $this->getBoardInstallations()->filter(function (BoardMember $boardMember) use ($today) {
             $dischargeDate = $boardMember->getDischargeDate();
@@ -641,9 +643,9 @@ class Member
             'firstName' => $this->getFirstName(),
             'middleName' => $this->getMiddleName(),
             'lastName' => $this->getLastName(),
-            'birth' => $this->getBirth()->format(\DateTime::ISO8601),
+            'birth' => $this->getBirth()->format(DateTime::ISO8601),
             'generation' => $this->getGeneration(),
-            'expiration' => $this->getExpiration()->format(\DateTime::ISO8601),
+            'expiration' => $this->getExpiration()->format(DateTime::ISO8601),
         ];
     }
 

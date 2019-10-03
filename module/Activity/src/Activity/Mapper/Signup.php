@@ -2,6 +2,7 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivitySignup;
 use Doctrine\ORM\EntityManager;
 
 class Signup
@@ -25,7 +26,7 @@ class Signup
 
     /**
      * @param int $id
-     * @return \Activity\Model\ActivitySignup
+     * @return ActivitySignup
      */
     public function getSignupById($id)
     {
@@ -59,7 +60,7 @@ class Signup
      * @param int $activityId
      * @param int $userId
      *
-     * @return \Activity\Model\ActivitySignup
+     * @return ActivitySignup
      */
     public function getSignUp($activityId, $userId)
     {
@@ -84,7 +85,7 @@ class Signup
      *
      * @param int $userId
      *
-     * @return \Activity\Model\ActivitySignup
+     * @return ActivitySignup
      */
     public function getSignedUpActivities($userId)
     {

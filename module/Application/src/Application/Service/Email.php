@@ -12,6 +12,7 @@ use Decision\Model\Member as MemberModel;
 
 use User\Model\User;
 use Zend\Mail\Message;
+use Zend\Mail\Transport\TransportInterface;
 use Zend\View\Model\ViewModel;
 use Activity\Model\Activity as ActivityModel;
 use Zend\Mime\Part as MimePart;
@@ -169,7 +170,7 @@ class Email extends AbstractService
     /**
      * Get the email transport.
      *
-     * @return \Zend\Mail\Transport\TransportInterface
+     * @return TransportInterface
      */
     public function getTransport()
     {

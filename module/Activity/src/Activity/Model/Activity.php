@@ -3,6 +3,7 @@
 namespace Activity\Model;
 
 use Decision\Model\Organ;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use User\Model\User;
@@ -210,7 +211,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     public function __construct()
     {
-        $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fields = new ArrayCollection();
     }
 
     /**

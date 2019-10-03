@@ -2,8 +2,14 @@
 
 namespace Activity\Service;
 
+use Activity\Model\ActivityUpdateProposal;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
+use DateTime;
+use Organ\Model\Organ;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
+use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Decision\Model\AssociationYear as AssociationYear;
 
@@ -18,7 +24,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -43,13 +49,13 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      *
      * @param int $id The activity id to be searched for
      *
-     * @return \Activity\Model\Activity Activity or null if the activity does not exist
+     * @return ActivityModel Activity or null if the activity does not exist
      */
     public function getActivity($id)
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
@@ -65,7 +71,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      *
      * @param int $id The proposal id to be searched for
      *
-     * @return \Activity\Model\ActivityUpdateProposal or null if the proposal does not exist
+     * @return ActivityUpdateProposal or null if the proposal does not exist
      */
     public function getProposal($id)
     {
@@ -109,7 +115,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if (!($this->isAllowed('viewDetails', 'activity') ||
                 $this->isAllowed('viewDetails', $this->getActivity($id)))) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
@@ -125,7 +131,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
@@ -145,7 +151,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view unapproved activities')
             );
         }
@@ -163,7 +169,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view activities')
             );
         }
@@ -175,7 +181,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     /**
      * Get upcoming activities organized by the given organ.
      *
-     * @param \Organ\Model\Organ $organ
+     * @param Organ $organ
      * @param integer $count
      *
      * @return array
@@ -194,7 +200,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('viewDisapproved', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the disapproved activities')
             );
         }
@@ -214,7 +220,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view upcoming the activities')
             );
         }
@@ -223,7 +229,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if ($category === 'my') {
             if (!$this->isAllowed('view', 'myActivities')) {
                 $translator = $this->getTranslator();
-                throw new \User\Permissions\NotAllowedException(
+                throw new NotAllowedException(
                     $translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
             }
@@ -292,7 +298,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
-        $endYear = AssociationYear::fromDate(new \DateTime())->getYear();
+        $endYear = AssociationYear::fromDate(new DateTime())->getYear();
 
         // We make the reasonable assumption that there is at least one activity
         return range($startYear, $endYear);
@@ -308,14 +314,14 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
 
         $associationYear = AssociationYear::fromYear($year);
 
-        $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
+        $endDate = $associationYear->getEndDate() < new DateTime() ? $associationYear->getEndDate() : new DateTime();
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
@@ -323,7 +329,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      /**
      * Gets the user service.
      *
-     * @return \User\Service\User
+     * @return User
      */
     public function getUserService()
     {

@@ -2,6 +2,9 @@
 
 namespace Photo\Listener;
 
+use Photo\Model\Album;
+use Photo\Model\Photo;
+
 /**
  * Doctrine event listener class for Album and Photo entities.
  * Do not instantiate this class manually.
@@ -13,9 +16,9 @@ class AlbumDate
     public function prePersist($eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof \Photo\Model\Album) {
+        if ($entity instanceof Album) {
             $this->albumPersisted($entity);
-        } elseif ($entity instanceof \Photo\Model\Photo) {
+        } elseif ($entity instanceof Photo) {
             $this->photoPersisted($entity);
         }
     }
@@ -23,7 +26,7 @@ class AlbumDate
     /**
      * Updates the dates on the parent album if it exists.
      *
-     * @param \Photo\Model\Album $album
+     * @param Album $album
      */
     protected function albumPersisted($album)
     {
@@ -45,7 +48,7 @@ class AlbumDate
     /**
      * Updates the dates on the parent album.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     protected function photoPersisted($photo)
     {

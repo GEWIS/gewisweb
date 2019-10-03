@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for WeeklyPhoto.
@@ -90,7 +91,7 @@ class WeeklyPhoto
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

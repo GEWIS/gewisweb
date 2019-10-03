@@ -2,8 +2,10 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use InvalidArgumentException;
 
 /**
  * Meeting model.
@@ -115,7 +117,7 @@ class Meeting
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new \InvalidArgumentException("Invalid meeting type given.");
+            throw new InvalidArgumentException("Invalid meeting type given.");
         }
         $this->type = $type;
     }
@@ -133,7 +135,7 @@ class Meeting
     /**
      * Get the meeting date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -143,9 +145,9 @@ class Meeting
     /**
      * Set the meeting date.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
     }

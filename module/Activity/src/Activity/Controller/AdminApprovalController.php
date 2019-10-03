@@ -2,6 +2,8 @@
 
 namespace Activity\Controller;
 
+use InvalidArgumentException;
+use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Model\Activity;
 use Activity\Form\ModifyRequest as RequestForm;
@@ -179,7 +181,7 @@ class AdminApprovalController extends AbstractActionController
      * Set the approval status of the activity requested
      *
      * @param $status
-     * @return array|\Zend\Http\Response
+     * @return array|Response
      */
     protected function setApprovalStatus($status)
     {
@@ -218,7 +220,7 @@ class AdminApprovalController extends AbstractActionController
                 $activityService->reset($activity);
                 break;
             default:
-                throw new \InvalidArgumentException('No such status ' . $status);
+                throw new InvalidArgumentException('No such status ' . $status);
 
         }
 

@@ -2,6 +2,7 @@
 
 namespace Photo\Controller;
 
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -42,7 +43,7 @@ class TagController extends AbstractActionController
     /**
      * Gets the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {

@@ -4,6 +4,10 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Application\Service\Email;
+use Application\Service\FileStorage;
+use Decision\Mapper\Authorization;
+use Decision\Mapper\Meeting;
 use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
@@ -59,7 +63,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('list_meetings')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to list meetings.')
             );
         }
@@ -79,7 +83,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('view', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view meetings.')
             );
         }
@@ -111,7 +115,7 @@ class Decision extends AbstractAclService
      * Get meeting documents corresponding to a certain id.
      *
      * @param $id
-     * @return \Decision\Model\MeetingDocument
+     * @return MeetingDocument
      */
     public function getMeetingDocument($id)
     {
@@ -121,7 +125,7 @@ class Decision extends AbstractAclService
     /**
      * Returns a download for a meeting document
      *
-     * @param \Decision\Model\MeetingDocument $meetingDocument
+     * @param MeetingDocument $meetingDocument
      *
      * @return response|null
      */
@@ -129,7 +133,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('view_documents', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view meeting documents.')
             );
         }
@@ -156,7 +160,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('view_notes', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view meeting notes.')
             );
         }
@@ -249,7 +253,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('delete_document', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to delete meeting documents.')
             );
         }
@@ -268,7 +272,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('search')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to search decisions.')
             );
         }
@@ -297,7 +301,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('view_all', 'authorization')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view all authorizations.')
             );
         }
@@ -310,13 +314,13 @@ class Decision extends AbstractAclService
      *
      * @param integer $meetingNumber
      *
-     * @return \Decision\Model\Authorization|null
+     * @return AuthorizationModel|null
      */
     public function getUserAuthorization($meetingNumber)
     {
         if (!$this->isAllowed('view_own', 'authorization')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view authorizations.')
             );
         }
@@ -383,7 +387,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('upload_notes', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to upload notes.')
             );
         }
@@ -400,7 +404,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('upload_document', 'meeting')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to upload meeting documents.')
             );
         }
@@ -427,7 +431,7 @@ class Decision extends AbstractAclService
     {
         if (!$this->isAllowed('create', 'authorization')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not authorize people.')
             );
         }
@@ -438,7 +442,7 @@ class Decision extends AbstractAclService
     /**
      * Get the meeting mapper.
      *
-     * @return \Decision\Mapper\Meeting
+     * @return Meeting
      */
     public function getMeetingMapper()
     {
@@ -458,7 +462,7 @@ class Decision extends AbstractAclService
     /**
      * Get the authorization mapper.
      *
-     * @return \Decision\Mapper\Authorization
+     * @return Authorization
      */
     public function getAuthorizationMapper()
     {
@@ -468,7 +472,7 @@ class Decision extends AbstractAclService
     /**
      * Get the email service.
      *
-     * @return \Application\Service\Email
+     * @return Email
      */
     public function getEmailService()
     {
@@ -478,7 +482,7 @@ class Decision extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\FileStorage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {

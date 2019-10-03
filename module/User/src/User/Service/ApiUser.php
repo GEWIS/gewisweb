@@ -4,8 +4,11 @@ namespace User\Service;
 
 use Application\Service\AbstractAclService;
 
+use User\Form\ApiToken;
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 
 
 /**
@@ -31,7 +34,7 @@ class ApiUser extends AbstractAclService
     {
         if (!$this->isAllowed('list')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view API tokens')
             );
         }
@@ -47,7 +50,7 @@ class ApiUser extends AbstractAclService
     {
         if (!$this->isAllowed('remove')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to remove API tokens')
             );
         }
@@ -65,7 +68,7 @@ class ApiUser extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view API tokens')
             );
         }
@@ -132,13 +135,13 @@ class ApiUser extends AbstractAclService
     /**
      * Get the API token form
      *
-     * @return \User\Form\ApiToken
+     * @return ApiToken
      */
     public function getApiTokenForm()
     {
         if (!$this->isAllowed('add')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to add API tokens')
             );
         }
@@ -158,7 +161,7 @@ class ApiUser extends AbstractAclService
     /**
      * Get the user ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

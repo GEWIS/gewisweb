@@ -7,7 +7,12 @@ use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityField as ActivityFieldModel;
 use Activity\Model\ActivityOption as ActivityOptionModel;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
+use Application\Service\Email;
+use DateTime;
 use Decision\Model\Organ;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Activity\Form\Activity as ActivityForm;
 
@@ -16,7 +21,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -44,7 +49,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create an activity')
             );
         }
@@ -67,7 +72,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create an activity')
             );
         }
@@ -75,7 +80,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         // Find the creator
-        /** @var \User\Model\User $user */
+        /** @var User $user */
         $user = $em->merge(
             $this->getServiceManager()->get('user_service_user')->getIdentity()
         );
@@ -99,7 +104,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
     /**
      * @param $activity ActivityModel
-     * @param $user \User\Model\User
+     * @param $user User
      * @param $organ Organ
      */
     private function requestGEFLITST($activity, $user, $organ)
@@ -147,7 +152,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         if (!($this->isAllowed('update', 'activity') ||
                 $this->isAllowed('update', $oldActivity))) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
             );
         }
@@ -181,7 +186,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             return false;
         }
 
-        $proposal = new \Activity\Model\ActivityUpdateProposal();
+        $proposal = new ActivityProposalModel();
         $proposal->setOld($oldActivity);
         $proposal->setNew($newActivity);
         $em->persist($proposal);
@@ -288,13 +293,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     protected function generateActivity(array $params, $user, $organ, $dutch, $english, $initialStatus)
     {
         $activity = new ActivityModel();
-        $activity->setBeginTime(new \DateTime($params['beginTime']));
-        $activity->setEndTime(new \DateTime($params['endTime']));
+        $activity->setBeginTime(new DateTime($params['beginTime']));
+        $activity->setEndTime(new DateTime($params['endTime']));
         //Default to the endtime if no deadline was set (so there is no deadline effectively)
         $activity->setSubscriptionDeadline(
             empty($params['subscriptionDeadline']) ?
                 $activity->getEndTime() :
-                new \DateTime($params['subscriptionDeadline'])
+                new DateTime($params['subscriptionDeadline'])
         );
 
         $this->setLanguageSpecificParameters($activity, $params, $dutch, $english);
@@ -338,7 +343,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @param int $organId The id of the organ associated with the activity
      * @return Organ The organ associated with the activity, if the user is a member of that organ
-     * @throws \User\Permissions\NotAllowedException if the user is not a member of the organ specified
+     * @throws NotAllowedException if the user is not a member of the organ specified
      */
     protected function findOrgan($organId)
     {
@@ -347,7 +352,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         if (!$organService->canEditOrgan($organ)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create an activity for this organ')
             );
         }
@@ -388,7 +393,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param ActivityModel $activity The activity the field belongs to.
      * @param bool $dutch
      * @param bool $english
-     * @return \Activity\Model\ActivityField The new field.
+     * @return ActivityFieldModel The new field.
      */
     public function createActivityField(array $params, ActivityModel $activity, $dutch, $english)
     {
@@ -469,7 +474,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('approve', 'model')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -488,7 +493,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('reset', 'model')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -508,7 +513,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('disapprove', 'model')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -533,7 +538,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Get the email service.
      *
-     * @return \Application\Service\Email
+     * @return Email
      */
     public function getEmailService()
     {

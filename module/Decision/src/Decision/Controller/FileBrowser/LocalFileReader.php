@@ -8,6 +8,9 @@
 
 namespace Decision\Controller\FileBrowser;
 
+use Zend\Http\Headers;
+use Zend\Http\Response\Stream;
+
 /**
  * Description of LocalFileReader
  *
@@ -44,10 +47,10 @@ class LocalFileReader implements FileReader
         if (substr($contentType,0, strlen('text')) === 'text') {
             $contentType = 'text/plain';
         }
-        $response = new \Zend\Http\Response\Stream();
+        $response = new Stream();
         $response->setStream(fopen('file://' . $fullPath, 'r'));
         $response->setStatusCode(200);
-        $headers = new \Zend\Http\Headers();
+        $headers = new Headers();
         $headers->addHeaderLine('Content-Type', $contentType)
                 ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
                 ->addHeaderLine('Content-Length', filesize($fullPath));

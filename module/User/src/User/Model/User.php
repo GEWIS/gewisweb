@@ -2,6 +2,7 @@
 
 namespace User\Model;
 
+use Decision\Model\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Permissions\Acl\Role\RoleInterface;
@@ -126,7 +127,7 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the member information of this user.
      *
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getMember()
     {

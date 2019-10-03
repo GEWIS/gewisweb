@@ -1,8 +1,24 @@
 <?php
 namespace User;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use User\Authentication\Adapter\Mapper;
+use User\Authentication\Adapter\PinMapper;
+use User\Form\Activate;
+use User\Form\ApiToken;
+use User\Form\Login;
+use User\Form\Password;
+use User\Form\Register;
+use User\Mapper\ApiUser;
+use User\Mapper\LoginAttempt;
+use User\Mapper\NewUser;
+use User\Mapper\Session;
+use User\Permissions\Assertion\IsBoardMember;
 use User\Service\ApiApp;
 use User\Service\Factory\ApiAppFactory;
+use Zend\Authentication\AuthenticationService;
+use Zend\Crypt\Password\Bcrypt;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
@@ -106,56 +122,56 @@ class Module
 
             'factories' => [
                 ApiApp::class => ApiAppFactory::class,
-                \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
+                Mapper\ApiApp::class => Mapper\Factory\ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {
-                    return new \User\Authentication\Storage\Session(
+                    return new Authentication\Storage\Session(
                         $sm
                     );
                 },
                 'user_bcrypt' => function ($sm) {
-                    $bcrypt = new \Zend\Crypt\Password\Bcrypt();
+                    $bcrypt = new Bcrypt();
                     $config = $sm->get('config');
                     $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
                 },
 
                 'user_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('user_doctrine_em')
                     );
                 },
                 'user_form_activate' => function ($sm) {
-                    return new \User\Form\Activate(
+                    return new Activate(
                         $sm->get('translator')
                     );
                 },
                 'user_form_register' => function ($sm) {
-                    return new \User\Form\Register(
+                    return new Register(
                         $sm->get('translator')
                     );
                 },
                 'user_form_login' => function ($sm) {
-                    return new \User\Form\Login(
+                    return new Login(
                         $sm->get('translator')
                     );
                 },
                 'user_form_password' => function ($sm) {
-                    return new \User\Form\Password(
+                    return new Password(
                         $sm->get('translator')
                     );
                 },
                 'user_form_passwordreset' => function($sm) {
-                    return new \User\Form\Register(
+                    return new Register(
                         $sm->get('translator')
                     );
                 },
                 'user_form_passwordactivate' => function($sm) {
-                    return new \User\Form\Activate(
+                    return new Activate(
                         $sm->get('translator')
                     );
                 },
                 'user_form_apitoken' => function ($sm) {
-                    $form = new \User\Form\ApiToken(
+                    $form = new ApiToken(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('user_hydrator'));
@@ -163,27 +179,27 @@ class Module
                 },
 
                 'user_mapper_user' => function ($sm) {
-                    return new \User\Mapper\User(
+                    return new Mapper\User(
                         $sm->get('user_doctrine_em')
                     );
                 },
                 'user_mapper_newuser' => function ($sm) {
-                    return new \User\Mapper\NewUser(
+                    return new NewUser(
                         $sm->get('user_doctrine_em')
                     );
                 },
                 'user_mapper_apiuser' => function($sm) {
-                    return new \User\Mapper\ApiUser(
+                    return new ApiUser(
                         $sm->get('user_doctrine_em')
                     );
                 },
                 'user_mapper_session' => function($sm) {
-                    return new \User\Mapper\Session(
+                    return new Session(
                         $sm->get('user_doctrine_em')
                     );
                 },
                 'user_mapper_loginattempt' => function($sm) {
-                    return new \User\Mapper\LoginAttempt(
+                    return new LoginAttempt(
                         $sm->get('user_doctrine_em')
                     );
                 },
@@ -198,7 +214,7 @@ class Module
                     return $transport;
                 },
                 'user_auth_adapter' => function ($sm) {
-                    $adapter = new \User\Authentication\Adapter\Mapper(
+                    $adapter = new Mapper(
                         $sm->get('user_bcrypt'),
                         $sm->get('application_service_legacy'),
                         $sm->get('user_service_user')
@@ -207,7 +223,7 @@ class Module
                     return $adapter;
                 },
                 'user_pin_auth_adapter' => function ($sm) {
-                    $adapter = new \User\Authentication\Adapter\PinMapper(
+                    $adapter = new PinMapper(
                         $sm->get('application_service_legacy'),
                         $sm->get('user_service_user')
                     );
@@ -215,19 +231,19 @@ class Module
                     return $adapter;
                 },
                 'user_auth_service' => function ($sm) {
-                    return new \User\Authentication\AuthenticationService(
+                    return new Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );
                 },
                 'user_pin_auth_service' => function ($sm) {
-                    return new \Zend\Authentication\AuthenticationService(
+                    return new AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_pin_auth_adapter')
                     );
                 },
                 'user_remoteaddress' => function ($sm) {
-                    $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
+                    $remote = new RemoteAddress();
                     return $remote->getIpAddress();
                 },
                 'user_role' => function ($sm) {
@@ -290,7 +306,7 @@ class Module
                     $acl->allow('admin');
 
                     // board members also are admins
-                    $acl->allow('user', null, null, new \User\Permissions\Assertion\IsBoardMember());
+                    $acl->allow('user', null, null, new IsBoardMember());
 
                     // configure the user ACL
                     $acl->addResource(new Resource('apiuser'));

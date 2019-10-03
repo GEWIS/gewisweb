@@ -5,6 +5,7 @@ namespace Education\Oase\Service;
 use Education\Oase\Client;
 use Education\Model\Course as CourseModel;
 
+use SimpleXMLElement;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Course
@@ -57,7 +58,7 @@ class Course
      *
      * @param SimpleXMLElement $element
      */
-    protected function toArray(\SimpleXMLElement $element)
+    protected function toArray(SimpleXMLElement $element)
     {
         $ret = [];
         foreach ($element as $el) {

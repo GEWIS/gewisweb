@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Decision\Model\SubDecision;
+use InvalidArgumentException;
 
 /**
  * Foundation of an organ.
@@ -133,12 +134,12 @@ class Foundation extends SubDecision
      *
      * @param string $organType
      *
-     * @throws \InvalidArgumentException if the type is wrong
+     * @throws InvalidArgumentException if the type is wrong
      */
     public function setOrganType($organType)
     {
         if (!in_array($organType, self::getOrganTypes())) {
-            throw new \InvalidArgumentException("Given type does not exist.");
+            throw new InvalidArgumentException("Given type does not exist.");
         }
         $this->organType = $organType;
     }

@@ -2,6 +2,9 @@
 
 namespace Photo\Controller;
 
+use Exception;
+use Photo\Service\Album;
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -31,7 +34,7 @@ class PhotoController extends AbstractActionController
     /**
      * Gets the album service.
      *
-     * @return \Photo\Service\Album
+     * @return Album
      */
     public function getAlbumService()
     {
@@ -59,7 +62,7 @@ class PhotoController extends AbstractActionController
     /**
      * Gets the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
@@ -78,7 +81,7 @@ class PhotoController extends AbstractActionController
         $photoId = $this->params()->fromRoute('photo_id');
         try {
             $memberAlbum = $this->getAlbumService()->getAlbum($lidnr, 'member');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->notFoundAction();
         }
         $photoData = $this->getPhotoService()->getPhotoData($photoId,
