@@ -70,7 +70,7 @@ $this->headTitle($this->translate('Photos'));
             <div class="col-lg-12">
                 <div class="alert alert-danger" role="alert">
                     <?= $this->translate('Do you want to help test new features of the website?')?>
-                    <?= sprintf($this->translate('Then try the new photo editor %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) . '">', '</a>' ) ?>
+                    <?= sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) . '">', '</a>' ) ?>
                 </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
