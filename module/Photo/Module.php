@@ -2,6 +2,7 @@
 
 namespace Photo;
 
+use League\Glide\Urls\UrlBuilderFactory;
 use Zend\Mvc\MvcEvent;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
@@ -118,6 +119,11 @@ class Module
                         $sm->get('photo_doctrine_em')
                     );
                 },
+                'photo_mapper_vote' => function ($sm) {
+                    return new Mapper\Vote(
+                        $sm->get('photo_doctrine_em')
+                    );
+                },
                 'photo_acl' => function ($sm) {
                     $acl = $sm->get('acl');
 
@@ -150,9 +156,48 @@ class Module
                 // reused code from the eduction module
                 'photo_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                }
+                },
+                'album_page_cache' => function () {
+                    return \Zend\Cache\StorageFactory::factory(
+                        array(
+                            'adapter' => array(
+                                'name' => 'filesystem',
+                                'options' => array(
+                                    'dirLevel' => 2,
+                                    'cacheDir' => 'data/cache',
+                                    'dirPermission' => 0755,
+                                    'filePermission' => 0666,
+                                    'namespaceSeparator' => '-db-'
+                                ),
+                            ),
+                            'plugins' => array('serializer'),
+                        )
+                    );
+                },
             ]
         ];
     }
 
+    public function getViewHelperConfig()
+    {
+        return [
+            'factories' => [
+                'glideUrl' => function ($sm) {
+                    $helper = new \Photo\View\Helper\GlideUrl();
+                    $config = $sm->getServiceLocator()->get('config');
+                    if (!isset($config['glide']) || !isset($config['glide']['base_url'])
+                        || !isset($config['glide']['signing_key'])) {
+                        throw new \Exception('Invalid glide configuration');
+                    }
+
+                    $urlBuilder = UrlBuilderFactory::create(
+                        $config['glide']['base_url'],
+                        $config['glide']['signing_key']
+                    );
+                    $helper->setUrlBuilder($urlBuilder);
+                    return $helper;
+                },
+            ]
+        ];
+    }
 }

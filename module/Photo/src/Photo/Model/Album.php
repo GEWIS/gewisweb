@@ -86,7 +86,7 @@ class Album implements ResourceInterface
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Gets an array of all child albums
      *
@@ -95,6 +95,16 @@ class Album implements ResourceInterface
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Gets an array of all the photos in this album
+     *
+     * @return array
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
     
     /**
