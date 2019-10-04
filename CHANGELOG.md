@@ -19,7 +19,7 @@
 
 ---
 
-## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-08-31)
+## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-09-02)
 
 * Implemented RFC2324
 * Updated dependencies
