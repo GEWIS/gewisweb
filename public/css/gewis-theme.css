@@ -7250,8 +7250,17 @@ Styleguide: colors
   width: 0.5%; }
 
 .grid-sizer, .photo-grid-item {
-  width: 24.5%;
+  width: 49%;
   margin-bottom: 0.5%; }
+  @media (min-width: 768px) {
+    .grid-sizer, .photo-grid-item {
+      width: 33%; } }
+  @media (min-width: 992px) {
+    .grid-sizer, .photo-grid-item {
+      width: 24.5%; } }
+  @media (min-width: 1200px) {
+    .grid-sizer, .photo-grid-item {
+      width: 16.2%; } }
 
 .photo-grid-item-photo {
   background-color: #d40026; }
@@ -7301,6 +7310,20 @@ Styleguide: colors
 
 .pager li > a {
   margin: 5px; }
+
+.tagSearch {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  border-bottom: 1px solid black;
+  background-color: #000;
+  color: #fff;
+  border-color: #FFF;
+  font-size: 16px; }
+
+.tagSearch:focus {
+  outline: none; }
 
 /*
 Frontpage

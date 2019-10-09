@@ -141,7 +141,7 @@ class Photo implements ResourceInterface
     /**
      * All the tags for this photo.
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"}, fetch="EAGER")
      */
     protected $tags;
 
@@ -150,6 +150,13 @@ class Photo implements ResourceInterface
      * @ORM\OneToOne(targetEntity="WeeklyPhoto", mappedBy="photo", cascade={"persist", "remove"})
      */
     protected $weeklyPhoto;
+
+    /**
+     * The aspect ratio of the photo width/height
+     *
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $aspectRatio;
 
     /**
      * Get the ID.
@@ -344,6 +351,18 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * @return float
+     */
+    public function getAspectRatio()
+    {
+        if ($this->aspectRatio === null) {
+            list($width, $height, $type, $attr) = getimagesize('public/data/' . $this->getSmallThumbPath());
+            $this->aspectRatio = $height / $width;
+        }
+        return $this->aspectRatio;
+    }
+
+    /**
      * Set the dateTime.
      *
      * @param \DateTime $dateTime
@@ -491,6 +510,16 @@ class Photo implements ResourceInterface
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+    }
+
+    /**
+     * Sets the aspect ratio
+     *
+     * @param float $ratio
+     */
+    public function setAspectRatio($ratio)
+    {
+        $this->aspectRatio = $ratio;
     }
 
     /**

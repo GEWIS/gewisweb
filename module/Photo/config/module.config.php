@@ -59,6 +59,19 @@ return [
                             ],
                         ],
                     ],
+                    'album_beta' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/beta/album[/:album_id]',
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Album',
+                                'action' => 'indexNew',
+                            ],
+                        ],
+                    ],
                     'photo' => [
                         'type' => 'Segment',
                         'options' => [
@@ -103,6 +116,15 @@ return [
                                                 'action' => 'remove',
                                             ],
                                         ],
+                                    ],
+                                ],
+                            ],
+                            'vote' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/vote',
+                                    'defaults' => [
+                                        'action' => 'vote',
                                     ],
                                 ],
                             ],
@@ -450,6 +472,15 @@ return [
                         'defaults' => [
                             'controller' => 'Photo\Controller\PhotoAdmin',
                             'action' => 'weeklyPhoto'
+                        ]
+                    ]
+                ],
+                'migrate_aspect_ratio' => [
+                    'options' => [
+                        'route' => 'photo aspectratio',
+                        'defaults' => [
+                            'controller' => 'Photo\Controller\PhotoAdmin',
+                            'action' => 'migrateAspectRatios'
                         ]
                     ]
                 ],
