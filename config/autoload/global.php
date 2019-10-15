@@ -49,6 +49,7 @@ return [
     'storage' => [
         'storage_dir' => 'public/data',
         'public_dir' => 'data',
+        'cache_dir' => 'data/cache',
         'dir_mode' => 0777, // rwx by default
     ],
 
@@ -121,7 +122,7 @@ return [
             /*
              * Max. width and height which a thumbnail may have.
              */
-            'width' => 960,
+            'width' => 1920,
             'height' => 1920
         ],
         'album_cover' => [

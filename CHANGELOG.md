@@ -1,7 +1,16 @@
+## [v1.6-beta](https://github.com/GEWIS/gewisweb/tree/v1.6-beta) (2019-10-07)
+
+* Implemented a new photo viewer next to the old photo viewer
+* Various UI improvements
+
+---
+
 ## [v1.5.3](https://github.com/GEWIS/gewisweb/tree/v1.5.3) (2019-09-26)
 
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.5.2](https://github.com/GEWIS/gewisweb/tree/v1.5.2) (2019-09-19)
 
@@ -9,12 +18,16 @@
 * Used more informative title for emails to GEFLITST
 * Various bugfixes
 
-## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-08-31)
+---
+
+## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-09-02)
 
 * Implemented RFC2324
 * Updated dependencies
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.5.0](https://github.com/GEWIS/gewisweb/tree/v1.5.0) (2019-06-25)
 
@@ -23,6 +36,8 @@
 * Added social media references
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.4.2](https://github.com/GEWIS/gewisweb/tree/v1.4.2) (2019-05-10)
 
@@ -33,6 +48,8 @@
 * Various UI improvements
 * Various bugfixes
 
+---
+
 ## [v1.4.1](https://github.com/GEWIS/gewisweb/tree/v1.4.1) (2019-03-21)
 
 * Sort meeting documents on number
@@ -40,6 +57,8 @@
 * Add overview of users subscribed activities
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.4.0](https://github.com/GEWIS/gewisweb/tree/v1.4.0) (2019-02-06)
 
@@ -49,6 +68,8 @@
 * Disclaimer on educational material
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.3.2](https://github.com/GEWIS/gewisweb/tree/v1.3.2) (2018-03-02)
 
@@ -128,5 +149,3 @@
 ## [v1.0](https://github.com/GEWIS/gewisweb/tree/v1.0) (2016-02-06)
 
 * Initial release, lots of great features
-
----

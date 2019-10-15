@@ -21,10 +21,34 @@ class AlbumController extends AbstractActionController
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
-        
+
         return new ViewModel($albumPage);
     }
-    
+
+    /**
+     * Shows a page from the album, or a 404 if this page does not exist
+     *
+     * @return array|ViewModel
+     */
+    public function indexNewAction()
+    {
+        $albumId = $this->params()->fromRoute('album_id');
+        $albumService = $this->getServiceLocator()
+            ->get('photo_service_album');
+
+        $album = $albumService->getAlbum($albumId, 'album');
+        if ($album === null) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel([
+            'cache' => $this->getServiceLocator()->get('album_page_cache'),
+            'album'     => $album,
+            'basedir'   => '/',
+            'config' => $this->getServiceLocator()->get('config')['photo']
+        ]);
+    }
+
     /**
      * Shows a page with photo's of a member, or a 404 if this page does not
      * exist
