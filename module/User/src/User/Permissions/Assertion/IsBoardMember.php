@@ -44,7 +44,7 @@ class IsBoardMember implements AssertionInterface
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -57,8 +57,7 @@ class IsBoardMember implements AssertionInterface
     protected function isCurrentBoard(BoardMember $boardMember)
     {
         $now = new \DateTime();
-        return true;
-//        return $boardMember->getInstallDate() <= $now &&
-//            (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate() >= $now);
+        return $boardMember->getInstallDate() <= $now &&
+            (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate() >= $now);
     }
 }
