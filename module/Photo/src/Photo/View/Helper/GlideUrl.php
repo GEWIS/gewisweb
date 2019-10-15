@@ -3,6 +3,8 @@
 namespace Photo\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use Zend\View\Exception;
+use League\Glide\Urls\UrlBuilderFactory;
 
 /**
  * Url view helper for generating (signed) glide url's

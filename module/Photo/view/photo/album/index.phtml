@@ -63,7 +63,9 @@ $this->headTitle($this->translate('Photos'));
         </ol>
     </div>
 </section>
-
+<div class="alert alert-danger" role="alert">
+    Wil je meehelpen om de website te testen? Probeer dan <a href="<?= $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) ?>">HIER</a> de nieuwe foto viewer uit!
+</div>
 <section class="section">
     <div class="container">
         <div class="row">
