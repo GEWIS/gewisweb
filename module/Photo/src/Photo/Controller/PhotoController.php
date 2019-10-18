@@ -3,11 +3,12 @@
 namespace Photo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class PhotoController extends AbstractActionController
 {
-    
+
     public function indexAction()
     {
         //add any other special behavior which is required for the main photo page here later
@@ -20,14 +21,14 @@ class PhotoController extends AbstractActionController
             $year = (int)$year;
         }
         $albums = $this->getAlbumService()->getAlbumsByYear($year);
-        
+
         return new ViewModel([
             'activeYear' => $year,
             'years'      => $years,
             'albums'     => $albums
         ]);
     }
-    
+
     /**
      * Gets the album service.
      *
@@ -37,7 +38,7 @@ class PhotoController extends AbstractActionController
     {
         return $this->getServiceLocator()->get("photo_service_album");
     }
-    
+
     /**
      * Called on viewing a photo
      *
@@ -46,16 +47,16 @@ class PhotoController extends AbstractActionController
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $photoData = $this->getPhotoService()->getPhotoData($photoId);
-        
+
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
-        
+
         $this->getPhotoService()->countHit($photoData['photo']);
-        
+
         return new ViewModel($photoData);
     }
-    
+
     /**
      * Gets the photo service.
      *
@@ -65,7 +66,7 @@ class PhotoController extends AbstractActionController
     {
         return $this->getServiceLocator()->get("photo_service_photo");
     }
-    
+
     /**
      * Called on viewing a photo in an album for a member
      *
@@ -83,41 +84,84 @@ class PhotoController extends AbstractActionController
         }
         $photoData = $this->getPhotoService()->getPhotoData($photoId,
             $memberAlbum);
-        
+
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
-        
+
         $photoData = array_merge($photoData, [
             'memberAlbum'     => $memberAlbum,
             'memberAlbumPage' => $page,
         ]);
-        
+
         $this->getPhotoService()->countHit($photoData['photo']);
-        
+
         $vm = new ViewModel($photoData);
         $vm->setTemplate('photo/view');
-        
+
         return $vm;
     }
-    
+
     public function downloadAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        
+
         return $this->getPhotoService()->getPhotoDownload($photoId);
     }
-    
+
     /**
      * Display the page containing previous pictures of the week.
      */
     public function weeklyAction()
     {
         $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
-        
+
         return new ViewModel([
             'weeklyPhotos' => $weeklyPhotos
         ]);
+    }
+
+    /**
+     * For setting a profile picture
+     */
+    public function setProfilePhotoAction()
+    {
+        $photoId = $this->params()->fromRoute('photo_id');
+        $this->getPhotoService()->setProfilePhoto($photoId);
+
+        $this->redirect()->toRoute('photo/photo', [
+            'photo_id' => $photoId,
+        ]);
+    }
+
+    /**
+     * For removing a profile picture
+     */
+    public function removeProfilePhotoAction()
+    {
+        $photoId = $this->params()->fromRoute('photo_id', null);
+        $this->getPhotoService()->removeProfilePhoto();
+
+        if ($photoId != null) {
+            $this->redirect()->toRoute('photo/photo', [
+                'photo_id' => $photoId,
+            ]);
+        } else {
+            $this->redirect()->toRoute('member/self');
+        }
+    }
+
+    /**
+     * Store a vote for a photo
+     */
+    public function voteAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $photoId = $this->params()->fromRoute('photo_id');
+            $this->getPhotoService()->countVote($photoId);
+            return new JsonModel(['success' => true]);
+        }
     }
     
 }

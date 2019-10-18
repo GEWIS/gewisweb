@@ -31,7 +31,7 @@ return [
         'from' => 'web@gewis.nl',
         'to' => [
             'activity_creation' => 'secr@gewis.nl',
-            'activity_calendar' => '',
+            'activity_calendar' => 'cib@gewis.nl',
             'poll_creation' => '',
             'organ_update' => ''
         ]
@@ -48,5 +48,10 @@ return [
 	/*
      * Path to folder in local filesystem available for browsing
      */
-    'filebrowser_folder' => getcwd() . '/public/webfiles/'
+    'filebrowser_folder' => getcwd() . '/public/webfiles/',
+
+    'glide' => [
+        'base_url' => '',
+        'signing_key' => ''
+    ]
 ];

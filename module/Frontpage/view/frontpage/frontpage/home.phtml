@@ -133,7 +133,7 @@
                 <?php if (!is_null($weeklyPhoto)): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
-                            <h3><?= $this->translate('Photo of the week') ?></h3>
+                            <h3><a href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>"><?= $this->translate('Photo of the week') ?></a></h3>
                         </div>
                         <div class="panel-thumb">
                             <a
@@ -149,14 +149,16 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading panel-heading--full-height">
-                        <h3><?= $this->translate('Infima') ?></h3>
+                <?php if($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-heading--full-height">
+                            <h3><?= $this->translate('Infima') ?></h3>
+                        </div>
+                        <div class="panel-body">
+                            <?= $this->infima() ?>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <?= $this->infima() ?>
-                    </div>
-                </div>
+                <?php endif ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3><?= $this->translate('Poll') ?></h3>

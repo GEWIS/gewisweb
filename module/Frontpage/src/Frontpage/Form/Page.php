@@ -3,7 +3,6 @@
 namespace Frontpage\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
@@ -110,7 +109,7 @@ class Page extends Form implements InputFilterProviderInterface
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'min' => 3,
+                            'min' => 2,
                             'max' => 25
                         ]
                     ],

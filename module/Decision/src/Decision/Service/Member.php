@@ -61,13 +61,20 @@ class Member extends AbstractAclService
         }
 
         $tags = $this->getPhotoService()->getTagsForMember($member);
+
         // Base directory for retrieving photos
         $basedir = $this->getPhotoService()->getBaseDirectory();
+
+        $photoService = $this->getPhotoService();
+        $profilePhoto = $photoService->getProfilePhoto($lidnr);
+        $isExplicitProfilePhoto = $photoService->hasExplicitProfilePhoto($lidnr);
 
         return [
             'member' => $member,
             'memberships' => $memberships,
             'tags' => $tags,
+            'profilePhoto' => $profilePhoto,
+            'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir
         ];
     }
@@ -152,7 +159,7 @@ class Member extends AbstractAclService
 
     public function getRegulationDownload($regulation)
     {
-        if (!$this->isAllowed('edit', 'organ')) {
+        if (!$this->isAllowed('download', 'regulations')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to download regulations.')
