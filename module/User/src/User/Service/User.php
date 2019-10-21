@@ -99,12 +99,15 @@ class User extends AbstractAclService
         }
 
         $newUser = $this->getNewUserMapper()->getByLidnr($data['lidnr']);
-        if (is_null($newUser)) {
+        if (null !== $newUser) {
             $time = $newUser->getTime();
             $requiredInterval = (new DateTime())->sub(new DateInterval('P1D'));
             if ($time > $requiredInterval) {
-                $form->setError(RegisterForm::)
+                $form->setError(RegisterForm::ERROR_ALREADY_REGISTERED);
+
+                return null;
             }
+            $this->getNewUserMapper()->deleteByMember($member);
         }
 
         // save the data, and send email
