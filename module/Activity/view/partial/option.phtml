@@ -51,4 +51,8 @@
 
     $("#begin-time-<?= $this->index ?>").datetimepicker(options);
     $("#end-time-<?= $this->index ?>").datetimepicker(options);
+
+    $("#begin-time-<?= $this->index ?>").change(function() {
+        $("#end-time-<?= $this->index ?>").val($("#begin-time-<?= $this->index ?>").val());
+    });
 </script>
