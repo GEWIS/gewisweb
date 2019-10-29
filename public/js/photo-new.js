@@ -287,7 +287,9 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
                 // TODO: this might break things
                 // Although this fixes the tagging UI
                 return true;
-            }
+            },
+
+            infoEl: true,
 
         };
 
