@@ -1,7 +1,10 @@
 ## [v1.6-beta](https://github.com/GEWIS/gewisweb/tree/v1.6-beta) (2019-10-07)
 
 * Implemented a new photo viewer next to the old photo viewer
+* Improved user registration
+* Improved exception logging
 * Various UI improvements
+* Various bugfixes
 
 ---
 
