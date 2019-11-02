@@ -69,6 +69,13 @@ class Register extends Form
                 ]
             ]);
             break;
+        case self::ERROR_ALREADY_REGISTERED:
+            $this->setMessages([
+                'lidnr' => [
+                    $this->translate->translate("You already attempted to register, please check your email or try again after 24 hours.")
+                ]
+            ]);
+            break;
         case self::ERROR_USER_ALREADY_EXISTS:
             $this->setMessages([
                 'lidnr' => [
