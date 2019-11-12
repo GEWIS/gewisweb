@@ -26,33 +26,63 @@
         <div class="row">
             <div class="col-md-2">
                 <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Category');?>
- </a>
+                </a>
                 <table class="table table-striped ">
                     <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Categories') ?>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Categories') ?>
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($categoryList as $category):
-                                $editUrl = $this->url('admin_company/editCategory', 
-                                ['categoryID' => $category->getLanguageNeutralId()]);
-                           ?>
-                           <tr>
-                           <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
-                           </tr>
-                           <?php endforeach; ?>
+                    <?php
+                    foreach ($categoryList as $category):
+                        $editUrl = $this->url('admin_company/editCategory',
+                            ['categoryID' => $category->getLanguageNeutralId()]);
+                        ?>
+                        <tr>
+                            <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
+                        </tr>
+                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Categories') ?></th>
-                        </tr>
+                    <tr>
+                        <th><?= $this->translate('Categories') ?></th>
+                    </tr>
                     </tfoot>
                 </table>
             </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel'])?>'> <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Label');?>
+                    </a>
+                    <table class="table table-striped ">
+                        <thead>
+                        <tr>
+                            <th>
+                                <?= $this->translate('Labels') ?>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach ($labelList as $label):
+                            $editUrl = $this->url('admin_company/editLabels',
+                                ['labelID' => $label->getLanguageNeutralId()]);
+                            ?>
+                            <tr>
+                                <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th><?= $this->translate('Categories') ?></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             <div class="col-md-10">
                 <table class="table table-striped ">
                     <thead>
@@ -95,7 +125,7 @@
                     <tbody class="company-list">
                         <?php
                             foreach ($companyList as $company):
-                                $editUrl = $this->url('admin_company/editCompany', 
+                                $editUrl = $this->url('admin_company/editCompany',
                                 ['slugCompanyName' => $company->getSlugName()]);
                            ?>
                            <tr class="company-list-item
@@ -109,7 +139,7 @@
                                <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                                <td>
                                    <button type="button" class="btn btn-danger btn-xs"
-                                                         onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')" 
+                                                         onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')"
                                                          data-toggle="modal"
                                                          data-target="#deleteModal">
                                        <?= $this->translate('Delete') ?>

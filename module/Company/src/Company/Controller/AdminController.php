@@ -22,6 +22,7 @@ class AdminController extends AbstractActionController
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
             'categoryList' => $companyService->getCategoryList(false),
+            'labelList' => $companyService->getLabelList(false),
             'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
                 new \DateInterval("P1M")
             )),
@@ -256,6 +257,70 @@ class AdminController extends AbstractActionController
 
         return $vm;
     }
+
+    /**
+     * Action that displays a form for editing a category
+     *
+     *
+     */
+    public function editLabelAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $labelForm = $companyService->getLabelForm();
+
+        // Get parameter
+        $labelId = $this->params('labelID');
+
+        // Get the specified company
+        $labels = $companyService->getAllLabelsById($labelId);
+
+        // If the company is not found, throw 404
+        if (empty($labels)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        // Initialize form
+        $labelsDict = [];
+        foreach ($labels as $label) {
+            $labelsDict[$label->getLanguage()] = $label;
+        }
+        $labelForm->bind($labelsDict);
+        $labelForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/editLabel',
+                [
+                    'labelID' => $labelId,
+                ]
+            )
+        );
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->saveLabel(
+                $request->getPost()
+            )){
+                return $this->redirect()->toRoute(
+                    'admin_company/editLabel',
+                    [
+                        'labelID' => $labelId,
+                    ]
+                );
+
+            }
+        }
+
+        $vm = new ViewModel([
+            'labels' => $labels,
+            'form' => $labelForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+
+        return $vm;
+    }
+
     private function getLanguageDescriptions()
     {
         $companyService = $this->getCompanyService();
@@ -504,6 +569,49 @@ class AdminController extends AbstractActionController
         // Initialize the view
         return new ViewModel([
             'form' => $categoryForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+    }
+
+        public function addLabelAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $labelForm = $companyService->getLabelForm();
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            // Check if data is valid, and insert when it is
+            $labels = $companyService->insertLabelByData(
+                $request->getPost(),
+                $request->getFiles()
+            );
+            if (!is_null($labels)) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/default',
+                    [
+                        'action' => 'editLabel',
+                        'slugCompanyName' => $labels['nl']->getLanguageNeutralId(),
+                    ]
+                );
+            }
+        }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $labelForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                ['action' => 'addLabel']
+            )
+        );
+        // Initialize the view
+        return new ViewModel([
+            'form' => $labelForm,
             'languages' => $this->getLanguageDescriptions(),
         ]);
     }
