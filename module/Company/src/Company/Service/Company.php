@@ -199,6 +199,42 @@ class Company extends AbstractACLService
         return $this->getCategoryMapper()->findAll();
     }
 
+
+    public function getLabelList($visible)
+    {
+        $translator = $this->getTranslator();
+        if (!$visible) {
+            if (!$this->isAllowed('listAllCategories')) {
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to access the admin interface')
+                );
+            }
+            $results = $this->getLabelMapper()->findAll();
+            return $this->getUniqueInArray($results, function ($a) {
+                return $a->getLanguageNeutralId();
+            });
+        }
+        if (!$this->isAllowed('listVisibleCategories')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list all categories')
+            );
+        }
+        if ($visible) {
+            $categories = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
+            $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
+            $filteredCategories =  $this->filterCategories($categories);
+            $noVacancyLabel = count(array_filter($filteredCategories, function ($el) {
+                return $el->getSlug() == "jobs";
+            })) ;
+            if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
+                $filteredCategories[] = $this->getLabelMapper()
+                    ->createNullLabel($translator->getLocale(), $translator);
+            }
+            return $filteredCategories;
+        }
+        return $this->getLabelMapper()->findAll();
+    }
+
     /**
      * Inserts a category, and binds it to the given package
      *
