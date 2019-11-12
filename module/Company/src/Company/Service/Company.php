@@ -878,6 +878,15 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns the category mapper
+     *
+     */
+    public function getLabelMapper()
+    {
+        return $this->sm->get('company_mapper_label');
+    }
+
+    /**
      * Get the Acl.
      *
      * @return Zend\Permissions\Acl\Acl
