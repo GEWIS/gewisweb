@@ -108,7 +108,7 @@ class Job
     /**
      * The job's category.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory")
      */
     protected $category;
 
@@ -282,7 +282,7 @@ class Job
     {
         $this->attachment = $attachment;
     }
-    
+
     /**
      * Get the job's contact's name.
      *
@@ -292,7 +292,7 @@ class Job
     {
         return $this->contactName;
     }
-    
+
     /**
      * Set the job's contact's name.
      *
@@ -302,7 +302,7 @@ class Job
     {
         $this->contactName = $name;
     }
-    
+
     /**
      * Get the job's phone.
      *

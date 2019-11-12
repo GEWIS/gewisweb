@@ -15,6 +15,7 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
 use Zend\Validator\AbstractValidator;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
@@ -39,8 +40,18 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $logger = $sm->get('logger');
 
+        if ($e->getError() === 'error-router-no-match') {
+            // not an interesting error
+            return;
+        }
         if ($e->getError() === 'error-exception') {
             $ex = $e->getParam('exception');
+
+            if ($ex instanceof NotAllowedException) {
+                // we do not need to log access denied
+                return;
+            }
+
             $logger->error($ex);
             return;
         }
