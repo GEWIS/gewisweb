@@ -53,35 +53,35 @@
                     </tfoot>
                 </table>
             </div>
-                <div class="col-md-2">
-                    <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel'])?>'> <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Label');?>
-                    </a>
-                    <table class="table table-striped ">
-                        <thead>
+            <div class="col-md-2">
+                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel'])?>'> <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Label');?>
+                </a>
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Labels') ?>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($labelList as $label):
+                        $editUrl = $this->url('admin_company/editLabels',
+                            ['labelID' => $label->getLanguageNeutralId()]);
+                        ?>
                         <tr>
-                            <th>
-                                <?= $this->translate('Labels') ?>
-                            </th>
+                            <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach ($labelList as $label):
-                            $editUrl = $this->url('admin_company/editLabels',
-                                ['labelID' => $label->getLanguageNeutralId()]);
-                            ?>
-                            <tr>
-                                <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Categories') ?></th>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                    <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><?= $this->translate('Categories') ?></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
             <div class="col-md-10">
                 <table class="table table-striped ">
                     <thead>
