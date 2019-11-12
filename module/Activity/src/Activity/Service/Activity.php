@@ -109,11 +109,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $activityTitle = $activity->getName(); // Fallback on Dutch title
         }
 
+        $activityTime = $activity->getBeginTime();
+
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
 
         if ($organ != null) {
-            $subject = sprintf('%s: %s', $organ->getAbbr(), $activityTitle);
+            $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
 
             $organInfo = $organ->getApprovedOrganInformation();
             if ($organInfo != null && $organInfo->getEmail() != null) {
@@ -125,7 +127,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                     ['activity' => $activity, 'requester' => $organ->getName()], $user);
             }
         } else {
-            $subject = sprintf('Member Initiative: %s', $activityTitle);
+            $subject = sprintf('Member Initiative: %s on %s', $activityTitle, $activityTime);
 
             $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
                 ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
