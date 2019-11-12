@@ -62,6 +62,15 @@ class Module
                 );
                 return $form;
             },
+            'company_admin_edit_label_form' => function ($sm) {
+                $form = new \Company\Form\EditCategory(
+                    $sm->get('company_mapper_label'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
+                return $form;
+            },
             'company_admin_edit_bannerpackage_form' => function ($sm) {
                 return new \Company\Form\EditPackage(
                     $sm->get('translator'),
@@ -111,6 +120,11 @@ class Module
             },
             'company_mapper_category' => function ($sm) {
                 return new \Company\Mapper\Category(
+                    $sm->get('company_doctrine_em')
+                );
+            },
+            'company_mapper_label' => function ($sm) {
+                return new \Company\Mapper\Label(
                     $sm->get('company_doctrine_em')
                 );
             },
