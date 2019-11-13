@@ -251,6 +251,24 @@ class Company extends AbstractACLService
         $result = $this->getCategoryMapper()->insert($lang, $id, $cat);
         return $result;
     }
+
+    /**
+     * Inserts a label, and binds it to the given package
+     *
+     * @param mixed $packageID
+     */
+    public function insertLabel($lang, $id, $cat = null)
+    {
+        if (!$this->isAllowed('insert')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to insert a job')
+            );
+        }
+        $result = $this->getLabelMapper()->insert($lang, $id, $cat);
+        return $result;
+    }
+
     /**
      * Checks if the data is valid, and if it is, inserts the category, and sets
      * all data
@@ -273,6 +291,37 @@ class Company extends AbstractACLService
             $id = -1;
             foreach ($newCategories as $lang => $category) {
                 $arr[$lang] = $this->insertCategory($lang, $id, $category);
+                if ($id == -1) {
+                    $id = current($arr)->getId();
+                }
+            }
+            return $arr;
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the data is valid, and if it is, inserts the label, and sets
+     * all data
+     *
+     * @param mixed $data
+     */
+    public function insertLabelByData($data, $files)
+    {
+        $labelForm = $this->getLabelForm();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $labelForm->setData($mergedData);
+        $arr = [];
+        $labelForm->get('labels')->setObject($arr);
+        $valid = $labelForm->isValid();
+        if ($valid) {
+            $newLabels = $labelForm->getObject();
+            $id = -1;
+            foreach ($newLabels as $lang => $label) {
+                $arr[$lang] = $this->insertLabel($lang, $id, $label);
                 if ($id == -1) {
                     $id = current($arr)->getId();
                 }
