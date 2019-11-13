@@ -732,6 +732,29 @@ class Company extends AbstractACLService
 
         return $package;
     }
+
+
+    /**
+     * Returns a persistent label
+     *
+     * @param mixed $labelID
+     */
+    public function getAllLabelsById($labelID)
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit packages')
+            );
+        }
+        if (is_null($labelID)) {
+            throw new \Exception('Invalid argument');
+        }
+        $package = $this->getCategoryMapper()->findAllCategoriesById($labelID);
+
+        return $package;
+    }
+
     /**
      * Returns a persistent package
      *
