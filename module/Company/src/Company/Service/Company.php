@@ -349,6 +349,26 @@ class Company extends AbstractACLService
         }
         $this->getCategoryMapper()->save();
     }
+
+    /**
+     * Checks if the data is valid (if nonnull), and if it is saves the label
+     *
+     * @param array $data The data to validate, and apply to the label
+     */
+    public function saveLabel($data = null)
+    {
+        if ($data != null) {
+            $labelForm = $this->getLabelForm();
+            $labelForm->setData($data);
+            if ($labelForm->isValid()) {
+                $this->saveLabel();
+                return true;
+            }
+            return;
+        }
+        $this->getLabelMapper()->save();
+    }
+
     /**
      * Checks if the data is valid, and if it is saves the package
      *
