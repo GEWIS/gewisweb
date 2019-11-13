@@ -776,6 +776,22 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Get the Label Edit form.
+     *
+     * @return Label Edit form
+     */
+    public function getLabelForm()
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit jobs')
+            );
+        }
+        return $this->sm->get('company_admin_edit_label_form');
+    }
+
+    /**
      * Returns a the form for entering packages
      *
      */

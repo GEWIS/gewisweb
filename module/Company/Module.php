@@ -63,7 +63,7 @@ class Module
                 return $form;
             },
             'company_admin_edit_label_form' => function ($sm) {
-                $form = new \Company\Form\EditCategory(
+                $form = new \Company\Form\EditLabel(
                     $sm->get('company_mapper_label'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
