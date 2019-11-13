@@ -6,7 +6,7 @@ use Company\Model\JobLabel as LabelModel;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Mappers for cateogry.
+ * Mappers for labels.
  *
  */
 class Label
@@ -109,7 +109,7 @@ class Label
         return $label;
     }
 
-    public function findAllCategoriesById($labelId)
+    public function findAllLabelsById($labelId)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
@@ -135,7 +135,7 @@ class Label
     }
 
     /**
-     * Find all Categories.
+     * Find all Labels.
      *
      * @return array
      */
