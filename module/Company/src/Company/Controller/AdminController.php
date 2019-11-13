@@ -259,7 +259,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a category
+     * Action that displays a form for editing a label
      *
      *
      */
