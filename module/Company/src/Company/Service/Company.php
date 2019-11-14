@@ -199,12 +199,11 @@ class Company extends AbstractACLService
         return $this->getCategoryMapper()->findAll();
     }
 
-
     public function getLabelList($visible)
     {
         $translator = $this->getTranslator();
         if (!$visible) {
-            if (!$this->isAllowed('listAllCategories')) {
+            if (!$this->isAllowed('listAllLabels')) {
                 throw new \User\Permissions\NotAllowedException(
                     $translator->translate('You are not allowed to access the admin interface')
                 );
@@ -214,23 +213,23 @@ class Company extends AbstractACLService
                 return $a->getLanguageNeutralId();
             });
         }
-        if (!$this->isAllowed('listVisibleCategories')) {
+        if (!$this->isAllowed('listVisibleLabels')) {
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to list all categories')
+                $translator->translate('You are not allowed to list all labels')
             );
         }
         if ($visible) {
-            $categories = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
+            $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
             $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
-            $filteredCategories =  $this->filterCategories($categories);
-            $noVacancyLabel = count(array_filter($filteredCategories, function ($el) {
+            $filteredLabels =  $this->filterCategories($labels);
+            $noVacancyLabel = count(array_filter($filteredLabels, function ($el) {
                 return $el->getSlug() == "jobs";
             })) ;
             if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
-                $filteredCategories[] = $this->getLabelMapper()
+                $filteredLabels[] = $this->getLabelMapper()
                     ->createNullLabel($translator->getLocale(), $translator);
             }
-            return $filteredCategories;
+            return $filteredLabels;
         }
         return $this->getLabelMapper()->findAll();
     }
