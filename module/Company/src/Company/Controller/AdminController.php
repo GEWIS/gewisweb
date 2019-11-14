@@ -573,7 +573,7 @@ class AdminController extends AbstractActionController
         ]);
     }
 
-        public function addLabelAction()
+    public function addLabelAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
