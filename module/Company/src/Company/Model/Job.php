@@ -350,7 +350,7 @@ class Job
      */
     public function getTimestamp()
     {
-        return $this->description;
+        return $this->timestamp;
     }
 
     /**
