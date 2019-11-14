@@ -43,16 +43,9 @@ if ($randomize) {
 <section class="section">
     <div class="container">
         <div class="row">
-            <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $category->getPluralName() ?>
-                <?php if (isset($this->company)): ?>
-                    <small>
-                        <?= $this->translate('at') ?>
-                        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
-                            <?= $this->company->getName(); ?>
-                        </a>
-                    </small>
-                <?php endif; ?>
-            </h1>
+            <div class="col-md-12">
+                <h1><?= $category->getPluralName() ?></h1>
+            </div>
         </div>
         <?php if (empty($jobList)): ?>
         <div class="row">
@@ -64,9 +57,18 @@ if ($randomize) {
         <?php else: ?>
         <div class="row">
             <div class="col-md-12">
+                <?php if (isset($this->company)): ?>
+                    <span class="text-muted" style="margin-right: 0.5em;"><?= $this->translate('Selected filters:') ?></span>
+                    <a href="<?= $this->url('company') ?>" class="btn btn-default btn-filter align-middle">
+                        <span class="btn-text" title="<?= $company->getName() ?>">
+                            <?= $company->getName() ?>
+                        </span>
+                        <span class="glyphicon glyphicon-trash small"></span>
+                    </a>
+                <?php endif; ?>
                 <fieldset id="filter-form" class="form-inline pull-right" style="margin-bottom: 1em">
                     <div class="form-group">
-                        <label for="filter-input"><?= $this->translate('Filter:') ?></label>
+                        <label for="filter-input"><?= $this->translate('Search:') ?></label>
                         <div class="btn-group">
                             <input
                                 type="text"

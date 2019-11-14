@@ -61,6 +61,28 @@ Styleguide: buttons.styles
     @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
 }
 
+.btn-filter {
+    .btn-text {
+        max-width: 6em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .glyphicon {
+        padding-left: 1em;
+    }
+
+    &:hover {
+        .glyphicon {
+            color: #D40026;
+        }
+
+        .btn-text {
+            text-decoration: line-through;
+        }
+    }
+}
+
 /*
 Button sizes
 
