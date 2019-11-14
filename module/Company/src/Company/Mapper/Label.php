@@ -68,7 +68,6 @@ class Label
         $labelForJobsWithoutLabel->setLanguage($lang);
         $labelForJobsWithoutLabel->setSlug("jobs");
         $labelForJobsWithoutLabel->setName($translator->translate("Job"));
-        $labelForJobsWithoutLabel->setPluralName($translator->translate("Jobs"));
 
         return $labelForJobsWithoutLabel;
     }

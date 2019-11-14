@@ -43,17 +43,6 @@ class LabelFieldset extends Fieldset
             ],
         ]);
         $this->add([
-            'name' => 'pluralName',
-            'attributes' => [
-                'type' => 'text',
-                'required' => 'required',
-            ],
-            'options' => [
-                'label' => $translate->translate('Plural display name'),
-                'required' => 'required',
-            ],
-        ]);
-        $this->add([
             'name' => 'hidden',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [

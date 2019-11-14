@@ -28,13 +28,6 @@ class JobLabel
     protected $name;
 
     /**
-     * The name of the label
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $pluralName;
-
-    /**
      * The slug of the label
      *
      * @ORM\Column(type="string")
@@ -123,22 +116,6 @@ class JobLabel
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get's the plural name
-     */
-    public function getPluralName()
-    {
-        return $this->pluralName;
-    }
-
-    /**
-     * Set's the name
-     */
-    public function setPluralName($name)
-    {
-        $this->pluralName = $name;
     }
 
     /**
