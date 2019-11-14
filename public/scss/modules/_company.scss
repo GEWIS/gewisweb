@@ -1,7 +1,4 @@
-/*
-Company
-
-*/
+@import '../_bootstrap-variables.scss';
 @import '../_variables.scss';
 
 .company-list {
@@ -29,7 +26,7 @@ Company
 
 .company-grid {
     .company-grid-item {
-        border: 1px solid darken(#fff, 20%);
+        border: 1px solid $card-border-color;
         border-radius: 5px;
         height: 17em;
         margin-bottom: 2em;
@@ -61,4 +58,105 @@ Company
         }
     }
 
+}
+
+.feedback {
+    display: none;
+}
+
+.card-grid {
+    display: grid;
+    column-gap: 2em;
+    row-gap: 2em;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: $screen-sm-min) {
+        & {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: $screen-md-min) {
+        & {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (min-width: $screen-lg-min) {
+        & {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+.card {
+    margin-top: 0;
+    padding: 1em;
+    border: 1px solid $card-border-color;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+
+    .card-img {
+        margin: 0 0 1em;
+        height: 3em;
+
+        img {
+            margin: 0;
+            max-height: 100%;
+            max-width: 100%;
+            display: block;
+        }
+
+        @media (min-width: $screen-sm-min) {
+            & {
+                height: 5em;
+
+                img {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+
+    .card-title {
+        margin: 0 0 0.75em;
+        text-transform: none;
+    }
+
+    .card-subtitle {
+        margin: -0.5em 0 0.75em;
+        font-size: 1em;
+    }
+
+    p {
+        line-height: normal;
+    }
+
+    .card-footer {
+        margin: auto 0 0;
+        padding: 1.5em 0 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .btn-link {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+
+a.card {
+    color: inherit;
+
+    &:hover, &:active, &:focus {
+        text-decoration: none;
+    }
+
+    &:hover .btn-link {
+        color: $link-color-hover;
+        text-decoration: underline;
+    }
 }

@@ -10,6 +10,14 @@ $this->headTitle($this->category->getPluralName());
 
 
 ?>
+
+<?php
+// Randomize the order of jobs
+if ($randomize) {
+    shuffle($jobList);
+}
+?>
+
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
@@ -34,126 +42,144 @@ $this->headTitle($this->category->getPluralName());
 
 <section class="section">
     <div class="container">
-
-        <div class="job-list">
-            <div class="row">
-                <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $category->getPluralName() ?>
-                    <?php if (isset($this->company)): ?>
-                        <small>
-                            <?= $this->translate('at') ?>
-                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
-                                <?= $this->company->getName(); ?>
-                            </a>
-                        </small>
-                    <?php endif; ?>
-                </h1>
-                <fieldset class="col-md-3 col-sm-4 col-xs-12 page-top-action pull-right">
+        <div class="row">
+            <h1 class="col-md-8 col-sm-7 col-xs-12"><?= $category->getPluralName() ?>
+                <?php if (isset($this->company)): ?>
+                    <small>
+                        <?= $this->translate('at') ?>
+                        <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
+                            <?= $this->company->getName(); ?>
+                        </a>
+                    </small>
+                <?php endif; ?>
+            </h1>
+        </div>
+        <?php if (empty($jobList)): ?>
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 1em">
+                <h4>No Results</h4>
+                <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset id="filter-form" class="form-inline pull-right">
                     <div class="form-group">
-                        <label for="filter-all"><?= $this->translate('Search') ?></label>
-                        <input type="text"
-                            class="form-control"
-                            id="filter-all"
-                            placeholder="<?= $this->translate('Filter results') ?>">
+                        <label for="filter-input"><?= $this->translate('Filter:') ?></label>
+                        <div class="btn-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="filter-input"
+                                placeholder="<?= $this->translate('Search title or companies') ?>" />
+                        </div>
                     </div>
                 </fieldset>
             </div>
-
-            <?php
-            // Randomize the order of jobs
-            if ($randomize) {
-                shuffle($jobList);
-            }
-            ?>
-            <?php foreach ($jobList as $job): ?>
-                <?php if ($job->isActive()): ?>
-                    <?php $company = $job->getPackage()->getCompany(); ?>
-                    <div class="job-list-item list-item"
-                        id="<?= $this->escapeHtmlAttr($job->getName()) ?>">
-                        <h1 class="job-name">
-                            <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                ['slugCompanyName' => $company->getSlugName(),
-                                 'slugJobName' => $job->getSlugName(), 'category' => $job->getCategory()->getSlug()]) ?>"><?= $job->getName() ?></a>
-                            <small><?= $this->translate('at') ?>
-                                <a href="<?= $this->url('company/companyItem',
-                                    ['slugCompanyName' => $company->getSlugName()]) ?>"><?= $company->getName() ?></a>
-                            </small>
-                        </h1>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $company->getSlugName()]) ?>">
-                                    <img class="company-logo img-responsive center-block"
-                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>"
-                                        alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()); ?>" />
-                                </a>
-                                <div class="">
-                                    <h4><?= $this->translate('Contact') ?></h4>
-                                    <p class="job-contactName"><?= $job->getContactName() ?></p>
-                                    <p class="job-phone">
-                                        <a href="tel:<?= rawurlencode($job->getPhone()) ?>"><?= $job->getPhone() ?></a>
-                                    </p>
-                                    <p class="job-email">
-                                        <a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a>
-                                    </p>
-                                    <?php if ($job->getAttachment() !== ''): ?>
-                                        <p class="job-vacancy">
-                                            <a href="<?= $this->fileUrl($job->getAttachment()); ?>">
-                                                <?= $this->translate('View'). ' ' . $job->getCategory()->getName(); ?>
-                                            </a>
-                                        </p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <h2><?= $this->translate('Description') ?></h2>
-                                <div class="job-description text-justify markdown">
-                                    <?php
-                                    if (isset($this->company)) { // do not truncate
-                                        echo $this->markdown($job->getDescription());
-                                    } else { // do truncate
-                                        $truncatedDescription = $this->truncate(
-                                            $job->getDescription(),
-                                            700 // character limit
-                                        );
-                                        echo $this->markdown($truncatedDescription);
-                                        if (strlen($truncatedDescription) < strlen($job->getDescription())) {
-                                            ?>
-                                            <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                                ['slugCompanyName' => $company->getSlugName(),
-                                                    'slugJobName' => $job->getSlugName(),
-                                                    'category' => $job->getCategory()->getSlug()]) ?>">
-                                                <?= $this->translate("Read more"); ?>
-                                                &nbsp;&raquo;</a>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                <?php endif ?>
-            <?php endforeach ?>
-
-            <script type="text/javascript">
-                /* FILTERING */
-
-                function filter_all(term) {
-                    $(".job-list-item").each(function () {
-                        if ($(this).text().toLowerCase().indexOf(term.toLowerCase()) == -1) {
-                            $(this).css({display: "none"});
-                        } else {
-                            $(this).css({display: "block"});
-                        }
-                    });
-                }
-
-                $("#filter-all").keyup(function () {
-                    filter_all($(this).val());
-                });
-
-            </script>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="feedback">
+                    <p class="small text-muted">
+                        <?= $this->translate('Showing results for') ?>&nbsp;<strong class="feedback-text"></strong>
+                    </p>
+                </div>
+                <div class="card-grid">
+                    <?php foreach ($jobList as $job): ?>
+                    <?php
+                        $company = $job->getPackage()->getCompany();
 
+                        $jobUrl = $this->url('company/companyItem/joblist/job_item', [
+                            'slugCompanyName' => $company->getSlugName(),
+                            'slugJobName'     => $job->getSlugName(),
+                            'category'        => $job->getCategory()->getSlug(),
+                        ]);
+                    ?>
+                    <a href="<?= $jobUrl ?>" class="card job-card">
+                        <div class="card-img">
+                            <img
+                                src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                alt="<?= $this->escapeHtmlAttr($company->getName()) ?>" />
+                        </div>
+                        <h2 class="card-title"><?= $job->getName() ?></h2>
+                        <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                        <div>
+                            <span class="label label-default" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
+                            <span class="label label-default" data-toggle="tooltip" title="Data Science">DS</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-link"><?= $this->translate('View job') ?></button>
+                            <span class="small">
+                                <?= sprintf($this->translate('Posted on %s'), $job->getTimestamp()->format('d-m-Y')) ?>
+                            </span>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
+<script type="text/javascript">
+    var CardGrid = function($el, searchElements) {
+        // Pre-compute the search texts of each card
+        var cards = $('.card', $el).map(function () {
+            return {
+                target: $(this),
+                text: $(searchElements, $(this)).text().toLowerCase()
+            };
+        }).get();
+
+        return {
+            applyFilter: function (query) {
+                var q = query.toLowerCase();
+
+                cards.forEach(function (card) {
+                    // If the search query isn't contained in the card
+                    if (card.text.indexOf(q) === -1) {
+                        $(card.target).hide();
+                    } else {
+                        $(card.target).show();
+                    }
+                });
+            },
+            clearFilter: function () {
+                cards.forEach(function (card) {
+                    $(card.target).show();
+                });
+            }
+        }
+    };
+
+    var Feedback = function ($el) {
+        return {
+            setVal: function (value) {
+                if (value === '') {
+                    return $el.hide();
+                }
+
+                if ($el.is(':hidden')) {
+                    $el.show()
+                }
+
+                $(".feedback-text", $el).text(value);
+            }
+        }
+    };
+
+    cardGrid = new CardGrid($('.card-grid'), '.card-title, .card-subtitle');
+    feedback = new Feedback($('.feedback'));
+
+    $("#filter-input").keyup(function () {
+        var query = $(this).val().trim();
+
+        cardGrid.applyFilter(query);
+        feedback.setVal(query);
+    });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        viewport: { "selector": ".card-grid" }
+    });
+</script>

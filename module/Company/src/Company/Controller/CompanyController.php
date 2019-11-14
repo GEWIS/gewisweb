@@ -104,15 +104,13 @@ class CompanyController extends AbstractActionController
         $jobs = $companyService->getActiveJobList(
             ['jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null]
         );
-        if (count($jobs) > 0) {
-            return new ViewModel([
-                'jobList' => $jobs,
-                'translator' => $companyService->getTranslator(),
-                'randomize' => true,
-                'category' => $category,
-            ]);
-        }
-        return $this->notFoundAction();
+
+        return new ViewModel([
+            'jobList'    => $jobs,
+            'translator' => $companyService->getTranslator(),
+            'randomize'  => true, // TODO: Do not let the view do this
+            'category'   => $category,
+        ]);
     }
 
     /**
