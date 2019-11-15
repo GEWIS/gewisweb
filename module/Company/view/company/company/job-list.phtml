@@ -47,26 +47,19 @@ if ($randomize) {
                 <h1><?= $category->getPluralName() ?></h1>
             </div>
         </div>
-        <?php if (empty($jobList)): ?>
         <div class="row">
-            <div class="col-md-12" style="margin-top: 1em">
-                <h4>No Results</h4>
-                <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
-            </div>
-        </div>
-        <?php else: ?>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-bottom: 1em">
                 <?php if (isset($this->company)): ?>
                     <span class="text-muted" style="margin-right: 0.5em;"><?= $this->translate('Selected filters:') ?></span>
-                    <a href="<?= $this->url('company') ?>" class="btn btn-default btn-filter align-middle">
+                    <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>" class="btn btn-default btn-filter align-middle">
                         <span class="btn-text" title="<?= $company->getName() ?>">
                             <?= $company->getName() ?>
                         </span>
                         <span class="glyphicon glyphicon-trash small"></span>
                     </a>
                 <?php endif; ?>
-                <fieldset id="filter-form" class="form-inline pull-right" style="margin-bottom: 1em">
+                <?php if (!empty($jobList)): ?>
+                <fieldset id="filter-form" class="form-inline pull-right">
                     <div class="form-group">
                         <label for="filter-input"><?= $this->translate('Search:') ?></label>
                         <div class="btn-group">
@@ -78,8 +71,17 @@ if ($randomize) {
                         </div>
                     </div>
                 </fieldset>
+                <?php endif; ?>
             </div>
         </div>
+        <?php if (empty($jobList)): ?>
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 1em">
+                <h4>No Results</h4>
+                <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+            </div>
+        </div>
+        <?php else: ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="feedback">
