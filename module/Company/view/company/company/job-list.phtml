@@ -107,7 +107,7 @@ $this->headTitle($this->category->getPluralName());
                         <div class="card-footer">
                             <button class="btn btn-link"><?= $this->translate('View job') ?></button>
                             <span class="small">
-                                <?= sprintf($this->translate('Posted on %s'), $job->getTimestamp()->format('d-m-Y')) ?>
+                                <?= sprintf($this->translate('Posted %s'), $job->getTimestampForHumans()) ?>
                             </span>
                         </div>
                     </a>

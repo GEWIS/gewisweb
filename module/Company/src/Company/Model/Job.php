@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -346,7 +347,7 @@ class Job
     /**
      * Get the job's timestamp.
      *
-     * @return date
+     * @return \DateTime
      */
     public function getTimestamp()
     {
@@ -354,9 +355,21 @@ class Job
     }
 
     /**
+     * Returns the timestamp in a human readable way
+     *
+     * e.g. The timestamp of yesterday will be returned as '1 day ago'.
+     *
+     * @return string
+     */
+    public function getTimestampForHumans()
+    {
+        return Carbon::instance($this->getTimestamp())->diffForHumans();
+    }
+
+    /**
      * Set the job's timestamp.
      *
-     * @param string $timestamp
+     * @param \DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {
