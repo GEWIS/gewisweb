@@ -153,6 +153,7 @@ a.card {
     color: inherit;
 
     &:hover, &:active, &:focus {
+        background-color: $card-active-color;
         text-decoration: none;
     }
 
