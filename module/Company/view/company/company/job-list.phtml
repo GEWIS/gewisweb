@@ -110,7 +110,11 @@ $this->headTitle($this->category->getPluralName());
                         <div class="card-footer">
                             <button class="btn btn-link"><?= $this->translate('View job') ?></button>
                             <span class="small">
-                                <?= sprintf($this->translate('Posted %s'), $job->getTimestampForHumans()) ?>
+                                <?php if($job->getTimestamp()->isToday()): ?>
+                                    <?= $this->translate('Posted today') ?>
+                                <?php else: ?>
+                                    <?= sprintf($this->translate('Posted %s'), $job->getTimestamp()->diffForHumans()) ?>
+                                <?php endif ?>
                             </span>
                         </div>
                     </a>

@@ -353,23 +353,11 @@ class Job
     /**
      * Get the job's timestamp.
      *
-     * @return \DateTime
+     * @return Carbon
      */
     public function getTimestamp()
     {
-        return $this->timestamp;
-    }
-
-    /**
-     * Returns the timestamp in a human readable way
-     *
-     * e.g. The timestamp of yesterday will be returned as '1 day ago'.
-     *
-     * @return string
-     */
-    public function getTimestampForHumans()
-    {
-        return Carbon::instance($this->getTimestamp())->diffForHumans();
+        return Carbon::instance($this->timestamp);
     }
 
     /**
