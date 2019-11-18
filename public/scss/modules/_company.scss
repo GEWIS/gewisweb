@@ -60,10 +60,6 @@
 
 }
 
-.feedback {
-    display: none;
-}
-
 .card-grid {
     display: grid;
     column-gap: 2em;
@@ -161,4 +157,49 @@ a.card {
         color: $link-color-hover;
         text-decoration: underline;
     }
+}
+
+.filter-bar {
+    padding: 0.5em 0;
+    margin-bottom: 1em;
+    background: $card-border-color;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .form-group {
+        margin: 0;
+        padding: 0.5em 1em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &:last-child {
+            border-right: 0;
+        }
+
+        > label {
+            margin-right: 0.5em;
+        }
+    }
+
+    @media (min-width: $screen-sm-min) {
+        & {
+            padding: 0;
+        }
+
+        .form-group {
+            padding: 1em;
+        }
+    }
+}
+
+#job-search, #job-label {
+    width: auto;
+    min-width: 100px;
+    max-width: 250px;
+}
+
+#job-search {
+    width: 250px;
 }

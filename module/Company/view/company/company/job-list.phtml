@@ -40,30 +40,37 @@ $this->headTitle($this->category->getPluralName());
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" style="margin-bottom: 1em">
-                <?php if (isset($this->company)): ?>
-                    <span class="text-muted" style="margin-right: 0.5em;"><?= $this->translate('Selected filters:') ?></span>
-                    <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>" class="btn btn-default btn-filter align-middle">
-                        <span class="btn-text" title="<?= $company->getName() ?>">
-                            <?= $company->getName() ?>
-                        </span>
-                        <span class="glyphicon glyphicon-trash small"></span>
-                    </a>
-                <?php endif; ?>
-                <?php if (!empty($jobList)): ?>
-                <fieldset id="filter-form" class="form-inline pull-right">
+            <div class="col-md-12">
+                <div class="filter-bar">
                     <div class="form-group">
-                        <label for="filter-input"><?= $this->translate('Search:') ?></label>
-                        <div class="btn-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="filter-input"
-                                placeholder="<?= $this->translate('Search title or companies') ?>" />
-                        </div>
+                        <label for="job-search"><span class="glyphicon glyphicon-search"></span></label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="job-search"
+                            placeholder="<?= $this->translate('What are you looking for?') ?>" />
                     </div>
-                </fieldset>
-                <?php endif; ?>
+                    <div class="form-group">
+                        <label for="job-label"><?= $this->translate('Audience') ?></label>
+                        <select name="label" id="job-label" class="form-control">
+                            <option value="*"><?= $this->translate('Any') ?></option>
+                            <option value="CSE">Computer Science and Engineering</option>
+                            <option value="DS">Data Science</option>
+                            <option value="IAM">Industrial and Applied Mathematics</option>
+                        </select>
+                    </div>
+                    <?php if (isset($this->company)): ?>
+                        <div class="form-group">
+                            <label><?= $this->translate('Company') ?></label>
+                            <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>" class="btn btn-default btn-filter align-middle">
+                                <span class="btn-text" title="<?= $company->getName() ?>">
+                                    <?= $company->getName() ?>
+                                </span>
+                                <span class="glyphicon glyphicon-trash small"></span>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <?php if (empty($jobList)): ?>
@@ -76,11 +83,6 @@ $this->headTitle($this->category->getPluralName());
         <?php else: ?>
         <div class="row">
             <div class="col-md-12">
-                <div class="feedback">
-                    <p class="small text-muted">
-                        <?= $this->translate('Showing results for') ?>&nbsp;<strong class="feedback-text"></strong>
-                    </p>
-                </div>
                 <div class="card-grid">
                     <?php foreach ($jobList as $job): ?>
                     <?php
@@ -104,8 +106,8 @@ $this->headTitle($this->category->getPluralName());
                             <p class="job-location"><?= $job->getLocation() ?></p>
                         <?php endif; ?>
                         <div>
-                            <span class="label label-default" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
-                            <span class="label label-default" data-toggle="tooltip" title="Data Science">DS</span>
+                            <span class="label label-default job-label" data-label="CSE" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
+                            <span class="label label-default job-label" data-label="DS" data-toggle="tooltip" title="Data Science">DS</span>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-link"><?= $this->translate('View job') ?></button>
@@ -126,60 +128,94 @@ $this->headTitle($this->category->getPluralName());
     </div>
 </section>
 <script type="text/javascript">
-    var CardGrid = function($el, searchElements) {
-        // Pre-compute the search texts of each card
-        var cards = $('.card', $el).map(function () {
+    var CardGrid = function($grid, searchElements) {
+        // Pre-compute card details
+        var cards = $('.card', $grid).map(function () {
+            var $card = $(this);
+
             return {
-                target: $(this),
-                text: $(searchElements, $(this)).text().toLowerCase()
+                target: $card,
+                text: $(searchElements, $card).text().toLowerCase(),
+                labels: $('.job-label', $card).map(function() {
+                    return $(this).data('label');
+                }).get()
             };
         }).get();
 
-        return {
-            applyFilter: function (query) {
-                var q = query.toLowerCase();
-
-                cards.forEach(function (card) {
-                    // If the search query isn't contained in the card
-                    if (card.text.indexOf(q) === -1) {
-                        $(card.target).hide();
-                    } else {
-                        $(card.target).show();
-                    }
+        /**
+         * Toggles the card visibility depending on the filter matches
+         */
+        var updateCardVisibility = function() {
+            cards.forEach(function (card) {
+                // Checks if the card matches all registered filters
+                var isFullMatch = Object.values(card.isMatchOn).every(function (isMatch) {
+                    return (isMatch === true);
                 });
+
+                $(card.target).toggle(isFullMatch);
+            });
+        };
+
+        /**
+         * Registers a filter
+         *
+         * @param filterName   Filter's name
+         * @param defaultValue If the card matches the filter by default
+         */
+        var registerFilter = function (filterName, defaultValue) {
+            cards.forEach(function (card) {
+                if (!card.hasOwnProperty('isMatchOn')) {
+                    card.isMatchOn = {};
+                }
+
+                card.isMatchOn[filterName] = defaultValue;
+            });
+        };
+
+        registerFilter('label', true);
+        registerFilter('search', true);
+
+        return {
+            filterByLabel: function(label) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['label'] = (card.labels.indexOf(label) > -1);
+                });
+
+                updateCardVisibility();
             },
-            clearFilter: function () {
+            clearLabelFilter: function() {
                 cards.forEach(function (card) {
-                    $(card.target).show();
+                    card.isMatchOn['label'] = true;
                 });
-            }
-        }
-    };
 
-    var Feedback = function ($el) {
-        return {
-            setVal: function (value) {
-                if (value === '') {
-                    return $el.hide();
-                }
+                updateCardVisibility();
+            },
+            filterByText: function (query) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['search'] = (card.text.indexOf(query.toLowerCase()) > -1);
+                });
 
-                if ($el.is(':hidden')) {
-                    $el.show()
-                }
-
-                $(".feedback-text", $el).text(value);
+                updateCardVisibility();
             }
         }
     };
 
     cardGrid = new CardGrid($('.card-grid'), '.card-title, .card-subtitle, .job-location');
-    feedback = new Feedback($('.feedback'));
 
-    $("#filter-input").keyup(function () {
+    $("#job-search").keyup(function () {
         var query = $(this).val().trim();
 
-        cardGrid.applyFilter(query);
-        feedback.setVal(query);
+        cardGrid.filterByText(query);
+    });
+
+    $("#job-label").change(function () {
+        var label = $(this).val();
+
+        if (label === "*") {
+            cardGrid.clearLabelFilter();
+        } else {
+            cardGrid.filterByLabel(label);
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip({
