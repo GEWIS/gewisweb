@@ -125,6 +125,32 @@ $this->headTitle($this->category->getPluralName());
             </div>
         </div>
         <?php endif; ?>
+        <?php
+            $alternatives = [];
+            foreach ($this->jobCategories() as $c) {
+                // Don't include current category in list of alternative job categories
+                if ($category->getId() === $c->getId()) {
+                    continue;
+                }
+
+                $alternatives[] = vsprintf('<a href="%s">%s</a>', [
+                    $this->url('company/jobList', ['category' => $c->getSlug()]),
+                    strtolower($c->getPluralName())
+                ]);
+            }
+
+            $alternatives = join(', ', $alternatives);
+        ?>
+        <?php if (!empty($alternatives)): ?>
+        <div class="row">
+            <div class="col-md-6" style="margin-top: 2em">
+                <hr />
+                <p class="text-muted">
+                    <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
+                </p>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 <script type="text/javascript">
