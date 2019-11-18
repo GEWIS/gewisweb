@@ -143,8 +143,10 @@ $this->headTitle($this->category->getPluralName());
         ?>
         <?php if (!empty($alternatives)): ?>
         <div class="row">
-            <div class="col-md-6" style="margin-top: 2em">
+            <div class="col-md-4" style="margin-top: 2em">
                 <hr />
+            </div>
+            <div class="col-md-12">
                 <p class="text-muted">
                     <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
                 </p>
