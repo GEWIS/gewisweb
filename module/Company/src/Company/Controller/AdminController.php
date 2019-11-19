@@ -125,12 +125,10 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'form' => $packageForm,
             'type' => $type,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -236,9 +234,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveCategory(
-                $request->getPost()
-            )){
+            if ($companyService->saveCategory($request->getPost())){
                 return $this->redirect()->toRoute(
                     'admin_company/editCategory',
                     [
@@ -249,13 +245,11 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $vm = new ViewModel([
+        return new ViewModel([
             'categories' => $categories,
             'form' => $categoryForm,
             'languages' => $this->getLanguageDescriptions(),
         ]);
-
-        return $vm;
     }
 
     /**
@@ -299,9 +293,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveLabel(
-                $request->getPost()
-            )){
+            if ($companyService->saveLabel($request->getPost())){
                 return $this->redirect()->toRoute(
                     'admin_company/editLabel',
                     [
@@ -312,13 +304,11 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $vm = new ViewModel([
+        return new ViewModel([
             'labels' => $labels,
             'form' => $labelForm,
             'languages' => $this->getLanguageDescriptions(),
         ]);
-
-        return $vm;
     }
 
     private function getLanguageDescriptions()
@@ -392,12 +382,10 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
-        $vm = new ViewModel([
+        return new ViewModel([
             'company' => $company,
             'form' => $companyForm,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -446,14 +434,12 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'package' => $package,
             'companyName' => $companyName,
             'form' => $packageForm,
             'type' => $type,
         ]);
-
-        return $vm;
     }
 
     /**

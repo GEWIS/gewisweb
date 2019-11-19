@@ -15,6 +15,7 @@ class LabelFieldset extends Fieldset
     {
         parent::__construct();
         $this->setHydrator($hydrator);
+
         $this->add([
             'name' => 'id',
             'attributes' => [
@@ -60,6 +61,7 @@ class LabelFieldset extends Fieldset
             ],
         ]);
     }
+
     public function setLanguage($lang)
     {
         $jc = new \Company\Model\JobLabel();

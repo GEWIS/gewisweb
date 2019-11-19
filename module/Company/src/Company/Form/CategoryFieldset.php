@@ -15,6 +15,7 @@ class CategoryFieldset extends Fieldset
     {
         parent::__construct();
         $this->setHydrator($hydrator);
+
         $this->add([
             'name' => 'id',
             'attributes' => [
@@ -71,6 +72,7 @@ class CategoryFieldset extends Fieldset
             ],
         ]);
     }
+
     public function setLanguage($lang)
     {
         $jc = new \Company\Model\JobCategory();

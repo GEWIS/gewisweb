@@ -16,7 +16,7 @@ class CompanyController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $featuredPackage = $companyService->getFeaturedPackage();
-        if ($featuredPackage == null) {
+        if ($featuredPackage === null) {
             return new ViewModel([
                 'companyList' => $companyService->getCompanyList(),
                 'translator' => $companyService->getTranslator(),
@@ -80,14 +80,14 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         $category = $companyService->categoryForSlug($this->params('category'));
-        if ($category == null) {
+        if ($category === null) {
             return $this->notFoundAction();
         }
         if (isset($companyName)) {
             // jobs for a single company
             $jobList = $companyService->getActiveJobList([
                     'companySlugName' => $companyName,
-                    'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
+                    'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
                 ]);
             if (count($jobList) > 0) {
                 return new ViewModel([
@@ -102,7 +102,7 @@ class CompanyController extends AbstractActionController
         }
         // all jobs
         $jobs = $companyService->getActiveJobList(
-            ['jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null]
+            ['jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null]
         );
         if (count($jobs) > 0) {
             return new ViewModel([
@@ -126,11 +126,11 @@ class CompanyController extends AbstractActionController
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
         $category = $companyService->categoryForSlug($this->params('category'));
-        if ($jobName != null) {
+        if ($jobName !== null) {
             $jobs = $companyService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
-                'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
+                'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
             ]);
             if (count($jobs) > 0) {
                 return new ViewModel([
