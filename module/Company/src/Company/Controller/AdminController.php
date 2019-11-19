@@ -234,7 +234,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveCategory($request->getPost())){
+            if ($companyService->saveCategory($request->getPost())) {
                 return $this->redirect()->toRoute(
                     'admin_company/editCategory',
                     [
@@ -293,7 +293,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveLabel($request->getPost())){
+            if ($companyService->saveLabel($request->getPost())) {
                 return $this->redirect()->toRoute(
                     'admin_company/editLabel',
                     [
