@@ -129,10 +129,10 @@ class Company extends AbstractACLService
         $category = $mapper->findCategory($slug);
         $locale = $translator->getLocale();
 
-        if ($category == null && $slug == "jobs") {
+        if ($category === null && $slug == "jobs") {
             $category = $mapper->createNullCategory($translator->getLocale(), $translator);
         }
-        if ($category == null || $category->getLanguage() == $locale) {
+        if ($category === null || $category->getLanguage() == $locale) {
             return $category;
         }
         $category = $mapper->siblingCategory($category, $locale);
@@ -183,19 +183,17 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to list all categories')
             );
         }
-        if ($visible) {
-            $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
-            $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
-            $filteredCategories =  $this->filterCategories($categories);
-            $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
-                return $el->getSlug() == "jobs";
-            })) ;
-            if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
-                $filteredCategories[] = $this->getCategoryMapper()
-                    ->createNullCategory($translator->getLocale(), $translator);
-            }
-            return $filteredCategories;
+        $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
+        $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
+        $filteredCategories =  $this->filterCategories($categories);
+        $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
+            return $el->getSlug() == "jobs";
+        })) ;
+        if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
+            $filteredCategories[] = $this->getCategoryMapper()
+                ->createNullCategory($translator->getLocale(), $translator);
         }
+        return $filteredCategories;
         return $this->getCategoryMapper()->findAll();
     }
 
@@ -218,19 +216,17 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to list all labels')
             );
         }
-        if ($visible) {
-            $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
-            $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
-            $filteredLabels =  $this->filterCategories($labels);
-            $noVacancyLabel = count(array_filter($filteredLabels, function ($el) {
-                return $el->getSlug() == "jobs";
-            })) ;
-            if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
-                $filteredLabels[] = $this->getLabelMapper()
-                    ->createNullLabel($translator->getLocale(), $translator);
-            }
-            return $filteredLabels;
+        $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
+        $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
+        $filteredLabels =  $this->filterCategories($labels);
+        $noVacancyLabel = count(array_filter($filteredLabels, function ($el) {
+            return $el->getSlug() == "jobs";
+        })) ;
+        if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
+            $filteredLabels[] = $this->getLabelMapper()
+                ->createNullLabel($translator->getLocale(), $translator);
         }
+        return $filteredLabels;
         return $this->getLabelMapper()->findAll();
     }
 
@@ -239,7 +235,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $packageID
      */
-    public function insertCategory($lang, $id, $cat = null)
+    public function insertCategory($lang, $id, $category = null)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -247,8 +243,21 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a job')
             );
         }
-        $result = $this->getCategoryMapper()->insert($lang, $id, $cat);
-        return $result;
+        $mapper = $this->getCategoryMapper();
+        if ($category === null) {
+            $category = new CategoryModel();
+        }
+        $category->setLanguage($lang);
+        $category->setLanguageNeutralId($id);
+        $category->setHidden(false);
+        $mapper->persist($category);
+        $mapper->save();
+        if ($id == -1) {
+            $id = $category->getId();
+        }
+        $category->setLanguageNeutralId($id);
+
+        return $category;
     }
 
     /**
@@ -256,7 +265,7 @@ class Company extends AbstractACLService
      *
      * @param mixed $packageID
      */
-    public function insertLabel($lang, $id, $cat = null)
+    public function insertLabel($lang, $id, $label = null)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -264,8 +273,21 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a job')
             );
         }
-        $result = $this->getLabelMapper()->insert($lang, $id, $cat);
-        return $result;
+        if ($label === null) {
+            $label = new LabelModel();
+        }
+        $mapper = $this->getLabelMapper();
+        $label->setLanguage($lang);
+        $label->setLanguageNeutralId($id);
+        $label->setHidden(false);
+        $mapper->persist($label);
+        $mapper->save();
+        if ($id == -1) {
+            $id = $label->getId();
+        }
+        $label->setLanguageNeutralId($id);
+
+        return $label;
     }
 
     /**
@@ -285,18 +307,18 @@ class Company extends AbstractACLService
         $arr = [];
         $categoryForm->get('categories')->setObject($arr);
         $valid = $categoryForm->isValid();
-        if ($valid) {
-            $newCategories = $categoryForm->getObject();
-            $id = -1;
-            foreach ($newCategories as $lang => $category) {
-                $arr[$lang] = $this->insertCategory($lang, $id, $category);
-                if ($id == -1) {
-                    $id = current($arr)->getId();
-                }
-            }
-            return $arr;
+        if (!$valid) {
+            return null;
         }
-        return null;
+        $newCategories = $categoryForm->getObject();
+        $id = -1;
+        foreach ($newCategories as $lang => $category) {
+            $arr[$lang] = $this->insertCategory($lang, $id, $category);
+            if ($id == -1) {
+                $id = current($arr)->getId();
+            }
+        }
+        return $arr;
     }
 
     /**
@@ -316,18 +338,18 @@ class Company extends AbstractACLService
         $arr = [];
         $labelForm->get('labels')->setObject($arr);
         $valid = $labelForm->isValid();
-        if ($valid) {
-            $newLabels = $labelForm->getObject();
-            $id = -1;
-            foreach ($newLabels as $lang => $label) {
-                $arr[$lang] = $this->insertLabel($lang, $id, $label);
-                if ($id == -1) {
-                    $id = current($arr)->getId();
-                }
-            }
-            return $arr;
+        if (!$valid) {
+            return null;
         }
-        return null;
+        $newLabels = $labelForm->getObject();
+        $id = -1;
+        foreach ($newLabels as $lang => $label) {
+            $arr[$lang] = $this->insertLabel($lang, $id, $label);
+            if ($id == -1) {
+                $id = current($arr)->getId();
+            }
+        }
+        return $arr;
     }
 
     /**
@@ -337,7 +359,7 @@ class Company extends AbstractACLService
      */
     public function saveCategory($data = null)
     {
-        if ($data != null) {
+        if ($data !== null) {
             $categoryForm = $this->getCategoryForm();
             $categoryForm->setData($data);
             if ($categoryForm->isValid()) {
@@ -346,7 +368,6 @@ class Company extends AbstractACLService
             }
             return;
         }
-        $this->getCategoryMapper()->save();
     }
 
     /**
@@ -356,7 +377,7 @@ class Company extends AbstractACLService
      */
     public function saveLabel($data = null)
     {
-        if ($data != null) {
+        if ($data !== null) {
             $labelForm = $this->getLabelForm();
             $labelForm->setData($data);
             if ($labelForm->isValid()) {
@@ -365,7 +386,6 @@ class Company extends AbstractACLService
             }
             return;
         }
-        $this->getLabelMapper()->save();
     }
 
     /**
@@ -607,7 +627,7 @@ class Company extends AbstractACLService
             }
             $file = $files['jobs'][$lang]['attachment_file'];
 
-            if ($file != null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($file !== null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
                 $oldPath = $job->getAttachment();
 
                 try {
@@ -727,9 +747,8 @@ class Company extends AbstractACLService
         if (is_null($categoryID)) {
             throw new \Exception('Invalid argument');
         }
-        $package = $this->getCategoryMapper()->findAllCategoriesById($categoryID);
 
-        return $package;
+        return $this->getCategoryMapper()->findAllCategoriesById($categoryID);
     }
 
 
@@ -749,9 +768,8 @@ class Company extends AbstractACLService
         if (is_null($labelID)) {
             throw new \Exception('Invalid argument');
         }
-        $package = $this->getCategoryMapper()->findAllCategoriesById($labelID);
 
-        return $package;
+        return $this->getLabelMapper()->findAllLabelsById($labelID);
     }
 
     /**
@@ -827,7 +845,7 @@ class Company extends AbstractACLService
     public function getJobs($dict)
     {
         $translator = $this->getTranslator();
-        if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] == null) {
+        if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] === null) {
             $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
             foreach ($jobs as $job) {
                 $job->setCategory($this->getCategoryMapper()

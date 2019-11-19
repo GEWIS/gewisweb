@@ -162,7 +162,8 @@ class Module
                 $acl->allow('guest', 'company', 'listVisibleCategories');
                 $acl->allow('guest', 'company', 'listVisibleLabels');
                 $acl->allow('guest', 'company', 'showBanner');
-                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete', 'listall', 'listAllCategories', 'listAllLabels']);
+                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete']);
+                $acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
 
                 return $acl;
             },

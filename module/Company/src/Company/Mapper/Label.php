@@ -86,27 +86,6 @@ class Label
         $labels = $qb->getQuery()->getResult();
         return $labels[0];
     }
-    /**
-     * Inserts a new package into the given company
-     *
-     */
-    public function insert($lang, $id, $label = null)
-    {
-        if ($label == null) {
-            $label = new LabelModel();
-        }
-        $label->setLanguage($lang);
-        $label->setLanguageNeutralId($id);
-        $label->setHidden(false);
-        $this->em->persist($label);
-        $this->em->flush();
-        if ($id == -1) {
-            $id = $label->getId();
-        }
-        $label->setLanguageNeutralId($id);
-
-        return $label;
-    }
 
     public function findAllLabelsById($labelId)
     {

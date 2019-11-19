@@ -117,8 +117,10 @@ class JobFieldset extends Fieldset
             ],
         ]);
     }
+
     protected $mapper;
     protected $translator;
+
     public function setLanguage($lang)
     {
         $jc = new \Company\Model\Job();

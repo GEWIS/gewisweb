@@ -87,27 +87,6 @@ class Category
         $categories = $qb->getQuery()->getResult();
         return $categories[0];
     }
-    /**
-     * Inserts a new package into the given company
-     *
-     */
-    public function insert($lang, $id, $category = null)
-    {
-        if ($category == null) {
-            $category = new CategoryModel();
-        }
-        $category->setLanguage($lang);
-        $category->setLanguageNeutralId($id);
-        $category->setHidden(false);
-        $this->em->persist($category);
-        $this->em->flush();
-        if ($id == -1) {
-            $id = $category->getId();
-        }
-        $category->setLanguageNeutralId($id);
-
-        return $category;
-    }
 
     public function findAllCategoriesById($categoryId)
     {

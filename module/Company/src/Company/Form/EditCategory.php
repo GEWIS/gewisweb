@@ -23,19 +23,17 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
 
         $this->setLanguages($languages);
 
-        $this->add(
-            [
-                'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'categories',
-                'hydrator' => $this->getHydrator(),
-                'options' => [
-                    'use_as_base_fieldset' => true,
-                    'count' => count($languages),
-                    'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
-                    'items' => $languages,
-                ]
+        $this->add([
+            'type' => '\Company\Form\FixedKeyDictionaryCollection',
+            'name' => 'categories',
+            'hydrator' => $this->getHydrator(),
+            'options' => [
+                'use_as_base_fieldset' => true,
+                'count' => count($languages),
+                'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
+                'items' => $languages,
             ]
-        );
+        ]);
         $this->add([
             'name' => 'submit',
             'attributes' => [
