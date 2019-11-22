@@ -357,6 +357,10 @@ class Job
      */
     public function getTimestamp()
     {
+        if (is_null($this->timestamp)) {
+            return null;
+        }
+
         return Carbon::instance($this->timestamp);
     }
 
