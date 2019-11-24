@@ -63,20 +63,37 @@ $element->setAttribute('required', 'required');
 <?= $this->form()->closeTag(); ?>
 <h3><?= $this->translate('Documents for this meeting') ?></h3>
 <div class="col-sm-12">
-<table class="table table-striped table-hover">
-<?php foreach ($meeting->getDocuments() as $document): ?>
+<table class="table table-striped table-hover table-documents">
+    <?php foreach ($meeting->getDocuments() as $document): ?>
     <tr>
-        <td><a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
-            <?= $document->getName() ?>
-        </a></td>
+        <td class="btn-group-move">
+            <form method="post" action="">
+                <a href="#" title="<?= $this->translate('Move up') ?>" class="btn-move">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+                <input type="hidden" name="document" value="<?= $document->getId() ?>">
+                <input type="hidden" name="direction" value="up" />
+            </form>
+            <form method="post" action="">
+                <a href="#" title="<?= $this->translate('Move down') ?>" class="btn-move">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <input type="hidden" name="document" value="<?= $document->getId() ?>">
+                <input type="hidden" name="direction" value="down" />
+            </form>
+        </td>
+        <td>
+            <a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
+                <?= $document->getName() ?>
+            </a>
+        </td>
         <td>
             <form method="POST" action="<?= $this->url('admin_decision/delete_document') ?>">
                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
-                    <input type="submit" name="submit" value="<?= $this->translate('Delete') ?>"
-                           class="btn btn-danger btn-xs pull-right"/>
-                </form>
-</td>
+                <input type="submit" name="submit" value="<?= $this->translate('Delete') ?>" class="btn btn-danger btn-xs pull-right"/>
+            </form>
+        </td>
     </tr>
-<?php endforeach ?>
-    </table>
+    <?php endforeach ?>
+</table>
 </div>
