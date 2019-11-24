@@ -68,16 +68,16 @@ $element->setAttribute('required', 'required');
     <tr>
         <td class="btn-group-move">
             <form method="post" action="">
-                <a href="#" title="<?= $this->translate('Move up') ?>" class="btn-move">
+                <button type="submit" class="btn btn-link btn-move"  title="<?= $this->translate('Move up') ?>">
                     <span class="glyphicon glyphicon-chevron-up"></span>
-                </a>
+                </button>
                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
                 <input type="hidden" name="direction" value="up" />
             </form>
             <form method="post" action="">
-                <a href="#" title="<?= $this->translate('Move down') ?>" class="btn-move">
+                <button type="submit" class="btn btn-link btn-move" title="<?= $this->translate('Move down') ?>">
                     <span class="glyphicon glyphicon-chevron-down"></span>
-                </a>
+                </button>
                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
                 <input type="hidden" name="direction" value="down" />
             </form>
