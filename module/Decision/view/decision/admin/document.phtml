@@ -67,14 +67,14 @@ $element->setAttribute('required', 'required');
     <?php foreach ($meeting->getDocuments() as $document): ?>
     <tr>
         <td class="btn-group-move">
-            <form method="post" action="">
+            <form method="post" action="<?= $this->url('admin_decision/position_document') ?>">
                 <button type="submit" class="btn btn-link btn-move"  title="<?= $this->translate('Move up') ?>">
                     <span class="glyphicon glyphicon-chevron-up"></span>
                 </button>
                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
                 <input type="hidden" name="direction" value="up" />
             </form>
-            <form method="post" action="">
+            <form method="post" action="<?= $this->url('admin_decision/position_document') ?>">
                 <button type="submit" class="btn btn-link btn-move" title="<?= $this->translate('Move down') ?>">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>

@@ -8,6 +8,7 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
+use Doctrine\ORM\PersistentCollection;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -257,6 +258,58 @@ class Decision extends AbstractAclService
         $document = $this->getMeetingDocument($id);
         $this->getMeetingMapper()->remove($document);
     }
+
+    /**
+     * Changes a document's position in the ordering
+     *
+     * @param int $id Document ID
+     * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
+     * @return void
+     * @throws \InvalidArgumentException If the document doesn't exist
+     */
+    public function changePositionDocument($id, $moveDown = true)
+    {
+        $id = (int) $id;
+        
+        $document = $this->getMeetingDocument($id);
+        if (is_null($document)) {
+            throw new \InvalidArgumentException(
+                sprintf("Document not found with ID '%d'.", $id)
+            );
+        }
+
+        // Documents are ordered because of @OrderBy annotation on relation
+        /** @var PersistentCollection $documents */
+        $documents = $document->getMeeting()->getDocuments();
+
+        // Create data structure to derive ordering, key is position and value
+        // is document ID
+        $ordering = $documents->map(function (MeetingDocument $document) {
+            return $document->getId();
+        });
+
+        $oldPosition = $ordering->indexOf($id);
+        $newPosition = ($moveDown === true) ? ($oldPosition + 1) : ($oldPosition - 1);
+
+        // Do nothing if the document is already at the top/bottom
+        if ($newPosition < 0 || $newPosition > ($ordering->count() - 1)) {
+            return;
+        }
+
+        // Swap positions
+        $ordering->set($oldPosition, $ordering->get($newPosition));
+        $ordering->set($newPosition, $id);
+
+        // Persist new positions
+        $documents->map(function (MeetingDocument $document) use ($ordering) {
+            $position = $ordering->indexOf($document->getId());
+
+            $document->setDisplayPosition($position);
+
+            $this->getMeetingMapper()->persistDocument($document);
+        });
+    }
+
     /**
      * Search for decisions.
      *

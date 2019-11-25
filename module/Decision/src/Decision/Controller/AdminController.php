@@ -66,6 +66,33 @@ class AdminController extends AbstractActionController
         return $this->redirect()->toRoute('admin_decision/document');
     }
 
+    public function changePositionDocumentAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            // TODO: Throw 405 Method Not Allowed error
+        }
+
+        $direction = $this->params()->fromPost('direction');
+        switch ($direction) {
+            case 'up':
+                $moveDown = false;
+                break;
+            case 'down':
+                $moveDown = true;
+                break;
+            default:
+                throw new \InvalidArgumentException(
+                    sprintf("Invalid value for direction parameter: '%s'", $direction)
+                );
+        }
+
+        $this->getDecisionService()->changePositionDocument(
+            $this->params()->fromPost('document'), $moveDown
+        );
+
+        return $this->redirect()->toRoute('admin_decision/document');
+    }
+
     public function authorizationsAction()
     {
         $meetings = $this->getDecisionService()->getMeetingsByType('AV');
