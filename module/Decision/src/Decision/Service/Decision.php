@@ -242,6 +242,12 @@ class Decision extends AbstractAclService
         $document->setName($data['name']);
         $document->setMeeting($meeting);
 
+        // Determine document's position in ordering
+        $maxPosition = $this->getMeetingMapper()->findMaxDocumentPosition($meeting);
+        $position = is_null($maxPosition) ? 0 : ++$maxPosition;
+
+        $document->setDisplayPosition($position);
+
         $this->getMeetingMapper()->persistDocument($document);
         return true;
     }

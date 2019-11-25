@@ -157,6 +157,22 @@ class Meeting
         return $this->em->find('Decision\Model\MeetingDocument', $id);
     }
 
+    public function findMaxDocumentPosition(MeetingModel $meeting)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('MAX(d.displayPosition)')
+            ->from('Decision\Model\Meeting', 'm')
+            ->join('m.documents', 'd')
+            ->where('m.type = :type')
+            ->andWhere('m.number = :number');
+
+        $qb->setParameter(':type', $meeting->getType());
+        $qb->setParameter(':number', $meeting->getNumber());
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     /**
      * Persist a meeting model.
      *
