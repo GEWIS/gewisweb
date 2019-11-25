@@ -64,7 +64,7 @@ $element->setAttribute('required', 'required');
 <h3><?= $this->translate('Documents for this meeting') ?></h3>
 <div class="col-sm-12">
 <table class="table table-striped table-hover">
-<?php foreach ($meeting->getDocuments() as $document): ?>
+<?php foreach ($meeting->getSortedDocuments() as $document): ?>
     <tr>
         <td><a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
             <?= $document->getName() ?>

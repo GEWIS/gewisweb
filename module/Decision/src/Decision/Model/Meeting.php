@@ -217,13 +217,10 @@ class Meeting
     /**
      * Sorts document list
      */
-    public function sortDocuments()
+    public function getSortedDocuments()
     {
-        $temp = [];
-        foreach ($this->documents as $document) {
-            $temp[] = $document;
-        }
-        usort($temp, function ($a, $b) {
+        $documents = $this->getDocuments();
+        usort($documents, function ($a, $b) {
             $aa = preg_split("/(\.|\s)/", $a->getName());
             $bb = preg_split("/(\.|\s)/", $b->getName());
             for ($i = 0; $i < min(count($aa), count($bb)); $i++) {
@@ -237,7 +234,7 @@ class Meeting
             }
             return 0;
         });
-        $this->documents = $temp;
+        return $documents;
     }
 
 }

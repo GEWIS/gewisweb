@@ -69,7 +69,6 @@ class DecisionController extends AbstractActionController
 
         try {
             $meeting = $service->getMeeting($type, $number);
-            $meeting->sortDocuments();
 
             return new ViewModel([
                 'meeting' => $meeting

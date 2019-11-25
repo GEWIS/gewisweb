@@ -26,7 +26,7 @@ $this->headTitle(sprintf('%s %d', $meeting->getType(), $meeting->getNumber())); 
 
             <div class="col-md-6">
                 <ul>
-                    <?php foreach ($meeting->getDocuments() as $document): ?>
+                    <?php foreach ($meeting->getSortedDocuments() as $document): ?>
                         <li><a
                                 href="<?= $this->url('decision/document', [
                                     'id' => $document->getId()
