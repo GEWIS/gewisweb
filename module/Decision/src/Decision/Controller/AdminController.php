@@ -72,7 +72,9 @@ class AdminController extends AbstractActionController
             // TODO: Throw 405 Method Not Allowed error
         }
 
+        $documentId = $this->params()->fromPost('document');
         $direction = $this->params()->fromPost('direction');
+
         switch ($direction) {
             case 'up':
                 $moveDown = false;
@@ -86,11 +88,18 @@ class AdminController extends AbstractActionController
                 );
         }
 
-        $this->getDecisionService()->changePositionDocument(
-            $this->params()->fromPost('document'), $moveDown
-        );
+        // Update ordering document
+        $this->getDecisionService()->changePositionDocument($documentId, $moveDown);
 
-        return $this->redirect()->toRoute('admin_decision/document');
+        // Redirect to correct meeting page
+        $meeting = $this->getDecisionService()
+            ->getMeetingDocument($documentId)
+            ->getMeeting();
+
+        return $this->redirect()->toRoute('admin_decision/document', [
+            'type'   => $meeting->getType(),
+            'number' => $meeting->getNumber()
+        ]);
     }
 
     public function authorizationsAction()
