@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -51,6 +52,7 @@ class Meeting
      * Documents.
      *
      * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
+     * @OrderBy({"displayPosition" = "ASC"})
      */
     protected $documents;
 
