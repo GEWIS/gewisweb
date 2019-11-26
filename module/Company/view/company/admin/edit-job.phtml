@@ -187,7 +187,7 @@ $element->setAttribute('class', 'form-control');
         /* render template for labels */
         $fs = $form->get('labels')->getTemplateElement();
         ob_start();
-        echo $this->partial('partial/admin/job-label.phtml', ['fs' => $fs, 'index' => '__index__']);
+        echo $this->partial('partial/company/admin/job-label.phtml', ['fs' => $fs, 'index' => '__index__']);
         $tpl = trim(ob_get_clean())
         ?>
         <fieldset id="additionalLabels">
@@ -195,7 +195,7 @@ $element->setAttribute('class', 'form-control');
             <?php
             $index = 0;
             foreach ($form->get('labels')->getIterator() as $fs) {
-                echo $this->partial('partial/admin/job-label.phtml', ['fs' => $fs, 'index' => $index]);
+                echo $this->partial('partial/company/admin/job-label.phtml', ['fs' => $fs, 'index' => $index]);
                 $index++;
             }
             ?>
