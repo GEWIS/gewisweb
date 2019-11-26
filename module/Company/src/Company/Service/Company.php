@@ -149,9 +149,7 @@ class Company extends AbstractACLService
     {
         $nonemptyCategories = [];
         foreach ($categories as $category) {
-            if (count(
-                    $this->getActiveJobList(['jobCategoryID' => $category->getId()])
-                ) > 0) {
+            if (count($this->getActiveJobList(['jobCategoryID' => $category->getId()])) > 0) {
                 $nonemptyCategories[] = $category;
             }
         }
@@ -168,9 +166,7 @@ class Company extends AbstractACLService
     {
         $nonemptyLabels = [];
         foreach ($labels as $label) {
-            if (count(
-                    $this->getActiveJobList(['jobCategoryID' => $label->getId()])
-                ) > 0) {
+            if (count($this->getActiveJobList(['jobCategoryID' => $label->getId()])) > 0) {
                 $nonemptyLabels[] = $label;
             }
         }
