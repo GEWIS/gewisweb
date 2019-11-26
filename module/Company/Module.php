@@ -62,15 +62,6 @@ class Module
                 );
                 return $form;
             },
-            'company_admin_edit_label_form' => function ($sm) {
-                $form = new \Company\Form\EditLabel(
-                    $sm->get('company_mapper_label'),
-                    $sm->get('translator'),
-                    $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator')
-                );
-                return $form;
-            },
             'company_admin_edit_bannerpackage_form' => function ($sm) {
                 return new \Company\Form\EditPackage(
                     $sm->get('translator'),
@@ -123,11 +114,6 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
-            'company_mapper_label' => function ($sm) {
-                return new \Company\Mapper\Label(
-                    $sm->get('company_doctrine_em')
-                );
-            },
             'company_mapper_bannerpackage' => function ($sm) {
                 return new \Company\Mapper\BannerPackage(
                     $sm->get('company_doctrine_em')
@@ -160,9 +146,8 @@ class Module
                 $acl->allow('guest', 'company', 'list');
                 $acl->allow('guest', 'company', 'view');
                 $acl->allow('guest', 'company', 'listVisibleCategories');
-                $acl->allow('guest', 'company', 'listVisibleLabels');
                 $acl->allow('guest', 'company', 'showBanner');
-                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete', 'listall', 'listAllCategories', 'listAllLabels']);
+                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete', 'listall', 'listAllCategories']);
 
                 return $acl;
             },

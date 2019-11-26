@@ -199,42 +199,6 @@ class Company extends AbstractACLService
         return $this->getCategoryMapper()->findAll();
     }
 
-
-    public function getLabelList($visible)
-    {
-        $translator = $this->getTranslator();
-        if (!$visible) {
-            if (!$this->isAllowed('listAllCategories')) {
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to access the admin interface')
-                );
-            }
-            $results = $this->getLabelMapper()->findAll();
-            return $this->getUniqueInArray($results, function ($a) {
-                return $a->getLanguageNeutralId();
-            });
-        }
-        if (!$this->isAllowed('listVisibleCategories')) {
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to list all categories')
-            );
-        }
-        if ($visible) {
-            $categories = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
-            $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
-            $filteredCategories =  $this->filterCategories($categories);
-            $noVacancyLabel = count(array_filter($filteredCategories, function ($el) {
-                return $el->getSlug() == "jobs";
-            })) ;
-            if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
-                $filteredCategories[] = $this->getLabelMapper()
-                    ->createNullLabel($translator->getLocale(), $translator);
-            }
-            return $filteredCategories;
-        }
-        return $this->getLabelMapper()->findAll();
-    }
-
     /**
      * Inserts a category, and binds it to the given package
      *
@@ -251,24 +215,6 @@ class Company extends AbstractACLService
         $result = $this->getCategoryMapper()->insert($lang, $id, $cat);
         return $result;
     }
-
-    /**
-     * Inserts a label, and binds it to the given package
-     *
-     * @param mixed $packageID
-     */
-    public function insertLabel($lang, $id, $cat = null)
-    {
-        if (!$this->isAllowed('insert')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to insert a job')
-            );
-        }
-        $result = $this->getLabelMapper()->insert($lang, $id, $cat);
-        return $result;
-    }
-
     /**
      * Checks if the data is valid, and if it is, inserts the category, and sets
      * all data
@@ -301,37 +247,6 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Checks if the data is valid, and if it is, inserts the label, and sets
-     * all data
-     *
-     * @param mixed $data
-     */
-    public function insertLabelByData($data, $files)
-    {
-        $labelForm = $this->getLabelForm();
-        $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
-        );
-        $labelForm->setData($mergedData);
-        $arr = [];
-        $labelForm->get('labels')->setObject($arr);
-        $valid = $labelForm->isValid();
-        if ($valid) {
-            $newLabels = $labelForm->getObject();
-            $id = -1;
-            foreach ($newLabels as $lang => $label) {
-                $arr[$lang] = $this->insertLabel($lang, $id, $label);
-                if ($id == -1) {
-                    $id = current($arr)->getId();
-                }
-            }
-            return $arr;
-        }
-        return null;
-    }
-
-    /**
      * Checks if the data is valid (if nonnull), and if it is saves the category
      *
      * @param array $data The data to validate, and apply to the category
@@ -349,26 +264,6 @@ class Company extends AbstractACLService
         }
         $this->getCategoryMapper()->save();
     }
-
-    /**
-     * Checks if the data is valid (if nonnull), and if it is saves the label
-     *
-     * @param array $data The data to validate, and apply to the label
-     */
-    public function saveLabel($data = null)
-    {
-        if ($data != null) {
-            $labelForm = $this->getLabelForm();
-            $labelForm->setData($data);
-            if ($labelForm->isValid()) {
-                $this->saveLabel();
-                return true;
-            }
-            return;
-        }
-        $this->getLabelMapper()->save();
-    }
-
     /**
      * Checks if the data is valid, and if it is saves the package
      *
@@ -730,29 +625,6 @@ class Company extends AbstractACLService
 
         return $package;
     }
-
-
-    /**
-     * Returns a persistent label
-     *
-     * @param mixed $labelID
-     */
-    public function getAllLabelsById($labelID)
-    {
-        if (!$this->isAllowed('edit')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to edit packages')
-            );
-        }
-        if (is_null($labelID)) {
-            throw new \Exception('Invalid argument');
-        }
-        $package = $this->getCategoryMapper()->findAllCategoriesById($labelID);
-
-        return $package;
-    }
-
     /**
      * Returns a persistent package
      *
@@ -866,22 +738,6 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get the Label Edit form.
-     *
-     * @return Label Edit form
-     */
-    public function getLabelForm()
-    {
-        if (!$this->isAllowed('edit')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to edit jobs')
-            );
-        }
-        return $this->sm->get('company_admin_edit_label_form');
-    }
-
-    /**
      * Returns a the form for entering packages
      *
      */
@@ -981,15 +837,6 @@ class Company extends AbstractACLService
     public function getCategoryMapper()
     {
         return $this->sm->get('company_mapper_category');
-    }
-
-    /**
-     * Returns the category mapper
-     *
-     */
-    public function getLabelMapper()
-    {
-        return $this->sm->get('company_mapper_label');
     }
 
     /**
