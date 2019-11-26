@@ -44,7 +44,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         ]);
 
         $this->add([
-            'name' => 'options',
+            'name' => 'labels',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
                 'count' => 1,
