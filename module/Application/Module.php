@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Carbon\Carbon;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
@@ -25,8 +26,12 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
+        $locale = $this->determineLocale($e);
+
         $translator = $e->getApplication()->getServiceManager()->get('translator');
-        $translator->setlocale($this->determineLocale($e));
+        $translator->setlocale($locale);
+
+        Carbon::setLocale($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
