@@ -98,19 +98,31 @@ class Category
 
         return $categories;
     }
+
     /**
      * Deletes the given category
      *
+     * @param CategoryModel $category
      */
-    public function delete($categoryID)
+    public function delete($category)
+    {
+        $this->em->remove($category);
+        $this->em->flush();
+    }
+
+    /**
+     * Deletes the given category
+     *
+     * @param int $categoryID
+     */
+    public function deleteByID($categoryID)
     {
         $category = $this->findEditableCategory($categoryID);
         if (is_null($category)) {
             return;
         }
 
-        $this->em->remove($category);
-        $this->em->flush();
+        $this->delete($category);
     }
 
     /**
