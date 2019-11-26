@@ -50,6 +50,7 @@ $this->headTitle($this->category->getPluralName());
                             id="job-search"
                             placeholder="<?= $this->translate('What are you looking for?') ?>" />
                     </div>
+                    <!--
                     <div class="form-group">
                         <label for="job-label"><?= $this->translate('Audience') ?></label>
                         <select name="label" id="job-label" class="form-control">
@@ -59,6 +60,7 @@ $this->headTitle($this->category->getPluralName());
                             <option value="IAM">Industrial and Applied Mathematics</option>
                         </select>
                     </div>
+                    -->
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>
@@ -105,10 +107,12 @@ $this->headTitle($this->category->getPluralName());
                         <?php if (!is_null($job->getLocation())): ?>
                             <p class="job-location"><?= $job->getLocation() ?></p>
                         <?php endif; ?>
+                        <!--
                         <div>
                             <span class="label label-default job-label" data-label="CSE" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
                             <span class="label label-default job-label" data-label="DS" data-toggle="tooltip" title="Data Science">DS</span>
                         </div>
+                        -->
                         <div class="card-footer">
                             <button class="btn btn-link"><?= $this->translate('View job') ?></button>
                             <span class="small">
