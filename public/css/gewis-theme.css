@@ -6250,6 +6250,17 @@ Styleguide: buttons.styles
     color: transparent;
     background-color: #D40026; }
 
+.btn-filter .btn-text {
+  max-width: 6em;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+.btn-filter .glyphicon {
+  padding-left: 1em; }
+.btn-filter:hover .glyphicon {
+  color: #D40026; }
+.btn-filter:hover .btn-text {
+  text-decoration: line-through; }
+
 /*
 Button sizes
 
@@ -6506,6 +6517,10 @@ a[href^='mailto:klachten@gewis.nl'] .panel-special {
 
 .mt-5 {
   margin-top: 5rem; }
+
+.align-middle {
+  display: inline-flex;
+  align-items: center; }
 
 /*
 List group
@@ -7182,9 +7197,19 @@ Markup:
   .grid-col-5 {
     grid-template-columns: repeat(5, 1fr); } }
 /*
-Company
+Colors
 
+Markup:
+<span class="styleguide-swatch {{modifier_class}}"></span>
+
+.primary - Primary
+.success - Success
+.warning - Warning
+.danger - Danger
+
+Styleguide: colors
 */
+/* Collapse navbar on medium */
 .company-list .company-list-item {
   margin-top: 4em;
   margin-bottom: 4em; }
@@ -7198,7 +7223,7 @@ Company
   margin: 2em auto; }
 
 .company-grid .company-grid-item {
-  border: 1px solid #cccccc;
+  border: 1px solid #f2f2f2;
   border-radius: 5px;
   height: 17em;
   margin-bottom: 2em; }
@@ -7219,6 +7244,98 @@ Company
 @media (min-width: 768px) {
   .company-grid img.company-logo {
     margin: 2em auto; } }
+
+.card-grid {
+  display: grid;
+  column-gap: 2em;
+  row-gap: 1em;
+  grid-template-columns: repeat(1, 1fr); }
+  @media (min-width: 768px) {
+    .card-grid {
+      row-gap: 2em;
+      grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 992px) {
+    .card-grid {
+      grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1200px) {
+    .card-grid {
+      grid-template-columns: repeat(4, 1fr); } }
+
+.card {
+  margin-top: 0;
+  padding: 1em;
+  border: 1px solid #f2f2f2;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column; }
+  .card .card-img {
+    margin: 0 0 1em;
+    height: 3em; }
+    .card .card-img img {
+      margin: 0;
+      max-height: 100%;
+      max-width: 100%;
+      display: block; }
+    @media (min-width: 768px) {
+      .card .card-img {
+        height: 5em; }
+        .card .card-img img {
+          margin: 0 auto; } }
+  .card .card-title {
+    margin: 0 0 0.75em;
+    text-transform: none; }
+  .card .card-subtitle {
+    margin: -0.5em 0 0.75em;
+    font-size: 1em; }
+  .card p {
+    line-height: normal; }
+  .card .card-footer {
+    margin: auto 0 0;
+    padding: 1.5em 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; }
+    .card .card-footer .btn-link {
+      margin: 0;
+      padding: 0; }
+
+a.card {
+  color: inherit; }
+  a.card:hover, a.card:active, a.card:focus {
+    background-color: #f8f8f8;
+    text-decoration: none; }
+  a.card:hover .btn-link {
+    color: #880018;
+    text-decoration: underline; }
+
+.filter-bar {
+  padding: 0.5em 0;
+  margin-bottom: 2em;
+  background: #f2f2f2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+  .filter-bar .form-group {
+    margin: 0;
+    padding: 0.5em 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+    .filter-bar .form-group:last-child {
+      border-right: 0; }
+    .filter-bar .form-group > label {
+      margin-right: 0.5em; }
+  @media (min-width: 768px) {
+    .filter-bar {
+      padding: 0; }
+    .filter-bar .form-group {
+      padding: 1em; } }
+
+#job-search, #job-label {
+  width: auto;
+  min-width: 100px;
+  max-width: 250px; }
 
 /*
 Photo
