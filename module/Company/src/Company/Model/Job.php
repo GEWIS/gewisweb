@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -83,6 +84,12 @@ class Job
      */
     protected $description;
 
+    /**
+     * The job's location.
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $location;
 
     /**
      * The job's timestamp.
@@ -346,17 +353,21 @@ class Job
     /**
      * Get the job's timestamp.
      *
-     * @return date
+     * @return Carbon
      */
     public function getTimestamp()
     {
-        return $this->description;
+        if (is_null($this->timestamp)) {
+            return null;
+        }
+
+        return Carbon::instance($this->timestamp);
     }
 
     /**
      * Set the job's timestamp.
      *
-     * @param string $timestamp
+     * @param \DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {
@@ -425,5 +436,29 @@ class Job
     public function setPackage(CompanyPackage $package)
     {
         $this->package = $package;
+    }
+
+    /**
+     * Returns the job's location
+     *
+     * The location property specifies for which location (i.e. city or country)
+     * this job is intended. This location may not be equal to the company's
+     * address.
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Sets the job's location
+     *
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
     }
 }
