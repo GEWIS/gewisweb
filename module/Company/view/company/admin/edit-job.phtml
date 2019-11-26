@@ -175,7 +175,7 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
-$element = $fieldset->get('labels');
+$element = $form->get('labels');
 ?>
 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
