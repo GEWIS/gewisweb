@@ -60,18 +60,6 @@ class Label
         return $labels;
     }
 
-    public function createNullLabel($lang, $translator)
-    {
-        $labelForJobsWithoutLabel =  new LabelModel();
-        $labelForJobsWithoutLabel->setHidden(false);
-        $labelForJobsWithoutLabel->setLanguageNeutralId(null);
-        $labelForJobsWithoutLabel->setLanguage($lang);
-        $labelForJobsWithoutLabel->setSlug("jobs");
-        $labelForJobsWithoutLabel->setName($translator->translate("Job"));
-
-        return $labelForJobsWithoutLabel;
-    }
-
     /**
      * Find the same label, but in the given language
      *

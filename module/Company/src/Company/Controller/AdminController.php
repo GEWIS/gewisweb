@@ -530,16 +530,19 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
-            if (!is_null($categories)) {
-                // Redirect to edit page
-                return $this->redirect()->toRoute(
-                    'admin_company/default',
-                    [
-                        'action' => 'editCategory',
-                        'slugCompanyName' => $categories['nl']->getLanguageNeutralId(),
-                    ]
+            if (is_null($categories)) {
+                throw new \Zend\Code\Exception\InvalidArgumentException(
+                    $this->getTranslator()->translate('Invalid data provided')
                 );
             }
+            // Redirect to edit page
+            return $this->redirect()->toRoute(
+                'admin_company/default',
+                [
+                    'action' => 'editCategory',
+                    'slugCompanyName' => $categories['nl']->getLanguageNeutralId(),
+                ]
+            );
         }
 
         // The form was not valid, or we did not get data back
@@ -573,16 +576,19 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
-            if (!is_null($labels)) {
-                // Redirect to edit page
-                return $this->redirect()->toRoute(
-                    'admin_company/default',
-                    [
-                        'action' => 'editLabel',
-                        'slugCompanyName' => $labels['nl']->getLanguageNeutralId(),
-                    ]
+            if (is_null($labels)) {
+                throw new \Zend\Code\Exception\InvalidArgumentException(
+                    $this->getTranslator()->translate('Invalid data provided')
                 );
             }
+            // Redirect to edit page
+            return $this->redirect()->toRoute(
+                'admin_company/default',
+                [
+                    'action' => 'editLabel',
+                    'slugCompanyName' => $labels['nl']->getLanguageNeutralId(),
+                ]
+            );
         }
 
         // The form was not valid, or we did not get data back

@@ -139,17 +139,42 @@ class Company extends AbstractACLService
         return $category;
     }
 
+    /**
+     * Filters out categories that are not used in active jobs
+     *
+     * @param array $categories
+     * @return array
+     */
     private function filterCategories($categories)
     {
         $nonemptyCategories = [];
         foreach ($categories as $category) {
             if (count(
-                $this->getActiveJobList(['jobCategoryID' => $category->getId()])
-            ) > 0) {
+                    $this->getActiveJobList(['jobCategoryID' => $category->getId()])
+                ) > 0) {
                 $nonemptyCategories[] = $category;
             }
         }
         return $nonemptyCategories;
+    }
+
+    /**
+     * Filters out labels that are not used in active jobs
+     *
+     * @param array $labels
+     * @return array
+     */
+    private function filterLabels($labels)
+    {
+        $nonemptyLabels = [];
+        foreach ($labels as $label) {
+            if (count(
+                    $this->getActiveJobList(['jobCategoryID' => $label->getId()])
+                ) > 0) {
+                $nonemptyLabels[] = $label;
+            }
+        }
+        return $nonemptyLabels;
     }
 
     private function getUniqueInArray($array, $callback) {
@@ -194,7 +219,6 @@ class Company extends AbstractACLService
                 ->createNullCategory($translator->getLocale(), $translator);
         }
         return $filteredCategories;
-        return $this->getCategoryMapper()->findAll();
     }
 
     public function getLabelList($visible)
@@ -217,17 +241,8 @@ class Company extends AbstractACLService
             );
         }
         $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
-        $jobsWithoutLabel = $this->getJobMapper()->findJobsWithoutLabel($translator->getLocale());
-        $filteredLabels =  $this->filterCategories($labels);
-        $noVacancyLabel = count(array_filter($filteredLabels, function ($el) {
-            return $el->getSlug() == "jobs";
-        })) ;
-        if (count($jobsWithoutLabel) > 0 && $noVacancyLabel  == 0) {
-            $filteredLabels[] = $this->getLabelMapper()
-                ->createNullLabel($translator->getLocale(), $translator);
-        }
+        $filteredLabels =  $this->filterLabels($labels);
         return $filteredLabels;
-        return $this->getLabelMapper()->findAll();
     }
 
     /**
