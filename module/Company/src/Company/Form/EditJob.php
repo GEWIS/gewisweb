@@ -21,6 +21,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
 
         $this->setAttribute('method', 'post');
 
+        $labelOptions = [];
+        foreach ($labels as $label) {
+            $labelOptions[$label->getId()] = $label->getName();
+        }
+
         $this ->setLanguages($languages);
         $this->add([
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
@@ -35,23 +40,21 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         ]);
 
         $this->add([
+            'name' => 'labels',
+            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'options' => [
+                'label' => $translator->translate('What labels apply to this job?'),
+                'value_options' => $this->labelOptions
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => $translator->translate('Submit changes'),
                 'id' => 'submitbutton',
             ],
-        ]);
-
-        $this->add([
-            'name' => 'labels',
-            'type' => 'Zend\Form\Element\Collection',
-            'options' => [
-                'count' => 1,
-                'should_create_template' => true,
-                'allow_add' => true,
-                'target_element' => new JobLabelFieldset($translator, $labels)
-            ]
         ]);
 
         $this->initFilters();
