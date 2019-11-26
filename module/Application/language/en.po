@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-04 11:36+0200\n"
+"POT-Creation-Date: 2019-11-26 19:01+0100\n"
 "PO-Revision-Date: 2019-10-04 11:43+0200\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
@@ -111,7 +111,6 @@ msgstr "Costs"
 #: module/Activity/view/partial/create.phtml:124
 #: module/Activity/view/partial/create.phtml:180
 #: module/Activity/view/activity/activity-calendar/create.phtml:129
-#: module/Company/view/company/company/job-list.phtml:107
 #: module/Company/view/company/company/jobs.phtml:73
 #: module/Company/view/partial/company/company/list/company.phtml:56
 #: module/Company/src/Company/Form/JobFieldset.php:115
@@ -1071,15 +1070,15 @@ msgstr "Then try the new photo viewer %sHERE%s!"
 msgid "View user profile"
 msgstr "View user profile"
 
-#: module/Photo/view/photo/album/index-new.phtml:189
+#: module/Photo/view/photo/album/index-new.phtml:191
 msgid "Download"
 msgstr "Download"
 
-#: module/Photo/view/photo/album/index-new.phtml:190
+#: module/Photo/view/photo/album/index-new.phtml:192
 msgid "Vote for photo of the week"
 msgstr "Vote for photo of the week"
 
-#: module/Photo/view/photo/album/index-new.phtml:191
+#: module/Photo/view/photo/album/index-new.phtml:193
 msgid "Metadata"
 msgstr "Metadata"
 
@@ -1412,48 +1411,46 @@ msgstr "People in this photo"
 msgid "Companies"
 msgstr "Companies"
 
-#: module/Company/view/company/company/job-list.phtml:43
-#: module/Company/view/company/company/job-list.phtml:76
-msgid "at"
-msgstr "at"
+#: module/Company/view/company/company/job-list.phtml:51
+msgid "What are you looking for?"
+msgstr ""
 
-#: module/Company/view/company/company/job-list.phtml:52
-#: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/view/decision/member/index.phtml:111
-#: module/Education/view/education/education/index.phtml:41
-#: module/Decision/src/Decision/Form/SearchDecision.php:29
-#: module/Decision/src/Decision/Form/SearchDecision.php:30
-msgid "Search"
-msgstr "Search"
+#: module/Company/view/company/company/job-list.phtml:55
+msgid "Audience"
+msgstr ""
 
-#: module/Company/view/company/company/job-list.phtml:56
-msgid "Filter results"
-msgstr "Filter results"
+#: module/Company/view/company/company/job-list.phtml:57
+msgid "Any"
+msgstr ""
 
-#: module/Company/view/company/company/job-list.phtml:86
-#: module/Company/view/company/company/companyStory.phtml:19
-#: module/Company/view/company/company/jobs.phtml:54
-#: module/Company/view/partial/company/company/list/company.phtml:12
-#: module/Company/view/partial/company/company/grid/company.phtml:15
-msgid "Logo of"
-msgstr "Logo of"
+#: module/Company/view/company/company/job-list.phtml:66
+#, fuzzy
+msgid "Company"
+msgstr "Add Company"
 
-#: module/Company/view/company/company/job-list.phtml:89
-#: module/Company/view/company/company/companyStory.phtml:22
-#: module/Company/view/company/company/jobs.phtml:57
-#: module/Company/view/partial/company/company/list/company.phtml:15
-#: module/Application/view/partial/main-nav.phtml:150
-msgid "Contact"
-msgstr "Contact"
+#: module/Company/view/company/company/job-list.phtml:82
+#, fuzzy, php-format
+msgid "Unfortunately, there aren't any %s at the moment."
+msgstr "Unfortunately there currently is no poll :("
 
-#: module/Company/view/company/company/job-list.phtml:100
+#: module/Company/view/company/company/job-list.phtml:117
 #: module/Company/view/company/company/jobs.phtml:67
 msgid "View"
 msgstr "View"
 
-#: module/Company/view/company/company/job-list.phtml:124
-msgid "Read more"
-msgstr "Read more"
+#: module/Company/view/company/company/job-list.phtml:120
+msgid "Posted today"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:122
+#, php-format
+msgid "Posted %s"
+msgstr ""
+
+#: module/Company/view/company/company/job-list.phtml:155
+#, php-format
+msgid "Still haven't found what you're looking for? Take a look at %s."
+msgstr ""
 
 #: module/Company/view/company/company/spotlight.phtml:19
 msgid "Featured company"
@@ -1463,6 +1460,20 @@ msgstr "Featured company"
 #: module/Company/view/company/company/list.phtml:19
 msgid "in the spotlight"
 msgstr "in the spotlight"
+
+#: module/Company/view/company/company/companyStory.phtml:19
+#: module/Company/view/company/company/jobs.phtml:54
+#: module/Company/view/partial/company/company/list/company.phtml:12
+#: module/Company/view/partial/company/company/grid/company.phtml:15
+msgid "Logo of"
+msgstr "Logo of"
+
+#: module/Company/view/company/company/companyStory.phtml:22
+#: module/Company/view/company/company/jobs.phtml:57
+#: module/Company/view/partial/company/company/list/company.phtml:15
+#: module/Application/view/partial/main-nav.phtml:150
+msgid "Contact"
+msgstr "Contact"
 
 #: module/Company/view/company/company/companyStory.phtml:68
 #: module/Company/src/Company/Form/EditPackage.php:60
@@ -1812,6 +1823,14 @@ msgstr "Search for decision"
 msgid "Search query"
 msgstr "Search query"
 
+#: module/Decision/view/decision/decision/search.phtml:30
+#: module/Decision/view/decision/member/index.phtml:111
+#: module/Education/view/education/education/index.phtml:41
+#: module/Decision/src/Decision/Form/SearchDecision.php:29
+#: module/Decision/src/Decision/Form/SearchDecision.php:30
+msgid "Search"
+msgstr "Search"
+
 #: module/Decision/view/decision/organ/show.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:118
 msgid "Current members"
@@ -2129,24 +2148,24 @@ msgstr "Webmail"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:170
+#: module/Decision/view/decision/member/index.phtml:168
 #: module/Application/view/partial/main-nav.phtml:149
 msgid "Regulations"
 msgstr "Regulations"
 
-#: module/Decision/view/decision/member/index.phtml:174
+#: module/Decision/view/decision/member/index.phtml:172
 msgid "Borrelreglement"
 msgstr "Social Drinks"
 
-#: module/Decision/view/decision/member/index.phtml:179
+#: module/Decision/view/decision/member/index.phtml:177
 msgid "Computerreglement"
 msgstr "Computer Usage"
 
-#: module/Decision/view/decision/member/index.phtml:184
+#: module/Decision/view/decision/member/index.phtml:182
 msgid "Posterreglement"
 msgstr "Posters"
 
-#: module/Decision/view/decision/member/index.phtml:189
+#: module/Decision/view/decision/member/index.phtml:187
 msgid "Sleutelbeleid"
 msgstr "Keys"
 
@@ -3066,17 +3085,17 @@ msgstr "You are not allowed to delete this option"
 msgid "You are not allowed to create an activity"
 msgstr "You are not allowed to create an activity"
 
-#: module/Activity/src/Activity/Service/Activity.php:151
+#: module/Activity/src/Activity/Service/Activity.php:153
 msgid "You are not allowed to update this activity"
 msgstr "You are not allowed to update this activity"
 
-#: module/Activity/src/Activity/Service/Activity.php:351
+#: module/Activity/src/Activity/Service/Activity.php:353
 msgid "You are not allowed to create an activity for this organ"
 msgstr "You are not allowed to create an activity for this organ"
 
-#: module/Activity/src/Activity/Service/Activity.php:473
-#: module/Activity/src/Activity/Service/Activity.php:492
-#: module/Activity/src/Activity/Service/Activity.php:512
+#: module/Activity/src/Activity/Service/Activity.php:475
+#: module/Activity/src/Activity/Service/Activity.php:494
+#: module/Activity/src/Activity/Service/Activity.php:514
 msgid "You are not allowed to change the status of the activity"
 msgstr "You are not allowed to change the status of the activity"
 
@@ -3303,19 +3322,19 @@ msgstr "You are not allowed to remove API tokens"
 msgid "You are not allowed to add API tokens"
 msgstr "You are not allowed to add API tokens"
 
-#: module/User/src/User/Service/User.php:191
+#: module/User/src/User/Service/User.php:204
 msgid "Password incorrect"
 msgstr "Password incorrect"
 
-#: module/User/src/User/Service/User.php:259
+#: module/User/src/User/Service/User.php:272
 msgid "You are not allowed to login using pin codes"
 msgstr "You are not allowed to login using pin codes"
 
-#: module/User/src/User/Service/User.php:300
+#: module/User/src/User/Service/User.php:313
 msgid "You need to log in to perform this action"
 msgstr "You need to log in to perform this action"
 
-#: module/User/src/User/Service/User.php:415
+#: module/User/src/User/Service/User.php:429
 msgid "You are not allowed to change your password"
 msgstr "You are not allowed to change your password"
 
@@ -3361,6 +3380,12 @@ msgid "There is no member with this membership number."
 msgstr "There is no member with this membership number."
 
 #: module/User/src/User/Form/Register.php:75
+msgid ""
+"You already attempted to register, please check your email or try again "
+"after 24 hours."
+msgstr ""
+
+#: module/User/src/User/Form/Register.php:82
 msgid "This member already has an account."
 msgstr "This member already has an account."
 
@@ -3508,38 +3533,38 @@ msgid "You are not allowed to list all categories"
 msgstr "You are not allowed to list all categories"
 
 #: module/Company/src/Company/Service/Company.php:212
-#: module/Company/src/Company/Service/Company.php:557
+#: module/Company/src/Company/Service/Company.php:555
 msgid "You are not allowed to insert a job"
 msgstr "You are not allowed to insert a vacancy"
 
-#: module/Company/src/Company/Service/Company.php:406
+#: module/Company/src/Company/Service/Company.php:404
 msgid "You are not allowed to insert a company"
 msgstr "You are not allowed to insert a company"
 
-#: module/Company/src/Company/Service/Company.php:445
+#: module/Company/src/Company/Service/Company.php:443
 msgid "You are not allowed to insert a package"
 msgstr "You are not allowed to insert a package"
 
-#: module/Company/src/Company/Service/Company.php:576
+#: module/Company/src/Company/Service/Company.php:574
 msgid "You are not allowed to delete packages"
 msgstr "You are not allowed to delete packages"
 
-#: module/Company/src/Company/Service/Company.php:593
+#: module/Company/src/Company/Service/Company.php:591
 msgid "You are not allowed to delete companies"
 msgstr "You are not allowed to delete companies"
 
-#: module/Company/src/Company/Service/Company.php:620
-#: module/Company/src/Company/Service/Company.php:640
+#: module/Company/src/Company/Service/Company.php:618
+#: module/Company/src/Company/Service/Company.php:638
 msgid "You are not allowed to edit packages"
 msgstr "You are not allowed to edit packages"
 
-#: module/Company/src/Company/Service/Company.php:667
+#: module/Company/src/Company/Service/Company.php:665
 msgid "You are not allowed to edit companies"
 msgstr "You are not allowed to edit companies"
 
-#: module/Company/src/Company/Service/Company.php:685
-#: module/Company/src/Company/Service/Company.php:736
-#: module/Company/src/Company/Service/Company.php:767
+#: module/Company/src/Company/Service/Company.php:683
+#: module/Company/src/Company/Service/Company.php:734
+#: module/Company/src/Company/Service/Company.php:765
 msgid "You are not allowed to edit jobs"
 msgstr "You are not allowed to edit vacancies"
 
@@ -3708,23 +3733,19 @@ msgstr ""
 "Login to Microsoft Imagine failed. If this persists, contact the "
 "WebCommittee."
 
-#: module/Decision/src/Decision/Service/Member.php:165
-msgid "You are not allowed to download regulations."
-msgstr "You are not allowed to download regulations."
-
-#: module/Decision/src/Decision/Service/Member.php:187
+#: module/Decision/src/Decision/Service/Member.php:174
 msgid "You are not allowed to view the list of today's birthdays."
 msgstr "You are not allowed to view the list of today's birthdays."
 
-#: module/Decision/src/Decision/Service/Member.php:194
+#: module/Decision/src/Decision/Service/Member.php:181
 msgid "You are not allowed to view the list of birthdays."
 msgstr "You are not allowed to view the list of birthdays."
 
-#: module/Decision/src/Decision/Service/Member.php:224
+#: module/Decision/src/Decision/Service/Member.php:211
 msgid "Name must be at least "
 msgstr "Name must be at least "
 
-#: module/Decision/src/Decision/Service/Member.php:230
+#: module/Decision/src/Decision/Service/Member.php:217
 msgid "Not allowed to search for members."
 msgstr "Not allowed to search for members."
 
@@ -4011,6 +4032,18 @@ msgstr "Table soccer coordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Purchaser"
+
+#~ msgid "at"
+#~ msgstr "at"
+
+#~ msgid "Filter results"
+#~ msgstr "Filter results"
+
+#~ msgid "Read more"
+#~ msgstr "Read more"
+
+#~ msgid "You are not allowed to download regulations."
+#~ msgstr "You are not allowed to download regulations."
 
 #~ msgid "Created at"
 #~ msgstr "Created at"
