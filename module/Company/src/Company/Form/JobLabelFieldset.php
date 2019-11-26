@@ -19,7 +19,7 @@ class JobLabelFieldset extends Fieldset
         }
 
         $this->add([
-            'name' => 'type',
+            'name' => 'label',
             'type' => 'select',
             'labels' => [
                 'empty_option' => [
