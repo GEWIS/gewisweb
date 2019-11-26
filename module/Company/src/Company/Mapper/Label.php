@@ -97,19 +97,31 @@ class Label
 
         return $labels;
     }
+
     /**
      * Deletes the given label
      *
+     * @param LabelModel $label
      */
-    public function delete($labelID)
+    public function delete($label)
+    {
+        $this->em->remove($label);
+        $this->em->flush();
+    }
+
+    /**
+     * Deletes the given label
+     *
+     * @param int $labelID
+     */
+    public function deleteById($labelID)
     {
         $label = $this->findEditableLabel($labelID);
         if (is_null($label)) {
             return;
         }
 
-        $this->em->remove($label);
-        $this->em->flush();
+        $this->delete($label);
     }
 
     /**
