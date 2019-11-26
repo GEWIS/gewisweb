@@ -271,22 +271,25 @@ class Decision extends AbstractAclService
      * @param int $id Document ID
      * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
      * @return void
+     * @throws NotAllowedException
      * @throws \InvalidArgumentException If the document doesn't exist
      */
     public function changePositionDocument($id, $moveDown = true)
     {
-        $id = (int) $id;
-        
-        $document = $this->getMeetingDocument($id);
-        if (is_null($document)) {
-            throw new \InvalidArgumentException(
-                sprintf("Document not found with ID '%d'.", $id)
+        $operation = null; // TODO: Which operation should be checked?
+
+        if ($this->isAllowed($operation)) {
+            throw new NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to modify meeting documents.')
             );
         }
 
-        // Documents are ordered because of @OrderBy annotation on relation
+        // Documents are ordered because of @OrderBy annotation on the relation
         /** @var PersistentCollection $documents */
-        $documents = $document->getMeeting()->getDocuments();
+        $documents = $this->getMeetingMapper()
+            ->findDocumentOrFail($id)
+            ->getMeeting()
+            ->getDocuments();
 
         // Create data structure to derive ordering, key is position and value
         // is document ID

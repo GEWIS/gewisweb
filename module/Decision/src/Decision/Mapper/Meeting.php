@@ -157,6 +157,26 @@ class Meeting
         return $this->em->find('Decision\Model\MeetingDocument', $id);
     }
 
+    /**
+     * Returns the document with the specified ID
+     *
+     * @param int $id Document ID
+     * @return MeetingDocument
+     * @throws \InvalidArgumentException If the document does not exist
+     */
+    public function findDocumentOrFail($id)
+    {
+        $document = $this->findDocument($id);
+
+        if (is_null($document)) {
+            throw new \InvalidArgumentException(
+                sprintf("A document with the provided ID '%d' does not exist.", $id)
+            );
+        }
+
+        return $document;
+    }
+
     public function findMaxDocumentPosition(MeetingModel $meeting)
     {
         $qb = $this->em->createQueryBuilder();
