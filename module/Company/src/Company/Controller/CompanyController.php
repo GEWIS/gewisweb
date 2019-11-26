@@ -78,41 +78,44 @@ class CompanyController extends AbstractActionController
     public function jobListAction()
     {
         $companyService = $this->getCompanyService();
-        $companyName = $this->params('slugCompanyName');
         $category = $companyService->categoryForSlug($this->params('category'));
-        if ($category == null) {
+
+        if (is_null($category)) {
             return $this->notFoundAction();
         }
-        if (isset($companyName)) {
-            // jobs for a single company
-            $jobList = $companyService->getActiveJobList([
-                    'companySlugName' => $companyName,
-                    'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
-                ]);
-            if (count($jobList) > 0) {
-                return new ViewModel([
-                    'company' => $companyService->getCompanyBySlugName($companyName),
-                    'jobList' => $jobList,
-                    'category' => $category,
-                    'translator' => $companyService->getTranslator(),
-                    'randomize' => false,
-                ]);
-            }
-            return $this->notFoundAction();
-        }
-        // all jobs
-        $jobs = $companyService->getActiveJobList(
-            ['jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null]
-        );
-        if (count($jobs) > 0) {
-            return new ViewModel([
+
+        $viewModel = new ViewModel([
+            'category'   => $category,
+            'translator' => $companyService->getTranslator(),
+        ]);
+
+        // A job can be a thesis/internship/etc.
+        $jobCategory = ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null;
+
+        if ($companyName = $this->params('slugCompanyName', null)) {
+            // Retrieve published jobs for one specific company
+            $jobs = $companyService->getActiveJobList([
+                'jobCategory'     => $jobCategory,
+                'companySlugName' => $companyName,
+            ]);
+
+            return $viewModel->setVariables([
                 'jobList' => $jobs,
-                'translator' => $companyService->getTranslator(),
-                'randomize' => true,
-                'category' => $category,
+                'company' => $companyService->getCompanyBySlugName($companyName)
             ]);
         }
-        return $this->notFoundAction();
+
+        // Retrieve all published jobs
+        $jobs = $companyService->getActiveJobList([
+            'jobCategory' => $jobCategory,
+        ]);
+
+        // Shuffle order to avoid bias
+        shuffle($jobs);
+
+        return $viewModel->setVariables([
+            'jobList' => $jobs
+        ]);
     }
 
     /**

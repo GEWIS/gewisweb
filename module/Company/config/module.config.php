@@ -256,6 +256,20 @@ return [
                             'may_terminate' => true,
                         ],
                     ],
+                    'editLabel' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'defaults' => [
+                                'action' => 'editLabel',
+                            ],
+                            'route' => '/editLabel/:labelID',
+                            'constraints' => [
+                                'labelID' => '[0-9]*',
+                            ],
+                            'may_terminate' => true,
+                        ],
+                    ],
                     'default' => [
                         'priority' => 2,
                         'type' => 'Segment',
