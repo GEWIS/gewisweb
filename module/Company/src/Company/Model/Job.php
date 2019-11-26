@@ -120,6 +120,13 @@ class Job
     protected $languageNeutralId;
 
     /**
+     * Job labels
+     *
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="lidnr")
+     */
+    protected $labels;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -420,6 +427,24 @@ class Job
     public function getCompany()
     {
         return $this->getPackage()->getCompany();
+    }
+
+    /**
+     * Get the labels
+     *
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param array $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 
     public function setPackage(CompanyPackage $package)

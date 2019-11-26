@@ -88,7 +88,8 @@ class Module
                     $sm->get('company_mapper_job'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator')
+                    $sm->get('company_hydrator'),
+                    $sm->get('company_service_company')->getLabelList(true)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));
                 return $form;

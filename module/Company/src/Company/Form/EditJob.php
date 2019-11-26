@@ -8,10 +8,12 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
-    public function __construct($mapper, Translator $translator, $languages, $hydrator)
+    public function __construct($mapper, Translator $translator, $languages, $hydrator, $labels)
     {
         // we want to ignore the name passed
         parent::__construct();
+
+        $this->translator = $translator;
 
         $this->mapper = $mapper;
 
@@ -40,7 +42,17 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'id' => 'submitbutton',
             ],
         ]);
-        $this->translator = $translator;
+
+        $this->add([
+            'name' => 'options',
+            'type' => 'Zend\Form\Element\Collection',
+            'options' => [
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => new JobLabelFieldset($translator, $labels)
+            ]
+        ]);
 
         $this->initFilters();
     }
@@ -50,7 +62,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $rootFilter =  new InputFilter();
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
-            
+
             $filter->add([
                 'name' => 'id',
                 'required' => false,

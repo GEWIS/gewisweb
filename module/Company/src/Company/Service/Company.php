@@ -632,6 +632,9 @@ class Company extends AbstractACLService
         }
         $id = -1;
 
+        $labels = $data['labels'];
+        $uniqueLabels = array_unique($labels);
+
         foreach ($jobs as $lang => $job) {
             if ($job->getActive() !== '1') {
                 continue;
@@ -655,6 +658,7 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
+            $job->setLabels($uniqueLabels);
             $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
