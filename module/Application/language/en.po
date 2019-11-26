@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-26 19:01+0100\n"
-"PO-Revision-Date: 2019-10-04 11:43+0200\n"
+"PO-Revision-Date: 2019-11-26 19:05+0100\n"
 "Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1413,25 +1413,24 @@ msgstr "Companies"
 
 #: module/Company/view/company/company/job-list.phtml:51
 msgid "What are you looking for?"
-msgstr ""
+msgstr "What are you looking for?"
 
 #: module/Company/view/company/company/job-list.phtml:55
 msgid "Audience"
-msgstr ""
+msgstr "Audience"
 
 #: module/Company/view/company/company/job-list.phtml:57
 msgid "Any"
-msgstr ""
+msgstr "Any"
 
 #: module/Company/view/company/company/job-list.phtml:66
-#, fuzzy
 msgid "Company"
-msgstr "Add Company"
+msgstr "Company"
 
 #: module/Company/view/company/company/job-list.phtml:82
-#, fuzzy, php-format
+#, php-format
 msgid "Unfortunately, there aren't any %s at the moment."
-msgstr "Unfortunately there currently is no poll :("
+msgstr "Unfortunately, there aren't any %s at the moment."
 
 #: module/Company/view/company/company/job-list.phtml:117
 #: module/Company/view/company/company/jobs.phtml:67
@@ -1440,17 +1439,17 @@ msgstr "View"
 
 #: module/Company/view/company/company/job-list.phtml:120
 msgid "Posted today"
-msgstr ""
+msgstr "Posted today"
 
 #: module/Company/view/company/company/job-list.phtml:122
 #, php-format
 msgid "Posted %s"
-msgstr ""
+msgstr "Posted %s"
 
 #: module/Company/view/company/company/job-list.phtml:155
 #, php-format
 msgid "Still haven't found what you're looking for? Take a look at %s."
-msgstr ""
+msgstr "Still haven't found what you're looking for? Take a look at %s."
 
 #: module/Company/view/company/company/spotlight.phtml:19
 msgid "Featured company"
@@ -3384,6 +3383,8 @@ msgid ""
 "You already attempted to register, please check your email or try again "
 "after 24 hours."
 msgstr ""
+"You already attempted to register, please check your email or try again "
+"after 24 hours."
 
 #: module/User/src/User/Form/Register.php:82
 msgid "This member already has an account."
