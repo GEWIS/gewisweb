@@ -470,6 +470,15 @@ class Decision extends AbstractAclService
         return $this->sm->get('decision_form_document');
     }
 
+    public function getReorderDocumentForm()
+    {
+        $errorMessage = 'You are not allowed to modify meeting documents.';
+
+        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
+
+        return $this->sm->get('decision_form_reorder_document');
+    }
+
     /**
      * Get the SearchDecision form.
      *
@@ -584,5 +593,24 @@ class Decision extends AbstractAclService
     public function isAllowedToBrowseFiles()
     {
         return $this->isAllowed('browse', 'files');
+    }
+
+    /**
+     * Checks the user's permission
+     *
+     * @param string $operation
+     * @param string $resource
+     * @param string $errorMessage English error message
+     * @throws NotAllowedException If the user doesn't have permission
+     */
+    private function isAllowedOrFail($operation, $resource, $errorMessage)
+    {
+        if (!$this->isAllowed($operation, $resource)) {
+            $translator = $this->getTranslator();
+
+            throw new NotAllowedException(
+                $translator->translate($errorMessage)
+            );
+        }
     }
 }

@@ -51,12 +51,14 @@ class AdminController extends AbstractActionController
             }
         }
         $meeting = $this->getDecisionService()->getMeeting($type, $number);
+
         return new ViewModel([
             'form' => $service->getDocumentForm(),
             'meetings' => $meetings,
             'meeting' => $meeting,
             'number' => $number,
-            'success' => $success
+            'success' => $success,
+            'reorderDocumentForm' => $service->getReorderDocumentForm(),
         ]);
     }
 
