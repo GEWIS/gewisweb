@@ -3,9 +3,10 @@
 namespace Decision\Form;
 
 use Zend\Form\Form;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 
-class ReorderDocument extends Form
+class ReorderDocument extends Form implements InputFilterProviderInterface
 {
     /**
      * @var Translator
@@ -47,6 +48,27 @@ class ReorderDocument extends Form
         ]);
 
         return $this;
+    }
+
+    public function getInputFilterSpecification() {
+        return [
+            'direction' => [
+                'required' => true,
+                'validators' => [
+                    (new \Zend\Validator\InArray())->setHaystack(['up', 'down']),
+                ],
+            ],
+            'document' => [
+                'required' => true,
+                'filters' => [
+                    [ 'name' => \Zend\Filter\ToNull::class ],
+                    [ 'name' => \Zend\Filter\ToInt::class ]
+                ],
+                'validators' => [
+                    [ 'name' => \Zend\Validator\NotEmpty::class ]
+                ],
+            ]
+        ];
     }
 
     public function setTranslator(Translator $translator) {
