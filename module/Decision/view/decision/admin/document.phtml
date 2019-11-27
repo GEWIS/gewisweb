@@ -72,6 +72,7 @@ $element->setAttribute('required', 'required');
             $form = $this->reorderDocumentForm;
 
             $form->setAttributes([
+                'class'  => 'form-reorder-document',
                 'action' => $this->url('admin_decision/position_document')
             ]);
             $form->populateValues([
@@ -101,5 +102,7 @@ $element->setAttribute('required', 'required');
 </table>
 </div>
 <script>
-    $()
+    $('.form-reorder-document input[type=radio]').change(function () {
+        this.form.submit();
+    });
 </script>
