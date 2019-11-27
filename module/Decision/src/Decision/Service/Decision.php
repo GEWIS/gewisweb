@@ -276,13 +276,9 @@ class Decision extends AbstractAclService
      */
     public function changePositionDocument($id, $moveDown = true)
     {
-        $operation = null; // TODO: Which operation should be checked?
+        $errorMessage = 'You are not allowed to modify meeting documents.';
 
-        if ($this->isAllowed($operation)) {
-            throw new NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to modify meeting documents.')
-            );
-        }
+        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
 
         // Documents are ordered because of @OrderBy annotation on the relation
         /** @var PersistentCollection $documents */

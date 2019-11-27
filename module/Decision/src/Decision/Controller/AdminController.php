@@ -74,28 +74,24 @@ class AdminController extends AbstractActionController
             // TODO: Throw 405 Method Not Allowed error
         }
 
-        $documentId = $this->params()->fromPost('document');
-        $direction = $this->params()->fromPost('direction');
+        $form = $this->getDecisionService()
+            ->getReorderDocumentForm()
+            ->setData($this->getRequest()->getPost());
 
-        switch ($direction) {
-            case 'up':
-                $moveDown = false;
-                break;
-            case 'down':
-                $moveDown = true;
-                break;
-            default:
-                throw new \InvalidArgumentException(
-                    sprintf("Invalid value for direction parameter: '%s'", $direction)
-                );
+        if (!$form->isValid()) {
+            // TODO: Throw a 400 Bad Request error
         }
 
+        $data = $form->getData();
+        $id = $data['document'];
+        $moveDown = ($data['direction'] === 'down') ? true : false;
+
         // Update ordering document
-        $this->getDecisionService()->changePositionDocument($documentId, $moveDown);
+        $this->getDecisionService()->changePositionDocument($id, $moveDown);
 
         // Redirect to correct meeting page
         $meeting = $this->getDecisionService()
-            ->getMeetingDocument($documentId)
+            ->getMeetingDocument($id)
             ->getMeeting();
 
         return $this->redirect()->toRoute('admin_decision/document', [
