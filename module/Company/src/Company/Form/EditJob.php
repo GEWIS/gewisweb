@@ -44,7 +44,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             'type' => 'Zend\Form\Element\MultiCheckbox',
             'options' => [
                 'label' => $translator->translate('What labels apply to this job?'),
-                'value_options' => $this->labelOptions
+                'value_options' => $labelOptions
             ],
         ]);
 
