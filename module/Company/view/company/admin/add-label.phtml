@@ -1,0 +1,14 @@
+<h1><?= $this->translate('Add Label'); ?></h1>
+<?php $form->prepare();?>
+<?= $this->form()->openTag($form) ?>
+<?= $this->partial('partial/company/admin/editors/label.phtml', ['form' => $form, 'languages' => $languages]) ?>
+<br>
+<?php
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary pull-right');
+?>
+<div class="form-group">
+    <?= $this->formButton($submit) ?>
+</div>
+<?= $this->form()->closeTag(); ?>

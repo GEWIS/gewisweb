@@ -128,13 +128,12 @@ class MemberController extends AbstractActionController
     public function downloadRegulationAction()
     {
         $regulation = $this->params("regulation");
-        $config = $this->getServiceLocator()->get('config')['regulations'];
-        if (isset($config['regulation'])) {
-            $this->getResponse()->setStatusCode(404);
+        $response = $this->getMemberService()->getRegulationDownload($regulation);
+        if ($response) {
+            return $response;
         }
-        $path = $config[$regulation];
 
-        return $this->redirect()->toUrl($this->url()->fromRoute('decision/files', ['path' => '']) . $path);
+        $this->getResponse()->setStatusCode(404);
     }
 
     /**

@@ -28,7 +28,6 @@
         "firebase/php-jwt": "^5.0",
         "paragonie/random_compat": "^2.0",
         "monolog/monolog": "^1.23",
-        "league/glide-zend": "^1.0",
-        "nesbot/carbon": "^1.39"
+        "league/glide-zend": "^1.0"
     }
 }

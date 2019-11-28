@@ -157,6 +157,19 @@ class Member extends AbstractAclService
         return $response->getBody();
     }
 
+    public function getRegulationDownload($regulation)
+    {
+        if (!$this->isAllowed('download', 'regulations')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to download regulations.')
+            );
+        }
+
+        $service = $this->getFileStorageService();
+        return $service->downloadFile("regulations/$regulation.pdf", "$regulation.pdf");
+    }
+
     /**
      * Get the members of which their birthday falls in the next $days days.
      *
@@ -238,7 +251,7 @@ class Member extends AbstractAclService
         $meetingNumber = $meeting->getNumber();
         $lidnr = $member->getLidnr();
         $authorizations = $authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
-
+        
         if (count($authorizations) < $maxAuthorizations) {
             return true;
         }

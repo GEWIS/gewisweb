@@ -148,13 +148,6 @@ return [
         'news_count' => 3, // Number of news items to display
     ],
 
-    'regulations' => [
-        'borrel-reglement' => 'Beleid%20&%20Reglementen/Borrelreglement',
-        'computer-reglement' => 'Beleid%20&%20Reglementen/Computerreglement',
-        'sleutel-beleid' => 'Beleid%20&%20Reglementen/Sleutelbeleid',
-        'poster-reglement' => 'Beleid%20&%20Reglementen/Posterbeleid',
-    ],
-
     /**
      * Doctrine global configuration, like functions
      */
