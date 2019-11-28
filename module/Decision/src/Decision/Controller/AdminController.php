@@ -73,8 +73,7 @@ class AdminController extends AbstractActionController
     public function changePositionDocumentAction()
     {
         if (!$this->getRequest()->isPost()) {
-            return $this->getResponse()
-                ->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
+            return $this->getResponse()->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
         }
 
         $form = $this->getDecisionService()->getReorderDocumentForm()
@@ -93,21 +92,7 @@ class AdminController extends AbstractActionController
         // Update ordering document
         $this->getDecisionService()->changePositionDocument($id, $moveDown);
 
-        // Return success if the request is an Ajax request
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $this->getResponse()
-                ->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
-        }
-
-        // Redirect to correct meeting page
-        $meeting = $this->getDecisionService()
-            ->getMeetingDocument($id)
-            ->getMeeting();
-
-        return $this->redirect()->toRoute('admin_decision/document', [
-            'type'   => $meeting->getType(),
-            'number' => $meeting->getNumber()
-        ]);
+        return $this->getResponse()->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
     }
 
     public function authorizationsAction()
