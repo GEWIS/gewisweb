@@ -53,8 +53,13 @@ label.label-radio-hidden {
     color: $link-color;
     cursor: pointer;
 
-    :hover {
+    &:hover {
         color: $link-color-hover;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        color: $link-color-disabled;
     }
 
     input[type=radio] {

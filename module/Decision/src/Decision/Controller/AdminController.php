@@ -89,6 +89,10 @@ class AdminController extends AbstractActionController
         // Update ordering document
         $this->getDecisionService()->changePositionDocument($id, $moveDown);
 
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            // TODO: Show 200 OK response
+        }
+
         // Redirect to correct meeting page
         $meeting = $this->getDecisionService()
             ->getMeetingDocument($id)
