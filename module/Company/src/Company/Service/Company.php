@@ -6,6 +6,7 @@ namespace Company\Service;
 use Application\Service\AbstractAclService;
 use Company\Model\Job as JobModel;
 use Company\Model\Job;
+use Company\Model\JobLabelAssignment;
 
 /**
  * Company service.
@@ -630,8 +631,10 @@ class Company extends AbstractACLService
         }
         $id = -1;
 
-        $labels = $data['labels'];
-        $uniqueLabels = array_unique($labels);
+        $label_IDs = $data['labels'];
+        if (!is_null($label_IDs)) {
+            $label_IDs = [];
+        }
 
         foreach ($jobs as $lang => $job) {
             if ($job->getActive() !== '1') {
@@ -656,13 +659,79 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
-            $job->setLabels($uniqueLabels);
             $id = $this->setLanguageNeutralId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
+
+            $mapper = $this->getLabelMapper();
+            $lang = $job->getLocation();
+            $labelModels = [];
+            foreach ($label_IDs as $id)
+            {
+                $label = $mapper->findLabelById($id);
+                $labelModels[] = $mapper->siblingLabel($label, $lang);
+            }
+            $this->setLabelsForJob($job, $labelModels);
         }
 
         return true;
+    }
+
+    /**
+     * @param Job $job
+     * @param array $labels
+     */
+    private function setLabelsForJob($job, $labels)
+    {
+        $value_compare_func = (function ($label1, $label2) {
+            if ($label1->getId() == $label2->getId())
+            {
+                return 0;
+            }
+            return 1;
+        });
+
+        $mapper = $this->getLabelAssignmentMapper();
+        $currentLabelAssignments = $mapper->findAssignmentsByJobId($job->getId());
+        $currentLabels = [];
+        foreach ($currentLabelAssignments as $labelAsg)
+        {
+            $currentLabels[] = $labelAsg->getLabel();
+        }
+        $intersection = array_uintersect($labels, $currentLabels, $value_compare_func);
+        $to_remove = array_udiff($currentLabels, $labels, $value_compare_func);
+        $to_add = array_udiff($labels, $intersection, $value_compare_func);
+
+        $this->removeLabelsFromJob($job, $to_remove);
+        $this->addLabelsToJob($job, $to_add);
+    }
+
+    /**
+     * @param mixed $job
+     * @param array $labels
+     */
+    private function addLabelsToJob($job, $labels)
+    {
+        $mapper = $this->getLabelAssignmentMapper();
+        foreach ($labels as $label) {
+            $jobLabelAssignment = new JobLabelAssignment();
+            $jobLabelAssignment->setJob($job);
+            $jobLabelAssignment->setLabel($label);
+            $mapper->persist($jobLabelAssignment);
+        }
+    }
+
+    /**
+     * @param mixed $job
+     * @param array $labels
+     */
+    private function removeLabelsFromJob($job, $labels)
+    {
+        $mapper = $this->getLabelAssignmentMapper();
+        foreach ($labels as $label) {
+            $to_remove = $mapper->findAssignmentByJobIdAndLabelId($job, $label);
+            $mapper->remove($to_remove);
+        }
     }
 
     private function setLanguageNeutralId($id, $job, $languageNeutralId)
@@ -1016,12 +1085,21 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns the category mapper
+     * Returns the label mapper
      *
      */
     public function getLabelMapper()
     {
         return $this->sm->get('company_mapper_label');
+    }
+
+    /**
+     * Returns the label assignment mapper
+     *
+     */
+    public function getLabelAssignmentMapper()
+    {
+        return $this->sm->get('company_mapper_label_assignment');
     }
 
     /**

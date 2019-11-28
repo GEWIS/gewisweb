@@ -28,6 +28,12 @@ class Category
         $this->em = $em;
     }
 
+    public function persist($label)
+    {
+        $this->em->persist($label);
+        $this->em->flush();
+    }
+
     /**
      * Saves all categories
      *

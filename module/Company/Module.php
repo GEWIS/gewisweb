@@ -89,7 +89,7 @@ class Module
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator'),
-                    $sm->get('company_service_company')->getLabelList(true)
+                    $sm->get('company_service_company')->getLabelList(false)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));
                 return $form;
@@ -126,6 +126,11 @@ class Module
             },
             'company_mapper_label' => function ($sm) {
                 return new \Company\Mapper\Label(
+                    $sm->get('company_doctrine_em')
+                );
+            },
+            'company_mapper_label_assignment' => function ($sm) {
+                return new \Company\Mapper\LabelAssignment(
                     $sm->get('company_doctrine_em')
                 );
             },

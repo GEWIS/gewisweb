@@ -450,14 +450,6 @@ class Job
         return $this->labels;
     }
 
-    /**
-     * @param array $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
-    }
-
     public function setPackage(CompanyPackage $package)
     {
         $this->package = $package;

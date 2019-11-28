@@ -28,6 +28,12 @@ class Label
         $this->em = $em;
     }
 
+    public function persist($label)
+    {
+        $this->em->persist($label);
+        $this->em->flush();
+    }
+
     /**
      * Saves all labels
      *
@@ -38,13 +44,23 @@ class Label
     }
 
     /**
-     * Finds the label with the given id
+     * Finds the label with the given slug
      *
      * @param integer $packageID
      */
     public function findLabel($labelSlug)
     {
         return $this->getRepository()->findOneBy(['slug' => $labelSlug]);
+    }
+
+    /**
+     * Finds the label with the given id
+     *
+     * @param integer $packageID
+     */
+    public function findLabelById($labelId)
+    {
+        return $this->getRepository()->findOneBy(['id' => $labelId]);
     }
 
     public function findVisibleLabelByLanguage($labelLanguage)
@@ -71,8 +87,8 @@ class Label
         $qb->select('c')->where('c.languageNeutralId=:labelID')->andWhere('c.language=:language');
         $qb->setParameter('labelID', $label->getLanguageNeutralId());
         $qb->setParameter('language', $lang);
-        $labels = $qb->getQuery()->getResult();
-        return $labels[0];
+        
+        return $qb->getQuery()->getOneOrNullResult;
     }
 
     public function findAllLabelsById($labelId)
