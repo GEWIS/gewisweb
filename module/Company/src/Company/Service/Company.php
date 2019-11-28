@@ -270,7 +270,6 @@ class Company extends AbstractACLService
 
         return $category;
     }
-
     /**
      * Inserts a label, and binds it to the given package
      *
@@ -380,7 +379,6 @@ class Company extends AbstractACLService
             return;
         }
     }
-
     /**
      * Checks if the data is valid (if nonnull), and if it is saves the label
      *
@@ -459,9 +457,7 @@ class Company extends AbstractACLService
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                    continue;
                 }
-                $translation->setLogo("");
             }
             $this->saveCompany();
             return true;
@@ -761,8 +757,6 @@ class Company extends AbstractACLService
 
         return $this->getCategoryMapper()->findAllCategoriesById($categoryID);
     }
-
-
     /**
      * Returns a persistent label
      *
@@ -896,22 +890,6 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get the Label Edit form.
-     *
-     * @return Label Edit form
-     */
-    public function getLabelForm()
-    {
-        if (!$this->isAllowed('edit')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to edit jobs')
-            );
-        }
-        return $this->sm->get('company_admin_edit_label_form');
-    }
-
-    /**
      * Returns a the form for entering packages
      *
      */
@@ -1011,15 +989,6 @@ class Company extends AbstractACLService
     public function getCategoryMapper()
     {
         return $this->sm->get('company_mapper_category');
-    }
-
-    /**
-     * Returns the category mapper
-     *
-     */
-    public function getLabelMapper()
-    {
-        return $this->sm->get('company_mapper_label');
     }
 
     /**
