@@ -268,6 +268,14 @@ class Decision extends AbstractAclService
     /**
      * Changes a document's position in the ordering
      *
+     * The basic flow is (1) retrieve documents, (2) swap document positions,
+     * then (3) persist position. Unfortunately, I have to update the positions
+     * of all documents related to a meeting because of legacy. Old documents
+     * don't have a position yet, so they are set to 0 by default.
+     *
+     * FUTURE: When documents have display positions, simplify the code by only
+     * mutating two rows.
+     *
      * @param int $id Document ID
      * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
      * @return void
