@@ -155,7 +155,7 @@ $element->setAttribute('required', 'required');
                     .find('input').removeAttr('disabled');
             },
             error: function (e) {
-                console.log(e);
+                console.error(e.responseText);
             }
         });
     });
