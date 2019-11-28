@@ -52,6 +52,7 @@ label.label-radio-hidden {
     border-radius: 0;
     color: $link-color;
     cursor: pointer;
+    display: block;
 
     &:hover {
         color: $link-color-hover;
