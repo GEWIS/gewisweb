@@ -13,7 +13,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      */
     protected $translator;
 
-    public function __construct($name = null, $options = array()) {
+    public function __construct($name = null, $options = array())
+    {
         parent::__construct($name, $options);
 
         $this->setAttribute('method', 'post');
@@ -50,7 +51,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         return $this;
     }
 
-    public function getInputFilterSpecification() {
+    public function getInputFilterSpecification()
+    {
         return [
             'direction' => [
                 'required' => true,
@@ -71,7 +73,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         ];
     }
 
-    public function setTranslator(Translator $translator) {
+    public function setTranslator(Translator $translator)
+    {
         $this->translator = $translator;
 
         return $this;
