@@ -2,6 +2,8 @@
 
 namespace Decision\Controller;
 
+use Zend\Http\Response;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -71,15 +73,17 @@ class AdminController extends AbstractActionController
     public function changePositionDocumentAction()
     {
         if (!$this->getRequest()->isPost()) {
-            // TODO: Throw 405 Method Not Allowed error
+            return $this->getResponse()
+                ->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
         }
 
-        $form = $this->getDecisionService()
-            ->getReorderDocumentForm()
+        $form = $this->getDecisionService()->getReorderDocumentForm()
             ->setData($this->getRequest()->getPost());
 
         if (!$form->isValid()) {
-            // TODO: Throw a 400 Bad Request error
+            return $this->getResponse()
+                ->setStatusCode(Response::STATUS_CODE_400) // Bad Request
+                ->setContent(Json::encode($form->getMessages()));
         }
 
         $data = $form->getData();
@@ -89,8 +93,10 @@ class AdminController extends AbstractActionController
         // Update ordering document
         $this->getDecisionService()->changePositionDocument($id, $moveDown);
 
+        // Return success if the request is an Ajax request
         if ($this->getRequest()->isXmlHttpRequest()) {
-            // TODO: Show 200 OK response
+            return $this->getResponse()
+                ->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
         }
 
         // Redirect to correct meeting page
