@@ -163,35 +163,34 @@ $meetings = $this->meetings;
                     </div>
                 </div>
             <?php endif; ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
+                <div class="col-md-6 mt-2">
+                    <h2><?= $this->translate('Regulations') ?></h2>
+                    <ul>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
+                                <?= $this->translate('Borrelreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
+                                <?= $this->translate('Computerreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
+                                <?= $this->translate('Posterreglement') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
+                                <?= $this->translate('Sleutelbeleid') ?>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php endif; ?>
         </div>
-        <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
-          <div class="row mt-2">
-              <div class="col-md-12">
-                  <h2><?= $this->translate('Regulations') ?></h2>
-                  <ul>
-                      <li>
-                          <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
-                              <?= $this->translate('Borrelreglement') ?>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="<?= $this->url('member/regulations', ['regulation' => 'computer-reglement']) ?>">
-                              <?= $this->translate('Computerreglement') ?>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-reglement']) ?>">
-                              <?= $this->translate('Posterreglement') ?>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="<?= $this->url('member/regulations', ['regulation' => 'sleutel-beleid']) ?>">
-                              <?= $this->translate('Sleutelbeleid') ?>
-                          </a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-        <?php endif; ?>
+
     </section>
 </div>
