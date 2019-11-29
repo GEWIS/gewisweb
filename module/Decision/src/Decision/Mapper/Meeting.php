@@ -177,6 +177,12 @@ class Meeting
         return $document;
     }
 
+    /**
+     * Returns the maximum document position for the given meeting
+     *
+     * @param MeetingModel $meeting
+     * @return string|null NULL if no documents are associated to the meeting
+     */
     public function findMaxDocumentPosition(MeetingModel $meeting)
     {
         $qb = $this->em->createQueryBuilder();

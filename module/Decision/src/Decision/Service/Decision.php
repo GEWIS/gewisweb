@@ -244,7 +244,7 @@ class Decision extends AbstractAclService
 
         // Determine document's position in ordering
         $maxPosition = $this->getMeetingMapper()->findMaxDocumentPosition($meeting);
-        $position = is_null($maxPosition) ? 0 : ++$maxPosition;
+        $position = is_null($maxPosition) ? 0 : ++$maxPosition; // NULL if meeting doesn't have documents yet
 
         $document->setDisplayPosition($position);
 
