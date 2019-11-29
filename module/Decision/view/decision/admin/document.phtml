@@ -162,7 +162,7 @@ $element->setAttribute('required', 'required');
                 var reverseAction = history[history.length - 1];
 
                 if (this.hasOwnProperty(reverseAction.fn)) {
-                    history = history.splice(-1, 1); // Remove last action from history
+                    history.pop(); // Remove last action from history
 
                     // Call function to reverse the last action
                     this[reverseAction.fn].apply(null, [ reverseAction.parameter, false ]);
