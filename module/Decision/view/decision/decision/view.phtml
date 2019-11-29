@@ -1,54 +1,72 @@
 <?php
-// set title
-$this->headTitle(sprintf('%s %d', $meeting->getType(), $meeting->getNumber())); ?>
+$meetingName = sprintf('%s %d', $meeting->getType(), $meeting->getNumber());
+
+$this->headTitle($meetingName);
+?>
 <section class="section">
     <div class="container">
-        <h1><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
-            <small><?= $this->dateFormat(
-                    $meeting->getDate(),
-                    \IntlDateFormatter::FULL,
-                    \IntlDateFormatter::NONE,
-                    'nl_NL'
-                ) ?></small>
-        </h1>
+        <h1><?= $meetingName ?></h1>
+        <h2>
+            <?= $this->dateFormat($meeting->getDate(), \IntlDateFormatter::FULL, \IntlDateFormatter::NONE) ?>
+        </h2>
         <div class="row">
             <div class="col-md-6">
+                <h3><?= $this->translate('Documents') ?></h3>
+                <table class="table table-striped table-hover">
+                    <?php foreach ($meeting->getDocuments() as $document): ?>
+                    <tr>
+                        <td>
+                            <a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>" class="d-block">
+                                <?= $document->getName() ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach ?>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h3><?= $this->translate('Minutes') ?></h3>
                 <?php if (!is_null($meeting->getNotes())): ?>
-                    <a
-                        href="<?= $this->url('decision/meeting/notes', [
-                            'type' => $meeting->getType(),
+                    <?php
+                        $notesUrl = $this->url('decision/meeting/notes', [
+                            'type'   => $meeting->getType(),
                             'number' => $meeting->getNumber()
-                        ]) ?>"
-                    >
-                        <?= $this->translate('Notes for this meeting') ?></a>
+                        ])
+                    ?>
+                    <a href="<?= $notesUrl ?>">
+                        <?= sprintf($this->translate('View the minutes of %s'), $meetingName) ?>
+                    </a>
+                <?php else: ?>
+                    <p class="text-muted">
+                        <?= $this->translate("The minutes aren't available yet.") ?>
+                    </p>
                 <?php endif ?>
             </div>
-
-            <div class="col-md-6">
-                <ul>
-                    <?php foreach ($meeting->getDocuments() as $document): ?>
-                        <li><a
-                                href="<?= $this->url('decision/document', [
-                                    'id' => $document->getId()
-                                ]) ?>"
-                            >
-                                <?= $document->getName() ?></a></li>
-                    <?php endforeach ?>
-                </ul>
-            </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <ul>
-                    <?php foreach ($meeting->getDecisions() as $decision): ?>
-                        <li><?= $meeting->getType() ?> <?= $meeting->getNumber() ?>
-                            .<?= $decision->getPoint() ?>
-                            .<?= $decision->getNumber() ?>
-                            <?= $decision->getContent() ?></li>
-                    <?php endforeach ?>
-                </ul>
+        <?php if ($meeting->getDecisions()->count() > 0): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3><?= $this->translate('Decisions') ?></h3>
+                    <ul>
+                        <?php foreach ($meeting->getDecisions() as $decision): ?>
+                            <?php
+                                $id = vsprintf('%s %s.%s.%s', [
+                                    $meeting->getType(),
+                                    $meeting->getNumber(),
+                                    $decision->getPoint(),
+                                    $decision->getNumber(),
+                                ]);
+                            ?>
+                            <li id="<?= urlencode($id) ?>" class="link-permalink-container">
+                                <?= sprintf('%s %s', $id, $decision->getContent()) ?>
+                                <a href="#<?= urlencode($id) ?>" class="link-permalink">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                </a>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </section>
