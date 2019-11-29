@@ -102,28 +102,78 @@ $element->setAttribute('required', 'required');
 </table>
 </div>
 <script>
-    var TableRows = function ($table, dataAttr) {
-        var findRow = function (id) {
-            return $('tr[' + dataAttr + '="' + id + '"]', $table);
+    var OrderableList = function ($list, itemContainerSelector) {
+        var history = [];
+
+        var findListItem = function (id) {
+            return $('[data-id="' + id + '"]', $list).closest(itemContainerSelector);
+        };
+
+        /**
+         * Adds an action to the history
+         *
+         * @param reverseFn Function name to reverse the action
+         * @param parameter Parameter to reverse the action
+         * @param predicate Predicate to determine if the history should be populated
+         */
+        var pushToHistory = function (reverseFn, parameter, predicate) {
+            if (predicate) {
+                history.push({ fn: reverseFn, parameter: parameter });
+            }
         };
 
         return {
-            moveUp: function (id) {
-                var $row = findRow(id);
+            /**
+             * Moves a list item upwards
+             *
+             * @param id List item ID
+             * @param history If the action should be recorded in the history, defaults to TRUE
+             */
+            moveUp: function (id, history = true) {
+                var $listItem = findListItem(id),
+                    inserted = $listItem.insertBefore($listItem.prev());
 
-                $row.insertBefore($row.prev());
+                // jQuery returns the inserted element. Empty array if the item
+                // is already at the top.
+                var hasMoved = (inserted.length === 1);
+
+                pushToHistory('moveDown', id, (history && hasMoved));
             },
-            moveDown: function (id) {
-                var $row = findRow(id);
+            /**
+             * Moves a list item downwards
+             *
+             * @param id List item ID
+             * @param history If the action should be recorded in the history, defaults to TRUE
+             */
+            moveDown: function (id, history = true) {
+                var $listItem = findListItem(id),
+                    inserted = $listItem.insertAfter($listItem.next());
 
-                $row.insertAfter($row.next());
+                // jQuery returns the inserted element. Empty array if the item
+                // is already at the bottom.
+                var hasMoved = (inserted.length === 1);
+
+                pushToHistory('moveUp', id, (history && hasMoved));
+            },
+            /**
+             * Reverses the last action
+             */
+            reverseLastStep: function () {
+                var reverseAction = history[history.length - 1];
+
+                if (this.hasOwnProperty(reverseAction.fn)) {
+                    history = history.splice(-1, 1); // Remove last action from history
+
+                    // Call function to reverse the last action
+                    this[reverseAction.fn].apply(null, [ reverseAction.parameter, false ]);
+                }
             }
         };
     };
 
-    var tableRows = new TableRows($('.table-documents'), 'data-id');
+    var documentsList = new OrderableList($('.table-documents'), 'tr');
 
-    $('.form-reorder-document label > input[type=radio]').on('change', function () {
+    $('.form-reorder-document label input[type=radio]').on('change', function () {
         var $radio = $(this),
             $form = $radio.closest('.form-reorder-document');
 
@@ -134,10 +184,10 @@ $element->setAttribute('required', 'required');
 
         var documentID = $('input[name="document"]', $form).val();
         if ($radio.val() === 'up') {
-            tableRows.moveUp(documentID);
+            documentsList.moveUp(documentID);
         }
         if ($radio.val() === 'down') {
-            tableRows.moveDown(documentID);
+            documentsList.moveDown(documentID);
         }
 
         $.ajax({
@@ -155,7 +205,9 @@ $element->setAttribute('required', 'required');
                     .find('input').removeAttr('disabled');
             },
             error: function (e) {
-                console.error(e.responseText);
+                console.error("Something unexpected happened. Reordering the list failed.", JSON.parse(e.responseText));
+
+                documentsList.reverseLastStep();
             }
         });
     });
