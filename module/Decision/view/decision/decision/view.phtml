@@ -6,9 +6,7 @@ $this->headTitle($meetingName);
 <section class="section">
     <div class="container">
         <h1><?= $meetingName ?></h1>
-        <h2>
-            <?= $this->dateFormat($meeting->getDate(), \IntlDateFormatter::FULL, \IntlDateFormatter::NONE) ?>
-        </h2>
+        <h2><?= $this->dateFormat($meeting->getDate(), \IntlDateFormatter::FULL, \IntlDateFormatter::NONE) ?></h2>
         <div class="row">
             <div class="col-md-6">
                 <h3><?= $this->translate('Documents') ?></h3>
@@ -39,9 +37,11 @@ $this->headTitle($meetingName);
                             'number' => $meeting->getNumber()
                         ])
                     ?>
-                    <a href="<?= $notesUrl ?>">
-                        <?= sprintf($this->translate('View the minutes of %s'), $meetingName) ?>
-                    </a>
+                    <p>
+                        <a href="<?= $notesUrl ?>">
+                            <?= sprintf($this->translate('View the minutes of %s'), $meetingName) ?>
+                        </a>
+                    </p>
                 <?php else: ?>
                     <p class="text-muted">
                         <?= $this->translate("The minutes aren't available yet.") ?>
@@ -49,7 +49,7 @@ $this->headTitle($meetingName);
                 <?php endif ?>
             </div>
         </div>
-        <?php if ($meeting->getDecisions()->count() > 0): ?>
+        <?php if (count($meeting->getDecisions()) > 0): ?>
             <div class="row">
                 <div class="col-md-12">
                     <h3><?= $this->translate('Decisions') ?></h3>
