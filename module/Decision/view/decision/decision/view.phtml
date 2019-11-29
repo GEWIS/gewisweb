@@ -24,13 +24,13 @@ $this->headTitle($meetingName);
                     </table>
                 <?php else: ?>
                     <p class="text-muted">
-                        <?= $this->translate("No documents have been added yet.") ?>
+                        <?= $this->translate("No documents have been added.") ?>
                     </p>
                 <?php endif; ?>
             </div>
-            <div class="col-md-6">
-                <h3><?= $this->translate('Minutes') ?></h3>
-                <?php if (!is_null($meeting->getNotes())): ?>
+            <?php if (!is_null($meeting->getNotes())): ?>
+                <div class="col-md-6">
+                    <h3><?= $this->translate('Minutes') ?></h3>
                     <?php
                         $notesUrl = $this->url('decision/meeting/notes', [
                             'type'   => $meeting->getType(),
@@ -42,12 +42,8 @@ $this->headTitle($meetingName);
                             <?= sprintf($this->translate('View the minutes of %s'), $meetingName) ?>
                         </a>
                     </p>
-                <?php else: ?>
-                    <p class="text-muted">
-                        <?= $this->translate("The minutes aren't available yet.") ?>
-                    </p>
-                <?php endif ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
         <?php if (count($meeting->getDecisions()) > 0): ?>
             <div class="row">
