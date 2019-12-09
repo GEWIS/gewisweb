@@ -51,7 +51,7 @@ class ActivityCalendarOption
     /**
      * To what activity proposal does the option belong
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
     protected $proposal;
@@ -59,7 +59,7 @@ class ActivityCalendarOption
     /**
      * Who modified this activity option, if null then the option is not modified
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
      */
     protected $modifiedBy;

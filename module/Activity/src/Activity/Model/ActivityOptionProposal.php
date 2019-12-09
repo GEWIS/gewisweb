@@ -39,7 +39,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Who created this activity option.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
      */
     protected $creator;

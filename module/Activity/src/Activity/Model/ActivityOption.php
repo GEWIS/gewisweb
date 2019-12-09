@@ -24,7 +24,7 @@ class ActivityOption
     /**
      * Field that the option belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options", cascade={"persist"}, onDelete="CASCADE")
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;

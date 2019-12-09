@@ -23,7 +23,7 @@ class ActivityFieldValue
     /**
      * Field which the value belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField")
+     * @ORM\ManyToOne(targetEntity="ActivityField", onDelete="CASCADE")
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;
@@ -31,7 +31,7 @@ class ActivityFieldValue
     /**
      * Signup which the value belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivitySignup", inversedBy="fieldValues")
+     * @ORM\ManyToOne(targetEntity="ActivitySignup", inversedBy="fieldValues", onDelete="CASCADE")
      * @ORM\JoinColumn(name="signup_id", referencedColumnName="id")
      */
     protected $signup;
@@ -46,7 +46,7 @@ class ActivityFieldValue
     /**
      * The option chosen.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityOption")
+     * @ORM\ManyToOne(targetEntity="ActivityOption", onDelete="CASCADE")
      * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
     protected $option;

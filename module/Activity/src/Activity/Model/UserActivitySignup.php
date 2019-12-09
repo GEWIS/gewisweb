@@ -15,7 +15,7 @@ class UserActivitySignup extends ActivitySignup
     /**
      * Who is subscribed.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
      * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
     protected $user;

@@ -73,11 +73,17 @@ class ActivityTranslation
 
     /**
      * Who did approve this activity.
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
+     * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
     protected $approver;
 
     /**
      * Who created this activity.
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
+     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
      */
     protected $creator;
 
@@ -93,11 +99,16 @@ class ActivityTranslation
 
     /**
      * all the people who signed up for this activity
+     *
+     * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity", cascade={"remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $signUps;
 
     /**
      * All additional fields belonging to the activity.
+     *
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity", cascade={"remove"})
      */
     protected $fields;
 

@@ -25,7 +25,7 @@ class ActivityUpdateProposal
     /**
      * The previous activity version, if any.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="updateProposal")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="updateProposal", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $old;
@@ -33,7 +33,7 @@ class ActivityUpdateProposal
     /**
      * The new activity
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $new;

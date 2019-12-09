@@ -23,7 +23,7 @@ class ActivityField
     /**
      * Activity that the field belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields", cascade={"persist"}, onDelete="CASCADE")
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
@@ -66,7 +66,7 @@ class ActivityField
     /**
      * The allowed options for the field of the ``option'' type.
      *
-     * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
+     * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field", cascade={"remove"})
      */
     protected $options;
 

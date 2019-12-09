@@ -123,7 +123,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Who did approve this activity.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
     protected $approver;
@@ -131,7 +131,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Who created this activity.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
+     * @ORM\ManyToOne(targetEntity="User\Model\User", onDelete="CASCADE")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
      */
     protected $creator;
@@ -146,7 +146,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The update proposal associated with this activity
      *
-     * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old")
+     * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old", cascade={"delete"})
      */
     protected $updateProposal;
 
@@ -167,7 +167,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * all the people who signed up for this activity
      *
-     * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
+     * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity", cascade={"remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $signUps;
@@ -175,7 +175,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All additional fields belonging to the activity.
      *
-     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
+     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity", cascade={"remove"})
      */
     protected $fields;
 

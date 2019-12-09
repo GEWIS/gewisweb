@@ -27,7 +27,7 @@ abstract class ActivitySignup
     /**
      * The activity the signup is for.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="signUps")
+     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="signUps", onDelete="CASCADE")
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
     protected $activity;
