@@ -195,9 +195,16 @@ class Exam extends AbstractAclService
 
         $filename = $data['file']['name'];
         $path = $uploadDirectory . '/' . $filename;
-
+        $tmpPath = $data['file']['tmp_name'];
+        
+        if (!file_exists($tmpPath)) {
+            echo "Something went wrong uploading the temporary file before gewisweb could process it.";
+            return false;
+        }
+        
         if (!file_exists($path)) {
-            move_uploaded_file($data['file']['tmp_name'], $path);
+            $result = move_uploaded_file($data['file']['tmp_name'], $path);
+            return $result;
         }
         return true;
     }
