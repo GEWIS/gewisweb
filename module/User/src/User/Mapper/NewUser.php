@@ -28,6 +28,27 @@ class NewUser
     }
 
     /**
+     * Get the new user by lidnr.
+     *
+     * @param int $lidnr
+     *
+     * @return NewUserModel
+     */
+    public function getByLidnr($lidnr)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u, m')
+            ->from('User\Model\NewUser', 'u')
+            ->join('u.member', 'm')
+            ->where('u.lidnr = ?1');
+        $qb->setParameter(1, $lidnr);
+        $qb->setMaxResults(1);
+
+        $res = $qb->getQuery()->getResult();
+        return empty($res) ? null : $res[0];
+    }
+
+    /**
      * Get the new user by code.
      *
      * @param string $code

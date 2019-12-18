@@ -9,12 +9,14 @@
 
 namespace Application;
 
+use Carbon\Carbon;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
 use Zend\Validator\AbstractValidator;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
@@ -24,8 +26,12 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
+        $locale = $this->determineLocale($e);
+
         $translator = $e->getApplication()->getServiceManager()->get('translator');
-        $translator->setlocale($this->determineLocale($e));
+        $translator->setlocale($locale);
+
+        Carbon::setLocale($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
@@ -39,8 +45,18 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $logger = $sm->get('logger');
 
+        if ($e->getError() === 'error-router-no-match') {
+            // not an interesting error
+            return;
+        }
         if ($e->getError() === 'error-exception') {
             $ex = $e->getParam('exception');
+
+            if ($ex instanceof NotAllowedException) {
+                // we do not need to log access denied
+                return;
+            }
+
             $logger->error($ex);
             return;
         }

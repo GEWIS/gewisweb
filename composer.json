@@ -1,5 +1,5 @@
 {
-    "name": "GEWIS/gewisweb",
+    "name": "gewis/gewisweb",
     "description": "GEWIS Website",
     "license": "GPL-3.0",
     "keywords": [
@@ -27,6 +27,8 @@
         "dino/dompdf-module": "0.2.0",
         "firebase/php-jwt": "^5.0",
         "paragonie/random_compat": "^2.0",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "league/glide-zend": "^1.0",
+        "nesbot/carbon": "^1.39"
     }
 }

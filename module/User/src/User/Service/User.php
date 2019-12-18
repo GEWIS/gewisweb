@@ -3,14 +3,14 @@
 namespace User\Service;
 
 use Application\Service\AbstractAclService;
-
-use User\Model\User as UserModel;
-use User\Model\NewUser as NewUserModel;
-use User\Model\LoginAttempt as LoginAttemptModel;
-use User\Mapper\User as UserMapper;
-use User\Model\Session as SessionModel;
-use User\Permissions\NotAllowedException;
+use DateInterval;
+use DateTime;
 use User\Form\Register as RegisterForm;
+use User\Mapper\User as UserMapper;
+use User\Model\LoginAttempt as LoginAttemptModel;
+use User\Model\NewUser as NewUserModel;
+use User\Model\User as UserModel;
+use User\Permissions\NotAllowedException;
 
 /**
  * User service.
@@ -98,9 +98,22 @@ class User extends AbstractAclService
             return null;
         }
 
+        $newUser = $this->getNewUserMapper()->getByLidnr($data['lidnr']);
+        if (null !== $newUser) {
+            $time = $newUser->getTime();
+            $requiredInterval = (new DateTime())->sub(new DateInterval('P1D'));
+            if ($time > $requiredInterval) {
+                $form->setError(RegisterForm::ERROR_ALREADY_REGISTERED);
+
+                return null;
+            }
+            $this->getNewUserMapper()->deleteByMember($member);
+        }
+
         // save the data, and send email
         $newUser = new NewUserModel($member);
         $newUser->setCode($this->generateCode());
+        $newUser->setTime(new DateTime());
 
         $this->getNewUserMapper()->persist($newUser);
 
@@ -302,6 +315,7 @@ class User extends AbstractAclService
         }
         return $authService->getIdentity();
     }
+
     /**
      * Checks whether the user is logged in
      *

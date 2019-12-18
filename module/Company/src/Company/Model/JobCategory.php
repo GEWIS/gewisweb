@@ -12,12 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class JobCategory
 {
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-    }
-    /**
      * The category id.
      *
      * @ORM\Id
@@ -27,7 +21,6 @@ class JobCategory
     protected $id;
 
     /**
-     *
      * The name of the category
      *
      * @ORM\Column(type="string")
@@ -35,7 +28,6 @@ class JobCategory
     protected $name;
 
     /**
-     *
      * The name of the category
      *
      * @ORM\Column(type="string")
@@ -43,7 +35,6 @@ class JobCategory
     protected $pluralName;
 
     /**
-     *
      * The slug of the category
      *
      * @ORM\Column(type="string")
@@ -51,7 +42,6 @@ class JobCategory
     protected $slug;
 
     /**
-     *
      * The language of the category
      *
      * @ORM\Column(type="string")
@@ -59,12 +49,18 @@ class JobCategory
     protected $language;
 
     /**
-     *
      * If the category is hidden
      *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
+
+    /**
+     * The category id.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $languageNeutralId;
 
     /**
      * Get's the id
@@ -83,11 +79,11 @@ class JobCategory
     }
 
     /**
-     * The category id.
-     *
-     * @ORM\Column(type="integer")
+     * Constructor.
      */
-    protected $languageNeutralId;
+    public function __construct()
+    {
+    }
 
     /**
      * Get's the id
