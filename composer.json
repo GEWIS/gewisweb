@@ -6,7 +6,7 @@
         "website",
         "gewis"
     ],
-    "homepage": "http://gewis.nl/",
+    "homepage": "https://gewis.nl/",
     "repositories": [
         {
             "type": "git",
@@ -29,6 +29,22 @@
         "paragonie/random_compat": "^2.0",
         "monolog/monolog": "^1.23",
         "league/glide-zend": "^1.0",
-        "nesbot/carbon": "^1.39"
+        "nesbot/carbon": "^1.39",
+        "fortawesome/font-awesome": "dev-master",
+        "slowprog/composer-copy-file": "~0.3"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "SlowProg\\CopyFile\\ScriptHandler::copy"
+        ],
+        "post-update-cmd": [
+            "SlowProg\\CopyFile\\ScriptHandler::copy"
+        ]
+    },
+    "extra": {
+        "copy-file": {
+            "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",
+            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/"
+        }
     }
 }

@@ -86,7 +86,12 @@ $form->prepare();
     $('[name="endTime"]').datetimepicker();
     $('[name="subscriptionDeadline"]').datetimepicker();
     $('.markdown-editor').each(function() {
-      $(this).markdown();
+      $(this).markdown(
+        {
+          resize: "both",
+          iconlibrary: "fa"
+        }
+      );
     });
     Activity.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
