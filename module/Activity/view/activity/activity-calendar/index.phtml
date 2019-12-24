@@ -32,13 +32,13 @@ $this->headLink()
             <div class="pull-left">
                 <div class="btn-group">
                     <button class="btn btn-primary" data-calendar-nav="prev">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        <i class="fas fa-chevron-left"></i>
                     </button>
                     <button class="btn btn-default" data-calendar-nav="today">
                         <?= $this->translate("Today") ?>
                     </button>
                     <button class="btn btn-primary" data-calendar-nav="next">
-                        <i class="glyphicon glyphicon-chevron-right"></i>
+                        <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 <div class="btn-group">
@@ -56,8 +56,8 @@ $this->headLink()
                 <div class="pull-right">
                     <div class="dropdown pull-right">
                         <a href="<?= $this->url('activity_calendar/create') ?>" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> <span
-                                class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
+                            <i class="fas fa-plus"></i>
+                            <span class="hidden-xs"><?= $this->translate('Plan activity') ?></span>
                         </a>
                     </div>
                 </div>
@@ -99,12 +99,12 @@ $this->headLink()
                             <?php if ($option->getModifiedBy() === null): ?>
                                 <a class="btn btn-xs btn-delete btn-danger"
                                    href="javascript:showDeleteModal(<?= $option->getId() ?>)">
-                                    <i class="glyphicon glyphicon-trash"></i>&nbsp;<?= $this->translate('Delete') ?>
+                                    <i class="far fa-trash-alt"></i>&nbsp;<?= $this->translate('Delete') ?>
                                 </a>
                                 <?php if ($canApprove): ?>
                                     <a class="btn btn-xs btn-succes"
                                        href="javascript:showApproveModal(<?= $option->getId() ?>)">
-                                        <i class="glyphicon glyphicon-check"></i>&nbsp;<?= $this->translate('Approve') ?>
+                                        <i class="far fa-check-square"></i>&nbsp;<?= $this->translate('Approve') ?>
                                     </a>
                                 <?php endif ?>
                             <?php else: ?>
@@ -132,8 +132,8 @@ $this->headLink()
                             <input type="hidden" name="option_id" id="deleteOptionId"/>
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                            <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"
-                                                                            aria-hidden="true"></i>&nbsp;<?= $this->translate('Delete') ?>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="far fa-trash-alt"></i>&nbsp;<?= $this->translate('Delete') ?>
                             </button>
                         </form>
                     </div>
@@ -156,8 +156,8 @@ $this->headLink()
                             <input type="hidden" name="option_id" id="approveOptionId"/>
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
-                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check"
-                                                                             aria-hidden="true"></i>&nbsp;<?= $this->translate('Approve') ?>
+                            <button type="submit" class="btn btn-success">
+                                <i class="far fa-check-square"></i>&nbsp;<?= $this->translate('Approve') ?>
                             </button>
                         </form>
                     </div>

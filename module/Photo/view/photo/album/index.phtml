@@ -55,7 +55,7 @@ $this->headTitle($this->translate('Photos'));
             <?php endforeach; ?>
             <li class="active">
                 <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
-                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="fas fa-user"></span>
                     &nbsp;
                 <?php endif; ?>
                 <?= $this->escapeHtml($album->getName()); ?>

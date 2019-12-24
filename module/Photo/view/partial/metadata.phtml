@@ -3,70 +3,70 @@
     <tbody>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <span class="fas fa-user" aria-hidden="true"></span>
             <?= $this->translate('Artist') ?>
         </td>
         <td><?= is_null($this->photo->getArtist()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getArtist()) ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+            <span class="fas fa-camera" aria-hidden="true"></span>
             <?= $this->translate('Camera') ?>
         </td>
         <td><?= is_null($this->photo->getCamera()) ? $this->translate("Unknown") : $this->escapeHtmlAttr($this->photo->getCamera()) ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <span class="far fa-calendar-alt" aria-hidden="true"></span>
             <?= $this->translate('Date/time') ?>
         </td>
         <td><?= $this->photo->getDateTime()->format('Y-m-d H:i:s'); ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+            <span class="fas fa-bolt" aria-hidden="true"></span>
             <?= $this->translate('Flash') ?>
         </td>
         <td><?= $this->photo->getFlash() ? $this->translate('Yes') : $this->translate('No') ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            <span class="far fa-eye" aria-hidden="true"></span>
             <?= $this->translate('Focal length') ?>
         </td>
         <td><?= is_null($this->photo->getFocalLength()) ? $this->translate("Unknown") : $this->photo->getFocalLength() ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
+            <span class="fas fa-adjust" aria-hidden="true"></span>
             <?= $this->translate('Exposure time') ?>
         </td>
         <td><?= is_null($this->photo->getExposureTime()) ? $this->translate("Unknown") : $this->photo->getExposureTime() ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="fas fa-stopwatch" aria-hidden="true"></span>
             <?= $this->translate('Shutter speed') ?>
         </td>
         <td><?= is_null($this->photo->getShutterSpeed()) ? $this->translate("Unknown") : $this->photo->getShutterSpeed() ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            <span class="fas fa-cog" aria-hidden="true"></span>
             <?= $this->translate('Aperture') ?>
         </td>
         <td><?= is_null($this->photo->getAperture()) ? $this->translate("Unknown") : $this->photo->getAperture() ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span>
+            <span class="fas fa-glasses" aria-hidden="true"></span>
             <?= $this->translate('ISO') ?>
         </td>
         <td><?= is_null($this->photo->getIso()) ? $this->translate("Unknown") : $this->photo->getIso() ?></td>
     </tr>
     <tr>
         <td>
-            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+            <span class="fas fa-map-marker-alt" aria-hidden="true"></span>
             <?= $this->translate('Location') ?>
         </td>
         <td>

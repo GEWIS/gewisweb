@@ -200,7 +200,7 @@ Styleguide: navbar
 .navbar-nav.no-collapse > li > a {
     padding: 30px 18px;
 
-    span.glyphicon {
+    span.fas, span.far, span.fab {
         vertical-align: middle;
         font-size: 20px;
         margin-top: -5px;

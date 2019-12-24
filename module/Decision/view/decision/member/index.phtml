@@ -22,24 +22,26 @@ $meetings = $this->meetings;
             <div class="col-md-12">
                 <h2><?= $this->translate('Personal') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('member/self') ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-user"></div>
+                    <a href="<?= $this->url('member/self') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-lock"></div>
+                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
-                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-picture"></div>
+                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-image"></div>
                         <div class="panel-heading"><?= $this->translate('My photo\'s') ?></div>
                     </a>
-                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image">
-                        <div class="glyphicon glyphicon-glass"></div>
+                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image align-middle">
+                        <!--<div class="big-icon fas fa-beer"></div>-->
+                        <div class="big-icon fas fa-glass-martini-alt"></div>
                         <div class="panel-heading"><?= $this->translate('SuSOS') ?></div>
                     </a>
-                    <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon glyphicon-bullhorn"></div>
+                    <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image align-middle">
+                        <!--<div class="fas fa-file-signature"></div>-->
+                        <div class="big-icon fas fa-bullhorn"></div>
                         <div class="panel-heading"><?= $this->translate('Authorizations') ?></div>
                     </a>
                 </div>
@@ -49,24 +51,26 @@ $meetings = $this->meetings;
             <div class="col-md-12">
                 <h2><?= $this->translate('Association') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('organ') ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-heart"></div>
+                    <a href="<?= $this->url('organ') ?>" class="panel panel-image align-middle">
+                        <!--<div class="fas fa-sitemap"></div>-->
+                        <div class="big-icon fas fa-heart"></div>
                         <div class="panel-heading"><?= $this->translate('Organs') ?></div>
                     </a>
-                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-download-alt"></div>
+                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>" class="panel panel-image align-middle">
+                        <!--<div class="fas fa-file-archive"></div>-->
+                        <div class="big-icon fas fa-download"></div>
                         <div class="panel-heading"><?= $this->translate('Public archive') ?></div>
                     </a>
-                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-search"></div>
+                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-search"></div>
                         <div class="panel-heading"><?= $this->translate('Find a member') ?></div>
                     </a>
-                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-cd"></div>
+                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-compact-disc"></div>
                         <div class="panel-heading"><?= $this->translate('Microsoft Imagine') ?></div>
                     </a>
-                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>" class="panel panel-image">
-                        <div class="glyphicon glyphicon-link"></div>
+                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-link"></div>
                         <div class="panel-heading"><?= $this->translate('Links') ?></div>
                     </a>
                 </div>
@@ -140,24 +144,24 @@ $meetings = $this->meetings;
                     <h2><?= $this->translate('Manage') ?></h2>
                     <p><?= $this->translate('A list of helpful pages to manage the organ(s) you are part of.') ?></p>
                     <div class="grid grid-col-3">
-                        <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-align-left"></div>
+                        <a href="<?= $this->url('admin_organ') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-align-left"></div>
                             <div class="panel-heading"><?= $this->translate('Info') ?></div>
                         </a>
-                        <a href="<?= $this->url('activity_admin') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-tree-deciduous"></div>
+                        <a href="<?= $this->url('activity_admin') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-tree"></div>
                             <div class="panel-heading"><?= $this->translate('Activities') ?></div>
                         </a>
-                        <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-calendar"></div>
+                        <a href="<?= $this->url('activity_calendar') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-calendar-alt"></div>
                             <div class="panel-heading"><?= $this->translate('Option calendar') ?></div>
                         </a>
                         <a href="/webmail" class="panel panel-image">
-                            <div class="glyphicon glyphicon-inbox"></div>
+                            <div class="big-icon fas fa-inbox"></div>
                             <div class="panel-heading"><?= $this->translate('Webmail') ?></div>
                         </a>
-                        <a href="<?= $this->url('admin') ?>" class="panel panel-image">
-                            <div class="glyphicon glyphicon-cog"></div>
+                        <a href="<?= $this->url('admin') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-cog"></div>
                             <div class="panel-heading"><?= $this->translate('Administrator') ?></div>
                         </a>
                     </div>

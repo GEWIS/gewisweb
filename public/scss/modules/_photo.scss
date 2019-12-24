@@ -104,3 +104,48 @@ Photo
 .tagSearch:focus {
   outline:none;
 }
+
+/* Previous and next buttons */
+@media screen and (min-width: 768px) {
+  .carousel-control .fa-chevron-left,
+  .carousel-control .icon-prev {
+    margin-left: -10px;
+  }
+}
+
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .fa-chevron-left,
+.carousel-control .fa-chevron-right {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: inline-block;
+    margin-top: -10px;
+}
+
+.button_top {
+  position: relative;
+  top: 1px;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+
+  width: 44px;
+  height: 44px;
+
+  background: none;
+  cursor: pointer;
+  overflow: visible;
+  -webkit-appearance: none;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  float: right;
+  opacity: 0.75;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+}

@@ -18,14 +18,14 @@
             </div>
             <div class="col-md-2">
                 <a class="btn btn-success" href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>>
-                    <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Company');?>
+                    <i class="fas fa-plus"></i><?=$this->translate('Add Company');?>
                 </a>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-2">
-                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <span class="glyphicon glyphicon-plus"></span><?=$this->translate('Add Category');?>
+                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <i class="fas fa-plus"></i><?=$this->translate('Add Category');?>
  </a>
                 <table class="table table-striped ">
                     <thead>
@@ -38,7 +38,7 @@
                     <tbody>
                         <?php
                             foreach ($categoryList as $category):
-                                $editUrl = $this->url('admin_company/editCategory', 
+                                $editUrl = $this->url('admin_company/editCategory',
                                 ['categoryID' => $category->getLanguageNeutralId()]);
                            ?>
                            <tr>
@@ -59,33 +59,33 @@
                         <tr>
                             <th>
                                 <?= $this->translate('Name') ?>
-                                <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Jobs') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Active jobs') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Banner active') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Featured in language') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Expired packages') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="fas fa-arrow-up"></span></a>
+                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="fas fa-arrow-down"></span></a>
                             </th>
                             <th>
                                 <?= $this->translate('Actions') ?>
@@ -95,7 +95,7 @@
                     <tbody class="company-list">
                         <?php
                             foreach ($companyList as $company):
-                                $editUrl = $this->url('admin_company/editCompany', 
+                                $editUrl = $this->url('admin_company/editCompany',
                                 ['slugCompanyName' => $company->getSlugName()]);
                            ?>
                            <tr class="company-list-item
@@ -109,7 +109,7 @@
                                <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                                <td>
                                    <button type="button" class="btn btn-danger btn-xs"
-                                                         onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')" 
+                                                         onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')"
                                                          data-toggle="modal"
                                                          data-target="#deleteModal">
                                        <?= $this->translate('Delete') ?>
@@ -235,4 +235,3 @@
     </div>
 </div>
 <?php endif ?>
-

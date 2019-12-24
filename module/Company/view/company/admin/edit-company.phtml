@@ -14,7 +14,7 @@ $this->scriptUrl()->requireUrls(
         "type" => "job",
         "slugCompanyName" => $company->getSlugName()
     ]
-); ?>"><span class="glyphicon glyphicon-plus"></span>
+); ?>"><i class="fas fa-plus"></i>
     <?= $this->translate('Add Job package'); ?>
 </a>
 <a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
@@ -23,7 +23,7 @@ $this->scriptUrl()->requireUrls(
         "slugCompanyName" => $company->getSlugName()
     ]
 ); ?>">
-    <span class="glyphicon glyphicon-asterisk"></span>
+    <span class="fas fa-asterisk"></span>
     <?= $this->translate('Add spotlight package'); ?>
 </a>
 <a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
@@ -32,7 +32,7 @@ $this->scriptUrl()->requireUrls(
         "slugCompanyName" => $company->getSlugName()
     ]
 ); ?>">
-    <span class="glyphicon glyphicon-picture"></span>
+    <span class="fas fa-image"></span>
     <?= $this->translate('Add Banner package'); ?>
 </a>
 <div class="row">
@@ -155,4 +155,3 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
         </div>
     </div>
 </div>
-

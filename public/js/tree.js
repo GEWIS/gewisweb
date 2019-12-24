@@ -5,12 +5,12 @@ $.fn.extend({
         tree.addClass("tree");
         tree.find('li').has("ul").each(function () {
             var branch = $(this); //li with children ul
-            branch.prepend("<i class='indicator glyphicon glyphicon-plus-sign'></i>");
+            branch.prepend("<i class='fas fa-plus-circle'></i>");
             branch.addClass('branch');
             branch.on('click', function (e) {
                 if (this == e.target) {
                     var icon = $(this).children('i:first');
-                    icon.toggleClass("glyphicon-minus-sign glyphicon-plus-sign");
+                      icon.toggleClass("fa-plus-circle fa-minus-circle");
                     $(this).children().children().toggle();
                 }
             })
