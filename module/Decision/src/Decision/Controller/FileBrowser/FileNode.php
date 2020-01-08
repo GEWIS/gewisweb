@@ -79,11 +79,10 @@ class FileNode
         $this->fullPath = $fullPath;
         $this->name = $name;
         if ($kind==='dir') {
-          $this->extension = 'folder';
-        }
-        else {
-          $filenameSplitted = explode(".", $name);
-          $this->extension = strtolower(end($filenameSplitted));
+            $this->extension = 'folder';
+        } else {
+            $filenameSplitted = explode(".", $name);
+            $this->extension = strtolower(end($filenameSplitted));
         }
     }
 
@@ -133,7 +132,7 @@ class FileNode
 
         foreach ($this->iconExtensions as $icon => $extensions) {
             if (in_array($this->getExtension(), $extensions)) {
-              return $icon;
+                return $icon;
             }
         }
 
