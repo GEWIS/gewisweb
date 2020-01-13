@@ -78,7 +78,8 @@
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
             <?php if ($admin): ?>
             <td>
-                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
+		 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
+                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
             <?php endif; ?>
         </tr>
