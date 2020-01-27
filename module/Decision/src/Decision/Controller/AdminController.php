@@ -124,7 +124,7 @@ class AdminController extends AbstractActionController
 
         $console = $this->getRequest();
 
-        if (!$console instanceof ConsoleRequest){
+        if (!$console instanceof ConsoleRequest) {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
