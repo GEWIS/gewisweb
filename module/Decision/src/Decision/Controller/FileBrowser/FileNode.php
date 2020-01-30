@@ -71,14 +71,14 @@ class FileNode
 
     public function __construct($kind, $fullPath, $name)
     {
-        if (!($kind==='dir' ||  $kind==='file')) {
+        if ($kind !== 'dir' &&  $kind !== 'file') {
             //invalid kind
             return false;
         }
         $this->kind = $kind;
         $this->fullPath = $fullPath;
         $this->name = $name;
-        if ($kind==='dir') {
+        if ($kind === 'dir') {
             $this->extension = 'folder';
         } else {
             $filenameSplitted = explode(".", $name);
@@ -128,8 +128,6 @@ class FileNode
      */
     public function getFileIcon()
     {
-
-
         foreach ($this->iconExtensions as $icon => $extensions) {
             if (in_array($this->getExtension(), $extensions)) {
                 return $icon;
