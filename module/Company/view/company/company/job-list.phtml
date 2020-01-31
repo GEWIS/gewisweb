@@ -53,8 +53,8 @@ $this->headTitle($this->category->getPluralName());
                     <div class="form-group">
                         <label for="job-sort"><?= $this->translate('Sort on') ?></label>
                         <select name="sort" id="job-sort" class="form-control">
-                            <option value="random">Random</option>
-                            <option value="posted">Most recent</option>
+                            <option value="random"><?= $this->translate('Random') ?></option>
+                            <option value="posted"><?= $this->translate('Most recent') ?></option>
                         </select>
                     </div>
                     <!--
