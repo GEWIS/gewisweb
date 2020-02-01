@@ -32,6 +32,7 @@ class Module
         $translator->setlocale($locale);
 
         Carbon::setLocale($locale);
+        \Locale::setDefault($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
