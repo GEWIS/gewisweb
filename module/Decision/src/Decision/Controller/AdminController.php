@@ -133,9 +133,9 @@ class AdminController extends AbstractActionController
                 $aa = preg_split("/(\.|\s)/", $a->getName());
                 $bb = preg_split("/(\.|\s)/", $b->getName());
                 for ($i = 0; $i < min(count($aa), count($bb)); $i++) {
-                    if (!is_numeric($aa[$i])) {
+                    if (!is_numeric($aa[$i]) && is_numeric($bb[$i])) {
                         return -1;
-                    } elseif (!is_numeric($bb[$i])) {
+                    } elseif (is_numeric($aa[$i]) && !is_numeric($bb[$i])) {
                         return 1;
                     } elseif ($aa[$i] != $bb[$i]) {
                         return $aa[$i] < $bb[$i] ? -1 : 1;
