@@ -63,20 +63,152 @@ $element->setAttribute('required', 'required');
 <?= $this->form()->closeTag(); ?>
 <h3><?= $this->translate('Documents for this meeting') ?></h3>
 <div class="col-sm-12">
-<table class="table table-striped table-hover">
-<?php foreach ($meeting->getDocuments() as $document): ?>
-    <tr>
-        <td><a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
-            <?= $document->getName() ?>
-        </a></td>
+<table class="table table-striped table-hover table-documents">
+    <?php foreach ($meeting->getDocuments() as $document): ?>
+    <tr data-id="<?= $document->getId() ?>">
+        <td class="btn-group-move">
+            <?php
+            /** @var \Zend\Form\Form $form */
+            $form = $this->reorderDocumentForm;
+
+            $form->setAttributes([
+                'class'  => 'form-reorder-document',
+                'action' => $this->url('admin_decision/position_document')
+            ]);
+            $form->populateValues([
+                'document' => $document->getId()
+            ]);
+            $form->prepare();
+            ?>
+            <?= $this->form()->openTag($form) ?>
+                <?php foreach ($form as $element): ?>
+                    <?= $this->formElement($element); ?>
+                <?php endforeach; ?>
+            <?= $this->form()->closeTag($form) ?>
+        </td>
+        <td>
+            <a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
+                <?= $document->getName() ?>
+            </a>
+        </td>
         <td>
             <form method="POST" action="<?= $this->url('admin_decision/delete_document') ?>">
                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
-                    <input type="submit" name="submit" value="<?= $this->translate('Delete') ?>"
-                           class="btn btn-danger btn-xs pull-right"/>
-                </form>
-</td>
+                <input type="submit" name="submit" value="<?= $this->translate('Delete') ?>" class="btn btn-danger btn-xs pull-right"/>
+            </form>
+        </td>
     </tr>
-<?php endforeach ?>
-    </table>
+    <?php endforeach ?>
+</table>
 </div>
+<script>
+    var OrderableList = function ($list, itemContainerSelector) {
+        var history = [];
+
+        var findListItem = function (id) {
+            return $('[data-id="' + id + '"]', $list).closest(itemContainerSelector);
+        };
+
+        /**
+         * Adds an action to the history
+         *
+         * @param reverseFn Function name to reverse the action
+         * @param parameter Parameter to reverse the action
+         * @param predicate Predicate to determine if the history should be populated
+         */
+        var pushToHistory = function (reverseFn, parameter, predicate) {
+            if (predicate) {
+                history.push({ fn: reverseFn, parameter: parameter });
+            }
+        };
+
+        return {
+            /**
+             * Moves a list item upwards
+             *
+             * @param id List item ID
+             * @param history If the action should be recorded in the history, defaults to TRUE
+             */
+            moveUp: function (id, history = true) {
+                var $listItem = findListItem(id),
+                    inserted = $listItem.insertBefore($listItem.prev());
+
+                // jQuery returns the inserted element. Empty array if the item
+                // is already at the top.
+                var hasMoved = (inserted.length === 1);
+
+                pushToHistory('moveDown', id, (history && hasMoved));
+            },
+            /**
+             * Moves a list item downwards
+             *
+             * @param id List item ID
+             * @param history If the action should be recorded in the history, defaults to TRUE
+             */
+            moveDown: function (id, history = true) {
+                var $listItem = findListItem(id),
+                    inserted = $listItem.insertAfter($listItem.next());
+
+                // jQuery returns the inserted element. Empty array if the item
+                // is already at the bottom.
+                var hasMoved = (inserted.length === 1);
+
+                pushToHistory('moveUp', id, (history && hasMoved));
+            },
+            /**
+             * Reverses the last action
+             */
+            reverseLastStep: function () {
+                var reverseAction = history[history.length - 1];
+
+                if (this.hasOwnProperty(reverseAction.fn)) {
+                    history.pop(); // Remove last action from history
+
+                    // Call function to reverse the last action
+                    this[reverseAction.fn].apply(null, [ reverseAction.parameter, false ]);
+                }
+            }
+        };
+    };
+
+    var documentsList = new OrderableList($('.table-documents'), 'tr');
+
+    $('.form-reorder-document label input[type=radio]').on('change', function () {
+        var $radio = $(this),
+            $form = $radio.closest('.form-reorder-document');
+
+        // Disable all labels while processing
+        $('.form-reorder-document label')
+            .addClass('disabled')
+            .find('input').not($radio).attr('disabled', 'disabled'); // Exclude $(this) so it's included in POST
+
+        var documentID = $('input[name="document"]', $form).val();
+        if ($radio.val() === 'up') {
+            documentsList.moveUp(documentID);
+        }
+        if ($radio.val() === 'down') {
+            documentsList.moveDown(documentID);
+        }
+
+        $.ajax({
+            method: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function () {
+                // Reset input to allow movement in the same direction
+                // Note that onChange event is not fire when unchecking
+                $radio.attr('checked', false);
+
+                // Done processing so allow reordering again
+                $('.form-reorder-document label')
+                    .removeClass('disabled')
+                    .find('input').removeAttr('disabled');
+            },
+            error: function (e) {
+                console.error("Something unexpected happened. Reordering the list failed.", JSON.parse(e.responseText));
+
+                documentsList.reverseLastStep();
+            }
+        });
+    });
+</script>

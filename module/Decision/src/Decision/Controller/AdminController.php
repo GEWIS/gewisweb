@@ -2,8 +2,12 @@
 
 namespace Decision\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Zend\Http\Response;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Console\Request as ConsoleRequest;
 
 class AdminController extends AbstractActionController
 {
@@ -51,12 +55,14 @@ class AdminController extends AbstractActionController
             }
         }
         $meeting = $this->getDecisionService()->getMeeting($type, $number);
+
         return new ViewModel([
             'form' => $service->getDocumentForm(),
             'meetings' => $meetings,
             'meeting' => $meeting,
             'number' => $number,
-            'success' => $success
+            'success' => $success,
+            'reorderDocumentForm' => $service->getReorderDocumentForm(),
         ]);
     }
 
@@ -64,6 +70,31 @@ class AdminController extends AbstractActionController
     {
         $this->getDecisionService()->deleteDocument($this->getRequest()->getPost());
         return $this->redirect()->toRoute('admin_decision/document');
+    }
+
+    public function changePositionDocumentAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->getResponse()->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
+        }
+
+        $form = $this->getDecisionService()->getReorderDocumentForm()
+            ->setData($this->getRequest()->getPost());
+
+        if (!$form->isValid()) {
+            return $this->getResponse()
+                ->setStatusCode(Response::STATUS_CODE_400) // Bad Request
+                ->setContent(Json::encode($form->getMessages()));
+        }
+
+        $data = $form->getData();
+        $id = $data['document'];
+        $moveDown = ($data['direction'] === 'down') ? true : false;
+
+        // Update ordering document
+        $this->getDecisionService()->changePositionDocument($id, $moveDown);
+
+        return $this->getResponse()->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
     }
 
     public function authorizationsAction()
@@ -84,6 +115,62 @@ class AdminController extends AbstractActionController
             'authorizations' => $authorizations,
             'number' => $number
         ]);
+    }
+
+    public function sortDocumentsLegacyAction()
+    {
+        // Set timezone to prevent PHP Warning
+        date_default_timezone_set('CET');
+
+        $console = $this->getRequest();
+
+        if (!$console instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        $legacySort = function (array $documents) {
+            usort($documents, function ($a, $b) {
+                $aa = preg_split("/(\.|\s)/", $a->getName());
+                $bb = preg_split("/(\.|\s)/", $b->getName());
+                for ($i = 0; $i < min(count($aa), count($bb)); $i++) {
+                    if (!is_numeric($aa[$i])) {
+                        return -1;
+                    } elseif (!is_numeric($bb[$i])) {
+                        return 1;
+                    } elseif ($aa[$i] != $bb[$i]) {
+                        return $aa[$i] < $bb[$i] ? -1 : 1;
+                    }
+                }
+                return 0;
+            });
+
+            return $documents;
+        };
+
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getServiceLocator()->get('decision_doctrine_em');
+
+        // Perform INNER JOIN to only retrieve meetings with associated documents
+        $dql = 'SELECT m, d ' .
+               'FROM Decision\Model\Meeting m ' .
+               'INNER JOIN m.documents d';
+
+        $meetings = $entityManager->createQuery($dql)->getResult();
+        foreach ($meetings as $meeting) {
+            $unsortedDocuments = iterator_to_array($meeting->getDocuments()->getIterator());
+
+            print(vsprintf('Sorting %d documents of %s %d...' . PHP_EOL, [
+                count($unsortedDocuments), $meeting->getType(), $meeting->getNumber()
+            ]));
+
+            foreach ($legacySort($unsortedDocuments) as $index => $document) {
+                $document->setDisplayPosition($index);
+            }
+        }
+
+        $entityManager->flush();
+
+        print('Done.' . PHP_EOL);
     }
 
     /**
