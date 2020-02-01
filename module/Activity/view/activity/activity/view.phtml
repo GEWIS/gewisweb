@@ -52,16 +52,16 @@ $this->headTitle($this->translate('Activities')); ?>
                             <div class="col-md-4">
                                 <dl>
                                     <dt><?= $this->translate('Start') ?></dt>
-                                    <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
-                                
+                                    <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
+
                                     <dt><?= $this->translate('End') ?></dt>
-                                    <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
-                                
+                                    <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
+
                                     <dt><?= $this->translate('Location') ?></dt>
                                     <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
                                     <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
                                         <dt><?= $this->translate('Subscribe before') ?></dt>
-                                        <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                        <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
                                     <?php endif; ?>
                                     <dt><?= $this->translate('Costs') ?></dt>
                                     <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
@@ -74,7 +74,7 @@ $this->headTitle($this->translate('Activities')); ?>
                                             />
                                         </a>
                                     <?php endif ?>
-                                    
+
                                     <?php
                                         $begin = $activity->getBeginTime()->format('Ymd\THis');
                                         $end = $activity->getEndTime()->format('Ymd\THis');
@@ -85,9 +85,9 @@ $this->headTitle($this->translate('Activities')); ?>
                                             'location' => $activity->getLocation(),
                                         ]);
                                     ?>
-                                    
+
                                      <a class="btn btn-default" target="_blank" href= "<?php echo $link ?>"> Google Calendar </a>
-                                            
+
                                 </dl>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ $this->headTitle($this->translate('Activities')); ?>
                 </div>
             </li>
         </ul>
-        
+
         <?php if ($isSignedUp) : ?>
             <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
                     aria-expanded="false" aria-controls="subscriptionForm">
@@ -181,7 +181,7 @@ $this->headTitle($this->translate('Activities')); ?>
             <?php endif; ?>
         </div>
     </div>
-    
+
     <?php if ($activity->getCanSignUp()): ?>
         <h2>
             <?= $this->translate('Current subscriptions') ?>
@@ -254,5 +254,5 @@ $this->headTitle($this->translate('Activities')); ?>
             </table>
         </div>
     <?php endif; ?>
-    
+
 </section>
