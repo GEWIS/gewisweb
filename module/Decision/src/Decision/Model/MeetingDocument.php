@@ -48,6 +48,15 @@ class MeetingDocument
     protected $path;
 
     /**
+     * Determines the order in which to display the document
+     *
+     * The order is determined by sorting the positions in ascending order.
+     *
+     * @ORM\Column(type="integer", options={"default":0})
+     */
+    protected $displayPosition;
+
+    /**
      * Get the document id.
      *
      * @return int
@@ -118,4 +127,13 @@ class MeetingDocument
         $this->path = $path;
     }
 
+    public function getDisplayPosition()
+    {
+        return $this->displayPosition;
+    }
+
+    public function setDisplayPosition($position)
+    {
+        $this->displayPosition = $position;
+    }
 }

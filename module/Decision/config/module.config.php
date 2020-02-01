@@ -143,6 +143,15 @@ return [
                             ],
                         ],
                     ],
+                    'position_document' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/document/position',
+                            'defaults' => [
+                                'action' => 'changePositionDocument',
+                            ],
+                        ],
+                    ],
                     'authorizations' => [
                         'type' => 'Segment',
                         'options' => [
@@ -361,4 +370,19 @@ return [
             ]
         ]
     ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'sort-documents-legacy' => [
+                    'options' => [
+                        'route'    => 'documents sort-legacy',
+                        'defaults' => [
+                            'controller' => 'Decision\Controller\Admin',
+                            'action'     => 'sortDocumentsLegacy'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
 ];
