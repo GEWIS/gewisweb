@@ -167,6 +167,10 @@ a.card {
     flex-direction: row;
     flex-wrap: wrap;
 
+    label {
+        flex-shrink: 0;
+    }
+
     .form-group {
         margin: 0;
         padding: 0.5em 1em;
@@ -194,8 +198,8 @@ a.card {
     }
 }
 
-#job-search, #job-label {
+#job-search, #job-label, #job-sort {
     width: auto;
-    min-width: 100px;
+    min-width: 150px;
     max-width: 250px;
 }
