@@ -26,7 +26,8 @@
         line-height:2em;
         color:#369;
         font-weight:700;
-        position:relative
+        position: relative;
+        cursor: default;
     }
     .tree ul li:before {
         content:"";
@@ -40,7 +41,7 @@
         left:0
     }
     .tree ul li:last-child:before {
-        background:#fff;
+        background:#f8f8f8;
         height:auto;
         top:1em;
         bottom:0

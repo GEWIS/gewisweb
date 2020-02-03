@@ -8,12 +8,10 @@ $.fn.extend({
             branch.prepend("<i class='fas fa-plus-circle'></i>");
             branch.addClass('branch');
             branch.on('click', function (e) {
-                if (this == e.target) {
-                    var icon = $(this).children('i:first');
-                      icon.toggleClass("fa-plus-circle fa-minus-circle");
-                    $(this).children().children().toggle();
-                }
-            })
+                var icon = $(this).children('i:first');
+                  icon.toggleClass("fa-plus-circle fa-minus-circle");
+                $(this).children().children().toggle();
+            });
             branch.children().children().toggle();
         });
         //fire event from the dynamically added icon
