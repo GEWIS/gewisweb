@@ -40,3 +40,10 @@
 @import 'modules/photo';
 @import 'modules/frontpage';
 @import 'modules/activity-calendar';
+
+// FontAwesome
+@import "fontawesome/fontawesome.scss";
+@import "fontawesome/regular.scss";
+@import "fontawesome/solid.scss";
+@import "fontawesome/brands.scss";   //Footer icons
+@import "fontawesome/v4-shims.scss"; //For bootstrap markdown editor which expects v4

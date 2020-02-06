@@ -18,12 +18,12 @@
                 <span><?= $organ->getName() ?>
                         <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
                             <a href="mailto:<?= $organInformation->getEmail() ?>" class="pull-right">
-                                <span class="glyphicon glyphicon-envelope"></span>
+                                <span class="fas fa-envelope"></span>
                             </a> &nbsp;
                         <?php endif; ?>
                         <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
                             <a href="<?= $organInformation->getWebsite() ?>" class="pull-right">
-                                <span class="glyphicon glyphicon-link"></span>
+                                <span class="fas fa-external-link-alt"></span>
                             </a>
                         <?php endif; ?>
                 </span>

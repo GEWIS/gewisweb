@@ -42,7 +42,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             <ul class="nav navbar-nav pull-left no-collapse">
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-globe"></span>
+                        <i class="fas fa-globe-europe"></i>
                         <span class="sr-only"><?= $this->translate('Language settings') ?></span>
                         <span class="caret"></span>
                     </a>
@@ -62,13 +62,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 <?php if (null === $this->identity()): ?>
                     <li class="visible-xs pull-left">
                         <a href="<?= $this->url('user') ?>">
-                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="fas fa-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
                         </a>
                     </li>
                     <li class="dropdown pull-left hidden-xs">
                         <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="fas fa-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
                             <span class="caret"></span>
                         </a>
@@ -169,7 +169,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if (!is_null($this->featuredCompanyPackage())): ?>
                             <li>
                                 <a href="<?= $this->url('company/spotlight') ?>">
-                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="fas fa-star"></span>
                                     <?= $this->translate('Featured') ?>:
                                     <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
                                 </a>

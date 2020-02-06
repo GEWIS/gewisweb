@@ -58,6 +58,12 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.card .card-content a.pull-right {
+  margin: 1px;
+}
+.card .card-content a.pull-right:hover {
+  text-decoration: none;
+}
 .card .card-details {
   position: absolute;
   background-color: #fff;

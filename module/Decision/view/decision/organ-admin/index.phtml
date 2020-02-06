@@ -19,9 +19,9 @@
                     <?php
                     foreach ($organ->getOrganInformation() as $information) {
                         if (is_null($information->getApprover())) {
-                            echo '<span class="glyphicon glyphicon-question-sign"></span>&nbsp;';
+                            echo '<span class="fas fa-question-circle"></span>&nbsp;';
                         } else {
-                            echo '<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;';
+                            echo '<span class="fas fa-check-circle"></span>&nbsp;';
                         }
                     }
                     ?>

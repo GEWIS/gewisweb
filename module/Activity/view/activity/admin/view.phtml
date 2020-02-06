@@ -3,7 +3,7 @@
     <?php if (isset($success)): // Display messages ?>
         <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
             <div class="container">
-                <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+                <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
             </div>
         </div>
     <?php endif;?>
