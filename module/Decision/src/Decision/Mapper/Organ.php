@@ -121,6 +121,8 @@ class Organ
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
+        $qb->orderBy('o.foundationDate', 'DESC')
+            ->setMaxResults(1);
 
         $qb->setParameter('abbr', $abbr);
 
