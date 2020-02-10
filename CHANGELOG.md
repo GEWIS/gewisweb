@@ -1,3 +1,12 @@
+## [v1.7-beta](https://github.com/GEWIS/gewisweb/tree/v1.7-beta) (2020-02-10)
+
+* Changed website icons to fontawesome
+* Added functionality for manually sorting meeting documents
+* Various UI improvements
+* Various bugfixes
+
+---
+
 ## [v1.6-beta](https://github.com/GEWIS/gewisweb/tree/v1.6-beta) (2019-11-02)
 
 * Implemented a new photo viewer next to the old photo viewer
