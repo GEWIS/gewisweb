@@ -122,17 +122,24 @@ class Organ
         $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
-            ->where('o.abbr = :abbr');
+            ->where('o.abbr = :abbr')
+            ->setParameter('abbr', $abbr);
         if (!is_null($type)) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
         if ($latest) {
-            $qb->orderBy('o.foundationDate', 'DESC')
-                ->setMaxResults(1);
+            $qb->orderBy('o.foundationDate', 'DESC');
+            $queryResult = $qb->getQuery()->getResult();
+            
+            if (count($queryResult) == 0) {
+                // the query did not return any records
+                throw new \Doctrine\ORM\NoResultException('no organ found');
+            }
+            
+            // the query did at least return 1 record, use that record
+            return $queryResult[0];
         }
-
-        $qb->setParameter('abbr', $abbr);
 
         return $qb->getQuery()->getSingleResult();
     }
