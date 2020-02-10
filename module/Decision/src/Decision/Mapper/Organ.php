@@ -106,7 +106,7 @@ class Organ
      *
      * It is possible that multiple organs with the same abbreviation exist,
      * for example, through the reinstatement of an previously abrogated organ.
-     * To retrieve the latest occurence of such an organ use `$latest`. 
+     * To retrieve the latest occurence of such an organ use `$latest`.
      *
      * @param string $abbr
      * @param string $type
@@ -131,12 +131,12 @@ class Organ
         if ($latest) {
             $qb->orderBy('o.foundationDate', 'DESC');
             $queryResult = $qb->getQuery()->getResult();
-            
+
             if (count($queryResult) == 0) {
                 // the query did not return any records
                 throw new \Doctrine\ORM\NoResultException('no organ found');
             }
-            
+
             // the query did at least return 1 record, use that record
             return $queryResult[0];
         }
