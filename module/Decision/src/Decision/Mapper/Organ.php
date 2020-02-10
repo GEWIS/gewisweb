@@ -137,7 +137,7 @@ class Organ
                 throw new \Doctrine\ORM\NoResultException('no organ found');
             }
 
-            // the query did at least return 1 record, use that record
+            // the query returned at least 1 record, use first (= latest) record
             return $queryResult[0];
         }
 
