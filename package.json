@@ -4,7 +4,8 @@
   "description": "GEWIS Website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --output-style compressed public/scss/main.scss > public/css/gewis-theme.css"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-shell": "^1.1.2",
     "kss": "^3.0.0-beta.20"
+  },
+  "dependencies": {
+    "node-sass": "^4.13.1"
   }
 }

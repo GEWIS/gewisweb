@@ -1,12 +1,12 @@
 FROM node:13-alpine as node-build
 
-COPY ./package.json ./package-lock.json ./
 WORKDIR /code
-COPY . /code
-
+COPY ./package.json ./package-lock.json ./
 RUN npm install
 
-# TODO: run scss
+COPY . /code
+
+RUN npm run scss
 
 FROM php:5.6-fpm as php-target
 
@@ -44,9 +44,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /code
 COPY ./composer.json ./composer.lock ./
 RUN composer install -o --no-dev
+
+COPY ./docker/prod /usr/local/etc/php/conf.d/default.ini
+
 COPY . /code
 RUN ./genclassmap.sh
 
-VOLUME /code
+COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
-CMD bash
+VOLUME /code
