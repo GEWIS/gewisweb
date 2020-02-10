@@ -7429,6 +7429,18 @@ Styleguide: colors
     .grid-sizer, .photo-grid-item {
       width: 16.2%; } }
 
+.photo-grid-item.potw-thumb {
+  width: 98.498%; }
+  @media (min-width: 768px) {
+    .photo-grid-item.potw-thumb {
+      width: 66.499%; } }
+  @media (min-width: 992px) {
+    .photo-grid-item.potw-thumb {
+      width: 49.499%; } }
+  @media (min-width: 1200px) {
+    .photo-grid-item.potw-thumb {
+      width: 32.899%; } }
+
 .photo-grid-item-photo {
   background-color: #d40026; }
 
@@ -7438,10 +7450,6 @@ Styleguide: colors
 .photo-grid-item-photo img {
   display: block;
   max-width: 100%; }
-
-.potw-thumb {
-  width: 49%;
-  margin-bottom: 1%; }
 
 .thumbnail .caption {
   overflow: hidden;
