@@ -73,7 +73,7 @@ class Register extends Form
         case self::ERROR_ALREADY_REGISTERED:
             $this->setMessages([
                 'lidnr' => [
-                    $this->translate->translate("You already attempted to register, please check your email or try again after 24 hours.")
+                    $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
                 ]
             ]);
             break;
