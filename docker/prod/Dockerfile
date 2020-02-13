@@ -49,6 +49,7 @@ COPY ./docker/prod /usr/local/etc/php/conf.d/default.ini
 
 COPY . /code
 RUN ./genclassmap.sh
+RUN ./web orm:generate-proxies
 
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
