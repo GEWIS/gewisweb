@@ -1,6 +1,6 @@
 FROM node:13-alpine as node-build
-
 WORKDIR /code
+
 COPY ./package.json ./package-lock.json ./
 RUN npm install
 
@@ -10,47 +10,52 @@ RUN npm run scss
 
 FROM php:5.6-fpm as php-target
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        git \
         libfreetype6-dev \
+        libicu-dev \
         libjpeg62-turbo-dev \
+        libmagickwand-dev \
         libpng-dev \
         libxml2-dev \
-        libicu-dev \
-        g++ \
-        zlib1g-dev \
-        git \
         unzip \
+        zlib1g-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl \
-    && docker-php-ext-install pdo \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install exif \
-    && docker-php-ext-install soap \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install calendar
+    && docker-php-ext-install \
+        calendar \
+        exif \
+        gd \
+        intl \
+        mbstring \
+        pdo \
+        pdo_mysql \
+        soap \
+        zip \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends
-RUN pecl install imagick
-RUN docker-php-ext-enable imagick
-
-# prod does not need xdebug
-#RUN pecl install -o -f xdebug-2.4.1 && rm -rf /tmp/pear
+FROM php-target as composer-build
+WORKDIR /code
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /code
 COPY ./composer.json ./composer.lock ./
 RUN composer install -o --no-dev
 
-COPY ./docker/prod /usr/local/etc/php/conf.d/default.ini
+FROM php-target as production-image
+WORKDIR /code
 
 COPY . /code
-RUN ./genclassmap.sh
-RUN ./web orm:generate-proxies
 
+COPY --from=composer-build /code/vendor /code/vendor
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
+COPY ./docker/prod/php.ini /usr/local/etc/php/conf.d/default.ini
+
+RUN ./genclassmap.sh \
+    && ./web orm:generate-proxies
+
+RUN mkdir -p /code/data/logs
 
 VOLUME /code
