@@ -56,6 +56,4 @@ COPY ./docker/prod/php.ini /usr/local/etc/php/conf.d/default.ini
 RUN ./genclassmap.sh \
     && ./web orm:generate-proxies
 
-RUN mkdir -p /code/data/logs
-
-VOLUME /code
+VOLUME ["/code", "/code/data", "/code/public/data"]
