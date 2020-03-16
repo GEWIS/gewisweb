@@ -4,9 +4,9 @@
             <div class="hidden-xs col-sm-2 col-md-1">
                 <div class="gi gewis-base" style="font-size: 7em;"></div>
             </div>
-            <div class="col-sm-10 col-md-7">
+            <div class="col-sm-10 col-md-11">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                         <?php if($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
                             <h3><?= $this->translate('Infima') ?></h3>
                             <p>
@@ -16,31 +16,8 @@
                         <p>&copy; 2013
                             - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-sm-4">
-                        <h3><?= $this->translate('Visiting address') ?></h3>
-                        <address>
-                            <?= $this->translate('Study association GEWIS') ?><br>
-                            MF 3.155<br>
-                            De Groene Loper 5<br>
-                            5612 AZ Eindhoven<br>
-                            <?= $this->translate('Netherlands') ?>
-                        </address>
-                    </div>
-                    <div class="col-sm-4">
-                        <h3><?= $this->translate('Postal address') ?></h3>
-                        <address>
-                            <?= $this->translate('Study association GEWIS') ?><br>
-                            MF 3.155<br>
-                            Postbus 513<br>
-                            5600 MB Eindhoven<br>
-                            <?= $this->translate('Netherlands') ?>
-                        </address>
-                    </div>
-                    <div class="col-sm-4">
-                        <i class="fas fa-phone-alt"></i> <a href="tel:+31402472815">+31 40 247 2815</a><br>
-                        <i class="fas fa-envelope"></i> <a href="mailto:<?= $this->translate("board@gewis.nl") ?>"><?= $this->translate("board@gewis.nl") ?></a><br>
+                        <i class="fas fa-address-book"></i> <a href="/vereniging/contact"><?= $this->translate('Contact') ?></a><br>
                         <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
                         <i class="fab fa-facebook-square"></i> <a href="https://www.facebook.com/svgewis/">Facebook</a><br>
                         <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/svgewis/">Instagram</a>

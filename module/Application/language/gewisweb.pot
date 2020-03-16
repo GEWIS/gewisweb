@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 11:45+0100\n"
+"POT-Creation-Date: 2020-03-16 12:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -850,26 +850,12 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
-#: module/Application/view/partial/footer.phtml:22
-msgid "Visiting address"
-msgstr ""
-
-#: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/footer.phtml:34
-msgid "Study association GEWIS"
-msgstr ""
-
-#: module/Application/view/partial/footer.phtml:28
-#: module/Application/view/partial/footer.phtml:38
-msgid "Netherlands"
-msgstr ""
-
-#: module/Application/view/partial/footer.phtml:32
-msgid "Postal address"
-msgstr ""
-
-#: module/Application/view/partial/footer.phtml:43
-msgid "board@gewis.nl"
+#: module/Application/view/partial/footer.phtml:20
+#: module/Application/view/partial/main-nav.phtml:150
+#: module/Company/view/company/company/jobs.phtml:57
+#: module/Company/view/company/company/companyStory.phtml:22
+#: module/Company/view/partial/company/company/list/company.phtml:15
+msgid "Contact"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:46
@@ -952,13 +938,6 @@ msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:148
 msgid "GEWIS song"
-msgstr ""
-
-#: module/Application/view/partial/main-nav.phtml:150
-#: module/Company/view/company/company/jobs.phtml:57
-#: module/Company/view/company/company/companyStory.phtml:22
-#: module/Company/view/partial/company/company/list/company.phtml:15
-msgid "Contact"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:157

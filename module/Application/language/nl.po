@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 11:44+0100\n"
-"PO-Revision-Date: 2020-03-16 11:58+0100\n"
+"POT-Creation-Date: 2020-03-16 12:07+0100\n"
+"PO-Revision-Date: 2020-03-16 12:10+0100\n"
 "Last-Translator: GEWISStijl <stijl@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -542,7 +542,7 @@ msgstr "Actieve leden"
 
 #: module/Decision/view/decision/member/index.phtml:140
 msgid "A list of helpful resources for active members."
-msgstr "Een lijst met behulpzame pagina's voor actieve leden."
+msgstr "Een lijst met nuttige pagina's voor actieve leden."
 
 #: module/Decision/view/decision/member/index.phtml:144
 msgid "Info"
@@ -876,27 +876,13 @@ msgstr "door de WebCommissie van GEWIS."
 msgid "All rights reserved."
 msgstr "Alle rechten voorbehouden."
 
-#: module/Application/view/partial/footer.phtml:22
-msgid "Visiting address"
-msgstr "Bezoekadres"
-
-#: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/footer.phtml:34
-msgid "Study association GEWIS"
-msgstr "Studievereniging GEWIS"
-
-#: module/Application/view/partial/footer.phtml:28
-#: module/Application/view/partial/footer.phtml:38
-msgid "Netherlands"
-msgstr "Nederland"
-
-#: module/Application/view/partial/footer.phtml:32
-msgid "Postal address"
-msgstr "Postadres"
-
-#: module/Application/view/partial/footer.phtml:43
-msgid "board@gewis.nl"
-msgstr "bestuur@gewis.nl"
+#: module/Application/view/partial/footer.phtml:20
+#: module/Application/view/partial/main-nav.phtml:150
+#: module/Company/view/company/company/jobs.phtml:57
+#: module/Company/view/company/company/companyStory.phtml:22
+#: module/Company/view/partial/company/company/list/company.phtml:15
+msgid "Contact"
+msgstr "Contact"
 
 #: module/Application/view/partial/main-nav.phtml:46
 msgid "Language settings"
@@ -979,13 +965,6 @@ msgstr "Disputen"
 #: module/Application/view/partial/main-nav.phtml:148
 msgid "GEWIS song"
 msgstr "GEWIS-lied"
-
-#: module/Application/view/partial/main-nav.phtml:150
-#: module/Company/view/company/company/jobs.phtml:57
-#: module/Company/view/company/company/companyStory.phtml:22
-#: module/Company/view/partial/company/company/list/company.phtml:15
-msgid "Contact"
-msgstr "Contact"
 
 #: module/Application/view/partial/main-nav.phtml:157
 #: module/Application/view/partial/main-nav.phtml:161
@@ -3238,7 +3217,7 @@ msgstr "Verplaats omhoog"
 
 #: module/Decision/src/Decision/Form/ReorderDocument.php:32
 msgid "Move down"
-msgstr "Verplaats naar beneden"
+msgstr "Verplaats omlaag"
 
 #: module/Decision/src/Decision/Form/OrganInformation.php:36
 msgid "Short dutch description"
@@ -3364,8 +3343,8 @@ msgid ""
 "You already attempted to register, please check your email or try again "
 "after 15 minutes."
 msgstr ""
-"Je hebt al geprobeerd om te registreren, controleer je email of probeer het "
-"opnieuw over 15 minuten."
+"Je hebt al geprobeerd om te registreren; controleer je email of probeer het "
+"na een kwartier opnieuw."
 
 #: module/User/src/User/Form/Register.php:83
 msgid "This member already has an account."
@@ -4102,8 +4081,8 @@ msgstr "Tafelvoetbalcoordinator"
 msgid "Inkoper"
 msgstr "Inkoper"
 
-#~ msgid "Notes for this meeting"
-#~ msgstr "Notulen voor deze vergadering"
+#~ msgid "GEWIS Logo"
+#~ msgstr "GEWIS Logo"
 
 #~ msgid "Manage"
 #~ msgstr "Beheer"
@@ -4113,8 +4092,23 @@ msgstr "Inkoper"
 #~ "Een lijst met behulpzame paginas voor het beheren van organen waar je lid "
 #~ "van bent."
 
-#~ msgid "GEWIS Logo"
-#~ msgstr "GEWIS Logo"
+#~ msgid "Notes for this meeting"
+#~ msgstr "Notulen voor deze vergadering"
+
+#~ msgid "Visiting address"
+#~ msgstr "Bezoekadres"
+
+#~ msgid "Study association GEWIS"
+#~ msgstr "Studievereniging GEWIS"
+
+#~ msgid "Netherlands"
+#~ msgstr "Nederland"
+
+#~ msgid "Postal address"
+#~ msgstr "Postadres"
+
+#~ msgid "board@gewis.nl"
+#~ msgstr "bestuur@gewis.nl"
 
 #~ msgid "at"
 #~ msgstr "bij"

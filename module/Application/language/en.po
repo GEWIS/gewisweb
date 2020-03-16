@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 11:44+0100\n"
-"PO-Revision-Date: 2020-03-16 11:58+0100\n"
+"POT-Creation-Date: 2020-03-16 12:07+0100\n"
+"PO-Revision-Date: 2020-03-16 12:08+0100\n"
 "Last-Translator: GEWISStijl <stijl@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -870,27 +870,13 @@ msgstr "by WebCommissie GEWIS."
 msgid "All rights reserved."
 msgstr "All rights reserved."
 
-#: module/Application/view/partial/footer.phtml:22
-msgid "Visiting address"
-msgstr "Visiting address"
-
-#: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/footer.phtml:34
-msgid "Study association GEWIS"
-msgstr "Study association GEWIS"
-
-#: module/Application/view/partial/footer.phtml:28
-#: module/Application/view/partial/footer.phtml:38
-msgid "Netherlands"
-msgstr "Netherlands"
-
-#: module/Application/view/partial/footer.phtml:32
-msgid "Postal address"
-msgstr "Postal address"
-
-#: module/Application/view/partial/footer.phtml:43
-msgid "board@gewis.nl"
-msgstr "board@gewis.nl"
+#: module/Application/view/partial/footer.phtml:20
+#: module/Application/view/partial/main-nav.phtml:150
+#: module/Company/view/company/company/jobs.phtml:57
+#: module/Company/view/company/company/companyStory.phtml:22
+#: module/Company/view/partial/company/company/list/company.phtml:15
+msgid "Contact"
+msgstr "Contact"
 
 #: module/Application/view/partial/main-nav.phtml:46
 msgid "Language settings"
@@ -973,13 +959,6 @@ msgstr "Fraternities"
 #: module/Application/view/partial/main-nav.phtml:148
 msgid "GEWIS song"
 msgstr "GEWIS song"
-
-#: module/Application/view/partial/main-nav.phtml:150
-#: module/Company/view/company/company/jobs.phtml:57
-#: module/Company/view/company/company/companyStory.phtml:22
-#: module/Company/view/partial/company/company/list/company.phtml:15
-msgid "Contact"
-msgstr "Contact"
 
 #: module/Application/view/partial/main-nav.phtml:157
 #: module/Application/view/partial/main-nav.phtml:161
@@ -4072,8 +4051,8 @@ msgstr "Table soccer coordinator"
 msgid "Inkoper"
 msgstr "Purchaser"
 
-#~ msgid "Notes for this meeting"
-#~ msgstr "Notes for this meeting"
+#~ msgid "GEWIS Logo"
+#~ msgstr "GEWIS Logo"
 
 #~ msgid "Manage"
 #~ msgstr "Manage"
@@ -4081,8 +4060,23 @@ msgstr "Purchaser"
 #~ msgid "A list of helpful pages to manage the organ(s) you are part of."
 #~ msgstr "A list of helpful pages to manage the organ(s) you are part of."
 
-#~ msgid "GEWIS Logo"
-#~ msgstr "GEWIS Logo"
+#~ msgid "Notes for this meeting"
+#~ msgstr "Notes for this meeting"
+
+#~ msgid "Visiting address"
+#~ msgstr "Visiting address"
+
+#~ msgid "Study association GEWIS"
+#~ msgstr "Study association GEWIS"
+
+#~ msgid "Netherlands"
+#~ msgstr "Netherlands"
+
+#~ msgid "Postal address"
+#~ msgstr "Postal address"
+
+#~ msgid "board@gewis.nl"
+#~ msgstr "board@gewis.nl"
 
 #~ msgid "at"
 #~ msgstr "at"
