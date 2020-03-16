@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-24 19:51+0100\n"
-"PO-Revision-Date: 2019-12-24 20:00+0100\n"
-"Last-Translator: Pieter Kokx <pieter@kokx.nl>\n"
+"POT-Creation-Date: 2020-03-16 11:44+0100\n"
+"PO-Revision-Date: 2020-03-16 11:58+0100\n"
+"Last-Translator: GEWISStijl <stijl@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.4\n"
 
 #: module/Decision/view/decision/organ/show.phtml:9
-#: module/Frontpage/view/frontpage/organ/organ.phtml:118
+#: module/Frontpage/view/frontpage/organ/organ.phtml:117
 msgid "Current members"
 msgstr "Huidige leden"
 
@@ -96,7 +96,7 @@ msgid "Search query"
 msgstr "Zoek query"
 
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/view/decision/member/index.phtml:112
+#: module/Decision/view/decision/member/index.phtml:110
 #: module/Education/view/education/education/index.phtml:41
 #: module/Decision/src/Decision/Form/SearchDecision.php:29
 #: module/Decision/src/Decision/Form/SearchDecision.php:30
@@ -130,12 +130,30 @@ msgstr ".. Ga map omhoog"
 msgid "Empty folder"
 msgstr "Lege map"
 
-#: module/Decision/view/decision/decision/view.phtml:23
-msgid "Notes for this meeting"
-msgstr "Notulen voor deze vergadering"
+#: module/Decision/view/decision/decision/view.phtml:12
+#: module/Application/view/partial/admin-nav.phtml:34
+msgid "Documents"
+msgstr "Documenten"
+
+#: module/Decision/view/decision/decision/view.phtml:27
+msgid "No documents have been added."
+msgstr "Er zijn geen documenten toegevoegd."
+
+#: module/Decision/view/decision/decision/view.phtml:33
+msgid "Minutes"
+msgstr "Notulen"
+
+#: module/Decision/view/decision/decision/view.phtml:42
+#, php-format
+msgid "View the minutes of %s"
+msgstr "Geef de notulen van %s weer"
+
+#: module/Decision/view/decision/decision/view.phtml:51
+msgid "Decisions"
+msgstr "Besluiten"
 
 #: module/Decision/view/decision/decision/index.phtml:3
-#: module/Decision/view/decision/member/index.phtml:78
+#: module/Decision/view/decision/member/index.phtml:76
 #: module/Application/view/partial/admin-nav.phtml:27
 msgid "Meetings"
 msgstr "Vergaderingen"
@@ -156,7 +174,7 @@ msgstr "# Besluiten"
 
 #: module/Decision/view/decision/decision/authorizations.phtml:3
 #: module/Decision/view/decision/decision/authorizations.phtml:8
-#: module/Decision/view/decision/member/index.phtml:44
+#: module/Decision/view/decision/member/index.phtml:42
 #: module/Application/view/partial/admin-nav.phtml:37
 msgid "Authorizations"
 msgstr "Machtigingen"
@@ -288,7 +306,7 @@ msgstr "Vergaderstuk geupload"
 msgid "Documents for this meeting"
 msgstr "Documenten voor deze vergadering"
 
-#: module/Decision/view/decision/admin/document.phtml:75
+#: module/Decision/view/decision/admin/document.phtml:97
 #: module/Company/view/company/admin/edit-company.phtml:127
 #: module/Company/view/company/admin/index.phtml:115
 #: module/Activity/view/activity/activity-calendar/index.phtml:102
@@ -308,7 +326,7 @@ msgstr "Zoeken op lid"
 #: module/Decision/view/decision/member/search.phtml:4
 #: module/Decision/view/decision/member/view.phtml:4
 #: module/Decision/view/decision/member/index.phtml:3
-#: module/Decision/view/decision/member/index.phtml:18
+#: module/Decision/view/decision/member/index.phtml:17
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Application/view/partial/main-nav.phtml:259
 msgid "Members"
@@ -420,13 +438,13 @@ msgstr "Woonplaats en postcode"
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
 
-#: module/Decision/view/decision/member/index.phtml:7
-#: module/Decision/view/decision/member/index.phtml:23
+#: module/Decision/view/decision/member/index.phtml:6
+#: module/Decision/view/decision/member/index.phtml:22
 msgid "Personal"
 msgstr "Persoonlijk"
 
-#: module/Decision/view/decision/member/index.phtml:8
-#: module/Decision/view/decision/member/index.phtml:31
+#: module/Decision/view/decision/member/index.phtml:7
+#: module/Decision/view/decision/member/index.phtml:30
 #: module/Application/view/partial/main-nav.phtml:106
 #: module/User/view/user/user/password.phtml:2
 #: module/User/view/user/user/password.phtml:23
@@ -434,60 +452,60 @@ msgstr "Persoonlijk"
 msgid "Change password"
 msgstr "Wijzig wachtwoord"
 
-#: module/Decision/view/decision/member/index.phtml:27
+#: module/Decision/view/decision/member/index.phtml:26
 msgid "Profile"
 msgstr "Profiel"
 
-#: module/Decision/view/decision/member/index.phtml:35
+#: module/Decision/view/decision/member/index.phtml:34
 #: module/Application/view/partial/main-nav.phtml:249
 msgid "My photo's"
 msgstr "Mijn foto’s"
 
-#: module/Decision/view/decision/member/index.phtml:39
+#: module/Decision/view/decision/member/index.phtml:38
 #: module/Application/view/partial/main-nav.phtml:105
 msgid "SuSOS"
 msgstr "SuSOS"
 
-#: module/Decision/view/decision/member/index.phtml:51
+#: module/Decision/view/decision/member/index.phtml:49
 #: module/Application/view/partial/main-nav.phtml:131
 #: module/Application/view/partial/main-nav.phtml:136
 #: module/Application/view/partial/main-nav.phtml:141
 msgid "Association"
 msgstr "Vereniging"
 
-#: module/Decision/view/decision/member/index.phtml:55
+#: module/Decision/view/decision/member/index.phtml:53
 #: module/Application/view/partial/admin-nav.phtml:45
 msgid "Organs"
 msgstr "Organen"
 
-#: module/Decision/view/decision/member/index.phtml:59
+#: module/Decision/view/decision/member/index.phtml:57
 msgid "Public archive"
 msgstr "Openbaar Archief"
 
-#: module/Decision/view/decision/member/index.phtml:63
+#: module/Decision/view/decision/member/index.phtml:61
 msgid "Find a member"
 msgstr "Vind een lid"
 
-#: module/Decision/view/decision/member/index.phtml:67
+#: module/Decision/view/decision/member/index.phtml:65
 #: module/Education/view/education/education/index.phtml:130
 msgid "Microsoft Imagine"
 msgstr "Microsoft Imagine"
 
-#: module/Decision/view/decision/member/index.phtml:71
+#: module/Decision/view/decision/member/index.phtml:69
 #: module/Application/view/partial/main-nav.phtml:151
 msgid "Links"
 msgstr "Links"
 
-#: module/Decision/view/decision/member/index.phtml:82
+#: module/Decision/view/decision/member/index.phtml:80
 msgid "Upcoming meeting"
 msgstr "Aankomende vergaderingen"
 
-#: module/Decision/view/decision/member/index.phtml:87
+#: module/Decision/view/decision/member/index.phtml:85
 #, php-format
 msgid "The next meeting is %s%s %s%s on %s."
 msgstr "De volgende vergadering is %s%s %s%s op %s."
 
-#: module/Decision/view/decision/member/index.phtml:100
+#: module/Decision/view/decision/member/index.phtml:98
 #, php-format
 msgid ""
 "If you aren't able to attend the meeting in person but you want your voice "
@@ -496,43 +514,41 @@ msgstr ""
 "Als je niet in staat bent aanwezig te zijn, maar je wilt dat je stem gehoord "
 "wordt, overweeg %seen ander lid te machtigen%s namens jou."
 
-#: module/Decision/view/decision/member/index.phtml:108
+#: module/Decision/view/decision/member/index.phtml:106
 msgid "Search through the list of decisions accumulated from past meetings:"
 msgstr "Doorzoek de lijst van alle beslissingen van eerdere vergaderingen:"
 
-#: module/Decision/view/decision/member/index.phtml:110
+#: module/Decision/view/decision/member/index.phtml:108
 msgid "Search by keyword or meeting number"
 msgstr "Zoek met trefwoord of vergaderingsnummer"
 
-#: module/Decision/view/decision/member/index.phtml:117
+#: module/Decision/view/decision/member/index.phtml:115
 #, php-format
 msgid "The latest %s meetings that took place:"
 msgstr "De laatste %s vergadering die plaatsvond:"
 
-#: module/Decision/view/decision/member/index.phtml:124
+#: module/Decision/view/decision/member/index.phtml:122
 #, php-format
 msgid "%s %s on %s"
 msgstr "%s %s op %s"
 
-#: module/Decision/view/decision/member/index.phtml:136
+#: module/Decision/view/decision/member/index.phtml:134
 msgid "View all meetings"
 msgstr "Toon alle vergadering"
 
-#: module/Decision/view/decision/member/index.phtml:141
-msgid "Manage"
-msgstr "Beheer"
+#: module/Decision/view/decision/member/index.phtml:139
+msgid "Active members"
+msgstr "Actieve leden"
 
-#: module/Decision/view/decision/member/index.phtml:142
-msgid "A list of helpful pages to manage the organ(s) you are part of."
-msgstr ""
-"Een lijst met behulpzame paginas voor het beheren van organen waar je lid "
-"van bent."
+#: module/Decision/view/decision/member/index.phtml:140
+msgid "A list of helpful resources for active members."
+msgstr "Een lijst met behulpzame pagina's voor actieve leden."
 
-#: module/Decision/view/decision/member/index.phtml:146
+#: module/Decision/view/decision/member/index.phtml:144
 msgid "Info"
 msgstr "Info"
 
-#: module/Decision/view/decision/member/index.phtml:150
+#: module/Decision/view/decision/member/index.phtml:148
 #: module/Application/view/partial/main-nav.phtml:195
 #: module/Application/view/partial/main-nav.phtml:199
 #: module/Application/view/partial/main-nav.phtml:204
@@ -544,38 +560,42 @@ msgstr "Info"
 msgid "Activities"
 msgstr "Activiteiten"
 
-#: module/Decision/view/decision/member/index.phtml:154
+#: module/Decision/view/decision/member/index.phtml:152
 #: module/Activity/view/activity/activity-calendar/index.phtml:15
 #: module/Activity/view/activity/activity-calendar/create.phtml:53
 msgid "Option calendar"
 msgstr "Optiekalender"
 
-#: module/Decision/view/decision/member/index.phtml:158
+#: module/Decision/view/decision/member/index.phtml:156
+msgid "Corporate Identity"
+msgstr "Huisstijl"
+
+#: module/Decision/view/decision/member/index.phtml:160
 msgid "Webmail"
 msgstr "Webmail"
 
-#: module/Decision/view/decision/member/index.phtml:162
+#: module/Decision/view/decision/member/index.phtml:164
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:169
+#: module/Decision/view/decision/member/index.phtml:171
 #: module/Application/view/partial/main-nav.phtml:149
 msgid "Regulations"
 msgstr "Reguleringen"
 
-#: module/Decision/view/decision/member/index.phtml:173
+#: module/Decision/view/decision/member/index.phtml:175
 msgid "Borrelreglement"
 msgstr "Borrelreglement"
 
-#: module/Decision/view/decision/member/index.phtml:178
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Computerreglement"
 msgstr "Computerreglement"
 
-#: module/Decision/view/decision/member/index.phtml:183
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Posterreglement"
 msgstr "Posterreglement"
 
-#: module/Decision/view/decision/member/index.phtml:188
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Sleutelbeleid"
 msgstr "Sleutelbeleid"
 
@@ -587,12 +607,12 @@ msgstr "Verjaardagen"
 msgid "Age"
 msgstr "Leeftijd"
 
-#: module/Decision/view/decision/member/birthdays.phtml:33
+#: module/Decision/view/decision/member/birthdays.phtml:32
 msgid "years"
 msgstr "jaren"
 
 #: module/Decision/view/decision/member/self.phtml:18
-#: module/User/src/User/Form/Register.php:27
+#: module/User/src/User/Form/Register.php:28
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
@@ -844,7 +864,7 @@ msgid "Next"
 msgstr "Volgende"
 
 #: module/Application/view/partial/footer.phtml:11
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:155
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:154
 msgid "Infima"
 msgstr "Infima"
 
@@ -877,11 +897,6 @@ msgstr "Postadres"
 #: module/Application/view/partial/footer.phtml:43
 msgid "board@gewis.nl"
 msgstr "bestuur@gewis.nl"
-
-#: module/Application/view/partial/main-nav.phtml:38
-#: module/Activity/view/activity/activity/touch.phtml:52
-msgid "GEWIS Logo"
-msgstr "GEWIS Logo"
 
 #: module/Application/view/partial/main-nav.phtml:46
 msgid "Language settings"
@@ -1039,7 +1054,7 @@ msgstr "Foto's"
 
 #: module/Application/view/partial/main-nav.phtml:245
 #: module/Photo/view/photo/photo/view.phtml:151
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:136
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:135
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
@@ -1050,10 +1065,6 @@ msgstr "Carri&egrave;re"
 #: module/Application/view/partial/admin-nav.phtml:31
 msgid "Notes"
 msgstr "Notulen"
-
-#: module/Application/view/partial/admin-nav.phtml:34
-msgid "Documents"
-msgstr "Documenten"
 
 #: module/Application/view/partial/admin-nav.phtml:57
 #: module/Education/view/education/admin/bulk-exam.phtml:8
@@ -1125,7 +1136,7 @@ msgstr "Token is gegenereerd"
 
 #: module/User/view/user/user/register.phtml:2
 #: module/User/view/user/user/register.phtml:23
-#: module/User/src/User/Form/Register.php:43
+#: module/User/src/User/Form/Register.php:44
 msgid "Register"
 msgstr "Registreer"
 
@@ -1259,7 +1270,7 @@ msgid "Logo of"
 msgstr "Logo van"
 
 #: module/Company/view/company/company/jobs.phtml:67
-#: module/Company/view/company/company/job-list.phtml:117
+#: module/Company/view/company/company/job-list.phtml:124
 msgid "View"
 msgstr "Toon"
 
@@ -1292,33 +1303,45 @@ msgstr "Uitgelicht bedrijf"
 msgid "What are you looking for?"
 msgstr "Waar ben je naar op zoek?"
 
-#: module/Company/view/company/company/job-list.phtml:55
+#: module/Company/view/company/company/job-list.phtml:54
+msgid "Sort on"
+msgstr "Sorteer op"
+
+#: module/Company/view/company/company/job-list.phtml:56
+msgid "Random"
+msgstr "Willekeurig"
+
+#: module/Company/view/company/company/job-list.phtml:57
+msgid "Most recent"
+msgstr "Recentst"
+
+#: module/Company/view/company/company/job-list.phtml:62
 msgid "Audience"
 msgstr "Doelgroep"
 
-#: module/Company/view/company/company/job-list.phtml:57
+#: module/Company/view/company/company/job-list.phtml:64
 msgid "Any"
 msgstr "Alle"
 
-#: module/Company/view/company/company/job-list.phtml:66
+#: module/Company/view/company/company/job-list.phtml:73
 msgid "Company"
 msgstr "Bedrijf"
 
-#: module/Company/view/company/company/job-list.phtml:82
+#: module/Company/view/company/company/job-list.phtml:89
 #, php-format
 msgid "Unfortunately, there aren't any %s at the moment."
 msgstr "Helaas zijn er momenteel geen %s."
 
-#: module/Company/view/company/company/job-list.phtml:120
+#: module/Company/view/company/company/job-list.phtml:127
 msgid "Posted today"
 msgstr "Vandaag geplaatst"
 
-#: module/Company/view/company/company/job-list.phtml:122
+#: module/Company/view/company/company/job-list.phtml:129
 #, php-format
 msgid "Posted %s"
 msgstr "%s geplaatst"
 
-#: module/Company/view/company/company/job-list.phtml:155
+#: module/Company/view/company/company/job-list.phtml:162
 #, php-format
 msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Niet gevonden wat je zoekt? Bekijk ook %s."
@@ -1640,7 +1663,7 @@ msgstr "ISO"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:57
 #: module/Activity/view/activity/activity/touch.phtml:222
 #: module/Activity/view/activity/activity/view.phtml:60
-#: module/Activity/view/activity/activity/list.phtml:48
+#: module/Activity/view/activity/activity/list.phtml:47
 #: module/Company/src/Company/Form/EditCompany.php:78
 msgid "Location"
 msgstr "Locatie"
@@ -1947,7 +1970,7 @@ msgstr "Inschrijfdeadline"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:64
 #: module/Activity/view/activity/activity/touch.phtml:226
 #: module/Activity/view/activity/activity/view.phtml:66
-#: module/Activity/view/activity/activity/list.phtml:54
+#: module/Activity/view/activity/activity/list.phtml:53
 msgid "Costs"
 msgstr "Kosten"
 
@@ -2109,13 +2132,13 @@ msgstr "Aangemaakt door"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:78
 #: module/Activity/view/activity/activity/view.phtml:54
-#: module/Activity/view/activity/activity/list.phtml:43
+#: module/Activity/view/activity/activity/list.phtml:42
 msgid "Start"
 msgstr "Start"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:79
 #: module/Activity/view/activity/activity/view.phtml:57
-#: module/Activity/view/activity/activity/list.phtml:45
+#: module/Activity/view/activity/activity/list.phtml:44
 msgid "End"
 msgstr "Einde"
 
@@ -2251,6 +2274,12 @@ msgstr "Geen"
 msgid "Edit"
 msgstr "Bewerken"
 
+#: module/Activity/view/activity/admin/view.phtml:82
+#: module/Activity/view/activity/admin/list.phtml:53
+#: module/Activity/view/activity/admin/participants.phtml:5
+msgid "Participants"
+msgstr "Deelnemers"
+
 #: module/Activity/view/activity/admin/exportpdf.phtml:3
 msgid "Details for activity"
 msgstr "Activiteit details"
@@ -2271,11 +2300,6 @@ msgstr "Update pending"
 #: module/Activity/view/activity/admin/list.phtml:51
 msgid "(dis)approve"
 msgstr "Details"
-
-#: module/Activity/view/activity/admin/list.phtml:53
-#: module/Activity/view/activity/admin/participants.phtml:5
-msgid "Participants"
-msgstr "Deelnemers"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:25
 msgid "User"
@@ -2439,7 +2463,7 @@ msgid "Failed to unsubscribe from this activity"
 msgstr "Uitschrijven voor deze activiteit is mislukt"
 
 #: module/Activity/view/activity/activity/view.phtml:63
-#: module/Activity/view/activity/activity/list.phtml:51
+#: module/Activity/view/activity/activity/list.phtml:50
 msgid "Subscribe before"
 msgstr "Inschrijven voor"
 
@@ -2515,16 +2539,16 @@ msgstr "Mijn Activiteiten"
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
 
-#: module/Activity/view/activity/activity/list.phtml:32
+#: module/Activity/view/activity/activity/list.phtml:31
 msgid "Proposal to update into: "
 msgstr "Voorstel om te wijzigen in: "
 
-#: module/Activity/view/activity/activity/list.phtml:39
+#: module/Activity/view/activity/activity/list.phtml:38
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:42
 msgid "Continue reading"
 msgstr "Lees meer"
 
-#: module/Activity/view/activity/activity/list.phtml:65
+#: module/Activity/view/activity/activity/list.phtml:64
 msgid "More"
 msgstr "Meer"
 
@@ -2821,38 +2845,38 @@ msgstr "%s wordt vandaag %s jaar oud!"
 msgid "Agenda"
 msgstr "Agenda"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:112
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:111
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:121
-#: module/Frontpage/view/frontpage/organ/organ.phtml:109
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:120
+#: module/Frontpage/view/frontpage/organ/organ.phtml:108
 msgid "Complete agenda"
 msgstr "Volledige agenda"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:125
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:124
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:164
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:163
 msgid "Poll"
 msgstr "Poll"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:177
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:176
 msgid "View the results"
 msgstr "Laat de resultaten zien"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:182
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:181
 msgid "There currently is no poll."
 msgstr "Er is op het moment geen poll."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:186
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:185
 #: module/Frontpage/view/frontpage/poll/request.phtml:165
 msgid "Request poll"
 msgstr "Vraag poll aan"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:189
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:188
 #: module/Frontpage/view/frontpage/poll/index.phtml:10
 msgid "Old polls"
 msgstr "Oude polls"
@@ -2904,7 +2928,7 @@ msgstr "Website"
 msgid "%s's activities"
 msgstr "Activiteiten door %s"
 
-#: module/Frontpage/view/frontpage/organ/organ.phtml:132
+#: module/Frontpage/view/frontpage/organ/organ.phtml:131
 msgid "Login to view more information"
 msgstr "Log in om meer informatie te zien"
 
@@ -3092,7 +3116,7 @@ msgstr "1 stem"
 msgid "%d votes"
 msgstr "%d stemmen"
 
-#: module/Decision/src/Decision/Controller/DecisionController.php:142
+#: module/Decision/src/Decision/Controller/DecisionController.php:141
 msgid "You are not allowed to browse files."
 msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 
@@ -3108,53 +3132,53 @@ msgstr "Het is niet toegestaan om informatie over organen in te zien"
 msgid "You are not allowed to edit organ information"
 msgstr "Je hebt niet de rechten om organen te wijzigen"
 
-#: module/Decision/src/Decision/Service/Organ.php:253
+#: module/Decision/src/Decision/Service/Organ.php:257
 msgid "You are not allowed to edit this organ's information"
 msgstr "Je hebt niet de rechten om organen te wijzigen"
 
-#: module/Decision/src/Decision/Service/Decision.php:31
-#: module/Decision/src/Decision/Service/Decision.php:51
-#: module/Decision/src/Decision/Service/Decision.php:63
+#: module/Decision/src/Decision/Service/Decision.php:32
+#: module/Decision/src/Decision/Service/Decision.php:52
+#: module/Decision/src/Decision/Service/Decision.php:64
 msgid "You are not allowed to list meetings."
 msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
 
-#: module/Decision/src/Decision/Service/Decision.php:83
+#: module/Decision/src/Decision/Service/Decision.php:84
 msgid "You are not allowed to view meetings."
 msgstr "Het is niet toegestaan om vergaderingen te zien."
 
-#: module/Decision/src/Decision/Service/Decision.php:133
+#: module/Decision/src/Decision/Service/Decision.php:134
 msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
-#: module/Decision/src/Decision/Service/Decision.php:160
+#: module/Decision/src/Decision/Service/Decision.php:161
 msgid "You are not allowed to view meeting notes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
-#: module/Decision/src/Decision/Service/Decision.php:253
+#: module/Decision/src/Decision/Service/Decision.php:260
 msgid "You are not allowed to delete meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te verwijderen."
 
-#: module/Decision/src/Decision/Service/Decision.php:272
+#: module/Decision/src/Decision/Service/Decision.php:338
 msgid "You are not allowed to search decisions."
 msgstr "Het is niet toegestaan om besluiten te doorzoeken."
 
-#: module/Decision/src/Decision/Service/Decision.php:301
+#: module/Decision/src/Decision/Service/Decision.php:367
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-#: module/Decision/src/Decision/Service/Decision.php:320
+#: module/Decision/src/Decision/Service/Decision.php:386
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Decision/Service/Decision.php:387
+#: module/Decision/src/Decision/Service/Decision.php:453
 msgid "You are not allowed to upload notes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Decision/Service/Decision.php:404
+#: module/Decision/src/Decision/Service/Decision.php:470
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Decision/Service/Decision.php:431
+#: module/Decision/src/Decision/Service/Decision.php:506
 msgid "You are not authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
@@ -3163,15 +3187,15 @@ msgid "You are not allowed to view membership info."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
 #: module/Decision/src/Decision/Service/Member.php:34
-#: module/Decision/src/Decision/Service/Member.php:102
+#: module/Decision/src/Decision/Service/Member.php:115
 msgid "You are not allowed to view members."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
-#: module/Decision/src/Decision/Service/Member.php:117
+#: module/Decision/src/Decision/Service/Member.php:130
 msgid "You are not allowed login into Microsoft Imagine."
 msgstr "Het is niet toegestaan om in te loggen op Microsoft Imagine."
 
-#: module/Decision/src/Decision/Service/Member.php:153
+#: module/Decision/src/Decision/Service/Member.php:166
 msgid ""
 "Login to Microsoft Imagine failed. If this persists, contact the "
 "WebCommittee."
@@ -3179,20 +3203,20 @@ msgstr ""
 "Inloggen op Microsoft Imagine is mislukt. Als dit probleem zich blijft "
 "voordoen, contacteer de WebCommissie."
 
-#: module/Decision/src/Decision/Service/Member.php:174
+#: module/Decision/src/Decision/Service/Member.php:187
 msgid "You are not allowed to view the list of today's birthdays."
 msgstr ""
 "Het is niet toegestaan om de lijst met verjaardagen van vandaag te zien."
 
-#: module/Decision/src/Decision/Service/Member.php:181
+#: module/Decision/src/Decision/Service/Member.php:194
 msgid "You are not allowed to view the list of birthdays."
 msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
 
-#: module/Decision/src/Decision/Service/Member.php:211
+#: module/Decision/src/Decision/Service/Member.php:224
 msgid "Name must be at least "
 msgstr "Naam moet op zijn minst "
 
-#: module/Decision/src/Decision/Service/Member.php:217
+#: module/Decision/src/Decision/Service/Member.php:230
 msgid "Not allowed to search for members."
 msgstr "Het is niet toegestaan om te zoeken op leden."
 
@@ -3207,6 +3231,14 @@ msgstr "Te uploaden document"
 #: module/Decision/src/Decision/Form/Document.php:44
 msgid "Upload document"
 msgstr "Upload document"
+
+#: module/Decision/src/Decision/Form/ReorderDocument.php:31
+msgid "Move up"
+msgstr "Verplaats omhoog"
+
+#: module/Decision/src/Decision/Form/ReorderDocument.php:32
+msgid "Move down"
+msgstr "Verplaats naar beneden"
 
 #: module/Decision/src/Decision/Form/OrganInformation.php:36
 msgid "Short dutch description"
@@ -3315,27 +3347,27 @@ msgstr "Verkeerd wachtwoord ingevoerd."
 msgid "Too many login attempts, try again later."
 msgstr "Te veel login pogingen, probeer het later nog eens."
 
-#: module/User/src/User/Form/Register.php:35
+#: module/User/src/User/Form/Register.php:36
 msgid "E-mail address"
 msgstr "E-mail adres"
 
-#: module/User/src/User/Form/Register.php:61
+#: module/User/src/User/Form/Register.php:62
 msgid "This email address does not be long to the given member."
 msgstr "Dit email adres is niet van het lid met dit lidmaatschapsnummer."
 
-#: module/User/src/User/Form/Register.php:68
+#: module/User/src/User/Form/Register.php:69
 msgid "There is no member with this membership number."
 msgstr "Er is geen lid met dit lidmaatschapsnummer."
 
-#: module/User/src/User/Form/Register.php:75
+#: module/User/src/User/Form/Register.php:76
 msgid ""
 "You already attempted to register, please check your email or try again "
-"after 24 hours."
+"after 15 minutes."
 msgstr ""
-"Je hebt al geprobeerd om te registreren, controleer je email of probeer weer "
-"na 24 uur."
+"Je hebt al geprobeerd om te registreren, controleer je email of probeer het "
+"opnieuw over 15 minuten."
 
-#: module/User/src/User/Form/Register.php:82
+#: module/User/src/User/Form/Register.php:83
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
 
@@ -3851,16 +3883,16 @@ msgstr "Je hebt niet de rechten om tentamens te downloaden"
 msgid "Course doesn't exist"
 msgstr "Vak bestaat niet"
 
-#: module/Education/src/Education/Service/Exam.php:282
+#: module/Education/src/Education/Service/Exam.php:280
 msgid "You are not allowed to delete exams"
 msgstr "Je hebt niet de rechten om tentamens te verwijderen"
 
-#: module/Education/src/Education/Service/Exam.php:302
-#: module/Education/src/Education/Service/Exam.php:412
+#: module/Education/src/Education/Service/Exam.php:300
+#: module/Education/src/Education/Service/Exam.php:410
 msgid "You are not allowed to upload exams"
 msgstr "Het is niet toegestaan om tentamens te uploaden"
 
-#: module/Education/src/Education/Service/Exam.php:430
+#: module/Education/src/Education/Service/Exam.php:428
 msgid "You are not allowed to add courses"
 msgstr "Je hebt niet de rechten om vakken toe te voegen"
 
@@ -4070,6 +4102,20 @@ msgstr "Tafelvoetbalcoordinator"
 msgid "Inkoper"
 msgstr "Inkoper"
 
+#~ msgid "Notes for this meeting"
+#~ msgstr "Notulen voor deze vergadering"
+
+#~ msgid "Manage"
+#~ msgstr "Beheer"
+
+#~ msgid "A list of helpful pages to manage the organ(s) you are part of."
+#~ msgstr ""
+#~ "Een lijst met behulpzame paginas voor het beheren van organen waar je lid "
+#~ "van bent."
+
+#~ msgid "GEWIS Logo"
+#~ msgstr "GEWIS Logo"
+
 #~ msgid "at"
 #~ msgstr "bij"
 
@@ -4101,9 +4147,6 @@ msgstr "Inkoper"
 
 #~ msgid "Decision Search"
 #~ msgstr "Besluiten zoeken"
-
-#~ msgid "Active members"
-#~ msgstr "Actieve leden"
 
 #~ msgid "Website admin"
 #~ msgstr "Website admin"
