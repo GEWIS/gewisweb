@@ -56,6 +56,13 @@ class JobLabel
     protected $languageNeutralId;
 
     /**
+     * Jobs with this label
+     *
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label")
+     */
+    protected $labels;
+
+    /**
      * Get's the id
      */
     public function getHidden()

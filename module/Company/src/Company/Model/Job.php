@@ -129,7 +129,7 @@ class Job
     /**
      * Job labels
      *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="lidnr")
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job")
      */
     protected $labels;
 

@@ -684,7 +684,7 @@ class Company extends AbstractACLService
     private function setLabelsForJob($job, $labels)
     {
         $value_compare_func = (function ($label1, $label2) {
-            if ($label1->getId() == $label2->getId())
+            if ($label1 == $label2)
             {
                 return 0;
             }
@@ -696,7 +696,7 @@ class Company extends AbstractACLService
         $currentLabels = [];
         foreach ($currentLabelAssignments as $labelAsg)
         {
-            $currentLabels[] = $labelAsg->getLabel();
+            $currentLabels[] = $labelAsg->getLabel()->getId();
         }
         $intersection = array_uintersect($labels, $currentLabels, $value_compare_func);
         $to_remove = array_udiff($currentLabels, $labels, $value_compare_func);
