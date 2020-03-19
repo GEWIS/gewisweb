@@ -83,12 +83,12 @@ a.agenda-item {
     margin-bottom: 2rem;
 
     &.collapsed {
-        .glyphicon {
+        .fas, .far, .fab {
             transform: rotate(0deg);
         }
     }
 
-    .glyphicon {
+    .fas, .far, .fab {
         transform: rotate(90deg);
     }
 

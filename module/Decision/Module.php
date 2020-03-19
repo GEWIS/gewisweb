@@ -1,6 +1,7 @@
 <?php
 namespace Decision;
 
+use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
@@ -106,6 +107,13 @@ class Module
                     );
                     $form->setHydrator($sm->get('decision_hydrator'));
                     return $form;
+                },
+                'decision_form_reorder_document' => function (ServiceManager $sm) {
+                    $translator = $sm->get('translator');
+
+                    return (new \Decision\Form\ReorderDocument())
+                        ->setTranslator($translator)
+                        ->setupElements();
                 },
                 'decision_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(

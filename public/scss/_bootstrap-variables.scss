@@ -33,6 +33,7 @@ $text-inverse-color: #fff;
 // Links
 $link-color: $brand-primary;
 $link-color-hover: darken($link-color, 15%);
+$link-color-disabled: #CCC;
 
 // Fonts
 $font-family-base: "Lato", "Arial", sans-serif;

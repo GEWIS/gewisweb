@@ -45,20 +45,7 @@ class Member extends AbstractAclService
             return null;
         }
 
-        $memberships = [];
-        foreach ($member->getOrganInstallations() as $install) {
-            if (null !== $install->getDischargeDate()) {
-                continue;
-            }
-            if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
-                $memberships[$install->getOrgan()->getAbbr()] = [];
-                $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
-            }
-            if ($install->getFunction() != 'Lid') {
-                $function = $this->getTranslator()->translate($install->getFunction());
-                $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
-            }
-        }
+        $memberships = $this->getOrganMemberships($member);
 
         $tags = $this->getPhotoService()->getTagsForMember($member);
 
@@ -77,6 +64,32 @@ class Member extends AbstractAclService
             'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir
         ];
+    }
+
+    /**
+     * Gets a list of all organs which the member currently is part of
+     *
+     * @param \Decision\Model\Member $member
+     *
+     * @return array
+     */
+    public function getOrganMemberships($member)
+    {
+        $memberships = [];
+        foreach ($member->getOrganInstallations() as $install) {
+            if (null !== $install->getDischargeDate()) {
+                continue;
+            }
+            if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
+                $memberships[$install->getOrgan()->getAbbr()] = [];
+                $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
+            }
+            if ($install->getFunction() != 'Lid') {
+                $function = $this->getTranslator()->translate($install->getFunction());
+                $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
+            }
+        }
+        return $memberships;
     }
 
     /**

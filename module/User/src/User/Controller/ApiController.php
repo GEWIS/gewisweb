@@ -23,20 +23,24 @@ class ApiController extends AbstractActionController
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $headers = $response->getHeaders();
-            $headers->addHeaderLine('X-GEWIS-MemberNr', $identity->getLidnr());
+            $headers->addHeaderLine('GEWIS-MemberID', $identity->getLidnr());
             if ($identity->getMember() != null) {
                 $member = $identity->getMember();
                 $name = $member->getFullName();
-                $headers->addHeaderLine('X-GEWIS-MemberName', $name);
+                $headers->addHeaderLine('GEWIS-MemberName', $name);
+                $headers->addHeaderLine('GEWIS-MemberEmail', $member->getEmail());
+                $memberships = $this->getMemberService()->getOrganMemberships($member);
+                $headers->addHeaderLine('GEWIS-MemberGroups', implode(',', array_keys($memberships)));
                 return $response;
             }
-            $headers->addHeaderLine('X-GEWIS-MemberName', '');
+            $headers->addHeaderLine('GEWIS-MemberName', '');
             return $response;
         }
         $response = $this->getResponse();
         $response->setStatusCode(401);
         return $response;
     }
+
     /**
      * Get a user service.
      *
@@ -45,5 +49,15 @@ class ApiController extends AbstractActionController
     protected function getUserService()
     {
         return $this->getServiceLocator()->get('user_service_user');
+    }
+
+    /**
+     * Get the member service.
+     *
+     * @return Decision\Service\Member
+     */
+    public function getMemberService()
+    {
+        return $this->getServiceLocator()->get('decision_service_member');
     }
 }

@@ -72,8 +72,7 @@ $form->prepare();
             <div class="row spacing-top--md">
                 <div class="col-md-12">
                     <div class="alert alert-danger" role="alert">
-                        <span
-                            class="glyphicon glyphicon-exclamation-sign"></span> <?= $this->translate('The activity could not be saved. Check and correct your input data.') ?>
+                        <i class="fas fa-exclamation-circle"></i> <?= $this->translate('The activity could not be saved. Check and correct your input data.') ?>
                     </div>
                 </div>
             </div>
@@ -158,13 +157,13 @@ $form->prepare();
                     ?>
                     <div class="form-group add-option spacing-top--md">
                         <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <i class="fas fa-plus"></i>
                             <?= $this->translate('Add an option') ?>
                         </button>
                     </div>
                     <div class="form-group remove-option">
                         <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
-                            <span class="glyphicon glyphicon-minus"></span>
+                            <i class="fas fa-minus"></i>
                             <?= $this->translate('Remove the last option') ?>
                         </button>
                     </div>

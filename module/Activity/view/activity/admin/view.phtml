@@ -3,7 +3,7 @@
     <?php if (isset($success)): // Display messages ?>
         <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
             <div class="container">
-                <span class="glyphicon <?= $success ? 'glyphicon-ok' : 'glyphicon-remove';?>"></span>&nbsp;<?= $message ?>
+                <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
             </div>
         </div>
     <?php endif;?>
@@ -79,6 +79,7 @@
             <?php if ($admin): ?>
             <td>
                  <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
+                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
             <?php endif; ?>
         </tr>

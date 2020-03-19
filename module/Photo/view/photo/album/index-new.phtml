@@ -64,7 +64,7 @@ $this->scriptUrl()->requireUrl('member/search')
             <?php endforeach; ?>
             <li class="active">
                 <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
-                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="fas fa-user"></span>
                     &nbsp;
                 <?php endif; ?>
                 <?= $this->escapeHtml($album->getName()); ?>
@@ -184,13 +184,13 @@ $this->scriptUrl()->requireUrl('member/search')
 
                     <div class="pswp__counter"></div>
 
-                    <button class="pswp__button_glyph pswp__button--close glyphicon-remove" title="Close (Esc)"></button>
+                    <button class="button_top pswp__button--close fas fa-times" title="Close (Esc)"></button>
                     <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
                     <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
-                    <button class="pswp__button_glyph pswp__button--download glyphicon-download-alt" title="<?= $this->translate('Download') ?>" data-toggle="tooltip" data-placement="bottom"></button>
-                    <button class="pswp__button_glyph pswp__button--like glyphicon glyphicon-thumbs-up" title="<?= $this->translate('Vote for photo of the week') ?>" data-toggle="tooltip" data-placement="bottom"></button>
-                    <button class="pswp__button_glyph pswp__button--info glyphicon-info-sign" title="<?= $this->translate('Metadata') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+                    <button class="button_top pswp__button--download fas fa-file-download" title="<?= $this->translate('Download') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+                    <button class="button_top pswp__button--like fas fa-thumbs-up" title="<?= $this->translate('Vote for photo of the week') ?>" data-toggle="tooltip" data-placement="bottom"></button>
+                    <button class="button_top pswp__button--info fas fa-info-circle" title="<?= $this->translate('Metadata') ?>" data-toggle="tooltip" data-placement="bottom"></button>
 
                     <!-- Preloader -->
                     <!-- element will get class pswp__preloader--active when preloader is running -->
@@ -233,6 +233,3 @@ $this->scriptUrl()->requireUrl('member/search')
         elements_selector: ".lazy-load"
     });
 </script>
-
-
-

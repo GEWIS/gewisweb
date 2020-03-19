@@ -27,7 +27,7 @@
                         <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
                         <td><?= $authorization->getRecipient()->getFullName() ?></td>
                         <td>
-                            <span class="glyphicon glyphicon-<?= $authorization->getRevoked() ? 'remove' : 'ok' ?>"
+                            <span class="fas <?= $authorization->getRevoked() ? 'fa-times' : 'fa-check' ?>">
                         </td>
                     </tr>
                 <?php endforeach ?>

@@ -8,6 +8,7 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\MeetingNotes as NotesModel;
 
 use Decision\Model\MeetingDocument;
+use Doctrine\ORM\PersistentCollection;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -241,6 +242,12 @@ class Decision extends AbstractAclService
         $document->setName($data['name']);
         $document->setMeeting($meeting);
 
+        // Determine document's position in ordering
+        $maxPosition = $this->getMeetingMapper()->findMaxDocumentPosition($meeting);
+        $position = is_null($maxPosition) ? 0 : ++$maxPosition; // NULL if meeting doesn't have documents yet
+
+        $document->setDisplayPosition($position);
+
         $this->getMeetingMapper()->persistDocument($document);
         return true;
     }
@@ -257,6 +264,65 @@ class Decision extends AbstractAclService
         $document = $this->getMeetingDocument($id);
         $this->getMeetingMapper()->remove($document);
     }
+
+    /**
+     * Changes a document's position in the ordering
+     *
+     * The basic flow is (1) retrieve documents, (2) swap document positions,
+     * then (3) persist position. Unfortunately, I have to update the positions
+     * of all documents related to a meeting because of legacy. Old documents
+     * don't have a position yet, so they are set to 0 by default.
+     *
+     * FUTURE: When documents have display positions, simplify the code by only
+     * mutating two rows.
+     *
+     * @param int $id Document ID
+     * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
+     * @return void
+     * @throws NotAllowedException
+     * @throws \InvalidArgumentException If the document doesn't exist
+     */
+    public function changePositionDocument($id, $moveDown = true)
+    {
+        $errorMessage = 'You are not allowed to modify meeting documents.';
+
+        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
+
+        // Documents are ordered because of @OrderBy annotation on the relation
+        /** @var PersistentCollection $documents */
+        $documents = $this->getMeetingMapper()
+            ->findDocumentOrFail($id)
+            ->getMeeting()
+            ->getDocuments();
+
+        // Create data structure to derive ordering, key is position and value
+        // is document ID
+        $ordering = $documents->map(function (MeetingDocument $document) {
+            return $document->getId();
+        });
+
+        $oldPosition = $ordering->indexOf($id);
+        $newPosition = ($moveDown === true) ? ($oldPosition + 1) : ($oldPosition - 1);
+
+        // Do nothing if the document is already at the top/bottom
+        if ($newPosition < 0 || $newPosition > ($ordering->count() - 1)) {
+            return;
+        }
+
+        // Swap positions
+        $ordering->set($oldPosition, $ordering->get($newPosition));
+        $ordering->set($newPosition, $id);
+
+        // Persist new positions
+        $documents->map(function (MeetingDocument $document) use ($ordering) {
+            $position = $ordering->indexOf($document->getId());
+
+            $document->setDisplayPosition($position);
+
+            $this->getMeetingMapper()->persistDocument($document);
+        });
+    }
+
     /**
      * Search for decisions.
      *
@@ -408,6 +474,15 @@ class Decision extends AbstractAclService
         return $this->sm->get('decision_form_document');
     }
 
+    public function getReorderDocumentForm()
+    {
+        $errorMessage = 'You are not allowed to modify meeting documents.';
+
+        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
+
+        return $this->sm->get('decision_form_reorder_document');
+    }
+
     /**
      * Get the SearchDecision form.
      *
@@ -522,5 +597,24 @@ class Decision extends AbstractAclService
     public function isAllowedToBrowseFiles()
     {
         return $this->isAllowed('browse', 'files');
+    }
+
+    /**
+     * Checks the user's permission
+     *
+     * @param string $operation
+     * @param string $resource
+     * @param string $errorMessage English error message
+     * @throws NotAllowedException If the user doesn't have permission
+     */
+    private function isAllowedOrFail($operation, $resource, $errorMessage)
+    {
+        if (!$this->isAllowed($operation, $resource)) {
+            $translator = $this->getTranslator();
+
+            throw new NotAllowedException(
+                $translator->translate($errorMessage)
+            );
+        }
     }
 }

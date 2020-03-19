@@ -68,12 +68,12 @@ Styleguide: buttons.styles
         overflow: hidden;
     }
 
-    .glyphicon {
+    .fas, .far, .fab {
         padding-left: 1em;
     }
 
     &:hover {
-        .glyphicon {
+        .fas, .far, .fab {
             color: #D40026;
         }
 

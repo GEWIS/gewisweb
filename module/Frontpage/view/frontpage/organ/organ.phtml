@@ -71,7 +71,7 @@ function getOrganDescription($organInformation, $lang)
             <table class="table">
                 <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
                     <tr>
-                        <td><span class="glyphicon glyphicon-envelope"></span>&nbsp;<?= $this->translate('Email') ?></td>
+                        <td><span class="fas fa-envelope"></span>&nbsp;&nbsp;<?= $this->translate('Email') ?></td>
                         <td>
                             <a href="mailto:<?= $organInformation->getEmail() ?>">
                                 <?= $organInformation->getEmail() ?>
@@ -81,7 +81,7 @@ function getOrganDescription($organInformation, $lang)
                 <?php endif; ?>
                 <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
                     <tr>
-                        <td><span class="glyphicon glyphicon-link"></span>&nbsp;<?= $this->translate('Website') ?></td>
+                        <td><span class="fas fa-external-link-alt"></span>&nbsp;&nbsp;<?= $this->translate('Website') ?></td>
                         <td>
                             <a href="<?= $organInformation->getWebsite() ?>">
                                 <?= $organInformation->getWebsite() ?>
@@ -99,8 +99,7 @@ function getOrganDescription($organInformation, $lang)
                         <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
 
                             <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
-                            <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
-                            <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
+                            <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
                         </a>
                     <?php endforeach; ?>
                 </div>

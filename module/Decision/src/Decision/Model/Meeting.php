@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -51,6 +52,7 @@ class Meeting
      * Documents.
      *
      * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
+     * @OrderBy({"displayPosition" = "ASC"})
      */
     protected $documents;
 
@@ -213,31 +215,4 @@ class Meeting
             $this->addDocument($document);
         }
     }
-
-    /**
-     * Sorts document list
-     */
-    public function sortDocuments()
-    {
-        $temp = [];
-        foreach ($this->documents as $document) {
-            $temp[] = $document;
-        }
-        usort($temp, function ($a, $b) {
-            $aa = preg_split("/(\.|\s)/", $a->getName());
-            $bb = preg_split("/(\.|\s)/", $b->getName());
-            for ($i = 0; $i < min(count($aa), count($bb)); $i++) {
-                if (!is_numeric($aa[$i])) {
-                    return -1;
-                } elseif (!is_numeric($bb[$i])) {
-                    return 1;
-                } elseif ($aa[$i] != $bb[$i]) {
-                    return $aa[$i] < $bb[$i] ? -1 : 1;
-                }
-            }
-            return 0;
-        });
-        $this->documents = $temp;
-    }
-
 }

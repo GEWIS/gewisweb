@@ -15,7 +15,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                 <a href="<?= $this->url('photo/photo/tag/remove',
                     ['photo_id' => $this->photo->getId(), 'lidnr' => $tag->getMember()->getLidnr()]); ?>"
                    class="remove-tag">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <span class="fas fa-times" aria-hidden="true"></span>
                 </a>
                 <?php
                     $i++;
@@ -32,7 +32,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
 <div>
     <form class="form-inline tagForm">
         <div class="form-group">
-            <label for="tagSearch"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <?= $this->translate('Tag someone') ?>:</label>
+            <label for="tagSearch"><i class="fas fa-plus"></i> <?= $this->translate('Tag someone') ?>:</label>
             <input type="text" data-url="<?= $this->url('photo/photo/tag/add',
                 ['photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr']); ?>" class="tagSearch" name="tagSearch">
         </div>

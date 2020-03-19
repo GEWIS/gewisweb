@@ -158,6 +158,48 @@ class Meeting
     }
 
     /**
+     * Returns the document with the specified ID
+     *
+     * @param int $id Document ID
+     * @return MeetingDocument
+     * @throws \InvalidArgumentException If the document does not exist
+     */
+    public function findDocumentOrFail($id)
+    {
+        $document = $this->findDocument($id);
+
+        if (is_null($document)) {
+            throw new \InvalidArgumentException(
+                sprintf("A document with the provided ID '%d' does not exist.", $id)
+            );
+        }
+
+        return $document;
+    }
+
+    /**
+     * Returns the maximum document position for the given meeting
+     *
+     * @param MeetingModel $meeting
+     * @return string|null NULL if no documents are associated to the meeting
+     */
+    public function findMaxDocumentPosition(MeetingModel $meeting)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('MAX(d.displayPosition)')
+            ->from('Decision\Model\Meeting', 'm')
+            ->join('m.documents', 'd')
+            ->where('m.type = :type')
+            ->andWhere('m.number = :number');
+
+        $qb->setParameter(':type', $meeting->getType());
+        $qb->setParameter(':number', $meeting->getNumber());
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Persist a meeting model.
      *
      * @param MeetingModel $meeting Meeting to persist.

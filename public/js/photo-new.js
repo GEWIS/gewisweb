@@ -74,7 +74,7 @@ Photo = {
                                 $('.tagList-' + data.tag.photo_id).each(function(i) {
                                     $(this).prepend('<a href="' + memberURL + '">' + suggestion.value + '</a>' +
                                         '<a href="' + removeURL + '" id="' + id + '">' +
-                                        '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
+                                        '<span class="fas fa-times" aria-hidden="true">' +
                                         '</span></a>, '
                                     );
                                 });

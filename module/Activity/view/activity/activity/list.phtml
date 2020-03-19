@@ -1,4 +1,3 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <ul class="list-group">
     <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
         <li class="list-group-item agenda-item">
@@ -41,15 +40,15 @@
                         <div class="col-md-4">
                             <dl>
                                 <dt><?= $this->translate('Start') ?></dt>
-                                <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
                                 <dt><?= $this->translate('End') ?></dt>
-                                <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
 
                                 <dt><?= $this->translate('Location') ?></dt>
                                 <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
                                 <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
                                     <dt><?= $this->translate('Subscribe before') ?></dt>
-                                    <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang); ?></dd>
+                                    <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
                                 <?php endif; ?>
                                 <dt><?= $this->translate('Costs') ?></dt>
                                 <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>

@@ -20,3 +20,7 @@ thead {
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #f0f0f0;
 }
+
+.table-documents > tbody > tr > td {
+    vertical-align: middle;
+}
