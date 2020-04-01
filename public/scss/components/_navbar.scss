@@ -8,14 +8,7 @@ Markup:
 <div class="navbar navbar-default">
     <div class="navbar-header">
         <a class="navbar-brand">
-            <img src="/img/logo-header.png"/>
-        </a>
-    </div>
-</div>
-<div class="navbar navbar-gewis">
-    <div class="navbar-header">
-        <a class="navbar-brand">
-            <img src="/img/logo-header.png" style="-webkit-filter: grayscale(1) brightness(100);"/>
+            <div class="gi gewis-base"></div>
         </a>
     </div>
 </div>
@@ -41,9 +34,16 @@ Styleguide: navbar
 
     padding: 10px 15px;
     height: 80px;
+}
 
-    img {
-        height: 100%;
+a.navbar-brand  {
+    color: #fff;
+    font-size: 3em;
+    display: table;
+
+    .gi {
+        display: table-cell;
+        vertical-align: middle;
     }
 }
 
