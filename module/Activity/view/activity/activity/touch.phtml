@@ -49,7 +49,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
     <div class="container">
         <div class="navbar-header">
             <a href="#" class="navbar-brand">
-                <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
+                <div class="gi gewis-base"></div>
             </a>
         </div>
 
@@ -249,7 +249,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" disabled="disabled"
                                         data-type="minus" data-field="__id__">
-                                    <span class="glyphicon glyphicon-minus"></span>
+                                    <i class="fas fa-minus"></i>
                                 </button>
                             </span>
                             <input class="form-control input-number" type="number" id="__id__" min="__min__" max="__max__" step="1"
@@ -257,7 +257,7 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number"
                                         data-type="plus" data-field="__id__">
-                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <i class="fas fa-plus"></i>
                                 </button>
                              </span>
                         </div>

@@ -2,7 +2,9 @@
 
 namespace Activity\Mapper;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class ActivityCalendarOption
 {
@@ -36,34 +38,46 @@ class ActivityCalendarOption
     }
 
     /**
-     * Gets all options created by the given organs or user
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Activity\Model\ActivityCalendarOption');
+    }
+
+    /**
+     * Gets all options created by the given organs
      *
      * @param $organs
      * @param $user
      *
      * @return array
      */
-    public function getUpcomingOptionsByOrganOrUser($organs, $user)
+    public function getUpcomingOptionsByOrgans($organs)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.endTime > :now')
-            ->andWhere('a.creator = :user OR a.organ IN (:organs)')
-            ->orderBy('a.creationTime', 'ASC');
+            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->where('a.proposal = b.id')
+            ->andWhere('a.endTime > :now')
+            ->andWhere('b.organ IN (:organs)')
+            ->orderBy('a.beginTime', 'ASC');
 
-        $qb->setParameter('now', new \DateTime())
-            ->setParameter('user', $user)
+        $qb->setParameter('now', new DateTime())
             ->setParameter('organs', $organs);
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * Get upcoming activity options sorted by creation date
+     * Get upcoming activity options sorted by begin date
      *
      * @param bool $withDeleted whether to include deleted results
      * @return array
+     * @throws \Exception
      */
     public function getUpcomingOptions($withDeleted = false)
     {
@@ -71,20 +85,21 @@ class ActivityCalendarOption
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
             ->where('a.endTime > :now')
-            ->orderBy('a.creationTime', 'ASC');
+            ->orderBy('a.beginTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere('a.deletedBy IS NULL');
+            $qb->andWhere("a.modifiedBy IS NULL")
+                ->orWhere("a.status = 'approved'");
         }
-        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * Get upcoming activity options sorted by creation date
+     * Get upcoming activity options sorted by begin date
      *
-     * @param \DateTime $before the date to get the options before
+     * @param DateTime $before the date to get the options before
      * @param bool $withDeleted Whether to include deleted options
      * @return array
      */
@@ -93,37 +108,61 @@ class ActivityCalendarOption
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.creationTime < :before')
-            ->orderBy('a.creationTime', 'ASC');
+            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->where('a.proposal = b.id')
+            ->andWhere('a.beginTime > :now')
+            ->andWhere('b.creationTime < :before')
+            ->orderBy('b.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere('a.deletedBy IS NULL');
+            $qb->andWhere("a.modifiedBy IS NULL")
+                ->orWhere("a.status = 'approved'");
         }
+
+        $qb->setParameter('now', new DateTime());
         $qb->setParameter('before', $before);
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * Retrieves upcoming, non-deleted options by name
+     * Retrieves options associated with a proposal
      *
-     * @param $name
+     * @param int $proposal
      *
      * @return array
      */
-    public function findOptionsByName($name)
+    public function findOptionsByProposal($proposalId)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->where('a.endTime > :now')
-            ->andWhere('a.name LIKE :name')
-            ->andWhere('a.deletedBy IS NULL')
-            ->setParameter('now', new \DateTime())
-            ->setParameter('name', '%' . $name . '%');
+            ->andWhere('a.proposal = :proposal')
+            ->setParameter('proposal', $proposalId);
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Retrieves options associated with a proposal and associated with given organ
+     *
+     * @param int $proposal
+     * @param int $organId the organ proposals have to be associated with
+     *
+     * @return array
+     */
+    public function findOptionsByProposalAndOrgan($proposalId, $organId)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->andWhere('a.proposal = :proposal')
+            ->setParameter('proposal', $proposalId)
+            ->setParameter('organ', $organId);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Persist an option
      *
@@ -140,15 +179,5 @@ class ActivityCalendarOption
     public function flush()
     {
         $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityCalendarOption');
     }
 }

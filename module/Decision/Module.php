@@ -1,6 +1,7 @@
 <?php
 namespace Decision;
 
+use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
@@ -107,6 +108,13 @@ class Module
                     $form->setHydrator($sm->get('decision_hydrator'));
                     return $form;
                 },
+                'decision_form_reorder_document' => function (ServiceManager $sm) {
+                    $translator = $sm->get('translator');
+
+                    return (new \Decision\Form\ReorderDocument())
+                        ->setTranslator($translator)
+                        ->setupElements();
+                },
                 'decision_hydrator' => function ($sm) {
                     return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
                         $sm->get('decision_doctrine_em')
@@ -132,6 +140,7 @@ class Module
                     $acl->addResource('meeting');
                     $acl->addResource('authorization');
                     $acl->addResource('files');
+                    $acl->addResource('regulations');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -157,6 +166,9 @@ class Module
 
                     // users are allowed to use the filebrowser
                     $acl->allow('user', 'files', 'browse');
+
+                    // users are allowed to download the regulations
+                    $acl->allow('user', 'regulations', ['list', 'download']);
 
                     return $acl;
                 },

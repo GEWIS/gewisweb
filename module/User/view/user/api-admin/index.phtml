@@ -16,12 +16,12 @@
             <td><?= $token->getToken() ?></td>
             <td><a class="btn btn-xs btn-danger" href="<?= $this->url('user_admin/api/remove', [
     'id' => $token->getId()
-]) ?>"><span class="glyphicon glyphicon-remove"></span> <?= $this->translate('Remove') ?></a></td>
+]) ?>"><span class="fas fa-times"></span> <?= $this->translate('Remove') ?></a></td>
         </tr>
         <?php endforeach ?>
     </tbody>
 </table>
 
 <a href="<?= $this->url('user_admin/api/default', ['action' => 'add']) ?>" class="btn btn-success">
-    <span class="glyphicon glyphicon-plus"></span> <?= $this->translate('Add new Token') ?>
+    <i class="fas fa-plus"></i> <?= $this->translate('Add new Token') ?>
 </a>

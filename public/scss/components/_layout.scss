@@ -27,7 +27,7 @@ a[href^='mailto:klachten@gewis.nl'] .panel-special {
     position: relative;
 
     &:hover {
-        .glyphicon {
+        .fas, .far, .fab {
             animation: 4s linear 0s dealWithIt;
         }
     }
@@ -70,3 +70,12 @@ a[href^='mailto:klachten@gewis.nl'] .panel-special {
 .mt-3 { margin-top: 3rem; }
 .mt-4 { margin-top: 4rem; }
 .mt-5 { margin-top: 5rem; }
+
+.align-middle {
+    display: inline-flex;
+    align-items: center;
+}
+
+.d-block {
+    display: block;
+}

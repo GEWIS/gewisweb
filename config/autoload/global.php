@@ -49,6 +49,7 @@ return [
     'storage' => [
         'storage_dir' => 'public/data',
         'public_dir' => 'data',
+        'cache_dir' => 'data/cache',
         'dir_mode' => 0777, // rwx by default
     ],
 
@@ -121,7 +122,7 @@ return [
             /*
              * Max. width and height which a thumbnail may have.
              */
-            'width' => 960,
+            'width' => 1920,
             'height' => 1920
         ],
         'album_cover' => [
@@ -145,6 +146,13 @@ return [
     'frontpage' => [
         'activity_count' => 3, // Number of activities to display
         'news_count' => 3, // Number of news items to display
+    ],
+
+    'regulations' => [
+        'borrel-reglement' => 'Beleid%20&%20Reglementen/Borrelreglement',
+        'computer-reglement' => 'Beleid%20&%20Reglementen/Computerreglement',
+        'sleutel-beleid' => 'Beleid%20&%20Reglementen/Sleutelbeleid',
+        'poster-reglement' => 'Beleid%20&%20Reglementen/Posterbeleid',
     ],
 
     /**

@@ -1,4 +1,79 @@
-## [v1.4.0](https://github.com/GEWIS/gewisweb/tree/v1.3.3) (2019-02-06)
+## [v1.7-beta](https://github.com/GEWIS/gewisweb/tree/v1.7-beta) (2020-02-10)
+
+* Changed website icons to fontawesome
+* Added functionality for manually sorting meeting documents
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.6-beta](https://github.com/GEWIS/gewisweb/tree/v1.6-beta) (2019-11-02)
+
+* Implemented a new photo viewer next to the old photo viewer
+* Improved the jobs overview
+* Improved user registration
+* Improved exception logging
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.5.3](https://github.com/GEWIS/gewisweb/tree/v1.5.3) (2019-09-26)
+
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.5.2](https://github.com/GEWIS/gewisweb/tree/v1.5.2) (2019-09-19)
+
+* Improved option calendar
+* Used more informative title for emails to GEFLITST
+* Various bugfixes
+
+---
+
+## [v1.5.1](https://github.com/GEWIS/gewisweb/tree/v1.5.1) (2019-09-02)
+
+* Implemented RFC2324
+* Updated dependencies
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.5.0](https://github.com/GEWIS/gewisweb/tree/v1.5.0) (2019-06-25)
+
+* Revised the option calendar system
+* Addded option for users to select profile pictures
+* Added social media references
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.4.2](https://github.com/GEWIS/gewisweb/tree/v1.4.2) (2019-05-10)
+
+* Added ability to add documents to VV's
+* Addded option for users to select profile pictures
+* Profile pictures are now cached
+* Automatic profile picture selection has been improved
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.4.1](https://github.com/GEWIS/gewisweb/tree/v1.4.1) (2019-03-21)
+
+* Sort meeting documents on number
+* Add profile picture to user profile
+* Add overview of users subscribed activities
+* Various UI improvements
+* Various bugfixes
+
+---
+
+## [v1.4.0](https://github.com/GEWIS/gewisweb/tree/v1.4.0) (2019-02-06)
 
 * Redesigned the members page!
 * Authorizations now send confirmation emails
@@ -6,6 +81,8 @@
 * Disclaimer on educational material
 * Various UI improvements
 * Various bugfixes
+
+---
 
 ## [v1.3.2](https://github.com/GEWIS/gewisweb/tree/v1.3.2) (2018-03-02)
 
@@ -85,5 +162,3 @@
 ## [v1.0](https://github.com/GEWIS/gewisweb/tree/v1.0) (2016-02-06)
 
 * Initial release, lots of great features
-
----

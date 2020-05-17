@@ -82,30 +82,30 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     </div>
     <div class="col-lg-9">
 
-        <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>"><span
-                class="glyphicon glyphicon-plus"></span>&nbsp;<?= $this->translate('Create new album') ?></a>
+        <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>">
+          <i class="fas fa-plus"></i>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
-            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="glyphicon glyphicon-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
+            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="fas fa-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
             </a>
             <a id="btnAdd" class="btn btn-primary" href=""><span
-                    class="glyphicon glyphicon-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>
+                    class="fas fa-file-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>
             <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary"><span
-                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move album') ?></button>
+                    class="fas fa-file-export"></span>&nbsp;<?= $this->translate('Move album') ?></button>
             <button type="button" data-toggle="modal" data-target="#multipleMoveModal"
                     class="btn btn-primary btn-hidden" id="btnMultipleMove"><span
-                    class="glyphicon glyphicon-folder-open"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
+                    class="fas fa-file-export"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
             </button>
             <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate">
-                <span class="glyphicon glyphicon-picture"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
+                <span class="fas fa-redo-alt"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
             </button>
             <br><br>
             <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
-                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
+                    class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete album') ?></button>
             <button type="button" data-toggle="modal" data-target="#multipleDeleteModal"
                     class="btn btn-danger btn-hidden" id="btnMultipleDelete"><span
-                    class="glyphicon glyphicon-trash"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
+                    class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete %i photos') ?></button>
         </div>
         <hr>
 
@@ -135,7 +135,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
                 <button type="button"
                         class="btn btn-primary btn-regenerate"><?= $this->translate('Regenerate') ?></button>
                 <button type="button" class="btn btn-primary"
-                        data-dismiss="modal"><?= $this->translate('Save') ?></button>
+                        data-dismiss="modal"><?= $this->translate('Close') ?></button>
             </div>
         </div>
     </div>

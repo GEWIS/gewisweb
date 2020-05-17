@@ -12,6 +12,7 @@ class Register extends Form
     const ERROR_WRONG_EMAIL = 'wrong_email';
     const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
     const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
+    const ERROR_ALREADY_REGISTERED = 'already_registered';
 
     protected $translate;
 
@@ -66,6 +67,13 @@ class Register extends Form
             $this->setMessages([
                 'lidnr' => [
                     $this->translate->translate("There is no member with this membership number.")
+                ]
+            ]);
+            break;
+        case self::ERROR_ALREADY_REGISTERED:
+            $this->setMessages([
+                'lidnr' => [
+                    $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
                 ]
             ]);
             break;

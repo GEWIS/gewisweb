@@ -2,10 +2,10 @@
 
 namespace User\Model;
 
+use DateTime;
 use Decision\Model\Member;
-
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * User model.
@@ -44,6 +44,13 @@ class NewUser
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $member;
+
+    /**
+     * Registration attempt timestamp
+     *
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $time;
 
 
     /**
@@ -93,6 +100,16 @@ class NewUser
     }
 
     /**
+     * Get the registration time.
+     *
+     * @return DateTime
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
      * Get the member.
      *
      * @return Member
@@ -130,5 +147,15 @@ class NewUser
     public function setCode($code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * Set the registration time.
+     *
+     * @param DateTime $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
     }
 }

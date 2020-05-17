@@ -112,7 +112,7 @@ Set the minimal role required to view this page. All visitors whom have this rol
 
     <?php if($canDelete): ?>
         <a href="<?= $this->url('admin_page/delete', ['page_id' => $pageId]) ?>" class="btn btn-danger">
-            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            <span class="far fa-trash-alt"></span>&nbsp;
             <?= $this->translate('Delete this page') ?>
         </a>
     <?php endif ?>

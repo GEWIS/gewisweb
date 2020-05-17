@@ -1,18 +1,48 @@
 <?php
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<nav class="navbar navbar-gewis navbar-static-top" role="navigation">
+<?php if($this->identity()): ?>
+    <?php if(in_array($this->identity()->getMember()->getLidnr(), [8073, 8284, 8090, 8329, 8032, 7571, 8186])): ?>
+        <style>
+            .rainbow {
+                background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+                background-size: 5000% 100%;
+
+                -webkit-animation: AnimationName 10s ease infinite;
+                -moz-animation: AnimationName 10s ease infinite;
+                animation: AnimationName 10s ease infinite;
+            }
+
+            @-webkit-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+            @-moz-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+            @keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+        </style>
+    <?php endif ?>
+<?php endif ?>
+<nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
             <a href="<?= $this->url('home') ?>" class="navbar-brand">
-                <img src="<?= $this->basePath() ?>/img/gewis-branding.svg" alt="<?= $this->translate('GEWIS Logo') ?>">
+                <div class="gi gewis-base"></div>
             </a>
         </div>
         <div class="navbar-header navbar-right pull-right">
             <ul class="nav navbar-nav pull-left no-collapse">
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-globe"></span>
+                        <i class="fas fa-globe-europe"></i>
                         <span class="sr-only"><?= $this->translate('Language settings') ?></span>
                         <span class="caret"></span>
                     </a>
@@ -32,13 +62,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 <?php if (null === $this->identity()): ?>
                     <li class="visible-xs pull-left">
                         <a href="<?= $this->url('user') ?>">
-                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="fas fa-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
                         </a>
                     </li>
                     <li class="dropdown pull-left hidden-xs">
                         <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="fas fa-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
                             <span class="caret"></span>
                         </a>
@@ -139,7 +169,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if (!is_null($this->featuredCompanyPackage())): ?>
                             <li>
                                 <a href="<?= $this->url('company/spotlight') ?>">
-                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="fas fa-star"></span>
                                     <?= $this->translate('Featured') ?>:
                                     <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
                                 </a>
@@ -174,6 +204,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <?= $this->translate('Activities') ?>
                             </a>
                         </li>
+                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+                            <li><a href="<?= $this->url('activity/my') ?>"> <?= $this->translate('My activities') ?></a></li>
+                        <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
                             <li><a href="<?= $this->url('activity/archive') ?>"> <?= $this->translate('Activity Archive') ?></a></li>
                         <?php endif; ?>

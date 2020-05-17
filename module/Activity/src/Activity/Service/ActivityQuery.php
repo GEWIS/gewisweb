@@ -206,6 +206,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     /**
      * Get all activities that are approved by the board and which occur in the future
      *
+     * @param String $category Type of activities requested
+     *
      * @return array Array of activities
      */
     public function getUpcomingActivities($category = null)
@@ -218,9 +220,17 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getUpcomingActivities(null, null, $category);
-
-        return $activity;
+        if ($category === 'my') {
+            if (!$this->isAllowed('view', 'myActivities')) {
+                $translator = $this->getTranslator();
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to view upcoming activities coupled to a member account')
+                );
+            }
+            $user = $this->getUserService()->getIdentity();
+            return $activityMapper->getUpcomingActivitiesForMember($user);
+        }
+        return $activityMapper->getUpcomingActivities(null, null, $category);
     }
 
     /**
@@ -308,5 +318,15 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
+    }
+    
+     /**
+     * Gets the user service.
+     *
+     * @return \User\Service\User
+     */
+    public function getUserService()
+    {
+        return $this->sm->get('user_service_user');
     }
 }

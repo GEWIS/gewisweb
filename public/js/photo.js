@@ -58,7 +58,7 @@ Photo = {
                             var id = 'removeTag' + data.tag.id;
                             $('#tagList').append('<li><a href="' + memberURL + '">' + suggestion.value + '</a>' +
                                 '<a href="' + removeURL + '" id="' + id + '">' +
-                                '<span class="glyphicon glyphicon-remove" aria-hidden="true">' +
+                                '<span class="fas fa-times" aria-hidden="true">' +
                                 '</span></a></li>'
                             );
                             $('#' + id).on('click', Photo.removeTag);
@@ -119,4 +119,3 @@ $(function () {
         }
     });
 });
-

@@ -27,7 +27,6 @@ $this->headTitle($this->translate('Members')); ?>
                             $member->getBirth(),
                             \IntlDateFormatter::LONG,
                             \IntlDateFormatter::NONE,
-                            'nl_NL'
                         ) ?></td>
                     <td><?= $member->getFullName() ?></td>
                     <td><?= $years ?> <?= $this->translate('years') ?></td>

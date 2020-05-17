@@ -41,8 +41,8 @@
             <?php endif; ?>
             <?php if (!$admin): ?>
             <td>
-                <?php $icons = ['question-sign', 'ok-sign',  'remove-sign'] ?>
-                <span class="glyphicon glyphicon-<?= $icons[$activity->getStatus() -1]?>"></span>&nbsp;
+                <?php $icons = ['fa-question-circle', 'fa-check-circle',  'fa-times-circle'] ?>
+                <span class="fas <?= $icons[$activity->getStatus() -1]?>"></span>&nbsp;
             </td>
             <?php endif ?>
             <td>
@@ -56,4 +56,3 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-

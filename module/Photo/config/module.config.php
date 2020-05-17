@@ -59,6 +59,19 @@ return [
                             ],
                         ],
                     ],
+                    'album_beta' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/beta/album[/:album_id]',
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Album',
+                                'action' => 'indexNew',
+                            ],
+                        ],
+                    ],
                     'photo' => [
                         'type' => 'Segment',
                         'options' => [
@@ -106,6 +119,15 @@ return [
                                     ],
                                 ],
                             ],
+                            'vote' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/vote',
+                                    'defaults' => [
+                                        'action' => 'vote',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'photo_download' => [
@@ -142,6 +164,32 @@ return [
                             'defaults' => [
                                 'controller' => 'Photo',
                                 'action' => 'weekly',
+                            ],
+                        ],
+                    ],
+                    'set_profile_photo' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/setprofilephoto/:photo_id',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'setProfilePhoto',
+                            ],
+                        ],
+                    ],
+                    'remove_profile_photo' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/removeprofilephoto[/:photo_id]',
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Photo',
+                                'action' => 'removeProfilePhoto',
                             ],
                         ],
                     ],
@@ -424,6 +472,15 @@ return [
                         'defaults' => [
                             'controller' => 'Photo\Controller\PhotoAdmin',
                             'action' => 'weeklyPhoto'
+                        ]
+                    ]
+                ],
+                'migrate_aspect_ratio' => [
+                    'options' => [
+                        'route' => 'photo aspectratio',
+                        'defaults' => [
+                            'controller' => 'Photo\Controller\PhotoAdmin',
+                            'action' => 'migrateAspectRatios'
                         ]
                     ]
                 ],

@@ -45,6 +45,36 @@ class Member extends AbstractAclService
             return null;
         }
 
+        $memberships = $this->getOrganMemberships($member);
+
+        $tags = $this->getPhotoService()->getTagsForMember($member);
+
+        // Base directory for retrieving photos
+        $basedir = $this->getPhotoService()->getBaseDirectory();
+
+        $photoService = $this->getPhotoService();
+        $profilePhoto = $photoService->getProfilePhoto($lidnr);
+        $isExplicitProfilePhoto = $photoService->hasExplicitProfilePhoto($lidnr);
+
+        return [
+            'member' => $member,
+            'memberships' => $memberships,
+            'tags' => $tags,
+            'profilePhoto' => $profilePhoto,
+            'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
+            'basedir' => $basedir
+        ];
+    }
+
+    /**
+     * Gets a list of all organs which the member currently is part of
+     *
+     * @param \Decision\Model\Member $member
+     *
+     * @return array
+     */
+    public function getOrganMemberships($member)
+    {
         $memberships = [];
         foreach ($member->getOrganInstallations() as $install) {
             if (null !== $install->getDischargeDate()) {
@@ -59,17 +89,7 @@ class Member extends AbstractAclService
                 $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
             }
         }
-
-        $tags = $this->getPhotoService()->getTagsForMember($member);
-        // Base directory for retrieving photos
-        $basedir = $this->getPhotoService()->getBaseDirectory();
-
-        return [
-            'member' => $member,
-            'memberships' => $memberships,
-            'tags' => $tags,
-            'basedir' => $basedir
-        ];
+        return $memberships;
     }
 
     /**
@@ -148,19 +168,6 @@ class Member extends AbstractAclService
         }
 
         return $response->getBody();
-    }
-
-    public function getRegulationDownload($regulation)
-    {
-        if (!$this->isAllowed('edit', 'organ')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to download regulations.')
-            );
-        }
-
-        $service = $this->getFileStorageService();
-        return $service->downloadFile("regulations/$regulation.pdf", "$regulation.pdf");
     }
 
     /**
@@ -244,7 +251,7 @@ class Member extends AbstractAclService
         $meetingNumber = $meeting->getNumber();
         $lidnr = $member->getLidnr();
         $authorizations = $authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
-        
+
         if (count($authorizations) < $maxAuthorizations) {
             return true;
         }

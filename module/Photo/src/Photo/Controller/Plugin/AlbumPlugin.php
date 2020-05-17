@@ -104,7 +104,7 @@ class AlbumPlugin extends AbstractPlugin
             'albums'  => $albums
         ];
     }
-    
+
     /**
      * Retrieves all data needed to display a page of an album
      *
@@ -129,13 +129,13 @@ class AlbumPlugin extends AbstractPlugin
             )
         );
         $paginator->setCurrentPageNumber($activePage);
-        
+
         $config = $albumService->getConfig();
         $paginator->setItemCountPerPage($config['max_photos_page']);
-        
+
         $photoService = $this->getPhotoService();
         $basedir = $photoService->getBaseDirectory();
-        
+
         return [
             'album'     => $album,
             'basedir'   => $basedir,
