@@ -1,3 +1,4 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <?php
 /** Render a form to sign up for an activity.
  * Required parameters:
@@ -60,7 +61,7 @@ function formElementRender($element, $label, $id, $context){
 <?php endif; ?>
 
     <?php foreach($activity->getFields() as $field):?>
-         <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()), $field->getId(), $this) ?>
+         <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
     <?php endforeach;?>
 
 <?php

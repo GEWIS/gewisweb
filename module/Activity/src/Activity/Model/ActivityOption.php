@@ -32,7 +32,7 @@ class ActivityOption
     /**
      * The value of the option.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
     protected $value;
 

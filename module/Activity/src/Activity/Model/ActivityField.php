@@ -31,7 +31,7 @@ class ActivityField
     /**
      * The name of the field.
      *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
     protected $name;
 
