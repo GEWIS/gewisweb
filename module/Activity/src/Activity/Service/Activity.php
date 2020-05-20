@@ -358,7 +358,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $organ;
     }
 
-    private static function createLocalized($params, $dutch, $english, $nameEn, $name) {
+    private static function createLocalized($params, $dutch, $english, $nameEn, $name)
+    {
         return new LocalisedText($english ? $params[$nameEn] : null, $dutch ? $params[$name] : null);
     }
 

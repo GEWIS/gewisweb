@@ -40,15 +40,18 @@ class LocalisedText
         $this->valueNL = $valueNL;
     }
 
-    public function getValueEN() {
+    public function getValueEN()
+    {
         return $this->valueEN;
     }
 
-    public function setValueEN($valueEN) {
+    public function setValueEN($valueEN)
+    {
         return new LocalisedText($valueEN, $this->valueNL);
     }
 
-    public function getValueNL() {
+    public function getValueNL()
+    {
         return $this->valueNL;
     }
 
@@ -56,7 +59,8 @@ class LocalisedText
      * @param string|null $locale
      * @return string The localised text.
      */
-    public function getText($locale = null) {
+    public function getText($locale = null)
+    {
         if ($locale === null) {
             $locale = $this->getPreferredLocale();
         }
@@ -74,7 +78,8 @@ class LocalisedText
      * @param string|null $locale
      * @return string The localised text.
      */
-    public function getExactText($locale = null) {
+    public function getExactText($locale = null)
+    {
         if ($locale === null) {
             $locale = $this->getPreferredLocale();
         }
@@ -91,14 +96,16 @@ class LocalisedText
     /**
      * @return LocalisedText
      */
-    public function copy() {
+    public function copy()
+    {
         return new LocalisedText($this->valueEN, $this->valueNL);
     }
 
     /**
      * @return string The preferred language: either 'nl'  or 'en'.
      */
-    private function getPreferredLocale() {
+    private function getPreferredLocale()
+    {
         $langSession = new SessionContainer("lang");
         return $langSession->lang;
     }
