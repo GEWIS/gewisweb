@@ -19,9 +19,12 @@
 @import 'components/flag-icon';
 @import 'components/footer';
 @import 'components/forms';
+@import 'components/grid';
 @import 'components/headings';
 @import 'components/jumbotron';
 @import 'components/layout';
+@import 'components/logo';
+@import 'components/links';
 @import 'components/list-group';
 @import 'components/md-editor';
 @import 'components/navbar';
@@ -32,8 +35,6 @@
 @import 'components/tables';
 @import 'components/thumbnails';
 @import 'components/type';
-@import 'components/grid';
-@import 'components/links';
 
 // Module specific styles
 @import 'modules/company';
@@ -47,3 +48,6 @@
 @import "fontawesome/solid.scss";
 @import "fontawesome/brands.scss";   //Footer icons
 @import "fontawesome/v4-shims.scss"; //For bootstrap markdown editor which expects v4
+
+//GEWIS icons
+@import "gewisicons/gewisicons.scss";
