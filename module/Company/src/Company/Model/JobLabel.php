@@ -60,7 +60,7 @@ class JobLabel
      *
      * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label")
      */
-    protected $labels;
+    protected $assignments;
 
     /**
      * Get's the id
@@ -163,5 +163,13 @@ class JobLabel
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * Get's all assignments
+     */
+    public function getAssignments()
+    {
+        return $this->assignments;
     }
 }

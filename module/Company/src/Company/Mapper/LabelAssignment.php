@@ -80,7 +80,7 @@ class LabelAssignment
         $qb = $objectRepository->createQueryBuilder('a');
         $qb->select('a')
             ->where('a.job=:jobID')
-            ->where('a.label=:labelID');
+            ->andWhere('a.label=:labelID');
         $qb->setParameter('jobID', $jobId);
         $qb->setParameter('labelID', $labelId);
 

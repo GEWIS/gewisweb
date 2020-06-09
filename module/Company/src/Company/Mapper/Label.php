@@ -84,11 +84,13 @@ class Label
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:labelID')->andWhere('c.language=:language');
+        $qb->select('c')
+            ->where('c.languageNeutralId=:labelID')
+            ->andWhere('c.language=:language');
         $qb->setParameter('labelID', $label->getLanguageNeutralId());
         $qb->setParameter('language', $lang);
-        
-        return $qb->getQuery()->getOneOrNullResult;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function findAllLabelsById($labelId)
