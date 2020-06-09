@@ -633,9 +633,9 @@ class Company extends AbstractACLService
         }
         $id = -1;
 
-        $label_IDs = $data['labels'];
-        if (is_null($label_IDs)) {
-            $label_IDs = [];
+        $labelIDs = $data['labels'];
+        if (is_null($labelIDs)) {
+            $labelIDs = [];
         }
 
         foreach ($jobs as $lang => $job) {
@@ -668,13 +668,12 @@ class Company extends AbstractACLService
             $mapper = $this->getLabelMapper();
             $lang = $job->getLanguage();
             // Contains language specific labels
-            $labels_lang = [];
-            foreach ($label_IDs as $id)
-            {
+            $labelsLangBased = [];
+            foreach ($labelIDs as $id) {
                 $label = $mapper->findLabelById($id);
-                $labels_lang[] = $mapper->siblingLabel($label, $lang)->getId();
+                $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
             }
-            $this->setLabelsForJob($job, $labels_lang);
+            $this->setLabelsForJob($job, $labelsLangBased);
         }
 
         return true;
@@ -687,18 +686,17 @@ class Company extends AbstractACLService
     private function setLabelsForJob($job, $labels)
     {
         $mapper = $this->getLabelAssignmentMapper();
-        $currentLabelAssignments = $mapper->findAssignmentsByJobId($job->getId());
+        $currentAssignments = $mapper->findAssignmentsByJobId($job->getId());
         $currentLabels = [];
-        foreach ($currentLabelAssignments as $labelAsg)
-        {
+        foreach ($currentAssignments as $labelAsg) {
             $currentLabels[] = $labelAsg->getLabel()->getId();
         }
         $intersection = array_intersect($labels, $currentLabels);
-        $to_remove = array_diff($currentLabels, $labels);
-        $to_add = array_diff($labels, $intersection);
+        $toRemove = array_diff($currentLabels, $labels);
+        $toAdd = array_diff($labels, $intersection);
 
-        $this->removeLabelsFromJob($job, $to_remove);
-        $this->addLabelsToJob($job, $to_add);
+        $this->removeLabelsFromJob($job, $toRemove);
+        $this->addLabelsToJob($job, $toAdd);
     }
 
     /**
@@ -707,14 +705,14 @@ class Company extends AbstractACLService
      */
     private function addLabelsToJob($job, $labels)
     {
-        $mapper_label = $this->getLabelMapper();
-        $mapper_assignment = $this->getLabelAssignmentMapper();
+        $mapperLabel = $this->getLabelMapper();
+        $mapperAssignment = $this->getLabelAssignmentMapper();
         foreach ($labels as $label) {
             $jobLabelAssignment = new JobLabelAssignment();
             $jobLabelAssignment->setJob($job);
-            $label_model = $mapper_label->findLabelById($label);
-            $jobLabelAssignment->setLabel($label_model);
-            $mapper_assignment->persist($jobLabelAssignment);
+            $labelModel = $mapperLabel->findLabelById($label);
+            $jobLabelAssignment->setLabel($labelModel);
+            $mapperAssignment->persist($jobLabelAssignment);
         }
     }
 
@@ -726,8 +724,8 @@ class Company extends AbstractACLService
     {
         $mapper = $this->getLabelAssignmentMapper();
         foreach ($labels as $label) {
-            $to_remove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
-            $mapper->delete($to_remove);
+            $toRemove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
+            $mapper->delete($toRemove);
         }
     }
 
