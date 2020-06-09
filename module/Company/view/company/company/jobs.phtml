@@ -53,6 +53,12 @@ $this->headTitle($category->getPluralName());
                                 src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()); ?>"
                                 alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>" />
                         </a>
+                        <div>
+                            <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                <?php $label = $labelAsg->getLabel(); ?>
+                                <span class="label label-default job-label" data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip" title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                            <?php endforeach; ?>
+                        </div>
                         <div class="">
                             <h4><?= $this->translate('Contact') ?></h4>
                             <p class="job-contactName"><?= $job->getContactName() ?></p>
