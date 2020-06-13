@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 09:30+0200\n"
-"PO-Revision-Date: 2020-05-19 09:34+0200\n"
-"Last-Translator: GEWISStijl <stijl@gewis.nl>\n"
+"POT-Creation-Date: 2020-06-13 19:28+0200\n"
+"PO-Revision-Date: 2020-06-13 19:42+0200\n"
+"Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -857,7 +857,7 @@ msgstr "Activiteit id"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:16
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:36
-#: module/Activity/view/activity/activity/view.phtml:193
+#: module/Activity/view/activity/activity/view.phtml:178
 #: module/Activity/view/activity/admin/participantsTable.phtml:6
 #: module/Activity/view/activity/activity-calendar/index.phtml:75
 #: module/Activity/view/activity/activity-calendar/create.phtml:111
@@ -1092,47 +1092,42 @@ msgstr "Je bent al ingeschreven"
 msgid "Subscription closed"
 msgstr "Inschrijving gesloten"
 
-#: module/Activity/view/activity/activity/view.phtml:113
-#: module/Activity/view/partial/signupForm.phtml:15
-msgid "Confirm subscription"
-msgstr "Bevestig inschrijving"
-
-#: module/Activity/view/activity/activity/view.phtml:126
+#: module/Activity/view/activity/activity/view.phtml:111
 msgid "Subscribe now"
 msgstr "Schrijf je in"
 
-#: module/Activity/view/activity/activity/view.phtml:134
+#: module/Activity/view/activity/activity/view.phtml:119
 msgid "Unsubscribe yourself"
 msgstr "Uitschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:138
+#: module/Activity/view/activity/activity/view.phtml:123
 #: module/Activity/src/Activity/Controller/ActivityController.php:310
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "Uitschrijven na de uitschrijfdeadline is niet toegestaan!"
 
-#: module/Activity/view/activity/activity/view.phtml:156
-#: module/Activity/view/activity/activity/view.phtml:173
+#: module/Activity/view/activity/activity/view.phtml:141
+#: module/Activity/view/activity/activity/view.phtml:158
 msgid "Subscribe yourself"
 msgstr "Inschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:159
+#: module/Activity/view/activity/activity/view.phtml:144
 msgid "Login to subscribe"
 msgstr "Login om in te schrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:163
+#: module/Activity/view/activity/activity/view.phtml:148
 msgid "Or subscribe without a GEWIS membership: "
 msgstr "Of schrijf je in zonder een GEWIS lidmaatschap: "
 
-#: module/Activity/view/activity/activity/view.phtml:186
+#: module/Activity/view/activity/activity/view.phtml:171
 msgid "Current subscriptions"
 msgstr "Huidige inschrijvingen"
 
-#: module/Activity/view/activity/activity/view.phtml:205
+#: module/Activity/view/activity/activity/view.phtml:190
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr "Het aantal ingeschreven leden is momenteel %d."
 
-#: module/Activity/view/activity/activity/view.phtml:208
+#: module/Activity/view/activity/activity/view.phtml:193
 msgid "Login to view the subscribed members."
 msgstr "Login om de lijst met deelnemers te bekijken."
 
@@ -1485,26 +1480,49 @@ msgstr "Verwijder de laatste optie"
 msgid "Submit"
 msgstr "Verzend"
 
+#: module/Activity/view/partial/signupForm.phtml:14
 #: module/Activity/view/partial/signupForm.phtml:19
+msgid "By subscribing to this activity, you agree to the terms outlined in the"
+msgstr ""
+"Door je in te schrijven voor deze activiteit ga je akkoord met de "
+"voorwaarden in het"
+
+#: module/Activity/view/partial/signupForm.phtml:16
+msgid "Confirm subscription"
+msgstr "Bevestig inschrijving"
+
+#: module/Activity/view/partial/signupForm.phtml:21
 msgid "Subscribe as external participant"
 msgstr "Inschrijven zonder GEWIS lidmaatschap"
 
-#: module/Activity/view/partial/signupForm.phtml:25
+#: module/Activity/view/partial/signupForm.phtml:26
+msgid ""
+"By subscribing an external participant to this activity, they agree to the "
+"terms outlined in the"
+msgstr ""
+"Door iemand zonder GEWIS lidmaatschap voor deze activiteit in te schrijven "
+"gaat deze persoon akkoord met de voorwaarden in het"
+
+#: module/Activity/view/partial/signupForm.phtml:28
 msgid "Subscribe an external participant"
 msgstr "Inschrijven zonder GEWIS lidmaatschap"
 
-#: module/Activity/view/partial/signupForm.phtml:54
+#: module/Activity/view/partial/signupForm.phtml:57
 msgid "Full name:"
 msgstr "Volledige naam:"
 
-#: module/Activity/view/partial/signupForm.phtml:55
+#: module/Activity/view/partial/signupForm.phtml:58
 #: module/User/view/user/email/register.phtml:6
 msgid "Email address:"
 msgstr "E-mail adres:"
 
-#: module/Activity/view/partial/signupForm.phtml:59
+#: module/Activity/view/partial/signupForm.phtml:62
 msgid "Please fill in this CAPTCHA:"
 msgstr "CAPTCHA:"
+
+#: module/Activity/view/partial/signupForm.phtml:69
+msgid "Activity Policy"
+msgstr "activiteitenbeleid"
 
 #: module/Activity/view/partial/create.phtml:1
 msgid "Display languages"
