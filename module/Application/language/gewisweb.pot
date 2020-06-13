@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR GEWIS
 # This file is distributed under the same license as the GEWISweb package.
-# Pieter Kokx <pieter@kokx.nl>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 19:28+0200\n"
+"POT-Creation-Date: 2020-06-13 20:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -653,6 +653,7 @@ msgid "English option"
 msgstr ""
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
+#: module/Activity/view/activity/admin-approval/view.phtml:60
 #: module/Activity/view/activity/activity-calendar/index.phtml:107
 #: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Decision/view/decision/organ-admin/edit.phtml:138
@@ -892,15 +893,19 @@ msgstr ""
 msgid "Only GEWIS"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:117
+#: module/Activity/view/activity/admin-approval/view.phtml:72
+msgid "Disapprove"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:119
 msgid "View details / subscriptions"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:127
+#: module/Activity/view/activity/admin-approval/view.phtml:129
 msgid "Dutch description"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:133
 msgid "English description"
 msgstr ""
 
@@ -1265,7 +1270,8 @@ msgid "Update pending"
 msgstr ""
 
 #: module/Activity/view/activity/admin/list.phtml:51
-msgid "(dis)approve"
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
+msgid "Details"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:8
@@ -1400,10 +1406,6 @@ msgstr ""
 msgid "The activity could not be saved. Check and correct your input data."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:82
-msgid "Details"
-msgstr ""
-
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
 msgid "Committee / fraternity"
 msgstr ""
@@ -1440,8 +1442,7 @@ msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:14
 #: module/Activity/view/partial/signupForm.phtml:19
-msgid ""
-"By subscribing to this activity, you agree to the terms outlined in the"
+msgid "By subscribing to this activity, you agree to the terms outlined in the"
 msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:16
@@ -1476,6 +1477,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:175
 msgid "Activity Policy"
 msgstr ""
 
@@ -2881,19 +2883,19 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:175
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Borrelreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:180
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Computerreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Posterreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:190
+#: module/Decision/view/decision/member/index.phtml:195
 msgid "Sleutelbeleid"
 msgstr ""
 

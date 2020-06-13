@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 19:28+0200\n"
-"PO-Revision-Date: 2020-06-13 19:49+0200\n"
+"POT-Creation-Date: 2020-06-13 20:06+0200\n"
+"PO-Revision-Date: 2020-06-13 20:07+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -669,6 +669,7 @@ msgid "English option"
 msgstr "Engelse optie"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
+#: module/Activity/view/activity/admin-approval/view.phtml:60
 #: module/Activity/view/activity/activity-calendar/index.phtml:107
 #: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Decision/view/decision/organ-admin/edit.phtml:138
@@ -910,15 +911,19 @@ msgstr "Inschrijven"
 msgid "Only GEWIS"
 msgstr "Alleen voor GEWIS leden"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:117
+#: module/Activity/view/activity/admin-approval/view.phtml:72
+msgid "Disapprove"
+msgstr "Afkeuren"
+
+#: module/Activity/view/activity/admin-approval/view.phtml:119
 msgid "View details / subscriptions"
 msgstr "Bekijk details / inschrijvingen"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:127
+#: module/Activity/view/activity/admin-approval/view.phtml:129
 msgid "Dutch description"
 msgstr "Nederlandse omschrijving"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:133
 msgid "English description"
 msgstr "Engelse omschrijving"
 
@@ -1286,7 +1291,8 @@ msgid "Update pending"
 msgstr "Update pending"
 
 #: module/Activity/view/activity/admin/list.phtml:51
-msgid "(dis)approve"
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
+msgid "Details"
 msgstr "Details"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:8
@@ -1442,10 +1448,6 @@ msgstr ""
 "De activiteit kon niet worden opgeslagen. Controleer en verbeter de input "
 "data."
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:82
-msgid "Details"
-msgstr "Details"
-
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
 msgid "Committee / fraternity"
 msgstr "Commissee / dispuut"
@@ -1521,6 +1523,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr "CAPTCHA:"
 
 #: module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:175
 msgid "Activity Policy"
 msgstr "Activiteitenbeleid"
 
@@ -2988,19 +2991,19 @@ msgstr "Webmail"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:175
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Borrelreglement"
 msgstr "Borrelreglement"
 
-#: module/Decision/view/decision/member/index.phtml:180
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Computerreglement"
 msgstr "Computerreglement"
 
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Posterreglement"
 msgstr "Posterreglement"
 
-#: module/Decision/view/decision/member/index.phtml:190
+#: module/Decision/view/decision/member/index.phtml:195
 msgid "Sleutelbeleid"
 msgstr "Sleutelbeleid"
 
@@ -3499,7 +3502,7 @@ msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
 #: module/Activity/src/Activity/Service/ActivityQuery.php:198
 msgid "You are not allowed to view the disapproved activities"
-msgstr "Je hebt niet de rechten om afgekeurde activiteitn in te zien"
+msgstr "Je hebt niet de rechten om afgekeurde activiteiten in te zien"
 
 #: module/Activity/src/Activity/Service/ActivityQuery.php:218
 msgid "You are not allowed to view upcoming the activities"
@@ -4103,6 +4106,9 @@ msgstr "Tafelvoetbalcoordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Inkoper"
+
+#~ msgid "(dis)approve"
+#~ msgstr "Details"
 
 #~ msgid "GEWIS Logo"
 #~ msgstr "GEWIS Logo"

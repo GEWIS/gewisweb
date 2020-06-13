@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 19:28+0200\n"
-"PO-Revision-Date: 2020-06-13 19:38+0200\n"
+"POT-Creation-Date: 2020-06-13 20:06+0200\n"
+"PO-Revision-Date: 2020-06-13 20:07+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -667,6 +667,7 @@ msgid "English option"
 msgstr "English option"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
+#: module/Activity/view/activity/admin-approval/view.phtml:60
 #: module/Activity/view/activity/activity-calendar/index.phtml:107
 #: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Decision/view/decision/organ-admin/edit.phtml:138
@@ -909,15 +910,19 @@ msgstr "Subscribe"
 msgid "Only GEWIS"
 msgstr "Only GEWIS"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:117
+#: module/Activity/view/activity/admin-approval/view.phtml:72
+msgid "Disapprove"
+msgstr "Disapprove"
+
+#: module/Activity/view/activity/admin-approval/view.phtml:119
 msgid "View details / subscriptions"
 msgstr "View details / subscriptions"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:127
+#: module/Activity/view/activity/admin-approval/view.phtml:129
 msgid "Dutch description"
 msgstr "Long dutch description"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:133
 msgid "English description"
 msgstr "English description"
 
@@ -1284,8 +1289,9 @@ msgid "Update pending"
 msgstr "Update pending"
 
 #: module/Activity/view/activity/admin/list.phtml:51
-msgid "(dis)approve"
-msgstr "(dis)approve"
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
+msgid "Details"
+msgstr "Details"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:8
 #: module/Activity/view/activity/activity-calendar/index.phtml:76
@@ -1437,10 +1443,6 @@ msgstr "You can currently plan options between %s and %s."
 msgid "The activity could not be saved. Check and correct your input data."
 msgstr "The activity could not be saved. Check and correct your input data."
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:82
-msgid "Details"
-msgstr "Details"
-
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
 msgid "Committee / fraternity"
 msgstr "Committee / fraternity"
@@ -1515,6 +1517,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr "Please fill in this CAPTCHA:"
 
 #: module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:175
 msgid "Activity Policy"
 msgstr "Activity Policy"
 
@@ -2964,19 +2967,19 @@ msgstr "Webmail"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:175
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Borrelreglement"
 msgstr "Social Drinks"
 
-#: module/Decision/view/decision/member/index.phtml:180
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Computerreglement"
 msgstr "Computer Usage"
 
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Posterreglement"
 msgstr "Posters"
 
-#: module/Decision/view/decision/member/index.phtml:190
+#: module/Decision/view/decision/member/index.phtml:195
 msgid "Sleutelbeleid"
 msgstr "Keys"
 
@@ -4072,6 +4075,9 @@ msgstr "Table soccer coordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Purchaser"
+
+#~ msgid "(dis)approve"
+#~ msgstr "(dis)approve"
 
 #~ msgid "GEWIS Logo"
 #~ msgstr "GEWIS Logo"
