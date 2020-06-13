@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-13 19:28+0200\n"
-"PO-Revision-Date: 2020-06-13 19:42+0200\n"
+"PO-Revision-Date: 2020-06-13 19:49+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -1522,7 +1522,7 @@ msgstr "CAPTCHA:"
 
 #: module/Activity/view/partial/signupForm.phtml:69
 msgid "Activity Policy"
-msgstr "activiteitenbeleid"
+msgstr "Activiteitenbeleid"
 
 #: module/Activity/view/partial/create.phtml:1
 msgid "Display languages"
