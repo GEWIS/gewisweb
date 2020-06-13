@@ -65,19 +65,21 @@
 
                 if (!(typeof systemPreferredTheme === 'undefined' || systemPreferredTheme === null)) {
                     if (systemPreferredTheme.matches) {
+                        document.body.className = 'theme-night';
                         document.getElementById("theme-icon").className = "fas fa-moon";
                     } else {
+                        document.body.className = 'theme-day';
                         document.getElementById("theme-icon").className = "fas fa-sun";
                     }
 
                     // Update the theme automatically based on system preferences.
                     function updateSystemThemePreference(systemPreferredTheme) {
                         if (systemPreferredTheme.matches) {
-                            document.documentElement.setAttribute('current-theme', 'night');		
+                            document.body.className = 'theme-night';
                             document.getElementById("theme-icon").className = "fas fa-moon";
                             storageBox.setItem('preferred-theme', '');
                         } else {
-                            document.documentElement.setAttribute('current-theme', 'day');
+                            document.body.className = 'theme-day';
                             document.getElementById("theme-icon").className = "fas fa-sun";
                             storageBox.setItem('preferred-theme', '');
                         }
@@ -87,11 +89,11 @@
 
                 // Overwrite the system preferred theme when needed.
                 if (userPreferredTheme === "night") {
-                	document.documentElement.setAttribute('current-theme', 'night');
+                	document.body.className = 'theme-night';
                 	storageBox.setItem('preferred-theme', 'night');
                 	document.getElementById("theme-icon").className = "fas fa-moon";
                 } else if (userPreferredTheme === "day") {
-                	document.documentElement.setAttribute('current-theme', 'day');
+                	document.body.className = 'theme-day';
                 	storageBox.setItem('preferred-theme', 'day');
                 	document.getElementById("theme-icon").className = "fas fa-sun";
                 }
@@ -102,21 +104,21 @@
                     userPreferredTheme = storageBox.getItem('preferred-theme');
 
                     if (userPreferredTheme === "night") {
-                        document.documentElement.setAttribute('current-theme', 'day');
+                        document.body.className = 'theme-day';
                         storageBox.setItem('preferred-theme', 'day');
                         document.getElementById("theme-icon").className = "fas fa-sun";
                     } else if (userPreferredTheme === "day") {
-                        document.documentElement.setAttribute('current-theme', 'night');
+                        document.body.className = 'theme-night';
                         storageBox.setItem('preferred-theme', 'night');
                         document.getElementById("theme-icon").className = "fas fa-moon";
                     } else if (!(typeof systemPreferredTheme === 'undefined' || systemPreferredTheme === null)) {
                         if (systemPreferredTheme.matches) {	
-                            document.documentElement.setAttribute('current-theme', 'day');
+                            document.body.className = 'theme-day';
                             storageBox.setItem('preferred-theme', 'day');
                             document.getElementById("theme-icon").className = "fas fa-sun";
                         }
                     } else {
-                        document.documentElement.setAttribute('current-theme', 'night');
+                        document.body.className = 'theme-night';
                         storageBox.setItem('preferred-theme', 'night');
                         document.getElementById("theme-icon").className = "fas fa-moon";
                     }
