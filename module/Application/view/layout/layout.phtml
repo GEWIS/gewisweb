@@ -40,6 +40,89 @@
 
         <?= $this->partial('partial/footer.phtml') ?>
 
+        <?php $this->inlineScript()->captureStart('prepend'); ?>
+            var storageBox;
+            var storageFailed;
+            var systemPreferredTheme;
+            var userPreferredTheme;
+            
+            // Determine if we are able to use localStorage to store the preferred theme.
+            try {
+                (storageBox = window.localStorage).setItem('GEWIS', 'GEWIS');
+                storageFailed = storageBox.getItem('GEWIS') != 'GEWIS';
+                storageBox.removeItem('GEWIS');
+
+                storageFailed && (storageBox = false);
+            } catch (e) {}
+
+            // Check if we can watch and match the system preferred theme.
+            if (typeof window.matchMedia != "undefined" || typeof window.msMatchMedia != "undefined") {
+                systemPreferredTheme = window.matchMedia("(prefers-color-scheme: dark)");
+            }
+
+            if (storageBox) {
+                userPreferredTheme = storageBox.getItem('preferred-theme');
+
+                if (!(typeof systemPreferredTheme === 'undefined' || systemPreferredTheme === null)) {
+                    if (systemPreferredTheme.matches) {
+                        document.getElementById("theme-icon").className = "fas fa-moon";
+                    } else {
+                        document.getElementById("theme-icon").className = "fas fa-sun";
+                    }
+
+                    // Update the theme automatically based on system preferences.
+                    function updateSystemThemePreference(systemPreferredTheme) {
+                        if (systemPreferredTheme.matches) {
+                            document.documentElement.setAttribute('current-theme', 'night');		
+                            document.getElementById("theme-icon").className = "fas fa-moon";
+                            storageBox.setItem('preferred-theme', '');
+                        } else {
+                            document.documentElement.setAttribute('current-theme', 'day');
+                            document.getElementById("theme-icon").className = "fas fa-sun";
+                            storageBox.setItem('preferred-theme', '');
+                        }
+                    }
+                    systemPreferredTheme.addListener(updateSystemThemePreference);
+                }
+
+                // Overwrite the system preferred theme when needed.
+                if (userPreferredTheme === "night") {
+                	document.documentElement.setAttribute('current-theme', 'night');
+                	storageBox.setItem('preferred-theme', 'night');
+                	document.getElementById("theme-icon").className = "fas fa-moon";
+                } else if (userPreferredTheme === "day") {
+                	document.documentElement.setAttribute('current-theme', 'day');
+                	storageBox.setItem('preferred-theme', 'day');
+                	document.getElementById("theme-icon").className = "fas fa-sun";
+                }
+            }
+
+            function switchTheme() {
+                if (storageBox) {
+                    userPreferredTheme = storageBox.getItem('preferred-theme');
+
+                    if (userPreferredTheme === "night") {
+                        document.documentElement.setAttribute('current-theme', 'day');
+                        storageBox.setItem('preferred-theme', 'day');
+                        document.getElementById("theme-icon").className = "fas fa-sun";
+                    } else if (userPreferredTheme === "day") {
+                        document.documentElement.setAttribute('current-theme', 'night');
+                        storageBox.setItem('preferred-theme', 'night');
+                        document.getElementById("theme-icon").className = "fas fa-moon";
+                    } else if (!(typeof systemPreferredTheme === 'undefined' || systemPreferredTheme === null)) {
+                        if (systemPreferredTheme.matches) {	
+                            document.documentElement.setAttribute('current-theme', 'day');
+                            storageBox.setItem('preferred-theme', 'day');
+                            document.getElementById("theme-icon").className = "fas fa-sun";
+                        }
+                    } else {
+                        document.documentElement.setAttribute('current-theme', 'night');
+                        storageBox.setItem('preferred-theme', 'night');
+                        document.getElementById("theme-icon").className = "fas fa-moon";
+                    }
+                }
+            }
+        <?php $this->inlineScript()->captureEnd(); ?>
         <?= $this->inlineScript() ?>
         <script>
             <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>

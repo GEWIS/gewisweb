@@ -59,6 +59,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
+                <li class="pull-right">
+                    <a href="#" class="theme-toggle" onclick="switchTheme()">
+                        <i class="fas fa-sun" id="theme-icon"></i>
+                    </a>
+                </li>
                 <?php if (null === $this->identity()): ?>
                     <li class="visible-xs pull-left">
                         <a href="<?= $this->url('user') ?>">
