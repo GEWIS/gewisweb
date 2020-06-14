@@ -1,0 +1,6 @@
+@mixin createHSLColorVars($id, $hue, $saturation, $lightness){
+  #{$id}: unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
+  #{$id}-h: #{$hue};
+  #{$id}-s: #{$saturation};
+  #{$id}-l: #{$lightness};
+}
