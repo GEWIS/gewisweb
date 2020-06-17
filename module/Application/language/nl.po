@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 20:06+0200\n"
-"PO-Revision-Date: 2020-06-13 20:07+0200\n"
+"POT-Creation-Date: 2020-06-17 13:34+0200\n"
+"PO-Revision-Date: 2020-06-17 13:35+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -831,6 +831,7 @@ msgstr "Er is op het moment geen poll."
 
 #: module/Activity/view/activity/admin-approval/view.phtml:5
 #: module/Activity/view/partial/create.phtml:15
+#: module/Activity/view/partial/create.phtml:75
 #: module/Company/view/partial/company/admin/editors/company.phtml:147
 #: module/Education/src/Education/Form/Fieldset/Exam.php:62
 #: module/Education/src/Education/Form/Fieldset/Summary.php:55
@@ -842,6 +843,7 @@ msgstr "Nederlands"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:6
 #: module/Activity/view/partial/create.phtml:24
+#: module/Activity/view/partial/create.phtml:131
 #: module/Company/view/partial/company/admin/editors/company.phtml:99
 #: module/Education/src/Education/Form/Fieldset/Exam.php:61
 #: module/Education/src/Education/Form/Fieldset/Summary.php:54
@@ -1149,13 +1151,10 @@ msgid "My Activities"
 msgstr "Mijn Activiteiten"
 
 #: module/Activity/view/activity/activity/index.phtml:30
-msgid "Create Activity"
-msgstr "Maak nieuwe activiteit"
-
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:72
-msgid "Create activity"
-msgstr "Create activity"
+msgid "Create Activity"
+msgstr "Maak nieuwe activiteit"
 
 #: module/Activity/view/activity/activity/create.phtml:18
 #: module/Application/view/partial/main-nav.phtml:214
@@ -3522,7 +3521,7 @@ msgstr "Je moet ingelogd zijn om je voor deze activiteit in te schrijven"
 
 #: module/Activity/src/Activity/Service/Signup.php:70
 msgid "You are not allowed to use the external signup"
-msgstr "You are not allowed to use the external signup"
+msgstr "Je hebt niet de rechten om een externe inschrijving te maken"
 
 #: module/Activity/src/Activity/Service/Signup.php:90
 msgid "You are not allowed to view who is signed up for this activity"
@@ -3542,7 +3541,8 @@ msgstr ""
 #: module/Activity/src/Activity/Service/Signup.php:210
 #: module/Activity/src/Activity/Service/Signup.php:230
 msgid "You are not allowed to create signups for this activity"
-msgstr "You are not allowed to create signups for this activity"
+msgstr ""
+"Je hebt niet de rechten om inschrijvingen te maken voor deze activiteit"
 
 #: module/Activity/src/Activity/Service/Signup.php:302
 msgid "You need to be logged in to sign off for this activity"
@@ -3550,7 +3550,9 @@ msgstr "Je moet ingelogd zijn om je uit te schrijven voor deze activiteit"
 
 #: module/Activity/src/Activity/Service/Signup.php:328
 msgid "You are not allowed to remove external signups for this activity"
-msgstr "You are not allowed to remove external signups for this activity"
+msgstr ""
+"Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze "
+"activiteit"
 
 #: module/Activity/src/Activity/Service/ActivityCalendar.php:116
 msgid "Not allowed to create activity options."
@@ -4106,6 +4108,9 @@ msgstr "Tafelvoetbalcoordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Inkoper"
+
+#~ msgid "Create activity"
+#~ msgstr "Create activity"
 
 #~ msgid "(dis)approve"
 #~ msgstr "Details"

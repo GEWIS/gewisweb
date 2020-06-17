@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 20:06+0200\n"
+"POT-Creation-Date: 2020-06-17 13:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -813,6 +813,7 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:5
 #: module/Activity/view/partial/create.phtml:15
+#: module/Activity/view/partial/create.phtml:75
 #: module/Company/view/partial/company/admin/editors/company.phtml:147
 #: module/Education/src/Education/Form/Fieldset/Exam.php:62
 #: module/Education/src/Education/Form/Fieldset/Summary.php:55
@@ -824,6 +825,7 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:6
 #: module/Activity/view/partial/create.phtml:24
+#: module/Activity/view/partial/create.phtml:131
 #: module/Company/view/partial/company/admin/editors/company.phtml:99
 #: module/Education/src/Education/Form/Fieldset/Exam.php:61
 #: module/Education/src/Education/Form/Fieldset/Summary.php:54
@@ -1129,12 +1131,9 @@ msgid "My Activities"
 msgstr ""
 
 #: module/Activity/view/activity/activity/index.phtml:30
-msgid "Create Activity"
-msgstr ""
-
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:72
-msgid "Create activity"
+msgid "Create Activity"
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:18
