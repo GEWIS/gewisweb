@@ -23,7 +23,7 @@ switch ($form->getType()) {
         $showName = true;
         break;
     case Activity\Form\ActivitySignup::EXTERNAL_ADMIN:
-        $agreementText = $this->translate('By subscribing an external participant to this activity, they agree to the terms outlined in the');
+        $agreementText = $this->translate('By subscribing an external participant to this activity, they must agree to the terms outlined in the');
         $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $activity->getId() ]);
         $submitText = $this->translate('Subscribe an external participant');
         $showName = true;
