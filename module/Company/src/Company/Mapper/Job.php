@@ -149,6 +149,20 @@ class Job
     }
 
     /**
+     * Deletes the jobs corresponding to the given language neutral id.
+     *
+     */
+    public function deleteByLanguageNeutralId($jobID)
+    {
+        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobID]);
+        foreach ($jobs as $job) {
+            $this->em->remove($job);
+        }
+
+        $this->em->flush();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

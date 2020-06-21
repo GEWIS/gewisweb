@@ -579,6 +579,22 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Deletes the given job
+     *
+     * @param mixed $packageID
+     */
+    public function deleteJob($jobID)
+    {
+        if (!$this->isAllowed('delete')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to delete jobs')
+            );
+        }
+        $this->getJobMapper()->deleteByLanguageNeutralId($jobID);
+    }
+
+    /**
      * Deletes the company identified with $slug
      *
      * @param mixed $slug

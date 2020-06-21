@@ -202,6 +202,16 @@ return [
                                             'may_terminate' => true,
                                         ],
                                     ],
+                                    'deleteJob' => [
+                                        'type' => 'segment',
+                                        'options' => [
+                                            'route' => '/job/:languageNeutralJobId/delete',
+                                            'defaults' => [
+                                                'action' => 'deleteJob',
+                                            ],
+                                            'may_terminate' => true,
+                                        ],
+                                    ],
                                 ],
                             ],
                             'addPackage' => [
