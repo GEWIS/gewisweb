@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --output-style compressed -o public/css public/scss/gewis-theme.scss",
+    "watch": "node-sass --watch -o public/css public/scss/gewis-theme.scss"
     "scss": "node-sass --output-style compressed public/scss/main.scss > public/css/gewis-theme.css"
   },
   "repository": {

@@ -152,7 +152,7 @@ class NewUser
     /**
      * Set the registration time.
      *
-     * @param string $time
+     * @param DateTime $time
      */
     public function setTime($time)
     {

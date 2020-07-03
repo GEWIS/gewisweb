@@ -18,6 +18,7 @@ Photo
 .gutter-sizer {
   width: 0.5%;
 }
+
 .grid-sizer, .photo-grid-item {
   width: 49%;
   @media (min-width: $screen-sm-min) {
@@ -32,9 +33,23 @@ Photo
   margin-bottom: 0.5%;
 }
 
+.photo-grid-item.potw-thumb {
+  width: 98.498%;
+  @media (min-width: $screen-sm-min) {
+    width: 66.499%;
+  }
+  @media (min-width: $screen-md-min) {
+    width: 49.499%;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: 32.899%;
+  }
+}
+
 .photo-grid-item-photo {
   background-color: #d40026;
 }
+
 .photo-grid-item {
   float: left;
 }
@@ -42,11 +57,6 @@ Photo
 .photo-grid-item-photo img {
   display: block;
   max-width: 100%;
-}
-
-.potw-thumb {
-  width: 49%;
-  margin-bottom: 1%;
 }
 
 .thumbnail .caption {

@@ -103,7 +103,7 @@ $this->headTitle($this->category->getPluralName());
                             'category'        => $job->getCategory()->getSlug(),
                         ]);
                     ?>
-                    <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>" data-posted="<?= $job->getTimestamp() ?>">
+                    <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>" data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
                         <div class="card-img">
                             <img
                                 src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"

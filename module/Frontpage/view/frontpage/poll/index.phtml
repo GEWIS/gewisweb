@@ -41,7 +41,7 @@ $this->headTitle($this->translate('Current poll')); ?>
                                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
                                 (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
                                 <br>
-                                <?= $comment->getCreatedOn()->format('Y-m-d H:M:s') ?>
+                                <?= $comment->getCreatedOn()->format('Y-m-d H:i:s') ?>
                             <?php endif ?>
                         </div>
                         <div class="col-sm-10">
