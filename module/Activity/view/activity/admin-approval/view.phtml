@@ -57,6 +57,7 @@
                 echo $this->formElement($approvalForm->get('security'));
                 $submit = $approvalForm->get('submit');
                 $submit->setAttribute('class', 'btn btn-default');
+                $submit->setAttribute('value', $this->translate('Approve'));
                 echo $this->formSubmit($submit);
                 echo $this->form()->closeTag();
                 ?>
@@ -68,9 +69,10 @@
                 echo $this->formElement($disapprovalForm->get('security'));
                 $submit = $disapprovalForm->get('submit');
                 $submit->setAttribute('class', 'btn btn-default');
+                $submit->setAttribute('value', $this->translate('Disapprove'));
                 echo $this->formSubmit($submit);
                 echo $this->form()->closeTag();
-                ?>                
+                ?>
             </td>
             <td></td>
         </tr>
@@ -88,7 +90,7 @@
                 $submit->setAttribute('class', 'btn btn-default');
                 echo $this->formSubmit($submit);
                 echo $this->form()->closeTag();
-                ?>                                
+                ?>
             </td>
             <td></td>
         </tr>
@@ -106,7 +108,7 @@
                 $submit->setAttribute('class', 'btn btn-default');
                 echo $this->formSubmit($submit);
                 echo $this->form()->closeTag();
-                ?>                                
+                ?>
             </td>
             <td></td>
         </tr>

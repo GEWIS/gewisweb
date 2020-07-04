@@ -12,16 +12,19 @@ $showCaptcha = false;
 $showName = false;
 switch ($form->getType()) {
     case Activity\Form\ActivitySignup::USER:
+        $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
         $submitUrl = $this->url('activity/signup', ['id' => $activity->getId() ]);
         $submitText = $this->translate('Confirm subscription');
         break;
     case Activity\Form\ActivitySignup::EXTERNAL_USER:
+        $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
         $submitUrl = $this->url('activity/externalSignup', ['id' => $activity->getId() ]);
         $submitText = $this->translate('Subscribe as external participant');
         $showCaptcha = true;
         $showName = true;
         break;
     case Activity\Form\ActivitySignup::EXTERNAL_ADMIN:
+        $agreementText = $this->translate('By subscribing an external participant to this activity, they must agree to the terms outlined in the');
         $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $activity->getId() ]);
         $submitText = $this->translate('Subscribe an external participant');
         $showName = true;
@@ -60,9 +63,11 @@ function formElementRender($element, $label, $id, $context){
      <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
 <?php endif; ?>
 
-    <?php foreach($activity->getFields() as $field):?>
-         <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
-    <?php endforeach;?>
+<?php foreach($activity->getFields() as $field):?>
+     <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
+<?php endforeach;?>
+
+<p><?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank"><?= $this->translate('Activity Policy') ?></a>.</p>
 
 <?php
     $submit = $form->get('submit');

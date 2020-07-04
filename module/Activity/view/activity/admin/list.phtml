@@ -48,7 +48,7 @@
             <td>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
                 <?php if($admin): ?>
-                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('(dis)approve') ?></a>
+                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('Details') ?></a>
                 <?php endif; ?>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>

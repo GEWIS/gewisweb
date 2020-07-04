@@ -171,6 +171,11 @@ $meetings = $this->meetings;
                     <h2><?= $this->translate('Regulations') ?></h2>
                     <ul>
                         <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'activity-policy']) ?>">
+                                <?= $this->translate('Activity Policy') ?>
+                            </a>
+                        </li>
+                        <li>
                             <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-reglement']) ?>">
                                 <?= $this->translate('Borrelreglement') ?>
                             </a>
