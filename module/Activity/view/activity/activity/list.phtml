@@ -14,16 +14,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>
-                                <?php if (!isset($proposals)): ?>
-                                    <a href="<?php echo $this->url((isset($admin) ? 'activity_admin_approval' : 'activity') . '/view', ['id' => $activity->getId()]) ?>">
-                                        <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
-                                    </a>
-                                <?php else: ?>
-                                    <?php $proposal = $proposals[$activity->getId()] ?>
-                                    <a href="<?php echo $this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()]) ?>">
-                                        <?= $this->translate('Proposal to update into: ') . $this->escapeHtml($activity->getName()->getText($lang)) ?>
-                                    </a>
-                                <?php endif; ?>
+                                <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                    <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                                </a>
                             </h4>
                         </div>
                         <div class="col-md-8 reveal reveal-10">
@@ -52,12 +45,8 @@
             </div>
         </li>
     <?php endforeach; ?>
-    <?php if (isset($moreLink)): ?>
-        <li class="list-group-item agenda-item">
-            <h4><a href="<?= $moreLink; ?>"><?= $this->translate('More'); ?></a></h4>
-        </li>
-    <?php endif; ?>
 </ul>
+
 <script type="application/javascript">
     $(".reveal-button").click(function () {
         $(this).parent().addClass("revealed");
