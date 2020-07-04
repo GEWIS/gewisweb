@@ -1,12 +1,5 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <ul class="list-group">
-    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
-        <li class="list-group-item agenda-item">
-            <?= $this->paginationControl($activities,
-                'Elastic',
-                'paginator/default', ['path' => $this->url($route)]); ?>
-        </li>
-    <?php endif; ?>
     <?php foreach ($activities as $activity): ?>
         <li class="list-group-item agenda-item">
             <div class="row">
@@ -62,14 +55,6 @@
     <?php if (isset($moreLink)): ?>
         <li class="list-group-item agenda-item">
             <h4><a href="<?= $moreLink; ?>"><?= $this->translate('More'); ?></a></h4>
-        </li>
-    <?php endif; ?>
-
-    <?php if ($activities instanceof \Zend\Paginator\Paginator): ?>
-        <li class="list-group-item agenda-item">
-            <?= $this->paginationControl($activities,
-                'Elastic',
-                'paginator/default', ['path' => $this->url($route)]); ?>
         </li>
     <?php endif; ?>
 </ul>
