@@ -58,7 +58,7 @@ class JobLabel
     /**
      * Jobs with this label
      *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label")
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist", "remove"})
      */
     protected $assignments;
 
