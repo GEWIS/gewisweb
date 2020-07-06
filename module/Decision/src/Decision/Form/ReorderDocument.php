@@ -28,8 +28,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
             'options' => [
                 'label'            => 'Label',
                 'value_options'    => [
-                    'up'   => $this->generateIcon('glyphicon-chevron-up', $this->translator->translate('Move up')),
-                    'down' => $this->generateIcon('glyphicon-chevron-down', $this->translator->translate('Move down')),
+                    'up'   => $this->generateIcon('fa-chevron-up', $this->translator->translate('Move up')),
+                    'down' => $this->generateIcon('fa-chevron-down', $this->translator->translate('Move down')),
                 ],
                 'label_attributes' => [
                     'class' => 'label label-radio-hidden'
@@ -86,12 +86,12 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      * FUTURE: Think of a better way to show icons in the label. Icons are
      * layout and shouldn't be defined in the Form.
      *
-     * @param string $className Glyphicon class
+     * @param string $className FontAwesome class
      * @param string $title Element title
      * @return string
      */
     private function generateIcon($className, $title)
     {
-        return "<span class=\"glyphicon {$className}\" title=\"{$title}\"></span>";
+        return "<span class=\"fa {$className}\" title=\"{$title}\"></span>";
     }
 }
