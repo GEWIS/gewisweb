@@ -71,6 +71,7 @@ class Album implements ResourceInterface
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album",
      *                                      cascade={"persist", "remove"},
      *                                      fetch="EXTRA_LAZY")
+     * @OrderBy({"dateTime" = "ASC"})
      */
     protected $photos;
     
