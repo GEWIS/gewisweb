@@ -488,7 +488,9 @@ class AdminController extends AbstractActionController
         $mapper = $companyService->getLabelMapper();
         $actualLabels = [];
         foreach ($labels as $label) {
-            $actualLabels[] = $mapper->siblingLabel($label->getLabel(), $lang);
+            $actualLabel = $label->getLabel();
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, $lang);
+            $actualLabels[] = $mapper->siblingLabel($actualLabel->getLabel(), $lang);
         }
         $jobForm->setLabels($actualLabels);
         $jobForm->bind($jobDict);
