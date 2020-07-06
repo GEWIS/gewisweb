@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 09:30+0200\n"
+"POT-Creation-Date: 2020-06-20 13:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -653,6 +653,7 @@ msgid "English option"
 msgstr ""
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
+#: module/Activity/view/activity/admin-approval/view.phtml:60
 #: module/Activity/view/activity/activity-calendar/index.phtml:107
 #: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Decision/view/decision/organ-admin/edit.phtml:138
@@ -812,6 +813,7 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:5
 #: module/Activity/view/partial/create.phtml:15
+#: module/Activity/view/partial/create.phtml:75
 #: module/Company/view/partial/company/admin/editors/company.phtml:147
 #: module/Education/src/Education/Form/Fieldset/Exam.php:62
 #: module/Education/src/Education/Form/Fieldset/Summary.php:55
@@ -823,6 +825,7 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:6
 #: module/Activity/view/partial/create.phtml:24
+#: module/Activity/view/partial/create.phtml:131
 #: module/Company/view/partial/company/admin/editors/company.phtml:99
 #: module/Education/src/Education/Form/Fieldset/Exam.php:61
 #: module/Education/src/Education/Form/Fieldset/Summary.php:54
@@ -839,7 +842,7 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:16
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:36
-#: module/Activity/view/activity/activity/view.phtml:193
+#: module/Activity/view/activity/activity/view.phtml:178
 #: module/Activity/view/activity/admin/participantsTable.phtml:6
 #: module/Activity/view/activity/activity-calendar/index.phtml:75
 #: module/Activity/view/activity/activity-calendar/create.phtml:111
@@ -892,15 +895,19 @@ msgstr ""
 msgid "Only GEWIS"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:117
+#: module/Activity/view/activity/admin-approval/view.phtml:72
+msgid "Disapprove"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:119
 msgid "View details / subscriptions"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:127
+#: module/Activity/view/activity/admin-approval/view.phtml:129
 msgid "Dutch description"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:133
 msgid "English description"
 msgstr ""
 
@@ -1072,47 +1079,42 @@ msgstr ""
 msgid "Subscription closed"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:113
-#: module/Activity/view/partial/signupForm.phtml:15
-msgid "Confirm subscription"
-msgstr ""
-
-#: module/Activity/view/activity/activity/view.phtml:126
+#: module/Activity/view/activity/activity/view.phtml:111
 msgid "Subscribe now"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:134
+#: module/Activity/view/activity/activity/view.phtml:119
 msgid "Unsubscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:138
+#: module/Activity/view/activity/activity/view.phtml:123
 #: module/Activity/src/Activity/Controller/ActivityController.php:310
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:156
-#: module/Activity/view/activity/activity/view.phtml:173
+#: module/Activity/view/activity/activity/view.phtml:141
+#: module/Activity/view/activity/activity/view.phtml:158
 msgid "Subscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:159
+#: module/Activity/view/activity/activity/view.phtml:144
 msgid "Login to subscribe"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:163
+#: module/Activity/view/activity/activity/view.phtml:148
 msgid "Or subscribe without a GEWIS membership: "
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:186
+#: module/Activity/view/activity/activity/view.phtml:171
 msgid "Current subscriptions"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:205
+#: module/Activity/view/activity/activity/view.phtml:190
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:208
+#: module/Activity/view/activity/activity/view.phtml:193
 msgid "Login to view the subscribed members."
 msgstr ""
 
@@ -1129,12 +1131,9 @@ msgid "My Activities"
 msgstr ""
 
 #: module/Activity/view/activity/activity/index.phtml:30
-msgid "Create Activity"
-msgstr ""
-
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:72
-msgid "Create activity"
+msgid "Create Activity"
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:18
@@ -1270,7 +1269,8 @@ msgid "Update pending"
 msgstr ""
 
 #: module/Activity/view/activity/admin/list.phtml:51
-msgid "(dis)approve"
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
+msgid "Details"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:8
@@ -1405,10 +1405,6 @@ msgstr ""
 msgid "The activity could not be saved. Check and correct your input data."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:82
-msgid "Details"
-msgstr ""
-
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
 msgid "Committee / fraternity"
 msgstr ""
@@ -1443,25 +1439,45 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: module/Activity/view/partial/signupForm.phtml:14
 #: module/Activity/view/partial/signupForm.phtml:19
+msgid "By subscribing to this activity, you agree to the terms outlined in the"
+msgstr ""
+
+#: module/Activity/view/partial/signupForm.phtml:16
+msgid "Confirm subscription"
+msgstr ""
+
+#: module/Activity/view/partial/signupForm.phtml:21
 msgid "Subscribe as external participant"
 msgstr ""
 
-#: module/Activity/view/partial/signupForm.phtml:25
+#: module/Activity/view/partial/signupForm.phtml:26
+msgid ""
+"By subscribing an external participant to this activity, they must agree to "
+"the terms outlined in the"
+msgstr ""
+
+#: module/Activity/view/partial/signupForm.phtml:28
 msgid "Subscribe an external participant"
 msgstr ""
 
-#: module/Activity/view/partial/signupForm.phtml:54
+#: module/Activity/view/partial/signupForm.phtml:57
 msgid "Full name:"
 msgstr ""
 
-#: module/Activity/view/partial/signupForm.phtml:55
+#: module/Activity/view/partial/signupForm.phtml:58
 #: module/User/view/user/email/register.phtml:6
 msgid "Email address:"
 msgstr ""
 
-#: module/Activity/view/partial/signupForm.phtml:59
+#: module/Activity/view/partial/signupForm.phtml:62
 msgid "Please fill in this CAPTCHA:"
+msgstr ""
+
+#: module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:175
+msgid "Activity Policy"
 msgstr ""
 
 #: module/Activity/view/partial/create.phtml:1
@@ -2866,19 +2882,19 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:175
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Borrelreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:180
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Computerreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Posterreglement"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:190
+#: module/Decision/view/decision/member/index.phtml:195
 msgid "Sleutelbeleid"
 msgstr ""
 

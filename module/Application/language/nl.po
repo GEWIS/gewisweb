@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 09:30+0200\n"
-"PO-Revision-Date: 2020-05-19 09:34+0200\n"
-"Last-Translator: GEWISStijl <stijl@gewis.nl>\n"
+"POT-Creation-Date: 2020-06-20 13:44+0200\n"
+"PO-Revision-Date: 2020-06-20 13:46+0200\n"
+"Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -669,6 +669,7 @@ msgid "English option"
 msgstr "Engelse optie"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
+#: module/Activity/view/activity/admin-approval/view.phtml:60
 #: module/Activity/view/activity/activity-calendar/index.phtml:107
 #: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Decision/view/decision/organ-admin/edit.phtml:138
@@ -830,6 +831,7 @@ msgstr "Er is op het moment geen poll."
 
 #: module/Activity/view/activity/admin-approval/view.phtml:5
 #: module/Activity/view/partial/create.phtml:15
+#: module/Activity/view/partial/create.phtml:75
 #: module/Company/view/partial/company/admin/editors/company.phtml:147
 #: module/Education/src/Education/Form/Fieldset/Exam.php:62
 #: module/Education/src/Education/Form/Fieldset/Summary.php:55
@@ -841,6 +843,7 @@ msgstr "Nederlands"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:6
 #: module/Activity/view/partial/create.phtml:24
+#: module/Activity/view/partial/create.phtml:131
 #: module/Company/view/partial/company/admin/editors/company.phtml:99
 #: module/Education/src/Education/Form/Fieldset/Exam.php:61
 #: module/Education/src/Education/Form/Fieldset/Summary.php:54
@@ -857,7 +860,7 @@ msgstr "Activiteit id"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:16
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:36
-#: module/Activity/view/activity/activity/view.phtml:193
+#: module/Activity/view/activity/activity/view.phtml:178
 #: module/Activity/view/activity/admin/participantsTable.phtml:6
 #: module/Activity/view/activity/activity-calendar/index.phtml:75
 #: module/Activity/view/activity/activity-calendar/create.phtml:111
@@ -910,15 +913,19 @@ msgstr "Inschrijven"
 msgid "Only GEWIS"
 msgstr "Alleen voor GEWIS leden"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:117
+#: module/Activity/view/activity/admin-approval/view.phtml:72
+msgid "Disapprove"
+msgstr "Afkeuren"
+
+#: module/Activity/view/activity/admin-approval/view.phtml:119
 msgid "View details / subscriptions"
 msgstr "Bekijk details / inschrijvingen"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:127
+#: module/Activity/view/activity/admin-approval/view.phtml:129
 msgid "Dutch description"
 msgstr "Nederlandse omschrijving"
 
-#: module/Activity/view/activity/admin-approval/view.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:133
 msgid "English description"
 msgstr "Engelse omschrijving"
 
@@ -1092,47 +1099,42 @@ msgstr "Je bent al ingeschreven"
 msgid "Subscription closed"
 msgstr "Inschrijving gesloten"
 
-#: module/Activity/view/activity/activity/view.phtml:113
-#: module/Activity/view/partial/signupForm.phtml:15
-msgid "Confirm subscription"
-msgstr "Bevestig inschrijving"
-
-#: module/Activity/view/activity/activity/view.phtml:126
+#: module/Activity/view/activity/activity/view.phtml:111
 msgid "Subscribe now"
 msgstr "Schrijf je in"
 
-#: module/Activity/view/activity/activity/view.phtml:134
+#: module/Activity/view/activity/activity/view.phtml:119
 msgid "Unsubscribe yourself"
 msgstr "Uitschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:138
+#: module/Activity/view/activity/activity/view.phtml:123
 #: module/Activity/src/Activity/Controller/ActivityController.php:310
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "Uitschrijven na de uitschrijfdeadline is niet toegestaan!"
 
-#: module/Activity/view/activity/activity/view.phtml:156
-#: module/Activity/view/activity/activity/view.phtml:173
+#: module/Activity/view/activity/activity/view.phtml:141
+#: module/Activity/view/activity/activity/view.phtml:158
 msgid "Subscribe yourself"
 msgstr "Inschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:159
+#: module/Activity/view/activity/activity/view.phtml:144
 msgid "Login to subscribe"
 msgstr "Login om in te schrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:163
+#: module/Activity/view/activity/activity/view.phtml:148
 msgid "Or subscribe without a GEWIS membership: "
 msgstr "Of schrijf je in zonder een GEWIS lidmaatschap: "
 
-#: module/Activity/view/activity/activity/view.phtml:186
+#: module/Activity/view/activity/activity/view.phtml:171
 msgid "Current subscriptions"
 msgstr "Huidige inschrijvingen"
 
-#: module/Activity/view/activity/activity/view.phtml:205
+#: module/Activity/view/activity/activity/view.phtml:190
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr "Het aantal ingeschreven leden is momenteel %d."
 
-#: module/Activity/view/activity/activity/view.phtml:208
+#: module/Activity/view/activity/activity/view.phtml:193
 msgid "Login to view the subscribed members."
 msgstr "Login om de lijst met deelnemers te bekijken."
 
@@ -1149,13 +1151,10 @@ msgid "My Activities"
 msgstr "Mijn Activiteiten"
 
 #: module/Activity/view/activity/activity/index.phtml:30
-msgid "Create Activity"
-msgstr "Maak nieuwe activiteit"
-
 #: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:72
-msgid "Create activity"
-msgstr "Create activity"
+msgid "Create Activity"
+msgstr "Maak nieuwe activiteit"
 
 #: module/Activity/view/activity/activity/create.phtml:18
 #: module/Application/view/partial/main-nav.phtml:214
@@ -1291,7 +1290,8 @@ msgid "Update pending"
 msgstr "Update pending"
 
 #: module/Activity/view/activity/admin/list.phtml:51
-msgid "(dis)approve"
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
+msgid "Details"
 msgstr "Details"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:8
@@ -1447,10 +1447,6 @@ msgstr ""
 "De activiteit kon niet worden opgeslagen. Controleer en verbeter de input "
 "data."
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:82
-msgid "Details"
-msgstr "Details"
-
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
 msgid "Committee / fraternity"
 msgstr "Commissee / dispuut"
@@ -1485,26 +1481,50 @@ msgstr "Verwijder de laatste optie"
 msgid "Submit"
 msgstr "Verzend"
 
+#: module/Activity/view/partial/signupForm.phtml:14
 #: module/Activity/view/partial/signupForm.phtml:19
+msgid "By subscribing to this activity, you agree to the terms outlined in the"
+msgstr ""
+"Door je in te schrijven voor deze activiteit ga je akkoord met de "
+"voorwaarden in het"
+
+#: module/Activity/view/partial/signupForm.phtml:16
+msgid "Confirm subscription"
+msgstr "Bevestig inschrijving"
+
+#: module/Activity/view/partial/signupForm.phtml:21
 msgid "Subscribe as external participant"
 msgstr "Inschrijven zonder GEWIS lidmaatschap"
 
-#: module/Activity/view/partial/signupForm.phtml:25
+#: module/Activity/view/partial/signupForm.phtml:26
+msgid ""
+"By subscribing an external participant to this activity, they must agree to "
+"the terms outlined in the"
+msgstr ""
+"Door iemand zonder GEWIS lidmaatschap in te schrijven voor deze activiteit "
+"moet deze persoon akkoord gaan met de voorwaarden in het"
+
+#: module/Activity/view/partial/signupForm.phtml:28
 msgid "Subscribe an external participant"
 msgstr "Inschrijven zonder GEWIS lidmaatschap"
 
-#: module/Activity/view/partial/signupForm.phtml:54
+#: module/Activity/view/partial/signupForm.phtml:57
 msgid "Full name:"
 msgstr "Volledige naam:"
 
-#: module/Activity/view/partial/signupForm.phtml:55
+#: module/Activity/view/partial/signupForm.phtml:58
 #: module/User/view/user/email/register.phtml:6
 msgid "Email address:"
 msgstr "E-mail adres:"
 
-#: module/Activity/view/partial/signupForm.phtml:59
+#: module/Activity/view/partial/signupForm.phtml:62
 msgid "Please fill in this CAPTCHA:"
 msgstr "CAPTCHA:"
+
+#: module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:175
+msgid "Activity Policy"
+msgstr "Activiteitenbeleid"
 
 #: module/Activity/view/partial/create.phtml:1
 msgid "Display languages"
@@ -2970,19 +2990,19 @@ msgstr "Webmail"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:175
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Borrelreglement"
 msgstr "Borrelreglement"
 
-#: module/Decision/view/decision/member/index.phtml:180
+#: module/Decision/view/decision/member/index.phtml:185
 msgid "Computerreglement"
 msgstr "Computerreglement"
 
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:190
 msgid "Posterreglement"
 msgstr "Posterreglement"
 
-#: module/Decision/view/decision/member/index.phtml:190
+#: module/Decision/view/decision/member/index.phtml:195
 msgid "Sleutelbeleid"
 msgstr "Sleutelbeleid"
 
@@ -3481,7 +3501,7 @@ msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
 #: module/Activity/src/Activity/Service/ActivityQuery.php:198
 msgid "You are not allowed to view the disapproved activities"
-msgstr "Je hebt niet de rechten om afgekeurde activiteitn in te zien"
+msgstr "Je hebt niet de rechten om afgekeurde activiteiten in te zien"
 
 #: module/Activity/src/Activity/Service/ActivityQuery.php:218
 msgid "You are not allowed to view upcoming the activities"
@@ -3501,7 +3521,7 @@ msgstr "Je moet ingelogd zijn om je voor deze activiteit in te schrijven"
 
 #: module/Activity/src/Activity/Service/Signup.php:70
 msgid "You are not allowed to use the external signup"
-msgstr "You are not allowed to use the external signup"
+msgstr "Je hebt niet de rechten om een externe inschrijving te maken"
 
 #: module/Activity/src/Activity/Service/Signup.php:90
 msgid "You are not allowed to view who is signed up for this activity"
@@ -3521,7 +3541,8 @@ msgstr ""
 #: module/Activity/src/Activity/Service/Signup.php:210
 #: module/Activity/src/Activity/Service/Signup.php:230
 msgid "You are not allowed to create signups for this activity"
-msgstr "You are not allowed to create signups for this activity"
+msgstr ""
+"Je hebt niet de rechten om inschrijvingen te maken voor deze activiteit"
 
 #: module/Activity/src/Activity/Service/Signup.php:302
 msgid "You need to be logged in to sign off for this activity"
@@ -3529,7 +3550,9 @@ msgstr "Je moet ingelogd zijn om je uit te schrijven voor deze activiteit"
 
 #: module/Activity/src/Activity/Service/Signup.php:328
 msgid "You are not allowed to remove external signups for this activity"
-msgstr "You are not allowed to remove external signups for this activity"
+msgstr ""
+"Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze "
+"activiteit"
 
 #: module/Activity/src/Activity/Service/ActivityCalendar.php:116
 msgid "Not allowed to create activity options."
@@ -4085,6 +4108,12 @@ msgstr "Tafelvoetbalcoordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Inkoper"
+
+#~ msgid "Create activity"
+#~ msgstr "Create activity"
+
+#~ msgid "(dis)approve"
+#~ msgstr "Details"
 
 #~ msgid "GEWIS Logo"
 #~ msgstr "GEWIS Logo"
