@@ -46,7 +46,7 @@ class Category
     /**
      * Finds the category with the given id
      *
-     * @param integer $categoryID
+     * @param integer $categorySlug
      */
     public function findCategory($categorySlug)
     {

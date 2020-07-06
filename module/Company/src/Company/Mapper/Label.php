@@ -46,7 +46,7 @@ class Label
     /**
      * Finds the label with the given slug
      *
-     * @param integer $labelID
+     * @param integer $labelSlug
      */
     public function findLabel($labelSlug)
     {
@@ -56,7 +56,7 @@ class Label
     /**
      * Finds the label with the given id
      *
-     * @param integer $labelID
+     * @param integer $labelId
      */
     public function findLabelById($labelId)
     {
