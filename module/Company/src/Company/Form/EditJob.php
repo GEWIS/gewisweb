@@ -205,6 +205,15 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $this->languages = $languages;
     }
 
+    public function setLabels($labels)
+    {
+        $allLabels = $this->labels->getValueOptions();
+        foreach ($labels as $label) {
+            $allLabels[$label] = true;
+        }
+        $this->labels->setValueOptions($allLabels);
+    }
+
     public function getLanguages()
     {
         return $this->languages;

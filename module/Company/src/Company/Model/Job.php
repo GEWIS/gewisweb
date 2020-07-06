@@ -450,6 +450,20 @@ class Job
         return $this->labels;
     }
 
+    /**
+     * Get the labels
+     *
+     * @return array
+     */
+    public function getLanguageNeutralLabels()
+    {
+        $array = [];
+        foreach ($this->labels as $label) {
+            $array[] = $label->getLanguageNeutralId();
+        }
+        return $array;
+    }
+
     public function setPackage(CompanyPackage $package)
     {
         $this->package = $package;
