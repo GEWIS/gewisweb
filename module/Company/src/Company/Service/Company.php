@@ -669,8 +669,8 @@ class Company extends AbstractACLService
             $lang = $job->getLanguage();
             // Contains language specific labels
             $labelsLangBased = [];
-            foreach ($labelIDs as $id) {
-                $label = $mapper->findLabelById($id);
+            foreach ($labelIDs as $labelId) {
+                $label = $mapper->findLabelById($labelId);
                 $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
             }
             $this->setLabelsForJob($job, $labelsLangBased);
