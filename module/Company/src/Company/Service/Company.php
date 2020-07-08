@@ -246,7 +246,7 @@ class Company extends AbstractACLService
 
     /**
      * Creates a new JobCategory.
-     * 
+     *
      * @param  array $data Category data from the EditCategory form.
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
@@ -263,7 +263,7 @@ class Company extends AbstractACLService
 
     /**
      * Checks if the data is valid, and if it is, saves the JobCategory
-     * 
+     *
      * @param int|string $languageNeutralId Identifier of the JobCategories to save
      * @param array $categories The JobCategories to save
      * @param array $data The (new) data to save
@@ -292,10 +292,10 @@ class Company extends AbstractACLService
 
     /**
      * Sets the languageNeutralId for this JobCategory.
-     * 
-     * @param int $id 
-     * @param JobCategory $category 
-     * @param int|string $languageNeutralId 
+     *
+     * @param int $id The id of the JobCategory
+     * @param JobCategory $category The JobCategory
+     * @param int|string $languageNeutralId The languageNeutralId of the JobCategory
      *
      * @return int
      */
@@ -320,11 +320,12 @@ class Company extends AbstractACLService
 
     /**
      * Creates a new JobLabel.
-     * 
-     * @param  array $data Label data from the EditLabel form.
+     *
+     * @param array $data Label data from the EditLabel form
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
-    public function createLabel($data) {
+    public function createLabel($data)
+    {
         $labelDict = [];
         foreach ($this->getLanguages() as $lang) {
             $label = new LabelModel();
@@ -337,7 +338,7 @@ class Company extends AbstractACLService
 
     /**
      * Checks if the data is valid, and if it is, saves the JobLabel
-     * 
+     *
      * @param int|string $languageNeutralId Identifier of the JobLabel to save
      * @param array $labels The JobLabels to save
      * @param array $data The data to validate, and apply to the label
@@ -366,10 +367,10 @@ class Company extends AbstractACLService
 
     /**
      * Sets the languageNeutralId for this JobLabel.
-     * 
-     * @param int $id 
-     * @param JobLabel $label 
-     * @param int|string $languageNeutralId 
+     *
+     * @param int $id The id of the JobLabel
+     * @param JobLabel $label The JobLabel
+     * @param int|string $languageNeutralId The languageNeutralId of the JobLabel 
      *
      * @return int
      */
@@ -618,10 +619,10 @@ class Company extends AbstractACLService
     /**
      * Checks if the data is valid, and if it is, saves the Job
      *
-     * @param int|string $languageNeutralId 
-     * @param array $jobs
-     * @param array $data
-     * @param array $files
+     * @param int|string $languageNeutralId Identifier of the Job to save
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     * @param array $files The (new) files to save
      *
      * @return bool
      */
