@@ -51,10 +51,10 @@ Company.Admin = {
         $("#deleteCompanyName").html(slugCompanyName);
     },
 
-    deletePackage: function (slugCompanyName, packageID) {
+    deletePackage: function (slugCompanyName, packageId) {
         $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deletePackage', {
             'slugCompanyName': slugCompanyName,
-            'packageID': packageID
+            'packageId': packageId
         }));
     }
 };
