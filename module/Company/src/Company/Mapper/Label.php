@@ -85,9 +85,9 @@ class Label
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')
-            ->where('c.languageNeutralId=:labelID')
+            ->where('c.languageNeutralId=:labelId')
             ->andWhere('c.language=:language');
-        $qb->setParameter('labelID', $label->getLanguageNeutralId());
+        $qb->setParameter('labelId', $label->getLanguageNeutralId());
         $qb->setParameter('language', $lang);
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -97,8 +97,8 @@ class Label
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:labelID');
-        $qb->setParameter('labelID', $labelId);
+        $qb->select('c')->where('c.languageNeutralId=:labelId');
+        $qb->setParameter('labelId', $labelId);
         $labels = $qb->getQuery()->getResult();
 
         return $labels;
@@ -118,11 +118,11 @@ class Label
     /**
      * Deletes the given label
      *
-     * @param int $labelID
+     * @param int $labelId
      */
-    public function deleteById($labelID)
+    public function deleteById($labelId)
     {
-        $label = $this->findEditableLabel($labelID);
+        $label = $this->findEditableLabel($labelId);
         if (is_null($label)) {
             return;
         }

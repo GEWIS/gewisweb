@@ -222,7 +222,7 @@ $this->scriptUrl()->requireUrls(
                             ?>
                             <?= sprintf(
                                 $this->translate("%s for company %s will start at %s"),
-                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                                 "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
                                 $package->getStartingDate()->format("l d M"))
                             ?>
@@ -254,7 +254,7 @@ $this->scriptUrl()->requireUrls(
                             ?>
                             <?= sprintf(
                                 $this->translate("%s for company %s will expire at %s"),
-                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                                 "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
                                 $package->getExpirationDate()->format("l d M"))
                             ?>

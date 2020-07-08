@@ -87,8 +87,8 @@ class Category
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryID')->andWhere('c.language=:language');
-        $qb->setParameter('categoryID', $category->getLanguageNeutralId());
+        $qb->select('c')->where('c.languageNeutralId=:categoryId')->andWhere('c.language=:language');
+        $qb->setParameter('categoryId', $category->getLanguageNeutralId());
         $qb->setParameter('language', $lang);
         $categories = $qb->getQuery()->getResult();
         return $categories[0];
@@ -98,8 +98,8 @@ class Category
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryID');
-        $qb->setParameter('categoryID', $categoryId);
+        $qb->select('c')->where('c.languageNeutralId=:categoryId');
+        $qb->setParameter('categoryId', $categoryId);
         $categories = $qb->getQuery()->getResult();
 
         return $categories;
@@ -119,11 +119,11 @@ class Category
     /**
      * Deletes the given category
      *
-     * @param int $categoryID
+     * @param int $categoryId
      */
-    public function deleteByID($categoryID)
+    public function deleteById($categoryId)
     {
-        $category = $this->findEditableCategory($categoryID);
+        $category = $this->findEditableCategory($categoryId);
         if (is_null($category)) {
             return;
         }

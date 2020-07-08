@@ -63,8 +63,8 @@ class LabelAssignment
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('a');
         $qb->select('a')
-            ->where('a.job=:jobID');
-        $qb->setParameter('jobID', $jobId);
+            ->where('a.job=:jobId');
+        $qb->setParameter('jobId', $jobId);
 
         return $qb->getQuery()->getResult();
     }
@@ -79,10 +79,10 @@ class LabelAssignment
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('a');
         $qb->select('a')
-            ->where('a.job=:jobID')
-            ->andWhere('a.label=:labelID');
-        $qb->setParameter('jobID', $jobId);
-        $qb->setParameter('labelID', $labelId);
+            ->where('a.job=:jobId')
+            ->andWhere('a.label=:labelId');
+        $qb->setParameter('jobId', $jobId);
+        $qb->setParameter('labelId', $labelId);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

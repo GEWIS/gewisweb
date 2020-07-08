@@ -159,12 +159,12 @@ return [
                             'editPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/package/:packageID',
+                                    'route' => '/package/:packageId',
                                     'defaults' => [
                                         'action' => 'editPackage',
                                     ],
                                     'constraints' => [
-                                        'packageID' => '[a-zA-Z0-9_-]*',
+                                        'packageId' => '[a-zA-Z0-9_-]*',
                                     ],
                                 ],
                                 'may_terminate' => true,

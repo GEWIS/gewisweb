@@ -518,7 +518,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
 
         $arraycopy = [];
-        $arraycopy['id'] = $this->getID();
+        $arraycopy['id'] = $this->getId();
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['contactName'] = $this->getContactName();

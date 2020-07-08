@@ -5,7 +5,7 @@ $this->scriptUrl()->requireUrls(
     [
         'admin_company/editCompany/editPackage/deletePackage'
     ],
-    ['slugCompanyName', 'packageID']
+    ['slugCompanyName', 'packageId']
 );
 ?>
 <h1><?= $this->translate('Edit Company'); ?></h1>
@@ -116,7 +116,7 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
                     <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",
                         [
                             "slugCompanyName" => $company->getSlugName(),
-                            "packageID" => $package->getId(),
+                            "packageId" => $package->getId(),
                         ]
                     ); ?>">
                         <?= $this->translate('edit'); ?></a>

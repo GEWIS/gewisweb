@@ -152,7 +152,7 @@ class Company extends AbstractACLService
     {
         $nonemptyCategories = [];
         foreach ($categories as $category) {
-            if (count($this->getActiveJobList(['jobCategoryID' => $category->getId()])) > 0) {
+            if (count($this->getActiveJobList(['jobCategoryId' => $category->getId()])) > 0) {
                 $nonemptyCategories[] = $category;
             }
         }
@@ -169,7 +169,7 @@ class Company extends AbstractACLService
     {
         $nonemptyLabels = [];
         foreach ($labels as $label) {
-            if (count($this->getActiveJobList(['jobCategoryID' => $label->getId()])) > 0) {
+            if (count($this->getActiveJobList(['jobCategoryId' => $label->getId()])) > 0) {
                 $nonemptyLabels[] = $label;
             }
         }
@@ -598,14 +598,14 @@ class Company extends AbstractACLService
     /**
      * Creates a new job and adds it to the specified package.
      *
-     * @param integer $packageID
+     * @param integer $packageId
      * @param array $data
      * @param array $files
      * @return bool
      */
-    public function createJob($packageID, $data, $files)
+    public function createJob($packageId, $data, $files)
     {
-        $package = $this->getPackageMapper()->findPackage($packageID);
+        $package = $this->getPackageMapper()->findPackage($packageId);
         $jobs = [];
         foreach ($this->getLanguages() as $lang) {
             $job = new JobModel();
@@ -643,9 +643,9 @@ class Company extends AbstractACLService
         }
         $id = -1;
 
-        $labelIDs = $data['labels'];
-        if (is_null($labelIDs)) {
-            $labelIDs = [];
+        $labelIds = $data['labels'];
+        if (is_null($labelIds)) {
+            $labelIds = [];
         }
 
         foreach ($jobs as $lang => $job) {
@@ -679,7 +679,7 @@ class Company extends AbstractACLService
             $lang = $job->getLanguage();
             // Contains language specific labels
             $labelsLangBased = [];
-            foreach ($labelIDs as $labelId) {
+            foreach ($labelIds as $labelId) {
                 $label = $mapper->findLabelById($labelId);
                 $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
             }
@@ -759,9 +759,9 @@ class Company extends AbstractACLService
     /**
      * Inserts a job, and binds it to the given package
      *
-     * @param mixed $packageID
+     * @param mixed $packageId
      */
-    public function insertJobIntoPackageID($packageID, $lang, $languageNeutralId)
+    public function insertJobIntoPackageId($packageId, $lang, $languageNeutralId)
     {
         if (!$this->isAllowed('insert')) {
             $translator = $this->getTranslator();
@@ -769,7 +769,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a job')
             );
         }
-        $package = $this->getEditablePackage($packageID);
+        $package = $this->getEditablePackage($packageId);
         $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
 
         return $result;
@@ -778,9 +778,9 @@ class Company extends AbstractACLService
     /**
      * Deletes the given package
      *
-     * @param mixed $packageID
+     * @param mixed $packageId
      */
-    public function deletePackage($packageID)
+    public function deletePackage($packageId)
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
@@ -788,8 +788,8 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete packages')
             );
         }
-        $this->getPackageMapper()->delete($packageID);
-        $this->getBannerPackageMapper()->delete($packageID);
+        $this->getPackageMapper()->delete($packageId);
+        $this->getBannerPackageMapper()->delete($packageId);
     }
 
     /**
@@ -822,9 +822,9 @@ class Company extends AbstractACLService
     /**
      * Returns a persistent category
      *
-     * @param int $categoryID
+     * @param int $categoryId
      */
-    public function getAllCategoriesById($categoryID)
+    public function getAllCategoriesById($categoryId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -833,16 +833,16 @@ class Company extends AbstractACLService
             );
         }
 
-        return $this->getCategoryMapper()->findAllCategoriesById($categoryID);
+        return $this->getCategoryMapper()->findAllCategoriesById($categoryId);
     }
 
 
     /**
      * Returns a persistent label
      *
-     * @param int $labelID
+     * @param int $labelId
      */
-    public function getAllLabelsById($labelID)
+    public function getAllLabelsById($labelId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -851,15 +851,15 @@ class Company extends AbstractACLService
             );
         }
 
-        return $this->getLabelMapper()->findAllLabelsById($labelID);
+        return $this->getLabelMapper()->findAllLabelsById($labelId);
     }
 
     /**
      * Returns a persistent package
      *
-     * @param mixed $packageID
+     * @param mixed $packageId
      */
-    public function getEditablePackage($packageID)
+    public function getEditablePackage($packageId)
     {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
@@ -867,15 +867,15 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit packages')
             );
         }
-        if (is_null($packageID)) {
+        if (is_null($packageId)) {
             throw new \Exception('Invalid argument');
         }
-        $package = $this->getPackageMapper()->findEditablePackage($packageID);
+        $package = $this->getPackageMapper()->findEditablePackage($packageId);
         if (is_null($package)) {
-            $package = $this->getBannerPackageMapper()->findEditablePackage($packageID);
+            $package = $this->getBannerPackageMapper()->findEditablePackage($packageId);
         }
         if (is_null($package)) {
-            $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageID);
+            $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageId);
         }
 
         return $package;
@@ -1114,7 +1114,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get the default resource ID.
+     * Get the default resource Id.
      *
      * @return string
      */

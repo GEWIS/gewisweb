@@ -144,7 +144,7 @@ class AdminController extends AbstractActionController
 
         // Get parameters
         $companyName = $this->params('slugCompanyName');
-        $packageId = $this->params('packageID');
+        $packageId = $this->params('packageId');
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -162,7 +162,7 @@ class AdminController extends AbstractActionController
                     'admin_company/editCompany/editPackage',
                     [
                         'slugCompanyName' => $companyName,
-                        'packageID' => $packageId
+                        'packageId' => $packageId
                     ]
                 );
             }
@@ -177,7 +177,7 @@ class AdminController extends AbstractActionController
                 'admin_company/editCompany/editPackage/addJob',
                 [
                     'slugCompanyName' => $companyName,
-                    'packageID' => $packageId
+                    'packageId' => $packageId
                 ]
             )
         );
@@ -394,10 +394,10 @@ class AdminController extends AbstractActionController
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
-        $packageID = $this->params('packageID');
+        $packageId = $this->params('packageId');
 
         // Get the specified package (Assuming it is found)
-        $package = $companyService->getEditablePackage($packageID);
+        $package = $companyService->getEditablePackage($packageId);
         $type = $package->getType();
 
         // Get form
@@ -420,7 +420,7 @@ class AdminController extends AbstractActionController
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage',
                 [
-                    'packageID' => $packageID,
+                    'packageId' => $packageId,
                     'slugCompanyName' => $companyName,
                     'type' => $type,
                 ]
@@ -612,13 +612,13 @@ class AdminController extends AbstractActionController
         $companyService = $this->getCompanyService();
 
         // Get parameters
-        $packageID = $this->params('packageID');
+        $packageId = $this->params('packageId');
         $companyName = $this->params('slugCompanyName');
 
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->deletePackage($packageID);
+            $companyService->deletePackage($packageId);
             return $this->redirect()->toRoute(
                 'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]

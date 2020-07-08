@@ -53,7 +53,7 @@ class Company
     {
         $objects = $this->findEditableCompaniesBySlugName($slugName, true);
         foreach ($objects as $company) {
-            if ($company->getID() != $cid) {
+            if ($company->getId() != $cid) {
                 return false;
             }
         }
