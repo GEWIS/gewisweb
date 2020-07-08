@@ -39,7 +39,7 @@ $this->scriptUrl()->requireUrls(
                     <?php
                     foreach ($categoryList as $category):
                         $editUrl = $this->url('admin_company/editCategory',
-                            ['categoryID' => $category->getLanguageNeutralId()]);
+                            ['languageNeutralCategoryId' => $category->getLanguageNeutralId()]);
                         ?>
                         <tr>
                             <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
@@ -68,7 +68,7 @@ $this->scriptUrl()->requireUrls(
                     <?php
                     foreach ($labelList as $label):
                         $editUrl = $this->url('admin_company/editLabel',
-                            ['labelID' => $label->getLanguageNeutralId()]);
+                            ['languageNeutralLabelId' => $label->getLanguageNeutralId()]);
                         ?>
                         <tr>
                             <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>

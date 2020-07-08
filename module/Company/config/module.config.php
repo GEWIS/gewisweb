@@ -197,7 +197,7 @@ return [
                                                 'action' => 'editJob',
                                             ],
                                             'constraints' => [
-                                                'jobName' => '[a-zA-Z0-9_-]*',
+                                                'languageNeutralJobId' => '[0-9]*',
                                             ],
                                             'may_terminate' => true,
                                         ],
@@ -246,28 +246,26 @@ return [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
+                            'route' => '/editCategory/:languageNeutralCategoryId',
                             'defaults' => [
                                 'action' => 'editCategory',
                             ],
-                            'route' => '/editCategory/:categoryID',
                             'constraints' => [
-                                'categoryID' => '[0-9]*',
+                                'languageNeutralCategoryId' => '\d+',
                             ],
-                            'may_terminate' => true,
                         ],
                     ],
                     'editLabel' => [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
+                            'route' => '/editLabel/:languageNeutralLabelId',
                             'defaults' => [
                                 'action' => 'editLabel',
                             ],
-                            'route' => '/editLabel/:labelID',
                             'constraints' => [
-                                'labelID' => '[0-9]*',
+                                'languageNeutralLabelId' => '\d+',
                             ],
-                            'may_terminate' => true,
                         ],
                     ],
                     'default' => [
