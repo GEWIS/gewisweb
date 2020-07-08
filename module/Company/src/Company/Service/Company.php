@@ -250,7 +250,8 @@ class Company extends AbstractACLService
      * @param  array $data Category data from the EditCategory form.
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
-    public function createCategory($data) {
+    public function createCategory($data)
+    {
         $categoryDict = [];
         foreach ($this->getLanguages() as $lang) {
             $category = new CategoryModel();
@@ -287,7 +288,7 @@ class Company extends AbstractACLService
             $this->saveCategory();
         }
 
-        return (($languageNeutralId == "") ? $id : $languageNeutralId); 
+        return (($languageNeutralId == "") ? $id : $languageNeutralId);
     }
 
     /**
@@ -357,7 +358,7 @@ class Company extends AbstractACLService
 
         $id = -1;
         foreach ($labels as $label) {
-            $id = $this->setLanguageNeutralCategoryId($id, $label, $languageNeutralId);
+            $id = $this->setLanguageNeutralLabelId($id, $label, $languageNeutralId);
             $this->getLabelMapper()->persist($label);
             $this->saveLabel();
         }
@@ -370,7 +371,7 @@ class Company extends AbstractACLService
      *
      * @param int $id The id of the JobLabel
      * @param JobLabel $label The JobLabel
-     * @param int|string $languageNeutralId The languageNeutralId of the JobLabel 
+     * @param int|string $languageNeutralId The languageNeutralId of the JobLabel
      *
      * @return int
      */
