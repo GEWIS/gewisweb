@@ -260,11 +260,19 @@ class Company extends AbstractACLService
     /**
      * Creates a new JobCategory.
      *
-     * @param  array $data Category data from the EditCategory form.
+     * @param array $data Category data from the EditCategory form
+     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job category
+     *
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
     public function createCategory($data)
     {
+        if (!$this->isAllowed('insert')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to insert a job category')
+            );
+        }
+
         $categoryDict = [];
         foreach ($this->getLanguages() as $lang) {
             $category = new CategoryModel();
@@ -286,6 +294,12 @@ class Company extends AbstractACLService
      */
     public function saveCategoryData($languageNeutralId, $categories, $data)
     {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit job categories')
+            );
+        }
+
         $categoryForm = $this->getCategoryForm();
         $categoryForm->bind($categories);
         $categoryForm->setData($data);
@@ -336,10 +350,18 @@ class Company extends AbstractACLService
      * Creates a new JobLabel.
      *
      * @param array $data Label data from the EditLabel form
+     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job label 
+     *
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
     public function createLabel($data)
     {
+        if (!$this->isAllowed('insert')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to insert a job label')
+            );
+        }
+
         $labelDict = [];
         foreach ($this->getLanguages() as $lang) {
             $label = new LabelModel();
@@ -361,6 +383,12 @@ class Company extends AbstractACLService
      */
     public function saveLabelData($languageNeutralId, $labels, $data)
     {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit job labels')
+            );
+        }
+
         $labelForm = $this->getLabelForm();
         $labelForm->bind($labels);
         $labelForm->setData($data);
@@ -642,6 +670,12 @@ class Company extends AbstractACLService
      */
     public function saveJobData($languageNeutralId, $jobs, $data, $files)
     {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit jobs')
+            );
+        }
+
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
