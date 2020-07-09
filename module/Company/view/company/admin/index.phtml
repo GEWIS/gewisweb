@@ -42,7 +42,7 @@ $this->scriptUrl()->requireUrls(
                             ['languageNeutralCategoryId' => $category->getLanguageNeutralId()]);
                         ?>
                         <tr>
-                            <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
+                            <td><?= $category->getName(); ?> (<a href="<?= $editUrl; ?>"><?= $this->translate('edit')?></a>)</td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

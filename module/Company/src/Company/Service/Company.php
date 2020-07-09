@@ -188,6 +188,13 @@ class Company extends AbstractACLService
         }
         return $resultArray;
     }
+
+    /**
+     * Returns all categories if $visible is false, only returns visible categories if $visible is false
+     *
+     * @param $visible
+     * @return array
+     */
     public function getCategoryList($visible)
     {
         $translator = $this->getTranslator();
@@ -220,6 +227,12 @@ class Company extends AbstractACLService
         return $filteredCategories;
     }
 
+    /**
+     * Returns all labels if $visible is false, only returns visible labels if $visible is false
+     *
+     * @param $visible
+     * @return array
+     */
     public function getLabelList($visible)
     {
         $translator = $this->getTranslator();
@@ -276,7 +289,7 @@ class Company extends AbstractACLService
         $categoryForm = $this->getCategoryForm();
         $categoryForm->bind($categories);
         $categoryForm->setData($data);
-        
+
         if (!$categoryForm->isValid()) {
             return false;
         }
@@ -351,7 +364,7 @@ class Company extends AbstractACLService
         $labelForm = $this->getLabelForm();
         $labelForm->bind($labels);
         $labelForm->setData($data);
-        
+
         if (!$labelForm->isValid()) {
             return false;
         }
