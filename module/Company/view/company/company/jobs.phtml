@@ -62,6 +62,13 @@ $this->headTitle($category->getPluralName());
                             <p class="job-email">
                                 <a href="mailto:<?= rawurlencode($job->getEmail()) ?>"><?= $job->getEmail() ?></a>
                             </p>
+                            <?php if ($job->getWebsite() !== ""): ?>
+                                <p class="job-website">
+                                    <a href="<?= $escaper->escapeHtmlAttr($job->getWebsite()) ?>" rel="noreferrer">
+                                        <?= $this->translate('View') . " ". $job->getCategory()->getName(); ?>
+                                    </a>
+                                </p>
+                            <?php endif; ?>
                             <?php if (!is_null($job->getAttachment())): ?>
                                 <p class="job-vacancy">
                                     <a href="<?= $this->fileUrl($job->getAttachment()); ?>"><?= $this->translate('View') . " ". $job->getCategory()->getName(); ?></a>
