@@ -94,5 +94,5 @@ class AlbumController extends AbstractActionController
             'basedir'   => '/',
             'config' => $this->getServiceLocator()->get('config')['photo']
         ]);
-    }    
+    }
 }
