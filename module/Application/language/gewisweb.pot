@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-20 13:44+0200\n"
+"POT-Creation-Date: 2020-07-16 14:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -809,6 +809,12 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:181
 msgid "There currently is no poll."
+msgstr ""
+
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:195
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:201
+#: module/Education/view/education/education/index.phtml:121
+msgid "Athenaeum Bookstore"
 msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:5
@@ -2061,7 +2067,7 @@ msgid ""
 msgstr ""
 
 #: module/Education/view/education/education/index.phtml:90
-#: module/Education/view/education/education/index.phtml:152
+#: module/Education/view/education/education/index.phtml:159
 msgid "Mail the education officer"
 msgstr ""
 
@@ -2097,75 +2103,75 @@ msgstr ""
 msgid "Books"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:118
+#: module/Education/view/education/education/index.phtml:125
 msgid ""
 "Order your course books via GEWIS to receive a discount. Specific ordering "
 "deadlines and pickup dates will be timely communicated to you via an email."
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:121
+#: module/Education/view/education/education/index.phtml:128
 msgid "Visit the webshop"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:121
+#: module/Education/view/education/education/index.phtml:128
 msgid "Visit webshop"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:130
+#: module/Education/view/education/education/index.phtml:137
 #: module/Decision/view/decision/member/index.phtml:65
 msgid "Microsoft Imagine"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:133
+#: module/Education/view/education/education/index.phtml:140
 msgid ""
 "Through Microsoft Imagine you have access to a vast variety of Microsoft "
 "products at no cost. The only requirement is that you are a member of GEWIS."
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:136
+#: module/Education/view/education/education/index.phtml:143
 msgid "Visit the Microsoft Imagine portal"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:136
+#: module/Education/view/education/education/index.phtml:143
 msgid "Visit portal"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:145
+#: module/Education/view/education/education/index.phtml:152
 msgid "Complaint or suggestion about TU/e education?"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:151
+#: module/Education/view/education/education/index.phtml:158
 #, php-format
 msgid ""
 "Do you have a complaint or suggestion concerning the education at the TU/e? "
 "Contact the %seducation officer%s to share your ideas."
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:162
+#: module/Education/view/education/education/index.phtml:169
 msgid "Disclaimer on educational content"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:167
+#: module/Education/view/education/education/index.phtml:174
 msgid ""
 "The exams on the website of GEWIS are provided by Education & Student "
 "Affairs of the department of Mathematics and Computer Science of the TU/e."
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:168
+#: module/Education/view/education/education/index.phtml:175
 msgid ""
 "If an exam has been put online without the intention of the author, please "
 "let the board of GEWIS know by sending an"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:169
+#: module/Education/view/education/education/index.phtml:176
 msgid "Email the board of GEWIS"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:169
+#: module/Education/view/education/education/index.phtml:176
 msgid "email to the board of GEWIS"
 msgstr ""
 
-#: module/Education/view/education/education/index.phtml:170
+#: module/Education/view/education/education/index.phtml:177
 msgid ""
 "then this exam will be removed from the website. Using the summaries or "
 "exams on this website for commercial goals without the permission of the "
