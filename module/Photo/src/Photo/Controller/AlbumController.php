@@ -28,7 +28,7 @@ class AlbumController extends AbstractActionController
     /**
      * Shows a page from the album, or a 404 if this page does not exist
      *
-     * @return array|ViewModel
+     * @return ViewModel
      */
     public function indexNewAction()
     {
@@ -76,7 +76,7 @@ class AlbumController extends AbstractActionController
      * Shows a page with photo's of a member, or a 404 if this page does not
      * exist
      *
-     * @return array|ViewModel
+     * @return ViewModel
      */
     public function memberNewAction()
     {
