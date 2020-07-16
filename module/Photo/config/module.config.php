@@ -45,6 +45,19 @@ return [
                             ],
                         ],
                     ],
+                    'member_beta' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/beta/member/:lidnr',
+                            'constraints' => [
+                                'lidnr' => '\d+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Album',
+                                'action' => 'memberNew',
+                            ],
+                        ],
+                    ],
                     'album' => [
                         'type' => 'Segment',
                         'options' => [
