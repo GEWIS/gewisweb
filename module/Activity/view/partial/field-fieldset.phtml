@@ -24,6 +24,7 @@
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getAttribute('id') ?>" class="control-label">
                     <?= $element->getLabel() ?>
+                    <span class="flag-icon flag-icon-nl"></span>
                 </label>
                 <?= $this->formInput($element) ?>
                 <?= $this->formElementErrors($element) ?>
@@ -38,6 +39,7 @@
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getAttribute('id') ?>" class="control-label">
                     <?= $element->getLabel() ?>
+                    <span class="flag-icon flag-icon-en"></span>
                 </label>
                 <?= $this->formInput($element) ?>
                 <?= $this->formElementErrors($element) ?>

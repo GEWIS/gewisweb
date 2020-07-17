@@ -9,6 +9,7 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 
 $form->prepare();
+$form->setAttribute('class', 'form-activity');
 ?>
 <section class="section">
     <div class="container">
@@ -46,14 +47,14 @@ $form->prepare();
                 <p><?= $this->translate('Add additional fields to collect specific information from the participants.') ?></p>
             </div>
             <div class="col-md-12">
-                <div class="row" id="additionalFieldsHeader" style="display: none">
+                <div class="row additional-fields-header">
                     <div class="col-md-4 col-md-offset-4">
-                        <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>
+                        <span class="flag-icon flag-icon-nl"></span>
                         <strong><?= $this->translate('Dutch') ?></strong>
                         <hr />
                     </div>
                     <div class="col-md-4">
-                        <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>
+                        <span class="flag-icon flag-icon-en"></span>
                         <strong><?= $this->translate('English') ?></strong>
                         <hr />
                     </div>
@@ -67,7 +68,7 @@ $form->prepare();
                         echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
                         $tpl = trim(ob_get_clean())
                         ?>
-                        <fieldset id="additionalFields">
+                        <fieldset class="additional-fields">
                             <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
                             <?php
                             $index = 0;
@@ -78,7 +79,7 @@ $form->prepare();
                             ?>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group add-field">
+                                    <div class="form-group field-controls">
                                         <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
                                             <i class="fas fa-minus"></i>
                                             <?= $this->translate('Remove the last field') ?>

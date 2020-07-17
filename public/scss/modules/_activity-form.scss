@@ -1,0 +1,42 @@
+.form-activity {
+    .additional-fields-header {
+        display: none;
+
+        @media (max-width: $screen-sm-max) {
+            display: none !important;
+        }
+    }
+
+    .additional-fields {
+        @media (max-width: $screen-md-max) {
+            .flag-icon-en,
+            .flag-icon-nl {
+                display: inline-block;
+            }
+        }
+
+        @media (min-width: $screen-md-min) {
+            .flag-icon-en,
+            .flag-icon-nl {
+                display: none;
+            }
+        }
+    }
+
+    .field {
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        margin-bottom: 0;
+    }
+
+    h2 {
+        margin-top: 2rem;
+        margin-bottom: 0;
+    }
+
+    hr {
+        margin: 0.5rem 0;
+    }
+}

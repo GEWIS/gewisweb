@@ -7,15 +7,15 @@ Activity = {
      * Adds an optional field to the activity form, at the end of the list.
      */
     addField: function () {
-        var currentCount = $('#additionalFields > div.field').length;
-        var template = $('#additionalFields span.template').data('template');
+        var currentCount = $('fieldset.additional-fields div.field').length;
+        var template = $('fieldset.additional-fields span.template').data('template');
 
         if (currentCount === 0) {
-            $("#additionalFieldsHeader").show();
+            $(".additional-fields-header").show();
         }
 
         template = template.replace(/__index__/g, currentCount);
-        $(template).insertBefore('#additionalFields div.add-field');
+        $(template).insertBefore('fieldset.additional-fields div.field-controls');
         Activity.updateForm();
         return false;
     },
@@ -24,13 +24,13 @@ Activity = {
      * Removes the last field from the list.
      */
     removeField: function () {
-        var currentCount = $('#additionalFields > div.field').length - 1;
+        var currentCount = $('fieldset.additional-fields div.field').length - 1;
         if (currentCount >= 0){
             $('#additionalField' + currentCount).remove();
         }
 
         if (currentCount === 0) {
-            $("#additionalFieldsHeader").hide();
+            $(".additional-fields-header").hide();
         }
 
         return false;

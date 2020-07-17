@@ -18,12 +18,18 @@
     content: "\00a0";
 }
 
-.dropdown-menu {
+.flag-icon-en {
+    background-image: url('https://gewis.nl/img/en.svg');
+}
 
+.flag-icon-nl {
+    background-image: url('https://gewis.nl/img/nl.svg');
+}
+
+.dropdown-menu {
     .flag-icon {
         margin-right: 1em;
     }
-
 }
 
 ul.dropdown-menu.language {
