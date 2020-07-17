@@ -76,8 +76,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'name-nl');
-        // $nameValue = $name->getValue();
-        // $name->setValue(is_null($nameValue) ? '' : $nameValue->getValueNL());
+        $nameValue = $name->getValue();
+        $name->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? '' : $nameValue->getValueNL()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($name) ?>">
             <label for="<?= $name->getAttribute('id') ?>" class="control-label">
@@ -91,8 +91,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'location-nl');
-        // $locationValue = $location->getValue();
-        // $location->setValue(is_null($locationValue) ? '' : $locationValue->getValueNL());
+        $locationValue = $location->getValue();
+        $location->setValue(is_null($locationValue) ? '' : (is_string($locationValue) ? '' : $locationValue->getValueNL()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($location) ?>">
             <label for="<?= $location->getAttribute('id') ?>" class="control-label">
@@ -106,8 +106,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'cost-nl');
-        // $costsValue = $costs->getValue();
-        // $costs->setValue(is_null($costsValue) ? '' : $costsValue->getValueNL());
+        $costsValue = $costs->getValue();
+        $costs->setValue(is_null($costsValue) ? '' : (is_string($costsValue) ? '' : $costsValue->getValueNL()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($costs) ?>">
             <label for="<?= $costs->getAttribute('id') ?>" class="control-label">
@@ -122,8 +122,8 @@
             ->setAttribute('style', 'width:100%; height:10em; resize:none')
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-nl');
-        // $descriptionValue = $description->getValue();
-        // $description->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueNL());
+        $descriptionValue = $description->getValue();
+        $description->setValue(is_null($descriptionValue) ? '' : (is_string($descriptionValue) ? '' : $descriptionValue->getValueNL()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($description) ?>">
             <label for="<?= $description->getAttribute('id') ?>" class="control-label">
@@ -155,8 +155,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'name-en');
-        // $nameValue = $nameEn->getValue();
-        // $nameEn->setValue(is_null($nameValue) ? '' : $nameValue->getValueEN());
+        $nameValue = $nameEn->getValue();
+        $nameEn->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? '' : $nameValue->getValueEN()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
             <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
@@ -170,8 +170,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'location-en');
-        // $locationValue = $locationEn->getValue();
-        // $locationEn->setValue(is_null($locationValue) ? '' : $locationValue->getValueEN());
+        $locationValue = $locationEn->getValue();
+        $locationEn->setValue(is_null($locationValue) ? '' : (is_string($locationValue) ? '' : $locationValue->getValueEN()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($locationEn) ?>">
             <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label">
@@ -185,8 +185,8 @@
             ->setAttribute('disabled', 'disabled')
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'cost-en');
-        // $costsValue = $costsEn->getValue();
-        // $costsEn->setValue(is_null($costsValue) ? '' : $costsValue->getValueEN());
+        $costsValue = $costsEn->getValue();
+        $costsEn->setValue(is_null($costsValue) ? '' : (is_string($costsValue) ? '' : $costsValue->getValueEN()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($costsEn) ?>">
             <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label">
@@ -201,8 +201,8 @@
             ->setAttribute('style', 'width:100%; height:10em; resize:none')
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-en');
-        // $descriptionValue = $descriptionEn->getValue();
-        // $descriptionEn->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueEN());
+        $descriptionValue = $descriptionEn->getValue();
+        $descriptionEn->setValue(is_null($descriptionValue) ? '' : (is_string($descriptionValue) ? '' : $descriptionValue->getValueEN()));
         ?>
         <div class="form-group <?= $this->bootstrapElementError($descriptionEn) ?>">
             <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label">
