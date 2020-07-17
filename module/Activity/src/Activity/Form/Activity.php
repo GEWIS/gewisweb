@@ -197,7 +197,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => new ActivityFieldFieldset($objectManager, $translator)
+                'target_element' => new ActivityFieldFieldset($translator)
             ]
         ]);
 

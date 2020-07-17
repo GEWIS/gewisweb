@@ -3,7 +3,6 @@
 namespace Activity\Form;
 
 use Activity\Model\ActivityField;
-use Doctrine\Common\Persistence\ObjectManager;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
@@ -14,7 +13,8 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
 {
     protected $translator;
 
-    public function __construct(ObjectManager $objectManager, Translator $translator) {
+    public function __construct(Translator $translator)
+    {
         parent::__construct('activityfield');
         $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
