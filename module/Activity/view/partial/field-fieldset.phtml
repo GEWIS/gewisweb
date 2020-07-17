@@ -1,11 +1,10 @@
 <div class="field" id="additionalField<?= $this->index ?>">
     <div class="row">
         <?php
-        $element = $this->fs->get('type');
-        $element->setAttribute('class', 'form-control')
+        $element = $this->fs->get('type')
+            ->setAttribute('class', 'form-control')
             ->setAttribute('id', 'type-field')
-            ->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index. ')')
-            ->setAttribute('placeholder', $element->getLabel());
+            ->setAttribute('onchange', 'Activity.updateFieldset(' . $this->index. ')');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -17,10 +16,9 @@
             </div>
         </div>
         <?php
-        $element = $this->fs->get('name');
-        $element->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'name-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('name')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'name-field');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -32,10 +30,9 @@
             </div>
         </div>
         <?php
-        $element = $this->fs->get('nameEn');
-        $element->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'name-en-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('nameEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'name-en-field');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -49,10 +46,9 @@
     </div>
     <div class="row field-dependant type-2" style="display:none;">
         <?php
-        $element = $this->fs->get('min. value');
-        $element->setAttribute('class', 'form-control')
-            ->setAttribute('id', 'min-value-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('min. value')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'min-value-field');
         ?>
         <div class="col-md-4 col-md-offset-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -64,10 +60,9 @@
             </div>
         </div>
         <?php
-        $element = $this->fs->get('max. value');
-        $element->setAttribute('class', 'form-control')
-            ->setAttribute('id', 'max-value-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('max. value')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'max-value-field');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -78,13 +73,15 @@
                 <?= $this->formElementErrors($element) ?>
             </div>
         </div>
+        <div class="col-md-8 col-md-offset-4">
+            <p><?= $this->translate('Please note that numbers are not dependant on the selected language(s).') ?></p>
+        </div>
     </div>
-    <div class="form-group form-inline field-dependant type-3" style="display:none;">
+    <div class="row field-dependant type-3" style="display:none;">
         <?php
-        $element = $this->fs->get('options');
-        $element->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'options-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('options')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'options-field');
         ?>
         <div class="col-md-4 col-md-offset-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -96,10 +93,9 @@
             </div>
         </div>
         <?php
-        $element = $this->fs->get('optionsEn');
-        $element->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'options-en-field')
-            ->setAttribute('placeholder', $element->getLabel());
+        $element = $this->fs->get('optionsEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'options-en-field');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">

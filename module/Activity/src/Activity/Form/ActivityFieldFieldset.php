@@ -3,27 +3,41 @@
 namespace Activity\Form;
 
 use Activity\Model\ActivityField;
-use Zend\Form\Fieldset;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Doctrine\Common\Persistence\ObjectManager;
-use Zend\Validator\NotEmpty;
+use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Mvc\I18n\Translator;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Validator\NotEmpty;
 
 class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct(ObjectManager $objectManager) {
+    protected $translator;
 
+    public function __construct(ObjectManager $objectManager, Translator $translator) {
         parent::__construct('activityfield');
+        $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
               ->setObject(new ActivityField());
+
         $this->add([
             'name' => 'name',
-            'options' => ['label' => 'Name'],
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Name'),
+            ],
         ]);
 
         $this->add([
             'name' => 'nameEn',
-            'options' => ['label' => 'Name(English)'],
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Name'),
+            ],
         ]);
 
         $this->add([
@@ -31,41 +45,55 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'type' => 'Zend\Form\Element\Select',
             'options' => [
                 'value_options' => [
-                    '0' => 'Text',
-                    '1' => 'Yes/No',
-                    '2' => 'Number',
-                    '3' => 'Choice'
+                    '0' => $translator->translate('Text'),
+                    '1' => $translator->translate('Yes/No'),
+                    '2' => $translator->translate('Number'),
+                    '3' => $translator->translate('Choice'),
                 ],
-                'label' => 'Type'
+                'label' => $translator->translate('Type'),
             ]
         ]);
 
         $this->add([
             'name' => 'min. value',
+            'attributes' => [
+                'type' => 'number',
+            ],
             'options' => [
-                'label' => 'Min. value'
-            ]
+                'label' => $translator->translate('Min. value'),
+            ],
         ]);
 
         $this->add([
             'name' => 'max. value',
+            'attributes' => [
+                'type' => 'number',
+            ],
             'options' => [
-                'label' => 'Max. value'
-            ]
+                'label' => $translator->translate('Max. value'),
+            ],
         ]);
 
         $this->add([
             'name' => 'options',
+            'attributes' => [
+                'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                'type' => 'text',
+            ],
             'options' => [
-                'label' => 'Options'
-            ]
+                'label' => $translator->translate('Options'),
+            ],
         ]);
 
         $this->add([
             'name' => 'optionsEn',
+            'attributes' => [
+                'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                'type' => 'text',
+            ],
             'options' => [
-                'label' => 'Options (English)'
-            ]
+                'label' => $translator->translate('Options'),
+            ],
         ]);
     }
 
