@@ -26,7 +26,7 @@ $form->prepare();
                 $organ->setAttribute('class', 'form-control');
                 $organ->setAttribute('id', 'organizing-organ');
                 ?>
-                <div class="form-group<?= count($organ->getMessages()) > 0 ? ' has-error' : '' ?>">
+                <div class="form-group<?= $this->bootstrapElementError($organ) ?>">
                     <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
                         <?= $this->translate('Organizing committee / fraternity') ?>
                     </label>

@@ -10,18 +10,20 @@ $englishElement->setAttribute('id', 'english-check');
 $englishElement->setAttribute('class', 'form-control');
 ?>
 <div class="form-group form-inline">
-    <div class="form-group<?= count($dutchElement->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label col-sm-2"><?=
-            $this->translate('Dutch') ?></label>
+    <div class="form-group<?= $this->bootstrapElementError($dutchElement) ?>">
+        <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label col-sm-2">
+            <?= $this->translate('Dutch') ?>
+        </label>
         <div class="col-sm-10">
             <?php $dutchElement->setChecked(isset($languages) ? $languages['nl'] : false); ?>
             <?= $this->formCheckbox($dutchElement) ?>
             <?= $this->formElementErrors($dutchElement) ?>
         </div>
     </div>
-    <div class="form-group<?= count($englishElement->getMessages()) > 0 ? ' has-error' : '' ?>">
-        <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label col-sm-2"><?=
-            $this->translate('English') ?></label>
+    <div class="form-group<?= $this->bootstrapElementError($englishElement) ?>">
+        <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label col-sm-2">
+            <?= $this->translate('English') ?>
+        </label>
         <div class="col-sm-10">
             <?php $englishElement->setChecked(isset($languages) ? $languages['en'] : false); ?>
             <?= $this->formCheckbox($englishElement) ?>
@@ -37,7 +39,7 @@ $englishElement->setAttribute('class', 'form-control');
     $endTime = $form->get('endTime');
     $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
     ?>
-    <div class="form-group<?= count($beginTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($beginTime) ?>">
         <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('From') ?>
         </label>
@@ -47,7 +49,7 @@ $englishElement->setAttribute('class', 'form-control');
         </div>
     </div>
 
-    <div class="form-group<?= count($endTime->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($endTime) ?>">
         <label for="<?= $endTime->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Until') ?>
         </label>
@@ -61,7 +63,7 @@ $englishElement->setAttribute('class', 'form-control');
 $subscriptionDeadline = $form->get('subscriptionDeadline');
 $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
 ?>
-<div class="form-group<?= count($subscriptionDeadline->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group<?= $this->bootstrapElementError($subscriptionDeadline) ?>">
     <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label col-sm-2">
         <?= $this->translate('Subscription deadline') ?>
     </label>
@@ -81,7 +83,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $nameValue = $name->getValue();
     $name->setValue(is_null($nameValue) ? '' : $nameValue->getValueNL());
     ?>
-    <div class="form-group<?= count($name->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($name) ?>">
         <label for="<?= $name->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Name') ?>
         </label>
@@ -96,7 +98,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $locationValue = $location->getValue();
     $location->setValue(is_null($locationValue) ? '' : $locationValue->getValueNL());
     ?>
-    <div class="form-group<?= count($location->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($location) ?>">
         <label for="<?= $location->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Location') ?>
         </label>
@@ -111,7 +113,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $costsValue = $costs->getValue();
     $costs->setValue(is_null($costsValue) ? '' : $costsValue->getValueNL());
     ?>
-    <div class="form-group<?= count($costs->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($costs) ?>">
         <label for="<?= $costs->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Costs') ?>
         </label>
@@ -127,7 +129,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $descriptionValue = $description->getValue();
     $description->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueNL());
     ?>
-    <div class="form-group<?= count($description->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($description) ?>">
         <label for="<?= $description->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
             <?= $this->translate('Description') ?>
         </label>
@@ -144,7 +146,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $nameEn->setAttribute('id', 'name-en');
     $nameEn->setValue(is_null($nameValue) ? '' : $nameValue->getValueEN());
     ?>
-    <div class="form-group<?= count($nameEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($nameEn) ?>">
         <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Name') ?>
         </label>
@@ -158,7 +160,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $locationEn->setAttribute('id', 'location-en');
     $locationEn->setValue(is_null($locationValue) ? '' : $locationValue->getValueEN());
     ?>
-    <div class="form-group<?= count($locationEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($locationEn) ?>">
         <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Location') ?>
         </label>
@@ -172,7 +174,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $costsEn->setAttribute('id', 'cost-en');
     $costsEn->setValue(is_null($costsValue) ? '' : $costsValue->getValueEN());
     ?>
-    <div class="form-group<?= count($costsEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($costsEn) ?>">
         <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label col-sm-2">
             <?= $this->translate('Costs') ?>
         </label>
@@ -187,7 +189,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $descriptionEn->setAttribute('id', 'description-en');
     $descriptionEn->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueEN());
     ?>
-    <div class="form-group<?= count($descriptionEn->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($descriptionEn) ?>">
         <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
             <?= $this->translate('Description') ?>
         </label>
@@ -202,7 +204,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <?php
     $canSignUp = $form->get('canSignUp');
     ?>
-    <div class="form-group<?= count($canSignUp->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($canSignUp) ?>">
         <label>
             <?= $this->formCheckbox($canSignUp) ?>
             <?= $this->translate('Enable subscriptions') ?>
@@ -214,7 +216,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     $onlyGEWIS = $form->get('onlyGEWIS');
     $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()');
     ?>
-    <div class="form-group<?= count($onlyGEWIS->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($onlyGEWIS) ?>">
         <label>
             <?= $this->formCheckbox($onlyGEWIS) ?>
             <?= $this->translate('Allow external participants') ?>
@@ -225,7 +227,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <?php
     $displaySubscribedNumber = $form->get('displaySubscribedNumber');
     ?>
-    <div class="form-group<?= count($displaySubscribedNumber->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
         <label>
             <?= $this->formCheckbox($displaySubscribedNumber) ?>
             <?= $this->translate('Display number of subscribed members') ?>
@@ -236,7 +238,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <?php
     $isFood = $form->get('isFood');
     ?>
-    <div class="form-group<?= count($isFood->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($isFood) ?>">
         <label>
             <?= $this->formCheckbox($isFood) ?>
             <?= $this->translate('This is a food subscription list') ?>
@@ -247,7 +249,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <?php
     $isMyFuture = $form->get('isMyFuture');
     ?>
-    <div class="form-group<?= count($isMyFuture->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($isMyFuture) ?>">
         <label>
             <?= $this->formCheckbox($isMyFuture) ?>
             <?= $this->translate('This is a career related activity') ?>
@@ -258,7 +260,7 @@ $subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id',
     <?php
     $requireGEFLITST = $form->get('requireGEFLITST');
     ?>
-    <div class="form-group<?= count($requireGEFLITST->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group<?= $this->bootstrapElementError($requireGEFLITST) ?>">
         <label>
             <?= $this->formCheckbox($requireGEFLITST) ?>
             <?= $this->translate('This activity needs a GEFLITST member to take photos') ?>
