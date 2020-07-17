@@ -18,7 +18,7 @@
         <?php
         $element = $this->fs->get('name')
             ->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'name-field');
+            ->setAttribute('id', 'field-name-nl');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -33,7 +33,7 @@
         <?php
         $element = $this->fs->get('nameEn')
             ->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'name-en-field');
+            ->setAttribute('id', 'field-name-en');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -54,7 +54,7 @@
         ?>
         <div class="col-md-4 col-md-offset-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
                     <?= $element->getLabel() ?>
                 </label>
                 <?= $this->formInput($element) ?>
@@ -68,7 +68,7 @@
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
                     <?= $element->getLabel() ?>
                 </label>
                 <?= $this->formInput($element) ?>
@@ -83,7 +83,7 @@
         <?php
         $element = $this->fs->get('options')
             ->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'options-field');
+            ->setAttribute('id', 'field-options-nl');
         ?>
         <div class="col-md-4 col-md-offset-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">
@@ -97,7 +97,7 @@
         <?php
         $element = $this->fs->get('optionsEn')
             ->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'options-en-field');
+            ->setAttribute('id', 'field-options-en');
         ?>
         <div class="col-md-4">
             <div class="form-group <?= $this->bootstrapElementError($element) ?>">

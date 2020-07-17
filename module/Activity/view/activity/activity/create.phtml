@@ -23,7 +23,7 @@ $form->setAttribute('class', 'form-activity');
         <div class="row">
             <div class="col-md-12">
                 <h2><?= $this->translate('Organizer') ?></h2>
-                <p><?= $this->translate('Select the committee or fraternity responsible for this activity.') ?></p>
+                <p><?= $this->translate('Select the committee or fraternity responsible for this activity. Or "no organ" if this activity is not organised by an organ.') ?></p>
             </div>
             <div class="col-md-6">
                 <?php
@@ -32,7 +32,7 @@ $form->setAttribute('class', 'form-activity');
                     ->setAttribute('id', 'organizing-organ');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
-                    <label for="<?= $organ->getAttribute('id') ?>" class="control-label">
+                    <label for="<?= $organ->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('Committee / fraternity') ?>
                     </label>
                     <?= $this->formSelect($organ) ?>
