@@ -76,15 +76,19 @@ $form->prepare();
                                 $index++;
                             }
                             ?>
-                            <div class="form-group add-field">
-                                <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
-                                    <i class="fas fa-minus"></i>
-                                    <?= $this->translate('Remove the last field') ?>
-                                </button>
-                                <button class="btn btn-success" type="button" onclick="return Activity.addField()">
-                                    <i class="fas fa-plus"></i>
-                                    <?= $this->translate('Add a field') ?>
-                                </button>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group add-field">
+                                        <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
+                                            <i class="fas fa-minus"></i>
+                                            <?= $this->translate('Remove the last field') ?>
+                                        </button>
+                                        <button class="btn btn-success" type="button" onclick="return Activity.addField()">
+                                            <i class="fas fa-plus"></i>
+                                            <?= $this->translate('Add a field') ?>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
                     </div>
