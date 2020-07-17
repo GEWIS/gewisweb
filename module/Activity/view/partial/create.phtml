@@ -1,270 +1,290 @@
-<h3><?= $this->translate('Display languages') ?></h3>
-<?php
-$dutchElement = $form->get('language_dutch');
-$dutchElement->setAttribute('onchange', 'Activity.updateForm()');
-$dutchElement->setAttribute('id', 'dutch-check');
-$dutchElement->setAttribute('class', 'form-control');
-$englishElement = $form->get('language_english');
-$englishElement->setAttribute('onchange', 'Activity.updateForm()');
-$englishElement->setAttribute('id', 'english-check');
-$englishElement->setAttribute('class', 'form-control');
-?>
-<div class="form-group form-inline">
-    <div class="form-group<?= $this->bootstrapElementError($dutchElement) ?>">
-        <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Dutch') ?>
-        </label>
-        <div class="col-sm-10">
-            <?php $dutchElement->setChecked(isset($languages) ? $languages['nl'] : false); ?>
-            <?= $this->formCheckbox($dutchElement) ?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Date and time') ?></h2>
+        <p><?= $this->translate('Enter the start and end date and time of this activity. Optionally, when allowing people to subscribe to this activity you should also set a subscription deadline.') ?></p>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $beginTime = $form->get('beginTime')
+                    ->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
+                    <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('Start date and time') ?>
+                    </label>
+                    <?= $this->formInput($beginTime) ?>
+                    <?= $this->formElementErrors($beginTime) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $endTime = $form->get('endTime')
+                    ->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
+                    <label for="<?= $endTime->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('End date and time') ?>
+                    </label>
+                    <?= $this->formInput($endTime) ?>
+                    <?= $this->formElementErrors($endTime) ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $subscriptionDeadline = $form->get('subscriptionDeadline')
+                    ->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($subscriptionDeadline) ?>">
+                    <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Subscription deadline') ?>
+                    </label>
+                    <?= $this->formInput($subscriptionDeadline) ?>
+                    <?= $this->formElementErrors($subscriptionDeadline) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+        <p><?= $this->translate('What is this activity about? Fill in the blanks below, please note that at least one language must be used.') ?></p>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $dutchElement = $form->get('language_dutch')
+            ->setAttribute('onchange', 'Activity.updateForm()')
+            ->setAttribute('id', 'dutch-check')
+            ->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($dutchElement) ?>">
+            <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
+                <?php $dutchElement->setChecked(isset($languages) ? $languages['nl'] : false); ?>
+                <?= $this->formCheckbox($dutchElement) ?>
+                <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>
+                <?= $this->translate('Dutch') ?>
+            </label>
             <?= $this->formElementErrors($dutchElement) ?>
         </div>
+        <hr>
+        <?php
+        $name = $form->get('name')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'name-nl');
+        // $nameValue = $name->getValue();
+        // $name->setValue(is_null($nameValue) ? '' : $nameValue->getValueNL());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+            <label for="<?= $name->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Name') ?>
+            </label>
+            <?= $this->formInput($name) ?>
+            <?= $this->formElementErrors($name) ?>
+        </div>
+        <?php
+        $location = $form->get('location')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'location-nl');
+        // $locationValue = $location->getValue();
+        // $location->setValue(is_null($locationValue) ? '' : $locationValue->getValueNL());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($location) ?>">
+            <label for="<?= $location->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Location') ?>
+            </label>
+            <?= $this->formInput($location) ?>
+            <?= $this->formElementErrors($location) ?>
+        </div>
+        <?php
+        $costs = $form->get('costs')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'cost-nl');
+        // $costsValue = $costs->getValue();
+        // $costs->setValue(is_null($costsValue) ? '' : $costsValue->getValueNL());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($costs) ?>">
+            <label for="<?= $costs->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Costs') ?>
+            </label>
+            <?= $this->formInput($costs) ?>
+            <?= $this->formElementErrors($costs) ?>
+        </div>
+        <?php
+        $description = $form->get('description')
+            ->setAttribute('class', 'form-control form-control-dutch markdown-editor')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('data-provide', 'markdown')
+            ->setAttribute('id', 'description-nl');
+        // $descriptionValue = $description->getValue();
+        // $description->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueNL());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($description) ?>">
+            <label for="<?= $description->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Description') ?>
+            </label>
+            <?= $this->formRow($description) ?>
+            <?= $this->formElementErrors($description) ?>
+        </div>
     </div>
-    <div class="form-group<?= $this->bootstrapElementError($englishElement) ?>">
-        <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('English') ?>
-        </label>
-        <div class="col-sm-10">
-            <?php $englishElement->setChecked(isset($languages) ? $languages['en'] : false); ?>
-            <?= $this->formCheckbox($englishElement) ?>
+    <div class="col-md-6">
+        <?php
+        $englishElement = $form->get('language_english')
+            ->setAttribute('onchange', 'Activity.updateForm()')
+            ->setAttribute('id', 'english-check')
+            ->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($englishElement) ?>">
+            <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
+                <?php $englishElement->setChecked(isset($languages) ? $languages['en'] : false); ?>
+                <?= $this->formCheckbox($englishElement) ?>
+                <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>
+                <?= $this->translate('English') ?>
+            </label>
             <?= $this->formElementErrors($englishElement) ?>
         </div>
-    </div>
-</div>
-<h3><?= $this->translate('Time and date') ?></h3>
-<div class="form-group form-inline">
-    <?php
-    $beginTime = $form->get('beginTime');
-    $beginTime->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
-    $endTime = $form->get('endTime');
-    $endTime->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($beginTime) ?>">
-        <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('From') ?>
-        </label>
-        <div class="col-sm-10">
-            <?= $this->formInput($beginTime) ?>
-            <?= $this->formElementErrors($beginTime) ?>
+        <hr>
+        <?php
+        $nameEn = $form->get('nameEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'name-en');
+        // $nameValue = $nameEn->getValue();
+        // $nameEn->setValue(is_null($nameValue) ? '' : $nameValue->getValueEN());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
+            <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Name') ?>
+            </label>
+            <?= $this->formInput($nameEn) ?>
+            <?= $this->formElementErrors($nameEn) ?>
+        </div>
+        <?php
+        $locationEn = $form->get('locationEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'location-en');
+        // $locationValue = $locationEn->getValue();
+        // $locationEn->setValue(is_null($locationValue) ? '' : $locationValue->getValueEN());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($locationEn) ?>">
+            <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Location') ?>
+            </label>
+            <?= $this->formInput($locationEn) ?>
+            <?= $this->formElementErrors($locationEn) ?>
+        </div>
+        <?php
+        $costsEn = $form->get('costs')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'cost-en');
+        // $costsValue = $costsEn->getValue();
+        // $costsEn->setValue(is_null($costsValue) ? '' : $costsValue->getValueEN());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($costsEn) ?>">
+            <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Costs') ?>
+            </label>
+            <?= $this->formInput($costsEn) ?>
+            <?= $this->formElementErrors($costsEn) ?>
+        </div>
+        <?php
+        $descriptionEn = $form->get('description')
+            ->setAttribute('class', 'form-control form-control-english markdown-editor')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('data-provide', 'markdown')
+            ->setAttribute('id', 'description-en');
+        // $descriptionValue = $descriptionEn->getValue();
+        // $descriptionEn->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueEN());
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($descriptionEn) ?>">
+            <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Description') ?>
+            </label>
+            <?= $this->formRow($descriptionEn) ?>
+            <?= $this->formElementErrors($descriptionEn) ?>
         </div>
     </div>
-
-    <div class="form-group<?= $this->bootstrapElementError($endTime) ?>">
-        <label for="<?= $endTime->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Until') ?>
-        </label>
-        <div class="col-sm-10">
-            <?= $this->formInput($endTime) ?>
-            <?= $this->formElementErrors($endTime) ?>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Options') ?></h2>
+        <p><?= $this->translate('Choose which options are applicable to this activity.') ?></p>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $canSignUp = $form->get('canSignUp');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($canSignUp) ?>">
+            <label>
+                <?= $this->formCheckbox($canSignUp) ?>
+                <?= $this->translate('Enable subscriptions') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if people need to subscribe to this activity.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($canSignUp) ?>
+            </label>
+        </div>
+        <?php
+        $onlyGEWIS = $form->get('onlyGEWIS')
+            ->setAttribute('onchange', 'Activity.toggleExternal()');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($onlyGEWIS) ?>">
+            <label>
+                <?= $this->formCheckbox($onlyGEWIS) ?>
+                <?= $this->translate('Allow external participants') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($onlyGEWIS) ?>
+            </label>
+        </div>
+        <?php
+        $displaySubscribedNumber = $form->get('displaySubscribedNumber');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
+            <label>
+                <?= $this->formCheckbox($displaySubscribedNumber) ?>
+                <?= $this->translate('Display number of subscribed members') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($displaySubscribedNumber) ?>
+            </label>
+        </div>
+        <?php
+        $isFood = $form->get('isFood');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($isFood) ?>">
+            <label>
+                <?= $this->formCheckbox($isFood) ?>
+                <?= $this->translate('This is a food subscription list') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if the activity is a food subscription list, it then won\'t be displayed on the information screens.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($isFood) ?>
+            </label>
+        </div>
+        <?php
+        $isMyFuture = $form->get('isMyFuture');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($isMyFuture) ?>">
+            <label>
+                <?= $this->formCheckbox($isMyFuture) ?>
+                <?= $this->translate('This is a career related activity') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page and the activity will be included on the career activities page.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($isMyFuture) ?>
+            </label>
+        </div>
+        <?php
+        $requireGEFLITST = $form->get('requireGEFLITST');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($requireGEFLITST) ?>">
+            <label>
+                <?= $this->formCheckbox($requireGEFLITST) ?>
+                <?= $this->translate('This activity needs a GEFLITST member to take photos') ?>
+                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('When this is checked, GEFLITST will be notified that this activity needs a photographer.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <?= $this->formElementErrors($requireGEFLITST) ?>
+            </label>
         </div>
     </div>
 </div>
-<?php
-$subscriptionDeadline = $form->get('subscriptionDeadline');
-$subscriptionDeadline->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
-?>
-<div class="form-group<?= $this->bootstrapElementError($subscriptionDeadline) ?>">
-    <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label col-sm-2">
-        <?= $this->translate('Subscription deadline') ?>
-    </label>
-    <div class="col-sm-10">
-        <?= $this->formInput($subscriptionDeadline) ?>
-        <?= $this->formElementErrors($subscriptionDeadline) ?>
-    </div>
-</div>
-</div>
-<div class="col-md-6">
-    <h3><?= $this->translate('Dutch') ?></h3>
-    <?php
-    $name = $form->get('name');
-    $name->setAttribute('disabled', 'disabled');
-    $name->setAttribute('class', 'form-control form-control-dutch');
-    $name->setAttribute('id', 'name-nl');
-    $nameValue = $name->getValue();
-    $name->setValue(is_null($nameValue) ? '' : $nameValue->getValueNL());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($name) ?>">
-        <label for="<?= $name->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Name') ?>
-        </label>
-        <?= $this->formInput($name) ?>
-        <?= $this->formElementErrors($name) ?>
-    </div>
-    <?php
-    $location = $form->get('location');
-    $location->setAttribute('disabled', 'disabled');
-    $location->setAttribute('class', 'form-control form-control-dutch');
-    $location->setAttribute('id', 'location-nl');
-    $locationValue = $location->getValue();
-    $location->setValue(is_null($locationValue) ? '' : $locationValue->getValueNL());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($location) ?>">
-        <label for="<?= $location->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Location') ?>
-        </label>
-        <?= $this->formInput($location) ?>
-        <?= $this->formElementErrors($location) ?>
-    </div>
-    <?php
-    $costs = $form->get('costs');
-    $costs->setAttribute('disabled', 'disabled');
-    $costs->setAttribute('class', 'form-control form-control-dutch');
-    $costs->setAttribute('id', 'cost-nl');
-    $costsValue = $costs->getValue();
-    $costs->setValue(is_null($costsValue) ? '' : $costsValue->getValueNL());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($costs) ?>">
-        <label for="<?= $costs->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Costs') ?>
-        </label>
-        <?= $this->formInput($costs) ?>
-        <?= $this->formElementErrors($costs) ?>
-    </div>
-    <?php
-    $description = $form->get('description');
-    $description->setAttribute('class', 'form-control form-control-dutch markdown-editor');
-    $description->setAttribute('style', 'width:100%; height:10em; resize:none');
-    $description->setAttribute('data-provide', 'markdown');
-    $description->setAttribute('id', 'description-nl');
-    $descriptionValue = $description->getValue();
-    $description->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueNL());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($description) ?>">
-        <label for="<?= $description->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
-            <?= $this->translate('Description') ?>
-        </label>
-        <?= $this->formRow($description) ?>
-        <?= $this->formElementErrors($description) ?>
-    </div>
-</div>
-<div class="col-md-6">
-    <h3><?= $this->translate('English') ?></h3>
-    <?php
-    $nameEn = $form->get('nameEn');
-    $nameEn->setAttribute('disabled', 'disabled');
-    $nameEn->setAttribute('class', 'form-control form-control-english');
-    $nameEn->setAttribute('id', 'name-en');
-    $nameEn->setValue(is_null($nameValue) ? '' : $nameValue->getValueEN());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($nameEn) ?>">
-        <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Name') ?>
-        </label>
-        <?= $this->formInput($nameEn) ?>
-        <?= $this->formElementErrors($nameEn) ?>
-    </div>
-    <?php
-    $locationEn = $form->get('locationEn');
-    $locationEn->setAttribute('disabled', 'disabled');
-    $locationEn->setAttribute('class', 'form-control form-control-english');
-    $locationEn->setAttribute('id', 'location-en');
-    $locationEn->setValue(is_null($locationValue) ? '' : $locationValue->getValueEN());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($locationEn) ?>">
-        <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Location') ?>
-        </label>
-        <?= $this->formInput($locationEn) ?>
-        <?= $this->formElementErrors($locationEn) ?>
-    </div>
-    <?php
-    $costsEn = $form->get('costsEn');
-    $costsEn->setAttribute('disabled', 'disabled');
-    $costsEn->setAttribute('class', 'form-control form-control-english');
-    $costsEn->setAttribute('id', 'cost-en');
-    $costsEn->setValue(is_null($costsValue) ? '' : $costsValue->getValueEN());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($costsEn) ?>">
-        <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label col-sm-2">
-            <?= $this->translate('Costs') ?>
-        </label>
-        <?= $this->formInput($costsEn) ?>
-        <?= $this->formElementErrors($costsEn) ?>
-    </div>
-    <?php
-    $descriptionEn = $form->get('descriptionEn');
-    $descriptionEn->setAttribute('class', 'form-control form-control-english markdown-editor');
-    $descriptionEn->setAttribute('style', 'width:100%; height:10em; resize:none');
-    $descriptionEn->setAttribute('data-provide', 'markdown');
-    $descriptionEn->setAttribute('id', 'description-en');
-    $descriptionEn->setValue(is_null($descriptionValue) ? '' : $descriptionValue->getValueEN());
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($descriptionEn) ?>">
-        <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
-            <?= $this->translate('Description') ?>
-        </label>
-        <?= $this->formRow($descriptionEn) ?>
-        <?= $this->formElementErrors($descriptionEn) ?>
-    </div>
-</div>
-<div class="col-md-12">
-
-    <h3><?= $this->translate('Activity options') ?></h3>
-
-    <?php
-    $canSignUp = $form->get('canSignUp');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($canSignUp) ?>">
-        <label>
-            <?= $this->formCheckbox($canSignUp) ?>
-            <?= $this->translate('Enable subscriptions') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if people need to subscribe to this activity.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($canSignUp) ?>
-        </label>
-    </div>
-    <?php
-    $onlyGEWIS = $form->get('onlyGEWIS');
-    $onlyGEWIS->setAttribute('onchange', 'Activity.toggleExternal()');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($onlyGEWIS) ?>">
-        <label>
-            <?= $this->formCheckbox($onlyGEWIS) ?>
-            <?= $this->translate('Allow external participants') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($onlyGEWIS) ?>
-        </label>
-    </div>
-    <?php
-    $displaySubscribedNumber = $form->get('displaySubscribedNumber');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
-        <label>
-            <?= $this->formCheckbox($displaySubscribedNumber) ?>
-            <?= $this->translate('Display number of subscribed members') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($displaySubscribedNumber) ?>
-        </label>
-    </div>
-    <?php
-    $isFood = $form->get('isFood');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($isFood) ?>">
-        <label>
-            <?= $this->formCheckbox($isFood) ?>
-            <?= $this->translate('This is a food subscription list') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if the activity is a food subscription list, it then won\'t be displayed on the information screens.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($isFood) ?>
-        </label>
-    </div>
-    <?php
-    $isMyFuture = $form->get('isMyFuture');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($isMyFuture) ?>">
-        <label>
-            <?= $this->formCheckbox($isMyFuture) ?>
-            <?= $this->translate('This is a career related activity') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page and the activity will be included on the career activities page.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($isMyFuture) ?>
-        </label>
-    </div>
-    <?php
-    $requireGEFLITST = $form->get('requireGEFLITST');
-    ?>
-    <div class="form-group<?= $this->bootstrapElementError($requireGEFLITST) ?>">
-        <label>
-            <?= $this->formCheckbox($requireGEFLITST) ?>
-            <?= $this->translate('This activity needs a GEFLITST member to take photos') ?>
-            <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('When this is checked, GEFLITST will be notified that this activity needs a photographer.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
-            <?= $this->formElementErrors($requireGEFLITST) ?>
-        </label>
-    </div>

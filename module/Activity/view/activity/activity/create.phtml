@@ -16,56 +16,82 @@ $form->prepare();
         <div class="row">
             <div class="col-md-12">
                 <h1><?= $this->translate('Create an activity') ?></h1>
-                <hr>
-                <?= $this->partial('partial/create', [
-                    'form' => $form
-                ])
-                ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Organizer') ?></h2>
+                <p><?= $this->translate('Select the committee or fraternity responsible for this activity.') ?></p>
+            </div>
+            <div class="col-md-6">
                 <?php
-                $organ = $form->get('organ');
-                $organ->setAttribute('class', 'form-control');
-                $organ->setAttribute('id', 'organizing-organ');
+                $organ = $form->get('organ')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'organizing-organ');
                 ?>
-                <div class="form-group<?= $this->bootstrapElementError($organ) ?>">
-                    <label for="<?= $organ->getAttribute('id'); ?>" class="control-label col-sm-2">
-                        <?= $this->translate('Organizing committee / fraternity') ?>
+                <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
+                    <label for="<?= $organ->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Committee / fraternity') ?>
                     </label>
-                    <div class="col-sm-10">
-                        <?= $this->formSelect($organ) ?>
-                        <?= $this->formElementErrors($organ) ?>
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->partial('partial/create', [ 'form' => $form ]) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Additional fields') ?></h2>
+                <p><?= $this->translate('Add additional fields to collect specific information from the participants.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <div class="row" id="additionalFieldsHeader" style="display: none">
+                    <div class="col-md-4 col-md-offset-4">
+                        <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>
+                        <strong><?= $this->translate('Dutch') ?></strong>
+                        <hr />
+                    </div>
+                    <div class="col-md-4">
+                        <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>
+                        <strong><?= $this->translate('English') ?></strong>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
+                        /* render template for fields */
+                        $fs = $form->get('fields')->getTemplateElement();
+                        ob_start();
+                        echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
+                        $tpl = trim(ob_get_clean())
+                        ?>
+                        <fieldset id="additionalFields">
+                            <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
+                            <?php
+                            $index = 0;
+                            foreach ($form->get('fields')->getIterator() as $fs) {
+                                echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
+                                $index++;
+                            }
+                            ?>
+                            <div class="form-group add-field">
+                                <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
+                                    <i class="fas fa-minus"></i>
+                                    <?= $this->translate('Remove the last field') ?>
+                                </button>
+                                <button class="btn btn-success" type="button" onclick="return Activity.addField()">
+                                    <i class="fas fa-plus"></i>
+                                    <?= $this->translate('Add a field') ?>
+                                </button>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <?php
-                /* render template for fields */
-                $fs = $form->get('fields')->getTemplateElement();
-                ob_start();
-                echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => '__index__']);
-                $tpl = trim(ob_get_clean())
-                ?>
-                <h3><?= $this->translate('Additional signup fields') ?></h3>
-                <fieldset id="additionalFields">
-                    <span class="template" data-template="<?= $this->escapeHtmlAttr($tpl) ?>"></span>
-                    <?php
-                    $index = 0;
-                    foreach ($form->get('fields')->getIterator() as $fs){
-                        echo $this->partial('partial/field-fieldset.phtml', ['fs' => $fs, 'index' => $index]);
-                        $index++;
-                    }
-                    ?>
-                    <div class="form-group add-field">
-                        <button class="btn btn-danger" type="button" onclick="return Activity.removeField()">
-                            <i class="fas fa-minus"></i>
-                            <?= $this->translate('Remove the last field') ?>
-                        </button>
-                        <button class="btn btn-success" type="button" onclick="return Activity.addField()">
-                            <i class="fas fa-plus"></i>
-                            <?= $this->translate('Add a field') ?>
-                        </button>
-                    </div>
-                </fieldset>
-            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <?php
                 $submit = $form->get('submit');

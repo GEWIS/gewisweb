@@ -9,6 +9,11 @@ Activity = {
     addField: function () {
         var currentCount = $('#additionalFields > div.field').length;
         var template = $('#additionalFields span.template').data('template');
+
+        if (currentCount === 0) {
+            $("#additionalFieldsHeader").show();
+        }
+
         template = template.replace(/__index__/g, currentCount);
         $(template).insertBefore('#additionalFields div.add-field');
         Activity.updateForm();
@@ -23,6 +28,11 @@ Activity = {
         if (currentCount >= 0){
             $('#additionalField' + currentCount).remove();
         }
+
+        if (currentCount === 0) {
+            $("#additionalFieldsHeader").hide();
+        }
+
         return false;
     },
 
