@@ -99,9 +99,9 @@ $form->setAttribute('class', 'form-activity');
         <div class="row">
             <div class="col-md-12">
                 <?php
-                $submit = $form->get('submit');
-                $submit->setLabel($this->translate('Create Activity'));
-                $submit->setAttribute('class', 'btn btn-primary');
+                $submit = $form->get('submit')
+                    ->setLabel($this->translate('Create Activity'))
+                    ->setAttribute('class', 'btn btn-primary');
                 ?>
                 <div class="form-group">
                     <?= $this->formButton($submit) ?>

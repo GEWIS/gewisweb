@@ -26,6 +26,10 @@
     .field {
         margin-bottom: 2rem;
     }
+    
+    & > .row:last-child {
+        margin-top: 2rem;
+    }
 
     h1 {
         margin-bottom: 0;
