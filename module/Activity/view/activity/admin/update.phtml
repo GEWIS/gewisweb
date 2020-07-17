@@ -6,6 +6,7 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 $form->prepare();
+$form->setAttribute('class', 'form-activity');
 ?>
 <section class="section">
     <div class="container">
