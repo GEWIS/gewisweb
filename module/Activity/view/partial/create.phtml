@@ -59,13 +59,13 @@
         $dutchElement = $form->get('language_dutch')
             ->setAttribute('onchange', 'Activity.updateForm()')
             ->setAttribute('id', 'dutch-check')
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', 'language-control');
         ?>
         <div class="form-group <?= $this->bootstrapElementError($dutchElement) ?>">
             <label for="<?= $dutchElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
                 <?php $dutchElement->setChecked(isset($languages) ? $languages['nl'] : false); ?>
                 <?= $this->formCheckbox($dutchElement) ?>
-                <span class="flag-icon flag-icon-nl" style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>
+                <span class="flag-icon flag-icon-nl"></span>
                 <?= $this->translate('Dutch') ?>
             </label>
             <?= $this->formElementErrors($dutchElement) ?>
@@ -138,13 +138,13 @@
         $englishElement = $form->get('language_english')
             ->setAttribute('onchange', 'Activity.updateForm()')
             ->setAttribute('id', 'english-check')
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', 'language-control');
         ?>
         <div class="form-group <?= $this->bootstrapElementError($englishElement) ?>">
             <label for="<?= $englishElement->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
                 <?php $englishElement->setChecked(isset($languages) ? $languages['en'] : false); ?>
                 <?= $this->formCheckbox($englishElement) ?>
-                <span class="flag-icon flag-icon-en" style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>
+                <span class="flag-icon flag-icon-en"></span>
                 <?= $this->translate('English') ?>
             </label>
             <?= $this->formElementErrors($englishElement) ?>
