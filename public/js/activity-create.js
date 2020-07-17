@@ -41,7 +41,23 @@ Activity = {
      */
     toggleExternal: function () {
         if ($('[name="onlyGEWIS"]').is(':checked')) {
-            $('[name="canSignUp"]').attr('checked', true);
+            $('[name="canSignUp"]').prop('checked', true);
+            Activity.toggleSubscription();
+        }
+    },
+
+    /**
+     * Adds the required indicator to the subscription deadline when
+     * selecting that people can subscribe to this activity.
+     */
+    toggleSubscription: function () {
+        if ($('[name="canSignUp"]').is(':checked')) {
+            $('#subscription-deadline').removeAttr('disabled');
+            $('[for="subscription-deadline"]').addClass('label-required');
+        } else {
+            $('#subscription-deadline').attr('disabled', 'disabled');
+            $('#subscription-deadline').val('');
+            $('[for="subscription-deadline"]').removeClass('label-required');
         }
     },
 

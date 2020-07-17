@@ -8,7 +8,8 @@
             <div class="col-md-6">
                 <?php
                 $beginTime = $form->get('beginTime')
-                    ->setAttribute('class', 'form-control')->setAttribute('id', 'begin-time');
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'begin-time');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
                     <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label label-required">
@@ -21,7 +22,8 @@
             <div class="col-md-6">
                 <?php
                 $endTime = $form->get('endTime')
-                    ->setAttribute('class', 'form-control')->setAttribute('id', 'end-time');
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'end-time');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
                     <label for="<?= $endTime->getAttribute('id') ?>" class="control-label label-required">
@@ -36,7 +38,9 @@
             <div class="col-md-6">
                 <?php
                 $subscriptionDeadline = $form->get('subscriptionDeadline')
-                    ->setAttribute('class', 'form-control')->setAttribute('id', 'deadline-date');
+                    ->setAttribute('disabled', 'disabled')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'subscription-deadline');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($subscriptionDeadline) ?>">
                     <label for="<?= $subscriptionDeadline->getAttribute('id') ?>" class="control-label">
@@ -220,7 +224,8 @@
     </div>
     <div class="col-md-6">
         <?php
-        $canSignUp = $form->get('canSignUp');
+        $canSignUp = $form->get('canSignUp')
+            ->setAttribute('onchange', 'Activity.toggleSubscription()');
         ?>
         <div class="form-group <?= $this->bootstrapElementError($canSignUp) ?>">
             <label>
