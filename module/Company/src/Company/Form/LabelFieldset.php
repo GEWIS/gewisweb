@@ -43,16 +43,6 @@ class LabelFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
-        $this->add([
-            'name' => 'hidden',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'label' => $translate->translate('Hidden'),
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-                'use_hidden_element' => true,
-            ],
-        ]);
         // Hidden language element, because it will only be set at initialization.
         $this->add([
             'name' => 'language',
