@@ -68,9 +68,7 @@ class Label
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.language=:lang');
-        $qb->andWhere('c.hidden=:hidden');
         $qb->setParameter('lang', $labelLanguage);
-        $qb->setParameter('hidden', false);
         $labels = $qb->getQuery()->getResult();
 
         return $labels;

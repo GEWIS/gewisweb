@@ -42,13 +42,6 @@ class JobLabel
     protected $language;
 
     /**
-     * If the label is hidden
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $hidden;
-
-    /**
      * The label id.
      *
      * @ORM\Column(type="integer")
@@ -61,22 +54,6 @@ class JobLabel
      * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist", "remove"})
      */
     protected $assignments;
-
-    /**
-     * Get's the id
-     */
-    public function getHidden()
-    {
-        return $this->hidden;
-    }
-
-    /**
-     * Set's the id
-     */
-    public function setHidden($hidden)
-    {
-        $this->hidden = $hidden;
-    }
 
     /**
      * Constructor.

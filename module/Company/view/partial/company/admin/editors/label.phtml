@@ -26,18 +26,6 @@
                 <?= $this->formInput($element) ?>
                 <?= $this->formElementErrors($element) ?>
             </div>
-            <?php
-                $element = $fieldset->get('hidden');
-                $element->setAttribute('class', 'form-control');
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
-                    <?= $element->getOption('label') ?>
-                </label>
-                <?= $this->formCheckbox($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-
         </div>
     <?php endforeach ?>
 </div>
