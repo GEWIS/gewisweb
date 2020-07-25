@@ -23,7 +23,10 @@ class EditJob extends CollectionBaseFieldsetAwareForm
 
         $labelOptions = [];
         foreach ($labels as $label) {
-            $labelOptions[$label->getId()] = $label->getName();
+            $labelOptions[] = array('value' => $label->getId(),
+                'label' =>$label->getName(),
+                'label_attributes' => array('class' => 'checkbox')
+            );
         }
 
         $this ->setLanguages($languages);
