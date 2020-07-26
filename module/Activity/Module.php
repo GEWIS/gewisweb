@@ -2,16 +2,18 @@
 
 namespace Activity;
 
-use Activity\Form\ActivityFieldFieldSet;
+use Activity\Form\SignupList as SignupListForm;
+use Activity\Form\SignupListFields;
 use Activity\Mapper\Activity;
 use Activity\Mapper\ActivityCalendarOption;
-use Activity\Mapper\ActivityFieldValue;
-use Activity\Mapper\ActivityOption;
 use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Mapper\ActivityOptionProposal;
 use Activity\Mapper\MaxActivities;
 use Activity\Mapper\Proposal;
 use Activity\Mapper\Signup;
+use Activity\Mapper\SignupFieldValue;
+use Activity\Mapper\SignupList as SignupListMapper;
+use Activity\Mapper\SignupOption;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreator;
 use User\Permissions\Assertion\IsOrganMember;
@@ -65,6 +67,7 @@ class Module
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
                 'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
+                'activity_service_signupListQuery' => 'Activity\Service\SignupListQuery',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
             'factories' => [
@@ -73,8 +76,13 @@ class Module
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'activity_form_activityfield_fieldset' => function ($sm) {
-                    $form = new ActivityFieldFieldSet();
+                'activity_form_signuplist' => function ($sm) {
+                    $form = new SignupListForm();
+                    $form->setHydrator($sm->get('activity_hydrator'));
+                    return $form;
+                },
+                'activity_form_signuplist_fields' => function ($sm) {
+                    $form = new SignupListFields();
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -135,13 +143,18 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_activity_field_value' => function ($sm) {
-                    return new ActivityFieldValue(
+                'activity_mapper_signuplist' => function ($sm) {
+                    return new SignupListMapper(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_activity_option' => function ($sm) {
-                    return new ActivityOption(
+                'activity_mapper_signup_field_value' => function ($sm) {
+                    return new SignupFieldValue(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_signup_option' => function ($sm) {
+                    return new SignupOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
@@ -169,31 +182,50 @@ class Module
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
                     $acl->addResource('myActivities');
-                    $acl->addResource('activitySignup');
                     $acl->addResource('model');
                     $acl->addResource('activity_calendar_proposal');
+                    $acl->addResource('signupList');
 
                     $acl->allow('guest', 'activity', 'view');
-
-                    $acl->allow('guest', 'activitySignup', 'externalSignup');
+                    $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
                     $acl->allow('user', 'activity', 'create');
+                    $acl->allow('user', 'activity', [
+                            'update',
+                            'viewDetails',
+                            'viewParticipants',
+                            'exportParticipants',
+                        ],
+                        new IsCreator()
+                    );
+                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
                     $acl->allow('user', 'myActivities', 'view');
-                    $acl->allow('user', 'activitySignup', ['view', 'signup', 'signoff', 'checkUserSignedUp']);
+                    $acl->allow('user', 'signupList', ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']);
+                    $acl->allow('user', 'signupList', [
+                            'adminSignup',
+                            'viewParticipants',
+                            'exportParticipants',
+                        ], new IsCreator()
+                    );
 
-                    $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
-                    $acl->allow('user', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsCreator());
-                    $acl->allow(
-                        'active_member',
-                        'activity',
-                        ['update', 'viewDetails', 'adminSignup'],
+                    $acl->allow('active_member', 'activity', [
+                            'update',
+                            'viewDetails',
+                            'adminSignup',
+                            'viewParticipants',
+                            'exportParticipants',
+                        ],
+                        new IsOrganMember()
+                    );
+                    $acl->allow('active_member', 'signupList', [
+                            'adminSignup',
+                            'viewParticipants',
+                            'exportParticipants',
+                        ],
                         new IsOrganMember()
                     );
 
-                    $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
-
-                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
-                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
+                    $acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
                     return $acl;
                 },
             ]

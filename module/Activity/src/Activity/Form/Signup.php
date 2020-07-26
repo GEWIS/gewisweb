@@ -9,21 +9,21 @@ use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Captcha\Image as ImageCaptcha;
 
-class ActivitySignup extends Form implements InputFilterProviderInterface
+class Signup extends Form implements InputFilterProviderInterface
 {
     const USER = 1;
     const EXTERNAL_USER = 2;
     const EXTERNAL_ADMIN = 3;
 
     protected $type;
-    protected $fields;
+    protected $signupList;
 
     public function __construct()
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new \Activity\Model\UserActivitySignup());
+            ->setObject(new \Activity\Model\UserSignup());
 
         $this->add([
             'name' => 'security',
@@ -46,26 +46,27 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
 
     /**
      * Initialize the form, i.e. set the language and the fields
-     * Add every field in $fields to the form.
+     * Add every field in $signupList to the form.
      *
-     * @param array(ActivityField) $fields
+     * @param SignupList $signupList
      */
-    public function initialiseForm($fields)
+    public function initialiseForm($signupList)
     {
-        foreach($fields as $field) {
-            $this->add($this->createFieldElementArray($field));
+        foreach($signupList->getFields() as $field) {
+            $this->add($this->createSignupFieldElementArray($field));
         }
-        $this->fields = $fields;
-        $this->type = ActivitySignup::USER;
+
+        $this->signupList = $signupList;
+        $this->type = Signup::USER;
     }
 
     /**
      * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
-     * Add every field in $fields to the form.
+     * Add every field in $signupList to the form.
      *
-     * @param array(ActivityField) $fields
+     * @param SignupList $signupList
      */
-    public function initialiseExternalAdminForm($fields)
+    public function initialiseExternalAdminForm($signupList)
     {
         $this->add([
             'name' => 'fullName',
@@ -75,11 +76,11 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
             'name' => 'email',
             'type' => 'Text'
         ]);
-        $this->initialiseForm($fields);
-        $this->type = ActivitySignup::EXTERNAL_ADMIN;
+        $this->initialiseForm($signupList);
+        $this->type = Signup::EXTERNAL_ADMIN;
     }
 
-    public function initialiseExternalForm($fields)
+    public function initialiseExternalForm($signupList)
     {
         $this->add([
             'name' => 'captcha',
@@ -92,8 +93,8 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
                     ]),
             ]
         ]);
-        $this->initialiseExternalAdminForm($fields);
-        $this->type = ActivitySignup::EXTERNAL_USER;
+        $this->initialiseExternalAdminForm($signupList);
+        $this->type = Signup::EXTERNAL_USER;
     }
 
     /**
@@ -104,8 +105,8 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $filter = [];
-        if ($this->type === ActivitySignup::EXTERNAL_USER ||
-            $this->type ===  ActivitySignup::EXTERNAL_ADMIN) {
+        if ($this->type === Signup::EXTERNAL_USER ||
+            $this->type ===  Signup::EXTERNAL_ADMIN) {
             $filter['fullName'] = [
                 'required' => true,
                 'validators' => [
@@ -140,20 +141,14 @@ class ActivitySignup extends Form implements InputFilterProviderInterface
         return $filter;
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception('Not used');
-    }
-
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
      *
-     * @param \Activity\Model\ActivityField $field
+     * @param \Activity\Model\SignupField $field
      * @return array
      */
-    protected function createFieldElementArray($field){
-
+    protected function createSignupFieldElementArray($field){
         $result = [
             'name' => $field->getId(),
         ];

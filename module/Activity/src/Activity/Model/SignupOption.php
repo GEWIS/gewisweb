@@ -5,12 +5,12 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity option model.
+ * SignupOption model.
  * Contains the possible options of a field of type ``option''.
  *
  * @ORM\Entity
  */
-class ActivityOption
+class SignupOption
 {
     /**
      * ID for the field.
@@ -24,7 +24,7 @@ class ActivityOption
     /**
      * Field that the option belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupField", inversedBy="options", cascade={"persist"})
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;
@@ -37,9 +37,25 @@ class ActivityOption
     protected $value;
 
     /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return \Activity\Model\SignupField
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
      * Set the field the option belongs to.
      *
-     * @param Activity\Model\ActivityField $field
+     * @param \Activity\Model\SignupField $field
      */
     public function setField($field)
     {
@@ -47,31 +63,21 @@ class ActivityOption
     }
 
     /**
-     * Set the value of the option.
-     *
-     * @param LocalisedText $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value->copy();
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @return LocalisedText
+     * @return \Activity\Model\LocalisedText
      */
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Set the value of the option.
+     *
+     * @param \Activity\Model\LocalisedText $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value->copy();
     }
 
     /**

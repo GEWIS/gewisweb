@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use \User\Model\User;
 
 /**
- * ActivitySignup model.
+ * Signup model.
  *
  * @ORM\Entity
  */
-class UserActivitySignup extends ActivitySignup
+class UserSignup extends Signup
 {
     /**
      * Who is subscribed.
@@ -21,16 +21,6 @@ class UserActivitySignup extends ActivitySignup
     protected $user;
 
     /**
-     * Set the user for the activity signup.
-     *
-     * @param User $user
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-    }
-
-    /**
      * Get the user that is signed up.
      *
      * @return User
@@ -38,6 +28,16 @@ class UserActivitySignup extends ActivitySignup
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set the user for the activity signup.
+     *
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
     }
 
     /**

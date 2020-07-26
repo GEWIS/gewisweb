@@ -37,7 +37,6 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         return 'activity';
     }
 
-
     /**
      * Get the information of one activity from the database.
      *
@@ -106,11 +105,10 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getActivityWithDetails($id)
     {
-        if (!($this->isAllowed('viewDetails', 'activity') ||
-                $this->isAllowed('viewDetails', $this->getActivity($id)))) {
+        if (!$this->isAllowed('viewDetails', $this->getActivity($id))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
+                $translator->translate('You are not allowed to view this activity')
             );
         }
         return $this->getActivity($id);

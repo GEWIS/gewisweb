@@ -1,5 +1,5 @@
 .form-activity {
-    .additional-fields-header {
+    .signup-lists-header {
         display: none;
 
         @media (max-width: $screen-sm-max) {
@@ -7,7 +7,8 @@
         }
     }
 
-    .additional-fields {
+    .signup-lists,
+    .signup-list-fields {
         @media (max-width: $screen-md-max) {
             .flag-icon-en,
             .flag-icon-nl {
@@ -23,7 +24,8 @@
         }
     }
 
-    .field {
+    .field,
+    .signup-list {
         margin-bottom: 2rem;
     }
     

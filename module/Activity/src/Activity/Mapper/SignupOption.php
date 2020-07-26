@@ -4,7 +4,7 @@ namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
 
-class ActivityOption
+class SignupOption
 {
     /**
      * Doctrine entity manager.
@@ -27,7 +27,7 @@ class ActivityOption
      * Finds the option of with the given id.
      * 
      * @param int $id
-     * @return \Activity\Model\ActivityOption
+     * @return \Activity\Model\SignupOption
      */
     public function getOptionById($id)
     {
@@ -42,6 +42,6 @@ class ActivityOption
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Activity\Model\ActivityOption');
+        return $this->em->getRepository('Activity\Model\SignupOption');
     }
 }

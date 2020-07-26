@@ -1,0 +1,128 @@
+<div class="row signup-list" id="signupList<?= $this->index ?>">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <?php
+                $openDate = $this->signupList->get('openDate')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'open-date');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($openDate) ?>">
+                    <label for="<?= $openDate->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('Open date and time') ?>
+                    </label>
+                    <?= $this->formInput($openDate) ?>
+                    <?= $this->formElementErrors($openDate) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $closeDate = $this->signupList->get('closeDate')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'close-date');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($closeDate) ?>">
+                    <label for="<?= $closeDate->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('Close date and time') ?>
+                    </label>
+                    <?= $this->formInput($closeDate) ?>
+                    <?= $this->formElementErrors($closeDate) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $name = $this->signupList->get('name')
+                    ->setAttribute('class', 'form-control form-control-dutch')
+                    ->setAttribute('id', 'name-signup-list-nl');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+                    <label for="<?= $name->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Name') ?>
+                        <span class="flag-icon flag-icon-nl"></span>
+                    </label>
+                    <?= $this->formInput($name) ?>
+                    <?= $this->formElementErrors($name) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $nameEn = $this->signupList->get('nameEn')
+                    ->setAttribute('class', 'form-control form-control-english')
+                    ->setAttribute('id', 'name-signup-list-en');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
+                    <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Name') ?>
+                        <span class="flag-icon flag-icon-en"></span>
+                    </label>
+                    <?= $this->formInput($nameEn) ?>
+                    <?= $this->formElementErrors($nameEn) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <?php
+                $onlyGEWIS = $this->signupList->get('onlyGEWIS');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($onlyGEWIS) ?>">
+                    <label>
+                        <?= $this->formCheckbox($onlyGEWIS) ?>
+                        <?= $this->translate('Allow external participants') ?>
+                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                    </label>
+                    <?= $this->formElementErrors($onlyGEWIS) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $displaySubscribedNumber = $this->signupList->get('displaySubscribedNumber');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
+                    <label>
+                        <?= $this->formCheckbox($displaySubscribedNumber) ?>
+                        <?= $this->translate('Display number of subscribed members') ?>
+                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                    </label>
+                    <?= $this->formElementErrors($displaySubscribedNumber) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <?php
+        // Render SignupListFields
+        $signupListFields = $this->signupList->get('fields')->getTemplateElement();
+        ob_start();
+        echo $this->partial('partial/signuplist-fields.phtml', ['signupListField' => $signupListFields, 'listIndex' => $this->index, 'index' => '__signuplist_field__']);
+        $signupListFieldsTemplate = trim(ob_get_clean());
+        ?>
+        <fieldset class="signup-list-fields">
+            <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListFieldsTemplate) ?>"></span>
+            <?php
+            $i = 0;
+            foreach ($this->signupList->get('fields')->getIterator() as $signupListField) {
+                echo $this->partial('partial/signuplist-fields.phtml', ['signupListField' => $signupListField, 'listIndex' => $this->index, 'index' => $i]);
+                $i++;
+            }
+            ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group signup-list-field-controls">
+                        <button class="btn btn-danger" type="button" onclick="return Activity.removeField(<?= $this->index ?>)">
+                            <i class="fas fa-minus"></i>
+                            <?= $this->translate('Remove the last signup list field') ?>
+                        </button>
+                        <button class="btn btn-success" type="button" onclick="return Activity.addField(<?= $this->index ?>)">
+                            <i class="fas fa-plus"></i>
+                            <?= $this->translate('Add a signup list field') ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <hr>
+    </div>
+</div>

@@ -25,13 +25,13 @@ class Signup
 
     /**
      * @param int $id
-     * @return \Activity\Model\ActivitySignup
+     * @return \Activity\Model\Signup
      */
     public function getSignupById($id)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivitySignup', 'a')
+            ->from('Activity\Model\Signup', 'a')
             ->where('a.id = :id')
             ->setParameter('id', $id);
         $result = $qb->getQuery()->getResult();
@@ -59,20 +59,20 @@ class Signup
      * @param int $activityId
      * @param int $userId
      *
-     * @return \Activity\Model\ActivitySignup
+     * @return \Activity\Model\Signup
      */
-    public function getSignUp($activityId, $userId)
+    public function getSignUp($signupListId, $userId)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\UserActivitySignup', 'a')
+            ->from('Activity\Model\UserSignup', 'a')
             ->join('a.user', 'u')
             ->where('u.lidnr = ?1')
-            ->join('a.activity', 'ac')
+            ->join('a.signupList', 'ac')
             ->andWhere('ac.id = ?2')
             ->setParameters([
                 1 => $userId,
-                2 => $activityId,
+                2 => $signupListId,
             ]);
         $result = $qb->getQuery()->getResult();
 
@@ -84,13 +84,13 @@ class Signup
      *
      * @param int $userId
      *
-     * @return \Activity\Model\ActivitySignup
+     * @return \Activity\Model\Signup
      */
     public function getSignedUpActivities($userId)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\UserActivitySignup', 'a')
+            ->from('Activity\Model\UserSignup', 'a')
             ->join('a.user', 'u')
             ->where('u.lidnr = ?1')
             ->setParameter(1, $userId);
@@ -99,14 +99,14 @@ class Signup
         return $result;
     }
 
-    public function getNumberOfSignedUpMembers($activityId)
+    public function getNumberOfSignedUpMembers($signupListId)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('COUNT(s)')
-           ->from('Activity\Model\UserActivitySignup', 's')
-           ->join('s.activity', 'a')
+           ->from('Activity\Model\UserSignup', 's')
+           ->join('s.signupList', 'a')
            ->where('a.id = ?1')
-           ->setParameter(1, $activityId);
+           ->setParameter(1, $signupListId);
         $result = $qb->getQuery()->getResult();
 
         return $result[0];

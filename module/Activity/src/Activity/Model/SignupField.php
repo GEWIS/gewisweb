@@ -5,11 +5,11 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity field model.
+ * SignupField model.
  *
  * @ORM\Entity
  */
-class ActivityField
+class SignupField
 {
     /**
      * ID for the field.
@@ -21,23 +21,22 @@ class ActivityField
     protected $id;
 
     /**
-     * Activity that the field belongs to.
+     * Activity that the SignupField belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="fields", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupList", inversedBy="fields", cascade={"persist"})
      * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
      */
-    protected $activity;
+    protected $signupList;
 
     /**
-     * The name of the field.
+     * The name of the SignupField.
      *
      * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
     protected $name;
 
-
     /**
-     * The type of the field.
+     * The type of the SignupField.
      *
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -58,76 +57,106 @@ class ActivityField
     protected $maximumValue;
 
     /**
-     * The allowed options for the field of the ``option'' type.
+     * The allowed options for the SignupField of the ``option'' type.
      *
-     * @ORM\OneToMany(targetEntity="ActivityOption", mappedBy="field")
+     * @ORM\OneToMany(targetEntity="Activity\Model\SignupOption", mappedBy="field")
      */
     protected $options;
 
-    public function setActivity($activity)
-    {
-        $this->activity = $activity;
-    }
-
     /**
-     * @param LocalisedText $name
+     * @return integer
      */
-    public function setName($name)
-    {
-        $this->name = $name->copy();
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    public function setMinimumValue($minimumValue)
-    {
-        $this->minimumValue = $minimumValue;
-    }
-
-    public function setMaximumValue($maximumValue)
-    {
-        $this->maximumValue = $maximumValue;
-    }
-
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return LocalisedText
+     * @return \Activity\Model\SignupList
+     */
+    public function getSignupList()
+    {
+        return $this->signupList;
+    }
+
+    /**
+     * @param \Activity\Model\SignupList $signupList
+     */
+    public function setSignupList($signupList)
+    {
+        $this->signupList = $signupList;
+    }
+
+    /**
+     * @return \Activity\Model\LocalisedText
      */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param \Activity\Model\LocalisedText $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name->copy();
+    }
+
+    /**
+     * @return integer
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return integer
+     */
     public function getMinimumValue()
     {
         return $this->minimumValue;
     }
 
+    /**
+     * @param integer $minimumValue
+     */
+    public function setMinimumValue($minimumValue)
+    {
+        $this->minimumValue = $minimumValue;
+    }
+
+    /**
+     * @return integer
+     */
     public function getMaximumValue()
     {
         return $this->maximumValue;
     }
 
+    /**
+     * @param integer $maximumValue
+     */
+    public function setMaximumValue($maximumValue)
+    {
+        $this->maximumValue = $maximumValue;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getOptions()
     {
         return $this->options;
-    }
-
-    public function getActivity()
-    {
-        return $this->activity;
     }
 
     /**

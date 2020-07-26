@@ -6,21 +6,15 @@ use Decision\Model\Organ;
 use Zend\Form\Form;
 use Zend\Mvc\I18n\Translator;
 use Doctrine\Common\Persistence\ObjectManager;
-use Zend\InputFilter\InputFilterInterface;
+//use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Validator\NotEmpty;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var InputFilter
-     */
-    protected $inputFilter;
     protected $organs;
-
     protected $translator;
-
 
     /**
      * @param Organ[] $organs
@@ -41,34 +35,6 @@ class Activity extends Form implements InputFilterProviderInterface
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
-
-        // Find user that wants to create an activity
-
-        $this->add([
-            'name' => 'language_dutch',
-            'type' => 'checkbox',
-            'uncheckedValue' => null,
-        ]);
-
-        $this->add([
-            'name' => 'language_english',
-            'type' => 'checkbox',
-            'uncheckedValue' => null,
-        ]);
-
-        $this->add([
-            'name' => 'name',
-            'attributes' => [
-                'type' => 'text',
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'nameEn',
-            'attributes' => [
-                'type' => 'text',
-            ],
-        ]);
 
         $this->add([
             'name' => 'organ',
@@ -91,6 +57,38 @@ class Activity extends Form implements InputFilterProviderInterface
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d H:i'
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'language_dutch',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'language_english',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'name',
+            'attributes' => [
+                'type' => 'text',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'nameEn',
+            'attributes' => [
+                'type' => 'text',
             ],
         ]);
 
@@ -136,34 +134,6 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'canSignUp',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'onlyGEWIS',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'checked_value' => 0,
-                'unchecked_value' => 1,
-                'use_hidden_element' => true,
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'isFood',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
-
-        $this->add([
             'name' => 'isMyFuture',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -180,32 +150,16 @@ class Activity extends Form implements InputFilterProviderInterface
                 'unchecked_value' => 0,
             ],
         ]);
-      
-        $this->add([
-            'name' => 'displaySubscribedNumber',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
 
         $this->add([
-            'name' => 'fields',
+            'name' => 'signuplists',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
                 'count' => 0,
                 'should_create_template' => true,
+                'template_placeholder' => '__signuplist__',
                 'allow_add' => true,
-                'target_element' => new ActivityFieldFieldset($translator)
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'subscriptionDeadline',
-            'type' => 'datetime',
-            'options' => [
-                'format' => 'Y/m/d H:i'
+                'target_element' => new SignupList($translator),
             ],
         ]);
 
@@ -227,34 +181,54 @@ class Activity extends Form implements InputFilterProviderInterface
     public function isValid()
     {
         $valid = parent::isValid();
-
         /*
          * This might seem like a bit of a hack, but this is probably the only way zend framework
          * allows us to do this.
+         *
+         * TODO: Move this to an actual InputFilter to add messages, because
+         * marking inputs as invalid (and adding messages) cannot be done from
+         * this function.
          */
-        foreach ($this->get('fields')->getFieldSets() as $fieldset) {
-            if ($this->data['language_english']) {
-                if (!(new NotEmpty())->isValid($fieldset->get('nameEn')->getValue())) {
-                    //TODO: Return error messages
-                    $valid = false;
+        if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
+            foreach ($this->get('signuplists')->getFieldSets() as $keySignupList => $signupList) {
+                if ($this->data['language_dutch']) {
+                    if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {
+                        // TODO: Return error messages
+                        $valid = false;
+                    }
                 }
 
-                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('optionsEn')->getValue())) {
-                    //TODO: Return error messages
-                    $valid = false;
-                }
-            }
-
-
-            if ($this->data['language_dutch']) {
-                if (!(new NotEmpty())->isValid($fieldset->get('name')->getValue())) {
-                    //TODO: Return error messages
-                    $valid = false;
+                if ($this->data['language_english']) {
+                    if (!(new NotEmpty())->isValid($signupList->get('nameEn')->getValue())) {
+                        // TODO: Return error messages
+                        $valid = false;
+                    }
                 }
 
-                if ($fieldset->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($fieldset->get('options')->getValue())) {
-                    //TODO: Return error messages
-                    $valid = false;
+                foreach ($signupList->get('fields')->getFieldSets() as $keyField => $field) {
+                    if ($this->data['language_dutch']) {
+                        if (!(new NotEmpty())->isValid($field->get('name')->getValue())) {
+                            // TODO: Return error messages
+                            $valid = false;
+                        }
+
+                        if ($field->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($field->get('options')->getValue())) {
+                            // TODO: Return error messages
+                            $valid = false;
+                        }
+                    }
+
+                    if ($this->data['language_english']) {
+                        if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
+                            // TODO: Return error messages
+                            $valid = false;
+                        }
+
+                        if ($field->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())) {
+                            // TODO: Return error messages
+                            $valid = false;
+                        }
+                    }
                 }
             }
         }
@@ -283,7 +257,6 @@ class Activity extends Form implements InputFilterProviderInterface
     {
         return $this->inputFilterGeneric('');
     }
-
 
     /**
      * Build a generic input filter
@@ -350,11 +323,6 @@ class Activity extends Form implements InputFilterProviderInterface
         ];
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception('Not used');
-    }
-
     /**
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set
@@ -363,6 +331,9 @@ class Activity extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $filter = [
+            'organ' => [
+                'required' => true,
+            ],
             'beginTime' => [
                 'required' => true,
                 'validators' => [
@@ -371,45 +342,21 @@ class Activity extends Form implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must start before it ends'),
+                                    $this->translator->translate('The activity must start before it ends.'),
                             ],
-                            'callback' => ['Activity\Form\Activity', 'beforeEndTime']
+                            'callback' => [$this, 'beforeEndTime']
                         ],
                     ],
-                ]
+                ],
             ],
             'endTime' => [
                 'required' => true,
             ],
-
-            'canSignUp' => [
-                'required' => true
-            ],
-            'subscriptionDeadline' => [
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => 'callback',
-                        'options' => [
-                            'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The subscription must stop before the activity ends'),
-                            ],
-                            'callback' => ['Activity\Form\Activity', 'beforeEndTime']
-                        ],
-                    ]
-                ]
-            ],
-            'organ' => [
-                'required' => true
-            ],
         ];
-
 
         if ($this->data['language_english']) {
             $filter += $this->inputFilterEnglish();
         }
-
 
         if ($this->data['language_dutch']) {
             $filter += $this->inputFilterDutch();
@@ -440,7 +387,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param array $context
      * @return bool
      */
-    public function beforeEndTime($value, $context = [])
+    public static function beforeEndTime($value, $context = [])
     {
         try {
             $thisTime = new \DateTime($value);
@@ -448,6 +395,24 @@ class Activity extends Form implements InputFilterProviderInterface
             return $thisTime <= $endTime;
         } catch (\Exception $e) {
             // An exception is an indication that one of the times was not valid
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a certain date is before the begin date of the activity.
+     *
+     * @param $value
+     * @param array $context
+     * @return boolean
+     */
+    public static function beforeBeginTime($value, $context = []) {
+        try {
+            $thisTime = new \DateTime($value);
+            $beginTime = isset($context['beginTime']) ? new \DateTime($context['beginTime']) : new \DateTime('now');
+            return $thisTime <= $beginTime;
+        } catch (\Exception $e) {
+            // An exception is an indication that one of the DateTimes was not valid
             return false;
         }
     }

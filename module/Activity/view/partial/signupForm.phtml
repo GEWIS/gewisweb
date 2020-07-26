@@ -1,31 +1,24 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <?php
-/** Render a form to sign up for an activity.
- * Required parameters:
- * $form,
- * $activity
- */
-?>
-
-<?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 $showCaptcha = false;
 $showName = false;
+
 switch ($form->getType()) {
-    case Activity\Form\ActivitySignup::USER:
+    case Activity\Form\Signup::USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
-        $submitUrl = $this->url('activity/signup', ['id' => $activity->getId() ]);
+        $submitUrl = $this->url('activity/signup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Confirm subscription');
         break;
-    case Activity\Form\ActivitySignup::EXTERNAL_USER:
+    case Activity\Form\Signup::EXTERNAL_USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
-        $submitUrl = $this->url('activity/externalSignup', ['id' => $activity->getId() ]);
+        $submitUrl = $this->url('activity/externalSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Subscribe as external participant');
         $showCaptcha = true;
         $showName = true;
         break;
-    case Activity\Form\ActivitySignup::EXTERNAL_ADMIN:
+    case Activity\Form\Signup::EXTERNAL_ADMIN:
         $agreementText = $this->translate('By subscribing an external participant to this activity, they must agree to the terms outlined in the');
-        $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $activity->getId() ]);
+        $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Subscribe an external participant');
         $showName = true;
         break;
@@ -50,30 +43,31 @@ function formElementRender($element, $label, $id, $context){
 }
 ?>
 
-<?php $form->setAttribute('action', $submitUrl);
-      $form->prepare();
-      echo $this->form()->openTag($form);
+<?php
+$form->setAttribute('action', $submitUrl);
+$form->prepare();
+echo $this->form()->openTag($form);
 ?>
 <?php if($showName): ?>
-     <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this)?>
-     <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this)?>
+    <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this)?>
+    <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this)?>
 <?php endif; ?>
 
 <?php if($showCaptcha): ?>
-     <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
+    <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
 <?php endif; ?>
 
-<?php foreach($activity->getFields() as $field):?>
-     <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
+<?php foreach($signupList->getFields() as $field): ?>
+    <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
 <?php endforeach;?>
 
 <p><?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank"><?= $this->translate('Activity Policy') ?></a>.</p>
 
 <?php
-    $submit = $form->get('submit');
-    $submit->setAttribute('class', 'btn btn-primary');
-    $submit->setAttribute('value', $submitText);
-    echo $this->formElement($form->get('security'));
-    echo $this->formSubmit($submit);
-    echo $this->form()->closeTag();
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+$submit->setAttribute('value', $submitText);
+echo $this->formElement($form->get('security'));
+echo $this->formSubmit($submit);
+echo $this->form()->closeTag();
 ?>

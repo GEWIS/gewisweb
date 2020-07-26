@@ -17,21 +17,37 @@ return [
                     'view' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/view/[:id]',
+                            'route' => '/view/:id',
                             'constraints' => [
-                                'action' => '[0-9]*',
+                                'id' => '\d+',
                             ],
                             'defaults' => [
                                 'action' => 'view'
-                            ]
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'signuplist' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route' => '/:signupList',
+                                    'constraints' => [
+                                        'signupList' => '\d+',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'viewSignupList'
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'signup' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/signup/[:id]',
+                            'route' => '/signup/:id/:signupList',
                             'constraints' => [
-                                'action' => '[0-9]*',
+                                'id' => '\d+',
+                                'signupList' => '\d+',
                             ],
                             'defaults' => [
                                 'action' => 'signup'
@@ -41,9 +57,10 @@ return [
                     'externalSignup' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/externalSignup/:id',
+                            'route' => '/externalSignup/:id/:signupList',
                             'constraints' => [
-                                'actions' => '[0-9]*',
+                                'id' => '\d+',
+                                'signupList' => '\d+',
                             ],
                             'defaults' => [
                                 'action' => 'externalSignup'
@@ -53,9 +70,10 @@ return [
                     'signoff' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/signoff/[:id]',
+                            'route' => '/signoff/:id/:signupList',
                             'constraints' => [
-                                'action' => '[0-9]*',
+                                'id' => '\d+',
+                                'signupList' => '\d+',
                             ],
                             'defaults' => [
                                 'action' => 'signoff'
@@ -154,17 +172,25 @@ return [
                     'participants' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/participants',
+                            'route' => '/participants/:id[/:signupList]',
+                            'constraints' => [
+                                'id' => '\d+',
+                                'signupList' => '\d+',
+                            ],
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'participants',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'adminSignup' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/adminSignup',
+                            'route' => '/adminSignup/:id/:signupList',
+                            'constraints' => [
+                                'id' => '\d+',
+                                'signupList' => '\d+',
+                            ],
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'externalSignup',
@@ -174,7 +200,10 @@ return [
                     'externalSignoff' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/externalSignoff',
+                            'route' => '/externalSignoff/:id',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'externalSignoff',
@@ -184,7 +213,11 @@ return [
                     'exportpdf' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/export/pdf',
+                            'route' => '/export/:id[/:signupList]/pdf',
+                            'constraints' => [
+                                'id' => '\d+',
+                                'signupList' => '\d+',
+                            ],
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'exportpdf',
@@ -194,7 +227,10 @@ return [
                     'update' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/:id/update',
+                            'route' => '/update/:id',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'update'

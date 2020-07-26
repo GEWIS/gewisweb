@@ -13,7 +13,6 @@
         <th><?= $this->translate('Dutch name') ?></th>
         <th><?= $this->translate('English name') ?></th>
         <th><?= $this->translate('Start date') ?></th>
-        <th><?= $this->translate('Subscriptions') ?></th>
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Update status') ?></th>
@@ -30,7 +29,6 @@
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()->getValueNL()) ?></a></td>
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()->getValueEN()) ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
-            <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr())  ?></td>
             <td><?= $this->escapeHtml($activity->getCreator()->getMember()->getFullName()) ?></td>
             <?php if($admin): ?>
@@ -50,7 +48,9 @@
                 <?php if($admin): ?>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('Details') ?></a>
                 <?php endif; ?>
+                <?php if ($activity->getSignupLists()->count() !== 0): ?>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
+                <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>

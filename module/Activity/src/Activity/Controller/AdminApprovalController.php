@@ -12,34 +12,6 @@ use Activity\Form\ModifyRequest as RequestForm;
 class AdminApprovalController extends AbstractActionController
 {
     /**
-     * View the queue of not approved activities
-     */
-    public function queueAction()
-    {
-        $perPage = 5;
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $unapprovedActivities = $queryService->getUnapprovedActivities();
-        $approvedActivities = $queryService->getApprovedActivities();
-        $disapprovedActivities = $queryService->getDisapprovedActivities();
-        $updatedActivities = [];
-        $updateProposals = [];
-        foreach ($queryService->getAllProposals() as $updateProposal) {
-            $updatedActivities[$updateProposal->getId()] = $updateProposal->getNew();
-            $updateProposals[$updateProposal->getNew()->getId()] = $updateProposal;
-        }
-        return [
-            'unapprovedActivities' => array_slice($unapprovedActivities, 0, $perPage),
-            'approvedActivities' => array_slice($approvedActivities, 0, $perPage),
-            'disapprovedActivities' => array_slice($disapprovedActivities, 0, $perPage),
-            'updatedActivities' => array_slice($updatedActivities, 0, $perPage),
-            'updateProposals' => $updateProposals,
-            'moreUnapprovedActivities' => count($unapprovedActivities) > $perPage,
-            'moreApprovedActivities' => count($approvedActivities) > $perPage,
-            'moreDisapprovedActivities' => count($disapprovedActivities) > $perPage
-        ];
-    }
-
-    /**
      * View one activity.
      */
     public function viewAction()

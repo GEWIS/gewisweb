@@ -2,23 +2,25 @@
 
 namespace Activity\Form;
 
-use Activity\Model\ActivityField;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\Validator\NotEmpty;
 
-class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
+class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
+    /**
+     * @var \Zend\Mvc\I18n\Translator
+     */
     protected $translator;
 
     public function __construct(Translator $translator)
     {
-        parent::__construct('activityfield');
+        parent::__construct('signupfield');
         $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
-              ->setObject(new ActivityField());
+              ->setObject(new \Activity\Model\SignupField());
 
         $this->add([
             'name' => 'name',
@@ -97,12 +99,10 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
         ]);
     }
 
-
     /**
      * @return array
      */
     public function getInputFilterSpecification() {
-
         return [
             'name' => [
                 'required' => false,

@@ -21,12 +21,6 @@ Er is een nieuwe activiteit aangemaakt op de GEWIS website.
         <td><b>Locatie:</b></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("nl")) ?></td>
     </tr>
-    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
-    <tr>
-        <td><b>Inschrijfdeadline:</b></td>
-        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'nl'); ?></td>
-    </tr>
-    <?php endif; ?>
      <tr>
         <td><b>Kosten:</b></td>
         <td><?=$this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
@@ -61,12 +55,6 @@ A new activity was created at the GEWIS website. See below for details.
         <td><b>Location:</b></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("en")) ?></td>
     </tr>
-    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
-    <tr>
-        <td><b>Subscription deadline:</b></td>
-        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
-    </tr>
-    <?php endif; ?>
      <tr>
         <td><b>Costs:</b></td>
         <td><?=$this->escapeHtml($activity->getCosts()->getText("en")) ?></td>

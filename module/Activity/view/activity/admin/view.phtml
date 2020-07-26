@@ -39,6 +39,7 @@
 <?php endif; ?>
 
 <h1><?= $this->translate('Old activities') ?></h1>
+<?php if (!empty($oldActivityPaginator)): ?>
 <?= $this->paginationControl(
     $oldActivityPaginator,
     // the scrolling style
@@ -49,7 +50,6 @@
     ]
 )
 ?>
-<?php if (!empty($oldActivityPaginator)): ?>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -57,7 +57,6 @@
         <th><?= $this->translate('Dutch name') ?></th>
         <th><?= $this->translate('English name') ?></th>
         <th><?= $this->translate('Start date') ?></th>
-        <th><?= $this->translate('Subscriptions') ?></th>
         <th><?= $this->translate('Organ') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <?php if ($admin): ?>
@@ -73,7 +72,6 @@
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("nl") ?></a></td>
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
-            <td><?= is_null($activity->getSignups()) ? 0 : count($activity->getSignups()) ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
             <?php if ($admin): ?>

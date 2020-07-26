@@ -148,15 +148,18 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->from('Activity\Model\UserActivitySignup', 'b')
+            ->from('Activity\Model\SignupList', 'b')
+            ->from('Activity\Model\UserSignup', 'c')
             ->where('a.endTime > :now')
             ->setParameter('now', new \DateTime())
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->andWhere('a = b.activity')
-            ->andWhere('b.user = :user')
+            ->andWhere('b = c.signupList')
+            ->andWhere('c.user = :user')
             ->setParameter('user', $user);
         $result = $qb->getQuery()->getResult();
+
         return $result;
     }
 

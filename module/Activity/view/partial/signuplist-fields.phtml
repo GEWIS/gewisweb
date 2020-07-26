@@ -1,0 +1,117 @@
+<div class="row field" id="additionalField<?= $this->index ?>">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+                <hr>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <?php
+                $element = $this->signupListField->get('type')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'type-field')
+                    ->setAttribute('onchange', 'Activity.updateField(' . $this->listIndex . ', ' . $this->index. ')');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                        <?= $element->getLabel() ?>
+                    </label>
+                    <?= $this->formSelect($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $element = $this->signupListField->get('name')
+                    ->setAttribute('class', 'form-control form-control-dutch')
+                    ->setAttribute('id', 'field-name-nl');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                        <?= $element->getLabel() ?>
+                        <span class="flag-icon flag-icon-nl"></span>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $element = $this->signupListField->get('nameEn')
+                    ->setAttribute('class', 'form-control form-control-english')
+                    ->setAttribute('id', 'field-name-en');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                        <?= $element->getLabel() ?>
+                        <span class="flag-icon flag-icon-en"></span>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+        </div>
+        <div class="row field-dependant type-2" style="display:none;">
+            <div class="col-md-3 col-md-offset-6">
+                <?php
+                $element = $this->signupListField->get('min. value')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'min-value-field');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $element->getLabel() ?>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $element = $this->signupListField->get('max. value')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'max-value-field');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $element->getLabel() ?>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-6">
+                <p><?= $this->translate('Please note that numbers are not dependant on the selected language(s).') ?></p>
+            </div>
+        </div>
+        <div class="row field-dependant type-3" style="display:none;">
+            <div class="col-md-3 col-md-offset-6">
+                <?php
+                $element = $this->signupListField->get('options')
+                    ->setAttribute('class', 'form-control form-control-dutch')
+                    ->setAttribute('id', 'field-options-nl');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                        <?= $element->getLabel() ?>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <?php
+                $element = $this->signupListField->get('optionsEn')
+                    ->setAttribute('class', 'form-control form-control-english')
+                    ->setAttribute('id', 'field-options-en');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getAttribute('id') ?>" class="control-label">
+                        <?= $element->getLabel() ?>
+                    </label>
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

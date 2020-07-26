@@ -5,8 +5,9 @@ namespace Activity\Service;
 use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivityField as ActivityFieldModel;
-use Activity\Model\ActivityOption as ActivityOptionModel;
+use Activity\Model\SignupField as SignupFieldModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Model\SignupOption as SignupOptionModel;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
 use Decision\Model\Organ;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
@@ -41,7 +42,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @return ActivityForm
      */
-    public function getForm()
+    public function getActivityForm()
     {
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
@@ -53,19 +54,27 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $this->getServiceManager()->get('activity_form_activity');
     }
 
+    public function getSignupListForm()
+    {
+        return $this->getServiceManager()->get('activity_form_signuplist');
+    }
+
+    public function getSignupListFieldsForm()
+    {
+        return $this->getServiceManager()->get('activity_form_signuplist_fields');
+    }
+
     /**
      * Create an activity from the creation form.
      *
      * @pre $params is valid data of Activity\Form\Activity
      *
-     * @param array $params Parameters describing activity
+     * @param array $data Parameters describing activity
      *
      * @return ActivityModel Activity that was created.
      */
-    public function createActivity(array $params, $dutch, $english)
+    public function createActivity($data)
     {
-        assert($dutch || $english, "Activities should have either be in dutch or english");
-
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
@@ -73,22 +82,19 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
         // Find the creator
-        /** @var \User\Model\User $user */
-        $user = $em->merge(
-            $this->getServiceManager()->get('user_service_user')->getIdentity()
-        );
+        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
-        $organId = intval($params['organ']);
+        $organId = intval($data['organ']);
         $organ = null;
+
         if ($organId !== 0) {
             $organ = $this->findOrgan($organId);
         }
-        $activity = $this->generateActivity($params, $user, $organ, $dutch, $english, ActivityModel::STATUS_TO_APPROVE);
+
+        $activity = $this->saveActivityData($data, $user, $organ, ActivityModel::STATUS_TO_APPROVE);
 
         // Send email to GEFLITST if user checked checkbox of GEFLITST
         if ($activity->getRequireGEFLITST()) {
@@ -105,11 +111,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     private function requestGEFLITST($activity, $user, $organ)
     {
-        $activityTitle = $activity->getNameEn(); // Default to English title
-        if (is_null($activityTitle)) {
-            $activityTitle = $activity->getName(); // Fallback on Dutch title
-        }
-
+        // Default to an English title, otherwise use the Dutch title
+        $activityTitle = $activity->getName()->getText('en');
         $activityTime = $activity->getBeginTime()->format('d-m-Y H:i');
 
         $type = 'activity_creation_require_GEFLITST';
@@ -145,27 +148,24 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @return ActivityProposalModel
      * @return bool indicating whether the update was applied or is pending
      */
-    public function createUpdateProposal(ActivityModel $oldActivity, array $params, $dutch, $english)
+    public function createUpdateProposal(ActivityModel $oldActivity, array $data)
     {
-        if (!($this->isAllowed('update', 'activity') ||
-                $this->isAllowed('update', $oldActivity))) {
+        if (!$this->isAllowed('update', $oldActivity)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
             );
         }
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
-        $newActivity = $this->generateActivity(
-            $params,
+        $newActivity = $this->saveActivityData(
+            $data,
             $user,
             $oldActivity->getOrgan(),
-            $dutch,
-            $english,
             ActivityModel::STATUS_UPDATE
         );
 
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $oldProposalContainer = $oldActivity->getUpdateProposal();
 
         if ($oldProposalContainer->count() !== 0) {
@@ -274,52 +274,39 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Create an activity from parameters.
      *
-     * @pre $params is valid data of Activity\Form\Activity
+     * @pre $data is valid data of Activity\Form\Activity
      *
-     * @param array $params Parameters describing activity
+     * @param array $data Parameters describing activity
      * @param User $user The user that creates this activity
      * @param Organ $organ The organ this activity is associated with
-     * @param boolean $dutch Whether dutch information is provided
-     * @param boolean $english Whether english information is provided
      *
      * @return ActivityModel Activity that was created.
      */
-    protected function generateActivity(array $params, $user, $organ, $dutch, $english, $initialStatus)
+    protected function saveActivityData($data, $user, $organ, $status)
     {
         $activity = new ActivityModel();
-        $activity->setBeginTime(new \DateTime($params['beginTime']));
-        $activity->setEndTime(new \DateTime($params['endTime']));
-        //Default to the endtime if no deadline was set (so there is no deadline effectively)
-        $activity->setSubscriptionDeadline(
-            empty($params['subscriptionDeadline']) ?
-                $activity->getEndTime() :
-                new \DateTime($params['subscriptionDeadline'])
-        );
+        $activity->setBeginTime(new \DateTime($data['beginTime']));
+        $activity->setEndTime(new \DateTime($data['endTime']));
 
-        $activity->setName(self::createLocalized($params, $dutch, $english, 'nameEn', 'name'));
-        $activity->setLocation(self::createLocalized($params, $dutch, $english, 'locationEn', 'location'));
-        $activity->setCosts(self::createLocalized($params, $dutch, $english, 'costsEn', 'costs'));
-        $activity->setDescription(self::createLocalized($params, $dutch, $english, 'descriptionEn', 'description'));
+        $activity->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $activity->setLocation(new LocalisedText($data['locationEn'], $data['location']));
+        $activity->setCosts(new LocalisedText($data['costsEn'], $data['costs']));
+        $activity->setDescription(new LocalisedText($data['descriptionEn'], $data['description']));
 
-        $activity->setCanSignUp($params['canSignUp']);
-        $activity->setIsFood($params['isFood']);
-        $activity->setIsMyFuture($params['isMyFuture']);
-        $activity->setRequireGEFLITST($params['requireGEFLITST']);
-        $activity->setOnlyGEWIS($params['onlyGEWIS']);
-        $activity->setDisplaySubscribedNumber($params['displaySubscribedNumber']);
+        $activity->setIsMyFuture($data['isMyFuture']);
+        $activity->setRequireGEFLITST($data['requireGEFLITST']);
 
         // Not user provided input
         $activity->setCreator($user);
         $activity->setOrgan($organ);
-        $activity->setStatus($initialStatus);
+        $activity->setStatus($status);
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
-        if (isset($params['fields'])) {
-            foreach ($params['fields'] as $fieldparams) {
-
-                $field = $this->createActivityField($fieldparams, $activity, $dutch, $english);
-                $em->persist($field);
+        if (isset($data['signuplists'])) {
+            foreach ($data['signuplists'] as $signupList) {
+                $signupList = $this->createSignupList($signupList, $activity);
+                $em->persist($signupList);
             }
             $em->flush();
         }
@@ -358,44 +345,63 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         return $organ;
     }
 
-    private static function createLocalized($params, $dutch, $english, $nameEn, $name)
+    /**
+     * Creates a SignupList for the specified Activity.
+     *
+     * @param array $data
+     * @param \Activity\Model\Activity $activity
+     * @return \Activity\Model\SignupList
+     */
+    public function createSignupList($data, $activity)
     {
-        return new LocalisedText($english ? $params[$nameEn] : null, $dutch ? $params[$name] : null);
+        $signupList = new SignupListModel();
+
+        $signupList->setActivity($activity);
+        $signupList->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $signupList->setOpenDate(new \DateTime($data['openDate']));
+        $signupList->setCloseDate(new \DateTime($data['closeDate']));
+
+        $signupList->setOnlyGEWIS($data['onlyGEWIS']);
+        $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
+
+        if (isset($data['fields'])) {
+            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+            foreach ($data['fields'] as $field) {
+                $field = $this->createSignupField($field, $signupList);
+                $em->persist($field);
+            }
+            $em->flush();
+        }
+
+        return $signupList;
     }
 
     /**
      * Create a new field
      *
-     * @pre $params is valid data of Activity\Form\ActivityFieldFieldset
+     * @pre $data is valid data of Activity\Form\SignupListFields
      *
-     * @param array $params Parameters for the new field.
-     * @param ActivityModel $activity The activity the field belongs to.
-     * @param bool $dutch
-     * @param bool $english
+     * @param array $data Parameters for the new field.
+     * @param \Activity\Model\SignupList $activity The SignupList the field belongs to.
+     *
      * @return \Activity\Model\ActivityField The new field.
      */
-    public function createActivityField(array $params, ActivityModel $activity, $dutch, $english)
+    public function createSignupField($data, $signupList)
     {
-        assert($dutch || $english, "Activities should have either be in dutch or english");
+        $field = new SignupFieldModel();
 
-        $field = new ActivityFieldModel();
+        $field->setSignupList($signupList);
+        $field->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $field->setType($data['type']);
 
-        $field->setActivity($activity);
-        $field->setName(self::createLocalized($params, $dutch, $english, 'nameEn', 'name'));
-        $field->setType($params['type']);
-
-        if ($params['type'] === '2') {
-            $field->setMinimumValue($params['min. value']);
-            $field->setMaximumValue($params['max. value']);
+        if ($data['type'] === '2') {
+            $field->setMinimumValue($data['min. value']);
+            $field->setMaximumValue($data['max. value']);
         }
 
-        if ($params['type'] === '3') {
-            $this->createActivityOptions(
-                $field,
-                $params,
-                $params['optionsEn'] !== '' && $english,
-                $params['options'] !== '' && $dutch
-            );
+        if ($data['type'] === '3') {
+            $this->createSignupOption($data, $field);
         }
 
         return $field;
@@ -407,33 +413,36 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @pre The options corresponding to the languages specified are filled in
      * $params. If both languages are specified, they must have the same amount of options.
      *
-     * @param ActivityFieldModel $field The field to add the options to.
-     * @param array $params The array containing the options strings.
-     * @param bool $createEnglishOptions
-     * @param bool $createDutchOptions
+     * @param array $data The array containing the options strings.
+     * @param \Activity\Model\SignupField $field The field to add the options to.
      */
-    protected function createActivityOptions($field, $params, $createEnglishOptions, $createDutchOptions)
+    protected function createSignupOption($data, $field)
     {
         $numOptions = 0;
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
-        if ($createDutchOptions) {
-            $options = explode(',', $params['options']);
+        if (isset($data['options'])) {
+            $options = explode(',', $data['options']);
+            $options = array_map('trim', $options);
             $numOptions = count($options);
         }
-        if ($createEnglishOptions) {
-            $optionsEn = explode(',', $params['optionsEn']);
+
+        if (isset($data['optionsEn'])) {
+            $optionsEn = explode(',', $data['optionsEn']);
+            $optionsEn = array_map('trim', $optionsEn);
             $numOptions = count($optionsEn);
         }
+
         for ($i = 0; $i < $numOptions; $i++) {
-            $option = new ActivityOptionModel();
+            $option = new SignupOptionModel();
             $option->setValue(new LocalisedText(
-                $createEnglishOptions ? $optionsEn[$i] : null,
-                $createDutchOptions ? $options[$i] : null
+                isset($data['optionsEn']) ? $optionsEn[$i] : null,
+                isset($data['options']) ? $options[$i] : null
             ));
             $option->setField($field);
             $em->persist($option);
         }
+
         $em->flush();
     }
 

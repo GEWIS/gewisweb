@@ -3,9 +3,11 @@
 namespace Activity\Service;
 
 use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivitySignup;
-use Activity\Model\UserActivitySignup;
-use Activity\Model\ExternalActivitySignup;
+use Activity\Model\Signup as SignupModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Model\SignupFieldValue as SignupFieldValueModel;
+use Activity\Model\UserSignup as UserSignupModel;
+use Activity\Model\ExternalSignup as ExternalSignupModel;
 use Application\Service\AbstractAclService;
 use Decision\Model\Member;
 
@@ -30,48 +32,59 @@ class Signup extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'activitySignup';
+        return 'signupList';
     }
 
     /**
      * Return the form for signing up in the preferred language, if available.
      * Otherwise, it returns it in the available language.
      *
-     * @param type $fields
-     * @param bool $external Whether the signup is external.
-     * @return type
+     * @param SignupListModel $signupList
+     * @return \Activity\Form\Signup
      * @throws \User\Permissions\NotAllowedException
      */
-    public function getForm($fields)
+    public function getForm($signupList)
     {
-        if (!$this->isAllowed('signup', 'activitySignup')) {
+        if (!$this->isAllowed('signup', $signupList)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
-        $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseForm($fields);
+
+        $form = new \Activity\Form\Signup();
+        $form->initialiseForm($signupList);
+
         return $form;
     }
 
-    public function getExternalAdminForm($fields)
+    public function getExternalAdminForm($signupList)
     {
-        $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseExternalAdminForm($fields);
+        if (!$this->isAllowed('adminSignup', $signupList)) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to use the external admin signup')
+            );
+        }
+
+        $form = new \Activity\Form\Signup();
+        $form->initialiseExternalAdminForm($signupList);
+
         return $form;
     }
 
-    public function getExternalForm($fields)
+    public function getExternalForm($signupList)
     {
-        if (!$this->isAllowed('externalSignup', 'activitySignup')) {
+        if (!$this->isAllowed('externalSignup', $signupList)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to use the external signup')
             );
         }
-        $form = new \Activity\Form\ActivitySignup();
-        $form->initialiseExternalForm($fields);
+
+        $form = new \Activity\Form\Signup();
+        $form->initialiseExternalForm($signupList);
+
         return $form;
     }
 
@@ -84,7 +97,7 @@ class Signup extends AbstractAclService
      */
     public function getSignedUpUsers($activity)
     {
-        if (!$this->isAllowed('view', 'activitySignup')) {
+        if (!$this->isAllowed('view', 'signupList')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view who is signed up for this activity')
@@ -92,6 +105,7 @@ class Signup extends AbstractAclService
         }
 
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
+
         return $signUpMapper->getSignedUp($activity->getId());
     }
 
@@ -100,29 +114,67 @@ class Signup extends AbstractAclService
      *
      * @return array
      */
-    public function getSignedUpData(ActivityModel $activity)
+    public function getSignedUpData(SignupListModel $signupList)
     {
-        if (!$this->isAllowed('view', 'activitySignup')) {
+        if (!$this->isAllowed('view', $signupList)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the sign up data')
             );
         }
 
-        $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_activity_field_value');
+        $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_signup_field_value');
         $result = [];
-        foreach($activity->getSignUps() as $signup){
+
+        foreach($signupList->getSignUps() as $signup){
             $entry = [];
             $entry['member'] = $signup->getFullName();
             $entry['values'] = [];
-            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue){
-                //If there is an option type, get the option object as a 'value'.
+
+            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue) {
+                // If there is an option type, get the option object as a 'value'.
                 $isOption = $fieldValue->getField()->getType() === 3;
                 $value = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
                 $entry['values'][$fieldValue->getField()->getId()] = $value;
             }
+
             $result[] = $entry;
         }
+
+        return $result;
+    }
+
+    /**
+     * Gets an array of the signed up users, but without the associated data.
+     *
+     * @return array
+     */
+    public function getSignedUpDataWithoutFields(SignupListModel $signupList)
+    {
+        if (!$this->isAllowed('view', $signupList)) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view the sign up data')
+            );
+        }
+
+        $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_signup_field_value');
+        $result = [];
+
+        foreach($signupList->getSignUps() as $signup){
+            $entry = [];
+            $entry['fullName'] = $signup->getFullName();
+            $entry['email'] = $signup->getEmail();
+
+            if ($signup instanceof Activity\Model\UserSignup) {
+                $entry['type'] = $this->getTranslator()->translate('User');
+            } else {
+                $entry['type'] = $this->getTranslator()->translate('External');
+            }
+
+            $result[] = $entry;
+        }
+
         return $result;
     }
 
@@ -136,7 +188,7 @@ class Signup extends AbstractAclService
      */
     public function isSignedUp($activity, Member $user)
     {
-        if (!$this->isAllowed('checkUserSignedUp', 'activitySignup')) {
+        if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
@@ -155,7 +207,7 @@ class Signup extends AbstractAclService
      */
     public function getSignedUpActivityIds()
     {
-        if (!$this->isAllowed('checkUserSignedUp', 'activitySignup')) {
+        if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view activities which you signed up for')
@@ -175,95 +227,100 @@ class Signup extends AbstractAclService
     /**
      * Sign a User up for an activity with the specified field values.
      *
-     * @param ActivityModel $activity
+     * @param SignupListModel $signupList
      * @param array $fieldResults
      */
-    public function signUp(ActivityModel $activity, array $fieldResults)
+    public function signUp(SignupListModel $signupList, array $fieldResults)
     {
-        if (!$this->isAllowed('signup', 'activitySignup')) {
+        if (!$this->isAllowed('signup', 'signupList')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
+
         $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
-        $signup = new UserActivitySignup();
+        $signup = new UserSignupModel();
         $signup->setUser($user);
-        $this->createSignup($signup, $activity, $fieldResults);
+        $this->createSignup($signup, $signupList, $fieldResults);
     }
 
     /**
      * Sign an external user up for an activity, which the current user may admin.
      *
-     * @param \Activity\Service\AcitivityModel $activity
+     * @param \Activity\Model\SignupList $signupList
      * @param type $fullName
      * @param type $email
      * @param array $fieldResults
      * @throws \User\Permissions\NotAllowedException
      */
-    public function adminSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
+    public function adminSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
     {
-        if (!($this->isAllowed('adminSignup', 'activity') ||
-                $this->isAllowed('adminSignup', $activity))) {
+        if (!($this->isAllowed('adminSignup', $signupList))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create signups for this activity')
+                $translator->translate('You are not allowed to subscribe an external user to this signup list')
             );
         }
-        $this->manualSignUp($activity, $fullName, $email, $fieldResults);
+
+        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
     }
 
     /**
      * Sign an external user up for an activity, allowed by a guest.
      *
-     * @param \Activity\Service\AcitivityModel $activity
+     * @param \Activity\Model\SignupList $signupList
      * @param type $fullName
      * @param type $email
      * @param array $fieldResults
      * @throws \User\Permissions\NotAllowedException
      */
-    public function externalSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
+    public function externalSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
     {
-        if (!($this->isAllowed('externalSignup', 'activitySignup'))) {
+        if (!($this->isAllowed('externalSignup', $signupList))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create signups for this activity')
+                $translator->translate('You are not allowed to subscribe to this signup list')
             );
         }
-        $this->manualSignUp($activity, $fullName, $email, $fieldResults);
+
+        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
     }
 
     /**
      * Sign an external user up for an activity.
      *
-     * @param \Activity\Service\AcitivityModel $activity
-     * @param type $user
+     * @param \Activity\Model\SignupList $signupList
+     * @param string $fullName
+     * @param string $email
      * @param array $fieldResults
+     *
      * @throws \User\Permissions\NotAllowedException
      */
-    protected function manualSignUp(ActivityModel $activity, $fullName, $email, array $fieldResults)
+    protected function manualSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
     {
-        $signup = new ExternalActivitySignup();
+        $signup = new ExternalSignupModel();
         $signup->setEmail($email);
         $signup->setFullName($fullName);
-        $this->createSignup($signup, $activity, $fieldResults);
+        $this->createSignup($signup, $signupList, $fieldResults);
     }
 
     /**
      * Creates the generic parts of a signup.
-     * @param ActivitySignup $signup
-     * @param ActivityModel $activity
-     * @param type $user
+     *
+     * @param \Activity\Model\Signup $signup
+     * @param \Activity\Model\SignupList $activity
      * @param array $fieldResults
-     * @return ActivitySignup
+     *
+     * @return \Activity\Model\Signup
      */
-    protected function createSignup(ActivitySignup $signup, ActivityModel $activity, array $fieldResults)
+    protected function createSignup(SignupModel $signup, SignupListModel $signupList, array $fieldResults)
     {
-        $signup->setActivity($activity);
-        $optionMapper = $this->getServiceManager()->get('activity_mapper_activity_option');
+        $signup->setSignupList($signupList);
+        $optionMapper = $this->getServiceManager()->get('activity_mapper_signup_option');
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        foreach ($activity->getFields() as $field){
-            $fieldValue = new \Activity\Model\ActivityFieldValue();
+        foreach ($signupList->getFields() as $field){
+            $fieldValue = new SignupFieldValueModel();
             $fieldValue->setField($field);
             $value = $fieldResults[$field->getId()];
 
@@ -285,18 +342,19 @@ class Signup extends AbstractAclService
         }
         $em->persist($signup);
         $em->flush();
+
         return $signup;
     }
 
     /**
      * Undo an activity sign up.
      *
-     * @param ActivityModel $activity
-     * @param Member        $user
+     * @param SignupListModel $signupList
+     * @param Member $user
      */
-    public function signOff(ActivityModel $activity, Member $user)
+    public function signOff(SignupListModel $signupList, Member $user)
     {
-        if (!$this->isAllowed('signoff', 'activitySignup')) {
+        if (!$this->isAllowed('signoff', 'signupList')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You need to be logged in to sign off for this activity')
@@ -304,22 +362,23 @@ class Signup extends AbstractAclService
         }
 
         $signUpMapper = $this->getServiceManager()->get('activity_mapper_signup');
-        $signUp = $signUpMapper->getSignUp($activity->getId(), $user->getLidnr());
+        $signUp = $signUpMapper->getSignUp($signupList->getId(), $user->getLidnr());
 
         // If the user was not signed up, no need to signoff anyway
         if (is_null($signUp)) {
             return;
         }
+
         $this->removeSignUp($signUp);
     }
 
-    public function getNumberOfSubscribedMembers(ActivityModel $activity)
+    public function getNumberOfSubscribedMembers(SignupListModel $signupList)
     {
         return $this->getServiceManager()->get('activity_mapper_signup')
-                ->getNumberOfSignedUpMembers($activity->getId())[1];
+                ->getNumberOfSignedUpMembers($signupList->getId())[1];
     }
 
-    public function externalSignOff(ExternalActivitySignup $signup)
+    public function externalSignOff(ExternalSignupModel $signup)
     {
         if (!($this->isAllowed('adminSignup', 'activity') ||
                 $this->isAllowed('adminSignup', $signup->getActivity()))) {
@@ -331,11 +390,17 @@ class Signup extends AbstractAclService
         $this->removeSignUp($signup);
     }
 
-    protected function removeSignUp(ActivitySignup $signup)
+    protected function removeSignUp(SignupModel $signup)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
         $em->remove($signup);
         $em->flush();
+    }
+
+    public function isInSubscriptionWindow($openDate, $closeDate)
+    {
+        $currentTime = new \DateTime();
+        return $openDate < $currentTime && $currentTime < $closeDate;
     }
 
     /**
@@ -345,7 +410,7 @@ class Signup extends AbstractAclService
      */
     public function isAllowedToSubscribe()
     {
-        return $this->isAllowed('signup', 'activitySignup');
+        return $this->isAllowed('signup', 'signupList');
     }
 
     /**
@@ -355,18 +420,19 @@ class Signup extends AbstractAclService
      */
     public function isAllowedToExternalSubscribe()
     {
-        return $this->isAllowed('externalSignup', 'activitySignup');
+        return $this->isAllowed('externalSignup', 'signupList');
     }
 
     public function isAllowedToViewSubscriptions()
     {
-        return $this->isAllowed('view', 'activitySignup');
+        return $this->isAllowed('view', 'signupList');
     }
 
     public function isAllowedToInternalSubscribe()
     {
-        return $this->isAllowed('signup', 'activitySignup');
+        return $this->isAllowed('signup', 'signupList');
     }
+
     /**
      * @return \Activity\Mapper\ActivityFieldValue
      */

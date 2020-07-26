@@ -6,7 +6,7 @@ use Activity\Model\Activity;
 use Activity\Service\Signup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Activity\Form\Activity as ActivityForm;
-use Activity\Form\ActivitySignup as SignupForm;
+use Activity\Form\Signup as SignupForm;
 use Zend\View\Model\JsonModel;
 
 class ApiController extends AbstractActionController
