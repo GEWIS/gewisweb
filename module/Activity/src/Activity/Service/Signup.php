@@ -126,7 +126,7 @@ class Signup extends AbstractAclService
         $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_signup_field_value');
         $result = [];
 
-        foreach($signupList->getSignUps() as $signup){
+        foreach ($signupList->getSignUps() as $signup) {
             $entry = [];
             $entry['member'] = $signup->getFullName();
             $entry['values'] = [];
@@ -158,18 +158,17 @@ class Signup extends AbstractAclService
             );
         }
 
-        $fieldValueMapper = $this->getServiceManager()->get('activity_mapper_signup_field_value');
         $result = [];
 
-        foreach($signupList->getSignUps() as $signup){
+        foreach ($signupList->getSignUps() as $signup) {
             $entry = [];
             $entry['fullName'] = $signup->getFullName();
             $entry['email'] = $signup->getEmail();
 
+            $entry['type'] = $this->getTranslator()->translate('External');
+
             if ($signup instanceof Activity\Model\UserSignup) {
                 $entry['type'] = $this->getTranslator()->translate('User');
-            } else {
-                $entry['type'] = $this->getTranslator()->translate('External');
             }
 
             $result[] = $entry;
@@ -319,7 +318,7 @@ class Signup extends AbstractAclService
         $signup->setSignupList($signupList);
         $optionMapper = $this->getServiceManager()->get('activity_mapper_signup_option');
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        foreach ($signupList->getFields() as $field){
+        foreach ($signupList->getFields() as $field) {
             $fieldValue = new SignupFieldValueModel();
             $fieldValue->setField($field);
             $value = $fieldResults[$field->getId()];

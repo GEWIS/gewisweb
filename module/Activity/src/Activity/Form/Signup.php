@@ -52,7 +52,7 @@ class Signup extends Form implements InputFilterProviderInterface
      */
     public function initialiseForm($signupList)
     {
-        foreach($signupList->getFields() as $field) {
+        foreach ($signupList->getFields() as $field) {
             $this->add($this->createSignupFieldElementArray($field));
         }
 
@@ -148,11 +148,12 @@ class Signup extends Form implements InputFilterProviderInterface
      * @param \Activity\Model\SignupField $field
      * @return array
      */
-    protected function createSignupFieldElementArray($field){
+    protected function createSignupFieldElementArray($field)
+    {
         $result = [
             'name' => $field->getId(),
         ];
-        switch($field->getType()) {
+        switch ($field->getType()) {
             case 0: //'Text'
                 $result['type'] = 'Text';
                 break;
@@ -175,7 +176,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 break;
             case 3: //'Choice'
                 $values = [];
-                foreach($field->getOptions() as $option){
+                foreach ($field->getOptions() as $option) {
                     $values[$option->getId()] =  $option->getValue()->getText();
                 }
                 $result['type'] = 'Zend\Form\Element\Select';

@@ -22,19 +22,18 @@ class SignupFieldValue
     {
         $this->em = $em;
     }
-    
+
     /**
      * Finds all field values associated with the $signup
-     * 
+     *
      * @param \Activity\Model\Signup $signup
      * @return array of \Activity\Model\ActivityFieldValue
      */
     public function getFieldValuesBySignup(\Activity\Model\Signup $signup)
-    {        
+    {
         return $this->getRepository()->findBy(array('signup' => $signup->getId()));
     }
-    
-    
+
     /**
      * Get the repository for this mapper.
      *

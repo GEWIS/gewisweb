@@ -22,10 +22,10 @@ class SignupOption
     {
         $this->em = $em;
     }
-    
+
     /**
      * Finds the option of with the given id.
-     * 
+     *
      * @param int $id
      * @return \Activity\Model\SignupOption
      */
@@ -33,8 +33,7 @@ class SignupOption
     {
         return $this->getRepository()->find($id);
     }
-    
-    
+
     /**
      * Get the repository for this mapper.
      *

@@ -88,7 +88,10 @@ class AdminController extends AbstractActionController
             }
 
             $result['externalSignupForm'] = $externalSignupForm;
-            $result['externalSignoffForm'] = new RequestForm('activityExternalSignoff', $this->getServiceLocator()->get('translator')->translate('Remove'));
+            $result['externalSignoffForm'] = new RequestForm(
+                'activityExternalSignoff',
+                $this->getServiceLocator()->get('translator')->translate('Remove')
+            );
         }
 
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
@@ -285,18 +288,33 @@ class AdminController extends AbstractActionController
             //Assure the form is valid
             if (!$form->isValid()) {
                 $message = $translator->translate('Invalid form');
-                $this->redirectActivityAdminRequest($signupList->getActivity()->getId(), $signupList->getId(), false, $message);
+                $this->redirectActivityAdminRequest(
+                    $signupList->getActivity()->getId(),
+                    $signupList->getId(),
+                    false,
+                    $message
+                );
                 return $this->getResponse();
             }
 
             $signupService->externalSignOff($signup);
             $message = $translator->translate('Successfully removed external participant');
-            $this->redirectActivityAdminRequest($signupList->getActivity()->getId(), $signupList->getId(), true, $message);
+            $this->redirectActivityAdminRequest(
+                $signupList->getActivity()->getId(),
+                $signupList->getId(),
+                true,
+                $message
+            );
             return $this->getResponse();
         }
 
         $message = $translator->translate('Use the form to unsubscribe an external participant');
-        $this->redirectActivityAdminRequest($signupList->getActivity()->getId(), $signupList->getId(), false, $message);
+        $this->redirectActivityAdminRequest(
+            $signupList->getActivity()->getId(),
+            $signupList->getId(),
+            false,
+            $message
+        );
         return $this->getResponse();
     }
 

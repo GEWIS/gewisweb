@@ -124,17 +124,17 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'openDate' => [
                 'required' => true,
                 // TODO: Move to an actual InputFilter
-                //  The validator below does not work, as the $context in
-                //  Activity\Form\Activity::beforeBeginTime is the context
-                //  of this FieldSet and not the parent form.
-                //  
-                //  This means that the `beginTime`-index does not exist and
-                //  as a result any `closeDate` in the future does not validate
-                //  correctly.
-                //  
-                //  An separate InputFilter should be made for the parent form
-                //  to validate any and all child forms.
-                //  
+                // The validator below does not work, as the $context in
+                // Activity\Form\Activity::beforeBeginTime is the context
+                // of this FieldSet and not the parent form.
+                //
+                // This means that the `beginTime`-index does not exist and
+                // as a result any `closeDate` in the future does not validate
+                // correctly.
+                //
+                // An separate InputFilter should be made for the parent form
+                // to validate any and all child forms.
+                //
                 'validators' => [
                     //[
                     //    'name' => 'callback',
@@ -151,7 +151,9 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The signup list opening date and time must be before the activity closes.'),
+                                    $this->translator->translate(
+                                        'The signup list opening date and time must be before the activity closes.'
+                                    ),
                             ],
                             'callback' => [$this, 'beforeCloseDate'],
                         ],
@@ -161,17 +163,17 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'closeDate' => [
                 'required' => true,
                 // TODO: Move to an actual InputFilter
-                //  The validator below does not work, as the $context in
-                //  Activity\Form\Activity::beforeBeginTime is the context
-                //  of this FieldSet and not the parent form.
-                //  
-                //  This means that the `beginTime`-index does not exist and
-                //  as a result any `closeDate` in the future does not validate
-                //  correctly.
-                //  
-                //  An separate InputFilter should be made for the parent form
-                //  to validate any and all child forms.
-                //  
+                // The validator below does not work, as the $context in
+                // Activity\Form\Activity::beforeBeginTime is the context
+                // of this FieldSet and not the parent form.
+                //
+                // This means that the `beginTime`-index does not exist and
+                // as a result any `closeDate` in the future does not validate
+                // correctly.
+                //
+                // An separate InputFilter should be made for the parent form
+                // to validate any and all child forms.
+                //
                 //'validators' => [
                 //    [
                 //        'name' => 'callback',

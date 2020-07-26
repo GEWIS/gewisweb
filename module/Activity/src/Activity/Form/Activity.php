@@ -20,7 +20,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, Translator $translator, ObjectManager $objectManager)
+    public function __construct(array $organs, Translator $translator)
     {
         parent::__construct('activity');
         $this->translator = $translator;
@@ -190,7 +190,7 @@ class Activity extends Form implements InputFilterProviderInterface
          * this function.
          */
         if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
-            foreach ($this->get('signuplists')->getFieldSets() as $keySignupList => $signupList) {
+            foreach ($this->get('signuplists')->getFieldSets() as $signupList) {
                 if ($this->data['language_dutch']) {
                     if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {
                         // TODO: Return error messages
@@ -205,7 +205,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     }
                 }
 
-                foreach ($signupList->get('fields')->getFieldSets() as $keyField => $field) {
+                foreach ($signupList->get('fields')->getFieldSets() as $field) {
                     if ($this->data['language_dutch']) {
                         if (!(new NotEmpty())->isValid($field->get('name')->getValue())) {
                             // TODO: Return error messages
@@ -406,7 +406,8 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param array $context
      * @return boolean
      */
-    public static function beforeBeginTime($value, $context = []) {
+    public static function beforeBeginTime($value, $context = [])
+    {
         try {
             $thisTime = new \DateTime($value);
             $beginTime = isset($context['beginTime']) ? new \DateTime($context['beginTime']) : new \DateTime('now');

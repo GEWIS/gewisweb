@@ -148,7 +148,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                             \Zend\Validator\Callback::INVALID_VALUE =>
                                 'Some of the required fields for this type are empty'
                             ],
-                            'callback' => function($value, $context=null) {
+                            'callback' => function ($value, $context = null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
                                        $this->fieldDependantRequired($value, $context, 'max. value', '2');
                             }
@@ -178,10 +178,10 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                                 \Zend\Validator\Callback::INVALID_VALUE =>
                                     'The number of English options must equal the number of Dutch options'
                             ],
-                            'callback' => function ($value, $context=null) {
+                            'callback' => function ($value, $context = null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
                                     || !((new NotEmpty())->isValid($context['name']))
-                                    || substr_count($context['options'],",") === substr_count($value,",");
+                                    || substr_count($context['options'], ",") === substr_count($value, ",");
                             }
                         ]
                     ]
@@ -200,9 +200,9 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
      * @param string $testvalue
      * @return boolean
      */
-    protected function fieldDependantRequired($value, $context, $child, $testvalue) {
-
-        if ($value === $testvalue){
+    protected function fieldDependantRequired($value, $context, $child, $testvalue)
+    {
+        if ($value === $testvalue) {
             return (new NotEmpty())->isValid($context[$child]);
         }
 

@@ -90,7 +90,7 @@ class Module
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $translator, $sm->get('activity_doctrine_em'));
+                    $form = new \Activity\Form\Activity($organs, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -190,38 +190,36 @@ class Module
                     $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
                     $acl->allow('user', 'activity', 'create');
-                    $acl->allow('user', 'activity', [
-                            'update',
-                            'viewDetails',
-                            'viewParticipants',
-                            'exportParticipants',
-                        ],
+                    $acl->allow(
+                        'user',
+                        'activity',
+                        ['update', 'viewDetails', 'viewParticipants', 'exportParticipants'],
                         new IsCreator()
                     );
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
                     $acl->allow('user', 'myActivities', 'view');
-                    $acl->allow('user', 'signupList', ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']);
-                    $acl->allow('user', 'signupList', [
-                            'adminSignup',
-                            'viewParticipants',
-                            'exportParticipants',
-                        ], new IsCreator()
+                    $acl->allow(
+                        'user',
+                        'signupList',
+                        ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
+                    );
+                    $acl->allow(
+                        'user',
+                        'signupList',
+                        ['adminSignup', 'viewParticipants', 'exportParticipants'],
+                        new IsCreator()
                     );
 
-                    $acl->allow('active_member', 'activity', [
-                            'update',
-                            'viewDetails',
-                            'adminSignup',
-                            'viewParticipants',
-                            'exportParticipants',
-                        ],
+                    $acl->allow(
+                        'active_member',
+                        'activity',
+                        ['update', 'viewDetails', 'adminSignup', 'viewParticipants', 'exportParticipants'],
                         new IsOrganMember()
                     );
-                    $acl->allow('active_member', 'signupList', [
-                            'adminSignup',
-                            'viewParticipants',
-                            'exportParticipants',
-                        ],
+                    $acl->allow(
+                        'active_member',
+                        'signupList',
+                        ['adminSignup', 'viewParticipants', 'exportParticipants'],
                         new IsOrganMember()
                     );
 
