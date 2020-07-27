@@ -3,7 +3,7 @@ $this->scriptUrl()->requireUrls(
     [
         'admin_company/editCompany/editPackage/deleteJob',
     ],
-    ['slugCompanyName', 'packageID', 'languageNeutralJobId']
+    ['slugCompanyName', 'packageId', 'languageNeutralJobId']
 );
 ?>
 <?php if ($type === 'banner'): ?>
@@ -119,7 +119,7 @@ $form->prepare()
     deleteJob = function(id) {
         $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deleteJob', {
             'slugCompanyName': '<?= $companyName ?>',
-            'packageID': '<?= $package->getId() ?>',
+            'packageId': '<?= $package->getId() ?>',
             'languageNeutralJobId': id}));
     };
 </script>

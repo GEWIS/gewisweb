@@ -280,7 +280,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             $post = $request->getPost();
             $labelDict = [];
-        
+
             foreach ($labels as $label) {
                 $labelDict[$label->getLanguage()] = $label;
             }
@@ -638,19 +638,19 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $jobID = $this->params('languageNeutralJobId');
+        $jobId = $this->params('languageNeutralJobId');
 
-        $this->getCompanyService()->deleteJob($jobID);
+        $this->getCompanyService()->deleteJob($jobId);
 
         $companyName = $this->params('slugCompanyName');
-        $packageId = $this->params('packageID');
+        $packageId = $this->params('packageId');
 
         // Redirect to package page
         return $this->redirect()->toRoute(
             'admin_company/editCompany/editPackage',
             [
                 'slugCompanyName' => $companyName,
-                'packageID' => $packageId
+                'packageId' => $packageId
             ]
         );
     }

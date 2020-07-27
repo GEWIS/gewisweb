@@ -350,7 +350,7 @@ class Company extends AbstractACLService
      * Creates a new JobLabel.
      *
      * @param array $data Label data from the EditLabel form
-     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job label 
+     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job label
      *
      * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
@@ -840,9 +840,9 @@ class Company extends AbstractACLService
     /**
      * Deletes the given job
      *
-     * @param mixed $packageID
+     * @param mixed $packageId
      */
-    public function deleteJob($jobID)
+    public function deleteJob($jobId)
     {
         if (!$this->isAllowed('delete')) {
             $translator = $this->getTranslator();
@@ -850,7 +850,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete jobs')
             );
         }
-        $this->getJobMapper()->deleteByLanguageNeutralId($jobID);
+        $this->getJobMapper()->deleteByLanguageNeutralId($jobId);
     }
 
     /**

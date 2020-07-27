@@ -152,9 +152,9 @@ class Job
      * Deletes the jobs corresponding to the given language neutral id.
      *
      */
-    public function deleteByLanguageNeutralId($jobID)
+    public function deleteByLanguageNeutralId($jobId)
     {
-        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobID]);
+        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobId]);
         foreach ($jobs as $job) {
             $this->em->remove($job);
         }
