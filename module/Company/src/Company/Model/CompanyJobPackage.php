@@ -55,10 +55,10 @@ class CompanyJobPackage extends CompanyPackage
     {
         $filter = function ($job) use ($category) {
             if ($category == null) {
-                return true;
+                return $job->isActive();
             }
             if ($job->getCategory() == null && $category->getLanguageNeutralId() == null) {
-                return true;
+                return $job->isActive();
             }
             if ($job->getCategory() == null) {
                 return false;

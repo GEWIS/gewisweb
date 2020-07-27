@@ -25,11 +25,6 @@ class FixedKeyDictionaryCollection extends Collection
     {
         $collection = [];
         foreach ($values as $name => $value) {
-            if (array_key_exists("active", $value)) {
-                if ($value["active"] == "0") {
-                    continue;
-                }
-            }
             $element = $this->get($name);
             $collection[$name] = $element instanceof FieldsetInterface ? $element->bindValues($value) : $value;
         }
