@@ -536,6 +536,34 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Action to delete a job.
+     */
+    public function deleteJobAction()
+    {
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->notFoundAction();
+        }
+
+        $jobID = $this->params('languageNeutralJobId');
+
+        $this->getCompanyService()->deleteJob($jobID);
+
+        $companyName = $this->params('slugCompanyName');
+        $packageId = $this->params('packageID');
+
+        // Redirect to package page
+        return $this->redirect()->toRoute(
+            'admin_company/editCompany/editPackage',
+            [
+                'slugCompanyName' => $companyName,
+                'packageID' => $packageId
+            ]
+        );
+    }
+
+
+    /**
      * Method that returns the service object for the company module.
      *
      * @return CompanyService
