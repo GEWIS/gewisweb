@@ -33,7 +33,7 @@ $form->prepare()
            href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
                [
                    "slugCompanyName" => $companyName,
-                   'packageID' => $package->getId()
+                   'packageId' => $package->getId()
                ]); ?>">
             <i class="fas fa-plus"></i>
             <?= $this->translate('Add job'); ?>
@@ -74,7 +74,7 @@ $form->prepare()
                        href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
                            [
                                "slugCompanyName" => $companyName,
-                               "packageID" => $package->getId(),
+                               "packageId" => $package->getId(),
                                "languageNeutralJobId" => $job->getLanguageNeutralId(),
                            ]
                        ); ?>">

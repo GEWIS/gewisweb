@@ -1,0 +1,31 @@
+<div class="row">
+    <?php foreach( $form->getLanguages() as $lang):?>
+    <?php $langDesc = $languages[$lang]?>
+        <div class="col-md-6">
+            <h1><?= $this->translate($langDesc)?></h1>
+            <?php $fieldset = $this->form->get("labels")->get($lang); ?>
+            <?php
+                $element = $fieldset->get('name');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+            <?php
+                $element = $fieldset->get('slug');
+                $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <?= $this->formInput($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
+        </div>
+    <?php endforeach ?>
+</div>

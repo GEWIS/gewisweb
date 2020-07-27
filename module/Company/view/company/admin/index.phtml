@@ -1,14 +1,14 @@
 <?php
-    $this->headScript()->prependFile($this->basePath() . '/js/company-admin.js');
-    $this->scriptUrl()->requireUrls(
-        ['admin_company/deleteCompany'],
-        ['slugCompanyName']
-    );
+$this->headScript()->prependFile($this->basePath() . '/js/company-admin.js');
+$this->scriptUrl()->requireUrls(
+    ['admin_company/deleteCompany'],
+    ['slugCompanyName']
+);
 ?>
 <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
 <div class="row">
-    <div class="col-md-9">
-    <?php endif ?>
+    <div class="col-md-8">
+        <?php endif ?>
 
         <div class="row">
             <div class="col-md-10">
@@ -24,110 +24,141 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-2">
-                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <i class="fas fa-plus"></i><?=$this->translate('Add Category');?>
- </a>
+            <div class="col-sm-6">
+                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <span class="fa fa-plus"></span><?=$this->translate('Add Category');?>
+                </a>
                 <table class="table table-striped ">
                     <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Categories') ?>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Categories') ?>
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($categoryList as $category):
-                                $editUrl = $this->url('admin_company/editCategory',
-                                ['categoryID' => $category->getLanguageNeutralId()]);
-                           ?>
-                           <tr>
-                           <td><?= $category->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
-                           </tr>
-                           <?php endforeach; ?>
+                    <?php
+                    foreach ($categoryList as $category):
+                        $editUrl = $this->url('admin_company/editCategory',
+                            ['languageNeutralCategoryId' => $category->getLanguageNeutralId()]);
+                        ?>
+                        <tr>
+                            <td><?= $category->getName(); ?> (<a href="<?= $editUrl; ?>"><?= $this->translate('edit')?></a>)</td>
+                        </tr>
+                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Categories') ?></th>
-                        </tr>
+                    <tr>
+                        <th><?= $this->translate('Categories') ?></th>
+                    </tr>
                     </tfoot>
                 </table>
             </div>
-            <div class="col-md-10">
+            <div class="col-sm-6">
+                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel'])?>'> <span class="fa fa-plus"></span><?=$this->translate('Add Label');?>
+                </a>
                 <table class="table table-striped ">
                     <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Name') ?>
-                                <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Jobs') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Active jobs') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Banner active') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Featured in language') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Expired packages') ?>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="fas fa-arrow-up"></span></a>
-                                <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="fas fa-arrow-down"></span></a>
-                            </th>
-                            <th>
-                                <?= $this->translate('Actions') ?>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Labels') ?>
+                        </th>
+                    </tr>
                     </thead>
-                    <tbody class="company-list">
-                        <?php
-                            foreach ($companyList as $company):
-                                $editUrl = $this->url('admin_company/editCompany',
-                                ['slugCompanyName' => $company->getSlugName()]);
-                           ?>
-                           <tr class="company-list-item
-                               <?= $company->getHidden() ? ' danger' : '' ?>
-                               <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
-                               <td class="company-name"><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
-                               <td><?= $company->getNumberOfJobs(); ?></td>
-                               <td><?= $company->getNumberOfActiveJobs(); ?></td>
-                               <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No'); ?></td>
-                               <td><?php $languages = $company->getFeaturedLanguages(); echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
-                               <td><?= $company->getNumberOfExpiredPackages(); ?></td>
-                               <td>
-                                   <button type="button" class="btn btn-danger btn-xs"
-                                                         onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')"
-                                                         data-toggle="modal"
-                                                         data-target="#deleteModal">
-                                       <?= $this->translate('Delete') ?>
-                                   </button>
-                               </td>
-                           </tr>
-                           <?php endforeach; ?>
+                    <tbody>
+                    <?php
+                    foreach ($labelList as $label):
+                        $editUrl = $this->url('admin_company/editLabel',
+                            ['languageNeutralLabelId' => $label->getLanguageNeutralId()]);
+                        ?>
+                        <tr>
+                            <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
+                        </tr>
+                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Name') ?></th>
-                            <th><?= $this->translate('Jobs') ?></th>
-                            <th><?= $this->translate('Active jobs') ?></th>
-                            <th><?= $this->translate('Banner active') ?></th>
-                            <th><?= $this->translate('Featured in language') ?></th>
-                            <th><?= $this->translate('Expired packages') ?></th>
-                            <th><?= $this->translate('Actions') ?></th>
+                    <tr>
+                        <th><?= $this->translate('Labels') ?></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Name') ?>
+                            <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Jobs') ?>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Active jobs') ?>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Banner active') ?>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Featured in language') ?>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Expired packages') ?>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="fa fa-arrow-up"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="fa fa-arrow-down"></span></a>
+                        </th>
+                        <th>
+                            <?= $this->translate('Actions') ?>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="company-list">
+                    <?php
+                    foreach ($companyList as $company):
+                        $editUrl = $this->url('admin_company/editCompany',
+                            ['slugCompanyName' => $company->getSlugName()]);
+                        ?>
+                        <tr class="company-list-item
+                               <?= $company->getHidden() ? ' danger' : '' ?>
+                               <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
+                            <td class="company-name"><a href=<?= $editUrl; ?>><?= $company->getName(); ?></a></td>
+                            <td><?= $company->getNumberOfJobs(); ?></td>
+                            <td><?= $company->getNumberOfActiveJobs(); ?></td>
+                            <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No'); ?></td>
+                            <td><?php $languages = $company->getFeaturedLanguages(); echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
+                            <td><?= $company->getNumberOfExpiredPackages(); ?></td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs"
+                                        onclick="Company.Admin.deleteCompany('<?= $company->getSlugName() ?>')"
+                                        data-toggle="modal"
+                                        data-target="#deleteModal">
+                                    <?= $this->translate('Delete') ?>
+                                </button>
+                            </td>
                         </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><?= $this->translate('Name') ?></th>
+                        <th><?= $this->translate('Jobs') ?></th>
+                        <th><?= $this->translate('Active jobs') ?></th>
+                        <th><?= $this->translate('Banner active') ?></th>
+                        <th><?= $this->translate('Featured in language') ?></th>
+                        <th><?= $this->translate('Expired packages') ?></th>
+                        <th><?= $this->translate('Actions') ?></th>
+                    </tr>
                     </tfoot>
                 </table>
             </div>
@@ -138,29 +169,29 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                                                 aria-hidden="true">&times;</span></button>
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
                     </div>
                     <div class="modal-body">
                         <p><?= sprintf($this->translate('Are you sure you want to delete %s?'),
-                        '<strong id="deleteCompanyName"></strong>') ?> </p>
+                                '<strong id="deleteCompanyName"></strong>') ?> </p>
                         <p class="options">
                         </p>
                     </div>
                     <div class="modal-footer">
                         <form id="deleteForm" method="POST">
                             <input type="submit" name="submit" value="<?= $this->translate('Delete company') ?>"
-                                                               class="btn btn-danger"/>
-                                                               <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                                   class="btn btn-danger"/>
+                            <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-<?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
+        <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <?= $this->translate("Package changes next month") ?>
@@ -172,8 +203,8 @@
                             <?= $package->getCompany()->getName() ?>
                         </div>
                         <div class="panel-body">
-                        <?php
-                        $type = $package->getType();
+                            <?php
+                            $type = $package->getType();
                             switch ($type){
                                 case "banner":
                                     $packageType = $this->translate("Banner Package");
@@ -188,13 +219,13 @@
                             $company = $package->getCompany();
                             $companySlugName = $company->getSlugName();
                             $companyName = $company->getName();
-                        ?>
-                        <?= sprintf(
-                            $this->translate("%s for company %s will start at %s"),
-                            "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
-                            "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
-                            $package->getStartingDate()->format("l d M"))
-                        ?>
+                            ?>
+                            <?= sprintf(
+                                $this->translate("%s for company %s will start at %s"),
+                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                                $package->getStartingDate()->format("l d M"))
+                            ?>
                         </div>
                     </div>
                 <?php endforeach ?>
@@ -204,8 +235,8 @@
                             <?= $package->getCompany()->getName() ?>
                         </div>
                         <div class="panel-body">
-                        <?php
-                        $type = $package->getType();
+                            <?php
+                            $type = $package->getType();
                             switch ($type){
                                 case "banner":
                                     $packageType = $this->translate("Banner Package");
@@ -220,13 +251,13 @@
                             $company = $package->getCompany();
                             $companySlugName = $company->getSlugName();
                             $companyName = $company->getName();
-                        ?>
-                        <?= sprintf(
-                            $this->translate("%s for company %s will expire at %s"),
-                            "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageID' => $package->getId()]) . "'> " . $packageType . "</a>",
-                            "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
-                            $package->getExpirationDate()->format("l d M"))
-                        ?>
+                            ?>
+                            <?= sprintf(
+                                $this->translate("%s for company %s will expire at %s"),
+                                "<a href='" . $this->url('admin_company/editCompany/editPackage', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href=" . $this->url('admin_company/editCompany', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                                $package->getExpirationDate()->format("l d M"))
+                            ?>
                         </div>
                     </div>
                 <?php endforeach ?>

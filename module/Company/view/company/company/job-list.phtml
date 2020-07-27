@@ -114,12 +114,12 @@ $this->headTitle($this->category->getPluralName());
                         <?php if (!is_null($job->getLocation())): ?>
                             <p class="job-location"><?= $job->getLocation() ?></p>
                         <?php endif; ?>
-                        <!--
                         <div>
-                            <span class="label label-default job-label" data-label="CSE" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
-                            <span class="label label-default job-label" data-label="DS" data-toggle="tooltip" title="Data Science">DS</span>
+                            <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                <?php $label = $labelAsg->getLabel(); ?>
+                                <span class="label label-default job-label" data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip" title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                            <?php endforeach; ?>
                         </div>
-                        -->
                         <div class="card-footer">
                             <button class="btn btn-link"><?= $this->translate('View') ?></button>
                             <span class="small">

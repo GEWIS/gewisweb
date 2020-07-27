@@ -127,6 +127,13 @@ class Job
     protected $languageNeutralId;
 
     /**
+     * Job labels
+     *
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"})
+     */
+    protected $labels;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -431,6 +438,16 @@ class Job
     public function getCompany()
     {
         return $this->getPackage()->getCompany();
+    }
+
+    /**
+     * Get the labels. Returns an array of JobLabelAssignments
+     *
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
     }
 
     public function setPackage(CompanyPackage $package)
