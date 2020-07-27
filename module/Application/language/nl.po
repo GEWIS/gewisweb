@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-27 21:20+0200\n"
-"PO-Revision-Date: 2020-07-27 21:34+0200\n"
+"PO-Revision-Date: 2020-07-27 21:36+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -3729,7 +3729,7 @@ msgstr "Categorie"
 #: module/Company/src/Company/Form/LabelFieldset.php:32
 #: module/Company/src/Company/Form/CategoryFieldset.php:32
 msgid "Slug name"
-msgstr "Link naam"
+msgstr "Afkorting naam"
 
 #: module/Company/src/Company/Form/LabelFieldset.php:42
 #: module/Company/src/Company/Form/CategoryFieldset.php:42
