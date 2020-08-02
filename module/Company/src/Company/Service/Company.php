@@ -768,9 +768,9 @@ class Company extends AbstractACLService
             $jobLabelAssignment->setJob($job);
             $labelModel = $mapperLabel->findLabelById($label);
             $jobLabelAssignment->setLabel($labelModel);
+            $mapperAssignment->persist($jobLabelAssignment);
             $job->addLabel($jobLabelAssignment);
             $jobMapper->persist($job);
-            $mapperAssignment->persist($jobLabelAssignment);
         }
     }
 
