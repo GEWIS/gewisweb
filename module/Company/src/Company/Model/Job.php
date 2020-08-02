@@ -129,7 +129,7 @@ class Job
     /**
      * Job labels
      *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"})
      */
     protected $labels;
 
