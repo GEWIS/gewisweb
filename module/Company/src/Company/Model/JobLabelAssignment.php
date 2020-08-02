@@ -23,13 +23,13 @@ class JobLabelAssignment
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Job", inversedBy="labels")
+     * @ORM\ManyToOne(targetEntity="Company\Model\Job", inversedBy="labels")
      * @ORM\JoinColumn(name="job_id",referencedColumnName="id")
      */
     protected $job;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobLabel")
+     * @ORM\ManyToOne(targetEntity="Company\Model\JobLabel")
      * @ORM\JoinColumn(name="label_id",referencedColumnName="id")
      */
     protected $label;
