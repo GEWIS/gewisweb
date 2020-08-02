@@ -447,6 +447,9 @@ class Job
      */
     public function getLabels()
     {
+        if ($this->labels === null) {
+            $this->labels = [];
+        }
         return $this->labels;
     }
 
@@ -458,6 +461,19 @@ class Job
     public function setLabels($labels)
     {
         $this->labels = $labels;
+    }
+
+    /**
+     * Adds a label.
+     *
+     * @param $labels
+     */
+    public function addLabel($label)
+    {
+        if ($this->labels === null) {
+            $this->labels = [];
+        }
+        $this->labels[] = $label;
     }
 
     public function setPackage(CompanyPackage $package)

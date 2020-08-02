@@ -29,7 +29,7 @@ class JobLabelAssignment
     protected $job;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobLabel", inversedBy="assignments")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobLabel")
      * @ORM\JoinColumn(name="label_id",referencedColumnName="id")
      */
     protected $label;

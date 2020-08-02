@@ -752,7 +752,6 @@ class Company extends AbstractACLService
 
         $this->removeLabelsFromJob($job, $toRemove);
         $this->addLabelsToJob($job, $toAdd);
-        $job->setLabels($labels);
     }
 
     /**
@@ -763,12 +762,15 @@ class Company extends AbstractACLService
     {
         $mapperLabel = $this->getLabelMapper();
         $mapperAssignment = $this->getLabelAssignmentMapper();
+        $jobMapper = $this->getJobMapper();
         foreach ($labels as $label) {
             $jobLabelAssignment = new JobLabelAssignment();
             $jobLabelAssignment->setJob($job);
             $labelModel = $mapperLabel->findLabelById($label);
             $jobLabelAssignment->setLabel($labelModel);
             $mapperAssignment->persist($jobLabelAssignment);
+            $job->addLabel($jobLabelAssignment);
+            $jobMapper->persist($job);
         }
     }
 
