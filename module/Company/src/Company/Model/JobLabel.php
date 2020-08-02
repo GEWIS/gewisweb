@@ -49,11 +49,17 @@ class JobLabel
     protected $languageNeutralId;
 
     /**
+     * Jobs with this label
+     *
+     * @ORM\OneToMany(targetEntity="\Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist", "remove"})
+     */
+    protected $assignments;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->assignments = [];
     }
 
     /**
@@ -134,5 +140,13 @@ class JobLabel
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * Get's all assignments
+     */
+    public function getAssignments()
+    {
+        return $this->assignments;
     }
 }
