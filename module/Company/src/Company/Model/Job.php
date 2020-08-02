@@ -454,6 +454,16 @@ class Job
     }
 
     /**
+     * Set the labels. Returns an array of JobLabelAssignments
+     *
+     * @param $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
+    }
+
+    /**
      * Adds a label.
      *
      * @param $labels
