@@ -53,7 +53,7 @@ class JobLabel
      */
     public function __construct()
     {
-        $this->assignments = [];
+        // nothing to do
     }
 
     /**
