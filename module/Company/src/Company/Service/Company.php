@@ -752,7 +752,6 @@ class Company extends AbstractACLService
 
         $this->removeLabelsFromJob($job, $toRemove);
         $this->addLabelsToJob($job, $toAdd);
-        $job->setLabels($labels);
     }
 
     /**
