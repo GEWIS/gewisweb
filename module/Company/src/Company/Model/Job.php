@@ -138,7 +138,7 @@ class Job
      */
     public function __construct()
     {
-        // noting to do
+        $this->labels = [];
     }
 
 
@@ -448,6 +448,16 @@ class Job
     public function getLabels()
     {
         return $this->labels;
+    }
+
+    /**
+     * Set the labels. Returns an array of JobLabelAssignments
+     *
+     * @param $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 
     public function setPackage(CompanyPackage $package)
