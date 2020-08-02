@@ -149,6 +149,14 @@ class Job
     }
 
     /**
+     * Flush.
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
      * Deletes the jobs corresponding to the given language neutral id.
      *
      */

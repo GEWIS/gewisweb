@@ -129,7 +129,7 @@ class Job
     /**
      * Job labels
      *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
      */
     protected $labels;
 
@@ -448,6 +448,30 @@ class Job
     public function getLabels()
     {
         return $this->labels;
+    }
+
+    /**
+     * Sets all labels.
+     *
+     * @param array $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
+    }
+
+    /**
+     * Adds a label.
+     *
+     * @param JobLabelAssignment $label
+     */
+    public function addLabel($label)
+    {
+        if ($this->labels === null) {
+            $this->labels = [];
+        }
+        $label->setJob($this);
+        $this->labels[] = $label;
     }
 
     public function setPackage(CompanyPackage $package)

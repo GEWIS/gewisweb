@@ -761,13 +761,15 @@ class Company extends AbstractACLService
     private function addLabelsToJob($job, $labels)
     {
         $mapperLabel = $this->getLabelMapper();
-        $mapperAssignment = $this->getLabelAssignmentMapper();
+        $mapperLabelAssignment = $this->getLabelAssignmentMapper();
+        $mapperJob = $this->getJobMapper();
         foreach ($labels as $label) {
             $jobLabelAssignment = new JobLabelAssignment();
-            $jobLabelAssignment->setJob($job);
             $labelModel = $mapperLabel->findLabelById($label);
             $jobLabelAssignment->setLabel($labelModel);
-            $mapperAssignment->persist($jobLabelAssignment);
+            $job->addLabel($jobLabelAssignment);
+            $mapperLabelAssignment->persist($jobLabelAssignment);
+            $mapperJob->flush();
         }
     }
 
@@ -993,12 +995,20 @@ class Company extends AbstractACLService
             foreach ($jobs as $job) {
                 $job->setCategory($this->getCategoryMapper()
                     ->createNullCategory($translator->getLocale(), $translator));
+
+                // TODO: This is a hotfix for some ORM issues:
+                $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
             }
             return $jobs;
         }
         $locale = $translator->getLocale();
         $dict["language"] = $locale;
-        return $this->getJobMapper()->findJob($dict);
+        $jobs = $this->getJobMapper()->findJob($dict);
+        foreach ($jobs as $job) {
+            // TODO: This is a hotfix for some ORM issues:
+            $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
+        }
+        return $jobs;
     }
 
     /**
