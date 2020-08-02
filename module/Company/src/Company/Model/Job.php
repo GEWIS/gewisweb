@@ -463,6 +463,7 @@ class Job
         if ($this->labels === null) {
             $this->labels = [];
         }
+        $label->setJob($this);
         $this->labels[] = $label;
     }
 
