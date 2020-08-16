@@ -72,9 +72,9 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Do you want to help test new features of the website?')?>
                     <?php
                     if ($album instanceof \Photo\Model\MemberAlbum) {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/member_beta', ['lidnr' => $currentAlbum->getId()]) . '">', '</a>' );
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>' );
                     } else {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) . '">', '</a>' );
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>' );
                     }
                     ?>
                 </div>
