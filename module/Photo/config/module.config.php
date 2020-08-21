@@ -18,7 +18,7 @@ return [
                     'member' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/member/:lidnr[/:page]',
+                            'route' => '/old/member/:lidnr[/:page]',
                             'constraints' => [
                                 'lidnr' => '[0-9]+',
                                 'page' => '[0-9]+',
@@ -45,31 +45,31 @@ return [
                             ],
                         ],
                     ],
-                    'album' => [
+                    'album_old' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/album[/:album_id][/:page]',
+                            'route' => '/old/album[/:album_id][/:page]',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
                                 'page' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'controller' => 'Album',
-                                'action' => 'index',
+                                'action' => 'indexOld',
                             ],
                         ],
                     ],
-                    'album_beta' => [
+                    'album' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/beta/:album_type/:album_id',
+                            'route' => '/:album_type/:album_id',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
                                 'album_type' => '(album|member)',
                             ],
                             'defaults' => [
                                 'controller' => 'Album',
-                                'action' => 'indexNew',
+                                'action' => 'index',
                             ],
                         ],
                     ],

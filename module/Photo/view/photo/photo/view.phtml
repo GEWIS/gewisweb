@@ -66,7 +66,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 while (!is_null($currentAlbum->getParent())) {
                     // prepend parent to array
                     array_unshift($crumbs, [
-                        'url' => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
+                        'url' => $this->url('photo/album_old', ['album_id' => $currentAlbum->getParent()->getId()]),
                         'name' => $currentAlbum->getParent()->getName()
                     ]);
                     $currentAlbum = $currentAlbum->getParent();
@@ -80,7 +80,7 @@ $this->scriptUrl()->requireUrl('member/search');
                     </li>
                 <?php endforeach; ?>
                 <li>
-                    <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                    <a href="<?= $this->url('photo/album_old', ['album_id' => $photo->getAlbum()->getId()]); ?>">
                         <?= $photo->getAlbum()->getName(); ?>
                     </a>
                 </li>
@@ -102,13 +102,13 @@ $this->scriptUrl()->requireUrl('member/search');
                         </a>
                     </li>
                     <li class="previous">
-                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                        <a href="<?= $this->url('photo/album_old', ['album_id' => $photo->getAlbum()->getId()]); ?>">
                             <?= sprintf($this->translate('View album %s'), $photo->getAlbum()->getName()) ?>
                         </a>
                     </li>
                     <?php else: ?>
                     <li class="previous">
-                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                        <a href="<?= $this->url('photo/album_old', ['album_id' => $photo->getAlbum()->getId()]); ?>">
                             <span aria-hidden="true">&larr;</span>
                             <?= $this->translate('Return to album') ?>
                         </a>

@@ -42,7 +42,7 @@ $this->headTitle($this->translate('Photos')); ?>
                         <?php if ($albums[$i]->getPhotoCount() > 0): ?>
                             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                 <a class="thumbnail"
-                                    href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
+                                    href="<?= $this->url('photo/album', ['album_id' => $albums[$i]->getId(), 'album_type' => 'album']); ?>">
                                     <img class="img-responsive"
                                         src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>"
                                         alt="">

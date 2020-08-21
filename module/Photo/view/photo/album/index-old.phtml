@@ -1,0 +1,142 @@
+<?php
+// set title
+$this->headTitle($album->getName());
+$currentAlbum = $album;
+while(!is_null($currentAlbum->getParent())) {
+    $this->headTitle($currentAlbum->getParent()->getName());
+    $currentAlbum = $currentAlbum->getParent();
+}
+$this->headTitle($this->translate('Photos'));
+?>
+<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+    ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
+    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+?>
+<section class="section section-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= $this->url('photo') ?>">
+                    <?= $this->translate('Photos') ?>
+                </a>
+            </li>
+            <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
+                <li>
+                    <?php
+                    // determine association year
+                    $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                    ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                        <?= $associationYear->getYearString() ?>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php
+            // first we need to get all parents
+            $crumbs = [];
+            if (!is_null($album->getParent())) {
+                $currentAlbum = $album;
+                while(!is_null($currentAlbum->getParent())) {
+                    // prepend parent to array
+                    array_unshift($crumbs, [
+                        'url'  => $this->url('photo/album_old', ['album_id' => $currentAlbum->getParent()->getId()]),
+                        'name' => $currentAlbum->getParent()->getName()
+                    ]);
+                    $currentAlbum = $currentAlbum->getParent();
+                }
+            }
+            // then we print them
+            foreach($crumbs as $crumb): ?>
+                <li>
+                    <a href="<?= $crumb['url'] ?>">
+                        <?= $this->escapeHtml($crumb['name']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+            <li class="active">
+                <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                    <span class="fas fa-user"></span>
+                    &nbsp;
+                <?php endif; ?>
+                <?= $this->escapeHtml($album->getName()); ?>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <?php
+        $path = '';
+        if ($album instanceof \Photo\Model\MemberAlbum) {
+            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
+        } else {
+            $path = $this->url('photo/album_old', ['album_id' => $album->getId()]);
+        }
+        $this->paginationControl(
+            $this->paginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $path
+            ]
+        )
+        ?>
+        <div class="photo-grid">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($paginator as $item): ?>
+                <?php if ($item instanceof \Photo\Model\Album): ?>
+                    <div class="photo-grid-item photo-grid-item-album">
+                        <a class="thumbnail" href="<?= $this->url('photo/album_old', ['album_id' => $item->getId()]); ?>">
+                            <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
+                            <div class="caption">
+                                <?= $this->escapeHtml($item->getName()); ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                        <a href="<?php
+                        if ($album instanceof \Photo\Model\MemberAlbum) {
+                            echo $this->url('photo/member/photo', [
+                                'lidnr' => $album->getMember()->getLidnr(),
+                                'page' => isset($paginator->current) ? $paginator->current : 0,
+                                'photo_id' => $item->getId()]);
+                        } else {
+                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
+                        }
+                        ?>">
+                            <?php
+                            $image = is_null($item->getWeeklyPhoto()) ?
+                                $item->getSmallThumbPath()
+                                : $item->getLargeThumbPath();
+                            $size = getimagesize('public/data/' . $image);
+                            ?>
+                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
+                        </a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="pull-right">
+            <?= $this->paginationControl(
+                $this->paginator,
+                // the scrolling style
+                'elastic',
+                'paginator/default',
+                [
+                    'path' => $path
+                ]
+            )
+            ?>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        Photo.initGrid();
+    });
+</script>

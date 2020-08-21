@@ -12,7 +12,7 @@ class AlbumController extends AbstractActionController
      *
      * @return array|ViewModel
      */
-    public function indexAction()
+    public function indexOldAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int)$this->params()->fromRoute('page');
@@ -31,7 +31,7 @@ class AlbumController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function indexNewAction()
+    public function indexAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');
@@ -68,7 +68,7 @@ class AlbumController extends AbstractActionController
         }
         
         $vm = new ViewModel($albumPage);
-        $vm->setTemplate('photo/album/index');
+        $vm->setTemplate('photo/album/index-old');
         
         return $vm;
     }
