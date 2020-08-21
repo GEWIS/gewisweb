@@ -30,15 +30,15 @@ $this->scriptUrl()->requireUrl('member/search')
                 </a>
             </li>
             <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
-            <li>
-                <?php
-                // determine association year
-                $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
-                ?>
-                <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
-                    <?= $associationYear->getYearString() ?>
-                </a>
-            </li>
+                <li>
+                    <?php
+                    // determine association year
+                    $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                    ?>
+                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                        <?= $associationYear->getYearString() ?>
+                    </a>
+                </li>
             <?php endif; ?>
             <?php
             // first we need to get all parents
@@ -91,14 +91,6 @@ $this->scriptUrl()->requireUrl('member/search')
                 </h1>
             </div>
         </div>
-        <?php
-        $path = '';
-        if ($album instanceof \Photo\Model\MemberAlbum) {
-            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
-        } else {
-            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
-        }
-        ?>
         <?php if ($album->getAlbumCount() > 0): ?>
             <div class="row">
                 <?php foreach ($album->getChildren() as $item): ?>

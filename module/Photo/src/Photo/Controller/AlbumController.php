@@ -26,26 +26,27 @@ class AlbumController extends AbstractActionController
     }
 
     /**
-     * Shows a page from the album, or a 404 if this page does not exist
+     * Shows a page with all photos in an album, the album is either an actual
+     * album or a member's album.
      *
-     * @return array|ViewModel
+     * @return ViewModel
      */
     public function indexNewAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
-        $albumService = $this->getServiceLocator()
-            ->get('photo_service_album');
+        $albumType = $this->params()->fromRoute('album_type');
+        $albumService = $this->getServiceLocator()->get('photo_service_album');
 
-        $album = $albumService->getAlbum($albumId, 'album');
-        if ($album === null) {
+        $album = $albumService->getAlbum($albumId, $albumType);
+        if (is_null($album)) {
             return $this->notFoundAction();
         }
 
         return new ViewModel([
             'cache' => $this->getServiceLocator()->get('album_page_cache'),
-            'album'     => $album,
-            'basedir'   => '/',
-            'config' => $this->getServiceLocator()->get('config')['photo']
+            'album' => $album,
+            'basedir' => '/',
+            'config' => $this->getServiceLocator()->get('config')['photo'],
         ]);
     }
 
@@ -71,5 +72,4 @@ class AlbumController extends AbstractActionController
         
         return $vm;
     }
-    
 }

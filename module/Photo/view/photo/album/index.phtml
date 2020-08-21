@@ -70,7 +70,13 @@ $this->headTitle($this->translate('Photos'));
             <div class="col-lg-12">
                 <div class="alert alert-danger" role="alert">
                     <?= $this->translate('Do you want to help test new features of the website?')?>
-                    <?= sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId()]) . '">', '</a>' ) ?>
+                    <?php
+                    if ($album instanceof \Photo\Model\MemberAlbum) {
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>' );
+                    } else {
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>' );
+                    }
+                    ?>
                 </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
