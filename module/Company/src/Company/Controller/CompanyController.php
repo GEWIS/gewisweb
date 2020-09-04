@@ -36,11 +36,14 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         $company = $companyService->getCompanyBySlugName($companyName);
+
         if (!is_null($company)) {
-            return new ViewModel([
-                'company' => $company,
-                'translator' => $companyService->getTranslator(),
-            ]);
+            if (!$company->isHidden()) {
+                return new ViewModel([
+                    'company' => $company,
+                    'translator' => $companyService->getTranslator(),
+                ]);
+            }
         }
 
         return $this->notFoundAction();
@@ -136,11 +139,13 @@ class CompanyController extends AbstractActionController
                 'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
             ]);
             if (count($jobs) > 0) {
-                return new ViewModel([
-                    'job' => $jobs[0],
-                    'translator' => $companyService->getTranslator(),
-                    'category' => $category,
-                ]);
+                if ($jobs[0]->isActive()) {
+                    return new ViewModel([
+                        'job' => $jobs[0],
+                        'translator' => $companyService->getTranslator(),
+                        'category' => $category,
+                    ]);
+                }
             }
             return $this->notFoundAction();
         }
