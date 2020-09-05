@@ -276,7 +276,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         }
 
         // Except when it is explicitly marked as hidden.
-        return $visible && !$this->getHidden();
+        return !$visible || $this->getHidden();
     }
     /**
      * Get the company's hidden status.
