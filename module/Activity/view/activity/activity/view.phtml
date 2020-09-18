@@ -166,6 +166,18 @@ $this->headTitle($this->translate('Activities')); ?>
         </div>
     </div>
 
+    <?php
+        $organString = "the organizing party";
+        $organ = $activity->getOrgan();
+
+        if (!is_null($organ)) {
+            $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
+        }
+    ?>
+    <p>
+        <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+    </p>
+
     <?php if ($activity->getCanSignUp()): ?>
         <h2>
             <?= $this->translate('Current subscriptions') ?>
