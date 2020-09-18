@@ -167,12 +167,21 @@ $this->headTitle($this->translate('Activities')); ?>
     </div>
 
     <?php
-        $organ = $activity->getOrgan();
-        $organEmail = $organ->getOrganInformation->getEmail();
-
         $organString = "the organizing party";
-        if (!is_null($organEmail)) {
-            $organString = $organ->getName() . " (<a href='mailto:" . $organEmail . "'>" . $organEmail . "</a>)";
+
+        $organ = $activity->getOrgan();
+
+        if (!is_null($organ)) {
+            $organInformation = $organ->getApprovedOrganInformation();
+            if (!is_null($organInformation)) {
+                $organEmail = $organInformation->getEmail();
+
+                if (!is_null($organEmail) && $organEmail != "") {
+                    $organString = $organ->getName() . " (<a href='mailto:" . $organEmail . "'>" . $organEmail . "</a>)";
+                } else {
+                    $organString = $organ->getName();
+                }
+            }
         }
     ?>
     <p><?php sprintf($this->translate("Please contact the %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?></p>
