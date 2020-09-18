@@ -168,23 +168,24 @@ $this->headTitle($this->translate('Activities')); ?>
 
     <?php
         $organString = "the organizing party";
-
         $organ = $activity->getOrgan();
 
         if (!is_null($organ)) {
             $organInformation = $organ->getApprovedOrganInformation();
             if (!is_null($organInformation)) {
-                $organEmail = $organInformation->getEmail();
+                $organEmail = $this->escapeHtml($organInformation->getEmail());
 
                 if (!is_null($organEmail) && $organEmail != "") {
-                    $organString = $organ->getName() . " (<a href='mailto:" . $organEmail . "'>" . $organEmail . "</a>)";
+                    $organString = $this->escapeHtml($organ->getName()) . " (<a href='mailto:" . $organEmail . "'>" . $organEmail . "</a>)";
                 } else {
-                    $organString = $organ->getName();
+                    $organString = $this->escapeHtml($organ->getName());
                 }
             }
         }
     ?>
-    <p><?php sprintf($this->translate("Please contact the %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?></p>
+    <p>
+        <?= sprintf($this->translate("Please contact the %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+    </p>
 
     <?php if ($activity->getCanSignUp()): ?>
         <h2>
