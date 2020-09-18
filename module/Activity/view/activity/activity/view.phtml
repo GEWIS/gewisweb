@@ -184,7 +184,7 @@ $this->headTitle($this->translate('Activities')); ?>
         }
     ?>
     <p>
-        <?= sprintf($this->translate("Please contact the %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+        <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
     </p>
 
     <?php if ($activity->getCanSignUp()): ?>
