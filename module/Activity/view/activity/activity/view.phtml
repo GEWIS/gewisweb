@@ -171,16 +171,7 @@ $this->headTitle($this->translate('Activities')); ?>
         $organ = $activity->getOrgan();
 
         if (!is_null($organ)) {
-            $organInformation = $organ->getApprovedOrganInformation();
-            if (!is_null($organInformation)) {
-                $organEmail = $this->escapeHtml($organInformation->getEmail());
-
-                if (!is_null($organEmail) && $organEmail != "") {
-                    $organString = $this->escapeHtml($organ->getName()) . " (<a href='mailto:" . $organEmail . "'>" . $organEmail . "</a>)";
-                } else {
-                    $organString = $this->escapeHtml($organ->getName());
-                }
-            }
+            $organString = $this->escapeHtml($organ->getName());
         }
     ?>
     <p>
