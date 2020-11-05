@@ -17,6 +17,13 @@ class ApiController extends AbstractActionController
     public function listAction()
     {
         $activityService = $this->getActivityService();
+        if (!$activityService->isAllowed('list', 'activityApi')) {
+            $translator = $activityService->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to access the activities through the API')
+            );
+        }
+
         $activities = $activityService->getUpcomingActivities();
         $activitiesArray = [];
         foreach ($activities as $activity) {
@@ -94,7 +101,7 @@ class ApiController extends AbstractActionController
     /**
      * Get the activity service
      *
-     * @return \Activity\Service\Activity
+     * @return \Activity\Service\ActivityQuery
      */
     private function getActivityService()
     {
