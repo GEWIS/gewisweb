@@ -348,6 +348,14 @@ class AdminController extends AbstractActionController
         $admin = false;
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
+        
+        if (!$acl->isAllowed($identity, 'activity', 'viewAdmin')) {
+            $translator = $this->getServiceLocator()->get('translator');
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to administer activities')
+            );
+        }
+        
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $disapprovedActivities = null;
         $unapprovedActivities = null;

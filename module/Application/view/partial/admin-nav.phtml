@@ -6,7 +6,7 @@
             </div>
         </div>
         <ul class="nav nav-pills head-menu">
-            <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+            <?php if ($this->acl('activity_acl')->isAllowed('activity', 'viewAdmin')): ?>
                 <li>
                     <a href="<?= $this->url('activity_admin') ?>">
                         <?= $this->translate('Activities') ?>
@@ -40,11 +40,13 @@
                 </li>
             <?php endif; ?>
 
+            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'viewAdmin')): ?>
             <li>
                 <a href="<?= $this->url('admin_organ') ?>">
                     <?= $this->translate('Organs') ?>
                 </a>
             </li>
+            <?php endif; ?>
 
             <?php if ($this->acl('education_acl')->isAllowed('exam', 'upload')): ?>
                 <li class="dropdown">

@@ -15,8 +15,7 @@ use Activity\Mapper\SignupFieldValue;
 use Activity\Mapper\SignupList as SignupListMapper;
 use Activity\Mapper\SignupOption;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use User\Permissions\Assertion\IsCreator;
-use User\Permissions\Assertion\IsOrganMember;
+use User\Permissions\Assertion\IsCreatorOrOrganMember;
 
 class Module
 {
@@ -189,13 +188,6 @@ class Module
                     $acl->allow('guest', 'activity', 'view');
                     $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
-                    $acl->allow('user', 'activity', 'create');
-                    $acl->allow(
-                        'user',
-                        'activity',
-                        ['update', 'viewDetails', 'viewParticipants', 'exportParticipants'],
-                        new IsCreator()
-                    );
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
                     $acl->allow('user', 'myActivities', 'view');
                     $acl->allow(
@@ -203,24 +195,19 @@ class Module
                         'signupList',
                         ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
                     );
-                    $acl->allow(
-                        'user',
-                        'signupList',
-                        ['adminSignup', 'viewParticipants', 'exportParticipants'],
-                        new IsCreator()
-                    );
 
+                    $acl->allow('active_member', 'activity', ['create', 'viewAdmin']);
                     $acl->allow(
                         'active_member',
                         'activity',
                         ['update', 'viewDetails', 'adminSignup', 'viewParticipants', 'exportParticipants'],
-                        new IsOrganMember()
+                        new IsCreatorOrOrganMember()
                     );
                     $acl->allow(
                         'active_member',
                         'signupList',
                         ['adminSignup', 'viewParticipants', 'exportParticipants'],
-                        new IsOrganMember()
+                        new IsCreatorOrOrganMember()
                     );
 
                     $acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
