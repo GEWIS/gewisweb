@@ -453,7 +453,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function approve(ActivityModel $activity)
     {
-        if (!$this->isAllowed('approve', 'model')) {
+        if (!$this->isAllowed('approve', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
@@ -472,7 +472,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function reset(ActivityModel $activity)
     {
-        if (!$this->isAllowed('reset', 'model')) {
+        if (!$this->isAllowed('reset', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
@@ -492,7 +492,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function disapprove(ActivityModel $activity)
     {
-        if (!$this->isAllowed('disapprove', 'model')) {
+        if (!$this->isAllowed('disapprove', 'activity')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')

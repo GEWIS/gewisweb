@@ -45,7 +45,7 @@
             <?php endif ?>
             <td>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
-                <?php if($admin): ?>
+                <?php if ($admin): ?>
                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('Details') ?></a>
                 <?php endif; ?>
                 <?php if ($activity->getSignupLists()->count() !== 0): ?>
