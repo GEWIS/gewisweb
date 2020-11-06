@@ -237,6 +237,23 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         $this->signUps = $signUps;
     }
 
+    public function toArray()
+    {
+        $fields = [];
+        foreach ($this->getFields() as $field) {
+            $fields[] = $field->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'openDate' => $this->getOpenDate(),
+            'closeDate' => $this->getCloseDate(),
+            'fields' => $fields,
+        ];
+    }
+
     /**
      * Returns the string identifier of the Resource
      *
