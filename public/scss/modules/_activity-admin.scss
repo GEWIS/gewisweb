@@ -1,0 +1,17 @@
+.admin-activity-overview {
+    .overview-header,
+    .overview-sidebar, {
+        @media (max-width: $screen-sm-max) {
+            display: none !important;
+        }
+    }
+
+    .activity-property {
+        @media (max-width: $screen-md-max) {
+            display: inline-block;
+        }
+
+        @media (min-width: $screen-md-min) {
+            display: none;
+        }
+}

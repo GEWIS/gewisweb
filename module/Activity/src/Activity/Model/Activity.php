@@ -401,7 +401,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'beginTime' => $this->getBeginTime(),
             'endTime' => $this->getEndTime(),
             'location' => $this->getLocation()->getValueNL(),
-            'LocationEn' => $this->getLocation()->getValueEN(),
+            'locationEn' => $this->getLocation()->getValueEN(),
             'costs' => $this->getCosts()->getValueNL(),
             'costsEn' => $this->getCosts()->getValueEN(),
             'description' => $this->getDescription()->getValueNL(),
