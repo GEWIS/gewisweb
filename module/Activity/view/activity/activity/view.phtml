@@ -234,7 +234,7 @@ $this->headTitle($this->translate('Activities')); ?>
                             <?php endif; ?>
                             <?php if (!$isArchived || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
                                 <?php foreach ($signupList->getSignUps() as $signup): ?>
-                                    <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_acl')->isAllowed('signupList', 'viewviewDetails')): ?>
+                                    <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
                                         <tr>
                                             <td><?= $this->acl('activity_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
                                             <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
