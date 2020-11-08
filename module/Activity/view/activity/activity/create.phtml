@@ -8,6 +8,8 @@ $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js')
     ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
 
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
 ?>
@@ -85,6 +87,38 @@ $form->setAttribute('class', 'form-activity');
             </div>
         </div>
         <?= $this->partial('partial/create', [ 'form' => $form ]) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Activity Categories') ?></h2>
+                <p><?= $this->translate('Add activity categories to your activity to give potential subscribers a better understanding of the activity.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $categories = $form->get('categories');
+                $categoriesName = $categories->getName();
+                $categoryOptions = $categories->getValueOptions();
+                $categorySelectedValues = $categories->getValue();
+                ?>
+                <fieldset>
+                    <?php foreach ($categoryOptions as $option => $value): ?>
+                        <?php
+                        $checked = ($categorySelectedValues && in_array($option, $categorySelectedValues)) ?
+                            'checked="checked"' : '';
+                        ?>
+                        <div class="chip chip-clickable chip-outlined">
+                            <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
+                            <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
+                                    class="chip-label">
+                                <?= $value->getText($lang) ?>
+                            </label>
+                            <input type="checkbox" name="<?= $categoriesName ?>[]"
+                                id="<?= $categoriesName ?>-<?= $option; ?>"
+                                value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
+                        </div>
+                    <?php endforeach; ?>
+                </fieldset>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <h2><?= $this->translate('Signup Lists') ?></h2>
@@ -169,4 +203,8 @@ $form->setAttribute('class', 'form-activity');
     });
     Activity.updateForm();
     Activity.updateAllFields();
+    Activity.updateAllCategories();
+    $('label[for^="categories-"]').on('click', function() {
+        Activity.toggleCategory($(this).data('category-id'));
+    });
 </script>

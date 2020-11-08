@@ -4,7 +4,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 $this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Approval'));
 ?>
-<div class="row admin-activity-overview">
+<div class="row admin-activity admin-activity-overview">
     <div class="col-md-12">
         <h2><?= $this->translate('Information') ?></h2>
         <p>
@@ -120,9 +120,23 @@ $this->headTitle($this->translate('Approval'));
         </div>
         <hr>
     </div>
+<?php if ($activity->getCategories()->count() > 0): ?>
+    <div class="col-md-12">
+        <h2><?= $this->translate('Activity Categories') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <?php foreach ($activity->getCategories() as $category): ?>
+            <div class="chip">
+                <span class="chip-label">
+                    <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                </span>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <?php if ($activity->getSignupLists()->count() > 0): ?>
     <div class="col-md-12">
-        <h2><?= $this->translate('Signup lists') ?></h2>
+        <h2><?= $this->translate('Signup Lists') ?></h2>
     </div>
     <div class="col-md-10 col-md-offset-2 overview-header">
         <div class="row">

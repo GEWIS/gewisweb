@@ -366,6 +366,56 @@ return [
                     ]
                 ],
             ],
+            'activity_admin_categories' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/admin/activity/categories',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Activity\Controller',
+                        'controller' => 'adminCategory',
+                        'action' => 'index'
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'add' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'controller' => 'adminCategory',
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/delete/:id',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'adminCategory',
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/edit/:id',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                'controller' => 'adminCategory',
+                                'action' => 'edit',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'activity_api' => [
                 'type' => 'Literal',
                 'options' => [
@@ -441,6 +491,7 @@ return [
         'invokables' => [
             'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
             'Activity\Controller\AdminApproval' => 'Activity\Controller\AdminApprovalController',
+            'Activity\Controller\AdminCategory' => 'Activity\Controller\AdminCategoryController',
             'Activity\Controller\Api' => 'Activity\Controller\ApiController',
             'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
             'Activity\Controller\ActivityCalendar' => 'Activity\Controller\ActivityCalendarController',

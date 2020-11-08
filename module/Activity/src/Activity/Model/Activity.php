@@ -106,6 +106,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $description;
 
     /**
+     * All additional Categories belonging to this activity.
+     *
+     * @ORM\ManyToMany(targetEntity="Activity\Model\ActivityCategory", inversedBy="activities", cascade={"persist"})
+     * @ORM\JoinTable(name="ActivityCategoryAssignment")
+     */
+    protected $categories;
+
+    /**
      * All additional SignupLists belonging to this activity.
      *
      * @ORM\OneToMany(targetEntity="Activity\Model\SignupList", mappedBy="activity", orphanRemoval=true)
@@ -136,6 +144,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     public function __construct()
     {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->signupLists = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -331,6 +340,32 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getCategories()
+    {
+       return $this->categories;
+    }
+
+    /**
+     * @param \Activity\Model\ActivityCategory $category
+     */
+    public function addCategory($category)
+    {
+        $this->categories->add($category);
+        $category->addActivity($this);
+    }
+
+    /**
+     * @param \Activity\Model\ActivityCategory $category
+     */
+    public function removeCategory($category)
+    {
+        $this->categories->removeElement($category);
+        $category->removeActivity($this);
+    }
+
+    /**
      * Returns an ArrayCollection of SignupLists associated with this activity.
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
@@ -408,6 +443,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'descriptionEn' => $this->getDescription()->getValueEN(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'categories' => $this->getCategories()->toArray(),
             'signupLists' => $signupLists,
         ];
     }

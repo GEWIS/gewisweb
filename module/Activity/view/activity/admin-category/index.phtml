@@ -1,0 +1,70 @@
+<?php
+$this->headTitle($this->translate('Activity Categories'));
+$this->scriptUrl()->requireUrls(['activity_admin_categories/delete'], ['id']);
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
+<div class="row admin-activity">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Activity Categories') ?></h2>
+        <p><?= $this->translate('Here you can add, edit, or remove activity categories. Click on \'Add Category\' to add a new category or click on a category to edit/remove it.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <?php if (empty($categories)): ?>
+            <p><i><?= $this->translate('There are currently no activity categories...') ?></i></p>
+        <?php else: ?>
+            <?php // When there are too many categories a search function should be added that searches client-side ?>
+            <?php foreach ($categories as $category): ?>
+                <a class="chip chip-clickable chip-deletable" href="<?= $this->url('activity_admin_categories/edit', ['id' => $category->getId()]) ?>">
+                    <span class="chip-label"><?= $category->getName()->getText($lang) ?></span>
+                    <span class="chip-icon chip-delete-icon fas fa-times-circle"
+                            onclick="deleteActivityCategory(<?= $category->getId() ?>)"
+                            data-toggle="modal"
+                            data-target="#deleteModal"></span>
+                </a>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <a class="btn btn-default" href="<?= $this->url('activity_admin_categories/add') ?>" role="button">
+            <?= $this->translate('Add Category') ?>
+        </a>
+    </div>
+</div>
+<!-- Delete activity category modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p><?= $this->translate('Are you sure you want to delete this activity category?') ?> </p>
+                <p class="options">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST">
+                    <input type="submit" name="submit" value="<?= $this->translate('Delete Activity Category') ?>"
+                           class="btn btn-danger"/>
+                    <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Prevent the anchor tag from redirecting when trying to delete.
+    $(document).on('click', ".chip-delete-icon", function(e) { 
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    
+    // Set correct URL for the activity category deletion form.
+    deleteActivityCategory = function(id) {
+        $("#deleteForm").attr('action', URLHelper.url('activity_admin_categories/delete', {'id': id}));
+    };
+</script>

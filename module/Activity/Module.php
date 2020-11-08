@@ -2,12 +2,14 @@
 
 namespace Activity;
 
+use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Form\SignupList as SignupListForm;
 use Activity\Form\SignupListFields;
 use Activity\Mapper\Activity;
 use Activity\Mapper\ActivityCalendarOption;
 use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Mapper\ActivityOptionProposal;
+use Activity\Mapper\ActivityCategory;
 use Activity\Mapper\MaxActivities;
 use Activity\Mapper\Proposal;
 use Activity\Mapper\Signup;
@@ -65,7 +67,7 @@ class Module
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
-                'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
+                'activity_service_category' => 'Activity\Service\ActivityCategory',
                 'activity_service_signupListQuery' => 'Activity\Service\SignupListQuery',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
@@ -88,8 +90,10 @@ class Module
                 'activity_form_activity' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
+                    $categoryService = $sm->get('activity_service_category');
+                    $categories = $categoryService->getAllCategories();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $translator);
+                    $form = new \Activity\Form\Activity($organs, $categories, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -102,6 +106,12 @@ class Module
                     $translator = $sm->get('translator');
                     $calendarService = $sm->get('activity_service_calendar');
                     $form = new Form\ActivityCalendarOption($translator, $calendarService);
+                    return $form;
+                },
+                'activity_form_category' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $form = new CategoryForm($translator);
+
                     return $form;
                 },
                 'activity_hydrator' => function ($sm) {
@@ -129,6 +139,11 @@ class Module
                 },
                 'activity_mapper_activity' => function ($sm) {
                     return new Activity(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_category' => function ($sm) {
+                    return new ActivityCategory(
                         $sm->get('activity_doctrine_em')
                     );
                 },

@@ -303,6 +303,18 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
+        if (isset($data['categories'])) {
+            $categoryService = $this->getServiceManager()->get('activity_service_category');
+
+            foreach ($data['categories'] as $category) {
+                $category = $categoryService->getCategoryById($category);
+
+                if (!is_null($category)) {
+                    $activity->addCategory($category);
+                }
+            }
+        }
+
         if (isset($data['signuplists'])) {
             foreach ($data['signuplists'] as $signupList) {
                 $signupList = $this->createSignupList($signupList, $activity);
@@ -504,7 +516,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
     }
-
 
     /**
      * Get the activity mapper.

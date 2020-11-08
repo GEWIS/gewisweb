@@ -19,6 +19,15 @@
                                 </a>
                             </h4>
                         </div>
+                        <div class="col-md-12">
+                            <?php foreach ($activity->getCategories() as $category): ?>
+                                <div class="chip chip-small chip-outlined">
+                                    <span class="chip-label">
+                                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                                    </span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                         <div class="col-md-8 reveal reveal-10">
                             <p><?= strip_tags($this->markdown($activity->getDescription()->getText($lang))) ?></p>
                             <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>

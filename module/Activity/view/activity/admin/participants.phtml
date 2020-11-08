@@ -4,7 +4,7 @@
 $this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Participants')); ?>
 
-<div class="row">
+<div class="row admin-activity">
     <?php if (isset($success)): // Display the signup/signoff message. ?>
         <div class="col-md-12">
             <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">

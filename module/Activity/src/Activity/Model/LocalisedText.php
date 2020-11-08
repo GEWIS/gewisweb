@@ -55,6 +55,22 @@ class LocalisedText
         return $this->valueNL;
     }
 
+    public function updateValues($valueEN, $valueNL)
+    {
+        $this->updateValueEN($valueEN);
+        $this->updateValueNL($valueNL);
+    }
+
+    public function updateValueEN($valueEN)
+    {
+        $this->valueEN = $valueEN;
+    }
+
+    public function updateValueNL($valueNL)
+    {
+        $this->valueNL = $valueNL;
+    }
+
     /**
      * @param string|null $locale
      * @return string The localised text.

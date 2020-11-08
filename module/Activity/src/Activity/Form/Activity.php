@@ -20,7 +20,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, Translator $translator)
+    public function __construct(array $organs, array $categories, Translator $translator)
     {
         parent::__construct('activity');
         $this->translator = $translator;
@@ -31,9 +31,13 @@ class Activity extends Form implements InputFilterProviderInterface
 
         // all the organs that the user belongs to in organId => name pairs
         $organOptions = [0 => $translator->translate('No organ')];
-
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
+        }
+
+        $categoryOptions = [];
+        foreach ($categories as $category) {
+            $categoryOptions[$category->getId()] = $category->getName();
         }
 
         $this->add([
@@ -148,6 +152,14 @@ class Activity extends Form implements InputFilterProviderInterface
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'categories',
+            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'options' => [
+                'value_options' => $categoryOptions
             ],
         ]);
 

@@ -1,0 +1,107 @@
+<?php
+$this->headTitle($action);
+
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/activity-create.js');
+
+$form->prepare();
+$form->setAttribute('class', 'form-activity');
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $action ?></h2>
+    </div>
+    <?= $this->form()->openTag($form) ?>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $checkboxDutch = $form->get('language_dutch')
+                    ->setAttribute('onchange', 'Activity.updateForm()')
+                    ->setAttribute('id', 'dutch-check')
+                    ->setAttribute('class', 'language-control');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
+                    <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
+                        <?= $this->formCheckbox($checkboxDutch) ?>
+                        <span class="flag-icon flag-icon-nl"></span>
+                        <?= $this->translate('Dutch') ?>
+                    </label>
+                    <?= $this->formElementErrors($checkboxDutch) ?>
+                </div>
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $name = $form->get('name')
+                    ->setAttribute('disabled', 'disabled')
+                    ->setAttribute('class', 'form-control form-control-dutch')
+                    ->setAttribute('id', 'name-nl');
+                $nameValue = $name->getValue();
+                $name->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? $nameValue : $nameValue->getValueNL()));
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+                    <label for="<?= $name->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Name') ?>
+                    </label>
+                    <?= $this->formInput($name) ?>
+                    <?= $this->formElementErrors($name) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $checkboxEnglish = $form->get('language_english')
+                    ->setAttribute('onchange', 'Activity.updateForm()')
+                    ->setAttribute('id', 'english-check')
+                    ->setAttribute('class', 'language-control');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
+                    <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
+                        <?= $this->formCheckbox($checkboxEnglish) ?>
+                        <span class="flag-icon flag-icon-en"></span>
+                        <?= $this->translate('English') ?>
+                    </label>
+                    <?= $this->formElementErrors($checkboxEnglish) ?>
+                </div>
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $nameEn = $form->get('nameEn')
+                    ->setAttribute('disabled', 'disabled')
+                    ->setAttribute('class', 'form-control form-control-english')
+                    ->setAttribute('id', 'name-en');
+                $nameValue = $nameEn->getValue();
+                $nameEn->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? $nameValue : $nameValue->getValueEN()));
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
+                    <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
+                        <?= $this->translate('Name') ?>
+                    </label>
+                    <?= $this->formInput($nameEn) ?>
+                    <?= $this->formElementErrors($nameEn) ?>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setLabel($action)
+            ->setAttribute('class', 'btn btn-primary');
+        ?>
+        <div class="form-group">
+            <?= $this->formButton($submit) ?>
+        </div>
+    </div>
+    <?= $this->form()->closeTag($form) ?>
+</div>
+
+<script>
+Activity.updateForm();
+</script>

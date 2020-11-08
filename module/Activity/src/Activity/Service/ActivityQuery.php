@@ -267,15 +267,6 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
-    /**
-     * Get the activity mapper.
-     *
-     * @return \Activity\Mapper\Activity
-     */
-    public function getActivityMapper()
-    {
-        return $this->sm->get('activity_mapper_activity');
-    }
 
     /**
      * Get all the years activities have taken place in the past
@@ -317,7 +308,17 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
-    
+
+    /**
+     * Get the activity mapper.
+     *
+     * @return \Activity\Mapper\Activity
+     */
+    public function getActivityMapper()
+    {
+        return $this->sm->get('activity_mapper_activity');
+    }
+
      /**
      * Gets the user service.
      *

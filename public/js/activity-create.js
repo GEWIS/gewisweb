@@ -64,6 +64,21 @@ Activity = {
     },
 
     /**
+     * Toggles the styling of a selected activity category `category`.
+     */
+    toggleCategory: function (category) {
+        var categoryLabel = $('label[for="categories-' + category + '"]');
+
+        if ($('#categories-' + category).is(':checked')) {
+            categoryLabel.prev().addClass('hidden');
+            categoryLabel.parent().addClass('chip-outlined');
+        } else {
+            categoryLabel.prev().removeClass('hidden');
+            categoryLabel.parent().removeClass('chip-outlined');
+        }
+    },
+
+    /**
      * Updates the form to accomodate changes in the language checkboxes.
      */
     updateForm: function () {
@@ -112,5 +127,22 @@ Activity = {
                 Activity.updateField(i, j);
             }
         }
+    },
+
+    /**
+     * Updates all activity categories.
+     */
+    updateAllCategories: function() {
+        var checked = null;
+
+        $('input[id^="categories-"]').each(function() {
+            checked = $(this).attr('checked');
+
+            if (typeof checked !== typeof undefined && checked !== false) {
+                $(this).prop('checked', false);
+                Activity.toggleCategory($(this).attr('value'));
+                $(this).prop('checked', true);
+            }
+        });
     }
 };

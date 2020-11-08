@@ -397,7 +397,7 @@ class AdminController extends AbstractActionController
 
     protected function getAcl()
     {
-        return $this->getServiceLocator()->get('activity_service_activity')->getAcl();
+        return $this->getServiceLocator()->get('activity_acl');
     }
 
     protected function getIdentity()
