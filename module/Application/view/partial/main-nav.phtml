@@ -215,7 +215,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <li><a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a></li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
-                            <li><a href="<?= $this->url('activity/corona') ?>"> <?= $this->translate('Activity Information COVID-19') ?></a></li>
+                            <li><a href="https://gewis.nl/activity/corona"> <?= $this->translate('Activity Information COVID-19') ?></a></li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
                             <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option
