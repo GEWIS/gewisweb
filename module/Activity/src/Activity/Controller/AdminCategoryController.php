@@ -25,25 +25,22 @@ class AdminCategoryController extends AbstractActionController
     public function addAction()
     {
         $categoryService = $this->getServiceLocator()->get('activity_service_category');
-        $form = $categoryService->getCategoryForm();
         $request = $this->getRequest();
         $translator = $this->getServiceLocator()->get('translator');
 
         if ($request->isPost()) {
-            $form->setData($request->getPost());
 
-            if ($form->isValid()) {
-                $category = $categoryService->createCategory($form->getData());
+            if ($categoryService->createCategory($request->getPost())) {
+                $message = $translator->translate('The activity category was created successfully!');
 
-                if ($category instanceof \Activity\Model\ActivityCategory) {
-                    $message = $translator->translate('The activity category was successfully created!');
-
-                    return $this->redirectWithNotice(true, $message);
-                }
+                return $this->redirectWithNotice(true, $message);
             }
         }
 
-        return ['form' => $form, 'action' => $translator->translate('Create Activity Category')];
+        return [
+            'form' => $categoryService->getCategoryForm(),
+            'action' => $translator->translate('Create Activity Category'),
+        ];
     }
 
     /**
@@ -64,7 +61,6 @@ class AdminCategoryController extends AbstractActionController
             $categoryService->deleteCategory($category);
             return $this->redirect()->toRoute('activity_admin_categories');
         }
-
 
         return $this->notFoundAction();
     }
@@ -88,16 +84,10 @@ class AdminCategoryController extends AbstractActionController
         $translator = $this->getServiceLocator()->get('translator');
 
         if ($request->isPost()) {
-            $form->setData($request->getPost());
+            if ($categoryService->updateCategory($category, $request->getPost())) {
+                $message = $translator->translate('The activity category was successfully updated!');
 
-            if ($form->isValid()) {
-                $category = $categoryService->updateCategory($category, $form->getData());
-
-                if ($category instanceof \Activity\Model\ActivityCategory) {
-                    $message = $translator->translate('The activity category was successfully updated!');
-
-                    return $this->redirectWithNotice(true, $message);
-                }
+                return $this->redirectWithNotice(true, $message);
             }
         }
 

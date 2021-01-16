@@ -96,6 +96,13 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
+        $form = $this->getCategoryForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
         $category = new CategoryModel();
         $category->setName(new LocalisedText($data['nameEn'], $data['name']));
 
@@ -103,7 +110,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $em->persist($category);
         $em->flush();
 
-        return $category;
+        return true;
     }
 
     public function updateCategory($category, $data)
@@ -115,6 +122,13 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
+        $form = $this->getCategoryForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
         $name = $category->getName();
         $name->updatevalues($data['nameEn'], $data['name']);
 
@@ -123,7 +137,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $em->persist($category);
         $em->flush();
 
-        return $category;
+        return true;
     }
 
     public function deleteCategory($category)
