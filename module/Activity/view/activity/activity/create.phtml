@@ -99,24 +99,28 @@ $form->setAttribute('class', 'form-activity');
                 $categoryOptions = $categories->getValueOptions();
                 $categorySelectedValues = $categories->getValue();
                 ?>
-                <fieldset>
-                    <?php foreach ($categoryOptions as $option => $value): ?>
-                        <?php
-                        $checked = ($categorySelectedValues && in_array($option, $categorySelectedValues)) ?
-                            'checked="checked"' : '';
-                        ?>
-                        <div class="chip chip-clickable chip-outlined">
-                            <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
-                            <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
-                                    class="chip-label">
-                                <?= $value->getText($lang) ?>
-                            </label>
-                            <input type="checkbox" name="<?= $categoriesName ?>[]"
-                                id="<?= $categoriesName ?>-<?= $option; ?>"
-                                value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
-                        </div>
-                    <?php endforeach; ?>
-                </fieldset>
+                <?php if (empty($categoryOptions)): ?>
+                    <p><i><?= $this->translate('There are currently no activity categories...') ?></i></p>
+                <?php else: ?>
+                    <fieldset>
+                        <?php foreach ($categoryOptions as $option => $value): ?>
+                            <?php
+                            $checked = ($categorySelectedValues && in_array($option, $categorySelectedValues)) ?
+                                'checked="checked"' : '';
+                            ?>
+                            <div class="chip chip-clickable chip-outlined">
+                                <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
+                                <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
+                                        class="chip-label">
+                                    <?= $value->getText($lang) ?>
+                                </label>
+                                <input type="checkbox" name="<?= $categoriesName ?>[]"
+                                    id="<?= $categoriesName ?>-<?= $option; ?>"
+                                    value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
+                            </div>
+                        <?php endforeach; ?>
+                    </fieldset>
+                <?php endif; ?>
             </div>
         </div>
         <div class="row">
