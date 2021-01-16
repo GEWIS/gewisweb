@@ -368,7 +368,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     public function getCategories()
     {
-       return $this->categories;
+        return $this->categories;
     }
 
     /**

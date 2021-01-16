@@ -102,7 +102,8 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
     /**
      * @return array
      */
-    public function getInputFilterSpecification() {
+    public function getInputFilterSpecification()
+    {
         return [
             'name' => [
                 'required' => false,

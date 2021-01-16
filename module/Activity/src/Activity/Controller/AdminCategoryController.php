@@ -29,7 +29,6 @@ class AdminCategoryController extends AbstractActionController
         $translator = $this->getServiceLocator()->get('translator');
 
         if ($request->isPost()) {
-
             if ($categoryService->createCategory($request->getPost())) {
                 $message = $translator->translate('The activity category was created successfully!');
 
@@ -49,6 +48,7 @@ class AdminCategoryController extends AbstractActionController
     public function deleteAction()
     {
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $categoryId = (int) $this->params('id');
             $categoryService = $this->getServiceLocator()->get('activity_service_category');
