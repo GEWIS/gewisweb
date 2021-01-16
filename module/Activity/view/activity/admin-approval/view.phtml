@@ -8,11 +8,22 @@ $this->headTitle($this->translate('Approval'));
     <div class="col-md-12">
         <h2><?= $this->translate('Information') ?></h2>
         <p>
-            <?=
-                sprintf(
+            <?php
+            $organisingParty = "";
+            if (!is_null($activity->getOrgan()) && !is_null($activity->getCompany())) {
+                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName() . " and " . $activity->getCompany()->getName());
+            } else if (!is_null($activity->getOrgan())) {
+                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName());
+            } else if (!is_null($activity->getCompany())) {
+                $organisingParty = $this->escapeHtml($activity->getCompany()->getName());
+            } else {
+                $organisingParty = $this->escapeHtml($activity->getCreator()->getMember()->getFullName());
+            }
+            
+            echo sprintf(
                     $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
                         $activity->getId(),
-                        (is_null($activity->getOrgan())) ? $activity->getCreator()->getMember()->getFullName() : $activity->getOrgan()->getName(),
+                        $organisingParty,
                         $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
                         $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
                 );

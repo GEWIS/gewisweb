@@ -90,10 +90,16 @@ class Module
                 'activity_form_activity' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
+                    $companyService = $sm->get('company_service_company');
+                    try {
+                        $companies = $companyService->getHiddenCompanyList();
+                    } catch (\User\Permissions\NotAllowedException $e) {
+                        $companies = [];
+                    }
                     $categoryService = $sm->get('activity_service_category');
                     $categories = $categoryService->getAllCategories();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $categories, $translator);
+                    $form = new \Activity\Form\Activity($organs, $companies, $categories, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -200,7 +206,7 @@ class Module
                     $acl->addResource('activity_calendar_proposal');
                     $acl->addResource('signupList');
 
-                    $acl->allow('guest', 'activity', 'view');
+                    $acl->allow('guest', 'activity', ['view', 'viewCategory']);
                     $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
@@ -211,7 +217,7 @@ class Module
                         ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
                     );
 
-                    $acl->allow('active_member', 'activity', ['create', 'viewAdmin']);
+                    $acl->allow('active_member', 'activity', ['create', 'viewAdmin', 'listCategories']);
                     $acl->allow(
                         'active_member',
                         'activity',

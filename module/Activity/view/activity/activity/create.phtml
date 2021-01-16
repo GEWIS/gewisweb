@@ -27,9 +27,9 @@ $form->setAttribute('class', 'form-activity');
                 <div class="row">
                     <div class="col-md-12">
                         <h2><?= $this->translate('Organizer') ?></h2>
-                        <p><?= $this->translate('Select the committee or fraternity responsible for this activity. Or "no organ" if this activity is not organised by an organ.') ?></p>
+                        <p><?= $this->translate('Select whether an organ (committee, fraternity, etc.) or a company is responsible for this activity, or both.') ?></p>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <?php
                         $organ = $form->get('organ')
                             ->setAttribute('class', 'form-control')
@@ -41,6 +41,20 @@ $form->setAttribute('class', 'form-activity');
                             </label>
                             <?= $this->formSelect($organ) ?>
                             <?= $this->formElementErrors($organ) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php
+                        $company = $form->get('company')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'organizing-company');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($company) ?>">
+                            <label for="<?= $company->getAttribute('id') ?>" class="control-label label-required">
+                                <?= $this->translate('Company') ?>
+                            </label>
+                            <?= $this->formSelect($company) ?>
+                            <?= $this->formElementErrors($company) ?>
                         </div>
                     </div>
                 </div>

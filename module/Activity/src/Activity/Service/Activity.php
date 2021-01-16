@@ -82,6 +82,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
+        $form = $this->getActivityForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
         // Find the creator
         $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
 
@@ -94,14 +101,23 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $organ = $this->findOrgan($organId);
         }
 
-        $activity = $this->saveActivityData($data, $user, $organ, ActivityModel::STATUS_TO_APPROVE);
+        // Find the company the activity belongs to. If the id is 0, the activity belongs to no company.
+        $companyId = intval($data['company']);
+        $company = null;
+
+        if ($companyId !== 0) {
+            $companyService = $this->getServiceManager()->get('company_service_company');
+            $company = $companyService->getCompanyById($companyId);
+        }
+
+        $activity = $this->saveActivityData($data, $user, $organ, $company, ActivityModel::STATUS_TO_APPROVE);
 
         // Send email to GEFLITST if user checked checkbox of GEFLITST
         if ($activity->getRequireGEFLITST()) {
             $this->requestGEFLITST($activity, $user, $organ);
         }
 
-        return $activity;
+        return true;
     }
 
     /**
@@ -162,6 +178,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $data,
             $user,
             $oldActivity->getOrgan(),
+            $oldActivity->getCompany(),
             ActivityModel::STATUS_UPDATE
         );
 
@@ -279,10 +296,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param array $data Parameters describing activity
      * @param User $user The user that creates this activity
      * @param Organ $organ The organ this activity is associated with
+     * @param Company $company The company this activity is associated with
      *
      * @return ActivityModel Activity that was created.
      */
-    protected function saveActivityData($data, $user, $organ, $status)
+    protected function saveActivityData($data, $user, $organ, $company, $status)
     {
         $activity = new ActivityModel();
         $activity->setBeginTime(new \DateTime($data['beginTime']));
@@ -299,6 +317,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // Not user provided input
         $activity->setCreator($user);
         $activity->setOrgan($organ);
+        $activity->setCompany($company);
         $activity->setStatus($status);
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');

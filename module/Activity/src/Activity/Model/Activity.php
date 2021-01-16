@@ -121,12 +121,20 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $signupLists;
 
     /**
-     * Who created this activity.
+     * Which organ organises this activity.
      *
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     protected $organ;
+
+    /**
+     * Which company organises this activity.
+     *
+     * @ORM\ManyToOne(targetEntity="Company\Model\Company")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
+     */
+    protected $company;
 
     /**
      * Is this a My Future related activity
@@ -321,6 +329,22 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function setOrgan($organ)
     {
         $this->organ = $organ;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $organ
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
     /**

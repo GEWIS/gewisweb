@@ -122,6 +122,24 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findAll();
     }
 
+    /**
+     * Get public company by id.
+     *
+     * @param $id
+     * @return \Company\Model\Company|null
+     */
+    public function getCompanyById($id)
+    {
+        $translator = $this->getTranslator();
+        if (!$this->isAllowed('listall')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to list the companies')
+            );
+        }
+
+        return $this->getCompanyMapper()->findById($id);
+    }
+
     public function categoryForSlug($slug)
     {
         $translator = $this->getTranslator();

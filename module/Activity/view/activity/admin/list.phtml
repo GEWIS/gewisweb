@@ -14,6 +14,7 @@
         <th><?= $this->translate('English name') ?></th>
         <th><?= $this->translate('Start date') ?></th>
         <th><?= $this->translate('Organ') ?></th>
+        <th><?= $this->translate('Company') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Update status') ?></th>
         <?php if (!$admin): ?>
@@ -30,6 +31,7 @@
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $this->escapeHtml($activity->getName()->getValueEN()) ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr())  ?></td>
+            <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
             <td><?= $this->escapeHtml($activity->getCreator()->getMember()->getFullName()) ?></td>
             <?php if($admin): ?>
             <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' :

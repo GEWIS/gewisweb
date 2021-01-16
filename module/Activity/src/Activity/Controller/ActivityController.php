@@ -169,17 +169,11 @@ class ActivityController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $form->setData($request->getPost());
+            if ($activityService->createActivity($request->getPost())) {
+                $view = new ViewModel();
+                $view->setTemplate('activity/activity/createSuccess.phtml');
 
-            if ($form->isValid()) {
-                $activity = $activityService->createActivity($form->getData());
-
-                if ($activity instanceof \Activity\Model\Activity) {
-                    $view = new ViewModel();
-                    $view->setTemplate('activity/activity/createSuccess.phtml');
-
-                    return $view;
-                }
+                return $view;
             }
         }
 

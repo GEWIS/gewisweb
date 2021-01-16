@@ -111,6 +111,17 @@ class Company
     }
 
     /**
+     * Find a specific company by its id.
+     *
+     * @param $id The id of the company
+     * @return CompanyModel|null
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    /**
      * Find all companies.
      *
      * @return array

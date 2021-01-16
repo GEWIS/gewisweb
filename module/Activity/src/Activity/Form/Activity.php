@@ -20,7 +20,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * @param Organ[] $organs
      * @param Translator $translator
      */
-    public function __construct(array $organs, array $categories, Translator $translator)
+    public function __construct(array $organs, array $companies, array $categories, Translator $translator)
     {
         parent::__construct('activity');
         $this->translator = $translator;
@@ -35,6 +35,11 @@ class Activity extends Form implements InputFilterProviderInterface
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
 
+        $companyOptions = [0 => $translator->translate('No Company')];
+        foreach ($companies as $company) {
+            $companyOptions[$company->getId()] = $company->getName();
+        }
+
         $categoryOptions = [];
         foreach ($categories as $category) {
             $categoryOptions[$category->getId()] = $category->getName();
@@ -45,6 +50,14 @@ class Activity extends Form implements InputFilterProviderInterface
             'type' => 'select',
             'options' => [
                 'value_options' => $organOptions
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'company',
+            'type' => 'select',
+            'options' => [
+                'value_options' => $companyOptions
             ]
         ]);
 
@@ -344,6 +357,9 @@ class Activity extends Form implements InputFilterProviderInterface
     {
         $filter = [
             'organ' => [
+                'required' => true,
+            ],
+            'company' => [
                 'required' => true,
             ],
             'beginTime' => [
