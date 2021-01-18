@@ -32,7 +32,7 @@ var CKBUILDER_CONFIG = {
 		'bender.js',
 		'bender-err.log',
 		'bender-out.log',
-		'dev',
+		'development',
 		'.DS_Store',
 		'.editorconfig',
 		'.gitattributes',

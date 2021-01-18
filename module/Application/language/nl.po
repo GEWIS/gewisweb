@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb 0.1.0-dev\n"
+"Project-Id-Version: GEWISweb 0.1.0-development\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-27 21:20+0200\n"
 "PO-Revision-Date: 2020-07-27 21:36+0200\n"
