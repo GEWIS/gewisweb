@@ -1,52 +1,20 @@
 version: '2'
+
 services:
-    web:
-        build: docker
-        volumes:
-            - .:/code
-            - ./docker/php.ini:/usr/local/etc/php/conf.d/default.ini
-            #- ./docker/php-fpm.conf:/usr/local/etc/php-fpm.conf
-        environment:
-            APP_ENV: development
-        networks:
-            - gewisweb
+  nginx:
+    image: nginx:latest
+    build: docker/nginx
+    depends_on:
+        -   web
+    ports:
+        - "80:80"
 
-    nginx:
-        image: nginx:1.10
-        volumes:
-            - .:/code
-            - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - web
-        networks:
-            - gewisweb
+  web:
+    build: .
+    volumes:
+      - code:/code
 
-    webmysql:
-        image: mysql:5.5
-        volumes:
-            - .mysql/dev:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: gewis
-            MYSQL_DATABASE: gewis
-            MYSQL_USER: gewis
-            MYSQL_PASSWORD: gewis
-            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-        networks:
-            - gewisweb
-
-    myadmin:
-        image: phpmyadmin/phpmyadmin
-        depends_on:
-            - webmysql
-        environment:
-            PMA_HOST: webmysql
-            PMA_USER: gewis
-            PMA_PASSWORD: gewis
-        volumes:
-            - /sessions
-        networks:
-            - gewisweb
-
-networks:
-    gewisweb:
-        driver: bridge
+volumes:
+  code:
+      external:
+          name: gewisweb

@@ -1,10 +1,8 @@
 FROM node:14-alpine as node-build
 WORKDIR /code
 
-ADD ./package.json ./package-lock.json ./
+COPY ./package.json ./package-lock.json public ./
 RUN npm install
-
-ADD . /code
 
 RUN npm run scss
 
@@ -41,18 +39,18 @@ WORKDIR /code
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-ADD ./composer.json ./composer.lock ./
+COPY ./composer.json ./composer.lock ./
 RUN composer install -o --no-dev
 
 FROM php-target as production-image
 WORKDIR /code
 
-ADD . /code
+COPY . /code
 
 COPY --from=composer-build /code/vendor /code/vendor
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
-ADD ./docker/prod/php.ini /usr/local/etc/php/conf.d/default.ini
+COPY ./php.ini /usr/local/etc/php/conf.d/default.ini
 
 RUN ./genclassmap.sh
 RUN ./web orm:generate-proxies

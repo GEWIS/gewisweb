@@ -1,8 +1,0 @@
-version: '2'
-services:
-  nginx:
-    ports:
-      - "80:80"
-  myadmin:
-    ports:
-      - "8000:80"

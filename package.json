@@ -1,37 +1,36 @@
 {
-  "name": "gewisweb",
-  "version": "0.0.0-dev",
-  "description": "GEWIS Website",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "scss": "node-sass --output-style compressed -o public/css public/scss/gewis-theme.scss",
-    "watch": "node-sass --watch -o public/css public/scss/gewis-theme.scss"
-    "scss": "node-sass --output-style compressed public/scss/main.scss > public/css/gewis-theme.css"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GEWIS/gewisweb.git"
-  },
-  "keywords": [
-    "GEWIS"
-  ],
-  "author": "GEWIS WebCommissie",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/GEWIS/gewisweb/issues"
-  },
-  "homepage": "https://github.com/GEWIS/gewisweb#readme",
-  "devDependencies": {
-    "grunt": "^1.0.2",
-    "grunt-contrib-clean": "^0.7.0",
-    "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-sass": "^0.9.2",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-shell": "^1.1.2",
-    "kss": "^3.0.0-beta.20"
-  },
-  "dependencies": {
-    "node-sass": "^4.13.1"
-  }
+    "name": "gewisweb",
+    "version": "0.0.0-dev",
+    "description": "GEWIS Website",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "scss": "node-sass --output-style compressed -o public/css public/scss/gewis-theme.scss",
+        "watch": "node-sass --watch -o public/css public/scss/gewis-theme.scss"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GEWIS/gewisweb.git"
+    },
+    "keywords": [
+        "GEWIS"
+    ],
+    "author": "GEWIS WebCommissie",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/GEWIS/gewisweb/issues"
+    },
+    "homepage": "https://github.com/GEWIS/gewisweb#readme",
+    "devDependencies": {
+        "grunt": "^1.0.2",
+        "grunt-contrib-clean": "^0.7.0",
+        "grunt-contrib-copy": "^0.8.2",
+        "grunt-contrib-sass": "^0.9.2",
+        "grunt-contrib-watch": "^1.1.0",
+        "grunt-shell": "^1.1.2",
+        "kss": "^3.0.0-beta.20"
+    },
+    "dependencies": {
+        "node-sass": "^4.14.1"
+    }
 }

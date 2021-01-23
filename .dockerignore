@@ -1,6 +1,6 @@
 docker
 docker-compose.*
-!docker/prod/php.ini
+!php.ini
 
 nbproject
 ._*
