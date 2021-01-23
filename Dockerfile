@@ -51,6 +51,8 @@ COPY --from=composer-build /code/vendor /code/vendor
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
 COPY ./php.ini /usr/local/etc/php/conf.d/default.ini
+COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doctrine.local.php
+COPY ./config/autoload/local.php.dist ./config/autoload/local.php
 
 RUN ./genclassmap.sh
 RUN ./web orm:generate-proxies

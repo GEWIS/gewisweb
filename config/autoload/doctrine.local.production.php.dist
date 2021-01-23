@@ -27,9 +27,9 @@ return [
                 'params' => [
                     'host'     => 'localhost',
                     'port'     => '3306',
-                    'user'     => 'username',
-                    'password' => 'password',
-                    'dbname'   => 'database',
+                    'user'     => '$DOCKER_DB_USERNAME',
+                    'password' => '$DOCKER_DB_PASSWORD',
+                    'dbname'   => '$DOCKER_DB_DATABASE',
                 ]
             ],
         ],
