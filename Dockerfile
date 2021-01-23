@@ -1,9 +1,10 @@
 FROM node:14-alpine as node-build
 WORKDIR /code
 
-COPY ./package.json ./package-lock.json public ./
+COPY package.json package-lock.json ./
 RUN npm install
 
+COPY public/ ./public/
 RUN npm run scss
 
 FROM php:5.6-fpm as php-target
