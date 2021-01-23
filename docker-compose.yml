@@ -6,15 +6,24 @@ services:
     build: docker/nginx
     depends_on:
         -   web
+    networks:
+        - network
     ports:
         - "80:80"
 
   web:
     build: .
     volumes:
-      - code:/code
+        - code:/code
+    networks:
+        - network
 
 volumes:
   code:
       external:
           name: gewisweb
+
+networks:
+    network:
+        external:
+            name: bridge
