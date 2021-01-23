@@ -56,6 +56,6 @@ COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doct
 COPY ./config/autoload/local.php.dist ./config/autoload/local.php
 
 RUN ./genclassmap.sh \
-    && web orm:generate-proxies
+    && ./web orm:generate-proxies
 
 VOLUME ["/code", "/code/data", "/code/public/data"]
