@@ -9,6 +9,7 @@ services:
         - network
     ports:
         - "8010:80"
+    restart: unless-stopped
 
   web:
     build: .
@@ -16,6 +17,7 @@ services:
         - code:/code
     networks:
         - network
+    restart: unless-stopped
 
 volumes:
   code:
