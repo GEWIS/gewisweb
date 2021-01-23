@@ -2,14 +2,13 @@ version: '2'
 
 services:
   nginx:
-    image: nginx:latest
     build: docker/nginx
     depends_on:
         -   web
     networks:
         - network
     ports:
-        - "80:80"
+        - "8010:80"
 
   web:
     build: .
