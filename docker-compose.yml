@@ -26,4 +26,4 @@ volumes:
 networks:
     network:
         external:
-            name: bridge
+            name: gewisweb
