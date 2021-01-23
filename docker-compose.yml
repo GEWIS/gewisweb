@@ -26,5 +26,3 @@ volumes:
 
 networks:
     network:
-        external:
-            name: gewisweb
