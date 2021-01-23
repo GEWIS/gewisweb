@@ -44,20 +44,20 @@ class Package
     /**
      * Finds the package with the given id
      *
-     * @param integer $packageID
+     * @param integer $packageId
      */
-    public function findPackage($packageID)
+    public function findPackage($packageId)
     {
-        return $this->getRepository()->findOneBy(['id' => $packageID]);
+        return $this->getRepository()->findOneBy(['id' => $packageId]);
     }
 
     /**
      * Deletes the given package
      *
      */
-    public function delete($packageID)
+    public function delete($packageId)
     {
-        $package = $this->findEditablePackage($packageID);
+        $package = $this->findEditablePackage($packageId);
         if (is_null($package)) {
             return;
         }
@@ -151,12 +151,12 @@ class Package
      *
      * @return array
      */
-    public function findEditablePackage($packageID)
+    public function findEditablePackage($packageId)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.id=:packageID');
-        $qb->setParameter('packageID', $packageID);
+        $qb->select('p')->where('p.id=:packageId');
+        $qb->setParameter('packageId', $packageId);
         $qb->setMaxResults(1);
         $packages = $qb->getQuery()->getResult();
         if (count($packages) != 1) {

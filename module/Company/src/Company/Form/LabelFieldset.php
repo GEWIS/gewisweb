@@ -9,7 +9,7 @@ use Zend\Mvc\I18n\Translator;
 /**
  *
  */
-class CategoryFieldset extends Fieldset
+class LabelFieldset extends Fieldset
 {
     public function __construct($translate, $hydrator)
     {
@@ -43,27 +43,6 @@ class CategoryFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
-        $this->add([
-            'name' => 'pluralName',
-            'attributes' => [
-                'type' => 'text',
-                'required' => 'required',
-            ],
-            'options' => [
-                'label' => $translate->translate('Plural display name'),
-                'required' => 'required',
-            ],
-        ]);
-        $this->add([
-            'name' => 'hidden',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => [
-                'label' => $translate->translate('Hidden'),
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-                'use_hidden_element' => true,
-            ],
-        ]);
         // Hidden language element, because it will only be set at initialization.
         $this->add([
             'name' => 'language',
@@ -75,7 +54,7 @@ class CategoryFieldset extends Fieldset
 
     public function setLanguage($lang)
     {
-        $jc = new \Company\Model\JobCategory();
+        $jc = new \Company\Model\JobLabel();
         $jc->setLanguage($lang);
         $this->setObject($jc);
     }

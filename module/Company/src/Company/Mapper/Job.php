@@ -53,11 +53,11 @@ class Job
         $objects = $this->findJob([
             'companySlugName' => $companySlug,
             'jobSlug' =>  $slugName,
-            'jobCategoryID' => $category,
+            'jobCategoryId' => $category,
         ]);
         foreach ($objects as $job) {
             // If the current job is in the database under the same slug, we can safely skip it
-            if ($job->getID() == $jid) {
+            if ($job->getId() == $jid) {
                 continue;
             }
             return false;
@@ -101,7 +101,7 @@ class Job
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c');
-        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryID', $dict)) {
+        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryId', $dict)) {
             $qb->join('j.category', 'cat');
         }
         if (array_key_exists('jobSlug', $dict)) {
@@ -121,8 +121,8 @@ class Job
             $qb->andWhere('cat.slug=:category');
             $qb->setParameter('category', $category);
         }
-        if (array_key_exists('jobCategoryID', $dict)) {
-            $category = $dict['jobCategoryID'];
+        if (array_key_exists('jobCategoryId', $dict)) {
+            $category = $dict['jobCategoryId'];
             $qb->andWhere('cat.id=:category');
             $qb->setParameter('category', $category);
         }
@@ -145,6 +145,28 @@ class Job
     public function persist($job)
     {
         $this->em->persist($job);
+        $this->em->flush();
+    }
+
+    /**
+     * Flush.
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * Deletes the jobs corresponding to the given language neutral id.
+     *
+     */
+    public function deleteByLanguageNeutralId($jobId)
+    {
+        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobId]);
+        foreach ($jobs as $job) {
+            $this->em->remove($job);
+        }
+
         $this->em->flush();
     }
 

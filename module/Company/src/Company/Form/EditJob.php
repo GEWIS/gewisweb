@@ -8,16 +8,26 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
-    public function __construct($mapper, Translator $translator, $languages, $hydrator)
+    public function __construct($mapper, Translator $translator, $languages, $hydrator, $labels)
     {
         // we want to ignore the name passed
         parent::__construct();
+
+        $this->translator = $translator;
 
         $this->mapper = $mapper;
 
         $this->setHydrator($hydrator);
 
         $this->setAttribute('method', 'post');
+
+        $labelOptions = [];
+        foreach ($labels as $label) {
+            $labelOptions[] = array('value' => $label->getId(),
+                'label' =>$label->getName(),
+                'label_attributes' => array('class' => 'checkbox')
+            );
+        }
 
         $this ->setLanguages($languages);
         $this->add([
@@ -33,6 +43,15 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         ]);
 
         $this->add([
+            'name' => 'labels',
+            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'options' => [
+                'label' => $translator->translate('What labels apply to this job?'),
+                'value_options' => $labelOptions
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -40,7 +59,6 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'id' => 'submitbutton',
             ],
         ]);
-        $this->translator = $translator;
 
         $this->initFilters();
     }
@@ -50,7 +68,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $rootFilter =  new InputFilter();
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
-            
+
             $filter->add([
                 'name' => 'id',
                 'required' => false,
@@ -188,6 +206,16 @@ class EditJob extends CollectionBaseFieldsetAwareForm
     public function setLanguages($languages)
     {
         $this->languages = $languages;
+    }
+
+    public function setLabels($labels)
+    {
+        $labelsElement = $this->get('labels');
+        $options = [];
+        foreach ($labels as $label) {
+            $options[] = $label->getId();
+        }
+        $labelsElement->setValue(array_values($options));
     }
 
     public function getLanguages()

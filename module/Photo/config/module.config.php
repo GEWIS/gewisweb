@@ -62,9 +62,10 @@ return [
                     'album_beta' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/beta/album[/:album_id]',
+                            'route' => '/beta/:album_type/:album_id',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
+                                'album_type' => '(album|member)',
                             ],
                             'defaults' => [
                                 'controller' => 'Album',

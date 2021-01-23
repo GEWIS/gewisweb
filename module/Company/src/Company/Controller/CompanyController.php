@@ -16,7 +16,7 @@ class CompanyController extends AbstractActionController
     {
         $companyService = $this->getCompanyService();
         $featuredPackage = $companyService->getFeaturedPackage();
-        if ($featuredPackage == null) {
+        if ($featuredPackage === null) {
             return new ViewModel([
                 'companyList' => $companyService->getCompanyList(),
                 'translator' => $companyService->getTranslator(),
@@ -36,11 +36,14 @@ class CompanyController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         $company = $companyService->getCompanyBySlugName($companyName);
+
         if (!is_null($company)) {
-            return new ViewModel([
-                'company' => $company,
-                'translator' => $companyService->getTranslator(),
-            ]);
+            if (!$company->isHidden()) {
+                return new ViewModel([
+                    'company' => $company,
+                    'translator' => $companyService->getTranslator(),
+                ]);
+            }
         }
 
         return $this->notFoundAction();
@@ -129,18 +132,20 @@ class CompanyController extends AbstractActionController
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
         $category = $companyService->categoryForSlug($this->params('category'));
-        if ($jobName != null) {
+        if ($jobName !== null) {
             $jobs = $companyService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
-                'jobCategory' => ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null
+                'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
             ]);
             if (count($jobs) > 0) {
-                return new ViewModel([
-                    'job' => $jobs[0],
-                    'translator' => $companyService->getTranslator(),
-                    'category' => $category,
-                ]);
+                if ($jobs[0]->isActive()) {
+                    return new ViewModel([
+                        'job' => $jobs[0],
+                        'translator' => $companyService->getTranslator(),
+                        'category' => $category,
+                    ]);
+                }
             }
             return $this->notFoundAction();
         }

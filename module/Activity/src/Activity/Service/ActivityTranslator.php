@@ -103,7 +103,7 @@ class ActivityTranslator extends AbstractService
         $activityTranslation->setStatus($activity->getStatus());
         $activityTranslation->setSignUps($activity->getSignUps());
         $activityTranslation->setSubscriptionDeadline($activity->getSubscriptionDeadline());
-        //TODO: add organ when relevant.
+        $activityTranslation->setOrgan($activity->getOrgan());
 
 
         if ($language === 'en'){

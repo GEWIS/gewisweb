@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
 use Zend\Form\FormInterface;
 
-class EditCategory extends CollectionBaseFieldsetAwareForm
+class EditLabel extends CollectionBaseFieldsetAwareForm
 {
     public function __construct($mapper, Translator $translate, $languages, $hydrator)
     {
@@ -25,12 +25,12 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
 
         $this->add([
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
-            'name' => 'categories',
+            'name' => 'labels',
             'hydrator' => $this->getHydrator(),
             'options' => [
                 'use_as_base_fieldset' => true,
                 'count' => count($languages),
-                'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
+                'target_element' => new LabelFieldset($translate, $this->getHydrator()),
                 'items' => $languages,
             ]
         ]);

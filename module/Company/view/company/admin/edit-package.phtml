@@ -1,3 +1,11 @@
+<?php
+$this->scriptUrl()->requireUrls(
+    [
+        'admin_company/editCompany/editPackage/deleteJob',
+    ],
+    ['slugCompanyName', 'packageId', 'languageNeutralJobId']
+);
+?>
 <?php if ($type === 'banner'): ?>
     <h2><?= $this->translate('Banner') ?></h2>
     <div class="row">
@@ -25,7 +33,7 @@ $form->prepare()
            href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
                [
                    "slugCompanyName" => $companyName,
-                   'packageID' => $package->getId()
+                   'packageId' => $package->getId()
                ]); ?>">
             <i class="fas fa-plus"></i>
             <?= $this->translate('Add job'); ?>
@@ -66,14 +74,52 @@ $form->prepare()
                        href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
                            [
                                "slugCompanyName" => $companyName,
-                               "packageID" => $package->getId(),
+                               "packageId" => $package->getId(),
                                "languageNeutralJobId" => $job->getLanguageNeutralId(),
                            ]
                        ); ?>">
                         <?= $this->translate('edit'); ?>
                     </a>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            onclick="deleteJob(<?= $job->getLanguageNeutralId() ?>)" data-toggle="modal"
+                            data-target="#deleteModal">
+                        <?= $this->translate('Delete') ?>
+                    </button>
                 </td>
             </tr>
         <?php endforeach ?>
     </table>
 <?php endif ?>
+<!-- Delete job modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p><?= $this->translate('Are you sure you want to delete this job?') ?> </p>
+                <p class="options">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST">
+                    <input type="submit" name="submit" value="<?= $this->translate('Delete job') ?>"
+                           class="btn btn-danger"/>
+                    <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    deleteJob = function(id) {
+        $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deleteJob', {
+            'slugCompanyName': '<?= $companyName ?>',
+            'packageId': '<?= $package->getId() ?>',
+            'languageNeutralJobId': id}));
+    };
+</script>

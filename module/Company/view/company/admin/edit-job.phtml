@@ -17,7 +17,7 @@ $fieldset = $form->get('jobs')->get($lang);
 $element = $fieldset->get('id');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -30,7 +30,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('name');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -43,7 +43,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('slugName');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -56,7 +56,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('website');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -69,7 +69,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('category');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -83,7 +83,7 @@ $element = $fieldset->get('description');
 $element->setAttribute('style', 'width:100%; height:10em; resize:none');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -95,7 +95,7 @@ $element->setAttribute('class', 'form-control');
 <?php
 $element = $fieldset->get('active');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -108,7 +108,7 @@ $element = $fieldset->get('active');
 $element = $fieldset->get('contactName');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -121,7 +121,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('phone');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -134,7 +134,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('email');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -147,7 +147,7 @@ $element->setAttribute('class', 'form-control');
 $element = $fieldset->get('attachment_file');
 $element->setAttribute('class', 'form-control');
 ?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
@@ -172,6 +172,19 @@ $element->setAttribute('class', 'form-control');
 <?php endif;?>
 </div>
 <?php endforeach;?>
+</div>
+
+<?php
+$element = $form->get('labels');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <div class="col-sm-10">
+        <?= $this->formMultiCheckbox($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
 </div>
 
 <?php

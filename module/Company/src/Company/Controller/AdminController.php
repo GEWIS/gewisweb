@@ -22,6 +22,7 @@ class AdminController extends AbstractActionController
         return new ViewModel([
             'companyList' => $companyService->getHiddenCompanyList(),
             'categoryList' => $companyService->getCategoryList(false),
+            'labelList' => $companyService->getLabelList(false),
             'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
                 new \DateInterval("P1M")
             )),
@@ -124,12 +125,10 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'form' => $packageForm,
             'type' => $type,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -145,25 +144,25 @@ class AdminController extends AbstractActionController
 
         // Get parameters
         $companyName = $this->params('slugCompanyName');
-        $packageId = $this->params('packageID');
+        $packageId = $this->params('packageId');
 
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-
             // Check if data is valid, and insert when it is
             $job = $companyService->createJob(
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
             );
+
             if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany/editPackage',
                     [
                         'slugCompanyName' => $companyName,
-                        'packageID' => $packageId
+                        'packageId' => $packageId
                     ]
                 );
             }
@@ -178,7 +177,7 @@ class AdminController extends AbstractActionController
                 'admin_company/editCompany/editPackage/addJob',
                 [
                     'slugCompanyName' => $companyName,
-                    'packageID' => $packageId
+                    'packageId' => $packageId
                 ]
             )
         );
@@ -206,56 +205,106 @@ class AdminController extends AbstractActionController
         $categoryForm = $companyService->getCategoryForm();
 
         // Get parameter
-        $categoryId = $this->params('categoryID');
-
-        // Get the specified company
-        $categories = $companyService->getAllCategoriesById($categoryId);
-
-        // If the company is not found, throw 404
-        if (empty($categories)) {
-            $company = null;
+        $languageNeutralId = $this->params('languageNeutralCategoryId');
+        if ($languageNeutralId === null) {
+            // The parameter is invalid or non-existent
             return $this->notFoundAction();
         }
 
-        // Initialize form
-        $categoriesDict = [];
-        foreach ($categories as $category) {
-            $categoriesDict[$category->getLanguage()] = $category;
+        // Get the specified category
+        $categories = $companyService->getAllCategoriesById($languageNeutralId);
+
+        // If the category is not found, throw 404
+        if (empty($categories)) {
+            return $this->notFoundAction();
         }
-        $categoryForm->bind($categoriesDict);
-        $categoryForm->setAttribute(
-            'action',
-            $this->url()->fromRoute(
-                'admin_company/editCategory',
-                [
-                    'categoryID' => $categoryId,
-                ]
-            )
-        );
+
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->saveCategory(
-                $request->getPost()
-            )){
-                return $this->redirect()->toRoute(
-                    'admin_company/editCategory',
-                    [
-                        'categoryID' => $categoryId,
-                    ]
-                );
+            $post = $request->getPost();
+            $categoryDict = [];
 
+            foreach ($categories as $category) {
+                $categoryDict[$category->getLanguage()] = $category;
             }
+
+            $companyService->saveCategoryData($languageNeutralId, $categoryDict, $post);
         }
 
-        $vm = new ViewModel([
-            'categories' => $categories,
+        // Initialize form
+        $categoryDict = [];
+        foreach ($categories as $category) {
+            $categoryDict[$category->getLanguage()] = $category;
+        }
+
+        $languages = array_keys($categoryDict);
+        $categoryForm->setLanguages($languages);
+        $categoryForm->bind($categoryDict);
+
+        return new ViewModel([
             'form' => $categoryForm,
+            'category' => $categories,
             'languages' => $this->getLanguageDescriptions(),
         ]);
-
-        return $vm;
     }
+
+    /**
+     * Action that displays a form for editing a label
+     *
+     *
+     */
+    public function editLabelAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $labelForm = $companyService->getLabelForm();
+
+        // Get parameter
+        $languageNeutralId = $this->params('languageNeutralLabelId');
+        if ($languageNeutralId === null) {
+            // The parameter is invalid or non-existent
+            return $this->notFoundAction();
+        }
+
+        // Get the specified label
+        $labels = $companyService->getAllLabelsById($languageNeutralId);
+
+        // If the label is not found, throw 404
+        if (empty($labels)) {
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $labelDict = [];
+
+            foreach ($labels as $label) {
+                $labelDict[$label->getLanguage()] = $label;
+            }
+
+            $companyService->saveLabelData($languageNeutralId, $labelDict, $post);
+        }
+
+        // Initialize form
+        $labelDict = [];
+        foreach ($labels as $label) {
+            $labelDict[$label->getLanguage()] = $label;
+        }
+
+        $languages = array_keys($labelDict);
+        $labelForm->setLanguages($languages);
+        $labelForm->bind($labelDict);
+
+        return new ViewModel([
+            'form' => $labelForm,
+            'label' => $labels,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+    }
+
     private function getLanguageDescriptions()
     {
         $companyService = $this->getCompanyService();
@@ -327,12 +376,10 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
-        $vm = new ViewModel([
+        return new ViewModel([
             'company' => $company,
             'form' => $companyForm,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -347,10 +394,10 @@ class AdminController extends AbstractActionController
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
-        $packageID = $this->params('packageID');
+        $packageId = $this->params('packageId');
 
         // Get the specified package (Assuming it is found)
-        $package = $companyService->getEditablePackage($packageID);
+        $package = $companyService->getEditablePackage($packageId);
         $type = $package->getType();
 
         // Get form
@@ -373,7 +420,7 @@ class AdminController extends AbstractActionController
             $this->url()->fromRoute(
                 'admin_company/editCompany/editPackage',
                 [
-                    'packageID' => $packageID,
+                    'packageId' => $packageId,
                     'slugCompanyName' => $companyName,
                     'type' => $type,
                 ]
@@ -381,14 +428,12 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
+        return new ViewModel([
             'package' => $package,
             'companyName' => $companyName,
             'form' => $packageForm,
             'type' => $type,
         ]);
-
-        return $vm;
     }
 
     /**
@@ -419,9 +464,11 @@ class AdminController extends AbstractActionController
             $files = $request->getFiles();
             $post = $request->getPost();
             $jobDict = [];
+
             foreach ($jobs as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
+
             $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
         }
 
@@ -432,6 +479,20 @@ class AdminController extends AbstractActionController
         }
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
+
+        // TODO: This is a hotfix for some ORM issues:
+        $labels = $companyService->getLabelAssignmentMapper()->findAssignmentsByJobId($jobs[0]->getId());
+        // TODO: Instead of doing:
+//        $labels = $jobs[0]->getLabels();
+
+        $mapper = $companyService->getLabelMapper();
+        $actualLabels = [];
+        foreach ($labels as $label) {
+            $actualLabel = $label->getLabel();
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+        }
+        $jobForm->setLabels($actualLabels);
         $jobForm->bind($jobDict);
 
         // Initialize the view
@@ -475,17 +536,14 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            $categories = $companyService->insertCategoryByData(
-                $request->getPost(),
-                $request->getFiles()
-            );
-            if (!is_null($categories)) {
+            $category = $companyService->createCategory($request->getPost());
+
+            if (is_numeric($category)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/default',
+                    'admin_company/editCategory',
                     [
-                        'action' => 'editCategory',
-                        'slugCompanyName' => $categories['nl']->getLanguageNeutralId(),
+                        'languageNeutralCategoryId' => $category,
                     ]
                 );
             }
@@ -508,6 +566,46 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    public function addLabelAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $labelForm = $companyService->getLabelForm();
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            // Check if data is valid, and insert when it is
+            $label = $companyService->createLabel($request->getPost());
+
+            if (is_numeric($label)) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/editLabel',
+                    [
+                        'languageNeutralLabelId' => $label,
+                    ]
+                );
+            }
+        }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $labelForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                ['action' => 'addLabel']
+            )
+        );
+        // Initialize the view
+        return new ViewModel([
+            'form' => $labelForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+    }
+
     /**
      * Action that first asks for confirmation, and when given, deletes the Package
      *
@@ -519,13 +617,13 @@ class AdminController extends AbstractActionController
         $companyService = $this->getCompanyService();
 
         // Get parameters
-        $packageID = $this->params('packageID');
+        $packageId = $this->params('packageId');
         $companyName = $this->params('slugCompanyName');
 
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $companyService->deletePackage($packageID);
+            $companyService->deletePackage($packageId);
             return $this->redirect()->toRoute(
                 'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]
@@ -534,6 +632,34 @@ class AdminController extends AbstractActionController
 
         return $this->notFoundAction();
     }
+
+    /**
+     * Action to delete a job.
+     */
+    public function deleteJobAction()
+    {
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->notFoundAction();
+        }
+
+        $jobId = $this->params('languageNeutralJobId');
+
+        $this->getCompanyService()->deleteJob($jobId);
+
+        $companyName = $this->params('slugCompanyName');
+        $packageId = $this->params('packageId');
+
+        // Redirect to package page
+        return $this->redirect()->toRoute(
+            'admin_company/editCompany/editPackage',
+            [
+                'slugCompanyName' => $companyName,
+                'packageId' => $packageId
+            ]
+        );
+    }
+
 
     /**
      * Method that returns the service object for the company module.
