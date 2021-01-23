@@ -43,7 +43,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY ./composer.json ./composer.lock ./
 RUN composer install -o --no-dev
 
-FROM php-target as production-image
+FROM php-target as gewisweb_web
 WORKDIR /code
 
 COPY . /code
@@ -55,7 +55,7 @@ COPY ./php.ini /usr/local/etc/php/conf.d/default.ini
 COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doctrine.local.php
 COPY ./config/autoload/local.php.dist ./config/autoload/local.php
 
-RUN ./genclassmap.sh
-RUN ./web orm:generate-proxies
+RUN ./genclassmap.sh \
+    && web orm:generate-proxies
 
 VOLUME ["/code", "/code/data", "/code/public/data"]
