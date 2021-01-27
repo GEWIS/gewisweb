@@ -18,8 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpng-dev \
         libxml2-dev \
         unzip \
-        zlib1g-dev \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        zlib1g-dev
+
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
         calendar \
@@ -31,6 +32,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         pdo_mysql \
         soap \
         zip \
+    && pecl5.6 install apcu \
+    && docker-php-ext-enable apcu \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && rm -rf /var/lib/apt/lists/*
@@ -56,6 +59,6 @@ COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doct
 COPY ./config/autoload/local.php.dist ./config/autoload/local.php
 
 RUN ./genclassmap.sh
-RUN ./web orm:generate-proxies
+RUN php ./web orm:generate-proxies
 
 VOLUME ["/code", "/code/data", "/code/public/data"]

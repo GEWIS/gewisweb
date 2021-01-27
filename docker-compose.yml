@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: koen1999/gewisweb_nginx
+    image: koen1999/gewisweb_nginx:latest
     depends_on:
         -   web
     networks:
@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: koen1999/gewisweb_web
+    image: koen1999/gewisweb_web:latest
     volumes:
         - code:/code
     networks:
