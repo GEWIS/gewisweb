@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    build: docker/nginx
+    image: koen1999/gewisweb_nginx
     depends_on:
         -   web
     networks:
@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
 
   web:
-    build: .
+    image: koen1999/gewisweb_web
     volumes:
         - code:/code
     networks:
@@ -26,3 +26,5 @@ volumes:
 
 networks:
     network:
+        external:
+            name: gewisweb

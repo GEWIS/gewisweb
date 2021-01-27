@@ -1,5 +1,6 @@
-#!/etc/bin/env php
+#!/usr/bin/env php
 <?php
+echo php_sapi_name();
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 if (php_sapi_name() != 'cli') {
