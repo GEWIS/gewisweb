@@ -46,7 +46,7 @@ return [
             'translator' => 'MvcTranslator',
         ],
         'factories' => array(
-            'my_memcached_alias' => function() {
+            'my_memcached_alias' => function () {
                 $memcached = new \Memcached();
                 $memcached->addServer('localhost', 11211);
                 return $memcached;
