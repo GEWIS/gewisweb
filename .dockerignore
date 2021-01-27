@@ -1,6 +1,6 @@
 docker
 docker-compose.*
-!php.ini
+.env
 
 nbproject
 ._*
