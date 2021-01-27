@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!/etc/bin/env php
 <?php
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
