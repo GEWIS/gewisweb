@@ -15,12 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libicu-dev \
         libjpeg62-turbo-dev \
         libmagickwand-dev \
+        libmemcached-dev \
         libpng-dev \
         libxml2-dev \
         unzip \
-        zlib1g-dev
-
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        zlib1g-dev \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
         calendar \
@@ -32,10 +32,10 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         pdo_mysql \
         soap \
         zip \
-    && pecl5.6 install apcu \
-    && docker-php-ext-enable apcu \
-    && pecl install imagick \
+    && pecl install -o imagick \
     && docker-php-ext-enable imagick \
+    && pecl install -o memcached-2.2.0 \
+    && docker-php-ext-enable memcached \
     && rm -rf /var/lib/apt/lists/*
 
 FROM php-target as composer-build
