@@ -1,28 +1,35 @@
 version: '2'
 
 services:
-  nginx:
-    image: koen1999/gewisweb_nginx:latest
-    depends_on:
-        -   web
-    networks:
-        - network
-    ports:
-        - "8010:80"
-    restart: unless-stopped
+    nginx:
+        image: koen1999/gewisweb_nginx:latest
+        depends_on:
+            -   web
+        networks:
+            - network
+        ports:
+            - "8010:80"
+        restart: unless-stopped
 
-  web:
-    image: koen1999/gewisweb_web:latest
-    volumes:
-        - code:/code
-    networks:
-        - network
-    restart: unless-stopped
+    web:
+        image: koen1999/gewisweb_web:latest
+        volumes:
+            - code:/code
+            - data:/code/data
+            - pulic_data:/code/public/data
+        networks:
+            - network
+        restart: unless-stopped
 
 volumes:
-  code:
-      external:
-          name: gewisweb
+    data:
+        external:
+            name: gewisweb_data
+    public_data:
+        external:
+            name: gewisweb_public_data
+    code:
+        external: false
 
 networks:
     network:
