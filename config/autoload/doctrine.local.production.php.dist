@@ -25,7 +25,7 @@ return [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
                 'params' => [
-                    'host'     => 'localhost',
+                    'host'     => '$DOCKER_DB_HOST',
                     'port'     => '3306',
                     'user'     => '$DOCKER_DB_USERNAME',
                     'password' => '$DOCKER_DB_PASSWORD',
