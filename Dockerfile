@@ -51,6 +51,9 @@ WORKDIR /code
 
 COPY . /code
 
+RUN chown -R www-data:www-data .
+RUN chmod -R 770 .
+
 COPY --from=composer-build /code/vendor /code/vendor
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 

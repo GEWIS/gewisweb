@@ -13,7 +13,7 @@ build:
 	    @docker build -t koen1999/gewisweb_nginx docker/nginx
 
 push:
-	    @docker push koen1999/gewisweb_web
-	    @docker push koen1999/gewisweb_nginx
+	    @docker push koen1999/gewisweb_web:latest
+	    @docker push koen1999/gewisweb_nginx:latest
 
 all: build push
