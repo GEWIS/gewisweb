@@ -16,7 +16,7 @@ class Organ
 {
 
     const ORGAN_TYPE_COMMITTEE = 'committee';
-    const ORGAN_TYPE_AV_COMMITTEE = 'avc';
+    const ORGAN_TYPE_AVC = 'avc';
     const ORGAN_TYPE_FRATERNITY = 'fraternity';
     const ORGAN_TYPE_AVW = 'avw';
     const ORGAN_TYPE_KKK = 'kkk';

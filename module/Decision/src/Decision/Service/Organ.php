@@ -66,7 +66,7 @@ class Organ extends AbstractAclService
             return array_merge(
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AV_COMMITTEE),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVC),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVW),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_KKK),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_RVA)
