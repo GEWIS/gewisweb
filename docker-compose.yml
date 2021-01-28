@@ -14,7 +14,7 @@ services:
     web:
         image: koen1999/gewisweb_web:latest
         env_file:
-            -   .env
+            - .env.dist
         volumes:
             - code:/code
             - data:/code/data

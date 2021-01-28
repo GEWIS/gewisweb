@@ -10,6 +10,7 @@ RUN npm run scss
 FROM php:5.6-fpm as php-target
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        cron \
         git \
         libfreetype6-dev \
         libicu-dev \
@@ -52,16 +53,21 @@ WORKDIR /code
 COPY . /code
 
 RUN chown -R www-data:www-data .
-RUN chmod -R 770 .
+RUN chmod -R 777 .
 
 COPY --from=composer-build /code/vendor /code/vendor
 COPY --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
 COPY ./php.ini /usr/local/etc/php/conf.d/default.ini
-COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doctrine.local.php
 COPY ./config/autoload/local.php.dist ./config/autoload/local.php
+COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doctrine.local.php
+COPY ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php
 
 RUN ./genclassmap.sh
-RUN php ./web orm:generate-proxies
+
+COPY crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+RUN crontab /etc/cron.d/crontab
+CMD ['exec', 'crond', '-f']
 
 VOLUME ["/code", "/code/data", "/code/public/data"]

@@ -25,11 +25,11 @@ return [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
                 'params' => [
-                    'host'     => getenv('DOCKER_DB_HOST'),
-                    'port'     => '3306',
-                    'user'     => getenv('DOCKER_DB_USERNAME'),
-                    'password' => getenv('DOCKER_DB_PASSWORD'),
-                    'dbname'   => getenv('DOCKER_DB_DATABASE'),
+                    'host'     => '$DOCKER_DB_HOST',
+                    'port'     => '$DOCKER_DB_PORT',
+                    'user'     => '$DOCKER_DB_USERNAME',
+                    'password' => '$DOCKER_DB_PASSWORD',
+                    'dbname'   => '$DOCKER_DB_DATABASE',
                 ]
             ],
         ],
