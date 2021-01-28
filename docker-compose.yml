@@ -6,7 +6,7 @@ services:
         depends_on:
             -   web
         volumes:
-            - public:/code/public
+            - code:/code
         networks:
             - network
         ports:
