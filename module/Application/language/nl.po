@@ -1957,6 +1957,18 @@ msgstr "AV Commissie"
 msgid "Fraternity"
 msgstr "Dispuut"
 
+#: module/Decision/view/decision/organ/index.phtml:38
+msgid "GM Task Force"
+msgstr "AV Werkgroep"
+
+#: module/Decision/view/decision/organ/index.phtml:41
+msgid "Audit Committee"
+msgstr "KKK"
+
+#: module/Decision/view/decision/organ/index.phtml:44
+msgid "Advisory Board"
+msgstr "RvA"
+
 #: module/Decision/view/decision/member/self.phtml:18
 #: module/User/src/User/Form/Register.php:28
 msgid "Membership number"
