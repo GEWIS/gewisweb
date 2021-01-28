@@ -68,6 +68,7 @@ RUN ./genclassmap.sh
 COPY crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab
 RUN crontab /etc/cron.d/crontab
-CMD ['exec', 'crond', '-f']
+
+ENTRYPOINT ['bash', 'init.sh']
 
 VOLUME ["/code", "/code/data", "/code/public/data"]
