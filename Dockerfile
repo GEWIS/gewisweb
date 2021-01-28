@@ -69,6 +69,6 @@ COPY crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab
 RUN crontab /etc/cron.d/crontab
 
-ENTRYPOINT ['bash', 'init.sh']
+ENTRYPOINT ['docker-entrypoint.sh']
 
-VOLUME ["/code", "/code/data", "/code/public/data"]
+VOLUME ["/code", "/code/data", "/code/public"]

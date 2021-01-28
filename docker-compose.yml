@@ -5,6 +5,8 @@ services:
         image: koen1999/gewisweb_nginx:latest
         depends_on:
             -   web
+        volumes:
+            - public:/code/public
         networks:
             - network
         ports:
@@ -18,7 +20,7 @@ services:
         volumes:
             - code:/code
             - data:/code/data
-            - pulic_data:/code/public/data
+            - pulic:/code/public
         networks:
             - network
         restart: unless-stopped
@@ -27,9 +29,9 @@ volumes:
     data:
         external:
             name: gewisweb_data
-    public_data:
+    public:
         external:
-            name: gewisweb_public_data
+            name: gewisweb_public
     code:
         external: false
 
