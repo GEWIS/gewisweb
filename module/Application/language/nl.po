@@ -1967,7 +1967,7 @@ msgstr "KKK"
 
 #: module/Decision/view/decision/organ/index.phtml:44
 msgid "Advisory Board"
-msgstr "RvA"
+msgstr "Raad van Advies"
 
 #: module/Decision/view/decision/member/self.phtml:18
 #: module/User/src/User/Form/Register.php:28
