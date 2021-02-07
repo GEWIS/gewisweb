@@ -42,7 +42,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="string")
      */
     protected $slugName;
-    
+
     /**
      * The company's contact's name.
      *
@@ -177,7 +177,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->slugName = $slugName;
     }
-    
+
     /**
      * Get the company's contact's name.
      *
@@ -187,7 +187,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         return $this->contactName;
     }
-    
+
     /**
      * Set the company's contact's name.
      *
@@ -419,17 +419,18 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslationFromLocale($locale)
     {
-        $translation = null;
-
         $companyLanguages = $this->getTranslations()->map(function ($value) {
                     return $value->getLanguage();
                 });
 
         if ($companyLanguages->contains($locale)) {
-            $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
+            return $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
         }
 
-        return $translation;
+        throw new \Exception(sprintf('Requested non-existent translation for locale %s of company with language neutral id %d',
+            $locale,
+            $this->getLanguageNeutralId())
+        );
     }
 
     /**
