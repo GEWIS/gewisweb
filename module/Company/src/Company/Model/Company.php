@@ -420,16 +420,19 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getTranslationFromLocale($locale)
     {
         $companyLanguages = $this->getTranslations()->map(function ($value) {
-                    return $value->getLanguage();
-                });
+            return $value->getLanguage();
+        });
 
         if ($companyLanguages->contains($locale)) {
-            return $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
+            return $this->getTranslations()[$companyLanguages->indexOf($locale)];
         }
 
-        throw new \Exception(sprintf('Requested non-existent translation for locale %s of company with language neutral id %d',
-            $locale,
-            $this->getLanguageNeutralId())
+        throw new \Exception(
+            sprintf(
+                'Requested non-existent translation for locale %s of company with language neutral id %d',
+                $locale,
+                $this->getLanguageNeutralId()
+            )
         );
     }
 
