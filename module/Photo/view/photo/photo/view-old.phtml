@@ -201,6 +201,7 @@ $this->scriptUrl()->requireUrl('member/search');
                     <?php endif; ?>
                 </div>
                 <div class="col-lg-3">
+                    test
                     <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
                     <?php if ($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
                         <a
@@ -211,7 +212,7 @@ $this->scriptUrl()->requireUrl('member/search');
                             <?= $this->translate('Full resolution'); ?>
                         </a>
                     <?php endif; ?>
-                    <?= $this->partial('partial/tags.phtml', ['photo' => $photo]) ?>
+                    <?= $this->partial('partial/tags-old.phtml', ['photo' => $photo]) ?>
                 </div>
             </div>
         </div>

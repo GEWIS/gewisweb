@@ -76,13 +76,13 @@ return [
                     'photo' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/view[/:photo_id]',
+                            'route' => '/old/view[/:photo_id]',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'controller' => 'Photo',
-                                'action' => 'view',
+                                'action' => 'viewOld',
                             ],
                         ],
                         'may_terminate' => true,

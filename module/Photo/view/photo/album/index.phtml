@@ -170,7 +170,7 @@ $this->scriptUrl()->requireUrl('member/search')
                         <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                     </figcaption>
                     <figtags style="display:none">
-                        <?= $this->partial('partial/tags-new.phtml', ['photo' => $item]) ?>
+                        <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                     </figtags>
                 </figure>
             <?php endforeach; ?>

@@ -43,7 +43,7 @@ class PhotoController extends AbstractActionController
      * Called on viewing a photo
      *
      */
-    public function viewAction()
+    public function viewOldAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $photoData = $this->getPhotoService()->getPhotoData($photoId);
