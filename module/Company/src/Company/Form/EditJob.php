@@ -24,12 +24,12 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $labelOptions = [];
         foreach ($labels as $label) {
             $labelOptions[] = array('value' => $label->getId(),
-                'label' =>$label->getName(),
+                'label' => $label->getName(),
                 'label_attributes' => array('class' => 'checkbox')
             );
         }
 
-        $this ->setLanguages($languages);
+        $this->setLanguages($languages);
         $this->add([
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
             'name' => 'jobs',
@@ -62,10 +62,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
 
         $this->initFilters();
     }
+
     protected function initFilters()
     {
         $parentFilter = new InputFilter();
-        $rootFilter =  new InputFilter();
+        $rootFilter = new InputFilter();
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 
@@ -91,11 +92,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => true,
                 'validators' => [
                     new \Zend\Validator\Callback([
-                        'callback' => [$this,'slugNameUnique'],
+                        'callback' => [$this, 'slugNameUnique'],
                         'message' => $this->translator->translate('This slug is already taken'),
                     ]),
                     new \Zend\Validator\Regex([
-                        'message' => $this->translator->translate('This slug contains invalid characters') ,
+                        'message' => $this->translator->translate('This slug contains invalid characters'),
                         'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                     ]),
                 ],
@@ -248,7 +249,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             return true;
         }
 
-        $val =  $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
+        $val = $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
         return $val;
     }
 }

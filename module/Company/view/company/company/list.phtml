@@ -37,8 +37,8 @@ $this->headTitle($this->translate('Companies'));
                             <a href="<?= $this->url('company/companyItem', // Route url
                                 ['slugCompanyName' => $company->getSlugName()], // Url parameters
                                 [], // routeOptions
-                                true); // Reuse matched parameters  ?>"
-                                class="list-group-item"><?= $company->getName() ?></a>
+                                true); // Reuse matched parameters   ?>"
+                               class="list-group-item"><?= $company->getName() ?></a>
                             <?php
                         }
                         ?>

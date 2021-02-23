@@ -23,7 +23,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
 
     /**
      * Company entity that these details are for.
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="translations", cascade={"persist"})
      */
     protected $company;
@@ -87,7 +87,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
 
     /**
      * Get the company entity that these details are for.
-     * 
+     *
      * @return Company company that these details are for
      */
     public function getCompany()
@@ -97,7 +97,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
 
     /**
      * Set the company entity that these details are for.
-     * 
+     *
      * @param Company $company company that these details are for
      */
     public function setCompany(Company $company)

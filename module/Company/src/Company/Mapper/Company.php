@@ -61,7 +61,7 @@ class Company
     }
 
     /**
-     * Inserts a company into the datebase, and initializes the given 
+     * Inserts a company into the datebase, and initializes the given
      * translations as empty translations for them
      *
      * @param mixed $languages
@@ -165,6 +165,7 @@ class Company
         $this->em->remove($company);
         $this->em->flush();
     }
+
     /**
      * Get the repository for this mapper.
      *

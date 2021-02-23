@@ -45,6 +45,7 @@ class FeaturedPackage extends Package
         return $packages;
 
     }
+
     /**
      * Get the repository for this mapper.
      *

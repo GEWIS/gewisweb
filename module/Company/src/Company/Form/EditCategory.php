@@ -43,6 +43,7 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
             ],
         ]);
     }
+
     private $languages;
 
     public function setLanguages($languages)

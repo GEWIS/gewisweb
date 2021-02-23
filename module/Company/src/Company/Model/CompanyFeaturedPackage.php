@@ -77,6 +77,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     {
         $this->language = $language;
     }
+
     // For zend2 forms
     public function getArrayCopy()
     {

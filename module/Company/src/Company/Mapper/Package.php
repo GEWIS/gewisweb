@@ -177,6 +177,7 @@ class Package
         }
         return new BannerPackageModel($this->em);
     }
+
     /**
      * Inserts a new package into the given company
      *

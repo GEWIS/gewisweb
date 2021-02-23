@@ -68,7 +68,7 @@ class Category
 
     public function createNullCategory($lang, $translator)
     {
-        $categoryForJobsWithoutCategory =  new CategoryModel();
+        $categoryForJobsWithoutCategory = new CategoryModel();
         $categoryForJobsWithoutCategory->setHidden(false);
         $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
         $categoryForJobsWithoutCategory->setLanguage($lang);

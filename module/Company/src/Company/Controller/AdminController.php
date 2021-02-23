@@ -315,6 +315,7 @@ class AdminController extends AbstractActionController
         }
         return $languageDictionary;
     }
+
     /**
      * Action that displays a form for editing a company
      *
@@ -348,7 +349,7 @@ class AdminController extends AbstractActionController
                 $company,
                 $post,
                 $request->getFiles()
-            )){
+            )) {
                 $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
                     'admin_company/default',
@@ -407,7 +408,7 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->savePackageByData($package,$request->getPost(), $request->getFiles())) {
+            if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
                 // TODO: possibly redirect to company
             }
         }

@@ -37,7 +37,7 @@ $element = $form->get('published');
     </div>
 </div>
 
-<?php if ($type === 'featured'):?>
+<?php if ($type === 'featured'): ?>
     <?php
     $element = $form->get('language');
     ?>
@@ -64,7 +64,7 @@ $element = $form->get('published');
             <?= $this->formElementErrors($element) ?>
         </div>
     </div>
-<?php endif;?>
+<?php endif; ?>
 
 <?php if ($type === 'banner'):
     $element = $form->get('banner') ?>

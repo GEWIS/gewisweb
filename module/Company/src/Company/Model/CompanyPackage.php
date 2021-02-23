@@ -218,7 +218,7 @@ abstract class CompanyPackage
         return ['id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
-            'published' => $this->isPublished(), ];
+            'published' => $this->isPublished(),];
     }
 
     public function exchangeArray($data)

@@ -42,7 +42,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="string")
      */
     protected $slugName;
-    
+
     /**
      * The company's contact's name.
      *
@@ -177,7 +177,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->slugName = $slugName;
     }
-    
+
     /**
      * Get the company's contact's name.
      *
@@ -187,7 +187,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         return $this->contactName;
     }
-    
+
     /**
      * Set the company's contact's name.
      *
@@ -269,8 +269,8 @@ class Company // implements ArrayHydrator (for zend2 form)
         $visible = false;
 
         // When any packages is not expired, the company should be shown to the user
-        foreach($this->getPackages() as $package) {
-            if(!$package->isExpired(new \DateTime)){
+        foreach ($this->getPackages() as $package) {
+            if (!$package->isExpired(new \DateTime)) {
                 $visible = true;
             }
         }
@@ -278,6 +278,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         // Except when it is explicitly marked as hidden.
         return !$visible || $this->getHidden();
     }
+
     /**
      * Get the company's hidden status.
      *
@@ -319,6 +320,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         return count($this->packages);
     }
+
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
@@ -402,6 +404,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         return $this->languageNeutralId;
     }
+
     /**
      * Set the company's language neutral id.
      *
@@ -422,8 +425,8 @@ class Company // implements ArrayHydrator (for zend2 form)
         $translation = null;
 
         $companyLanguages = $this->getTranslations()->map(function ($value) {
-                    return $value->getLanguage();
-                });
+            return $value->getLanguage();
+        });
 
         if ($companyLanguages->contains($locale)) {
             $translation = $this->getTranslations()[$companyLanguages->indexOf($locale)];
@@ -446,6 +449,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         }
         return $default;
     }
+
     /**
      * Returns the translation identified by $language
      *
@@ -459,16 +463,16 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         if ($language !== '') {
             $translation = $this->getTranslationFromLocale($language);
-            if (is_null($translation)){
+            if (is_null($translation)) {
 
                 $translation = new CompanyI18n($language, $this);
             }
-            $language = $language.'_';
+            $language = $language . '_';
 
             // Translated properties
-            $translation->setWebsite($this->updateIfSet($data[($language).'website'], ''));
-            $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
-            $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
+            $translation->setWebsite($this->updateIfSet($data[($language) . 'website'], ''));
+            $translation->setSlogan($this->updateIfSet($data[$language . 'slogan'], ''));
+            $translation->setDescription($this->updateIfSet($data[$language . 'description'], ''));
 
             // Do not set logo, because most likely, $data[logo] is bogus.
             // Instead, the user should set this property himself later.
@@ -487,7 +491,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $newTranslations = new ArrayCollection();
 
         foreach ($languages as $language) {
-            $newTranslationObject = $this->getTranslationFromArray($data,$language);
+            $newTranslationObject = $this->getTranslationFromArray($data, $language);
             $newTranslations->add($newTranslationObject);
         }
 
@@ -497,13 +501,13 @@ class Company // implements ArrayHydrator (for zend2 form)
                 $translation->remove();
             }
         }
-        $this->setName($this->updateIfSet($data['name'],''));
+        $this->setName($this->updateIfSet($data['name'], ''));
         $this->setContactName($this->updateIfSet($data['contactName'], ''));
         $this->setSlugName($this->updateIfSet($data['slugName'], ''));
-        $this->setAddress($this->updateIfSet($data['address'],  ''));
-        $this->setEmail($this->updateIfSet($data['email'],''));
-        $this->setPhone($this->updateIfSet($data['phone'],''));
-        $this->setHidden($this->updateIfSet($data['hidden'],''));
+        $this->setAddress($this->updateIfSet($data['address'], ''));
+        $this->setEmail($this->updateIfSet($data['email'], ''));
+        $this->setPhone($this->updateIfSet($data['phone'], ''));
+        $this->setHidden($this->updateIfSet($data['hidden'], ''));
         $this->translations = $newTranslations;
     }
 
@@ -530,10 +534,10 @@ class Company // implements ArrayHydrator (for zend2 form)
         // Languages
         $arraycopy['languages'] = [];
         foreach ($this->getTranslations() as $translation) {
-            $arraycopy[$translation->getLanguage().'_'.'slogan'] = $translation->getSlogan();
-            $arraycopy[$translation->getLanguage().'_'.'website'] = $translation->getWebsite();
-            $arraycopy[$translation->getLanguage().'_'.'description'] = $translation->getDescription();
-            $arraycopy[$translation->getLanguage().'_'.'logo'] = $translation->getLogo();
+            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
+            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
+            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
+            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
             $arraycopy['languages'][] = $translation->getLanguage();
         }
 

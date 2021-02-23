@@ -380,6 +380,7 @@ class Job
     {
         $this->timestamp = $timestamp;
     }
+
     /**
      * Get the job's description.
      *

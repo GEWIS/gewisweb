@@ -95,6 +95,7 @@ class Company extends AbstractACLService
         $expirePackages = $this->getFuturePackageExpiresBeforeDate($date);
         return [$startPackages, $expirePackages];
     }
+
     /**
      * Returns an list of all companies (excluding hidden companies)
      *
@@ -110,6 +111,7 @@ class Company extends AbstractACLService
         return $this->getCompanyMapper()->findPublicByLocale($translator->getLocale());
     }
     // Company list for admin interface
+
     /**
      * Returns a list of all companies (including hidden companies)
      *
@@ -176,7 +178,8 @@ class Company extends AbstractACLService
         return $nonemptyLabels;
     }
 
-    private function getUniqueInArray($array, $callback) {
+    private function getUniqueInArray($array, $callback)
+    {
         $tempResults = [];
         $resultArray = [];
         foreach ($array as $x) {
@@ -216,11 +219,11 @@ class Company extends AbstractACLService
         }
         $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
         $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
-        $filteredCategories =  $this->filterCategories($categories);
+        $filteredCategories = $this->filterCategories($categories);
         $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
             return $el->getSlug() == "jobs";
-        })) ;
-        if (count($jobsWithoutCategory) > 0 && $noVacancyCategory  == 0) {
+        }));
+        if (count($jobsWithoutCategory) > 0 && $noVacancyCategory == 0) {
             $filteredCategories[] = $this->getCategoryMapper()
                 ->createNullCategory($translator->getLocale(), $translator);
         }
@@ -253,7 +256,7 @@ class Company extends AbstractACLService
             );
         }
         $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
-        $filteredLabels =  $this->filterLabels($labels);
+        $filteredLabels = $this->filterLabels($labels);
         return $filteredLabels;
     }
 
@@ -261,9 +264,9 @@ class Company extends AbstractACLService
      * Creates a new JobCategory.
      *
      * @param array $data Category data from the EditCategory form
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
      * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job category
      *
-     * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
     public function createCategory($data)
     {
@@ -350,9 +353,9 @@ class Company extends AbstractACLService
      * Creates a new JobLabel.
      *
      * @param array $data Label data from the EditLabel form
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
      * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job label
      *
-     * @return bool|int Returns false on failure, and the languageNeutralId on success
      */
     public function createLabel($data)
     {
@@ -1203,6 +1206,7 @@ class Company extends AbstractACLService
     {
         return $this->sm->get('application_service_storage');
     }
+
     /**
      * Gets the storage service.
      *
@@ -1212,6 +1216,7 @@ class Company extends AbstractACLService
     {
         return $this->sm->get('application_get_languages');
     }
+
     public function getLanguageDescription($lang)
     {
         if ($lang === 'en') {

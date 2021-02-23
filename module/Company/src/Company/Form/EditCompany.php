@@ -232,7 +232,7 @@ class EditCompany extends Form
             'required' => true,
             'validators' => [
                 new \Zend\Validator\Callback([
-                    'callback' => [$this,'slugNameUnique'],
+                    'callback' => [$this, 'slugNameUnique'],
                     'message' => $translate->translate('This slug is already taken'),
                 ]),
                 new \Zend\Validator\Regex([
@@ -254,7 +254,7 @@ class EditCompany extends Form
             'validators' => [
             ]
         ]);
-        
+
         $filter->add([
             'name' => 'nl_website',
             'required' => false,
@@ -291,7 +291,7 @@ class EditCompany extends Form
                 ]
             ]
         ]);
-    
+
         $filter->add([
             'name' => 'contactName',
             'required' => false,
@@ -351,6 +351,7 @@ class EditCompany extends Form
 
         $this->setInputFilter($filter);
     }
+
     public function slugNameUnique($slugName, $context)
     {
         $cid = $context['id'];

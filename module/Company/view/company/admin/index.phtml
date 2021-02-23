@@ -5,7 +5,7 @@ $this->scriptUrl()->requireUrls(
     ['slugCompanyName']
 );
 ?>
-<?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
+<?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
 <div class="row">
     <div class="col-md-8">
         <?php endif ?>
@@ -13,19 +13,22 @@ $this->scriptUrl()->requireUrls(
         <div class="row">
             <div class="col-md-10">
                 <div class="form-group">
-                    <input type="text" class="form-control" onkeyup="Company.Admin.filterCompanies()" id="filterCompanies" placeholder="Filter...">
+                    <input type="text" class="form-control" onkeyup="Company.Admin.filterCompanies()"
+                           id="filterCompanies" placeholder="Filter...">
                 </div>
             </div>
             <div class="col-md-2">
-                <a class="btn btn-success" href=<?=$this->url('admin_company/default', ['action' => 'addCompany'])?>>
-                    <i class="fas fa-plus"></i><?=$this->translate('Add Company');?>
+                <a class="btn btn-success" href=<?= $this->url('admin_company/default', ['action' => 'addCompany']) ?>>
+                    <i class="fas fa-plus"></i><?= $this->translate('Add Company'); ?>
                 </a>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-sm-6">
-                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addCategory'])?>'> <span class="fa fa-plus"></span><?=$this->translate('Add Category');?>
+                <a class="btn btn-success"
+                   href='<?= $this->url('admin_company/default', ['action' => 'addCategory']) ?>'> <span
+                        class="fa fa-plus"></span><?= $this->translate('Add Category'); ?>
                 </a>
                 <table class="table table-striped ">
                     <thead>
@@ -42,7 +45,9 @@ $this->scriptUrl()->requireUrls(
                             ['languageNeutralCategoryId' => $category->getLanguageNeutralId()]);
                         ?>
                         <tr>
-                            <td><?= $category->getName(); ?> (<a href="<?= $editUrl; ?>"><?= $this->translate('edit')?></a>)</td>
+                            <td><?= $category->getName(); ?> (<a
+                                    href="<?= $editUrl; ?>"><?= $this->translate('edit') ?></a>)
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -54,7 +59,8 @@ $this->scriptUrl()->requireUrls(
                 </table>
             </div>
             <div class="col-sm-6">
-                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel'])?>'> <span class="fa fa-plus"></span><?=$this->translate('Add Label');?>
+                <a class="btn btn-success" href='<?= $this->url('admin_company/default', ['action' => 'addLabel']) ?>'>
+                    <span class="fa fa-plus"></span><?= $this->translate('Add Label'); ?>
                 </a>
                 <table class="table table-striped ">
                     <thead>
@@ -71,7 +77,8 @@ $this->scriptUrl()->requireUrls(
                             ['languageNeutralLabelId' => $label->getLanguageNeutralId()]);
                         ?>
                         <tr>
-                            <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit')?></a>)</td>
+                            <td><?= $label->getName(); ?> (<a href=<?= $editUrl; ?>><?= $this->translate('edit') ?></a>)
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -91,32 +98,38 @@ $this->scriptUrl()->requireUrls(
                         <th>
                             <?= $this->translate('Name') ?>
                             <a onclick="Company.Admin.sortCompaniesByName(1)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByName(-1)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByName(-1)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Jobs') ?>
                             <a onclick="Company.Admin.sortCompaniesByColumn(1, 1)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 1)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Active jobs') ?>
                             <a onclick="Company.Admin.sortCompaniesByColumn(1, 2)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 2)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Banner active') ?>
                             <a onclick="Company.Admin.sortCompaniesByColumn(1, 3)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 3)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Featured in language') ?>
                             <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Expired packages') ?>
                             <a onclick="Company.Admin.sortCompaniesByColumn(1, 5)"><span class="fa fa-arrow-up"></span></a>
-                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span class="fa fa-arrow-down"></span></a>
+                            <a onclick="Company.Admin.sortCompaniesByColumn(-1, 5)"><span
+                                    class="fa fa-arrow-down"></span></a>
                         </th>
                         <th>
                             <?= $this->translate('Actions') ?>
@@ -136,7 +149,8 @@ $this->scriptUrl()->requireUrls(
                             <td><?= $company->getNumberOfJobs(); ?></td>
                             <td><?= $company->getNumberOfActiveJobs(); ?></td>
                             <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No'); ?></td>
-                            <td><?php $languages = $company->getFeaturedLanguages(); echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
+                            <td><?php $languages = $company->getFeaturedLanguages();
+                                echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
                             <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-xs"
@@ -182,14 +196,15 @@ $this->scriptUrl()->requireUrls(
                         <form id="deleteForm" method="POST">
                             <input type="submit" name="submit" value="<?= $this->translate('Delete company') ?>"
                                    class="btn btn-danger"/>
-                            <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            <button type="button" class="btn"
+                                    data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <?php if (array_sum(array_map("count", $packageFuture)) != 0):?>
+        <?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
     </div>
     <div class="col-md-4">
         <div class="panel panel-info">
@@ -205,7 +220,7 @@ $this->scriptUrl()->requireUrls(
                         <div class="panel-body">
                             <?php
                             $type = $package->getType();
-                            switch ($type){
+                            switch ($type) {
                                 case "banner":
                                     $packageType = $this->translate("Banner Package");
                                     break;
@@ -237,7 +252,7 @@ $this->scriptUrl()->requireUrls(
                         <div class="panel-body">
                             <?php
                             $type = $package->getType();
-                            switch ($type){
+                            switch ($type) {
                                 case "banner":
                                     $packageType = $this->translate("Banner Package");
                                     break;
