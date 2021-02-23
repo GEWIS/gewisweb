@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -374,7 +375,7 @@ class Job
     /**
      * Set the job's timestamp.
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {

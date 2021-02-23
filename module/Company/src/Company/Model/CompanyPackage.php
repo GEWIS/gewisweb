@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
@@ -193,7 +194,7 @@ abstract class CompanyPackage
 
     public function isActive()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($this->isExpired($now)) {
             // unpublish activity
             $this->setPublished(false);
@@ -224,8 +225,8 @@ abstract class CompanyPackage
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
-        $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
-        $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
+        $this->setStartingDate((isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate());
+        $this->setExpirationDate((isset($data['expirationDate'])) ? new DateTime($data['expirationDate']) : $this->getExpirationDate());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
     }
 }
