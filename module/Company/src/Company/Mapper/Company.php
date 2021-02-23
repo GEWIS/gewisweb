@@ -70,11 +70,6 @@ class Company
     {
         $company = new CompanyModel($this->em);
 
-        $companiesBySameSlugName = $this->findEditableCompaniesBySlugName($company->getSlugName(), false);
-
-        // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
-
-
         foreach ($languages as $language) {
             $translation = new CompanyI18n($language, $company);
             if (is_null($translation->getLogo())) {
