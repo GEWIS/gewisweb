@@ -69,9 +69,7 @@ class Label
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.language=:lang');
         $qb->setParameter('lang', $labelLanguage);
-        $labels = $qb->getQuery()->getResult();
-
-        return $labels;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -97,9 +95,7 @@ class Label
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.languageNeutralId=:labelId');
         $qb->setParameter('labelId', $labelId);
-        $labels = $qb->getQuery()->getResult();
-
-        return $labels;
+        return $qb->getQuery()->getResult();
     }
 
     /**

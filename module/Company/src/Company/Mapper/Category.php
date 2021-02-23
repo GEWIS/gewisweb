@@ -61,9 +61,7 @@ class Category
         $qb->andWhere('c.hidden=:hidden');
         $qb->setParameter('lang', $categoryLanguage);
         $qb->setParameter('hidden', false);
-        $categories = $qb->getQuery()->getResult();
-
-        return $categories;
+        return $qb->getQuery()->getResult();
     }
 
     public function createNullCategory($lang, $translator)
@@ -100,9 +98,7 @@ class Category
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.languageNeutralId=:categoryId');
         $qb->setParameter('categoryId', $categoryId);
-        $categories = $qb->getQuery()->getResult();
-
-        return $categories;
+        return $qb->getQuery()->getResult();
     }
 
     /**

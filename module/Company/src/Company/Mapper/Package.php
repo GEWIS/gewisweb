@@ -84,8 +84,7 @@ class Package
             ->andWhere('p.expires<=:date')
             ->orderBy('p.expires', 'ASC')
             ->setParameter('date', $date);
-        $packages = $qb->getQuery()->getResult();
-        return $packages;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -106,8 +105,7 @@ class Package
             ->andWhere('p.starts<=:date')
             ->orderBy('p.starts', 'ASC')
             ->setParameter('date', $date);
-        $packages = $qb->getQuery()->getResult();
-        return $packages;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -140,9 +138,7 @@ class Package
     public function findVisiblePackages()
     {
         $qb = $this->getVisiblePackagesQueryBuilder();
-        $packages = $qb->getQuery()->getResult();
-
-        return $packages;
+        return $qb->getQuery()->getResult();
 
     }
 

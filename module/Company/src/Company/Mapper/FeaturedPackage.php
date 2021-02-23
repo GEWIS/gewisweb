@@ -40,9 +40,7 @@ class FeaturedPackage extends Package
         $qb = $this->getVisiblePackagesQueryBuilder();
         $qb->andWhere('p.language>=?1')
             ->setParameter(1, $locale);
-        $packages = $qb->getQuery()->getResult();
-
-        return $packages;
+        return $qb->getQuery()->getResult();
 
     }
 

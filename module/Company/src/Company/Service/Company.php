@@ -256,8 +256,7 @@ class Company extends AbstractACLService
             );
         }
         $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
-        $filteredLabels = $this->filterLabels($labels);
-        return $filteredLabels;
+        return $this->filterLabels($labels);
     }
 
     /**
@@ -820,9 +819,7 @@ class Company extends AbstractACLService
             );
         }
         $package = $this->getEditablePackage($packageId);
-        $result = $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
-
-        return $result;
+        return $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
     }
 
     /**
@@ -978,8 +975,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
-        $res = $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
-        return $res;
+        return $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
     }
 
     /**
