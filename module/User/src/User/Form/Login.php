@@ -57,6 +57,11 @@ class Login extends Form
             'type' => 'hidden'
         ]);
 
+        $this->add([
+            'name' => 'security',
+            'type' => 'Zend\Form\Element\Csrf'
+        ]);
+
         $this->initFilters();
     }
 
