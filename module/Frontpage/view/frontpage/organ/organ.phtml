@@ -6,26 +6,24 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 $organInformation = $organ->getApprovedOrganInformation();
 function getOrganDescription($organInformation, $lang)
 {
-    if (is_null($organInformation)) {
-        return '';
-    }
+    if (!is_null($organInformation)) {
+        if ($lang === 'en') {
+            if (strlen($organInformation->getEnglishDescription()) > 0) {
+                return $organInformation->getEnglishDescription();
+            }
 
-    if ($lang === 'en') {
-        if (strlen($organInformation->getEnglishDescription()) > 0) {
-            return $organInformation->getEnglishDescription();
+            if (strlen($organInformation->getShortEnglishDescription()) > 0) {
+                return $organInformation->getShortEnglishDescription();
+            }
         }
 
-        if (strlen($organInformation->getShortEnglishDescription()) > 0) {
-            return $organInformation->getShortEnglishDescription();
+        if (strlen($organInformation->getDutchDescription()) > 0) {
+            return $organInformation->getDutchDescription();
         }
-    }
 
-    if (strlen($organInformation->getDutchDescription()) > 0) {
-        return $organInformation->getDutchDescription();
-    }
-
-    if (strlen($organInformation->getShortDutchDescription()) > 0) {
-        return $organInformation->getShortDutchDescription();
+        if (strlen($organInformation->getShortDutchDescription()) > 0) {
+            return $organInformation->getShortDutchDescription();
+        }
     }
 
     return '';

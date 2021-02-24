@@ -19,7 +19,6 @@
                         <article class="content-article">
                             <h3>
                                 <?php
-                                // TODO: Fix design and URLs
                                 $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 if ($item instanceof \Activity\Model\Activity) {
                                     echo ($lang === 'en') ? $item->getNameEn() : $item->getName();

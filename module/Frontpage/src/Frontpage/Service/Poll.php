@@ -339,9 +339,7 @@ class Poll extends AbstractAclService
      */
     public function getUser()
     {
-        $user = $this->sm->get('user_role');
-
-        return $user;
+        return $this->sm->get('user_role');
     }
 
     /**

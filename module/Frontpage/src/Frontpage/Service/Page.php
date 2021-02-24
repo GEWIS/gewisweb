@@ -41,12 +41,10 @@ class Page extends AbstractAclService
     {
         $pageMapper = $this->getPageMapper();
         $parents = [];
-        if (!is_null($page)) {
-            if (!is_null($page->getSubCategory())) {
-                $parents[] = $pageMapper->findPage($page->getCategory());
-                if (!is_null($page->getName())) {
-                    $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
-                }
+        if (!is_null($page) && !is_null($page->getSubCategory())) {
+            $parents[] = $pageMapper->findPage($page->getCategory());
+            if (!is_null($page->getName())) {
+                $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
             }
         }
 
@@ -200,12 +198,12 @@ class Page extends AbstractAclService
                 $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
                 return $config['public_dir'] . '/' . $fileName;
             } else {
-                throw new \Exception(
+                throw new \InvalidArgumentException(
                     $this->getTranslator()->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
-            throw new \Exception(
+            throw new \InvalidArgumentException(
                 $this->getTranslator()->translate('The uploaded file is not a valid image')
             );
         }

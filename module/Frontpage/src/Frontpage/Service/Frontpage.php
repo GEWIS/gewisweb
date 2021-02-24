@@ -125,9 +125,7 @@ class Frontpage extends AbstractAclService
     public function getUpcomingActivities()
     {
         $count = $this->getConfig()['activity_count'];
-        $activities = $this->getActivityMapper()->getUpcomingActivities($count);
-
-        return $activities;
+        return $this->getActivityMapper()->getUpcomingActivities($count);
 
     }
 
