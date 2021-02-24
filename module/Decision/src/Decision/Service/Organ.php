@@ -124,14 +124,14 @@ class Organ extends AbstractAclService
     /**
      * Finds an organ by its abbreviation.
      *
-     * @see Decision/Mapper/Organ::findByAbbr()
-     *
      * @param $abbr
      * @param string $type
      * @param bool $latest
      *    Whether to retrieve the latest occurence of an organ or not.
      *
      * @return OrganModel
+     * @see Decision/Mapper/Organ::findByAbbr()
+     *
      */
     public function findOrganByAbbr($abbr, $type = null, $latest = false)
     {

@@ -109,6 +109,7 @@ class Meeting
     {
         return $this->meetingNotes;
     }
+
     /**
      * Set the meeting type.
      *

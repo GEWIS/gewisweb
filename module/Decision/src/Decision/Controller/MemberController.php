@@ -23,9 +23,9 @@ class MemberController extends AbstractActionController
         $member = $this->identity()->getMember();
 
         return new ViewModel([
-            'member'             => $member,
-            'isActive'           => $this->getMemberService()->isActiveMember(),
-            'upcoming'           => $decisionService->getUpcomingMeeting(),
+            'member' => $member,
+            'isActive' => $this->getMemberService()->isActiveMember(),
+            'upcoming' => $decisionService->getUpcomingMeeting(),
             'meetingsCollection' => $meetingsCollection,
         ]);
     }
@@ -63,8 +63,8 @@ class MemberController extends AbstractActionController
             $members = [];
             foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
                 $members[] = [
-                    'lidnr'      => $member->getLidnr(),
-                    'fullName'   => $member->getFullname(),
+                    'lidnr' => $member->getLidnr(),
+                    'fullName' => $member->getFullname(),
                     'generation' => $member->getGeneration()
                 ];
             }

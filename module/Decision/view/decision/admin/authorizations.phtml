@@ -3,7 +3,8 @@
         <div class="form-group">
             <select class="form-control" onchange="window.location=this.value">
                 <?php foreach ($meetings as $meeting): ?>
-                    <option value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
+                    <option
+                        value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
                         <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>>
                         AV <?= $meeting->getNumber() ?> (<?= $meeting->getDate()->format('Y-m-d') ?>
                         )

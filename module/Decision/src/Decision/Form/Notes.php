@@ -28,7 +28,7 @@ class Notes extends Form implements InputFilterProviderInterface
             $meeting = $meeting[0];
             $name = $meeting->getType() . '/' . $meeting->getNumber();
             $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
-                            . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
+                . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
         $this->add([
@@ -67,13 +67,13 @@ class Notes extends Form implements InputFilterProviderInterface
     public function setError($error)
     {
         switch ($error) {
-        case self::ERROR_FILE_EXISTS:
-            $this->setMessages([
-                'meeting' => [
-                    $this->translator->translate('There already are notes for this meeting')
-                ]
-            ]);
-            break;
+            case self::ERROR_FILE_EXISTS:
+                $this->setMessages([
+                    'meeting' => [
+                        $this->translator->translate('There already are notes for this meeting')
+                    ]
+                ]);
+                break;
         }
     }
 

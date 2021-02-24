@@ -47,7 +47,8 @@ class Member
      *
      * @return array
      */
-    public function searchByName($query, $maxResults = 32, $orderColumn = 'generation', $orderDirection = 'DESC')    {
+    public function searchByName($query, $maxResults = 32, $orderColumn = 'generation', $orderDirection = 'DESC')
+    {
         $qb = $this->em->createQueryBuilder();
         $qb->select('m')
             ->from('Decision\Model\Member', 'm')

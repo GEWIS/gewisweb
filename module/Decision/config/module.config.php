@@ -375,10 +375,10 @@ return [
             'routes' => [
                 'sort-documents-legacy' => [
                     'options' => [
-                        'route'    => 'documents sort-legacy',
+                        'route' => 'documents sort-legacy',
                         'defaults' => [
                             'controller' => 'Decision\Controller\Admin',
-                            'action'     => 'sortDocumentsLegacy'
+                            'action' => 'sortDocumentsLegacy'
                         ]
                     ]
                 ]

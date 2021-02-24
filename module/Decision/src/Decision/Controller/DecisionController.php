@@ -160,7 +160,7 @@ class DecisionController extends AbstractActionController
             }
             $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
             return new ViewModel([
-                'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
+                'folderName' => $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
                 'folder' => $folder,
                 'path' => $path,
                 'trailingSlash' => $trailingSlash,

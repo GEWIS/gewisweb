@@ -152,8 +152,8 @@ class AdminController extends AbstractActionController
 
         // Perform INNER JOIN to only retrieve meetings with associated documents
         $dql = 'SELECT m, d ' .
-               'FROM Decision\Model\Meeting m ' .
-               'INNER JOIN m.documents d';
+            'FROM Decision\Model\Meeting m ' .
+            'INNER JOIN m.documents d';
 
         $meetings = $entityManager->createQuery($dql)->getResult();
         foreach ($meetings as $meeting) {

@@ -41,7 +41,7 @@ class LocalFileReader implements FileReader
             return null;
         }
         $contentType = mime_content_type($fullPath);
-        if (substr($contentType,0, strlen('text')) === 'text') {
+        if (substr($contentType, 0, strlen('text')) === 'text') {
             $contentType = 'text/plain';
         }
         $response = new \Zend\Http\Response\Stream();
@@ -49,8 +49,8 @@ class LocalFileReader implements FileReader
         $response->setStatusCode(200);
         $headers = new \Zend\Http\Headers();
         $headers->addHeaderLine('Content-Type', $contentType)
-                ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
-                ->addHeaderLine('Content-Length', filesize($fullPath));
+            ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
+            ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
         return $response;
     }

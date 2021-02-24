@@ -19,7 +19,7 @@ $this->scriptUrl()->requireUrl('admin_page/upload');
 
     .crop-area {
         border: 2px solid;
-        background-color:#D40026;
+        background-color: #D40026;
     }
 </style>
 <?php
@@ -165,14 +165,14 @@ $submit->setAttribute('class', 'btn btn-primary');
             reader.onload = function (e) {
                 $('#' + element + 'Image').attr('src', e.target.result);
                 $('#' + element + 'Alert').show();
-                $('#' + element + 'Image').imagesLoaded( function() {
+                $('#' + element + 'Image').imagesLoaded(function () {
                     var width = $('#' + element + 'Image').width();
                     var height = Math.round(width / aspectX * aspectY);
                     $('#' + element + 'Image').Jcrop({
-                        onSelect:    callback,
-                        bgColor:     'black',
-                        bgOpacity:   .4,
-                        setSelect:   [ 0, 0, width, height ],
+                        onSelect: callback,
+                        bgColor: 'black',
+                        bgOpacity: .4,
+                        setSelect: [0, 0, width, height],
                         aspectRatio: aspectX / aspectY
                     });
                 });
@@ -185,8 +185,8 @@ $submit->setAttribute('class', 'btn btn-primary');
         }
     }
 
-    $("#thumbnailUpload").change(function(){
-        readImage(this, 'thumbnailPreview', 16, 9, function(c) {
+    $("#thumbnailUpload").change(function () {
+        readImage(this, 'thumbnailPreview', 16, 9, function (c) {
             var width = $('#thumbnailPreviewImage').width();
             var height = $('#thumbnailPreviewImage').height();
             $('[name=thumbnailCropX]').val(c.x / width);
@@ -196,8 +196,8 @@ $submit->setAttribute('class', 'btn btn-primary');
         });
     });
 
-    $("#coverUpload").change(function(){
-        readImage(this, 'coverPreview', 16, 5, function(c) {
+    $("#coverUpload").change(function () {
+        readImage(this, 'coverPreview', 16, 5, function (c) {
             var width = $('#coverPreviewImage').width();
             var height = $('#coverPreviewImage').height();
             $('[name=coverCropX]').val(c.x / width);

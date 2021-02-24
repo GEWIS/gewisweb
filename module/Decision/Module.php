@@ -1,4 +1,5 @@
 <?php
+
 namespace Decision;
 
 use Zend\ServiceManager\ServiceManager;

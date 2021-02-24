@@ -29,7 +29,7 @@ class Meeting
     /**
      * Find all meetings.
      *
-     * @param int|null $limit   The amount of results, default is all
+     * @param int|null $limit The amount of results, default is all
      * @return array Of all meetings
      */
     public function findAll($limit = null)
