@@ -8,17 +8,21 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
+    private $translator;
+    private $companySlug;
+    private $currentSlug;
+    private $languages;
+
+    protected $extraInputFilter;
+
     public function __construct($mapper, Translator $translator, $languages, $hydrator, $labels)
     {
         // we want to ignore the name passed
         parent::__construct();
-
         $this->translator = $translator;
-
         $this->mapper = $mapper;
 
         $this->setHydrator($hydrator);
-
         $this->setAttribute('method', 'post');
 
         $labelOptions = [];
@@ -67,6 +71,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
     {
         $parentFilter = new InputFilter();
         $rootFilter = new InputFilter();
+
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 
@@ -74,6 +79,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'name' => 'id',
                 'required' => false,
             ]);
+
             $filter->add([
                 'name' => 'name',
                 'required' => true,
@@ -87,6 +93,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                     ],
                 ],
             ]);
+
             $filter->add([
                 'name' => 'slugName',
                 'required' => true,
@@ -127,6 +134,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                     ],
                 ],
             ]);
+
             $filter->add([
                 'name' => 'contactName',
                 'required' => false,
@@ -147,10 +155,12 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                     ['name' => 'email_address'],
                 ],
             ]);
+
             $filter->add([
                 'name' => 'phone',
                 'required' => false,
             ]);
+
             $filter->add([
                 'name' => 'active',
                 'required' => false,
@@ -179,12 +189,15 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                     ],
                 ],
             ]);
+
             $filter->add([
                 'name' => 'category',
                 'required' => false,
             ]);
+
             $rootFilter->add($filter, $lang);
         }
+
         $parentFilter->add($rootFilter, $this->baseFieldset->getName());
         $this->extraInputFilter = $parentFilter;
         $this->setInputFilter($parentFilter);
@@ -195,14 +208,6 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         return $this->extraInputFilter;
     }
 
-    private $translator;
-
-    private $companySlug;
-
-    private $currentSlug;
-
-    private $languages;
-
     public function setLanguages($languages)
     {
         $this->languages = $languages;
@@ -212,9 +217,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
     {
         $labelsElement = $this->get('labels');
         $options = [];
+
         foreach ($labels as $label) {
             $options[] = $label->getId();
         }
+
         $labelsElement->setValue(array_values($options));
     }
 
@@ -233,8 +240,6 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $this->currentSlug = $currentSlug;
     }
 
-    protected $extraInputFilter;
-
     /**
      *
      * Checks if a given slugName is unique. (Callback for validation).
@@ -244,6 +249,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
     {
         $jid = $context['id'];
         $cat = $context['category'];
+
         if ($this->currentSlug === $slugName) {
             return true;
         }

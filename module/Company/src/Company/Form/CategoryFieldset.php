@@ -23,6 +23,7 @@ class CategoryFieldset extends Fieldset
                 'type' => 'hidden',
             ],
         ]);
+
         $this->add([
             'name' => 'slug',
             'attributes' => [
@@ -33,6 +34,7 @@ class CategoryFieldset extends Fieldset
                 'label' => $translate->translate('Slug name'),
             ],
         ]);
+
         $this->add([
             'name' => 'name',
             'attributes' => [
@@ -44,6 +46,7 @@ class CategoryFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
+
         $this->add([
             'name' => 'pluralName',
             'attributes' => [
@@ -55,6 +58,7 @@ class CategoryFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
+
         $this->add([
             'name' => 'hidden',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -65,6 +69,7 @@ class CategoryFieldset extends Fieldset
                 'use_hidden_element' => true,
             ],
         ]);
+
         // Hidden language element, because it will only be set at initialization.
         $this->add([
             'name' => 'language',

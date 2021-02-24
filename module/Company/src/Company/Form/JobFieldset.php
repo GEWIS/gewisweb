@@ -9,6 +9,9 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
+    protected $mapper;
+    protected $translator;
+
     public function __construct($mapper, Translator $translator, $hydrator)
     {
         parent::__construct();
@@ -28,6 +31,7 @@ class JobFieldset extends Fieldset
                 'type' => 'hidden',
             ],
         ]);
+
         $this->add([
             'name' => 'name',
             'attributes' => [
@@ -37,6 +41,7 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Name'),
             ],
         ]);
+
         $this->add([
             'name' => 'slugName',
             'attributes' => [
@@ -46,6 +51,7 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Permalink'),
             ],
         ]);
+
         $this->add([
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -56,6 +62,7 @@ class JobFieldset extends Fieldset
                 'unchecked_value' => '0',
             ],
         ]);
+
         $this->add([
             'name' => 'website',
             'attributes' => [
@@ -66,6 +73,7 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
         $this->add([
             'name' => 'attachment_file',
             'type' => '\Zend\Form\Element\File',
@@ -77,6 +85,7 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
         $this->add([
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
@@ -88,6 +97,7 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
         $this->add([
             'name' => 'contactName',
             'attributes' => [
@@ -98,6 +108,7 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
         $this->add([
             'name' => 'phone',
             'attributes' => [
@@ -108,6 +119,7 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
         $this->add([
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
@@ -118,13 +130,11 @@ class JobFieldset extends Fieldset
         ]);
     }
 
-    protected $mapper;
-    protected $translator;
-
     public function setLanguage($lang)
     {
         $jc = new \Company\Model\Job();
         $jc->setLanguage($lang);
+
         $this->add(
             $this->mapper->createObjectSelectConfig(
                 'Company\Model\JobCategory',
@@ -134,6 +144,7 @@ class JobFieldset extends Fieldset
                 $lang
             )
         );
+
         $this->setObject($jc);
     }
 }
