@@ -13,12 +13,12 @@ class Legacy extends AbstractService
     /**
      * Checks if a SuSOS pincode is correct.
      *
-     * @throws \Exception
-     *
      * @param \User\Model\User $user
      * @param string $pincode
      *
      * @return bool indicating whether the pincode was correct.
+     * @throws \Exception
+     *
      */
     public function checkPincode($user, $pincode)
     {
@@ -28,13 +28,13 @@ class Legacy extends AbstractService
     /**
      * Checks a password against the old website's database and saves it in the new database if corrrect
      *
-     * @throws \Exception
-     *
      * @param \User\Model\User $user
      * @param string $password
      * @param \Zend\Crypt\Password\Bcrypt $bcrypt
      *
      * @return bool indicating if password was correct
+     * @throws \Exception
+     *
      */
     public function checkPassword($user, $password, $bcrypt)
     {

@@ -46,7 +46,8 @@ class IndexController extends AbstractActionController
     /**
      * Throws a teapot error
      */
-    public function teapotAction() {
+    public function teapotAction()
+    {
         $this->getResponse()->setStatusCode(418);
     }
 }
