@@ -33,12 +33,10 @@ class IsCreator implements AssertionInterface
      */
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
-        if (!$role instanceof User) {
+        if (!$role instanceof User || !$resource instanceof CreatorResourceInterface) {
             return false;
         }
-        if (!$resource instanceof CreatorResourceInterface) {
-            return false;
-        }
+
         $creator = $resource->getResourceCreator();
 
         if (!$creator instanceof User) {

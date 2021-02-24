@@ -69,9 +69,7 @@ class PinMapper implements AdapterInterface
      */
     public function authenticate()
     {
-        $mapper = $this->getMapper();
-
-        $user = $mapper->findByLogin($this->lidnr);
+        $user = $this->mapper->findByLogin($this->lidnr);
 
         if (null === $user) {
             return new Result(

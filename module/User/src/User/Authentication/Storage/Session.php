@@ -82,6 +82,7 @@ class Session extends Storage\Session
 
         $this->session->{$this->member} = $session->lidnr;
         $this->saveSession($session->lidnr);
+
         return true;
     }
 

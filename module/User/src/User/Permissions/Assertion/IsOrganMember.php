@@ -35,10 +35,7 @@ class IsOrganMember implements AssertionInterface
      */
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
-        if (!$role instanceof User) {
-            return false;
-        }
-        if (!$resource instanceof OrganResourceInterface) {
+        if (!$role instanceof User || !$resource instanceof OrganResourceInterface) {
             return false;
         }
 
