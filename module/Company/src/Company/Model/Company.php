@@ -448,6 +448,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         if (isset($object)) {
             return $object;
         }
+
         return $default;
     }
 

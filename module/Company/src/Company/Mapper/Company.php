@@ -57,6 +57,7 @@ class Company
                 return false;
             }
         }
+
         return true;
     }
 
@@ -133,6 +134,7 @@ class Company
         if ($asObject) {
             return $qb->getQuery()->getResult();
         }
+
         return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
     }
 

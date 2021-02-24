@@ -152,6 +152,7 @@ class Job
         if ($id == 0) {
             return $this->id;
         }
+
         return $id;
     }
 

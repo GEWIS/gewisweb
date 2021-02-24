@@ -84,6 +84,7 @@ class Package
             ->andWhere('p.expires<=:date')
             ->orderBy('p.expires', 'ASC')
             ->setParameter('date', $date);
+
         return $qb->getQuery()->getResult();
     }
 
@@ -105,6 +106,7 @@ class Package
             ->andWhere('p.starts<=:date')
             ->orderBy('p.starts', 'ASC')
             ->setParameter('date', $date);
+
         return $qb->getQuery()->getResult();
     }
 
@@ -127,6 +129,7 @@ class Package
             ->where('p.published=1')
             ->andWhere('p.starts<=CURRENT_DATE()')
             ->andWhere('p.expires>=CURRENT_DATE()');
+
         return $qb;
     }
 
@@ -138,6 +141,7 @@ class Package
     public function findVisiblePackages()
     {
         $qb = $this->getVisiblePackagesQueryBuilder();
+
         return $qb->getQuery()->getResult();
 
     }
@@ -171,6 +175,7 @@ class Package
             return new FeaturedPackageModel($this->em);
 
         }
+
         return new BannerPackageModel($this->em);
     }
 

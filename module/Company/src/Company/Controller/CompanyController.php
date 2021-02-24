@@ -22,6 +22,7 @@ class CompanyController extends AbstractActionController
                 'translator' => $companyService->getTranslator(),
             ]);
         }
+
         return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
@@ -147,8 +148,10 @@ class CompanyController extends AbstractActionController
                     ]);
                 }
             }
+
             return $this->notFoundAction();
         }
+
         return new ViewModel([
             'activeJobList' => $companyService->getActiveJobList(),
             'translator' => $companyService->getTranslator(),

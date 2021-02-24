@@ -56,11 +56,12 @@ class Category
     public function findVisibleCategoryByLanguage($categoryLanguage)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.language=:lang');
-        $qb->andWhere('c.hidden=:hidden');
-        $qb->setParameter('lang', $categoryLanguage);
-        $qb->setParameter('hidden', false);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.language=:lang')
+            ->andWhere('c.hidden=:hidden')
+            ->setParameter('lang', $categoryLanguage)
+            ->setParameter('hidden', false);
+
         return $qb->getQuery()->getResult();
     }
 
@@ -84,20 +85,23 @@ class Category
     public function siblingCategory($category, $lang)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryId')->andWhere('c.language=:language');
-        $qb->setParameter('categoryId', $category->getLanguageNeutralId());
-        $qb->setParameter('language', $lang);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.languageNeutralId=:categoryId')->andWhere('c.language=:language')
+            ->setParameter('categoryId', $category->getLanguageNeutralId())
+            ->setParameter('language', $lang);
+
         $categories = $qb->getQuery()->getResult();
+
         return $categories[0];
     }
 
     public function findAllCategoriesById($categoryId)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryId');
-        $qb->setParameter('categoryId', $categoryId);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.languageNeutralId=:categoryId')
+            ->setParameter('categoryId', $categoryId);
+
         return $qb->getQuery()->getResult();
     }
 

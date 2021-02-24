@@ -27,6 +27,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to view the banner')
             );
         }
+
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
@@ -38,6 +39,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to view the featured company')
             );
         }
+
         return $this->getFeaturedPackageMapper()->getFeaturedPackage($translator->getLocale());
     }
 
@@ -48,6 +50,7 @@ class Company extends AbstractACLService
             $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
             $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
         );
+
         usort($startPackages, function ($a, $b) {
             $aStart = $a->getStartingDate();
             $bStart = $b->getStartingDate();
@@ -56,6 +59,7 @@ class Company extends AbstractACLService
             }
             return $aStart < $bStart ? -1 : 1;
         });
+
         return $startPackages;
     }
 
@@ -66,6 +70,7 @@ class Company extends AbstractACLService
             $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
             $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
         );
+
         usort($expirePackages, function ($a, $b) {
             $aEnd = $a->getExpirationDate();
             $bEnd = $b->getExpirationDate();
@@ -74,6 +79,7 @@ class Company extends AbstractACLService
             }
             return $aEnd < $bEnd ? -1 : 1;
         });
+
         return $expirePackages;
     }
 
@@ -86,13 +92,16 @@ class Company extends AbstractACLService
     public function getPackageChangeEvents($date)
     {
         $translator = $this->getTranslator();
+
         if (!$this->isAllowed('listall')) {
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to list the companies')
             );
         }
+
         $startPackages = $this->getFuturePackageStartsBeforeDate($date);
         $expirePackages = $this->getFuturePackageExpiresBeforeDate($date);
+
         return [$startPackages, $expirePackages];
     }
 
@@ -103,11 +112,13 @@ class Company extends AbstractACLService
     public function getCompanyList()
     {
         $translator = $this->getTranslator();
+
         if (!$this->isAllowed('list')) {
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to list the companies')
             );
         }
+
         return $this->getCompanyMapper()->findPublicByLocale($translator->getLocale());
     }
     // Company list for admin interface
@@ -124,6 +135,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to access the admin interface')
             );
         }
+
         return $this->getCompanyMapper()->findAll();
     }
 
@@ -141,6 +153,7 @@ class Company extends AbstractACLService
             return $category;
         }
         $category = $mapper->siblingCategory($category, $locale);
+
         return $category;
     }
 
@@ -158,6 +171,7 @@ class Company extends AbstractACLService
                 $nonemptyCategories[] = $category;
             }
         }
+
         return $nonemptyCategories;
     }
 
@@ -175,6 +189,7 @@ class Company extends AbstractACLService
                 $nonemptyLabels[] = $label;
             }
         }
+
         return $nonemptyLabels;
     }
 
@@ -189,6 +204,7 @@ class Company extends AbstractACLService
                 $tempResults[$newVar] = $x;
             }
         }
+
         return $resultArray;
     }
 
@@ -217,16 +233,19 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to list all categories')
             );
         }
+
         $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($translator->getLocale());
         $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
         $filteredCategories = $this->filterCategories($categories);
         $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
             return $el->getSlug() == "jobs";
         }));
+
         if (count($jobsWithoutCategory) > 0 && $noVacancyCategory == 0) {
             $filteredCategories[] = $this->getCategoryMapper()
                 ->createNullCategory($translator->getLocale(), $translator);
         }
+
         return $filteredCategories;
     }
 
@@ -255,7 +274,9 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to list all labels')
             );
         }
+
         $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($translator->getLocale());
+
         return $this->filterLabels($labels);
     }
 
@@ -345,6 +366,7 @@ class Company extends AbstractACLService
         }
 
         $category->setLanguageNeutralId($languageNeutralId);
+
         return $id;
     }
 
@@ -434,6 +456,7 @@ class Company extends AbstractACLService
         }
 
         $label->setLanguageNeutralId($languageNeutralId);
+
         return $id;
     }
 
@@ -563,6 +586,7 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
+
         if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
@@ -579,6 +603,7 @@ class Company extends AbstractACLService
             $this->saveCompany();
             return $company;
         }
+
         return null;
     }
 
@@ -595,6 +620,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a company')
             );
         }
+
         return $this->getCompanyMapper()->insert($languages);
     }
 
@@ -618,6 +644,7 @@ class Company extends AbstractACLService
             $this->savePackage();
             return true;
         }
+
         return false;
     }
 
@@ -634,8 +661,10 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to insert a package')
             );
         }
+
         $companies = $this->getEditableCompaniesBySlugName($companySlugName);
         $company = $companies[0];
+
         return $this->getPackageMapper()->insertPackageIntoCompany($company, $type);
     }
 
@@ -651,12 +680,14 @@ class Company extends AbstractACLService
     {
         $package = $this->getPackageMapper()->findPackage($packageId);
         $jobs = [];
+
         foreach ($this->getLanguages() as $lang) {
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
             $jobs[$lang] = $job;
         }
+
         return $this->saveJobData("", $jobs, $data, $files);
     }
 
@@ -802,6 +833,7 @@ class Company extends AbstractACLService
             return $id;
         }
         $job->setLanguageNeutralId($languageNeutralId);
+
         return $id;
     }
 
@@ -819,6 +851,7 @@ class Company extends AbstractACLService
             );
         }
         $package = $this->getEditablePackage($packageId);
+
         return $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
     }
 
@@ -957,6 +990,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit companies')
             );
         }
+
         return $this->getCompanyMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
@@ -975,6 +1009,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
+
         return $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
     }
 
@@ -1007,6 +1042,7 @@ class Company extends AbstractACLService
             // TODO: This is a hotfix for some ORM issues:
             $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
         }
+
         return $jobs;
     }
 
@@ -1049,6 +1085,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit labels')
             );
         }
+
         return $this->sm->get('company_admin_edit_label_form');
     }
 
@@ -1063,8 +1100,8 @@ class Company extends AbstractACLService
         }
         if ($type === 'featured') {
             return $this->sm->get('company_admin_edit_featuredpackage_form');
-
         }
+
         return $this->sm->get('company_admin_edit_package_form');
     }
 
@@ -1081,6 +1118,7 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to edit jobs')
             );
         }
+
         return $this->sm->get('company_admin_edit_job_form');
     }
 

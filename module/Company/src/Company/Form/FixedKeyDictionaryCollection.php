@@ -18,6 +18,7 @@ class FixedKeyDictionaryCollection extends Collection
                 $fs->setLanguage($x);
             }
         }
+
         return $this;
     }
 
@@ -29,6 +30,7 @@ class FixedKeyDictionaryCollection extends Collection
             $element = $this->get($name);
             $collection[$name] = $element instanceof FieldsetInterface ? $element->bindValues($value) : $value;
         }
+
         return $collection;
     }
 }

@@ -67,6 +67,7 @@ class CompanyJobPackage extends CompanyPackage
             return $job->getCategory()->getLanguageNeutralId() === $category->getLanguageNeutralId()
                 && $job->isActive() && $job->getLanguage() === $category->getLanguage();
         };
+
         return array_filter($this->jobs->toArray(), $filter);
     }
 

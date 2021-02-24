@@ -27,6 +27,7 @@ class FeaturedPackage extends Package
         if (!empty($featuredPackages)) {
             return $featuredPackages[array_rand($featuredPackages)];
         }
+
         return null;
     }
 
@@ -40,6 +41,7 @@ class FeaturedPackage extends Package
         $qb = $this->getVisiblePackagesQueryBuilder();
         $qb->andWhere('p.language>=?1')
             ->setParameter(1, $locale);
+
         return $qb->getQuery()->getResult();
 
     }

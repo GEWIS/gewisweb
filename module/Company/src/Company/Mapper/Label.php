@@ -66,9 +66,10 @@ class Label
     public function findVisibleLabelByLanguage($labelLanguage)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.language=:lang');
-        $qb->setParameter('lang', $labelLanguage);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.language=:lang')
+            ->setParameter('lang', $labelLanguage);
+
         return $qb->getQuery()->getResult();
     }
 
@@ -82,9 +83,9 @@ class Label
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')
             ->where('c.languageNeutralId=:labelId')
-            ->andWhere('c.language=:language');
-        $qb->setParameter('labelId', $label->getLanguageNeutralId());
-        $qb->setParameter('language', $lang);
+            ->andWhere('c.language=:language')
+            ->setParameter('labelId', $label->getLanguageNeutralId())
+            ->setParameter('language', $lang);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -92,9 +93,10 @@ class Label
     public function findAllLabelsById($labelId)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:labelId');
-        $qb->setParameter('labelId', $labelId);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.languageNeutralId=:labelId')
+            ->setParameter('labelId', $labelId);
+
         return $qb->getQuery()->getResult();
     }
 

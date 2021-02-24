@@ -315,6 +315,7 @@ class AdminController extends AbstractActionController
         foreach ($languages as $key) {
             $languageDictionary[$key] = $companyService->getLanguageDescription($key);
         }
+
         return $languageDictionary;
     }
 

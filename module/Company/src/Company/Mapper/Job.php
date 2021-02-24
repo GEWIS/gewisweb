@@ -62,6 +62,7 @@ class Job
             }
             return false;
         }
+
         return true;
     }
 
