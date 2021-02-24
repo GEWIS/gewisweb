@@ -49,7 +49,7 @@ class PageAdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($pageService->updatePage($pageId, $request->getPost())) {
-                    $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
@@ -87,6 +87,7 @@ class PageAdminController extends AbstractActionController
 
         return new JsonModel($result);
     }
+
     /**
      * Get the Page service.
      *

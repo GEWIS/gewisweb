@@ -41,10 +41,10 @@ class Page extends AbstractAclService
     {
         $pageMapper = $this->getPageMapper();
         $parents = [];
-        if(!is_null($page)) {
-            if(!is_null($page->getSubCategory())) {
+        if (!is_null($page)) {
+            if (!is_null($page->getSubCategory())) {
                 $parents[] = $pageMapper->findPage($page->getCategory());
-                if(!is_null($page->getName())) {
+                if (!is_null($page->getName())) {
                     $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
                 }
             }
@@ -181,8 +181,8 @@ class Page extends AbstractAclService
      *
      * @param array $files
      *
-     * @throws \Exception
      * @return array
+     * @throws \Exception
      */
     public function uploadImage($files)
     {
@@ -227,7 +227,7 @@ class Page extends AbstractAclService
         }
         $form = $this->sm->get('frontpage_form_page');
 
-        if(!is_null($pageId)) {
+        if (!is_null($pageId)) {
             $page = $this->getPageById($pageId);
             $form->bind($page);
         }

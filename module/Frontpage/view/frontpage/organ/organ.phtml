@@ -57,79 +57,83 @@ function getOrganDescription($organInformation, $lang)
 <?php endif; ?>
 <section class="section">
     <div class="container">
-    <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
-        <div class="col-md-12 organ-banner"
-             style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
-        </div>
-    <?php endif ?>
-    <div class="row">
-        <div class="col-md-8">
-            <h1 class="h-wrap"><?= $organ->getName() ?></h1>
-            <?php echo getOrganDescription($organInformation, $lang) ?>
-        </div>
-        <div class="col-md-4">
-            <table class="table">
-                <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
-                    <tr>
-                        <td><span class="fas fa-envelope"></span>&nbsp;&nbsp;<?= $this->translate('Email') ?></td>
-                        <td>
-                            <a href="mailto:<?= $organInformation->getEmail() ?>">
-                                <?= $organInformation->getEmail() ?>
-                            </a>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
-                    <tr>
-                        <td><span class="fas fa-external-link-alt"></span>&nbsp;&nbsp;<?= $this->translate('Website') ?></td>
-                        <td>
-                            <a href="<?= $organInformation->getWebsite() ?>">
-                                <?= $organInformation->getWebsite() ?>
-                            </a>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-            </table>
-            <div class="panel panel-default agenda">
-                <div class="panel-heading">
-                    <h3><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h3>
-                </div>
-                <div class="list-group">
-                    <?php foreach($activities as $activity): ?>
-                        <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+        <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
+            <div class="col-md-12 organ-banner"
+                 style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
+            </div>
+        <?php endif ?>
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="h-wrap"><?= $organ->getName() ?></h1>
+                <?php echo getOrganDescription($organInformation, $lang) ?>
+            </div>
+            <div class="col-md-4">
+                <table class="table">
+                    <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+                        <tr>
+                            <td><span class="fas fa-envelope"></span>&nbsp;&nbsp;<?= $this->translate('Email') ?></td>
+                            <td>
+                                <a href="mailto:<?= $organInformation->getEmail() ?>">
+                                    <?= $organInformation->getEmail() ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
+                        <tr>
+                            <td><span
+                                    class="fas fa-external-link-alt"></span>&nbsp;&nbsp;<?= $this->translate('Website') ?>
+                            </td>
+                            <td>
+                                <a href="<?= $organInformation->getWebsite() ?>">
+                                    <?= $organInformation->getWebsite() ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                </table>
+                <div class="panel panel-default agenda">
+                    <div class="panel-heading">
+                        <h3><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h3>
+                    </div>
+                    <div class="list-group">
+                        <?php foreach ($activities as $activity): ?>
+                            <a class="list-group-item"
+                               href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
 
-                            <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
-                            <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
+                                <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
+                                <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
+                            <?= $this->translate('Complete agenda') ?>
                         </a>
-                    <?php endforeach; ?>
-                </div>
-                <div class="panel-footer">
-                    <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
-                        <?= $this->translate('Complete agenda') ?>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
-            <h1><?= $this->translate('Current members') ?></h1>
-            <ul>
-                <?php foreach ($currentMembers as $membership): ?>
-                    <li>
-                        <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
-                            <?= $membership['member']->getFullName() ?>
-                            <?php if (!empty($membership['functions'])): ?>
-                                (<?= implode(', ', $membership['functions']) ?>)
-                            <?php endif ?>
-                        </a>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-            <?php else: ?>
-                <?= $this->translate('Login to view more information') ?>
-            <?php endif; ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php if ($this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+                    <h1><?= $this->translate('Current members') ?></h1>
+                    <ul>
+                        <?php foreach ($currentMembers as $membership): ?>
+                            <li>
+                                <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
+                                    <?= $membership['member']->getFullName() ?>
+                                    <?php if (!empty($membership['functions'])): ?>
+                                        (<?= implode(', ', $membership['functions']) ?>)
+                                    <?php endif ?>
+                                </a>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php else: ?>
+                    <?= $this->translate('Login to view more information') ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div></section>
+</section>
