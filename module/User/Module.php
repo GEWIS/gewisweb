@@ -1,4 +1,5 @@
 <?php
+
 namespace User;
 
 use User\Service\ApiApp;
@@ -39,10 +40,10 @@ class Module
 
         // this event listener will turn the request into '403 Forbidden' when
         // there is a NotAllowedException
-        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function($e) {
+        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function ($e) {
             if (($e->getError() == 'error-exception') &&
-                    ($e->getParam('exception', null) != null) &&
-                    ($e->getParam('exception') instanceof NotAllowedException)) {
+                ($e->getParam('exception', null) != null) &&
+                ($e->getParam('exception') instanceof NotAllowedException)) {
                 $form = $e->getApplication()->getServiceManager()->get('user_form_login');
                 $e->getResult()->setVariable('form', $form);
                 $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
@@ -144,12 +145,12 @@ class Module
                         $sm->get('translator')
                     );
                 },
-                'user_form_passwordreset' => function($sm) {
+                'user_form_passwordreset' => function ($sm) {
                     return new \User\Form\Register(
                         $sm->get('translator')
                     );
                 },
-                'user_form_passwordactivate' => function($sm) {
+                'user_form_passwordactivate' => function ($sm) {
                     return new \User\Form\Activate(
                         $sm->get('translator')
                     );
@@ -172,17 +173,17 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_apiuser' => function($sm) {
+                'user_mapper_apiuser' => function ($sm) {
                     return new \User\Mapper\ApiUser(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_session' => function($sm) {
+                'user_mapper_session' => function ($sm) {
                     return new \User\Mapper\Session(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_loginattempt' => function($sm) {
+                'user_mapper_loginattempt' => function ($sm) {
                     return new \User\Mapper\LoginAttempt(
                         $sm->get('user_doctrine_em')
                     );

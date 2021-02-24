@@ -37,6 +37,7 @@ class Session
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
     /**
      * Find a session by its id
      *
@@ -101,6 +102,7 @@ class Session
     {
         $this->em->remove($entity);
     }
+
     /**
      * Get the repository for this mapper.
      *

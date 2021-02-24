@@ -25,10 +25,10 @@ class IsBoardMember implements AssertionInterface
      * $role, $resource, or $privilege parameters are null, it means that the query applies to all Roles, Resources, or
      * privileges, respectively.
      *
-     * @param  Acl                        $acl
-     * @param  RoleInterface         $role
-     * @param  ResourceInterface $resource
-     * @param  string                         $privilege
+     * @param Acl $acl
+     * @param RoleInterface $role
+     * @param ResourceInterface $resource
+     * @param string $privilege
      * @return bool
      */
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)

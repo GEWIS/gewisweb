@@ -7,6 +7,7 @@ use \Zend\Authentication\AuthenticationService as ZendAuthService;
 class AuthenticationService extends ZendAuthService
 {
     protected $identity = null;
+
     public function getIdentity()
     {
         if ($this->identity !== null) {

@@ -9,16 +9,16 @@
         <tr>
     </thead>
     <tbody>
-        <?php foreach ($tokens as $token): ?>
+    <?php foreach ($tokens as $token): ?>
         <tr>
             <td><?= $token->getId() ?></td>
             <td><?= $token->getName() ?></td>
             <td><?= $token->getToken() ?></td>
             <td><a class="btn btn-xs btn-danger" href="<?= $this->url('user_admin/api/remove', [
-    'id' => $token->getId()
-]) ?>"><span class="fas fa-times"></span> <?= $this->translate('Remove') ?></a></td>
+                    'id' => $token->getId()
+                ]) ?>"><span class="fas fa-times"></span> <?= $this->translate('Remove') ?></a></td>
         </tr>
-        <?php endforeach ?>
+    <?php endforeach ?>
     </tbody>
 </table>
 

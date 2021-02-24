@@ -175,6 +175,7 @@ class User implements RoleInterface, ResourceInterface
             'member' => $this->getMember()->toArray()
         ];
     }
+
     /**
      * Get the user's resource ID.
      *

@@ -98,7 +98,7 @@ class Session extends Storage\Session
     /**
      * Defined by Zend\Authentication\Storage\StorageInterface
      *
-     * @param  mixed $contents
+     * @param mixed $contents
      * @return void
      */
     public function write($contents)
