@@ -2,9 +2,9 @@
 
 namespace Company\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-
 
 /**
  * CompanyPackage model.
@@ -21,7 +21,6 @@ abstract class CompanyPackage
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -178,9 +177,7 @@ abstract class CompanyPackage
             case "Company\Model\CompanyFeaturedPackage":
                 return "featured";
         }
-
     }
-
 
     public function isExpired($now)
     {
@@ -193,7 +190,7 @@ abstract class CompanyPackage
 
     public function isActive()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($this->isExpired($now)) {
             // unpublish activity
             $this->setPublished(false);
@@ -218,14 +215,14 @@ abstract class CompanyPackage
         return ['id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
-            'published' => $this->isPublished(), ];
+            'published' => $this->isPublished(),];
     }
 
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
-        $this->setStartingDate((isset($data['startDate'])) ? new \DateTime($data['startDate']) : $this->getStartingDate());
-        $this->setExpirationDate((isset($data['expirationDate'])) ? new \DateTime($data['expirationDate']) : $this->getExpirationDate());
+        $this->setStartingDate((isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate());
+        $this->setExpirationDate((isset($data['expirationDate'])) ? new DateTime($data['expirationDate']) : $this->getExpirationDate());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
     }
 }

@@ -35,7 +35,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__.'/config/module.config.php';
+        return include __DIR__ . '/config/module.config.php';
     }
 
     private function getFormFactories()
@@ -96,6 +96,7 @@ class Module
             },
         ];
     }
+
     private function getMapperFactories()
     {
         return [

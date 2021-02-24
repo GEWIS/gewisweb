@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class FeaturedPackage extends Package
 {
-
-
     /**
      *
      * Returns an random featured package from the active featured packages,
@@ -27,6 +25,7 @@ class FeaturedPackage extends Package
         if (!empty($featuredPackages)) {
             return $featuredPackages[array_rand($featuredPackages)];
         }
+
         return null;
     }
 
@@ -40,11 +39,10 @@ class FeaturedPackage extends Package
         $qb = $this->getVisiblePackagesQueryBuilder();
         $qb->andWhere('p.language>=?1')
             ->setParameter(1, $locale);
-        $packages = $qb->getQuery()->getResult();
 
-        return $packages;
-
+        return $qb->getQuery()->getResult();
     }
+
     /**
      * Get the repository for this mapper.
      *

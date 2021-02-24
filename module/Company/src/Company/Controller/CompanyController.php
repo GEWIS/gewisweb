@@ -22,13 +22,13 @@ class CompanyController extends AbstractActionController
                 'translator' => $companyService->getTranslator(),
             ]);
         }
+
         return new ViewModel([
             'companyList' => $companyService->getCompanyList(),
             'translator' => $companyService->getTranslator(),
             'featuredCompany' => $featuredPackage->getCompany(),
             'featuredPackage' => $featuredPackage,
         ]);
-
     }
 
     public function showAction()
@@ -88,7 +88,7 @@ class CompanyController extends AbstractActionController
         }
 
         $viewModel = new ViewModel([
-            'category'   => $category,
+            'category' => $category,
             'translator' => $companyService->getTranslator(),
         ]);
 
@@ -98,7 +98,7 @@ class CompanyController extends AbstractActionController
         if ($companyName = $this->params('slugCompanyName', null)) {
             // Retrieve published jobs for one specific company
             $jobs = $companyService->getActiveJobList([
-                'jobCategory'     => $jobCategory,
+                'jobCategory' => $jobCategory,
                 'companySlugName' => $companyName,
             ]);
 
@@ -147,8 +147,10 @@ class CompanyController extends AbstractActionController
                     ]);
                 }
             }
+
             return $this->notFoundAction();
         }
+
         return new ViewModel([
             'activeJobList' => $companyService->getActiveJobList(),
             'translator' => $companyService->getTranslator(),
