@@ -1,56 +1,6 @@
 <?php
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<?php if ($this->identity()): ?>
-    <?php if (in_array($this->identity()->getMember()->getLidnr(), [8073, 8284, 8090, 8329, 8032, 7571, 8186])): ?>
-        <style>
-            .rainbow {
-                background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-                background-size: 5000% 100%;
-
-                -webkit-animation: AnimationName 10s ease infinite;
-                -moz-animation: AnimationName 10s ease infinite;
-                animation: AnimationName 10s ease infinite;
-            }
-
-            @-webkit-keyframes AnimationName {
-                0% {
-                    background-position: 0% 50%
-                }
-                50% {
-                    background-position: 100% 50%
-                }
-                100% {
-                    background-position: 0% 50%
-                }
-            }
-
-            @-moz-keyframes AnimationName {
-                0% {
-                    background-position: 0% 50%
-                }
-                50% {
-                    background-position: 100% 50%
-                }
-                100% {
-                    background-position: 0% 50%
-                }
-            }
-
-            @keyframes AnimationName {
-                0% {
-                    background-position: 0% 50%
-                }
-                50% {
-                    background-position: 100% 50%
-                }
-                100% {
-                    background-position: 0% 50%
-                }
-            }
-        </style>
-    <?php endif ?>
-<?php endif ?>
 <nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
