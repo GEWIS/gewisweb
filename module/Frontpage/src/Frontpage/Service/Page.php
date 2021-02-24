@@ -197,16 +197,14 @@ class Page extends AbstractAclService
                 $config = $this->getStorageConfig();
                 $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
                 return $config['public_dir'] . '/' . $fileName;
-            } else {
-                throw new \InvalidArgumentException(
-                    $this->getTranslator()->translate('The uploaded file does not have a valid extension')
-                );
             }
-        } else {
             throw new \InvalidArgumentException(
-                $this->getTranslator()->translate('The uploaded file is not a valid image')
+                $this->getTranslator()->translate('The uploaded file does not have a valid extension')
             );
         }
+        throw new \InvalidArgumentException(
+            $this->getTranslator()->translate('The uploaded file is not a valid image')
+        );
     }
 
     /**
