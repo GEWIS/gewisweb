@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class FeaturedPackage extends Package
 {
-
-
     /**
      *
      * Returns an random featured package from the active featured packages,
@@ -43,7 +41,6 @@ class FeaturedPackage extends Package
             ->setParameter(1, $locale);
 
         return $qb->getQuery()->getResult();
-
     }
 
     /**

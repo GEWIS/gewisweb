@@ -209,5 +209,4 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     {
         $this->company = null;
     }
-
 }

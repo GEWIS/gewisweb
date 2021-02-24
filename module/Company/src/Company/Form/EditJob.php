@@ -174,7 +174,6 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                                 }
                                 $mimeValidator = new \Zend\Validator\File\MimeType('application/pdf');
                                 return $mimeValidator->isValid($value);
-
                             }
                         ],
                     ],

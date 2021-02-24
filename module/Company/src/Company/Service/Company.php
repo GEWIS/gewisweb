@@ -485,7 +485,6 @@ class Company extends AbstractACLService
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
                 }
-
             }
             $this->savePackage();
             return true;

@@ -6,7 +6,6 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
-
 /**
  * CompanyPackage model.
  *
@@ -22,7 +21,6 @@ abstract class CompanyPackage
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -179,9 +177,7 @@ abstract class CompanyPackage
             case "Company\Model\CompanyFeaturedPackage":
                 return "featured";
         }
-
     }
-
 
     public function isExpired($now)
     {

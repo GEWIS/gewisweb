@@ -72,7 +72,6 @@ class Package
      * @param date The date until where to search
      *
      */
-
     public function findFuturePackageExpirationsBeforeDate($date)
     {
         $objectRepository = $this->getRepository();
@@ -94,7 +93,6 @@ class Package
      * @param date The date until where to search
      *
      */
-
     public function findFuturePackageStartsBeforeDate($date)
     {
         $objectRepository = $this->getRepository();
@@ -122,7 +120,6 @@ class Package
 
     protected function getVisiblePackagesQueryBuilder()
     {
-
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')
@@ -143,7 +140,6 @@ class Package
         $qb = $this->getVisiblePackagesQueryBuilder();
 
         return $qb->getQuery()->getResult();
-
     }
 
     /**
@@ -155,10 +151,12 @@ class Package
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.id=:packageId');
-        $qb->setParameter('packageId', $packageId);
-        $qb->setMaxResults(1);
+        $qb->select('p')->where('p.id=:packageId')
+            ->setParameter('packageId', $packageId)
+            ->setMaxResults(1);
+
         $packages = $qb->getQuery()->getResult();
+
         if (count($packages) != 1) {
             return;
         }
@@ -171,9 +169,9 @@ class Package
         if ($type === "job") {
             return new PackageModel($this->em);
         }
+
         if ($type === "featured") {
             return new FeaturedPackageModel($this->em);
-
         }
 
         return new BannerPackageModel($this->em);

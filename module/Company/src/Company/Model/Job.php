@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Job model.
  *
@@ -141,7 +140,6 @@ class Job
     {
         // noting to do
     }
-
 
     /**
      * Get's the id

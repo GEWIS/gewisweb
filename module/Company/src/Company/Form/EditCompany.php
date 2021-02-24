@@ -356,6 +356,5 @@ class EditCompany extends Form
     {
         $cid = $context['id'];
         return $this->mapper->isSlugNameUnique($slugName, $cid);
-
     }
 }

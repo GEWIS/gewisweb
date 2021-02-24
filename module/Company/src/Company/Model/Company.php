@@ -376,7 +376,6 @@ class Company // implements ArrayHydrator (for zend2 form)
             },
             array_filter($this->getPackages()->toArray(), function ($package) {
                 return $package->getType() === 'featured' && $package->isActive();
-
             })
         );
     }
@@ -389,7 +388,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $banners = array_filter($this->getPackages()->toArray(), function ($package) {
             return $package->getType() === 'banner' && $package->isActive();
-
         });
 
         return !empty($banners);
@@ -462,13 +460,13 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslationFromArray($data, $language)
     {
-
         if ($language !== '') {
             $translation = $this->getTranslationFromLocale($language);
-            if (is_null($translation)) {
 
+            if (is_null($translation)) {
                 $translation = new CompanyI18n($language, $this);
             }
+
             $language = $language . '_';
 
             // Translated properties
@@ -522,7 +520,6 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getArrayCopy()
     {
-
         $arraycopy = [];
         $arraycopy['id'] = $this->getId();
         $arraycopy['name'] = $this->getName();

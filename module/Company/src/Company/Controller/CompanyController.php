@@ -29,7 +29,6 @@ class CompanyController extends AbstractActionController
             'featuredCompany' => $featuredPackage->getCompany(),
             'featuredPackage' => $featuredPackage,
         ]);
-
     }
 
     public function showAction()

@@ -112,7 +112,6 @@ class AdminController extends AbstractActionController
                     false
                 );
             }
-
         }
 
         // The form was not valid, or we did not get data back
@@ -363,7 +362,6 @@ class AdminController extends AbstractActionController
                     [],
                     false
                 );
-
             }
         }
 
