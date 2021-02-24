@@ -22,7 +22,7 @@ class BannerPackage extends Package
     public function getBannerPackage()
     {
         $banners = $this->findVisiblePackages();
-        return count($banners) === 0 ? null : $banners[array_rand($banners)];
+        return empty($banners) ? null : $banners[array_rand($banners)];
     }
 
     /**

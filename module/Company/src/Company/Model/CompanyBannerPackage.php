@@ -4,10 +4,6 @@ namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
-
 /**
  * CompanyBannerPackage model.
  *
@@ -45,14 +41,5 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
     public function getType()
     {
         return "banner";
-    }
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        // todo
     }
 }
