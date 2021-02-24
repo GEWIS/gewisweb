@@ -91,10 +91,9 @@ class Release extends SubDecision
 
         $zh = $this->getInstallation()->getMember()->getGender() == 'm' ? 'zijn' : 'haar';
 
-        $text = $member . ' wordt per ' . $this->formatDate($this->getDate())
+        return $member . ' wordt per ' . $this->formatDate($this->getDate())
             . ' ontheven uit ' . $zh . ' functie als ' . $function
             . ' der s.v. GEWIS.';
-        return $text;
     }
 
     /**

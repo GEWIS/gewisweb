@@ -226,9 +226,8 @@ class Organ extends AbstractAclService
         //Tempfile is used such that the file storage service can generate a filename
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
         $image->writeImage($tempFileName);
-        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
-        return $newPath;
+        return $this->getFileStorageService()->storeFile($tempFileName);
     }
 
     public function approveOrganInformation($organInformation)

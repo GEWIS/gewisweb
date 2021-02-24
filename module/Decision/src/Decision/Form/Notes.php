@@ -66,14 +66,12 @@ class Notes extends Form implements InputFilterProviderInterface
      */
     public function setError($error)
     {
-        switch ($error) {
-            case self::ERROR_FILE_EXISTS:
-                $this->setMessages([
-                    'meeting' => [
-                        $this->translator->translate('There already are notes for this meeting')
-                    ]
-                ]);
-                break;
+        if ($error == self::ERROR_FILE_EXISTS) {
+            $this->setMessages([
+                'meeting' => [
+                    $this->translator->translate('There already are notes for this meeting')
+                ]
+            ]);
         }
     }
 

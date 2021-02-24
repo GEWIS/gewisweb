@@ -82,10 +82,7 @@ class LocalFileReader implements FileReader
 
     protected function interpretDircontent($dircontent, $fullPath)
     {
-        if ($dircontent[0] === '.') {
-            return false;
-        }
-        if (!$this->isValidPathName($fullPath)) {
+        if ($dircontent[0] === '.' || !$this->isValidPathName($fullPath)) {
             return false;
         }
         if (is_link($fullPath)) {
@@ -129,7 +126,6 @@ class LocalFileReader implements FileReader
 
     protected function isValidPathName($path)
     {
-        $res = preg_match('#^' . $this->validFilepath . '$#', $path) === 1;
-        return $res;
+        return preg_match('#^' . $this->validFilepath . '$#', $path) === 1;
     }
 }

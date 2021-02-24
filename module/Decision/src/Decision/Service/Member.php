@@ -162,7 +162,7 @@ class Member extends AbstractAclService
 
         if ($response->getStatusCode() != 200) {
             $translator = $this->getTranslator();
-            throw new \Exception(
+            throw new \User\Permissions\NotAllowedException(
                 $translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
             );
         }

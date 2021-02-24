@@ -43,7 +43,7 @@ class AdminController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
         $meetings = $service->getMeetingsByType('AV');
         $meetings = array_merge($meetings, $service->getMeetingsByType('VV'));
-        if (is_null($number) && count($meetings) > 0) {
+        if (is_null($number) && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
             $type = $meetings[0]->getType();
         }
@@ -102,7 +102,7 @@ class AdminController extends AbstractActionController
         $meetings = $this->getDecisionService()->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
-        if (is_null($number) && count($meetings) > 0) {
+        if (is_null($number) && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
         }
 
