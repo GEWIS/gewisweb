@@ -103,7 +103,7 @@ class Course
     protected function getCourseInfo($course)
     {
         $year = $course->LaatsteStudiejaarGegeven->__toString();
-        $year = (empty($year)  || $year == 0) ? date('Y') : $year;
+        $year = (empty($year) || $year == 0) ? date('Y') : $year;
         $code = $course->ActCode->__toString();
 
         $course = $this->client->GeefVakGegevens($code, $year, 'NL');
@@ -128,10 +128,10 @@ class Course
         $data = [
             'code' => $course->VakCode->__toString(),
             'name' => $course->VakOmschr->__toString(),
-            'url'  => $course->UrlStudiewijzer->__toString(),
+            'url' => $course->UrlStudiewijzer->__toString(),
             'quartile' => 'q1', //TODO: determine this value
             'year' => $year, // TODO: correctly determine this value
-                             // from $course->Studiejaar
+            // from $course->Studiejaar
             'studies' => $studies
         ];
 
@@ -183,7 +183,9 @@ class Course
         $info = array_map([$this, 'getCourseInfo'], $courses);
 
         // filter null values
-        $info = array_filter($info, function($data) { return null !== $data; });
+        $info = array_filter($info, function ($data) {
+            return null !== $data;
+        });
 
         // match children
         $ret = [];

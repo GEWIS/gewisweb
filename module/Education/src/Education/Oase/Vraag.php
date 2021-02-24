@@ -2,7 +2,8 @@
 
 namespace Education\Oase;
 
-class Vraag {
+class Vraag
+{
 
     public function __construct($ServiceNaam)
     {

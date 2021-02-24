@@ -1,4 +1,5 @@
 <?php
+
 namespace Education;
 
 class Module

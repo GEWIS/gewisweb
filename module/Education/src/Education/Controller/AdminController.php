@@ -6,7 +6,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
-class AdminController extends AbstractActionController {
+class AdminController extends AbstractActionController
+{
 
     public function indexAction()
     {
@@ -104,7 +105,7 @@ class AdminController extends AbstractActionController {
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form'   => $service->getBulkExamForm(),
+            'form' => $service->getBulkExamForm(),
             'config' => $config
         ]);
     }
@@ -127,7 +128,7 @@ class AdminController extends AbstractActionController {
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form'   => $service->getBulkSummaryForm(),
+            'form' => $service->getBulkSummaryForm(),
             'config' => $config
         ]);
     }

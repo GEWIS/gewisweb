@@ -3,13 +3,13 @@ return [
     'router' => [
         'routes' => [
             'education' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
-                    'route'    => '/education',
+                    'route' => '/education',
                     'defaults' => [
                         '__NAMESPACE__' => 'Education\Controller',
-                        'controller'    => 'Education',
-                        'action'        => 'index',
+                        'controller' => 'Education',
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -42,11 +42,11 @@ return [
                         ]
                     ],
                     'default' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '[/:action]',
+                            'route' => '[/:action]',
                             'constraints' => [
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                         ],
                     ]
@@ -59,18 +59,18 @@ return [
                     'route' => '/admin/education',
                     'defaults' => [
                         '__NAMESPACE__' => 'Education\Controller',
-                        'controller'    => 'Admin',
-                        'action'        => 'index'
+                        'controller' => 'Admin',
+                        'action' => 'index'
                     ]
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '[/:action]',
+                            'route' => '[/:action]',
                             'constraints' => [
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                         ],
                     ],
