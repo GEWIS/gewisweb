@@ -47,7 +47,7 @@ class FileStorage extends AbstractService
     {
         $config = $this->getConfig();
         if ($file['error'] !== 0) {
-            throw new \Exception(
+            throw new \RuntimeException(
                 sprintf(
                     $this->getTranslator()->translate('An unknown error occurred during uploading (%i)'),
                     $file['error']
