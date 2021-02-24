@@ -6,10 +6,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-
 class PageAdminController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $pages = $this->getPageService()->getPages();

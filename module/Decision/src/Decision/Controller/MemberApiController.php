@@ -7,7 +7,6 @@ use Zend\View\Model\JsonModel;
 
 class MemberApiController extends AbstractActionController
 {
-
     public function lidnrAction()
     {
         $lidnr = $this->params()->fromRoute('lidnr');

@@ -7,7 +7,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 abstract class AbstractAclService extends AbstractService
 {
-
     /**
      * Get the ACL.
      *

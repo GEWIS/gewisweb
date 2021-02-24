@@ -13,7 +13,6 @@ use Zend\Http\Client as HttpClient;
  */
 class Member extends AbstractAclService
 {
-
     const MIN_SEARCH_QUERY_LENGTH = 2;
 
     /**
@@ -28,7 +27,7 @@ class Member extends AbstractAclService
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view membership info.')
             );
-        } else if (null !== $lidnr && !$this->isAllowed('view')) {
+        } elseif (null !== $lidnr && !$this->isAllowed('view')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view members.')
@@ -232,7 +231,6 @@ class Member extends AbstractAclService
         }
 
         return $this->getMemberMapper()->searchByName($query);
-
     }
 
     /**
@@ -268,7 +266,6 @@ class Member extends AbstractAclService
         return $this->sm->get('decision_mapper_member');
     }
 
-
     /**
      * Get the photo service.
      *
@@ -278,7 +275,6 @@ class Member extends AbstractAclService
     {
         return $this->sm->get('photo_service_photo');
     }
-
 
     /**
      * Get the photo service.

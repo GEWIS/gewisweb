@@ -6,7 +6,6 @@ use Zend\Soap\Client as SoapClient;
 
 class Client
 {
-
     /**
      * SOAP client
      *

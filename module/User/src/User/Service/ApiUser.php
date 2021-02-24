@@ -7,13 +7,11 @@ use Application\Service\AbstractAclService;
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
 
-
 /**
  * API User service.
  */
 class ApiUser extends AbstractAclService
 {
-
     /**
      * Identity storage.
      *
@@ -174,5 +172,4 @@ class ApiUser extends AbstractAclService
     {
         return 'apiuser';
     }
-
 }

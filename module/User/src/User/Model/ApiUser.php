@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class ApiUser implements RoleInterface, ResourceInterface
 {
-
     /**
      * Id
      *

@@ -6,7 +6,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class Truncate extends AbstractHelper
 {
-
     /**
      * @param string $text string to truncate
      * @param int $length length at which to truncate

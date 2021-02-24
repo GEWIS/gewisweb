@@ -9,10 +9,8 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class AddCourse extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translator)
     {
-
         $qOptions = [
             'q1' => $translator->translate('Quartile 1'),
             'q2' => $translator->translate('Quartile 2'),

@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 
 class Meeting
 {
-
     /**
      * Doctrine entity manager.
      *

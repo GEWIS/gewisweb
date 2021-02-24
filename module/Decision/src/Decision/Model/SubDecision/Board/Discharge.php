@@ -16,7 +16,6 @@ use Decision\Model\SubDecision;
  */
 class Discharge extends SubDecision
 {
-
     /**
      * Reference to the installation of a member.
      *
@@ -30,7 +29,6 @@ class Discharge extends SubDecision
      * })
      */
     protected $installation;
-
 
     /**
      * Get installation.
@@ -51,5 +49,4 @@ class Discharge extends SubDecision
     {
         $this->installation = $installation;
     }
-
 }

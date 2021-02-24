@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Study
 {
-
     const PHASE_BACHELOR = 'bachelor';
     const PHASE_MASTER = 'master';
 

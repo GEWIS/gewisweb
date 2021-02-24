@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Summary extends Exam
 {
-
     /**
      * Author of the summary.
      *

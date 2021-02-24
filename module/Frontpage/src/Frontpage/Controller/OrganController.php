@@ -43,7 +43,6 @@ class OrganController extends AbstractActionController
                 'organ' => $organ,
                 'activities' => $activities
             ], $organMemberInformation));
-
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }

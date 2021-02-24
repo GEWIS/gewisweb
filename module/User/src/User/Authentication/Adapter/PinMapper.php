@@ -2,18 +2,17 @@
 
 namespace User\Authentication\Adapter;
 
-use Zend\Authentication\Adapter\AdapterInterface,
-    Zend\Authentication\Result,
-    User\Mapper\User as UserMapper,
-    User\Model\User as UserModel,
-    User\Model\UserRole as UserRoleModel,
-    User\Model\LoginAttempt;
+use Zend\Authentication\Adapter\AdapterInterface;
+use Zend\Authentication\Result;
+use User\Mapper\User as UserMapper;
+use User\Model\User as UserModel;
+use User\Model\UserRole as UserRoleModel;
+use User\Model\LoginAttempt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\User as UserService;
 
 class PinMapper implements AdapterInterface
 {
-
     /**
      * Mapper.
      *

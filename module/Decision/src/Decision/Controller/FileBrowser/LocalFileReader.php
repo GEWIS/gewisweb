@@ -15,18 +15,17 @@ namespace Decision\Controller\FileBrowser;
  */
 class LocalFileReader implements FileReader
 {
-
     /**
      * The location in the local filesystem that is considered the 'root' for this browser
      * @var string
      */
-    static private $root;
+    private static $root;
 
     /**
      * A regex pattern matching all valid filepaths.
      * @var string
      */
-    static private $validFilepath;
+    private static $validFilepath;
 
     public function __construct($root, $validFilepath)
     {
@@ -102,7 +101,6 @@ class LocalFileReader implements FileReader
         //(likely, the path doesn't resolve to a valid entry in the filesystem at all)
         return false;
     }
-
 
     public function isDir($path)
     {

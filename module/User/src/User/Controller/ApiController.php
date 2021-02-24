@@ -14,7 +14,6 @@ use Zend\Session\Container as SessionContainer;
 
 class ApiController extends AbstractActionController
 {
-
     public function validateAction()
     {
         $userService = $this->getUserService();

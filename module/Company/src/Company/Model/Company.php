@@ -271,7 +271,7 @@ class Company // implements ArrayHydrator (for zend2 form)
 
         // When any packages is not expired, the company should be shown to the user
         foreach ($this->getPackages() as $package) {
-            if (!$package->isExpired(new DateTime)) {
+            if (!$package->isExpired(new DateTime())) {
                 $visible = true;
             }
         }
@@ -360,7 +360,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getNumberOfExpiredPackages()
     {
         return count(array_filter($this->getPackages()->toArray(), function ($package) {
-            return $package->isExpired(new DateTime);
+            return $package->isExpired(new DateTime());
         }));
     }
 

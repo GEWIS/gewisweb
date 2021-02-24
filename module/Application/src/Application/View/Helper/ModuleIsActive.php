@@ -6,7 +6,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class ModuleIsActive extends AbstractHelper
 {
-
     /**
      * Service locator
      *

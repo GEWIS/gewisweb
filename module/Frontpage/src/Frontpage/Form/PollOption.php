@@ -12,7 +12,6 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct()
     {
-
         parent::__construct('pollOption');
 
         $this->setHydrator(new ClassMethodsHydrator(false))

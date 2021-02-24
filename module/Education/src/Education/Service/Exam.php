@@ -15,7 +15,6 @@ use Zend\Form\FormInterface;
  */
 class Exam extends AbstractAclService
 {
-
     /**
      * Bulk form.
      *

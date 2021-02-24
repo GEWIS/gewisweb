@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class BannerPackage extends Package
 {
-
     /**
      *
      * Returns an random banner from the active banners

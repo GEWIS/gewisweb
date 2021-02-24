@@ -16,7 +16,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class UserRole
 {
-
     /**
      * Id
      *

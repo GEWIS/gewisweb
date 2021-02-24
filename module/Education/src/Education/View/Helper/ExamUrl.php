@@ -9,7 +9,6 @@ use Education\Service\Exam as ExamService;
 
 class ExamUrl extends AbstractHelper
 {
-
     /**
      * Exam service..
      *

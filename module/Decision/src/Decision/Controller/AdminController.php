@@ -11,7 +11,6 @@ use Zend\Console\Request as ConsoleRequest;
 
 class AdminController extends AbstractActionController
 {
-
     /**
      * Notes upload action.
      */
@@ -180,5 +179,4 @@ class AdminController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_decision');
     }
-
 }

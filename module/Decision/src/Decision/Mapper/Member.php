@@ -8,14 +8,12 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class Member
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor

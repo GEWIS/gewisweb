@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 class Session
 {
-
     /**
      * Doctrine entity manager.
      *

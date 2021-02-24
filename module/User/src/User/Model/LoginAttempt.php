@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoginAttempt
 {
-
     const TYPE_PIN = 'pin';
     const TYPE_NORMAL = 'normal';
 

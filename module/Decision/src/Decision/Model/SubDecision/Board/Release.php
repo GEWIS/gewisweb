@@ -16,7 +16,6 @@ use Decision\Model\SubDecision;
  */
 class Release extends SubDecision
 {
-
     /**
      * Reference to the installation of a member.
      *
@@ -37,7 +36,6 @@ class Release extends SubDecision
      * @ORM\Column(type="date")
      */
     protected $date;
-
 
     /**
      * Get installation.

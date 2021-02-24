@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 
 class NewUser
 {
-
     /**
      * Doctrine entity manager.
      *

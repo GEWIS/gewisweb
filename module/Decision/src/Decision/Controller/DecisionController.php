@@ -8,7 +8,6 @@ use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
-
     /**
      * Index action, shows meetings.
      */
@@ -38,7 +37,6 @@ class DecisionController extends AbstractActionController
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
-
     }
 
     public function documentAction()
@@ -178,5 +176,4 @@ class DecisionController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_decision');
     }
-
 }

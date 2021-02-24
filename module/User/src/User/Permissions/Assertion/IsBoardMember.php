@@ -16,8 +16,6 @@ use Decision\Model\BoardMember;
  */
 class IsBoardMember implements AssertionInterface
 {
-
-
     /**
      * Returns true if and only if the assertion conditions are met
      *

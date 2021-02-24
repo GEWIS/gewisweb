@@ -9,7 +9,6 @@ namespace Application\Service;
  */
 class Legacy extends AbstractService
 {
-
     /**
      * Checks if a SuSOS pincode is correct.
      *
@@ -39,7 +38,6 @@ class Legacy extends AbstractService
     public function checkPassword($user, $password, $bcrypt)
     {
         return false;
-
     }
 
     /**

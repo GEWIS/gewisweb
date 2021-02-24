@@ -15,7 +15,6 @@ use User\Model\User;
 
 class Module
 {
-
     /**
      * Bootstrap.
      *

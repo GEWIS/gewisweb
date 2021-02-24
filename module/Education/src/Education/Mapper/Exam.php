@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Exam
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -75,4 +74,3 @@ class Exam
         return $this->em->getRepository('Education\Model\Exam');
     }
 }
-

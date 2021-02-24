@@ -8,7 +8,6 @@ namespace Decision\Controller\FileBrowser;
  */
 class FileNode
 {
-
     /**
      * Whether the node represents a file or a directory
      * @var string  either 'file' or 'dir'

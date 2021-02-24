@@ -9,7 +9,6 @@ use Zend\Authentication\Result;
 
 class Login extends Form
 {
-
     protected $translate;
 
     public function __construct(Translator $translate)
@@ -126,4 +125,3 @@ class Login extends Form
         $this->setInputFilter($filter);
     }
 }
-

@@ -4,10 +4,8 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-
 class Acl extends AbstractHelper
 {
-
     /**
      * Service locator
      *

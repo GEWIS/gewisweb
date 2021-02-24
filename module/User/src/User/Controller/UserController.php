@@ -2,13 +2,12 @@
 
 namespace User\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController,
-    Zend\View\Model\ViewModel,
-    Zend\View\Model\JsonModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class UserController extends AbstractActionController
 {
-
     /**
      * User login action.
      */
@@ -64,7 +63,6 @@ class UserController extends AbstractActionController
             $login = $userService->pinLogin($data);
 
             if (null !== $login) {
-
                 return new JsonModel([
                     'login' => true,
                     'user' => $login->toArray()

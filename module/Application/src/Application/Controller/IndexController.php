@@ -14,7 +14,6 @@ use Zend\Session\Container as SessionContainer;
 
 class IndexController extends AbstractActionController
 {
-
     /**
      * Action to switch language.
      */
@@ -32,7 +31,6 @@ class IndexController extends AbstractActionController
         }
 
         return $this->redirect()->toRoute('home');
-
     }
 
     /**
@@ -40,7 +38,6 @@ class IndexController extends AbstractActionController
      */
     public function externalAction()
     {
-
     }
 
     /**

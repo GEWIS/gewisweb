@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class PollComment implements ResourceInterface
 {
-
     /**
      * Poll comment ID.
      *

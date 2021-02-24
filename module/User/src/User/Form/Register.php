@@ -8,7 +8,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class Register extends Form
 {
-
     const ERROR_WRONG_EMAIL = 'wrong_email';
     const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
     const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
@@ -112,5 +111,3 @@ class Register extends Form
         $this->setInputFilter($filter);
     }
 }
-
-

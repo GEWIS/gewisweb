@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 class LoginAttempt
 {
-
     /**
      * Doctrine entity manager.
      *

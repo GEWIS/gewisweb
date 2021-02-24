@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Course implements ResourceInterface
 {
-
     const QUARTILE_Q1 = 'q1';
     const QUARTILE_Q2 = 'q2';
     const QUARTILE_Q3 = 'q3';

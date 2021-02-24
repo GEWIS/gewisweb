@@ -3,17 +3,16 @@
 namespace User\Authentication\Adapter;
 
 use User\Model\LoginAttempt;
-use Zend\Authentication\Adapter\AdapterInterface,
-    Zend\Authentication\Result,
-    User\Mapper\User as UserMapper,
-    User\Model\User as UserModel;
+use Zend\Authentication\Adapter\AdapterInterface;
+use Zend\Authentication\Result;
+use User\Mapper\User as UserMapper;
+use User\Model\User as UserModel;
 use Zend\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\User as UserService;
 
 class Mapper implements AdapterInterface
 {
-
     /**
      * Mapper.
      *

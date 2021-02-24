@@ -17,7 +17,6 @@ use User\Permissions\NotAllowedException;
  */
 class User extends AbstractAclService
 {
-
     /**
      * Activate a user.
      *

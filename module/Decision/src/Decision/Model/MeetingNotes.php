@@ -12,7 +12,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class MeetingNotes implements ResourceInterface
 {
-
     /**
      * Meeting type.
      *

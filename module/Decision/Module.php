@@ -6,7 +6,6 @@ use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
-
     /**
      * Get the autoloader configuration.
      *

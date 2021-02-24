@@ -8,7 +8,6 @@ use User\Model\User as UserModel;
 
 class User
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -128,5 +127,4 @@ class User
     {
         return $this->em->getRepository('User\Model\User');
     }
-
 }

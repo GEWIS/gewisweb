@@ -3,13 +3,12 @@
 namespace User\Authentication\Storage;
 
 use Firebase\JWT\JWT;
-use Zend\Authentication\Storage,
-    User\Model\Session as SessionModel,
-    Zend\Http\Header\SetCookie;
+use Zend\Authentication\Storage;
+use User\Model\Session as SessionModel;
+use Zend\Http\Header\SetCookie;
 
 class Session extends Storage\Session
 {
-
     /**
      * @var The service manager
      */
@@ -53,7 +52,6 @@ class Session extends Storage\Session
         }
 
         return !$this->validateSession();
-
     }
 
     /**
@@ -147,7 +145,6 @@ class Session extends Storage\Session
         // Clear the session
         unset($this->session->{$this->member});
         $this->clearCookie();
-
     }
 
     /**

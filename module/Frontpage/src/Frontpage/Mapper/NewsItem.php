@@ -12,7 +12,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  */
 class NewsItem
 {
-
     /**
      * Doctrine entity manager.
      *

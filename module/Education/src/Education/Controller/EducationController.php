@@ -7,7 +7,6 @@ use Zend\View\Model\ViewModel;
 
 class EducationController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $service = $this->getExamService();

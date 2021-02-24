@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Course
 {
-
     /**
      * Doctrine entity manager.
      *

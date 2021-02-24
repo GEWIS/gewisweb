@@ -23,7 +23,6 @@ use Zend\Mime\Message as MimeMessage;
  */
 class Email extends AbstractService
 {
-
     /**
      * Send an email.
      *

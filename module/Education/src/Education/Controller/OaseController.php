@@ -11,7 +11,6 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 class OaseController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $console = $this->getServiceLocator()->get('console');

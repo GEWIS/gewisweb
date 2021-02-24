@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Session
 {
-
     /**
      * The id of this session
      *

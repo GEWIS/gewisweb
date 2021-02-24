@@ -13,14 +13,12 @@ use Doctrine\ORM\EntityManager;
  */
 class Organ
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor

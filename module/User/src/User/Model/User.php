@@ -14,7 +14,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class User implements RoleInterface, ResourceInterface
 {
-
     /**
      * The membership number.
      *

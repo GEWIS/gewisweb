@@ -10,7 +10,6 @@ use Frontpage\Model\Page as PageModel;
  */
 class Page extends AbstractAclService
 {
-
     /**
      * Returns a single page
      *

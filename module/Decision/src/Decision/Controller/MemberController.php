@@ -8,7 +8,6 @@ use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');

@@ -65,7 +65,6 @@ class FileStorage extends AbstractService
         }
 
         return $storagePath;
-
     }
 
     /**

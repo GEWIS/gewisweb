@@ -13,7 +13,6 @@ use Zend\View\Model\ViewModel;
 
 class Email extends AbstractService
 {
-
     /**
      * Send registration email.
      *

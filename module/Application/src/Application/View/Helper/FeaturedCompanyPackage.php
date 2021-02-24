@@ -7,7 +7,6 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 class FeaturedCompanyPackage extends AbstractHelper implements ServiceLocatorAwareInterface
 {
-
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
     /**

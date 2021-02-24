@@ -7,7 +7,6 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 class JobCategories extends AbstractHelper implements ServiceLocatorAwareInterface
 {
-
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
     /**

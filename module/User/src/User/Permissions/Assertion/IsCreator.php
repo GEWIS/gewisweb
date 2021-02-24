@@ -16,8 +16,6 @@ use User\Permissions\Resource\CreatorResourceInterface;
  */
 class IsCreator implements AssertionInterface
 {
-
-
     /**
      * Returns true if and only if the assertion conditions are met
      *

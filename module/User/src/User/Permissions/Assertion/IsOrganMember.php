@@ -18,8 +18,6 @@ use Decision\Model\Organ;
  */
 class IsOrganMember implements AssertionInterface
 {
-
-
     /**
      * Returns true if and only if the assertion conditions are met
      *

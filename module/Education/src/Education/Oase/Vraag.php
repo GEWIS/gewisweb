@@ -4,7 +4,6 @@ namespace Education\Oase;
 
 class Vraag
 {
-
     public function __construct($ServiceNaam)
     {
         $this->ServiceNaam = $ServiceNaam;

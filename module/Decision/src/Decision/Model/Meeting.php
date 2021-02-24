@@ -63,7 +63,6 @@ class Meeting
      */
     protected $meetingNotes;
 
-
     /**
      * Get all allowed meeting types.
      */

@@ -13,7 +13,6 @@ use Decision\Mapper\Meeting as MeetingMapper;
 
 class Notes extends Form implements InputFilterProviderInterface
 {
-
     const ERROR_FILE_EXISTS = 'file_exists';
 
     protected $translator;

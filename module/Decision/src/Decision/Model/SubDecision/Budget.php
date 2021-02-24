@@ -14,7 +14,6 @@ use Decision\Model\Member;
  */
 class Budget extends SubDecision
 {
-
     /**
      * Budget author.
      *

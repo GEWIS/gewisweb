@@ -9,7 +9,6 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Study
 {
-
     /**
      * Client.
      *

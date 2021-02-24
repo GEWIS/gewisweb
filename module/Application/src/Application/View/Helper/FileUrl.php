@@ -6,7 +6,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class FileUrl extends AbstractHelper
 {
-
     /**
      * Service locator
      *
