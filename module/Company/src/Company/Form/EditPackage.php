@@ -14,10 +14,12 @@ class EditPackage extends Form
         parent::__construct();
 
         $this->setAttribute('method', 'post');
+
         $this->add([
             'name' => 'id',
             'type' => 'hidden',
         ]);
+
         $this->add([
             'name' => 'startDate',
             'type' => 'Zend\Form\Element\Date',
@@ -29,6 +31,7 @@ class EditPackage extends Form
                 'label' => $translate->translate('Start date'),
             ],
         ]);
+
         $this->add([
             'name' => 'expirationDate',
             'type' => 'Zend\Form\Element\Date',
@@ -40,6 +43,7 @@ class EditPackage extends Form
                 'label' => $translate->translate('Expiration date'),
             ],
         ]);
+
         $this->add([
             'name' => 'published',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -52,6 +56,7 @@ class EditPackage extends Form
                 ],
             ],
         ]);
+
         if ($type === "featured") {
             $this->add([
                 'name' => 'article',
@@ -63,6 +68,7 @@ class EditPackage extends Form
                     'type' => 'textarea',
                 ],
             ]);
+
             $this->add([
                 'type' => 'Zend\Form\Element\Radio',
                 'name' => 'language',
@@ -75,6 +81,7 @@ class EditPackage extends Form
                 ],
             ]);
         }
+
         if ($type === "banner") {
             $this->add([
                 'name' => 'banner',
@@ -85,9 +92,9 @@ class EditPackage extends Form
                 'options' => [
                     'label' => $translate->translate('Banner'),
                 ],
-
             ]);
         }
+
         $this->add([
             'name' => 'submit',
             'attributes' => [
@@ -96,6 +103,7 @@ class EditPackage extends Form
                 'id' => 'submitbutton',
             ],
         ]);
+
         $this->initFilters();
     }
 

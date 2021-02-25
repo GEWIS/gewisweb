@@ -245,7 +245,7 @@ return [
                                         'action' => 'editJob',
                                     ],
                                     'constraints' => [
-                                        'jobName'     => '[a-zA-Z0-9_-]*',
+                                        'jobName' => '[a-zA-Z0-9_-]*',
                                     ],
                                     'may_terminate' => true,
                                 ],
@@ -300,7 +300,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'company' => __DIR__.'/../view/',
+            'company' => __DIR__ . '/../view/',
         ],
     ],
     'doctrine' => [
@@ -308,7 +308,7 @@ return [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Company/Model/'],
+                'paths' => [__DIR__ . '/../src/Company/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

@@ -46,6 +46,7 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
     {
         return "banner";
     }
+
     /**
      * Constructor.
      */

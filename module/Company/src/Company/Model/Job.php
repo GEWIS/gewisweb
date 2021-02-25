@@ -3,8 +3,8 @@
 namespace Company\Model;
 
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * Job model.
@@ -141,7 +141,6 @@ class Job
         // noting to do
     }
 
-
     /**
      * Get's the id
      */
@@ -151,6 +150,7 @@ class Job
         if ($id == 0) {
             return $this->id;
         }
+
         return $id;
     }
 
@@ -374,12 +374,13 @@ class Job
     /**
      * Set the job's timestamp.
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {
         $this->timestamp = $timestamp;
     }
+
     /**
      * Get the job's description.
      *

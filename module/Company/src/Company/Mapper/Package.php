@@ -72,7 +72,6 @@ class Package
      * @param date The date until where to search
      *
      */
-
     public function findFuturePackageExpirationsBeforeDate($date)
     {
         $objectRepository = $this->getRepository();
@@ -84,8 +83,8 @@ class Package
             ->andWhere('p.expires<=:date')
             ->orderBy('p.expires', 'ASC')
             ->setParameter('date', $date);
-        $packages = $qb->getQuery()->getResult();
-        return $packages;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -94,7 +93,6 @@ class Package
      * @param date The date until where to search
      *
      */
-
     public function findFuturePackageStartsBeforeDate($date)
     {
         $objectRepository = $this->getRepository();
@@ -106,8 +104,8 @@ class Package
             ->andWhere('p.starts<=:date')
             ->orderBy('p.starts', 'ASC')
             ->setParameter('date', $date);
-        $packages = $qb->getQuery()->getResult();
-        return $packages;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -122,13 +120,13 @@ class Package
 
     protected function getVisiblePackagesQueryBuilder()
     {
-
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')
             ->where('p.published=1')
             ->andWhere('p.starts<=CURRENT_DATE()')
             ->andWhere('p.expires>=CURRENT_DATE()');
+
         return $qb;
     }
 
@@ -140,10 +138,8 @@ class Package
     public function findVisiblePackages()
     {
         $qb = $this->getVisiblePackagesQueryBuilder();
-        $packages = $qb->getQuery()->getResult();
 
-        return $packages;
-
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -155,10 +151,12 @@ class Package
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.id=:packageId');
-        $qb->setParameter('packageId', $packageId);
-        $qb->setMaxResults(1);
+        $qb->select('p')->where('p.id=:packageId')
+            ->setParameter('packageId', $packageId)
+            ->setMaxResults(1);
+
         $packages = $qb->getQuery()->getResult();
+
         if (count($packages) != 1) {
             return;
         }
@@ -171,12 +169,14 @@ class Package
         if ($type === "job") {
             return new PackageModel($this->em);
         }
+
         if ($type === "featured") {
             return new FeaturedPackageModel($this->em);
-
         }
+
         return new BannerPackageModel($this->em);
     }
+
     /**
      * Inserts a new package into the given company
      *

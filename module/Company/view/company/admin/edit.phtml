@@ -1,19 +1,19 @@
 <div class="company-edit-editor">
-<?php
-    if (!isset($company)){
+    <?php
+    if (!isset($company)) {
         echo "Company not found";
-    } else { 
-        if (isset($slugJobName)){
-            echo $this->partial('company/admin/editJob.phtml', 
-                                 ['slugJobName' => $slugJobName]
-                               );
-        } else { 
-            echo $this->partial('company/admin/editCompany.phtml', 
-                                ['companyEditForm' => $companyEditForm,
-                                 'company'         => $company,
-                                 'joblist'         => $joblist]
-                                );
-        } 
+    } else {
+        if (isset($slugJobName)) {
+            echo $this->partial('company/admin/editJob.phtml',
+                ['slugJobName' => $slugJobName]
+            );
+        } else {
+            echo $this->partial('company/admin/editCompany.phtml',
+                ['companyEditForm' => $companyEditForm,
+                    'company' => $company,
+                    'joblist' => $joblist]
+            );
+        }
     }
-?>
+    ?>
 </div>

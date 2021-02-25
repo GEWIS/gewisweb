@@ -52,7 +52,7 @@ class Job
         // A slug in unique if there is no other slug of the same category and same language
         $objects = $this->findJob([
             'companySlugName' => $companySlug,
-            'jobSlug' =>  $slugName,
+            'jobSlug' => $slugName,
             'jobCategoryId' => $category,
         ]);
         foreach ($objects as $job) {
@@ -62,6 +62,7 @@ class Job
             }
             return false;
         }
+
         return true;
     }
 
@@ -179,6 +180,7 @@ class Job
     {
         return $this->em->getRepository('Company\Model\Job');
     }
+
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [
@@ -189,8 +191,8 @@ class Job
                 'object_manager' => $this->em,
                 'target_class' => $targetClass,
                 'property' => $property,
-                'find_method'    => [
-                    'name'   => 'findBy',
+                'find_method' => [
+                    'name' => 'findBy',
                     'params' => [
                         'criteria' => ['language' => $locale],
                         // Use key 'orderBy' if using ORM

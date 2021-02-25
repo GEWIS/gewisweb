@@ -1,4 +1,5 @@
 <?php
+
 namespace Company\Form;
 
 use Zend\Form\Form;
@@ -22,6 +23,7 @@ class LabelFieldset extends Fieldset
                 'type' => 'hidden',
             ],
         ]);
+
         $this->add([
             'name' => 'slug',
             'attributes' => [
@@ -32,6 +34,7 @@ class LabelFieldset extends Fieldset
                 'label' => $translate->translate('Slug name'),
             ],
         ]);
+
         $this->add([
             'name' => 'name',
             'attributes' => [
@@ -43,6 +46,7 @@ class LabelFieldset extends Fieldset
                 'required' => 'required',
             ],
         ]);
+
         // Hidden language element, because it will only be set at initialization.
         $this->add([
             'name' => 'language',
