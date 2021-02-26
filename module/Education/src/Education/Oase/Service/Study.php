@@ -51,7 +51,6 @@ class Study
      */
     protected $hydrator;
 
-
     /**
      * Constructor.
      *

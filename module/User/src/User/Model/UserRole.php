@@ -40,7 +40,6 @@ class UserRole
      */
     protected $role;
 
-
     /**
      * Get the id.
      *

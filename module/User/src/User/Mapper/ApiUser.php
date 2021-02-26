@@ -14,7 +14,6 @@ class ApiUser
      */
     protected $em;
 
-
     /**
      * Constructor
      *

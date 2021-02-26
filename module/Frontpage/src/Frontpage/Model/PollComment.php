@@ -59,7 +59,6 @@ class PollComment implements ResourceInterface
      */
     protected $createdOn;
 
-
     /**
      * Get the comment ID.
      *

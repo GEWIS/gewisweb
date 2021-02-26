@@ -15,7 +15,6 @@ class NewUser
      */
     protected $em;
 
-
     /**
      * Constructor
      *

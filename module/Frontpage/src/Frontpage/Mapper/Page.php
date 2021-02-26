@@ -63,7 +63,6 @@ class Page
         return $this->getRepository()->findAll();
     }
 
-
     /**
      * Removes a page.
      *

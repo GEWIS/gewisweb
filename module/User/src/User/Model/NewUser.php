@@ -51,7 +51,6 @@ class NewUser
      */
     protected $time;
 
-
     /**
      * Constructor.
      *

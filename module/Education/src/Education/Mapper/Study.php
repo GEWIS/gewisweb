@@ -20,7 +20,6 @@ class Study
      */
     protected $em;
 
-
     /**
      * Constructor
      *

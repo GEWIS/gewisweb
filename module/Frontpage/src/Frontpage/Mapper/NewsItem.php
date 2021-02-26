@@ -70,7 +70,6 @@ class NewsItem
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
-
     /**
      * Removes a news item.
      *

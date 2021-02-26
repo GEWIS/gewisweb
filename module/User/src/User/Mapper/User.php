@@ -15,7 +15,6 @@ class User
      */
     protected $em;
 
-
     /**
      * Constructor
      *
@@ -53,7 +52,6 @@ class User
             ->from('User\Model\User', 'u')
             ->leftJoin('u.roles', 'r')
             ->join('u.member', 'm');
-
 
         // depending on login, add correct where clause
         if (is_numeric($login)) {

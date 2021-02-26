@@ -136,7 +136,6 @@ class Email extends AbstractService
         return $message;
     }
 
-
     /**
      * Render a template with given variables.
      *

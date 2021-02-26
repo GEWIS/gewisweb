@@ -36,7 +36,6 @@ class ApiUser implements RoleInterface, ResourceInterface
      */
     protected $token;
 
-
     /**
      * Get the id.
      *

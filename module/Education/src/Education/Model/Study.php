@@ -53,7 +53,6 @@ class Study
      */
     protected $courses;
 
-
     /**
      * Constructor.
      */

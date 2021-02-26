@@ -931,7 +931,6 @@ class Company extends AbstractACLService
         return $this->getCategoryMapper()->findAllCategoriesById($categoryId);
     }
 
-
     /**
      * Returns a persistent label
      *

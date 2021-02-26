@@ -30,7 +30,6 @@ class Course
      */
     protected $hydrator;
 
-
     /**
      * Constructor.
      *

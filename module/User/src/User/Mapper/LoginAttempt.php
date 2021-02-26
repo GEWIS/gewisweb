@@ -13,7 +13,6 @@ class LoginAttempt
      */
     protected $em;
 
-
     /**
      * Constructor
      *

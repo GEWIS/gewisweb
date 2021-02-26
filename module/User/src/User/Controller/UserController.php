@@ -186,7 +186,6 @@ class UserController extends AbstractActionController
         ]);
     }
 
-
     /**
      * Get a user service.
      *

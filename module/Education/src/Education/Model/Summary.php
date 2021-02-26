@@ -20,7 +20,6 @@ class Summary extends Exam
      */
     protected $author;
 
-
     /**
      * Get the author.
      *

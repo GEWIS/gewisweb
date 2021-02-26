@@ -17,7 +17,6 @@ class Exam
      */
     protected $em;
 
-
     /**
      * Constructor
      *

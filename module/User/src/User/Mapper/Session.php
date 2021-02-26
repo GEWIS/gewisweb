@@ -13,7 +13,6 @@ class Session
      */
     protected $em;
 
-
     /**
      * Constructor
      *
@@ -63,7 +62,6 @@ class Session
             $this->em->flush();
         }
     }
-
 
     /**
      * Persist a session model

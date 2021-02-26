@@ -19,7 +19,6 @@ class ApiUser extends AbstractAclService
      */
     protected $identity;
 
-
     /**
      * Obtain all tokens.
      *
