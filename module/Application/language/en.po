@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 21:20+0200\n"
-"PO-Revision-Date: 2020-07-27 21:31+0200\n"
+"POT-Creation-Date: 2021-02-25 18:17+0100\n"
+"PO-Revision-Date: 2021-02-25 18:17+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -2618,12 +2618,6 @@ msgstr "View the results"
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:181
 msgid "There currently is no poll."
 msgstr "There currently is no poll."
-
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:195
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:201
-#: module/Education/view/education/education/index.phtml:121
-msgid "Athenaeum Bookstore"
-msgstr "Athenaeum Bookstore"
 
 #: module/Frontpage/view/frontpage/page-admin/index.phtml:5
 #: module/Application/view/partial/admin-nav.phtml:71
