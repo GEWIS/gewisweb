@@ -28,11 +28,20 @@ $this->headTitle($this->translate('Organ list'));
                                 case Organ::ORGAN_TYPE_COMMITTEE:
                                     echo $this->translate('Committee');
                                     break;
-                                case Organ::ORGAN_TYPE_AV_COMMITTEE:
+                                case Organ::ORGAN_TYPE_AVC:
                                     echo $this->translate('AV Committee');
                                     break;
                                 case Organ::ORGAN_TYPE_FRATERNITY:
                                     echo $this->translate('Fraternity');
+                                    break;
+                                case Organ::ORGAN_TYPE_AVW:
+                                    echo $this->translate('GM Task Force');
+                                    break;
+                                case Organ::ORGAN_TYPE_KKK:
+                                    echo $this->translate('Audit Committee');
+                                    break;
+                                case Organ::ORGAN_TYPE_RVA:
+                                    echo $this->translate('Advisory Board');
                                     break;
                             }
                             ?></a></td>

@@ -1944,6 +1944,18 @@ msgstr "AV Committee"
 msgid "Fraternity"
 msgstr "Fraternity"
 
+#: module/Decision/view/decision/organ/index.phtml:38
+msgid "GM Task Force"
+msgstr "GM Task Force"
+
+#: module/Decision/view/decision/organ/index.phtml:41
+msgid "Audit Committee"
+msgstr "Audit Committee"
+
+#: module/Decision/view/decision/organ/index.phtml:44
+msgid "Advisory Board"
+msgstr "Advisory Board"
+
 #: module/Decision/view/decision/member/self.phtml:18
 #: module/User/src/User/Form/Register.php:28
 msgid "Membership number"

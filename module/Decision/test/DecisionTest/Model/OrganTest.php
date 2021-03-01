@@ -27,5 +27,17 @@ class OrganTest extends PHPUnit_Framework_TestCase
 
         $organ->setType(Organ::ORGAN_TYPE_COMMITTEE);
         $this->assertEquals(Organ::ORGAN_TYPE_COMMITTEE, $organ->getType());
+
+        $organ->setType(Organ::ORGAN_TYPE_AVC);
+        $this->assertEquals(Organ::ORGAN_TYPE_AVC, $organ->getType());
+
+        $organ->setType(Organ::ORGAN_TYPE_AVW);
+        $this->assertEquals(Organ::ORGAN_TYPE_AVW, $organ->getType());
+
+        $organ->setType(Organ::ORGAN_TYPE_KKK);
+        $this->assertEquals(Organ::ORGAN_TYPE_KKK, $organ->getType());
+
+        $organ->setType(Organ::ORGAN_TYPE_RVA);
+        $this->assertEquals(Organ::ORGAN_TYPE_RVA, $organ->getType());
     }
 }
