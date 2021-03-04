@@ -9,7 +9,7 @@
         <tr>
     </thead>
     <tbody>
-    <?php foreach ($tokens as $token): ?>
+        <?php foreach ($tokens as $token): ?>
         <tr>
             <td><?= $token->getId() ?></td>
             <td><?= $token->getName() ?></td>
@@ -18,7 +18,7 @@
                     'id' => $token->getId()
                 ]) ?>"><span class="fas fa-times"></span> <?= $this->translate('Remove') ?></a></td>
         </tr>
-    <?php endforeach ?>
+        <?php endforeach ?>
     </tbody>
 </table>
 

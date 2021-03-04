@@ -122,7 +122,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the author.
      *
-     * @param string $author ;
+     * @param string $author
      */
     public function setAuthor($author)
     {

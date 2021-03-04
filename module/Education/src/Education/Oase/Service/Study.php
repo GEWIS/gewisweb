@@ -164,10 +164,10 @@ class Study
     public function createStudy(\SimpleXMLElement $doelgroep)
     {
         $data = [
-            'id' => (int)$doelgroep->Id->__toString(),
+            'id' => (int) $doelgroep->Id->__toString(),
             'name' => $doelgroep->Omschrijving->__toString(),
             'phase' => $doelgroep->Opleidingstype->__toString(),
-            'groupId' => (int)$doelgroep->GroepscategorieId->__toString()
+            'groupId' => (int) $doelgroep->GroepscategorieId->__toString()
         ];
         return $this->hydrator->hydrate($data, new StudyModel());
     }
