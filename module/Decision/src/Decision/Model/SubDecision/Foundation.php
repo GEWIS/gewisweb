@@ -16,8 +16,11 @@ use Decision\Model\SubDecision;
 class Foundation extends SubDecision
 {
     const ORGAN_TYPE_COMMITTEE = 'committee';
-    const ORGAN_TYPE_AV_COMMITTEE = 'avc';
+    const ORGAN_TYPE_AVC = 'avc';
     const ORGAN_TYPE_FRATERNITY = 'fraternity';
+    const ORGAN_TYPE_AVW = 'avw';
+    const ORGAN_TYPE_KKK = 'kkk';
+    const ORGAN_TYPE_RVA = 'rva';
 
     /**
      * Abbreviation (only for when organs are created)
@@ -71,8 +74,11 @@ class Foundation extends SubDecision
     {
         return [
             self::ORGAN_TYPE_COMMITTEE,
-            self::ORGAN_TYPE_AV_COMMITTEE,
-            self::ORGAN_TYPE_FRATERNITY
+            self::ORGAN_TYPE_AVC,
+            self::ORGAN_TYPE_FRATERNITY,
+            self::ORGAN_TYPE_AVW,
+            self::ORGAN_TYPE_KKK,
+            self::ORGAN_TYPE_RVA
         ];
     }
 

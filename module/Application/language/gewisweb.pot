@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 21:20+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2021-02-25 18:17+0100\n"
+"PO-Revision-Date: 2021-02-25 18:17+0100\n"
+"Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -1893,6 +1893,18 @@ msgstr ""
 msgid "Fraternity"
 msgstr ""
 
+#: module/Decision/view/decision/organ/index.phtml:38
+msgid "GM Task Force"
+msgstr ""
+
+#: module/Decision/view/decision/organ/index.phtml:41
+msgid "Audit Committee"
+msgstr ""
+
+#: module/Decision/view/decision/organ/index.phtml:44
+msgid "Advisory Board"
+msgstr ""
+
 #: module/Decision/view/decision/member/self.phtml:18
 #: module/User/src/User/Form/Register.php:28
 msgid "Membership number"
@@ -2551,12 +2563,6 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:181
 msgid "There currently is no poll."
-msgstr ""
-
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:195
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:201
-#: module/Education/view/education/education/index.phtml:121
-msgid "Athenaeum Bookstore"
 msgstr ""
 
 #: module/Frontpage/view/frontpage/page-admin/index.phtml:5
