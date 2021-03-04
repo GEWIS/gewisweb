@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManager;
  */
 class Page
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -64,7 +63,6 @@ class Page
         return $this->getRepository()->findAll();
     }
 
-
     /**
      * Removes a page.
      *
@@ -102,5 +100,4 @@ class Page
     {
         return $this->em->getRepository('Frontpage\Model\Page');
     }
-
 }

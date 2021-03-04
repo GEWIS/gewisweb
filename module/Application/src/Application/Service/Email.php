@@ -23,7 +23,6 @@ use Zend\Mime\Message as MimeMessage;
  */
 class Email extends AbstractService
 {
-
     /**
      * Send an email.
      *
@@ -136,7 +135,6 @@ class Email extends AbstractService
 
         return $message;
     }
-
 
     /**
      * Render a template with given variables.

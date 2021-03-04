@@ -405,7 +405,6 @@ class AdminController extends AbstractActionController
         // Get form
         $packageForm = $companyService->getPackageForm($type);
 
-
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -661,7 +660,6 @@ class AdminController extends AbstractActionController
             ]
         );
     }
-
 
     /**
      * Method that returns the service object for the company module.

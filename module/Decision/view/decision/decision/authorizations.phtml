@@ -40,7 +40,7 @@ You may still be able to authorize someone or revoke an authorization by contact
                     <?= $this->translate('Member') ?>
                 </label>
                 <div class='col-sm-10'>
-                    <input id='memberSearch' type='text' class='form-control' />
+                    <input id='memberSearch' type='text' class='form-control'/>
                     <?= $this->formElementErrors($element) ?>
                     <?= $this->formElement($element) ?>
                 </div>
@@ -106,40 +106,43 @@ You may still be able to authorize someone or revoke an authorization by contact
     <div class='modal-dialog' role='document'>
         <div class='modal-content'>
             <div class='modal-header'>
-                <h2 class='modal-title' id='authorizationConfirmTitle'><?= $this->translate('Are you sure you would like to authorize') . ' ...'?></h2>
+                <h2 class='modal-title'
+                    id='authorizationConfirmTitle'><?= $this->translate('Are you sure you would like to authorize') . ' ...' ?></h2>
                 <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>
                 </button>
             </div>
-        <div class='modal-body'>
-            <p><?= $this->translate(' This person already has 2 or more authorizations. Are you sure you would like to proceed?') ?></p>
-        </div>
+            <div class='modal-body'>
+                <p><?= $this->translate(' This person already has 2 or more authorizations. Are you sure you would like to proceed?') ?></p>
+            </div>
             <div class='modal-footer'>
-                <button type='button' class='btn btn-secondary' data-dismiss='modal'><?= $this->translate('Cancel')?></button>
-                <button type='button' class='btn btn-primary' id='definitiveSubmit'><?= $this->translate('Confirm authorization')?></button>
+                <button type='button' class='btn btn-secondary'
+                        data-dismiss='modal'><?= $this->translate('Cancel') ?></button>
+                <button type='button' class='btn btn-primary'
+                        id='definitiveSubmit'><?= $this->translate('Confirm authorization') ?></button>
                 <script>
-                $(document).ready(function () {
-                  $('#definitiveSubmit').click(function () {
-                    $('#authorizationForm').submit();
-                  });
-                });
+                    $(document).ready(function () {
+                        $('#definitiveSubmit').click(function () {
+                            $('#authorizationForm').submit();
+                        });
+                    });
                 </script>
             </div>
         </div>
     </div>
 </div>
 <script>
-$('#initialSubmit').click(function () {
-    var memberName = $('#memberSearch').val();
-    var memberLidnr = $("[name='recipient']").val();
-    $.getJSON('<?= $this->url('member/canauth') ?>' + '?q=' + memberLidnr, function(data) {
-        var isAuthorizable = data.value;
-        if (isAuthorizable) {
-            $('#authorizationForm').submit();
-        } else {
-            $('#confirmAuthorization').modal('show');
-        }
-    });
-    $('#authorizationConfirmTitle').text('<?= $this->translate('Are you sure you would like to authorize %s')?>'.replace('%s', memberName));
-})
+    $('#initialSubmit').click(function () {
+        var memberName = $('#memberSearch').val();
+        var memberLidnr = $("[name='recipient']").val();
+        $.getJSON('<?= $this->url('member/canauth') ?>' + '?q=' + memberLidnr, function (data) {
+            var isAuthorizable = data.value;
+            if (isAuthorizable) {
+                $('#authorizationForm').submit();
+            } else {
+                $('#confirmAuthorization').modal('show');
+            }
+        });
+        $('#authorizationConfirmTitle').text('<?= $this->translate('Are you sure you would like to authorize %s')?>'.replace('%s', memberName));
+    })
 </script>

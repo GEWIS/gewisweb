@@ -1,22 +1,22 @@
 <?php if (isset($this->success) && $this->success): ?>
-<?= $this->translate('Summary successfully uploaded!') ?>
+    <?= $this->translate('Summary successfully uploaded!') ?>
 <?php else: ?>
-<?php
-$form = $this->form;
-$form->prepare();
+    <?php
+    $form = $this->form;
+    $form->prepare();
 
-$form->setAttribute('action', $this->url('admin_education/default', ['action' => 'summary']));
-$form->setAttribute('method', 'post');
+    $form->setAttribute('action', $this->url('admin_education/default', ['action' => 'summary']));
+    $form->setAttribute('method', 'post');
 
-$form->setAttribute('class', 'form-horizontal');
-?>
-<?php echo $this->form()->openTag($form); ?>
+    $form->setAttribute('class', 'form-horizontal');
+    ?>
+    <?php echo $this->form()->openTag($form); ?>
 
-<?php
-$element = $form->get('course');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
+    <?php
+    $element = $form->get('course');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
@@ -25,11 +25,11 @@ $element->setAttribute('placeholder', $element->getLabel());
         </div>
     </div>
 
-<?php
-$element = $form->get('date');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
+    <?php
+    $element = $form->get('date');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
@@ -38,11 +38,11 @@ $element->setAttribute('placeholder', $element->getLabel());
         </div>
     </div>
 
-<?php
-$element = $form->get('author');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
+    <?php
+    $element = $form->get('author');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
@@ -51,10 +51,10 @@ $element->setAttribute('placeholder', $element->getLabel());
         </div>
     </div>
 
-<?php
-$element = $form->get('language');
-$element->setAttribute('class', 'form-control');
-?>
+    <?php
+    $element = $form->get('language');
+    $element->setAttribute('class', 'form-control');
+    ?>
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
@@ -63,9 +63,9 @@ $element->setAttribute('class', 'form-control');
         </div>
     </div>
 
-<?php
-$element = $form->get('upload');
-?>
+    <?php
+    $element = $form->get('upload');
+    ?>
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
@@ -74,16 +74,16 @@ $element = $form->get('upload');
         </div>
     </div>
 
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <?php
-        $submit = $form->get('submit');
-        $submit->setLabel($this->translate('Upload'));
-        $submit->setAttribute('class', 'btn btn-primary');
-        ?>
-        <?= $this->formButton($submit) ?>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <?php
+            $submit = $form->get('submit');
+            $submit->setLabel($this->translate('Upload'));
+            $submit->setAttribute('class', 'btn btn-primary');
+            ?>
+            <?= $this->formButton($submit) ?>
+        </div>
     </div>
-</div>
 
-<?= $this->form()->closeTag() ?>
+    <?= $this->form()->closeTag() ?>
 <?php endif ?>

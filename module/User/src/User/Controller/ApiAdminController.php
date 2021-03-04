@@ -2,12 +2,11 @@
 
 namespace User\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController,
-    Zend\View\Model\ViewModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class ApiAdminController extends AbstractActionController
 {
-
     /**
      * API token view.
      *

@@ -8,14 +8,12 @@ use User\Model\User as UserModel;
 
 class User
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -54,7 +52,6 @@ class User
             ->from('User\Model\User', 'u')
             ->leftJoin('u.roles', 'r')
             ->join('u.member', 'm');
-
 
         // depending on login, add correct where clause
         if (is_numeric($login)) {
@@ -128,5 +125,4 @@ class User
     {
         return $this->em->getRepository('User\Model\User');
     }
-
 }

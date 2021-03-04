@@ -13,7 +13,6 @@ use Education\Model\Exam as ExamModel;
  */
 class SummaryUpload extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translator)
     {
         parent::__construct();

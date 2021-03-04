@@ -8,7 +8,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class SearchCourse extends Form
 {
-
     public function __construct(Translator $translate)
     {
         parent::__construct();

@@ -9,7 +9,6 @@ use Education\Model\Exam as ExamModel;
 
 class Summary extends Fieldset implements InputFilterProviderInterface
 {
-
     protected $config;
 
     public function __construct(Translator $translator)

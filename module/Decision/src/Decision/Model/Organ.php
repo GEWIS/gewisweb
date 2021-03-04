@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Organ
 {
-
     const ORGAN_TYPE_COMMITTEE = 'committee';
     const ORGAN_TYPE_AVC = 'avc';
     const ORGAN_TYPE_FRATERNITY = 'fraternity';

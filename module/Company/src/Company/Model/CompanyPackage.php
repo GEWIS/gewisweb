@@ -198,11 +198,7 @@ abstract class CompanyPackage
             return false;
         }
 
-        if ($now < $this->getStartingDate()) {
-            return false;
-        }
-
-        if (!$this->isPublished()) {
+        if ($now < $this->getStartingDate() || !$this->isPublished()) {
             return false;
         }
 

@@ -138,7 +138,7 @@ class CompanyController extends AbstractActionController
                 'jobSlug' => $jobName,
                 'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
             ]);
-            if (count($jobs) > 0) {
+            if (!empty($jobs)) {
                 if ($jobs[0]->isActive()) {
                     return new ViewModel([
                         'job' => $jobs[0],

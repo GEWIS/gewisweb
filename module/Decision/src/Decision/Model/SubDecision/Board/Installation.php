@@ -14,7 +14,6 @@ use Decision\Model\Member;
  */
 class Installation extends SubDecision
 {
-
     /**
      * Function in the board.
      *
@@ -63,7 +62,6 @@ class Installation extends SubDecision
      * @ORM\OneToOne(targetEntity="Decision\Model\BoardMember", mappedBy="installationDec")
      */
     protected $boardMember;
-
 
     /**
      * Get the function.

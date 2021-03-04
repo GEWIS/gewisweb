@@ -11,7 +11,6 @@ use Zend\Console\Request as ConsoleRequest;
 
 class AdminController extends AbstractActionController
 {
-
     /**
      * Notes upload action.
      */
@@ -43,7 +42,7 @@ class AdminController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
         $meetings = $service->getMeetingsByType('AV');
         $meetings = array_merge($meetings, $service->getMeetingsByType('VV'));
-        if (is_null($number) && count($meetings) > 0) {
+        if (is_null($number) && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
             $type = $meetings[0]->getType();
         }
@@ -102,7 +101,7 @@ class AdminController extends AbstractActionController
         $meetings = $this->getDecisionService()->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
-        if (is_null($number) && count($meetings) > 0) {
+        if (is_null($number) && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
         }
 
@@ -152,8 +151,8 @@ class AdminController extends AbstractActionController
 
         // Perform INNER JOIN to only retrieve meetings with associated documents
         $dql = 'SELECT m, d ' .
-               'FROM Decision\Model\Meeting m ' .
-               'INNER JOIN m.documents d';
+            'FROM Decision\Model\Meeting m ' .
+            'INNER JOIN m.documents d';
 
         $meetings = $entityManager->createQuery($dql)->getResult();
         foreach ($meetings as $meeting) {
@@ -180,5 +179,4 @@ class AdminController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_decision');
     }
-
 }

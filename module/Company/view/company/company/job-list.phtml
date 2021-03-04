@@ -57,17 +57,6 @@ $this->headTitle($this->category->getPluralName());
                             <option value="posted"><?= $this->translate('Most recent') ?></option>
                         </select>
                     </div>
-                    <!--
-                    <div class="form-group">
-                        <label for="job-label"><?= $this->translate('Audience') ?></label>
-                        <select name="label" id="job-label" class="form-control">
-                            <option value="*"><?= $this->translate('Any') ?></option>
-                            <option value="CSE">Computer Science and Engineering</option>
-                            <option value="DS">Data Science</option>
-                            <option value="IAM">Industrial and Applied Mathematics</option>
-                        </select>
-                    </div>
-                    -->
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>

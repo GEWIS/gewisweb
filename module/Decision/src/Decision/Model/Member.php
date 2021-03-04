@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Member
 {
-
     const GENDER_MALE = 'm';
     const GENDER_FEMALE = 'f';
     const GENDER_OTHER = 'o';
@@ -572,8 +571,8 @@ class Member
      */
     public function isActive()
     {
-        $installations = $this->getCurrentOrganInstallations();
-        return !empty($installations);
+        $currentInstallations = $this->getCurrentOrganInstallations();
+        return !empty($currentInstallations);
     }
 
     /**
@@ -603,7 +602,7 @@ class Member
             return is_null($dischargeDate) || $dischargeDate >= $today;
         });
 
-        if (count($boards) == 0) {
+        if (empty($boards)) {
             return null;
         }
 

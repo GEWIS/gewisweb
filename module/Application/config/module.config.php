@@ -16,9 +16,9 @@ return [
                     'route' => '/lang/:lang/',
                     'defaults' => [
                         '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'lang',
-                        'lang'          => 'nl'
+                        'controller' => 'Index',
+                        'action' => 'lang',
+                        'lang' => 'nl'
                     ]
                 ],
                 'priority' => 100
@@ -29,8 +29,8 @@ return [
                     'route' => '/coffee',
                     'defaults' => [
                         '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'teapot',
+                        'controller' => 'Index',
+                        'action' => 'teapot',
                     ]
                 ],
                 'priority' => 100
@@ -50,9 +50,9 @@ return [
         'locale' => 'nl',
         'translation_file_patterns' => [
             [
-                'type'     => 'gettext',
+                'type' => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
+                'pattern' => '%s.mo',
             ],
             // Zend\Validate translation
             [
@@ -70,22 +70,22 @@ return [
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => (APP_ENV === 'production' ? 'error/404' : 'error/debug/404'),
-        'exception_template'       => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => (APP_ENV === 'production' ? 'error/404' : 'error/debug/404'),
+        'exception_template' => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'application/index/teapot' => __DIR__ . '/../view/application/index/418.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/403'               => __DIR__ . '/../view/error/403.phtml',
-            'error/418'               => __DIR__ . '/../view/error/418.phtml',
-            'error/500'             => __DIR__ . '/../view/error/500.phtml',
-            'error/debug/404'               => __DIR__ . '/../view/error/debug/404.phtml',
-            'error/debug/403'               => __DIR__ . '/../view/error/debug/403.phtml',
-            'error/debug/500'             => __DIR__ . '/../view/error/debug/500.phtml',
-            'paginator/default'       => __DIR__ . '/../view/partial/paginator.phtml',
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'error/403' => __DIR__ . '/../view/error/403.phtml',
+            'error/418' => __DIR__ . '/../view/error/418.phtml',
+            'error/500' => __DIR__ . '/../view/error/500.phtml',
+            'error/debug/404' => __DIR__ . '/../view/error/debug/404.phtml',
+            'error/debug/403' => __DIR__ . '/../view/error/debug/403.phtml',
+            'error/debug/500' => __DIR__ . '/../view/error/debug/500.phtml',
+            'paginator/default' => __DIR__ . '/../view/partial/paginator.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
@@ -94,7 +94,7 @@ return [
     'view_helpers' => [
         'invokables' => [
             'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage',
-            'bootstrapElementError'  => 'Application\View\Helper\BootstrapElementError',
+            'bootstrapElementError' => 'Application\View\Helper\BootstrapElementError',
         ],
     ],
 ];

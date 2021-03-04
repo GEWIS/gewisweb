@@ -9,7 +9,6 @@ use Zend\Authentication\Result;
 
 class Login extends Form
 {
-
     protected $translate;
 
     public function __construct(Translator $translate)
@@ -72,27 +71,27 @@ class Login extends Form
     {
         if (!$result->isValid()) {
             switch ($result->getCode()) {
-            case Result::FAILURE_IDENTITY_NOT_FOUND:
-                $this->setMessages([
-                    'login' => [
-                        $this->translate->translate('This user could not be found.')
-                    ]
-                ]);
-                break;
-            case Result::FAILURE_CREDENTIAL_INVALID:
-                $this->setMessages([
-                    'password' => [
-                        $this->translate->translate('Wrong password provided.')
-                    ]
-                ]);
-                break;
-            case Result::FAILURE:
-                $this->setMessages([
-                    'password' => [
-                        $this->translate->translate('Too many login attempts, try again later.')
-                    ]
-                ]);
-                break;
+                case Result::FAILURE_IDENTITY_NOT_FOUND:
+                    $this->setMessages([
+                        'login' => [
+                            $this->translate->translate('This user could not be found.')
+                        ]
+                    ]);
+                    break;
+                case Result::FAILURE_CREDENTIAL_INVALID:
+                    $this->setMessages([
+                        'password' => [
+                            $this->translate->translate('Wrong password provided.')
+                        ]
+                    ]);
+                    break;
+                case Result::FAILURE:
+                    $this->setMessages([
+                        'password' => [
+                            $this->translate->translate('Too many login attempts, try again later.')
+                        ]
+                    ]);
+                    break;
             }
         }
     }
@@ -126,4 +125,3 @@ class Login extends Form
         $this->setInputFilter($filter);
     }
 }
-

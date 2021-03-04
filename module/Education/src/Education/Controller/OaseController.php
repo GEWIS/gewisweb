@@ -9,8 +9,8 @@ use Zend\Mvc\Controller\AbstractActionController;
  *
  * This controller will only be called from console routes.
  */
-class OaseController extends AbstractActionController {
-
+class OaseController extends AbstractActionController
+{
     public function indexAction()
     {
         $console = $this->getServiceLocator()->get('console');

@@ -54,22 +54,20 @@ class Module
                 );
             },
             'company_admin_edit_category_form' => function ($sm) {
-                $form = new \Company\Form\EditCategory(
+                return new \Company\Form\EditCategory(
                     $sm->get('company_mapper_category'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator')
                 );
-                return $form;
             },
             'company_admin_edit_label_form' => function ($sm) {
-                $form = new \Company\Form\EditLabel(
+                return \Company\Form\EditLabel(
                     $sm->get('company_mapper_label'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator')
                 );
-                return $form;
             },
             'company_admin_edit_bannerpackage_form' => function ($sm) {
                 return new \Company\Form\EditPackage(

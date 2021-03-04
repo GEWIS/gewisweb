@@ -146,12 +146,12 @@ class Job
      */
     public function getLanguageNeutralId()
     {
-        $id = $this->languageNeutralId;
-        if ($id == 0) {
+        $lnid = $this->languageNeutralId;
+        if ($lnid == 0) {
             return $this->id;
         }
 
-        return $id;
+        return $lnid;
     }
 
     /**
@@ -244,7 +244,7 @@ class Job
 
     public function isActive()
     {
-        return $this->getActive() and $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
+        return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
     }
 
     /**

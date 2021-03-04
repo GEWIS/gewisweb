@@ -63,7 +63,9 @@ $pinned = $form->get('pinned');
     <label>
         <?= $this->formCheckbox($pinned) ?>
         <?= $this->translate('Pin news item') ?>
-        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this if you want this news item to stay at the top of the page.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+        <span data-toggle="tooltip" data-placement="right"
+              title="<?= $this->translate('Select this if you want this news item to stay at the top of the page.') ?>"
+              class="fas fa-info-circle" aria-hidden="true"></span>
     </label>
 </div>
 <hr>
@@ -74,7 +76,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 ?>
 <?= $this->formButton($submit) ?>
 
-<?php if($canDelete): ?>
+<?php if ($canDelete): ?>
     <a href="<?= $this->url('admin_news/delete', ['item_id' => $newsItemId]) ?>" class="btn btn-danger">
         <span class="far fa-trash-alt"></span>&nbsp;
         <?= $this->translate('Delete this news item') ?>

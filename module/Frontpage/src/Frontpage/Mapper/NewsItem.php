@@ -12,7 +12,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  */
 class NewsItem
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -70,7 +69,6 @@ class NewsItem
 
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
-
 
     /**
      * Removes a news item.

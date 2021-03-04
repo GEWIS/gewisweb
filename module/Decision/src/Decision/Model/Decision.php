@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Decision
 {
-
     /**
      * Meeting.
      *

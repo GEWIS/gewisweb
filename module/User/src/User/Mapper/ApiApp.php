@@ -1,8 +1,6 @@
 <?php
 
-
 namespace User\Mapper;
-
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -10,7 +8,6 @@ use User\Model\ApiApp as ApiAppModel;
 
 class ApiApp
 {
-
     /**
      * @var EntityManager
      */

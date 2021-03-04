@@ -14,7 +14,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class User implements RoleInterface, ResourceInterface
 {
-
     /**
      * The membership number.
      *
@@ -140,13 +139,13 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getRoleNames()
     {
-        $roles = [];
+        $names = [];
 
         foreach ($this->getRoles() as $role) {
-            $roles[] = $role->getRole();
+            $names[] = $role->getRole();
         }
 
-        return $roles;
+        return $names;
     }
 
     /**
@@ -175,6 +174,7 @@ class User implements RoleInterface, ResourceInterface
             'member' => $this->getMember()->toArray()
         ];
     }
+
     /**
      * Get the user's resource ID.
      *

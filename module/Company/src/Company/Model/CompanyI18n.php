@@ -42,7 +42,6 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     protected $logo;
 
-    // TODO: Check if description is not reserved by PHP
     /**
      * The company's (HTML) description.
      *

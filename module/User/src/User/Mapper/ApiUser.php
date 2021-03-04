@@ -7,14 +7,12 @@ use Doctrine\ORM\EntityManager;
 
 class ApiUser
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -92,5 +90,4 @@ class ApiUser
     {
         return $this->em->getRepository('User\Model\ApiUser');
     }
-
 }

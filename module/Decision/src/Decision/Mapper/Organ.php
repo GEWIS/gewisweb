@@ -13,14 +13,12 @@ use Doctrine\ORM\EntityManager;
  */
 class Organ
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -132,7 +130,7 @@ class Organ
             $qb->orderBy('o.foundationDate', 'DESC');
             $queryResult = $qb->getQuery()->getResult();
 
-            if (count($queryResult) == 0) {
+            if (empty($queryResult)) {
                 // the query did not return any records
                 throw new \Doctrine\ORM\NoResultException('no organ found');
             }

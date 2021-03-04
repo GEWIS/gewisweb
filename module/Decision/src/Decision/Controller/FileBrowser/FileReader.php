@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Decision\Controller\FileBrowser;
 
 /**
@@ -9,7 +8,6 @@ namespace Decision\Controller\FileBrowser;
  */
 interface FileReader
 {
-
     /**
      * Return an array of all files and subdirectories in the given directory.
      * Returns null when the $path doesn't resolve to a valid directory or

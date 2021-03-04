@@ -931,7 +931,6 @@ class Company extends AbstractACLService
         return $this->getCategoryMapper()->findAllCategoriesById($categoryId);
     }
 
-
     /**
      * Returns a persistent label
      *
@@ -963,7 +962,7 @@ class Company extends AbstractACLService
             );
         }
         if (is_null($packageId)) {
-            throw new \Exception('Invalid argument');
+            throw new \InvalidArgumentException('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageId);
         if (is_null($package)) {

@@ -15,7 +15,6 @@ use Zend\Form\FormInterface;
  */
 class Exam extends AbstractAclService
 {
-
     /**
      * Bulk form.
      *
@@ -164,7 +163,6 @@ class Exam extends AbstractAclService
         return $this->bulkEdit($data, 'exam');
     }
 
-
     public function bulkSummaryEdit($data)
     {
         return $this->bulkEdit($data, 'summary');
@@ -250,7 +248,6 @@ class Exam extends AbstractAclService
         }
 
         $filename[] = $exam->getDate()->format('Y-m-d');
-
 
         return implode('-', $filename) . '.pdf';
     }

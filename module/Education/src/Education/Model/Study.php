@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Study
 {
-
     const PHASE_BACHELOR = 'bachelor';
     const PHASE_MASTER = 'master';
 
@@ -53,7 +52,6 @@ class Study
      * @ORM\ManyToMany(targetEntity="Education\Model\Course", mappedBy="studies")
      */
     protected $courses;
-
 
     /**
      * Constructor.

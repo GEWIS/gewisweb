@@ -9,7 +9,6 @@ use Zend\Authentication\Result;
 
 class Password extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translate)
     {
         parent::__construct();

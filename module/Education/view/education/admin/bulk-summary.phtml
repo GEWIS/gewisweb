@@ -6,14 +6,16 @@ $this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css');
 <div class="row">
     <div class="col-md-12">
         <h1><?= $this->translate('Upload summaries') ?>
-        <hr>
-        <div class="panel panel-default">
-        <form action="<?= $this->url('admin_education/bulk_upload_summary') ?>" class="dropzone panel-body"></form>
-        </div>
+            <hr>
+            <div class="panel panel-default">
+                <form action="<?= $this->url('admin_education/bulk_upload_summary') ?>"
+                      class="dropzone panel-body"></form>
+            </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="<?= $this->url('admin_education/bulk_edit_summary') ?>" class="btn btn-primary"><?= $this->translate('Finalize summary uploads') ?></a>
+        <a href="<?= $this->url('admin_education/bulk_edit_summary') ?>"
+           class="btn btn-primary"><?= $this->translate('Finalize summary uploads') ?></a>
     </div>
 </div>
