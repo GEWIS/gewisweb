@@ -177,7 +177,7 @@ class Activity extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'signuplists',
+            'name' => 'signupLists',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
                 'count' => 0,
@@ -216,7 +216,7 @@ class Activity extends Form implements InputFilterProviderInterface
          */
         if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
             // Check for each SignupList whether the required fields have data.
-            foreach ($this->get('signuplists')->getFieldSets() as $signupList) {
+            foreach ($this->get('signupLists')->getFieldSets() as $signupList) {
                 // Check the Dutch name of the SignupLists.
                 if ($this->data['language_dutch']) {
                     if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {

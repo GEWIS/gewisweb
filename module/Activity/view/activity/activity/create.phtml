@@ -1,5 +1,5 @@
 <?php
-$this->headTitle($this->translate('Create Activity'));
+$this->headTitle($action);
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
@@ -18,7 +18,7 @@ $form->setAttribute('class', 'form-activity');
         <?= $this->form()->openTag($form) ?>
         <div class="row">
             <div class="col-md-12">
-                <h1><?= $this->translate('Create an activity') ?></h1>
+                <h1><?= $action ?></h1>
             </div>
         </div>
         <hr>
@@ -112,6 +112,14 @@ $form->setAttribute('class', 'form-activity');
                 $categoriesName = $categories->getName();
                 $categoryOptions = $categories->getValueOptions();
                 $categorySelectedValues = $categories->getValue();
+
+                if (!empty($categorySelectedValues)) {
+                    $selectedCategoryIds = [];
+
+                    foreach ($categorySelectedValues as $category) {
+                        $selectedCategoryIds[] = is_string($category) ? $category : $category->getId();
+                    }
+                }
                 ?>
                 <?php if (empty($categoryOptions)): ?>
                     <p><i><?= $this->translate('There are currently no activity categories...') ?></i></p>
@@ -119,7 +127,7 @@ $form->setAttribute('class', 'form-activity');
                     <fieldset>
                         <?php foreach ($categoryOptions as $option => $value): ?>
                             <?php
-                            $checked = ($categorySelectedValues && in_array($option, $categorySelectedValues)) ?
+                            $checked = (isset($selectedCategoryIds) && in_array($option, $selectedCategoryIds)) ?
                                 'checked="checked"' : '';
                             ?>
                             <div class="chip chip-clickable chip-outlined">
@@ -137,66 +145,68 @@ $form->setAttribute('class', 'form-activity');
                 <?php endif; ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2><?= $this->translate('Signup Lists') ?></h2>
-                <p><?= $this->translate('Add signup lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
-            </div>
-            <div class="col-md-12">
-                <div class="row signup-lists-header">
-                    <div class="col-md-3 col-md-offset-6">
-                        <span class="flag-icon flag-icon-nl"></span>
-                        <strong><?= $this->translate('Dutch') ?></strong>
-                        <hr />
-                    </div>
-                    <div class="col-md-3">
-                        <span class="flag-icon flag-icon-en"></span>
-                        <strong><?= $this->translate('English') ?></strong>
-                        <hr />
-                    </div>
+        <?php if (!isset($update)): // Do not allow updates to change SignupLists. This is very complicated. ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Signup Lists') ?></h2>
+                    <p><?= $this->translate('Add signup lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php
-                        // Render template for SignupLists
-                        $signupLists = $form->get('signuplists')->getTemplateElement();
-                        ob_start();
-                        echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupLists, 'index' => '__signuplist__']);
-                        $signupListsTemplate = trim(ob_get_clean());
-                        ?>
-                        <fieldset class="signup-lists">
-                            <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListsTemplate) ?>"></span>
+                <div class="col-md-12">
+                    <div class="row signup-lists-header">
+                        <div class="col-md-3 col-md-offset-6">
+                            <span class="flag-icon flag-icon-nl"></span>
+                            <strong><?= $this->translate('Dutch') ?></strong>
+                            <hr />
+                        </div>
+                        <div class="col-md-3">
+                            <span class="flag-icon flag-icon-en"></span>
+                            <strong><?= $this->translate('English') ?></strong>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <?php
-                            $index = 0;
-                            foreach ($form->get('signuplists')->getIterator() as $signupList) {
-                                echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupList, 'index' => $index]);
-                                $index++;
-                            }
+                            // Render template for SignupLists
+                            $signupLists = $form->get('signupLists')->getTemplateElement();
+                            ob_start();
+                            echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupLists, 'index' => '__signuplist__']);
+                            $signupListsTemplate = trim(ob_get_clean());
                             ?>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group signup-list-controls">
-                                        <button class="btn btn-danger" type="button" onclick="return Activity.removeSignupList()">
-                                            <i class="fas fa-minus"></i>
-                                            <?= $this->translate('Remove the last signup list') ?>
-                                        </button>
-                                        <button class="btn btn-success" type="button" onclick="return Activity.addSignupList()">
-                                            <i class="fas fa-plus"></i>
-                                            <?= $this->translate('Add a signup list') ?>
-                                        </button>
+                            <fieldset class="signup-lists">
+                                <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListsTemplate) ?>"></span>
+                                <?php
+                                $index = 0;
+                                foreach ($form->get('signupLists')->getIterator() as $signupList) {
+                                    echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupList, 'index' => $index]);
+                                    $index++;
+                                }
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group signup-list-controls">
+                                            <button class="btn btn-danger" type="button" onclick="return Activity.removeSignupList()">
+                                                <i class="fas fa-minus"></i>
+                                                <?= $this->translate('Remove the last signup list') ?>
+                                            </button>
+                                            <button class="btn btn-success" type="button" onclick="return Activity.addSignupList()">
+                                                <i class="fas fa-plus"></i>
+                                                <?= $this->translate('Add a signup list') ?>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
                 <?php
                 $submit = $form->get('submit')
-                    ->setLabel($this->translate('Create Activity'))
+                    ->setLabel($action)
                     ->setAttribute('class', 'btn btn-primary');
                 ?>
                 <div class="form-group">

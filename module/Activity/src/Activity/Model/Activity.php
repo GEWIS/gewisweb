@@ -376,6 +376,10 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     public function addCategory($category)
     {
+        if ($this->categories->contains($category)) {
+            return;
+        }
+
         $this->categories->add($category);
         $category->addActivity($this);
     }
@@ -385,6 +389,10 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     public function removeCategory($category)
     {
+        if (!$this->categories->contains($category)) {
+            return;
+        }
+
         $this->categories->removeElement($category);
         $category->removeActivity($this);
     }
@@ -465,6 +473,8 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'costsEn' => $this->getCosts()->getValueEN(),
             'description' => $this->getDescription()->getValueNL(),
             'descriptionEn' => $this->getDescription()->getValueEN(),
+            'organ' => $this->getOrgan(),
+            'company' => $this->getCompany(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'categories' => $this->getCategories()->toArray(),

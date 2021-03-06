@@ -60,6 +60,10 @@ class ActivityCategory
      */
     public function addActivity($activity)
     {
+        if ($this->activities->contains($activity)) {
+            return;
+        }
+
         $this->activities->add($activity);
     }
 
@@ -68,6 +72,10 @@ class ActivityCategory
      */
     public function removeActivity($activity)
     {
+        if (!$this->activities->contains($activity)) {
+            return;
+        }
+
         $this->activities->removeElement($activity);
     }
 

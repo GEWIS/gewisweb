@@ -24,7 +24,7 @@ class SignupField
      * Activity that the SignupField belongs to.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\SignupList", inversedBy="fields", cascade={"persist"})
-     * @ORM\JoinColumn(name="activity_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="signupList_id",referencedColumnName="id")
      */
     protected $signupList;
 

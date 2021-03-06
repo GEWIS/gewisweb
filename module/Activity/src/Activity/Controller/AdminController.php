@@ -132,7 +132,29 @@ class AdminController extends AbstractActionController
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
 
-        if (!$acl->isAllowed($identity, $activity, 'update') || $activity->getEndTime() < new DateTime()) {
+        if (!$acl->isAllowed($identity, $activity, 'update')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to update this activity')
+            );
+        }
+
+        if ($activity->getSignupLists()->getCount() !== 0) {
+            $openingDates = [];
+
+            foreach ($activity->getSignupLists() as $signupList) {
+                $startingTimes[$signupList->getId()] = $signupList->getOpenDate();
+            }
+
+            if (min($openingDates) < new DateTime()) {
+                throw new \User\Permissions\NotAllowedException(
+                    $translator->translate('You are not allowed to update this activity')
+                );
+            }
+        }
+
+        // Can also be `elseif` as SignupLists are guaranteed to be before the
+        // Activity begin date and time.
+        if ($activity->getBeginTime() < new DateTime()) {
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
             );
@@ -143,36 +165,32 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $form->setData($request->getPost());
-
-            if ($form->isValid()) {
-                $updated = $activityService->createUpdateProposal(
-                    $activity,
-                    $form->getData()
-                );
-
-                $message = $translator->translate('The activity has been successfully updated.');
-
-                if (!$updated) {
-                    $message .= ' ' . $translator->translate('It will become applied after it has been approved by the board.');
-                }
+            if ($activityService->createUpdateProposal($activity, $request->getPost())) {
+                $message = $translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
 
                 $this->redirectActivityAdmin(true, $message);
             }
         }
+
         $updateProposal = $activity->getUpdateProposal();
+
         if ($updateProposal->count() !== 0) {
-            //if there exists an update proposal, show that instead of the old activity
+            // If there already is an update proposal for this activity, show that instead of the original activity.
             $activity = $updateProposal->first()->getNew();
         }
+
         $activityData = $activity->toArray();
-        unset($activityData['id'], $activityData['signupLists']);
         $languages = $queryService->getAvailableLanguages($activity);
         $activityData['language_dutch'] = $languages['nl'];
         $activityData['language_english'] = $languages['en'];
+        unset($activityData['id'], $activityData['signupLists']);
+
         $form->setData($activityData);
 
-        return ['form' => $form];
+        $viewModel = new ViewModel(['form' => $form, 'action' => $translator->translate('Update Activity'), 'update' => true]);
+        $viewModel->setTemplate('activity/activity/create.phtml');
+
+        return $viewModel;
     }
 
     public function exportPdfAction()

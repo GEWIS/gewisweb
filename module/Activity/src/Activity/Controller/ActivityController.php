@@ -177,7 +177,9 @@ class ActivityController extends AbstractActionController
             }
         }
 
-        return ['form' => $form];
+        $translator = $this->getServiceLocator()->get('translator');
+
+        return ['form' => $form, 'action' => $translator->translate('Create Activity')];
     }
 
     /**

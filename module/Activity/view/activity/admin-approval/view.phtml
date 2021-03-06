@@ -11,7 +11,9 @@ $this->headTitle($this->translate('Approval'));
             <?php
             $organisingParty = "";
             if (!is_null($activity->getOrgan()) && !is_null($activity->getCompany())) {
-                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName() . " and " . $activity->getCompany()->getName());
+                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName()) . ' ';
+                $organisingParty .= $this->translate('and') . ' ';
+                $organisingParty .= $this->escapeHtml($activity->getCompany()->getName());
             } else if (!is_null($activity->getOrgan())) {
                 $organisingParty = $this->escapeHtml($activity->getOrgan()->getName());
             } else if (!is_null($activity->getCompany())) {

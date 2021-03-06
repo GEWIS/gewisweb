@@ -11,6 +11,7 @@ use Activity\Model\SignupOption as SignupOptionModel;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
 use Decision\Model\Organ;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\Stdlib\Parameters;
 use Activity\Form\Activity as ActivityForm;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
@@ -71,7 +72,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @param array $data Parameters describing activity
      *
-     * @return ActivityModel Activity that was created.
+     * @return bool Activity that was created.
      */
     public function createActivity($data)
     {
@@ -155,16 +156,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Create a new update proposal from user form
+     * Create a new update proposal from user form.
      *
      * @param ActivityModel $oldActivity
-     * @param array $params
-     * @param type $dutch
-     * @param type $english
-     * @return ActivityProposalModel
+     * @param array $data
      * @return bool indicating whether the update was applied or is pending
      */
-    public function createUpdateProposal(ActivityModel $oldActivity, array $data)
+    public function createUpdateProposal(ActivityModel $oldActivity, Parameters $data)
     {
         if (!$this->isAllowed('update', $oldActivity)) {
             $translator = $this->getTranslator();
@@ -173,12 +171,50 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
+        $form = $this->getActivityForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        // Find the creator
         $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
+
+        // Find the organ the activity belongs to, and see if the user has permission to create an activity
+        // for this organ. If the id is 0, the activity belongs to no organ.
+        $organId = intval($data['organ']);
+        $organ = null;
+
+        if ($organId !== 0) {
+            $organ = $this->findOrgan($organId);
+        }
+
+        // Find the company the activity belongs to. If the id is 0, the activity belongs to no company.
+        $companyId = intval($data['company']);
+        $company = null;
+
+        if ($companyId !== 0) {
+            $companyService = $this->getServiceManager()->get('company_service_company');
+            $company = $companyService->getCompanyById($companyId);
+        }
+
+        // Check if something actually changed. Should probably be done using
+        // `array_intersect_assoc`:
+        //
+        // $oldActivityArray = $oldActivity->toArray();
+        // $updateProposal = [...];
+        //
+        // if ($oldActivityArray == array_intersect_assoc($oldActivityArray, $updateProposal)) {
+        //     // nothing changed
+        //     return false;
+        // }
+
         $newActivity = $this->saveActivityData(
             $data,
             $user,
-            $oldActivity->getOrgan(),
-            $oldActivity->getCompany(),
+            $organ,
+            $company,
             ActivityModel::STATUS_UPDATE
         );
 
@@ -195,10 +231,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
             if ($this->canApplyUpdateProposal($oldActivity)) {
                 $this->updateActivity($oldProposal);
-                return true;
             }
 
-            return false;
+            return true;
         }
 
         $proposal = new \Activity\Model\ActivityUpdateProposal();
@@ -209,10 +244,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         if ($this->canApplyUpdateProposal($oldActivity)) {
             $this->updateActivity($proposal);
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -263,13 +297,20 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $old->setName($new->getName());
         $old->setBeginTime($new->getBeginTime());
         $old->setEndTime($new->getEndTime());
-        $old->setSubscriptionDeadline($new->getSubscriptionDeadline());
         $old->setLocation($new->getLocation());
         $old->setCosts($new->getCosts());
         $old->setDescription($new->getDescription());
         $old->setCreator($new->getCreator());
-        $old->setCanSignUp($new->getCanSignUp());
-        $old->setOnlyGEWIS($new->getOnlyGEWIS());
+        $old->setOrgan($new->getOrgan());
+        $old->setCompany($new->getCompany());
+        
+        foreach ($old->getCategories() as $category) {
+            $old->removeCategory($category);
+        }
+
+        foreach ($new->getCategories() as $category) {
+            $old->addCategory($category);
+        }
     }
 
     /**
@@ -334,9 +375,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             }
         }
 
-        if (isset($data['signuplists'])) {
-            foreach ($data['signuplists'] as $signupList) {
-                $signupList = $this->createSignupList($signupList, $activity);
+        if (isset($data['signupLists'])) {
+            foreach ($data['signupLists'] as $signupList) {
+                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                $signupList = $this->createSignupList(new Parameters($signupList), $activity);
                 $em->persist($signupList);
             }
             $em->flush();
@@ -399,7 +441,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
             foreach ($data['fields'] as $field) {
-                $field = $this->createSignupField($field, $signupList);
+                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                $field = $this->createSignupField(new Parameters($field), $signupList);
                 $em->persist($field);
             }
             $em->flush();

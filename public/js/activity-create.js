@@ -16,8 +16,9 @@ Activity = {
 
         template = template.replace(/__signuplist__/g, currentCount);
         $(template).insertBefore('fieldset.signup-lists div.signup-list-controls');
-        $('[name="signuplists[' + currentCount + '][openDate]"]').datetimepicker();
-        $('[name="signuplists[' + currentCount + '][closeDate]"]').datetimepicker();
+        console.log(1);
+        $('[name="signupLists[' + currentCount + '][openDate]"]').datetimepicker();
+        $('[name="signupLists[' + currentCount + '][closeDate]"]').datetimepicker();
         Activity.updateForm();
 
         return false;
@@ -30,8 +31,8 @@ Activity = {
         var currentCount = $('fieldset.signup-lists div.signup-list').length - 1;
 
         if (currentCount >= 0){
-            $('[name="signuplists[' + currentCount + '][openDate]"]').datetimepicker('destroy');
-            $('[name="signuplists[' + currentCount + '][closeDate]"]').datetimepicker('destroy');
+            $('[name="signupLists[' + currentCount + '][openDate]"]').datetimepicker('destroy');
+            $('[name="signupLists[' + currentCount + '][closeDate]"]').datetimepicker('destroy');
             $('#signupList' + currentCount).remove();
         }
 
@@ -117,7 +118,7 @@ Activity = {
      */
     updateField: function (signupList, index) {
         $('#signupList' + signupList + ' #additionalField' + index + ' .field-dependant').hide();
-        var type = $('[name="signuplists[' + signupList + '][fields][' + index + '][type]"]').val();
+        var type = $('[name="signupLists[' + signupList + '][fields][' + index + '][type]"]').val();
         $('#signupList' + signupList + ' #additionalField' + index + ' .type-' + type).show();
         Activity.updateForm();
     },

@@ -34,6 +34,8 @@
                 $name = $this->signupList->get('name')
                     ->setAttribute('class', 'form-control form-control-dutch')
                     ->setAttribute('id', 'name-signup-list-nl');
+                $nameValue = $name->getValue();
+                $name->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? $nameValue : $nameValue->getValueNL()));
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($name) ?>">
                     <label for="<?= $name->getAttribute('id') ?>" class="control-label">
@@ -49,6 +51,8 @@
                 $nameEn = $this->signupList->get('nameEn')
                     ->setAttribute('class', 'form-control form-control-english')
                     ->setAttribute('id', 'name-signup-list-en');
+                $nameValue = $nameEn->getValue();
+                $nameEn->setValue(is_null($nameValue) ? '' : (is_string($nameValue) ? $nameValue : $nameValue->getValueEN()));
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
                     <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
