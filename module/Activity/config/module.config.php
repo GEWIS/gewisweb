@@ -109,15 +109,6 @@ return [
                             ]
                         ]
                     ],
-                    'touch' => [
-                        'type' => 'Literal',
-                        'options' => [
-                            'route' => '/touch',
-                            'defaults' => [
-                                'action' => 'touch'
-                            ]
-                        ]
-                    ],
                     'archive' => [
                         'type' => 'Literal',
                         'options' => [

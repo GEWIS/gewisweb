@@ -398,17 +398,6 @@ class ActivityController extends AbstractActionController
         ]);
     }
 
-    public function touchAction()
-    {
-        $viewModel = new ViewModel();
-        $viewModel->setVariables(array('key' => 'value'))
-            ->setTerminal(true);
-
-        return $viewModel;
-    }
-
-
-
     /**
      * Display all the finished activities in a school year
      *
