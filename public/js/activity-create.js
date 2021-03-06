@@ -79,6 +79,14 @@ Activity = {
     },
 
     /**
+     * Update SignupLists to have a datetimepicker.
+     */
+     updateLists: function () {
+         $('[name$="[openDate]"]').datetimepicker();
+         $('[name$="[closeDate]"]').datetimepicker();
+     },
+
+    /**
      * Updates the form to accomodate changes in the language checkboxes.
      */
     updateForm: function () {

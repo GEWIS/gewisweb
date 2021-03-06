@@ -221,6 +221,7 @@ $form->setAttribute('class', 'form-activity');
     });
     Activity.updateForm();
     Activity.updateAllFields();
+    Activity.updateLists();
     Activity.updateAllCategories();
     $('label[for^="categories-"]').on('click', function() {
         Activity.toggleCategory($(this).data('category-id'));
