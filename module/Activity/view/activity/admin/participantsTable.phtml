@@ -2,10 +2,13 @@
 <table class="table table-bordered" style="width: 100%" border="1">
     <thead>
         <tr>
-            <th></th>
+            <th>#</th>
             <th><?= $this->translate('Name') ?></th>
             <th><?= $this->translate('Email') ?></th>
             <th><?= $this->translate('Type') ?></th>
+            <?php if (!isset($signupList)): ?>
+                <th><?= $this->translate('Signup List') ?></th>
+            <?php endif; ?>
             <?php if (isset($detailed) && isset($signupList)): ?>
                 <?php foreach ($signupList->getFields() as $field): ?>
                     <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
@@ -34,22 +37,25 @@
                 </a>
             </td>
             <?php if ($signup instanceof Activity\Model\UserSignup): ?>
-            <td><?= $this->translate('User')?></td>
+                <td><?= $this->translate('User')?></td>
             <?php else: ?>
-            <td>
-                <?= $this->translate('External')?>
-                <?php if (isset($externalSignoffForm)): ?>
-                    <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
-                    $externalSignoffForm->prepare();
-                    echo $this->form()->openTag($externalSignoffForm);
-                    echo $this->formElement($externalSignoffForm->get('security'));
-                    $submit = $externalSignoffForm->get('submit');
-                    $submit->setAttribute('class', 'btn btn-primary btn-xs');
-                    echo $this->formSubmit($submit);
-                    echo $this->form()->closeTag();
-                    ?>
-                <?php endif; ?>
-            </td>
+                <td>
+                    <?= $this->translate('External')?>
+                    <?php if (isset($externalSignoffForm)): ?>
+                        <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
+                        $externalSignoffForm->prepare();
+                        echo $this->form()->openTag($externalSignoffForm);
+                        echo $this->formElement($externalSignoffForm->get('security'));
+                        $submit = $externalSignoffForm->get('submit');
+                        $submit->setAttribute('class', 'btn btn-primary btn-xs');
+                        echo $this->formSubmit($submit);
+                        echo $this->form()->closeTag();
+                        ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+            <?php if (!isset($signupList)): ?>
+                <td><?= $this->escapeHtml($signup->getSignupList()->getName()->getText($lang)) ?></td>
             <?php endif; ?>
             <?php if (isset($detailed)): ?>
                 <?php foreach ($signupList->getFields() as $field): ?>
