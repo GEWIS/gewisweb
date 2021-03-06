@@ -58,6 +58,7 @@
         <th><?= $this->translate('English name') ?></th>
         <th><?= $this->translate('Start date') ?></th>
         <th><?= $this->translate('Organ') ?></th>
+        <th><?= $this->translate('Company') ?></th>
         <th><?= $this->translate('Submitter') ?></th>
         <?php if ($admin): ?>
         <th></th>
@@ -72,11 +73,11 @@
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("nl") ?></a></td>
             <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a></td>
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
-            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $activity->getOrgan()->getAbbr()  ?></td>
+            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
+            <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
             <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
             <?php if ($admin): ?>
             <td>
-                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
                  <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
             </td>
             <?php endif; ?>
