@@ -152,7 +152,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
                                     $this->translator->translate(
-                                        'The signup list opening date and time must be before the activity closes.'
+                                        'The signup list opening date and time must be before the signup list closes.'
                                     ),
                             ],
                             'callback' => [$this, 'beforeCloseDate'],

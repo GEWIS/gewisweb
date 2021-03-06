@@ -215,7 +215,9 @@ class Activity extends Form implements InputFilterProviderInterface
          * this function.
          */
         if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
+            // Check for each SignupList whether the required fields have data.
             foreach ($this->get('signuplists')->getFieldSets() as $signupList) {
+                // Check the Dutch name of the SignupLists.
                 if ($this->data['language_dutch']) {
                     if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {
                         // TODO: Return error messages
@@ -223,6 +225,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     }
                 }
 
+                // Check the English name of the SignupLists.
                 if ($this->data['language_english']) {
                     if (!(new NotEmpty())->isValid($signupList->get('nameEn')->getValue())) {
                         // TODO: Return error messages
@@ -230,7 +233,9 @@ class Activity extends Form implements InputFilterProviderInterface
                     }
                 }
 
+                // Check the SignupFields of the SignupLists.
                 foreach ($signupList->get('fields')->getFieldSets() as $field) {
+                    // Check the Dutch name of the SignupField and the "Options" option.
                     if ($this->data['language_dutch']) {
                         if (!(new NotEmpty())->isValid($field->get('name')->getValue())) {
                             // TODO: Return error messages
@@ -243,6 +248,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         }
                     }
 
+                    // Check the English name of the SignupField and the "Options" option.
                     if ($this->data['language_english']) {
                         if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
                             // TODO: Return error messages
@@ -379,6 +385,9 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
             'endTime' => [
                 'required' => true,
+            ],
+            'categories' => [
+                'required' => false,
             ],
         ];
 
