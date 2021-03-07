@@ -108,7 +108,7 @@ $this->headTitle($this->translate('Activities')); ?>
         <?php if (isset($signupLists)): ?>
             <div class="row">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Signup Lists') ?></h2>
+                    <h2><?= $this->translate('Sign-up Lists') ?></h2>
                 </div>
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
@@ -127,7 +127,7 @@ $this->headTitle($this->translate('Activities')); ?>
                     <p>
                         <?=
                         sprintf(
-                            $this->translate('This signup list is open from <strong>%s</strong> till <strong>%s</strong>.'),
+                            $this->translate('This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>.'),
                             $this->dateFormat($signupList->getOpenDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
                             $this->dateFormat($signupList->getCloseDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
                         )

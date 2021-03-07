@@ -149,7 +149,7 @@ $this->headTitle($this->translate('Approval'));
 <?php endif; ?>
 <?php if ($activity->getSignupLists()->count() > 0): ?>
     <div class="col-md-12">
-        <h2><?= $this->translate('Signup Lists') ?></h2>
+        <h2><?= $this->translate('Sign-up Lists') ?></h2>
     </div>
     <div class="col-md-10 col-md-offset-2 overview-header">
         <div class="row">
@@ -233,7 +233,7 @@ $this->headTitle($this->translate('Approval'));
             <?php if ($signupList->getFields()->count() > 0): ?>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-2">
-                        <i><?= $this->translate('This signup list contains additional fields which require input from subscribers, they are shown below.') ?></i>
+                        <i><?= $this->translate('This sign-up list contains additional fields which require input from subscribers, they are shown below.') ?></i>
                     </div>
                 </div>
                 <?php foreach ($signupList->getFields() as $field): ?>

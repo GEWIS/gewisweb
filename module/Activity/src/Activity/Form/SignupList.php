@@ -141,7 +141,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     //    'options' => [
                     //        'messages' => [
                     //            \Zend\Validator\Callback::INVALID_VALUE =>
-                    //                $this->translator->translate('The signup list opening date and time must be before the activity starts.'),
+                    //                $this->translator->translate('The sign-up list opening date and time must be before the activity starts.'),
                     //        ],
                     //        'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],
                     //    ],
@@ -152,7 +152,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                             'messages' => [
                                 \Zend\Validator\Callback::INVALID_VALUE =>
                                     $this->translator->translate(
-                                        'The signup list opening date and time must be before the signup list closes.'
+                                        'The sign-up list opening date and time must be before the sign-up list closes.'
                                     ),
                             ],
                             'callback' => [$this, 'beforeCloseDate'],
@@ -180,7 +180,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //        'options' => [
                 //            'messages' => [
                 //                \Zend\Validator\Callback::INVALID_VALUE =>
-                //                    $this->translator->translate('The signup list closing date and time must be before the activity starts.'),
+                //                    $this->translator->translate('The sign-up list closing date and time must be before the activity starts.'),
                 //            ],
                 //            'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],
                 //        ],

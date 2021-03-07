@@ -148,8 +148,8 @@ $form->setAttribute('class', 'form-activity');
         <?php if (!isset($update)): // Do not allow updates to change SignupLists. This is very complicated. ?>
             <div class="row">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Signup Lists') ?></h2>
-                    <p><?= $this->translate('Add signup lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
+                    <h2><?= $this->translate('Sign-up Lists') ?></h2>
+                    <p><?= $this->translate('Add sign-up lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
                 </div>
                 <div class="col-md-12">
                     <div class="row signup-lists-header">
@@ -187,11 +187,11 @@ $form->setAttribute('class', 'form-activity');
                                         <div class="form-group signup-list-controls">
                                             <button class="btn btn-danger" type="button" onclick="return Activity.removeSignupList()">
                                                 <i class="fas fa-minus"></i>
-                                                <?= $this->translate('Remove the last signup list') ?>
+                                                <?= $this->translate('Remove the last sign-up list') ?>
                                             </button>
                                             <button class="btn btn-success" type="button" onclick="return Activity.addSignupList()">
                                                 <i class="fas fa-plus"></i>
-                                                <?= $this->translate('Add a signup list') ?>
+                                                <?= $this->translate('Add a sign-up list') ?>
                                             </button>
                                         </div>
                                     </div>

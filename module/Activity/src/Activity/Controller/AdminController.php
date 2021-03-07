@@ -41,8 +41,8 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            // If the activity does not have any signup lists there is no need
-            // to check the participants or any signup lists.
+            // If the activity does not have any sign-up lists there is no need
+            // to check the participants or any sign-up lists.
             if ($activity->getSignupLists()->count() === 0) {
                 return $this->notFoundAction();
             }

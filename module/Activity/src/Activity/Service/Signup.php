@@ -258,7 +258,7 @@ class Signup extends AbstractAclService
         if (!($this->isAllowed('adminSignup', $signupList))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to subscribe an external user to this signup list')
+                $translator->translate('You are not allowed to subscribe an external user to this sign-up list')
             );
         }
 
@@ -279,7 +279,7 @@ class Signup extends AbstractAclService
         if (!($this->isAllowed('externalSignup', $signupList))) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to subscribe to this signup list')
+                $translator->translate('You are not allowed to subscribe to this sign-up list')
             );
         }
 

@@ -7,7 +7,7 @@
             <th><?= $this->translate('Email') ?></th>
             <th><?= $this->translate('Type') ?></th>
             <?php if (!isset($signupList)): ?>
-                <th><?= $this->translate('Signup List') ?></th>
+                <th><?= $this->translate('Sign-up List') ?></th>
             <?php endif; ?>
             <?php if (isset($detailed) && isset($signupList)): ?>
                 <?php foreach ($signupList->getFields() as $field): ?>
