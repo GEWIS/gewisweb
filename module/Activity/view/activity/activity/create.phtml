@@ -145,7 +145,7 @@ $form->setAttribute('class', 'form-activity');
                 <?php endif; ?>
             </div>
         </div>
-        <?php if (!isset($update)): // Do not allow updates to change SignupLists. This is very complicated. ?>
+        <?php if (isset($allowSignupList) && $allowSignupList): // Do not allow updates to change SignupLists. This is very complicated. ?>
             <div class="row">
                 <div class="col-md-12">
                     <h2><?= $this->translate('Sign-up Lists') ?></h2>
@@ -168,13 +168,13 @@ $form->setAttribute('class', 'form-activity');
                         <div class="col-md-12">
                             <?php
                             // Render template for SignupLists
-                            $signupLists = $form->get('signupLists')->getTemplateElement();
+                            $signupListsTemplate = $form->get('signupLists')->getTemplateElement();
                             ob_start();
-                            echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupLists, 'index' => '__signuplist__']);
-                            $signupListsTemplate = trim(ob_get_clean());
+                            echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupListsTemplate, 'index' => '__signuplist__']);
+                            $signupListsTemplateData = trim(ob_get_clean());
                             ?>
                             <fieldset class="signup-lists">
-                                <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListsTemplate) ?>"></span>
+                                <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
                                 <?php
                                 $index = 0;
                                 foreach ($form->get('signupLists')->getIterator() as $signupList) {

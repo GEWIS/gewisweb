@@ -89,7 +89,8 @@ class SignupOption
     {
         return [
             'id' => $this->getId(),
-            'value' => $this->getValue()
+            'value' => $this->getValue()->getValueNL(),
+            'valueEn' => $this->getValue()->getValueEN(),
         ];
     }
 }

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-3">
                 <?php
-                $openDate = $this->signupList->get('openDate')
+                $openDate = $signupList->get('openDate')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'open-date');
                 ?>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-3">
                 <?php
-                $closeDate = $this->signupList->get('closeDate')
+                $closeDate = $signupList->get('closeDate')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'close-date');
                 ?>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-md-3">
                 <?php
-                $name = $this->signupList->get('name')
+                $name = $signupList->get('name')
                     ->setAttribute('class', 'form-control form-control-dutch')
                     ->setAttribute('id', 'name-signup-list-nl');
                 $nameValue = $name->getValue();
@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-3">
                 <?php
-                $nameEn = $this->signupList->get('nameEn')
+                $nameEn = $signupList->get('nameEn')
                     ->setAttribute('class', 'form-control form-control-english')
                     ->setAttribute('id', 'name-signup-list-en');
                 $nameValue = $nameEn->getValue();
@@ -69,20 +69,20 @@
         <div class="row">
             <div class="col-md-3">
                 <?php
-                $onlyGEWIS = $this->signupList->get('onlyGEWIS');
+                $onlyGEWIS = $signupList->get('onlyGEWIS');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($onlyGEWIS) ?>">
                     <label>
                         <?= $this->formCheckbox($onlyGEWIS) ?>
-                        <?= $this->translate('Allow external participants') ?>
-                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                        <?= $this->translate('Only allow GEWIS members') ?>
+                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Deselect this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
                     </label>
                     <?= $this->formElementErrors($onlyGEWIS) ?>
                 </div>
             </div>
             <div class="col-md-3">
                 <?php
-                $displaySubscribedNumber = $this->signupList->get('displaySubscribedNumber');
+                $displaySubscribedNumber = $signupList->get('displaySubscribedNumber');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($displaySubscribedNumber) ?>">
                     <label>
@@ -98,7 +98,7 @@
     <div class="col-md-12">
         <?php
         // Render SignupListFields
-        $signupListFields = $this->signupList->get('fields')->getTemplateElement();
+        $signupListFields = $signupList->get('fields')->getTemplateElement();
         ob_start();
         echo $this->partial('partial/signuplist-fields.phtml', ['signupListField' => $signupListFields, 'listIndex' => $this->index, 'index' => '__signuplist_field__']);
         $signupListFieldsTemplate = trim(ob_get_clean());
@@ -107,7 +107,7 @@
             <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListFieldsTemplate) ?>"></span>
             <?php
             $i = 0;
-            foreach ($this->signupList->get('fields')->getIterator() as $signupListField) {
+            foreach ($signupList->get('fields')->getIterator() as $signupListField) {
                 echo $this->partial('partial/signuplist-fields.phtml', ['signupListField' => $signupListField, 'listIndex' => $this->index, 'index' => $i]);
                 $i++;
             }

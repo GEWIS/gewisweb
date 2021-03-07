@@ -14,6 +14,8 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Stdlib\Parameters;
 use Activity\Form\Activity as ActivityForm;
 
+use DateTime;
+
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
@@ -158,13 +160,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Create a new update proposal from user form.
      *
-     * @param ActivityModel $oldActivity
+     * @param ActivityModel $currentActivity
      * @param array $data
      * @return bool indicating whether the update was applied or is pending
      */
-    public function createUpdateProposal(ActivityModel $oldActivity, Parameters $data)
+    public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
     {
-        if (!$this->isAllowed('update', $oldActivity)) {
+        if (!$this->isAllowed('update', $currentActivity)) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
@@ -199,16 +201,15 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $company = $companyService->getCompanyById($companyId);
         }
 
-        // Check if something actually changed. Should probably be done using
-        // `array_intersect_assoc`:
-        //
-        // $oldActivityArray = $oldActivity->toArray();
-        // $updateProposal = [...];
-        //
-        // if ($oldActivityArray == array_intersect_assoc($oldActivityArray, $updateProposal)) {
-        //     // nothing changed
-        //     return false;
-        // }
+        $currentActivityArray = $currentActivity->toArray();
+        $proposalActivityArray = $data->toArray();
+
+        $proposalActivityArray['company'] = is_null($company) ? null : $company->getId();
+        $proposalActivityArray['organ'] = is_null($organ) ? null : $organ->getId();
+
+        if (!$this->isUpdateProposalNew($currentActivityArray, $proposalActivityArray)) {
+            return false;
+        }
 
         $newActivity = $this->saveActivityData(
             $data,
@@ -219,34 +220,165 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         );
 
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-        $oldProposalContainer = $oldActivity->getUpdateProposal();
 
-        if ($oldProposalContainer->count() !== 0) {
-            $oldProposal = $oldProposalContainer->unwrap()->first();
+        if ($currentActivity->getUpdateProposal()->count() !== 0) {
+            $proposal = $proposalContainer->unwrap()->first();
             //Remove old update proposal
-            $oldUpdate = $oldProposal->getNew();
-            $oldProposal->setNew($newActivity);
+            $oldUpdate = $proposal->getNew();
+            $proposal->setNew($newActivity);
             $em->remove($oldUpdate);
             $em->flush();
+        } else {
+            $proposal = new \Activity\Model\ActivityUpdateProposal();
+            $proposal->setOld($currentActivity);
+            $proposal->setNew($newActivity);
+            $em->persist($proposal);
+            $em->flush();
+        }
 
-            if ($this->canApplyUpdateProposal($oldActivity)) {
-                $this->updateActivity($oldProposal);
-            }
+        // Try to directly update the proposal.
+        if ($this->canApplyUpdateProposal($currentActivity)) {
+            $this->updateActivity($proposal);
 
+            // Send an e-mail stating that the activity was updated.
+            $this->getEmailService()->sendEmail('activity_creation', 'email/activity-updated',
+                'Activiteit aangepast op de GEWIS website | Activity was updated on the GEWIS website',
+                ['activity' => $newActivity]);
+            
             return true;
         }
 
-        $proposal = new \Activity\Model\ActivityUpdateProposal();
-        $proposal->setOld($oldActivity);
-        $proposal->setNew($newActivity);
-        $em->persist($proposal);
-        $em->flush();
+        // Send an e-mail stating that an activity update proposal has been made.
+        $this->getEmailService()->sendEmail('activity_creation', 'email/activity-update-proposed',
+            'Activiteit aanpassingsvoorstel op de GEWIS website | Activity update proposed on the GEWIS website',
+            ['activity' => $newActivity, 'proposal' => $proposal]);
 
-        if ($this->canApplyUpdateProposal($oldActivity)) {
-            $this->updateActivity($proposal);
+        return true;
+    }
+
+    /**
+     * Check if an update proposal is actually an update.
+     *
+     * @param array $current
+     * @param array $proposal
+     * @return boolean
+     */
+    protected function isUpdateProposalNew($current, $proposal)
+    {
+        unset($current['id']);
+
+        // Convert all DateTimes in the original Activity to strings.
+        array_walk_recursive($current, function (&$v, $k) {
+            if ($v instanceof DateTime) {
+                $v = $v->format('Y/m/d H:i');
+            }
+        });
+
+        // We do not need the ActivityCategory models, hence we replace it with
+        // the ids of each one.
+        array_walk($current['categories'], function (&$v, $k) {
+            $v = strval($v->getId());
+        });
+
+        // HTML forms do not know anything about booleans, hence we need to
+        // convert the strings to something we can use.
+        array_walk_recursive($proposal, function (&$v, $k) {
+            if (in_array($k, ['isMyFuture', 'requireGEFLITST', 'onlyGEWIS', 'displaySubscribedNumber'], true)) {
+                $v = boolval($v);
+            }
+        });
+
+        // Remove some of the form attributes.
+        unset($proposal['language_dutch'], $proposal['language_english'], $proposal['submit']);
+
+        // Get the difference between the original Activity and the update
+        // proposal. We unset all `id`s after getting the diff to reduce the
+        // number of calls.
+        $diff = $this->array_diff_assoc_recursive($current, $proposal);
+        $this->recursiveUnsetKey($diff, 'id');
+
+        // Filter out all empty parts of the difference, if we an empty result
+        // nothing has changed on form submission.
+        if (empty($this->array_filter_recursive($diff))) {
+            return false;
         }
 
         return true;
+    }
+
+    /**
+     * Recursively unset a key in an array (by reference).
+     *
+     * @param array $array
+     * @param string $key
+     */
+    protected function recursiveUnsetKey(&$array, $key)
+    {
+        unset($array[$key]);
+
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->recursiveUnsetKey($value, $key);
+            }
+        }
+    }
+
+    /**
+     * `array_diff_assoc` but recursively. Used to compare an update proposal of an activity
+     * to the original activity.
+     *
+     * Adapted from https://www.php.net/manual/en/function.array-diff-assoc.php#usernotes.
+     *
+     * @param array $array1
+     * @param array $array2
+     * @return bool
+     */
+    protected function array_diff_assoc_recursive($array1, $array2) {
+        $difference = [];
+
+        foreach ($array1 as $key => $value) {
+            if (is_array($value)) {
+                if (!isset($array2[$key]) || !is_array($array2[$key])) {
+                    $difference[$key] = $value;
+                } else {
+                    $newDiff = $this->array_diff_assoc_recursive($value, $array2[$key]);
+
+                    if (!empty($newDiff)) {
+                        $difference[$key] = $newDiff;
+                    }
+                }
+            } else {
+                if (is_array($array2) && !in_array($value, $array2)) {
+                    $difference[] = $value;
+                } elseif (!is_array($array2) && $value != $array2) {
+                    $difference[] = $value;
+                }
+            }
+        }
+
+        return $difference;
+    }
+
+    /**
+     * `array_filter` but recursively. Used to compare an update proposal of an activity
+     * to the original activity.
+     *
+     * @param array $array
+     * @return array
+     */
+    protected function array_filter_recursive(array $array)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array[$key] = $this->array_filter_recursive($array[$key]);
+            }
+
+            if (in_array($array[$key], ['', null, []], true)) {
+                unset($array[$key]);
+            }
+        }
+
+        return $array;
     }
 
     /**
@@ -265,8 +397,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             return false;
         }
 
-        // If the activity has not been approved yet the update proposal can be applied
-        return $activity->getStatus() !== ActivityModel::STATUS_APPROVED;
+        // If the activity has not been approved the update proposal can be applied.
+        return $activity->getStatus() === ActivityModel::STATUS_TO_APPROVE;
     }
 
     /**
@@ -278,39 +410,25 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         $old = $proposal->getOld();
         $new = $proposal->getNew();
-        $this->copyActivity($old, $new);
+
+        // If the old activity was already approved, keep it approved.
+        // Otherwise the status of the new Activity becomes
+        // ActivityModel::STATUS_TO_APPROVE.
+        if ($old->getStatus() !== ActivityModel::STATUS_APPROVED) {
+            $new->setStatus(ActivityModel::STATUS_TO_APPROVE);
+        } else {
+            $new->setStatus(ActivityModel::STATUS_APPROVED);
+        }
+
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
-        $em->remove($proposal);//Proposal is no longer needed.
-        $em->remove($new);
+        // The proposal association is no longer needed and can safely be
+        // removed. The old Activity is also removed, as we would otherwise have
+        // to switch all attributes from the new Activity to the old one (which
+        // can only cause problems).
+        $em->remove($proposal);
+        $em->remove($old);
         $em->flush();
-    }
-
-    /**
-     * Copies all relevant activity attributes from $new to $old
-     *
-     * @param ActivityModel $old
-     * @param ActivityModel $new
-     */
-    protected function copyActivity(ActivityModel $old, ActivityModel $new)
-    {
-        $old->setName($new->getName());
-        $old->setBeginTime($new->getBeginTime());
-        $old->setEndTime($new->getEndTime());
-        $old->setLocation($new->getLocation());
-        $old->setCosts($new->getCosts());
-        $old->setDescription($new->getDescription());
-        $old->setCreator($new->getCreator());
-        $old->setOrgan($new->getOrgan());
-        $old->setCompany($new->getCompany());
-        
-        foreach ($old->getCategories() as $category) {
-            $old->removeCategory($category);
-        }
-
-        foreach ($new->getCategories() as $category) {
-            $old->addCategory($category);
-        }
     }
 
     /**
@@ -387,10 +505,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em->persist($activity);
         $em->flush();
 
-        // Send an email when a new Activity was created.
-        $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
-            'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
-            ['activity' => $activity]);
+        // Send an email when a new Activity was created, but do not send one
+        // when an activity is updated. This e-mail is handled in
+        // `$this->createUpdateProposal()`.
+        if ($status !== ActivityModel::STATUS_UPDATE) {
+            $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
+                'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
+                ['activity' => $activity]);
+        }
 
         return $activity;
     }

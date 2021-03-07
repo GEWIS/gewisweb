@@ -1,0 +1,172 @@
+<?php foreach ($activity->getSignupLists() as $signupList): ?>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Name') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($signupList->getName()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($signupList->getName()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <b><?= $this->translate('Open date and time') ?></b>
+            </div>
+            <div class="col-md-5">
+                <?= $this->dateFormat($signupList->getOpenDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
+            </div>
+            <div class="col-md-5 overview-sidebar">
+                <?= $this->dateFormat($signupList->getOpenDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <b><?= $this->translate('Close date and time') ?></b>
+            </div>
+            <div class="col-md-5">
+                <?= $this->dateFormat($signupList->getCloseDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
+            </div>
+            <div class="col-md-5 overview-sidebar">
+                <?= $this->dateFormat($signupList->getCloseDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <b><?= $this->translate('GEWIS members only') ?></b>
+            </div>
+            <div class="col-md-5">
+                <?= $signupList->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No") ?>
+            </div>
+            <div class="col-md-5 overview-sidebar">
+                <?= $signupList->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <b><?= $this->translate('Display GEWIS member count') ?></b>
+            </div>
+            <div class="col-md-5">
+                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No") ?>
+            </div>
+            <div class="col-md-5 overview-sidebar">
+                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No"); ?>
+            </div>
+        </div>
+        <?php if ($signupList->getFields()->count() > 0): ?>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2">
+                    <i><?= $this->translate('This sign-up list contains additional fields which require input from subscribers, they are shown below.') ?></i>
+                </div>
+            </div>
+            <?php foreach ($signupList->getFields() as $field): ?>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-2">
+                        <hr>
+                    </div>
+                    <div class="col-md-2 overview-sidebar">
+                        <b><?= $this->translate('Name') ?></b>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="activity-property">
+                            <span class="flag-icon flag-icon-nl"></span>
+                            <b><?= $this->translate('Name') ?>:</b>
+                        </span>
+                        <?= $this->escapeHtml($field->getName()->getValueNL()) ?>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="activity-property">
+                            <span class="flag-icon flag-icon-en"></span>
+                            <b><?= $this->translate('Name') ?>:</b>
+                        </span>
+                        <?= $this->escapeHtml($field->getName()->getValueEN()) ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <b><?= $this->translate('Type') ?></b>
+                    </div>
+                    <?php for ($i = 0; $i < 2; $i++): ?>
+                        <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
+                            <?php
+                            switch ($field->getType()) {
+                                case 0:
+                                    echo $this->translate('Text');
+                                    break;
+                                case 1:
+                                    echo $this->translate('Yes/No');
+                                    break;
+                                case 2:
+                                    echo $this->translate('Number');
+                                    break;
+                                case 3:
+                                    echo $this->translate('Choice');
+                                    break;
+                            }
+                            ?>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+                <?php if ($field->getType() === 2): ?>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <b><?= $this->translate('Min. value') ?></b>
+                        </div>
+                        <?php for ($i = 0; $i < 2; $i++): ?>
+                            <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
+                                <?= $field->getMinimumValue() ?>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <b><?= $this->translate('Max. value') ?></b>
+                        </div>
+                        <?php for ($i = 0; $i < 2; $i++): ?>
+                            <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
+                                <?= $field->getMaximumValue() ?>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($field->getType() === 3): ?>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <b><?= $this->translate('Options') ?></b>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <?php foreach ($field->getOptions() as $option): ?>
+                                    <div class="col-md-6">
+                                        <span class="activity-property">
+                                            <span class="flag-icon flag-icon-nl"></span>
+                                        </span>
+                                        <?= $this->escapeHtml($option->getValue()->getValueNL()) ?>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="activity-property">
+                                            <span class="flag-icon flag-icon-en"></span>
+                                        </span>
+                                        <?= $this->escapeHtml($option->getValue()->getValueEN()) ?>
+                                    </div>
+                                    <br>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <hr>
+    </div>
+<?php endforeach; ?>

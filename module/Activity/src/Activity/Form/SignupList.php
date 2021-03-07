@@ -61,9 +61,11 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'name' => 'onlyGEWIS',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
-                'checked_value' => 0,
-                'unchecked_value' => 1,
-                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+            'attributes' => [
+                'value' => 1,
             ],
         ]);
 

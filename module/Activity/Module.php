@@ -78,7 +78,8 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'activity_form_signuplist' => function ($sm) {
-                    $form = new SignupListForm();
+                    $translator = $sm->get('translator');
+                    $form = new SignupListForm($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },

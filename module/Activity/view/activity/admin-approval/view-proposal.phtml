@@ -32,7 +32,7 @@ function diff($oldValue, $newValue) {
         <p>
             <?=
                 sprintf(
-                    $this->translate('Changes in activity attributes are shown like this: %s. If there are no changes to a certain attribute, you will see the existing data.'),
+                    $this->translate('Changes in activity attributes are shown like this: %s. If there are no changes to a certain attribute, you will see the existing data. Sign-up list differences are <strong>not</strong> shown with colours, both the old sign-up list(s) and the new sign-up list(s) are shown. There might not be difference between the two!'),
                     diff($this->translate('old'), $this->translate('new'))
                 )
             ?>
@@ -68,7 +68,7 @@ function diff($oldValue, $newValue) {
             echo sprintf(
                     $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
                         $old->getId(),
-                        $oldOrganisingParty,
+                        diff($oldOrganisingParty, $newOrganisingParty),
                         diff(
                             $this->dateFormat($old->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
                             $this->dateFormat($new->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
@@ -227,7 +227,7 @@ function diff($oldValue, $newValue) {
         </div>
         <hr>
     </div>
-    <?php if ($old->getCategories()->count() !== 0 && $new->getCategories()->count() !== 0): ?>
+    <?php if ($old->getCategories()->count() !== 0 || $new->getCategories()->count() !== 0): ?>
         <div class="col-md-12">
             <h2><?= $this->translate('Activity Categories') ?></h2>
         </div>
@@ -253,6 +253,31 @@ function diff($oldValue, $newValue) {
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
+    <?php endif; ?>
+    <?php if ($old->getSignupLists()->count() !== 0 || $new->getSignupLists()->count() !== 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Sign-up Lists') ?></h2>
+        </div>
+        <?php foreach (['Old' => $old, 'New' => $new] as $key => $activity): ?>
+            <div class="col-md-2">
+                <h3><?= $this->translate($key) ?></h3>
+            </div>
+            <div class="col-md-10 overview-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="flag-icon flag-icon-nl"></span>
+                        <b><?= $this->translate('Dutch') ?></b>
+                        <hr>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="flag-icon flag-icon-en"></span>
+                        <b><?= $this->translate('English') ?></b>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <?= $this->partial('partial/admin-approval/signuplists', ['activity' => $activity]) ?>
+        <?php endforeach; ?>
     <?php endif; ?>
     <div class="col-md-12">
         <h2><?= $this->translate('Approval') ?></h2>

@@ -250,6 +250,8 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'nameEn' => $this->getName()->getValueEN(),
             'openDate' => $this->getOpenDate(),
             'closeDate' => $this->getCloseDate(),
+            'onlyGEWIS' => $this->getOnlyGEWIS(),
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'fields' => $fields,
         ];
     }

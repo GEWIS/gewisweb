@@ -173,11 +173,12 @@ class SignupField
 
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
             'type' => $this->getType(),
             'minimumValue' => $this->getMinimumValue(),
             'maximumValue' => $this->getMaximumValue(),
-            'options' => $options
+            'options' => $options,
         ];
     }
 }

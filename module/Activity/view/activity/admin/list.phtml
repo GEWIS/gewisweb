@@ -18,7 +18,7 @@
         <th><?= $this->translate('Submitter') ?></th>
         <th><?= $this->translate('Update status') ?></th>
         <?php if (!$admin): ?>
-        <th><?= $this->translate('Approved') ?></th>
+            <th><?= $this->translate('Approved') ?></th>
         <?php endif ?>
         <th></th>
     </tr>
@@ -46,12 +46,14 @@
             </td>
             <?php endif ?>
             <td>
-                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
+                <?php if ($activity->getSignupLists()->count() === 0 || $activity->getStatus() !== $activity::STATUS_APPROVED): ?>
+                    <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
+                <?php endif; ?>
                 <?php if ($admin): ?>
-                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('Details') ?></a>
+                    <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin_approval/view', ['id' => $activity->getId()]) ?>"><?= $this->translate('Details') ?></a>
                 <?php endif; ?>
                 <?php if ($activity->getSignupLists()->count() !== 0): ?>
-                <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
+                    <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
                 <?php endif; ?>
             </td>
         </tr>

@@ -16,7 +16,6 @@ Activity = {
 
         template = template.replace(/__signuplist__/g, currentCount);
         $(template).insertBefore('fieldset.signup-lists div.signup-list-controls');
-        console.log(1);
         $('[name="signupLists[' + currentCount + '][openDate]"]').datetimepicker();
         $('[name="signupLists[' + currentCount + '][closeDate]"]').datetimepicker();
         Activity.updateForm();

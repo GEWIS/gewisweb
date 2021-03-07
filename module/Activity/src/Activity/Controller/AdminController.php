@@ -138,26 +138,28 @@ class AdminController extends AbstractActionController
             );
         }
 
-        if ($activity->getSignupLists()->getCount() !== 0) {
+        if ($activity->getSignupLists()->count() !== 0) {
             $openingDates = [];
+            $participants = 0;
 
             foreach ($activity->getSignupLists() as $signupList) {
-                $startingTimes[$signupList->getId()] = $signupList->getOpenDate();
+                $openingDates[] = $signupList->getOpenDate();
+                $participants += $signupList->getSignups()->count();
             }
 
-            if (min($openingDates) < new DateTime()) {
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to update this activity')
-                );
+            if (min($openingDates) < new DateTime() || $activity->getStatus() === Activity::STATUS_APPROVED) {
+                $message = $translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
+
+                $this->redirectActivityAdmin(false, $message);
             }
         }
 
         // Can also be `elseif` as SignupLists are guaranteed to be before the
         // Activity begin date and time.
         if ($activity->getBeginTime() < new DateTime()) {
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to update this activity')
-            );
+            $message = $translator->translate('This activity has already started/ended and can no longer be updated.');
+
+            $this->redirectActivityAdmin(false, $message);
         }
 
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
@@ -180,14 +182,25 @@ class AdminController extends AbstractActionController
         }
 
         $activityData = $activity->toArray();
+        unset($activityData['id']);
+
         $languages = $queryService->getAvailableLanguages($activity);
         $activityData['language_dutch'] = $languages['nl'];
         $activityData['language_english'] = $languages['en'];
-        unset($activityData['id'], $activityData['signupLists']);
+
+        $allowSignupList = true;
+        if ($activity->getStatus() === Activity::STATUS_APPROVED || (isset($participants) && $participants !== 0)) {
+            $allowSignupList = false;
+            unset($activityData['signupLists']);
+        }
 
         $form->setData($activityData);
 
-        $viewModel = new ViewModel(['form' => $form, 'action' => $translator->translate('Update Activity'), 'update' => true]);
+        $viewModel = new ViewModel([
+            'form' => $form,
+            'action' => $translator->translate('Update Activity'),
+            'allowSignupList' => $allowSignupList,
+        ]);
         $viewModel->setTemplate('activity/activity/create.phtml');
 
         return $viewModel;

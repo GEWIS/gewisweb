@@ -179,7 +179,11 @@ class ActivityController extends AbstractActionController
 
         $translator = $this->getServiceLocator()->get('translator');
 
-        return ['form' => $form, 'action' => $translator->translate('Create Activity')];
+        return [
+            'form' => $form,
+            'action' => $translator->translate('Create Activity'),
+            'allowSignupList' => true,
+        ];
     }
 
     /**

@@ -116,7 +116,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All additional SignupLists belonging to this activity.
      *
-     * @ORM\OneToMany(targetEntity="Activity\Model\SignupList", mappedBy="activity", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Activity\Model\SignupList", mappedBy="activity", cascade={"remove"})
      */
     protected $signupLists;
 
@@ -398,6 +398,26 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @param array $categories
+     */
+    public function addCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->addCategory($category);
+        }
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function removeCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->removeCategory($category);
+        }
+    }
+
+    /**
      * Returns an ArrayCollection of SignupLists associated with this activity.
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
@@ -408,6 +428,32 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @param \Activity\Model\SignupList $signupList
+     */
+    public function addSignupList($signupList)
+    {
+        if ($this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->add($signupList);
+        $signupList->setActivity($this);
+    }
+
+    /**
+     * @param \Activity\Model\SignupList $category
+     */
+    public function removeSignupList($signupList)
+    {
+        if (!$this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->removeElement($signupList);
+        $signupList->setActivity(null);
+    }
+
+    /**
      * Adds SignupLists to this activity.
      *
      * @param array $signupLists
@@ -415,8 +461,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function addSignupLists($signupLists)
     {
         foreach ($signupLists as $signupList) {
-            $signupList->setActivity($this);
-            $this->signupLists->add($signupList);
+            $this->addSignupList($signupList);
         }
     }
 
@@ -428,8 +473,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function removeSignupLists($signupLists)
     {
         foreach ($signupLists as $signupList) {
-            $signupList->setActivity(null);
-            $this->signupLists->removeElement($signupList);
+            $this->removeSignupList($signupList);
         }
     }
 

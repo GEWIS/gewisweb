@@ -115,11 +115,11 @@ class AdminApprovalController extends AbstractActionController
         if (is_null($proposal)) {
             return $this->notFoundAction();
         }
-        $oldId = $proposal->getOld()->getId();
+        $newId = $proposal->getNew()->getId();
         $activityService->updateActivity($proposal);
 
         $this->redirect()->toRoute('activity_admin_approval/view', [
-            'id' => $oldId,
+            'id' => $newId,
         ]);
     }
 
