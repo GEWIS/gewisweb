@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,27 +37,11 @@ class ActivityCategory
 
     public function __construct()
     {
-        $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return array
-     */
-    public function getActivities()
-    {
-        return $this->activities->toArray();
-    }
-
-    /**
-     * @param \Activity\Model\Activity $activity
+     * @param Activity $activity
      */
     public function addActivity($activity)
     {
@@ -68,7 +53,7 @@ class ActivityCategory
     }
 
     /**
-     * @param \Activity\Model\Activity $activity
+     * @param Activity $activity
      */
     public function removeActivity($activity)
     {
@@ -77,6 +62,27 @@ class ActivityCategory
         }
 
         $this->activities->removeElement($activity);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'activities' => $this->getActivities(),
+        ];
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -98,13 +104,8 @@ class ActivityCategory
     /**
      * @return array
      */
-    public function toArray()
+    public function getActivities()
     {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'activities' => $this->getActivities(),
-        ];
+        return $this->activities->toArray();
     }
 }

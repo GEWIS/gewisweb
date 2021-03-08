@@ -1,4 +1,5 @@
 <?php
+
 return [
     'router' => [
         'routes' => [
@@ -489,7 +490,7 @@ return [
         ],
         'factories' => [
             'Activity\Controller\Activity' => function ($sm) {
-                $controller = new Activity\Controller\ActivityController;
+                $controller = new Activity\Controller\ActivityController();
                 $activity = $sm->getServiceLocator()->get('activity_service');
                 $controller->setActivity($activity);
                 return $controller;

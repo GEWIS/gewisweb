@@ -3,7 +3,7 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use \User\Model\User;
+use User\Model\User;
 
 /**
  * Signup model.
@@ -19,6 +19,16 @@ class UserSignup extends Signup
      * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
     protected $user;
+
+    /**
+     * Get the full name of the user whom signed up for the activity.
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
+    }
 
     /**
      * Get the user that is signed up.
@@ -38,16 +48,6 @@ class UserSignup extends Signup
     public function setUser(User $user)
     {
         $this->user = $user;
-    }
-
-    /**
-     * Get the full name of the user whom signed up for the activity.
-     *
-     * @return string
-     */
-    public function getFullName()
-    {
-        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
     }
 
     /**

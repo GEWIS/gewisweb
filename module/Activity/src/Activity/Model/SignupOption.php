@@ -37,15 +37,7 @@ class SignupOption
     protected $value;
 
     /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return \Activity\Model\SignupField
+     * @return SignupField
      */
     public function getField()
     {
@@ -55,29 +47,11 @@ class SignupOption
     /**
      * Set the field the option belongs to.
      *
-     * @param \Activity\Model\SignupField $field
+     * @param SignupField $field
      */
     public function setField($field)
     {
         $this->field = $field;
-    }
-
-    /**
-     * @return \Activity\Model\LocalisedText
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Set the value of the option.
-     *
-     * @param \Activity\Model\LocalisedText $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value->copy();
     }
 
     /**
@@ -92,5 +66,31 @@ class SignupOption
             'value' => $this->getValue()->getValueNL(),
             'valueEn' => $this->getValue()->getValueEN(),
         ];
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return LocalisedText
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set the value of the option.
+     *
+     * @param LocalisedText $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value->copy();
     }
 }

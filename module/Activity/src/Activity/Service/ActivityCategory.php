@@ -5,8 +5,9 @@ namespace Activity\Service;
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
-
 use Application\Service\AbstractAclService;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class ActivityCategory extends AbstractAclService implements ServiceManagerAwareInterface
@@ -14,7 +15,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -22,34 +23,32 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     }
 
     /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'activity';
-    }
-
-    /**
      * Get all categories.
      *
      * @param $id
-     * @return \Activity\Model\ActivityCategory
+     * @return CategoryModel
      */
     public function getCategoryById($id)
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view activity categories')
             );
         }
-    
+
         $categoryMapper = $this->getCategoryMapper();
         return $categoryMapper->getCategoryById($id);
+    }
+
+    /**
+     * Get the activity mapper.
+     *
+     * @return \Activity\Mapper\ActivityCategory
+     */
+    public function getCategoryMapper()
+    {
+        return $this->getServiceManager()->get('activity_mapper_category');
     }
 
     /**
@@ -61,37 +60,20 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view activity categories')
             );
         }
-    
+
         $categoryMapper = $this->getCategoryMapper();
         return $categoryMapper->getAllCategories();
-    }
-
-    /**
-     * Return Category creation form.
-     *
-     * @return CategoryForm
-     */
-    public function getCategoryForm()
-    {
-        if (!$this->isAllowed('addCategory', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create an activity category')
-            );
-        }
-
-        return $this->getServiceManager()->get('activity_form_category');
     }
 
     public function createCategory($data)
     {
         if (!$this->isAllowed('addCategory', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create an activity category')
             );
         }
@@ -113,11 +95,28 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         return true;
     }
 
+    /**
+     * Return Category creation form.
+     *
+     * @return CategoryForm
+     */
+    public function getCategoryForm()
+    {
+        if (!$this->isAllowed('addCategory', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to create an activity category')
+            );
+        }
+
+        return $this->getServiceManager()->get('activity_form_category');
+    }
+
     public function updateCategory($category, $data)
     {
         if (!$this->isAllowed('editCategory', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to edit an activity category')
             );
         }
@@ -144,7 +143,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     {
         if (!$this->isAllowed('deleteCategory', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to delete an activity category')
             );
         }
@@ -155,12 +154,14 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     }
 
     /**
-     * Get the activity mapper.
+     * Get the default resource ID.
      *
-     * @return \Activity\Mapper\ActivityCategory
+     * This is used by {@link isAllowed()} when no resource is specified.
+     *
+     * @return string
      */
-    public function getCategoryMapper()
+    protected function getDefaultResourceId()
     {
-        return $this->getServiceManager()->get('activity_mapper_category');
+        return 'activity';
     }
 }

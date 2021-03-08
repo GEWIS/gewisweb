@@ -2,10 +2,16 @@
 
 namespace Activity\Service;
 
-use Application\Service\AbstractAclService;
 use Activity\Model\Activity as ActivityModel;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Activity\Model\ActivityUpdateProposal;
+use Application\Service\AbstractAclService;
+use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
+use Organ\Model\Organ;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
+use Zend\Permissions\Acl\Acl;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
@@ -18,7 +24,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -26,45 +32,11 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     }
 
     /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'activity';
-    }
-
-    /**
-     * Get the information of one activity from the database.
-     *
-     * @param int $id The activity id to be searched for
-     *
-     * @return \Activity\Model\Activity Activity or null if the activity does not exist
-     */
-    public function getActivity($id)
-    {
-        if (!$this->isAllowed('view', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view the activities')
-            );
-        }
-
-        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityById($id);
-
-        return $activity;
-    }
-
-    /**
      * Get the information of one proposal from the database.
      *
      * @param int $id The proposal id to be searched for
      *
-     * @return \Activity\Model\ActivityUpdateProposal or null if the proposal does not exist
+     * @return ActivityUpdateProposal or null if the proposal does not exist
      */
     public function getProposal($id)
     {
@@ -94,7 +66,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getAvailableLanguages($activity)
     {
         return ['nl' => !is_null($activity->getName()->getValueNL()),
-                'en' => !is_null($activity->getName()->getValueEN())];
+            'en' => !is_null($activity->getName()->getValueEN())];
     }
 
     /**
@@ -107,11 +79,33 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('viewDetails', $this->getActivity($id))) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view this activity')
             );
         }
         return $this->getActivity($id);
+    }
+
+    /**
+     * Get the information of one activity from the database.
+     *
+     * @param int $id The activity id to be searched for
+     *
+     * @return ActivityModel Activity or null if the activity does not exist
+     */
+    public function getActivity($id)
+    {
+        if (!$this->isAllowed('view', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to view the activities')
+            );
+        }
+
+        $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
+        $activity = $activityMapper->getActivityById($id);
+
+        return $activity;
     }
 
     /**
@@ -123,7 +117,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
@@ -143,7 +137,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view unapproved activities')
             );
         }
@@ -161,7 +155,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view activities')
             );
         }
@@ -173,7 +167,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     /**
      * Get upcoming activities organized by the given organ.
      *
-     * @param \Organ\Model\Organ $organ
+     * @param Organ $organ
      * @param integer $count
      *
      * @return array
@@ -181,6 +175,16 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getOrganActivities($organ, $count = null)
     {
         return $this->getActivityMapper()->getUpcomingActivities($count, $organ);
+    }
+
+    /**
+     * Get the activity mapper.
+     *
+     * @return \Activity\Mapper\Activity
+     */
+    public function getActivityMapper()
+    {
+        return $this->sm->get('activity_mapper_activity');
     }
 
     /**
@@ -192,7 +196,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('viewDisapproved', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the disapproved activities')
             );
         }
@@ -212,7 +216,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view upcoming the activities')
             );
         }
@@ -221,7 +225,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         if ($category === 'my') {
             if (!$this->isAllowed('view', 'myActivities')) {
                 $translator = $this->getTranslator();
-                throw new \User\Permissions\NotAllowedException(
+                throw new NotAllowedException(
                     $translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
             }
@@ -229,6 +233,16 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
         return $activityMapper->getUpcomingActivities(null, null, $category);
+    }
+
+    /**
+     * Gets the user service.
+     *
+     * @return User
+     */
+    public function getUserService()
+    {
+        return $this->sm->get('user_service_user');
     }
 
     /**
@@ -267,7 +281,6 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
-
     /**
      * Get all the years activities have taken place in the past
      *
@@ -281,7 +294,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
-        $endYear = AssociationYear::fromDate(new \DateTime())->getYear();
+        $endYear = AssociationYear::fromDate(new DateTime())->getYear();
 
         // We make the reasonable assumption that there is at least one activity
         return range($startYear, $endYear);
@@ -297,35 +310,27 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     {
         if (!$this->isAllowed('view', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
 
         $associationYear = AssociationYear::fromYear($year);
 
-        $endDate = $associationYear->getEndDate() < new \DateTime() ? $associationYear->getEndDate() : new \DateTime();
+        $endDate = $associationYear->getEndDate() < new DateTime() ? $associationYear->getEndDate() : new DateTime();
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
 
     /**
-     * Get the activity mapper.
+     * Get the default resource ID.
      *
-     * @return \Activity\Mapper\Activity
-     */
-    public function getActivityMapper()
-    {
-        return $this->sm->get('activity_mapper_activity');
-    }
-
-     /**
-     * Gets the user service.
+     * This is used by {@link isAllowed()} when no resource is specified.
      *
-     * @return \User\Service\User
+     * @return string
      */
-    public function getUserService()
+    protected function getDefaultResourceId()
     {
-        return $this->sm->get('user_service_user');
+        return 'activity';
     }
 }

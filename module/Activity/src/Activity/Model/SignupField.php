@@ -64,6 +64,53 @@ class SignupField
     protected $options;
 
     /**
+     * @return SignupList
+     */
+    public function getSignupList()
+    {
+        return $this->signupList;
+    }
+
+    /**
+     * @param SignupList $signupList
+     */
+    public function setSignupList($signupList)
+    {
+        $this->signupList = $signupList;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $options = [];
+        foreach ($this->getOptions() as $option) {
+            $options[] = $option->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'type' => $this->getType(),
+            'minimumValue' => $this->getMinimumValue(),
+            'maximumValue' => $this->getMaximumValue(),
+            'options' => $options,
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
      * @return integer
      */
     public function getId()
@@ -72,23 +119,7 @@ class SignupField
     }
 
     /**
-     * @return \Activity\Model\SignupList
-     */
-    public function getSignupList()
-    {
-        return $this->signupList;
-    }
-
-    /**
-     * @param \Activity\Model\SignupList $signupList
-     */
-    public function setSignupList($signupList)
-    {
-        $this->signupList = $signupList;
-    }
-
-    /**
-     * @return \Activity\Model\LocalisedText
+     * @return LocalisedText
      */
     public function getName()
     {
@@ -96,7 +127,7 @@ class SignupField
     }
 
     /**
-     * @param \Activity\Model\LocalisedText $name
+     * @param LocalisedText $name
      */
     public function setName($name)
     {
@@ -149,36 +180,5 @@ class SignupField
     public function setMaximumValue($maximumValue)
     {
         $this->maximumValue = $maximumValue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $options = [];
-        foreach ($this->getOptions() as $option) {
-            $options[] = $option->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'type' => $this->getType(),
-            'minimumValue' => $this->getMinimumValue(),
-            'maximumValue' => $this->getMaximumValue(),
-            'options' => $options,
-        ];
     }
 }

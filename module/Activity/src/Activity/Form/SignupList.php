@@ -2,15 +2,18 @@
 
 namespace Activity\Form;
 
+use DateTime;
+use Exception;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
     /**
-     * @var \Zend\Mvc\I18n\Translator
+     * @var Translator
      */
     protected $translator;
 
@@ -19,7 +22,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         parent::__construct('signuplist');
         $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
-              ->setObject(new \Activity\Model\SignupList());
+            ->setObject(new \Activity\Model\SignupList());
 
         $this->add([
             'name' => 'name',
@@ -92,6 +95,25 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
     }
 
     /**
+     * Check if a certain date is before the closing date of the SignupList.
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public static function beforeCloseDate($value, $context = [])
+    {
+        try {
+            $thisTime = new DateTime($value);
+            $closeTime = isset($context['closeDate']) ? new DateTime($context['closeDate']) : new DateTime('now');
+            return $thisTime < $closeTime;
+        } catch (Exception $e) {
+            // An exception is an indication that one of the times was not valid
+            return false;
+        }
+    }
+
+    /**
      * @return array
      */
     public function getInputFilterSpecification()
@@ -152,7 +174,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate(
                                         'The sign-up list opening date and time must be before the sign-up list closes.'
                                     ),
@@ -204,24 +226,5 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->isValid = $valid;
 
         return $valid;
-    }
-
-    /**
-     * Check if a certain date is before the closing date of the SignupList.
-     *
-     * @param $value
-     * @param array $context
-     * @return bool
-     */
-    public static function beforeCloseDate($value, $context = [])
-    {
-        try {
-            $thisTime = new \DateTime($value);
-            $closeTime = isset($context['closeDate']) ? new \DateTime($context['closeDate']) : new \DateTime('now');
-            return $thisTime < $closeTime;
-        } catch (\Exception $e) {
-            // An exception is an indication that one of the times was not valid
-            return false;
-        }
     }
 }

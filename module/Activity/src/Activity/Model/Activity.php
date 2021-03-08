@@ -2,12 +2,13 @@
 
 namespace Activity\Model;
 
+use DateTime;
 use Decision\Model\Organ;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use \DateTime;
 use User\Model\User;
-use User\Permissions\Resource\OrganResourceInterface;
 use User\Permissions\Resource\CreatorResourceInterface;
+use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity model.
@@ -152,8 +153,187 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->signupLists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->signupLists = new ArrayCollection();
+    }
+
+    /**
+     * @return User
+     */
+    public function getApprover()
+    {
+        return $this->approver;
+    }
+
+    /**
+     * @param User $approver
+     */
+    public function setApprover(User $approver)
+    {
+        $this->approver = $approver;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param integer $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return Activity\Model\ActivityUpdateProposal
+     */
+    public function getUpdateProposal()
+    {
+        return $this->updateProposal;
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function addCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->addCategory($category);
+        }
+    }
+
+    /**
+     * @param ActivityCategory $category
+     */
+    public function addCategory($category)
+    {
+        if ($this->categories->contains($category)) {
+            return;
+        }
+
+        $this->categories->add($category);
+        $category->addActivity($this);
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function removeCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->removeCategory($category);
+        }
+    }
+
+    /**
+     * @param ActivityCategory $category
+     */
+    public function removeCategory($category)
+    {
+        if (!$this->categories->contains($category)) {
+            return;
+        }
+
+        $this->categories->removeElement($category);
+        $category->removeActivity($this);
+    }
+
+    /**
+     * Adds SignupLists to this activity.
+     *
+     * @param array $signupLists
+     */
+    public function addSignupLists($signupLists)
+    {
+        foreach ($signupLists as $signupList) {
+            $this->addSignupList($signupList);
+        }
+    }
+
+    /**
+     * @param SignupList $signupList
+     */
+    public function addSignupList($signupList)
+    {
+        if ($this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->add($signupList);
+        $signupList->setActivity($this);
+    }
+
+    /**
+     * Removes SignupLists from this activity.
+     *
+     * @param array $signupLists
+     */
+    public function removeSignupLists($signupLists)
+    {
+        foreach ($signupLists as $signupList) {
+            $this->removeSignupList($signupList);
+        }
+    }
+
+    /**
+     * @param SignupList $category
+     */
+    public function removeSignupList($signupList)
+    {
+        if (!$this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->removeElement($signupList);
+        $signupList->setActivity(null);
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $signupLists = [];
+        foreach ($this->getSignupLists() as $signupList) {
+            $signupLists[] = $signupList->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'beginTime' => $this->getBeginTime(),
+            'endTime' => $this->getEndTime(),
+            'location' => $this->getLocation()->getValueNL(),
+            'locationEn' => $this->getLocation()->getValueEN(),
+            'costs' => $this->getCosts()->getValueNL(),
+            'costsEn' => $this->getCosts()->getValueEN(),
+            'description' => $this->getDescription()->getValueNL(),
+            'descriptionEn' => $this->getDescription()->getValueEN(),
+            'organ' => $this->getOrgan(),
+            'company' => $this->getCompany(),
+            'isMyFuture' => $this->getIsMyFuture(),
+            'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'categories' => $this->getCategories()->toArray(),
+            'signupLists' => $signupLists,
+        ];
+    }
+
+    /**
+     * Returns an ArrayCollection of SignupLists associated with this activity.
+     *
+     * @return ArrayCollection
+     */
+    public function getSignupLists()
+    {
+        return $this->signupLists;
     }
 
     /**
@@ -245,61 +425,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return User
-     */
-    public function getApprover()
-    {
-        return $this->approver;
-    }
-
-    /**
-     * @param User $approver
-     */
-    public function setApprover(User $approver)
-    {
-        $this->approver = $approver;
-    }
-
-    /**
-     * @return User
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param User $creator
-     */
-    public function setCreator(User $creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param integer $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return Activity\Model\ActivityUpdateProposal
-     */
-    public function getUpdateProposal()
-    {
-        return $this->updateProposal;
-    }
-    /**
      * @return LocalisedText
      */
     public function getDescription()
@@ -364,120 +489,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * @param \Activity\Model\ActivityCategory $category
-     */
-    public function addCategory($category)
-    {
-        if ($this->categories->contains($category)) {
-            return;
-        }
-
-        $this->categories->add($category);
-        $category->addActivity($this);
-    }
-
-    /**
-     * @param \Activity\Model\ActivityCategory $category
-     */
-    public function removeCategory($category)
-    {
-        if (!$this->categories->contains($category)) {
-            return;
-        }
-
-        $this->categories->removeElement($category);
-        $category->removeActivity($this);
-    }
-
-    /**
-     * @param array $categories
-     */
-    public function addCategories($categories)
-    {
-        foreach ($categories as $category) {
-            $this->addCategory($category);
-        }
-    }
-
-    /**
-     * @param array $categories
-     */
-    public function removeCategories($categories)
-    {
-        foreach ($categories as $category) {
-            $this->removeCategory($category);
-        }
-    }
-
-    /**
-     * Returns an ArrayCollection of SignupLists associated with this activity.
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getSignupLists()
-    {
-        return $this->signupLists;
-    }
-
-    /**
-     * @param \Activity\Model\SignupList $signupList
-     */
-    public function addSignupList($signupList)
-    {
-        if ($this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->add($signupList);
-        $signupList->setActivity($this);
-    }
-
-    /**
-     * @param \Activity\Model\SignupList $category
-     */
-    public function removeSignupList($signupList)
-    {
-        if (!$this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->removeElement($signupList);
-        $signupList->setActivity(null);
-    }
-
-    /**
-     * Adds SignupLists to this activity.
-     *
-     * @param array $signupLists
-     */
-    public function addSignupLists($signupLists)
-    {
-        foreach ($signupLists as $signupList) {
-            $this->addSignupList($signupList);
-        }
-    }
-
-    /**
-     * Removes SignupLists from this activity.
-     *
-     * @param array $signupLists
-     */
-    public function removeSignupLists($signupLists)
-    {
-        foreach ($signupLists as $signupList) {
-            $this->removeSignupList($signupList);
-        }
-    }
-
-    /**
      * @return mixed
      */
     public function getRequireGEFLITST()
@@ -494,36 +505,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
+     * @return ArrayCollection
      */
-    public function toArray()
+    public function getCategories()
     {
-        $signupLists = [];
-        foreach ($this->getSignupLists() as $signupList) {
-            $signupLists[] = $signupList->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'beginTime' => $this->getBeginTime(),
-            'endTime' => $this->getEndTime(),
-            'location' => $this->getLocation()->getValueNL(),
-            'locationEn' => $this->getLocation()->getValueEN(),
-            'costs' => $this->getCosts()->getValueNL(),
-            'costsEn' => $this->getCosts()->getValueEN(),
-            'description' => $this->getDescription()->getValueNL(),
-            'descriptionEn' => $this->getDescription()->getValueEN(),
-            'organ' => $this->getOrgan(),
-            'company' => $this->getCompany(),
-            'isMyFuture' => $this->getIsMyFuture(),
-            'requireGEFLITST' => $this->getRequireGEFLITST(),
-            'categories' => $this->getCategories()->toArray(),
-            'signupLists' => $signupLists,
-        ];
+        return $this->categories;
     }
 
     /**
@@ -536,7 +522,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         return 'activity';
     }
 
-    // Permission to link the resource to an organ
     /**
      * Get the organ of this resource.
      *
@@ -555,5 +540,23 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function getResourceCreator()
     {
         return $this->getCreator();
+    }
+
+    // Permission to link the resource to an organ
+
+    /**
+     * @return User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
     }
 }

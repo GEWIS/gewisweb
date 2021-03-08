@@ -2,37 +2,29 @@
 
 namespace Activity\Service;
 
+use Activity\Mapper\ActivityFieldValue;
 use Activity\Model\Activity as ActivityModel;
-use Activity\Model\Signup as SignupModel;
-use Activity\Model\SignupList as SignupListModel;
-use Activity\Model\SignupFieldValue as SignupFieldValueModel;
-use Activity\Model\UserSignup as UserSignupModel;
 use Activity\Model\ExternalSignup as ExternalSignupModel;
+use Activity\Model\Signup as SignupModel;
+use Activity\Model\SignupFieldValue as SignupFieldValueModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Model\UserSignup as UserSignupModel;
 use Application\Service\AbstractAclService;
+use DateTime;
 use Decision\Model\Member;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 
 class Signup extends AbstractAclService
 {
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
         return $this->getServiceManager()->get('activity_acl');
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'signupList';
     }
 
     /**
@@ -41,13 +33,13 @@ class Signup extends AbstractAclService
      *
      * @param SignupListModel $signupList
      * @return \Activity\Form\Signup
-     * @throws \User\Permissions\NotAllowedException
+     * @throws NotAllowedException
      */
     public function getForm($signupList)
     {
         if (!$this->isAllowed('signup', $signupList)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
@@ -62,7 +54,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('adminSignup', $signupList)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to use the external admin signup')
             );
         }
@@ -77,7 +69,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('externalSignup', $signupList)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to use the external signup')
             );
         }
@@ -99,7 +91,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('view', 'signupList')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view who is signed up for this activity')
             );
         }
@@ -118,7 +110,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('view', $signupList)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the sign up data')
             );
         }
@@ -131,7 +123,7 @@ class Signup extends AbstractAclService
             $entry['member'] = $signup->getFullName();
             $entry['values'] = [];
 
-            foreach($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue) {
+            foreach ($fieldValueMapper->getFieldValuesBySignup($signup) as $fieldValue) {
                 // If there is an option type, get the option object as a 'value'.
                 $isOption = $fieldValue->getField()->getType() === 3;
                 $value = $isOption ? $fieldValue->getOption() : $fieldValue->getValue();
@@ -153,7 +145,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('view', $signupList)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the sign up data')
             );
         }
@@ -180,8 +172,8 @@ class Signup extends AbstractAclService
     /**
      * Check if a member is signed up for an activity.
      *
-     * @param ActivityModel          $activity
-     * @param \Decision\Model\Member $user
+     * @param ActivityModel $activity
+     * @param Member $user
      *
      * @return bool
      */
@@ -189,7 +181,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the activities')
             );
         }
@@ -208,7 +200,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view activities which you signed up for')
             );
         }
@@ -217,7 +209,7 @@ class Signup extends AbstractAclService
             $user->getLidnr()
         );
         $activities = [];
-        foreach($activitySignups as $activitySignup) {
+        foreach ($activitySignups as $activitySignup) {
             $activities[] = $activitySignup->getActivity()->getId();
         }
         return $activities;
@@ -233,7 +225,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('signup', 'signupList')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You need to be logged in to sign up for this activity')
             );
         }
@@ -245,73 +237,13 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * Sign an external user up for an activity, which the current user may admin.
-     *
-     * @param \Activity\Model\SignupList $signupList
-     * @param type $fullName
-     * @param type $email
-     * @param array $fieldResults
-     * @throws \User\Permissions\NotAllowedException
-     */
-    public function adminSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
-        if (!($this->isAllowed('adminSignup', $signupList))) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to subscribe an external user to this sign-up list')
-            );
-        }
-
-        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
-    }
-
-    /**
-     * Sign an external user up for an activity, allowed by a guest.
-     *
-     * @param \Activity\Model\SignupList $signupList
-     * @param type $fullName
-     * @param type $email
-     * @param array $fieldResults
-     * @throws \User\Permissions\NotAllowedException
-     */
-    public function externalSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
-        if (!($this->isAllowed('externalSignup', $signupList))) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to subscribe to this sign-up list')
-            );
-        }
-
-        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
-    }
-
-    /**
-     * Sign an external user up for an activity.
-     *
-     * @param \Activity\Model\SignupList $signupList
-     * @param string $fullName
-     * @param string $email
-     * @param array $fieldResults
-     *
-     * @throws \User\Permissions\NotAllowedException
-     */
-    protected function manualSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
-        $signup = new ExternalSignupModel();
-        $signup->setEmail($email);
-        $signup->setFullName($fullName);
-        $this->createSignup($signup, $signupList, $fieldResults);
-    }
-
-    /**
      * Creates the generic parts of a signup.
      *
-     * @param \Activity\Model\Signup $signup
-     * @param \Activity\Model\SignupList $activity
+     * @param SignupModel $signup
+     * @param SignupListModel $activity
      * @param array $fieldResults
      *
-     * @return \Activity\Model\Signup
+     * @return SignupModel
      */
     protected function createSignup(SignupModel $signup, SignupListModel $signupList, array $fieldResults)
     {
@@ -333,7 +265,7 @@ class Signup extends AbstractAclService
                     $fieldValue->setValue(($value) ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->getOptionById((int)$value));
+                    $fieldValue->setOption($optionMapper->getOptionById((int) $value));
                     break;
             }
             $fieldValue->setSignup($signup);
@@ -346,6 +278,66 @@ class Signup extends AbstractAclService
     }
 
     /**
+     * Sign an external user up for an activity, which the current user may admin.
+     *
+     * @param SignupListModel $signupList
+     * @param type $fullName
+     * @param type $email
+     * @param array $fieldResults
+     * @throws NotAllowedException
+     */
+    public function adminSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
+    {
+        if (!($this->isAllowed('adminSignup', $signupList))) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to subscribe an external user to this sign-up list')
+            );
+        }
+
+        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
+    }
+
+    /**
+     * Sign an external user up for an activity.
+     *
+     * @param SignupListModel $signupList
+     * @param string $fullName
+     * @param string $email
+     * @param array $fieldResults
+     *
+     * @throws NotAllowedException
+     */
+    protected function manualSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
+    {
+        $signup = new ExternalSignupModel();
+        $signup->setEmail($email);
+        $signup->setFullName($fullName);
+        $this->createSignup($signup, $signupList, $fieldResults);
+    }
+
+    /**
+     * Sign an external user up for an activity, allowed by a guest.
+     *
+     * @param SignupListModel $signupList
+     * @param type $fullName
+     * @param type $email
+     * @param array $fieldResults
+     * @throws NotAllowedException
+     */
+    public function externalSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
+    {
+        if (!($this->isAllowed('externalSignup', $signupList))) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to subscribe to this sign-up list')
+            );
+        }
+
+        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
+    }
+
+    /**
      * Undo an activity sign up.
      *
      * @param SignupListModel $signupList
@@ -355,7 +347,7 @@ class Signup extends AbstractAclService
     {
         if (!$this->isAllowed('signoff', 'signupList')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You need to be logged in to sign off for this activity')
             );
         }
@@ -371,24 +363,6 @@ class Signup extends AbstractAclService
         $this->removeSignUp($signUp);
     }
 
-    public function getNumberOfSubscribedMembers(SignupListModel $signupList)
-    {
-        return $this->getServiceManager()->get('activity_mapper_signup')
-                ->getNumberOfSignedUpMembers($signupList->getId())[1];
-    }
-
-    public function externalSignOff(ExternalSignupModel $signup)
-    {
-        if (!($this->isAllowed('adminSignup', 'activity') ||
-                $this->isAllowed('adminSignup', $signup->getActivity()))) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to remove external signups for this activity')
-            );
-        }
-        $this->removeSignUp($signup);
-    }
-
     protected function removeSignUp(SignupModel $signup)
     {
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
@@ -396,9 +370,27 @@ class Signup extends AbstractAclService
         $em->flush();
     }
 
+    public function getNumberOfSubscribedMembers(SignupListModel $signupList)
+    {
+        return $this->getServiceManager()->get('activity_mapper_signup')
+            ->getNumberOfSignedUpMembers($signupList->getId())[1];
+    }
+
+    public function externalSignOff(ExternalSignupModel $signup)
+    {
+        if (!($this->isAllowed('adminSignup', 'activity') ||
+            $this->isAllowed('adminSignup', $signup->getActivity()))) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to remove external signups for this activity')
+            );
+        }
+        $this->removeSignUp($signup);
+    }
+
     public function isInSubscriptionWindow($openDate, $closeDate)
     {
-        $currentTime = new \DateTime();
+        $currentTime = new DateTime();
         return $openDate < $currentTime && $currentTime < $closeDate;
     }
 
@@ -433,10 +425,22 @@ class Signup extends AbstractAclService
     }
 
     /**
-     * @return \Activity\Mapper\ActivityFieldValue
+     * @return ActivityFieldValue
      */
-    public function getActivityFieldValueMapper(){
-
+    public function getActivityFieldValueMapper()
+    {
         return $this->getServiceManager()->get('activity_mapper_activity_field_value');
+    }
+
+    /**
+     * Get the default resource ID.
+     *
+     * This is used by {@link isAllowed()} when no resource is specified.
+     *
+     * @return string
+     */
+    protected function getDefaultResourceId()
+    {
+        return 'signupList';
     }
 }

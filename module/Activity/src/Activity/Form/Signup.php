@@ -2,12 +2,14 @@
 
 namespace Activity\Form;
 
-use Zend\Form\Form;
-//input filter
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Zend\InputFilter\InputFilterProviderInterface;
+use Activity\Model\SignupField;
+use Activity\Model\UserSignup;
 use Zend\Captcha\Image as ImageCaptcha;
+use Zend\Form\Form;
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+
+//input filter
 
 class Signup extends Form implements InputFilterProviderInterface
 {
@@ -23,7 +25,7 @@ class Signup extends Form implements InputFilterProviderInterface
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new \Activity\Model\UserSignup());
+            ->setObject(new UserSignup());
 
         $this->add([
             'name' => 'security',
@@ -44,20 +46,21 @@ class Signup extends Form implements InputFilterProviderInterface
         return $this->type;
     }
 
-    /**
-     * Initialize the form, i.e. set the language and the fields
-     * Add every field in $signupList to the form.
-     *
-     * @param SignupList $signupList
-     */
-    public function initialiseForm($signupList)
+    public function initialiseExternalForm($signupList)
     {
-        foreach ($signupList->getFields() as $field) {
-            $this->add($this->createSignupFieldElementArray($field));
-        }
-
-        $this->signupList = $signupList;
-        $this->type = Signup::USER;
+        $this->add([
+            'name' => 'captcha',
+            'type' => 'Zend\Form\Element\Captcha',
+            'options' => [
+                'captcha' => new ImageCaptcha([
+                    'font' => 'public/fonts/bitstream-vera/Vera.ttf',
+                    'imgDir' => 'public/img/captcha/',
+                    'imgUrl' => '/img/captcha/',
+                ]),
+            ]
+        ]);
+        $this->initialiseExternalAdminForm($signupList);
+        $this->type = Signup::EXTERNAL_USER;
     }
 
     /**
@@ -80,21 +83,68 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->type = Signup::EXTERNAL_ADMIN;
     }
 
-    public function initialiseExternalForm($signupList)
+    /**
+     * Initialize the form, i.e. set the language and the fields
+     * Add every field in $signupList to the form.
+     *
+     * @param SignupList $signupList
+     */
+    public function initialiseForm($signupList)
     {
-        $this->add([
-            'name' => 'captcha',
-            'type' => 'Zend\Form\Element\Captcha',
-            'options' => [
-                'captcha' => new ImageCaptcha([
-                    'font' => 'public/fonts/bitstream-vera/Vera.ttf',
-                    'imgDir' => 'public/img/captcha/',
-                    'imgUrl' => '/img/captcha/',
-                    ]),
-            ]
-        ]);
-        $this->initialiseExternalAdminForm($signupList);
-        $this->type = Signup::EXTERNAL_USER;
+        foreach ($signupList->getFields() as $field) {
+            $this->add($this->createSignupFieldElementArray($field));
+        }
+
+        $this->signupList = $signupList;
+        $this->type = Signup::USER;
+    }
+
+    /**
+     * Creates an array of the form element specification for the given $field,
+     * to be used by the factory.
+     *
+     * @param SignupField $field
+     * @return array
+     */
+    protected function createSignupFieldElementArray($field)
+    {
+        $result = [
+            'name' => $field->getId(),
+        ];
+        switch ($field->getType()) {
+            case 0: //'Text'
+                $result['type'] = 'Text';
+                break;
+            case 1: //'Yes/No'
+                $result['type'] = 'Zend\Form\Element\Radio';
+                $result['options'] = [
+                    'value_options' => [
+                        '1' => 'Yes',
+                        '0' => 'No',
+                    ]
+                ];
+                break;
+            case 2: //'Number'
+                $result['type'] = 'Zend\Form\Element\Number';
+                $result['attributes'] = [
+                    'min' => $field->getMinimumValue(),
+                    'max' => $field->getMaximumValue(),
+                    'step' => '1'
+                ];
+                break;
+            case 3: //'Choice'
+                $values = [];
+                foreach ($field->getOptions() as $option) {
+                    $values[$option->getId()] = $option->getValue()->getText();
+                }
+                $result['type'] = 'Zend\Form\Element\Select';
+                $result['options'] = [
+                    //'empty_option' => 'Make a choice',
+                    'value_options' => $values
+                ];
+                break;
+        }
+        return $result;
     }
 
     /**
@@ -106,7 +156,7 @@ class Signup extends Form implements InputFilterProviderInterface
     {
         $filter = [];
         if ($this->type === Signup::EXTERNAL_USER ||
-            $this->type ===  Signup::EXTERNAL_ADMIN) {
+            $this->type === Signup::EXTERNAL_ADMIN) {
             $filter['fullName'] = [
                 'required' => true,
                 'validators' => [
@@ -139,53 +189,5 @@ class Signup extends Form implements InputFilterProviderInterface
         }
 
         return $filter;
-    }
-
-    /**
-     * Creates an array of the form element specification for the given $field,
-     * to be used by the factory.
-     *
-     * @param \Activity\Model\SignupField $field
-     * @return array
-     */
-    protected function createSignupFieldElementArray($field)
-    {
-        $result = [
-            'name' => $field->getId(),
-        ];
-        switch ($field->getType()) {
-            case 0: //'Text'
-                $result['type'] = 'Text';
-                break;
-            case 1: //'Yes/No'
-                $result['type'] = 'Zend\Form\Element\Radio';
-                $result['options'] = [
-                    'value_options' => [
-                        '1' => 'Yes',
-                        '0' => 'No',
-                    ]
-                ];
-                break;
-            case 2: //'Number'
-                $result['type'] = 'Zend\Form\Element\Number';
-                $result['attributes'] = [
-                    'min' => $field->getMinimumValue(),
-                    'max' => $field->getMaximumValue(),
-                    'step' => '1'
-                ];
-                break;
-            case 3: //'Choice'
-                $values = [];
-                foreach ($field->getOptions() as $option) {
-                    $values[$option->getId()] =  $option->getValue()->getText();
-                }
-                $result['type'] = 'Zend\Form\Element\Select';
-                $result['options'] = [
-                    //'empty_option' => 'Make a choice',
-                    'value_options' => $values
-                ];
-                break;
-        }
-        return $result;
     }
 }

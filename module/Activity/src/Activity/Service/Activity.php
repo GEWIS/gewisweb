@@ -2,59 +2,34 @@
 
 namespace Activity\Service;
 
-use Activity\Model\LocalisedText;
-use Application\Service\AbstractAclService;
+use Activity\Form\Activity as ActivityForm;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityField;
+use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
+use Activity\Model\LocalisedText;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
-use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
+use Application\Service\AbstractAclService;
+use Application\Service\Email;
+use DateTime;
 use Decision\Model\Organ;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Stdlib\Parameters;
-use Activity\Form\Activity as ActivityForm;
-
-use DateTime;
 
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
         return $this->getServiceManager()->get('activity_acl');
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'activity';
-    }
-
-    /**
-     * Return activity creation form
-     *
-     * @return ActivityForm
-     */
-    public function getActivityForm()
-    {
-        if (!$this->isAllowed('create', 'activity')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create an activity')
-            );
-        }
-
-        return $this->getServiceManager()->get('activity_form_activity');
     }
 
     public function getSignupListForm()
@@ -80,7 +55,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('create', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to create an activity')
             );
         }
@@ -124,8 +99,233 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
+     * Return activity creation form
+     *
+     * @return ActivityForm
+     */
+    public function getActivityForm()
+    {
+        if (!$this->isAllowed('create', 'activity')) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to create an activity')
+            );
+        }
+
+        return $this->getServiceManager()->get('activity_form_activity');
+    }
+
+    /**
+     * Find the organ the activity belongs to, and see if the user has permission to create an activity
+     * for this organ.
+     *
+     * @param int $organId The id of the organ associated with the activity
+     * @return Organ The organ associated with the activity, if the user is a member of that organ
+     * @throws NotAllowedException if the user is not a member of the organ specified
+     */
+    protected function findOrgan($organId)
+    {
+        $organService = $this->getServiceManager()->get('decision_service_organ');
+        $organ = $organService->getOrgan($organId);
+
+        if (!$organService->canEditOrgan($organ)) {
+            $translator = $this->getTranslator();
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to create an activity for this organ')
+            );
+        }
+
+        return $organ;
+    }
+
+    /**
+     * Create an activity from parameters.
+     *
+     * @pre $data is valid data of Activity\Form\Activity
+     *
+     * @param array $data Parameters describing activity
+     * @param User $user The user that creates this activity
+     * @param Organ $organ The organ this activity is associated with
+     * @param Company $company The company this activity is associated with
+     *
+     * @return ActivityModel Activity that was created.
+     */
+    protected function saveActivityData($data, $user, $organ, $company, $status)
+    {
+        $activity = new ActivityModel();
+        $activity->setBeginTime(new DateTime($data['beginTime']));
+        $activity->setEndTime(new DateTime($data['endTime']));
+
+        $activity->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $activity->setLocation(new LocalisedText($data['locationEn'], $data['location']));
+        $activity->setCosts(new LocalisedText($data['costsEn'], $data['costs']));
+        $activity->setDescription(new LocalisedText($data['descriptionEn'], $data['description']));
+
+        $activity->setIsMyFuture($data['isMyFuture']);
+        $activity->setRequireGEFLITST($data['requireGEFLITST']);
+
+        // Not user provided input
+        $activity->setCreator($user);
+        $activity->setOrgan($organ);
+        $activity->setCompany($company);
+        $activity->setStatus($status);
+
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+        if (isset($data['categories'])) {
+            $categoryService = $this->getServiceManager()->get('activity_service_category');
+
+            foreach ($data['categories'] as $category) {
+                $category = $categoryService->getCategoryById($category);
+
+                if (!is_null($category)) {
+                    $activity->addCategory($category);
+                }
+            }
+        }
+
+        if (isset($data['signupLists'])) {
+            foreach ($data['signupLists'] as $signupList) {
+                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                $signupList = $this->createSignupList(new Parameters($signupList), $activity);
+                $em->persist($signupList);
+            }
+            $em->flush();
+        }
+
+        $em->persist($activity);
+        $em->flush();
+
+        // Send an email when a new Activity was created, but do not send one
+        // when an activity is updated. This e-mail is handled in
+        // `$this->createUpdateProposal()`.
+        if ($status !== ActivityModel::STATUS_UPDATE) {
+            $this->getEmailService()->sendEmail(
+                'activity_creation',
+                'email/activity',
+                'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
+                ['activity' => $activity]
+            );
+        }
+
+        return $activity;
+    }
+
+    /**
+     * Creates a SignupList for the specified Activity.
+     *
+     * @param array $data
+     * @param ActivityModel $activity
+     * @return SignupListModel
+     */
+    public function createSignupList($data, $activity)
+    {
+        $signupList = new SignupListModel();
+
+        $signupList->setActivity($activity);
+        $signupList->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $signupList->setOpenDate(new DateTime($data['openDate']));
+        $signupList->setCloseDate(new DateTime($data['closeDate']));
+
+        $signupList->setOnlyGEWIS($data['onlyGEWIS']);
+        $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
+
+        if (isset($data['fields'])) {
+            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+            foreach ($data['fields'] as $field) {
+                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                $field = $this->createSignupField(new Parameters($field), $signupList);
+                $em->persist($field);
+            }
+            $em->flush();
+        }
+
+        return $signupList;
+    }
+
+    /**
+     * Create a new field
+     *
+     * @pre $data is valid data of Activity\Form\SignupListFields
+     *
+     * @param array $data Parameters for the new field.
+     * @param SignupListModel $activity The SignupList the field belongs to.
+     *
+     * @return ActivityField The new field.
+     */
+    public function createSignupField($data, $signupList)
+    {
+        $field = new SignupFieldModel();
+
+        $field->setSignupList($signupList);
+        $field->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $field->setType($data['type']);
+
+        if ($data['type'] === '2') {
+            $field->setMinimumValue($data['min. value']);
+            $field->setMaximumValue($data['max. value']);
+        }
+
+        if ($data['type'] === '3') {
+            $this->createSignupOption($data, $field);
+        }
+
+        return $field;
+    }
+
+    /**
+     * Creates options for both languages specified and adds it to $field.
+     * If no languages are specified, this method does nothing.
+     * @pre The options corresponding to the languages specified are filled in
+     * $params. If both languages are specified, they must have the same amount of options.
+     *
+     * @param array $data The array containing the options strings.
+     * @param SignupFieldModel $field The field to add the options to.
+     */
+    protected function createSignupOption($data, $field)
+    {
+        $numOptions = 0;
+        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+
+        if (isset($data['options'])) {
+            $options = explode(',', $data['options']);
+            $options = array_map('trim', $options);
+            $numOptions = count($options);
+        }
+
+        if (isset($data['optionsEn'])) {
+            $optionsEn = explode(',', $data['optionsEn']);
+            $optionsEn = array_map('trim', $optionsEn);
+            $numOptions = count($optionsEn);
+        }
+
+        for ($i = 0; $i < $numOptions; $i++) {
+            $option = new SignupOptionModel();
+            $option->setValue(new LocalisedText(
+                isset($data['optionsEn']) ? $optionsEn[$i] : null,
+                isset($data['options']) ? $options[$i] : null
+            ));
+            $option->setField($field);
+            $em->persist($option);
+        }
+
+        $em->flush();
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return Email
+     */
+    public function getEmailService()
+    {
+        return $this->sm->get('application_service_email');
+    }
+
+    /**
      * @param $activity ActivityModel
-     * @param $user \User\Model\User
+     * @param $user User
      * @param $organ Organ
      */
     private function requestGEFLITST($activity, $user, $organ)
@@ -142,18 +342,33 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
             $organInfo = $organ->getApprovedOrganInformation();
             if ($organInfo != null && $organInfo->getEmail() != null) {
-                $this->getEmailService()->sendEmailAsOrgan($type, $view, $subject,
-                    ['activity' => $activity, 'requester' => $organ->getName()], $organInfo);
+                $this->getEmailService()->sendEmailAsOrgan(
+                    $type,
+                    $view,
+                    $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()],
+                    $organInfo
+                );
             } else {
                 // The organ did not fill in it's email address, so send the email as the requested user.
-                $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
-                    ['activity' => $activity, 'requester' => $organ->getName()], $user);
+                $this->getEmailService()->sendEmailAsUser(
+                    $type,
+                    $view,
+                    $subject,
+                    ['activity' => $activity, 'requester' => $organ->getName()],
+                    $user
+                );
             }
         } else {
             $subject = sprintf('Member Initiative: %s on %s', $activityTitle, $activityTime);
 
-            $this->getEmailService()->sendEmailAsUser($type, $view, $subject,
-                ['activity' => $activity, 'requester' => $user->getMember()->getFullName()], $user);
+            $this->getEmailService()->sendEmailAsUser(
+                $type,
+                $view,
+                $subject,
+                ['activity' => $activity, 'requester' => $user->getMember()->getFullName()],
+                $user
+            );
         }
     }
 
@@ -168,7 +383,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('update', $currentActivity)) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
             );
         }
@@ -229,7 +444,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $em->remove($oldUpdate);
             $em->flush();
         } else {
-            $proposal = new \Activity\Model\ActivityUpdateProposal();
+            $proposal = new ActivityProposalModel();
             $proposal->setOld($currentActivity);
             $proposal->setNew($newActivity);
             $em->persist($proposal);
@@ -241,17 +456,23 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->updateActivity($proposal);
 
             // Send an e-mail stating that the activity was updated.
-            $this->getEmailService()->sendEmail('activity_creation', 'email/activity-updated',
+            $this->getEmailService()->sendEmail(
+                'activity_creation',
+                'email/activity-updated',
                 'Activiteit aangepast op de GEWIS website | Activity was updated on the GEWIS website',
-                ['activity' => $newActivity]);
-            
+                ['activity' => $newActivity]
+            );
+
             return true;
         }
 
         // Send an e-mail stating that an activity update proposal has been made.
-        $this->getEmailService()->sendEmail('activity_creation', 'email/activity-update-proposed',
+        $this->getEmailService()->sendEmail(
+            'activity_creation',
+            'email/activity-update-proposed',
             'Activiteit aanpassingsvoorstel op de GEWIS website | Activity update proposed on the GEWIS website',
-            ['activity' => $newActivity, 'proposal' => $proposal]);
+            ['activity' => $newActivity, 'proposal' => $proposal]
+        );
 
         return true;
     }
@@ -307,23 +528,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Recursively unset a key in an array (by reference).
-     *
-     * @param array $array
-     * @param string $key
-     */
-    protected function recursiveUnsetKey(&$array, $key)
-    {
-        unset($array[$key]);
-
-        foreach ($array as &$value) {
-            if (is_array($value)) {
-                $this->recursiveUnsetKey($value, $key);
-            }
-        }
-    }
-
-    /**
      * `array_diff_assoc` but recursively. Used to compare an update proposal of an activity
      * to the original activity.
      *
@@ -333,7 +537,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param array $array2
      * @return bool
      */
-    protected function array_diff_assoc_recursive($array1, $array2) {
+    protected function array_diff_assoc_recursive($array1, $array2)
+    {
         $difference = [];
 
         foreach ($array1 as $key => $value) {
@@ -357,6 +562,23 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         return $difference;
+    }
+
+    /**
+     * Recursively unset a key in an array (by reference).
+     *
+     * @param array $array
+     * @param string $key
+     */
+    protected function recursiveUnsetKey(&$array, $key)
+    {
+        unset($array[$key]);
+
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->recursiveUnsetKey($value, $key);
+            }
+        }
     }
 
     /**
@@ -448,201 +670,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Create an activity from parameters.
-     *
-     * @pre $data is valid data of Activity\Form\Activity
-     *
-     * @param array $data Parameters describing activity
-     * @param User $user The user that creates this activity
-     * @param Organ $organ The organ this activity is associated with
-     * @param Company $company The company this activity is associated with
-     *
-     * @return ActivityModel Activity that was created.
-     */
-    protected function saveActivityData($data, $user, $organ, $company, $status)
-    {
-        $activity = new ActivityModel();
-        $activity->setBeginTime(new \DateTime($data['beginTime']));
-        $activity->setEndTime(new \DateTime($data['endTime']));
-
-        $activity->setName(new LocalisedText($data['nameEn'], $data['name']));
-        $activity->setLocation(new LocalisedText($data['locationEn'], $data['location']));
-        $activity->setCosts(new LocalisedText($data['costsEn'], $data['costs']));
-        $activity->setDescription(new LocalisedText($data['descriptionEn'], $data['description']));
-
-        $activity->setIsMyFuture($data['isMyFuture']);
-        $activity->setRequireGEFLITST($data['requireGEFLITST']);
-
-        // Not user provided input
-        $activity->setCreator($user);
-        $activity->setOrgan($organ);
-        $activity->setCompany($company);
-        $activity->setStatus($status);
-
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-        if (isset($data['categories'])) {
-            $categoryService = $this->getServiceManager()->get('activity_service_category');
-
-            foreach ($data['categories'] as $category) {
-                $category = $categoryService->getCategoryById($category);
-
-                if (!is_null($category)) {
-                    $activity->addCategory($category);
-                }
-            }
-        }
-
-        if (isset($data['signupLists'])) {
-            foreach ($data['signupLists'] as $signupList) {
-                // Zend\Stdlib\Parameters is required to prevent undefined indices.
-                $signupList = $this->createSignupList(new Parameters($signupList), $activity);
-                $em->persist($signupList);
-            }
-            $em->flush();
-        }
-
-        $em->persist($activity);
-        $em->flush();
-
-        // Send an email when a new Activity was created, but do not send one
-        // when an activity is updated. This e-mail is handled in
-        // `$this->createUpdateProposal()`.
-        if ($status !== ActivityModel::STATUS_UPDATE) {
-            $this->getEmailService()->sendEmail('activity_creation', 'email/activity',
-                'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
-                ['activity' => $activity]);
-        }
-
-        return $activity;
-    }
-
-    /**
-     * Find the organ the activity belongs to, and see if the user has permission to create an activity
-     * for this organ.
-     *
-     * @param int $organId The id of the organ associated with the activity
-     * @return Organ The organ associated with the activity, if the user is a member of that organ
-     * @throws \User\Permissions\NotAllowedException if the user is not a member of the organ specified
-     */
-    protected function findOrgan($organId)
-    {
-        $organService = $this->getServiceManager()->get('decision_service_organ');
-        $organ = $organService->getOrgan($organId);
-
-        if (!$organService->canEditOrgan($organ)) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to create an activity for this organ')
-            );
-        }
-
-        return $organ;
-    }
-
-    /**
-     * Creates a SignupList for the specified Activity.
-     *
-     * @param array $data
-     * @param \Activity\Model\Activity $activity
-     * @return \Activity\Model\SignupList
-     */
-    public function createSignupList($data, $activity)
-    {
-        $signupList = new SignupListModel();
-
-        $signupList->setActivity($activity);
-        $signupList->setName(new LocalisedText($data['nameEn'], $data['name']));
-        $signupList->setOpenDate(new \DateTime($data['openDate']));
-        $signupList->setCloseDate(new \DateTime($data['closeDate']));
-
-        $signupList->setOnlyGEWIS($data['onlyGEWIS']);
-        $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
-
-        if (isset($data['fields'])) {
-            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-            foreach ($data['fields'] as $field) {
-                // Zend\Stdlib\Parameters is required to prevent undefined indices.
-                $field = $this->createSignupField(new Parameters($field), $signupList);
-                $em->persist($field);
-            }
-            $em->flush();
-        }
-
-        return $signupList;
-    }
-
-    /**
-     * Create a new field
-     *
-     * @pre $data is valid data of Activity\Form\SignupListFields
-     *
-     * @param array $data Parameters for the new field.
-     * @param \Activity\Model\SignupList $activity The SignupList the field belongs to.
-     *
-     * @return \Activity\Model\ActivityField The new field.
-     */
-    public function createSignupField($data, $signupList)
-    {
-        $field = new SignupFieldModel();
-
-        $field->setSignupList($signupList);
-        $field->setName(new LocalisedText($data['nameEn'], $data['name']));
-        $field->setType($data['type']);
-
-        if ($data['type'] === '2') {
-            $field->setMinimumValue($data['min. value']);
-            $field->setMaximumValue($data['max. value']);
-        }
-
-        if ($data['type'] === '3') {
-            $this->createSignupOption($data, $field);
-        }
-
-        return $field;
-    }
-
-    /**
-     * Creates options for both languages specified and adds it to $field.
-     * If no languages are specified, this method does nothing.
-     * @pre The options corresponding to the languages specified are filled in
-     * $params. If both languages are specified, they must have the same amount of options.
-     *
-     * @param array $data The array containing the options strings.
-     * @param \Activity\Model\SignupField $field The field to add the options to.
-     */
-    protected function createSignupOption($data, $field)
-    {
-        $numOptions = 0;
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
-
-        if (isset($data['options'])) {
-            $options = explode(',', $data['options']);
-            $options = array_map('trim', $options);
-            $numOptions = count($options);
-        }
-
-        if (isset($data['optionsEn'])) {
-            $optionsEn = explode(',', $data['optionsEn']);
-            $optionsEn = array_map('trim', $optionsEn);
-            $numOptions = count($optionsEn);
-        }
-
-        for ($i = 0; $i < $numOptions; $i++) {
-            $option = new SignupOptionModel();
-            $option->setValue(new LocalisedText(
-                isset($data['optionsEn']) ? $optionsEn[$i] : null,
-                isset($data['options']) ? $options[$i] : null
-            ));
-            $option->setField($field);
-            $em->persist($option);
-        }
-
-        $em->flush();
-    }
-
-    /**
      * Approve of an activity
      *
      * @param ActivityModel $activity
@@ -651,7 +678,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('approve', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -670,7 +697,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('reset', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -690,7 +717,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     {
         if (!$this->isAllowed('disapprove', 'activity')) {
             $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to change the status of the activity')
             );
         }
@@ -712,12 +739,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Get the email service.
+     * Get the default resource ID.
      *
-     * @return \Application\Service\Email
+     * This is used by {@link isAllowed()} when no resource is specified.
+     *
+     * @return string
      */
-    public function getEmailService()
+    protected function getDefaultResourceId()
     {
-        return $this->sm->get('application_service_email');
+        return 'activity';
     }
 }

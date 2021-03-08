@@ -2,10 +2,10 @@
 
 namespace Activity\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use \DateTime;
-use User\Permissions\Resource\OrganResourceInterface;
 use User\Permissions\Resource\CreatorResourceInterface;
+use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * SignupList model.
@@ -82,33 +82,64 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      */
     protected $signUps;
 
+    /**
+     * @return array
+     */
+    public function getSignUps()
+    {
+        return $this->signUps;
+    }
+
+    /**
+     * @param array $signUps
+     */
+    public function setSignUps($signUps)
+    {
+        $this->signUps = $signUps;
+    }
+
+    public function toArray()
+    {
+        $fields = [];
+        foreach ($this->getFields() as $field) {
+            $fields[] = $field->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'openDate' => $this->getOpenDate(),
+            'closeDate' => $this->getCloseDate(),
+            'onlyGEWIS' => $this->getOnlyGEWIS(),
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
+            'fields' => $fields,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @param array $signUps
+     */
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * Returns the associated Activity.
-     *
-     * @return \Activity\Model\Activity
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
-
-    /**
-     * Sets the associated Activity.
-     *
-     * @param \Activity\Model\Activity $activity
-     */
-    public function setActivity($activity)
-    {
-        $this->activity = $activity;
-    }
-
-    /**
-     * @return \Activity\Model\LocalisedText
+     * @return LocalisedText
      */
     public function getName()
     {
@@ -116,7 +147,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param \Activity\Model\LocalisedText $name
+     * @param LocalisedText $name
      */
     public function setName($name)
     {
@@ -206,57 +237,6 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return array
-     */
-    public function getFields()
-    {
-        return $this->fields;
-    }
-
-    /**
-     * @param array $signUps
-     */
-    public function setFields($fields)
-    {
-        $this->fields = $fields;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSignUps()
-    {
-        return $this->signUps;
-    }
-
-    /**
-     * @param array $signUps
-     */
-    public function setSignUps($signUps)
-    {
-        $this->signUps = $signUps;
-    }
-
-    public function toArray()
-    {
-        $fields = [];
-        foreach ($this->getFields() as $field) {
-            $fields[] = $field->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'openDate' => $this->getOpenDate(),
-            'closeDate' => $this->getCloseDate(),
-            'onlyGEWIS' => $this->getOnlyGEWIS(),
-            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
-            'fields' => $fields,
-        ];
-    }
-
-    /**
      * Returns the string identifier of the Resource
      *
      * @return string
@@ -266,7 +246,6 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         return 'signupList';
     }
 
-    // Permission to link the resource to an organ
     /**
      * Get the organ of this resource.
      *
@@ -275,6 +254,28 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     public function getResourceOrgan()
     {
         return $this->getActivity()->getOrgan();
+    }
+
+    /**
+     * Returns the associated Activity.
+     *
+     * @return Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    // Permission to link the resource to an organ
+
+    /**
+     * Sets the associated Activity.
+     *
+     * @param Activity $activity
+     */
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
     }
 
     /**

@@ -2,16 +2,18 @@
 
 namespace Activity\Form;
 
+use Activity\Model\SignupField;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Validator\Callback;
 use Zend\Validator\NotEmpty;
 
 class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
     /**
-     * @var \Zend\Mvc\I18n\Translator
+     * @var Translator
      */
     protected $translator;
 
@@ -20,7 +22,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         parent::__construct('signupfield');
         $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
-              ->setObject(new \Activity\Model\SignupField());
+            ->setObject(new SignupField());
 
         $this->add([
             'name' => 'name',
@@ -146,12 +148,12 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                            \Zend\Validator\Callback::INVALID_VALUE =>
-                                'Some of the required fields for this type are empty'
+                                Callback::INVALID_VALUE =>
+                                    'Some of the required fields for this type are empty'
                             ],
                             'callback' => function ($value, $context = null) {
                                 return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
-                                       $this->fieldDependantRequired($value, $context, 'max. value', '2');
+                                    $this->fieldDependantRequired($value, $context, 'max. value', '2');
                             }
                         ]
                     ]
@@ -176,7 +178,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     'The number of English options must equal the number of Dutch options'
                             ],
                             'callback' => function ($value, $context = null) {

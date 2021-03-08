@@ -42,9 +42,18 @@ class AdminCategoryController extends AbstractActionController
         ];
     }
 
+    protected function redirectWithNotice($success, $message)
+    {
+        $categoryAdminSession = new SessionContainer('activityAdmin');
+        $categoryAdminSession->success = $success;
+        $categoryAdminSession->message = $message;
+
+        return $this->redirect()->toRoute('activity_admin_categories');
+    }
+
     /**
-    * Delete Category.
-    */
+     * Delete Category.
+     */
     public function deleteAction()
     {
         $request = $this->getRequest();
@@ -102,14 +111,5 @@ class AdminCategoryController extends AbstractActionController
         $viewModel->setTemplate('activity/admin-category/add.phtml');
 
         return $viewModel;
-    }
-
-    protected function redirectWithNotice($success, $message)
-    {
-        $categoryAdminSession = new SessionContainer('activityAdmin');
-        $categoryAdminSession->success = $success;
-        $categoryAdminSession->message = $message;
-
-        return $this->redirect()->toRoute('activity_admin_categories');
     }
 }

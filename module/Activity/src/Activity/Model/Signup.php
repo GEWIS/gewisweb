@@ -3,7 +3,6 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
 
 /**
  * Signup model.

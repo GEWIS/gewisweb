@@ -7,9 +7,9 @@ use Activity\Form\SignupList as SignupListForm;
 use Activity\Form\SignupListFields;
 use Activity\Mapper\Activity;
 use Activity\Mapper\ActivityCalendarOption;
+use Activity\Mapper\ActivityCategory;
 use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Mapper\ActivityOptionProposal;
-use Activity\Mapper\ActivityCategory;
 use Activity\Mapper\MaxActivities;
 use Activity\Mapper\Proposal;
 use Activity\Mapper\Signup;
@@ -18,10 +18,10 @@ use Activity\Mapper\SignupList as SignupListMapper;
 use Activity\Mapper\SignupOption;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
-
     /**
      * Get the autoloader configuration.
      *
@@ -94,13 +94,13 @@ class Module
                     $companyService = $sm->get('company_service_company');
                     try {
                         $companies = $companyService->getHiddenCompanyList();
-                    } catch (\User\Permissions\NotAllowedException $e) {
+                    } catch (NotAllowedException $e) {
                         $companies = [];
                     }
                     $categoryService = $sm->get('activity_service_category');
                     $categories = $categoryService->getAllCategories();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $companies, $categories, $translator);
+                    $form = new Form\Activity($organs, $companies, $categories, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },

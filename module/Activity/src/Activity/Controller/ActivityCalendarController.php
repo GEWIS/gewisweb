@@ -8,7 +8,6 @@ use Zend\View\Model\ViewModel;
 
 class ActivityCalendarController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $service = $this->getActivityCalendarService();

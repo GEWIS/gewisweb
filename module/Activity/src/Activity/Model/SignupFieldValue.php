@@ -52,7 +52,7 @@ class SignupFieldValue
     protected $option;
 
     /**
-     * @return \Activity\Model\SignupField
+     * @return SignupField
      */
     public function getField()
     {
@@ -62,7 +62,7 @@ class SignupFieldValue
     /**
      * Set the field.
      *
-     * @param \Activity\Model\SignupField $field
+     * @param SignupField $field
      */
     public function setField(SignupField $field)
     {
@@ -72,7 +72,7 @@ class SignupFieldValue
     /**
      * Set the signup.
      *
-     * @param \Activity\Model\Signup $signup
+     * @param Signup $signup
      */
     public function setSignup(Signup $signup)
     {
@@ -98,7 +98,7 @@ class SignupFieldValue
     }
 
     /**
-     * @return \Activity\Model\SignupOption
+     * @return SignupOption
      */
     public function getOption()
     {
@@ -106,7 +106,7 @@ class SignupFieldValue
     }
 
     /**
-     * @param \Activity\Model\SignupOption
+     * @param SignupOption
      */
     public function setOption($option)
     {

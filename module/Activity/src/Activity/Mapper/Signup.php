@@ -39,7 +39,6 @@ class Signup
         return count($result) > 0 ? $result[0] : null;
     }
 
-
     /**
      * Check if a user is signed up for an activity.
      *
@@ -103,10 +102,10 @@ class Signup
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('COUNT(s)')
-           ->from('Activity\Model\UserSignup', 's')
-           ->join('s.signupList', 'a')
-           ->where('a.id = ?1')
-           ->setParameter(1, $signupListId);
+            ->from('Activity\Model\UserSignup', 's')
+            ->join('s.signupList', 'a')
+            ->where('a.id = ?1')
+            ->setParameter(1, $signupListId);
         $result = $qb->getQuery()->getResult();
 
         return $result[0];

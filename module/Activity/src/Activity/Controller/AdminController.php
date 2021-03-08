@@ -2,16 +2,17 @@
 
 namespace Activity\Controller;
 
-use Activity\Model\Activity;
-use Activity\Service\Signup;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Activity\Form\ModifyRequest as RequestForm;
-use Zend\Paginator\Paginator;
-use Zend\View\Model\ViewModel;
-use DOMPDFModule\View\Model\PdfModel;
+use Activity\Model\Activity;
 use DateTime;
+use DOMPDFModule\View\Model\PdfModel;
+use User\Permissions\NotAllowedException;
+use Zend\Form\FormInterface;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Paginator\Paginator;
+use Zend\Session\Container as SessionContainer;
 use Zend\Stdlib\Parameters;
+use Zend\View\Model\ViewModel;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -19,104 +20,6 @@ use Zend\Stdlib\Parameters;
  */
 class AdminController extends AbstractActionController
 {
-
-    /**
-     * Return the data of the activity participants
-     *
-     * @return array
-     */
-    public function participantsAction()
-    {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
-
-        if ($signupListId === 0) {
-            $activity = $queryService->getActivity($activityId);
-
-            if (is_null($activity)) {
-                return $this->notFoundAction();
-            }
-
-            // If the activity does not have any sign-up lists there is no need
-            // to check the participants or any sign-up lists.
-            if ($activity->getSignupLists()->count() === 0) {
-                return $this->notFoundAction();
-            }
-
-            if (!$acl->isAllowed($identity, $activity, 'viewParticipants')) {
-                $translator = $this->getServiceLocator()->get('translator');
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to view the participants of this activity')
-                );
-            }
-        } else {
-            $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
-            $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
-
-            if (is_null($signupList)) {
-                return $this->notFoundAction();
-            }
-
-            if (!$acl->isAllowed($identity, $signupList, 'viewParticipants')) {
-                $translator = $this->getServiceLocator()->get('translator');
-                throw new \User\Permissions\NotAllowedException(
-                    $translator->translate('You are not allowed to view the participants of this activity')
-                );
-            }
-
-            $activity = $queryService->getActivity($activityId);
-        }
-
-        $result = [
-            'activity' => $activity,
-        ];
-
-        if (isset($signupList)) {
-            $result['signupList'] = $signupList;
-            $activityAdminSession = new SessionContainer('activityAdminRequest');
-            $signupService = $this->getServiceLocator()->get('activity_service_signup');
-            $externalSignupForm = $signupService->getExternalAdminForm($signupList);
-
-            if (isset($activityAdminSession->signupData)) {
-                $externalSignupForm->setData(new Parameters($activityAdminSession->signupData));
-                $externalSignupForm->isValid();
-                unset($activityAdminSession->signupData);
-            }
-
-            $result['externalSignupForm'] = $externalSignupForm;
-            $result['externalSignoffForm'] = new RequestForm(
-                'activityExternalSignoff',
-                $this->getServiceLocator()->get('translator')->translate('Remove')
-            );
-        }
-
-        $signupService = $this->getServiceLocator()->get('activity_service_signup');
-        $signupLists = [];
-
-        foreach ($activity->getSignupLists()->getValues() as $signupList) {
-            $signupLists[] = [
-                'id' => $signupList->getId(),
-                'name' => $signupList->getName(),
-            ];
-        }
-
-        $result['signupLists'] = $signupLists;
-
-        // Retrieve and clear the request status from the session, if it exists.
-        if (isset($activityAdminSession->success)) {
-            $result['success'] = $activityAdminSession->success;
-            unset($activityAdminSession->success);
-            $result['message'] = $activityAdminSession->message;
-            unset($activityAdminSession->message);
-        }
-
-        return $result;
-    }
-
     public function updateAction()
     {
         $activityId = (int) $this->params('id');
@@ -133,7 +36,7 @@ class AdminController extends AbstractActionController
         $identity = $this->getIdentity();
 
         if (!$acl->isAllowed($identity, $activity, 'update')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to update this activity')
             );
         }
@@ -206,6 +109,24 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
+    protected function getAcl()
+    {
+        return $this->getServiceLocator()->get('activity_acl');
+    }
+
+    protected function getIdentity()
+    {
+        return $this->getServiceLocator()->get('user_service_user')->getIdentity();
+    }
+
+    protected function redirectActivityAdmin($success, $message)
+    {
+        $activityAdminSession = new SessionContainer('activityAdmin');
+        $activityAdminSession->success = $success;
+        $activityAdminSession->message = $message;
+        $this->redirect()->toRoute('activity_admin');
+    }
+
     public function exportPdfAction()
     {
         $variables = $this->participantsAction();
@@ -216,7 +137,7 @@ class AdminController extends AbstractActionController
         $resource = isset($variables['signupList']) ? $variables['signupList'] : $variables['activity'];
         if (!$acl->isAllowed($identity, $resource, 'exportParticipants')) {
             $translator = $this->getServiceLocator()->get('translator');
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to export the participants of this activity')
             );
         }
@@ -225,6 +146,103 @@ class AdminController extends AbstractActionController
         $pdf->setVariables($variables);
 
         return $pdf;
+    }
+
+    /**
+     * Return the data of the activity participants
+     *
+     * @return array
+     */
+    public function participantsAction()
+    {
+        $activityId = (int) $this->params('id');
+        $signupListId = (int) $this->params('signupList');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+
+        $acl = $this->getAcl();
+        $identity = $this->getIdentity();
+
+        if ($signupListId === 0) {
+            $activity = $queryService->getActivity($activityId);
+
+            if (is_null($activity)) {
+                return $this->notFoundAction();
+            }
+
+            // If the activity does not have any sign-up lists there is no need
+            // to check the participants or any sign-up lists.
+            if ($activity->getSignupLists()->count() === 0) {
+                return $this->notFoundAction();
+            }
+
+            if (!$acl->isAllowed($identity, $activity, 'viewParticipants')) {
+                $translator = $this->getServiceLocator()->get('translator');
+                throw new NotAllowedException(
+                    $translator->translate('You are not allowed to view the participants of this activity')
+                );
+            }
+        } else {
+            $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
+            $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
+
+            if (is_null($signupList)) {
+                return $this->notFoundAction();
+            }
+
+            if (!$acl->isAllowed($identity, $signupList, 'viewParticipants')) {
+                $translator = $this->getServiceLocator()->get('translator');
+                throw new NotAllowedException(
+                    $translator->translate('You are not allowed to view the participants of this activity')
+                );
+            }
+
+            $activity = $queryService->getActivity($activityId);
+        }
+
+        $result = [
+            'activity' => $activity,
+        ];
+
+        if (isset($signupList)) {
+            $result['signupList'] = $signupList;
+            $activityAdminSession = new SessionContainer('activityAdminRequest');
+            $signupService = $this->getServiceLocator()->get('activity_service_signup');
+            $externalSignupForm = $signupService->getExternalAdminForm($signupList);
+
+            if (isset($activityAdminSession->signupData)) {
+                $externalSignupForm->setData(new Parameters($activityAdminSession->signupData));
+                $externalSignupForm->isValid();
+                unset($activityAdminSession->signupData);
+            }
+
+            $result['externalSignupForm'] = $externalSignupForm;
+            $result['externalSignoffForm'] = new RequestForm(
+                'activityExternalSignoff',
+                $this->getServiceLocator()->get('translator')->translate('Remove')
+            );
+        }
+
+        $signupService = $this->getServiceLocator()->get('activity_service_signup');
+        $signupLists = [];
+
+        foreach ($activity->getSignupLists()->getValues() as $signupList) {
+            $signupLists[] = [
+                'id' => $signupList->getId(),
+                'name' => $signupList->getName(),
+            ];
+        }
+
+        $result['signupLists'] = $signupLists;
+
+        // Retrieve and clear the request status from the session, if it exists.
+        if (isset($activityAdminSession->success)) {
+            $result['success'] = $activityAdminSession->success;
+            unset($activityAdminSession->success);
+            $result['message'] = $activityAdminSession->message;
+            unset($activityAdminSession->message);
+        }
+
+        return $result;
     }
 
     public function externalSignupAction()
@@ -243,13 +261,13 @@ class AdminController extends AbstractActionController
         $identity = $this->getIdentity();
 
         if (!$acl->isAllowed($identity, $signupList, 'adminSignup')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to use this form')
             );
         }
 
         $request = $this->getRequest();
-        
+
         if ($request->isPost()) {
             $signupService = $this->getServiceLocator()->get('activity_service_signup');
 
@@ -266,7 +284,7 @@ class AdminController extends AbstractActionController
                 return $this->getResponse();
             }
 
-            $formData = $form->getData(\Zend\Form\FormInterface::VALUES_AS_ARRAY);
+            $formData = $form->getData(FormInterface::VALUES_AS_ARRAY);
             $fullName = $formData['fullName'];
             unset($formData['fullName']);
             $email = $formData['email'];
@@ -280,6 +298,28 @@ class AdminController extends AbstractActionController
         $error = $translator->translate('Use the form to subscribe');
         $this->redirectActivityAdminRequest($activityId, $signupListId, false, $error);
         return $this->getResponse();
+    }
+
+    /**
+     * Redirects to the view of the activity with the given $id, where the
+     * $error message can be displayed if the request was unsuccesful (i.e.
+     * $success was false)
+     *
+     * @param int $id
+     * @param boolean $success Whether the request was successful
+     * @param string $message
+     */
+    protected function redirectActivityAdminRequest($activityId, $signupListId, $success, $message, $session = null)
+    {
+        if (is_null($session)) {
+            $session = new SessionContainer('activityAdminRequest');
+        }
+        $session->success = $success;
+        $session->message = $message;
+        $this->redirect()->toRoute('activity_admin/participants', [
+            'id' => $activityId,
+            'signupList' => $signupListId,
+        ]);
     }
 
     public function externalSignoffAction()
@@ -300,7 +340,7 @@ class AdminController extends AbstractActionController
         $identity = $this->getIdentity();
 
         if (!$acl->isAllowed($identity, $signupList, 'adminSignup')) {
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to use this form')
             );
         }
@@ -346,28 +386,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Redirects to the view of the activity with the given $id, where the
-     * $error message can be displayed if the request was unsuccesful (i.e.
-     * $success was false)
-     *
-     * @param int $id
-     * @param boolean $success Whether the request was successful
-     * @param string $message
-     */
-    protected function redirectActivityAdminRequest($activityId, $signupListId, $success, $message, $session = null)
-    {
-        if (is_null($session)) {
-            $session = new SessionContainer('activityAdminRequest');
-        }
-        $session->success = $success;
-        $session->message = $message;
-        $this->redirect()->toRoute('activity_admin/participants', [
-            'id' => $activityId,
-            'signupList' => $signupListId,
-        ]);
-    }
-
-    /**
      * Show a list of all activities this user can manage.
      */
     public function viewAction()
@@ -375,14 +393,14 @@ class AdminController extends AbstractActionController
         $admin = false;
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
-        
+
         if (!$acl->isAllowed($identity, 'activity', 'viewAdmin')) {
             $translator = $this->getServiceLocator()->get('translator');
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to administer activities')
             );
         }
-        
+
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $disapprovedActivities = null;
         $unapprovedActivities = null;
@@ -420,23 +438,5 @@ class AdminController extends AbstractActionController
         }
 
         return $result;
-    }
-
-    protected function getAcl()
-    {
-        return $this->getServiceLocator()->get('activity_acl');
-    }
-
-    protected function getIdentity()
-    {
-        return $this->getServiceLocator()->get('user_service_user')->getIdentity();
-    }
-
-    protected function redirectActivityAdmin($success, $message)
-    {
-        $activityAdminSession = new SessionContainer('activityAdmin');
-        $activityAdminSession->success = $success;
-        $activityAdminSession->message = $message;
-        $this->redirect()->toRoute('activity_admin');
     }
 }

@@ -21,7 +21,6 @@ use Zend\Permissions\Acl\Acl;
 
 class ActivityCalendar extends AbstractAclService
 {
-
     /**
      * Gets all future options
      *
@@ -77,8 +76,12 @@ class ActivityCalendar extends AbstractAclService
         $date->sub(new DateInterval('P3W'));
         $oldOptions = $this->getActivityCalendarOptionMapper()->getPastOptions($date);
         if (!empty($oldOptions)) {
-            $this->getEmailService()->sendEmail('activity_calendar', 'email/options-overdue',
-                'Activiteiten kalender opties verlopen | Activity calendar options expired', ['options' => $oldOptions]);
+            $this->getEmailService()->sendEmail(
+                'activity_calendar',
+                'email/options-overdue',
+                'Activiteiten kalender opties verlopen | Activity calendar options expired',
+                ['options' => $oldOptions]
+            );
         }
     }
 
@@ -371,6 +374,31 @@ class ActivityCalendar extends AbstractAclService
         }
     }
 
+    public function canApproveOption()
+    {
+        if ($this->isAllowed('approve_all')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function deleteOption($id)
+    {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $option = $mapper->find($id);
+        if (!$this->canDeleteOption($option)) {
+            throw new NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to delete this option')
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setStatus('deleted');
+        $em->flush();
+    }
+
     protected function canDeleteOption($option)
     {
         if ($this->isAllowed('delete_all')) {
@@ -395,15 +423,6 @@ class ActivityCalendar extends AbstractAclService
         return false;
     }
 
-    public function canApproveOption()
-    {
-        if ($this->isAllowed('approve_all')) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Get the organ service
      *
@@ -412,22 +431,6 @@ class ActivityCalendar extends AbstractAclService
     public function getOrganService()
     {
         return $this->sm->get('decision_service_organ');
-    }
-
-    public function deleteOption($id)
-    {
-        $mapper = $this->getActivityCalendarOptionMapper();
-        $option = $mapper->find($id);
-        if (!$this->canDeleteOption($option)) {
-            throw new NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to delete this option')
-            );
-        }
-
-        $em = $this->getEntityManager();
-        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
-        $option->setStatus('deleted');
-        $em->flush();
     }
 
     /**

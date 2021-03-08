@@ -38,6 +38,16 @@ class ActivityOptionProposal
     }
 
     /**
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
+    }
+
+    /**
      * Get activity proposals within a given period and associated with given organ
      *
      * @param DateTime $begin the date to get the options after
@@ -62,15 +72,5 @@ class ActivityOptionProposal
             ->setParameter('organ', $organId);
 
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
     }
 }

@@ -5,6 +5,7 @@ namespace Activity\Mapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Exception;
 
 class ActivityCalendarOption
 {
@@ -77,7 +78,7 @@ class ActivityCalendarOption
      *
      * @param bool $withDeleted whether to include deleted results
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getUpcomingOptions($withDeleted = false)
     {

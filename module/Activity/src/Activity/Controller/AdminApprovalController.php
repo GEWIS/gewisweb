@@ -2,9 +2,12 @@
 
 namespace Activity\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Activity\Model\Activity;
 use Activity\Form\ModifyRequest as RequestForm;
+use Activity\Model\Activity;
+use InvalidArgumentException;
+use User\Permissions\NotAllowedException;
+use Zend\Http\Response;
+use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * Controller for all administrative activity actions
@@ -24,12 +27,12 @@ class AdminApprovalController extends AbstractActionController
 
         if (!$acl->isAllowed($identity, 'activity', 'approval')) {
             $translator = $this->getServiceLocator()->get('translator');
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the approval of this activity')
             );
         }
 
-        /** @var $activity Activity*/
+        /** @var $activity Activity */
         $activity = $queryService->getActivity($id);
 
         if (is_null($activity)) {
@@ -50,6 +53,56 @@ class AdminApprovalController extends AbstractActionController
     public function approveAction()
     {
         return $this->setApprovalStatus('approve');
+    }
+
+    /**
+     * Set the approval status of the activity requested
+     *
+     * @param $status
+     * @return array|Response
+     */
+    protected function setApprovalStatus($status)
+    {
+        $id = (int) $this->params('id');
+        $activityService = $this->getServiceLocator()->get('activity_service_activity');
+        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
+
+        /** @var $activity Activity */
+        $activity = $queryService->getActivity($id);
+
+        //Assure the form is used
+        if (!$this->getRequest()->isPost()) {
+            return $this->notFoundAction();
+        }
+        $form = new RequestForm('updateApprovalStatus');
+
+        $form->setData($this->getRequest()->getPost());
+
+        //Assure the form is valid
+        if (!$form->isValid()) {
+            return $this->notFoundAction();
+        }
+
+        if (is_null($activity)) {
+            return $this->notFoundAction();
+        }
+
+        switch ($status) {
+            case 'approve':
+                $activityService->approve($activity);
+                break;
+            case 'disapprove':
+                $activityService->disapprove($activity);
+                break;
+            case 'reset':
+                $activityService->reset($activity);
+                break;
+            default:
+                throw new InvalidArgumentException('No such status ' . $status);
+
+        }
+
+        return $this->redirect()->toRoute('activity_admin');
     }
 
     /**
@@ -155,55 +208,5 @@ class AdminApprovalController extends AbstractActionController
         $this->redirect()->toRoute('activity_admin_approval/view', [
             'id' => $oldId,
         ]);
-    }
-
-    /**
-     * Set the approval status of the activity requested
-     *
-     * @param $status
-     * @return array|\Zend\Http\Response
-     */
-    protected function setApprovalStatus($status)
-    {
-        $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-
-        /** @var $activity Activity*/
-        $activity = $queryService->getActivity($id);
-
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
-            return $this->notFoundAction();
-        }
-        $form = new RequestForm('updateApprovalStatus');
-
-        $form->setData($this->getRequest()->getPost());
-
-        //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        if (is_null($activity)) {
-            return $this->notFoundAction();
-        }
-
-        switch ($status) {
-            case 'approve':
-                $activityService->approve($activity);
-                break;
-            case 'disapprove':
-                $activityService->disapprove($activity);
-                break;
-            case 'reset':
-                $activityService->reset($activity);
-                break;
-            default:
-                throw new \InvalidArgumentException('No such status ' . $status);
-
-        }
-
-        return $this->redirect()->toRoute('activity_admin');
     }
 }

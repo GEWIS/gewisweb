@@ -131,7 +131,6 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         ];
     }
 
-
     /**
      * Check if the amount of options is acceptable
      *
@@ -149,7 +148,6 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         }
         return true;
     }
-
 
     /**
      * Check if the begin times of the options are acceptable

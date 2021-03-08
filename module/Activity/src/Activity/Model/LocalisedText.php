@@ -1,7 +1,9 @@
 <?php
+
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Zend\Session\Container as SessionContainer;
 
 /**
@@ -86,8 +88,17 @@ class LocalisedText
             case "en":
                 return !is_null($this->valueEN) ? $this->valueEN : $this->valueNL;
             default:
-                throw new \InvalidArgumentException("Locale not supported: " . $locale);
+                throw new InvalidArgumentException("Locale not supported: " . $locale);
         }
+    }
+
+    /**
+     * @return string The preferred language: either 'nl'  or 'en'.
+     */
+    private function getPreferredLocale()
+    {
+        $langSession = new SessionContainer("lang");
+        return $langSession->lang;
     }
 
     /**
@@ -105,7 +116,7 @@ class LocalisedText
             case "en":
                 return $this->valueEN;
             default:
-                throw new \InvalidArgumentException("Locale not supported: " . $locale);
+                throw new InvalidArgumentException("Locale not supported: " . $locale);
         }
     }
 
@@ -115,14 +126,5 @@ class LocalisedText
     public function copy()
     {
         return new LocalisedText($this->valueEN, $this->valueNL);
-    }
-
-    /**
-     * @return string The preferred language: either 'nl'  or 'en'.
-     */
-    private function getPreferredLocale()
-    {
-        $langSession = new SessionContainer("lang");
-        return $langSession->lang;
     }
 }

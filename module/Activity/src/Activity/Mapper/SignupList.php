@@ -2,11 +2,7 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
-use \Activity\Model\Activity as ActivityModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 class SignupList
 {

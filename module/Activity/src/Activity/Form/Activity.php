@@ -2,14 +2,16 @@
 
 namespace Activity\Form;
 
+use DateTime;
 use Decision\Model\Organ;
+use Exception;
 use Zend\Form\Form;
-use Zend\Mvc\I18n\Translator;
-use Doctrine\Common\Persistence\ObjectManager;
-//use Zend\InputFilter\InputFilterInterface;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Mvc\I18n\Translator;
+use Zend\Validator\Callback;
 use Zend\Validator\NotEmpty;
+
+//use Zend\InputFilter\InputFilterInterface;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
@@ -198,6 +200,44 @@ class Activity extends Form implements InputFilterProviderInterface
     }
 
     /**
+     * Check if a certain date is before the end date of the activity.
+     *
+     * @param $value
+     * @param array $context
+     * @return bool
+     */
+    public static function beforeEndTime($value, $context = [])
+    {
+        try {
+            $thisTime = new DateTime($value);
+            $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
+            return $thisTime <= $endTime;
+        } catch (Exception $e) {
+            // An exception is an indication that one of the times was not valid
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a certain date is before the begin date of the activity.
+     *
+     * @param $value
+     * @param array $context
+     * @return boolean
+     */
+    public static function beforeBeginTime($value, $context = [])
+    {
+        try {
+            $thisTime = new DateTime($value);
+            $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
+            return $thisTime <= $beginTime;
+        } catch (Exception $e) {
+            // An exception is an indication that one of the DateTimes was not valid
+            return false;
+        }
+    }
+
+    /**
      * Validate the form
      *
      * @return bool
@@ -242,7 +282,8 @@ class Activity extends Form implements InputFilterProviderInterface
                             $valid = false;
                         }
 
-                        if ($field->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($field->get('options')->getValue())) {
+                        if ($field->get('type')->getValue() === '3'
+                            && !(new NotEmpty())->isValid($field->get('options')->getValue())) {
                             // TODO: Return error messages
                             $valid = false;
                         }
@@ -255,7 +296,8 @@ class Activity extends Form implements InputFilterProviderInterface
                             $valid = false;
                         }
 
-                        if ($field->get('type')->getValue() === '3' && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())) {
+                        if ($field->get('type')->getValue() === '3'
+                            && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())) {
                             // TODO: Return error messages
                             $valid = false;
                         }
@@ -269,6 +311,69 @@ class Activity extends Form implements InputFilterProviderInterface
         return $valid;
     }
 
+    /**
+     * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
+     * is set
+     * @return InputFilter
+     */
+    public function getInputFilterSpecification()
+    {
+        $filter = [
+            'organ' => [
+                'required' => true,
+            ],
+            'company' => [
+                'required' => true,
+            ],
+            'beginTime' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'callback',
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE =>
+                                    $this->translator->translate('The activity must start before it ends.'),
+                            ],
+                            'callback' => [$this, 'beforeEndTime']
+                        ],
+                    ],
+                ],
+            ],
+            'endTime' => [
+                'required' => true,
+            ],
+            'categories' => [
+                'required' => false,
+            ],
+        ];
+
+        if ($this->data['language_english']) {
+            $filter += $this->inputFilterEnglish();
+        }
+
+        if ($this->data['language_dutch']) {
+            $filter += $this->inputFilterDutch();
+        }
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
+        // they need to be set
+
+        if (!$this->data['language_dutch'] && !$this->data['language_english']) {
+            unset($this->data['language_dutch'], $this->data['language_english']);
+
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
+                ],
+                'language_english' => [
+                    'required' => true,
+                ],
+            ];
+        }
+
+        return $filter;
+    }
+
     /***
      * Add  the input filter for the English language
      *
@@ -277,16 +382,6 @@ class Activity extends Form implements InputFilterProviderInterface
     public function inputFilterEnglish()
     {
         return $this->inputFilterGeneric('En');
-    }
-
-    /***
-     * Add  the input filter for the Dutch language
-     *
-     * @return array
-     */
-    public function inputFilterDutch()
-    {
-        return $this->inputFilterGeneric('');
     }
 
     /**
@@ -354,104 +449,13 @@ class Activity extends Form implements InputFilterProviderInterface
         ];
     }
 
-    /**
-     * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
-     * is set
-     * @return InputFilter
-     */
-    public function getInputFilterSpecification()
-    {
-        $filter = [
-            'organ' => [
-                'required' => true,
-            ],
-            'company' => [
-                'required' => true,
-            ],
-            'beginTime' => [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => 'callback',
-                        'options' => [
-                            'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must start before it ends.'),
-                            ],
-                            'callback' => [$this, 'beforeEndTime']
-                        ],
-                    ],
-                ],
-            ],
-            'endTime' => [
-                'required' => true,
-            ],
-            'categories' => [
-                'required' => false,
-            ],
-        ];
-
-        if ($this->data['language_english']) {
-            $filter += $this->inputFilterEnglish();
-        }
-
-        if ($this->data['language_dutch']) {
-            $filter += $this->inputFilterDutch();
-        }
-        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
-        // they need to be set
-
-        if (!$this->data['language_dutch'] && !$this->data['language_english']) {
-            unset($this->data['language_dutch'], $this->data['language_english']);
-
-            $filter += [
-                'language_dutch' => [
-                    'required' => true,
-                ],
-                'language_english' => [
-                    'required' => true,
-                ],
-            ];
-        }
-
-        return $filter;
-    }
-
-    /**
-     * Check if a certain date is before the end date of the activity.
+    /***
+     * Add  the input filter for the Dutch language
      *
-     * @param $value
-     * @param array $context
-     * @return bool
+     * @return array
      */
-    public static function beforeEndTime($value, $context = [])
+    public function inputFilterDutch()
     {
-        try {
-            $thisTime = new \DateTime($value);
-            $endTime = isset($context['endTime']) ? new \DateTime($context['endTime']) : new \DateTime('now');
-            return $thisTime <= $endTime;
-        } catch (\Exception $e) {
-            // An exception is an indication that one of the times was not valid
-            return false;
-        }
-    }
-
-    /**
-     * Checks if a certain date is before the begin date of the activity.
-     *
-     * @param $value
-     * @param array $context
-     * @return boolean
-     */
-    public static function beforeBeginTime($value, $context = [])
-    {
-        try {
-            $thisTime = new \DateTime($value);
-            $beginTime = isset($context['beginTime']) ? new \DateTime($context['beginTime']) : new \DateTime('now');
-            return $thisTime <= $beginTime;
-        } catch (\Exception $e) {
-            // An exception is an indication that one of the DateTimes was not valid
-            return false;
-        }
+        return $this->inputFilterGeneric('');
     }
 }

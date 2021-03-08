@@ -11,7 +11,7 @@ use Zend\Mvc\I18n\Translator;
 class ActivityCategory extends Form implements InputFilterProviderInterface
 {
     /**
-     * @var \Zend\Mvc\I18n\Translator
+     * @var Translator
      */
     protected $translator;
 
@@ -70,32 +70,6 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Build a generic input filter.
-     *
-     * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
-     * language
-     * @return array
-     */
-    protected function inputFilterGeneric($languagePostFix)
-    {
-        return [
-            'name' . $languagePostFix => [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => 'StringLength',
-                        'options' => [
-                            'encoding' => 'UTF-8',
-                            'min' => 1,
-                            'max' => 100,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
      * Get the input filter.
      *
      * @return InputFilter
@@ -128,6 +102,32 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         }
 
         return $filter;
+    }
+
+    /**
+     * Build a generic input filter.
+     *
+     * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
+     * language
+     * @return array
+     */
+    protected function inputFilterGeneric($languagePostFix)
+    {
+        return [
+            'name' . $languagePostFix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
