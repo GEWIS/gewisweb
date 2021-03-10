@@ -116,8 +116,10 @@ $form->setAttribute('class', 'form-activity');
                 if (!empty($categorySelectedValues)) {
                     $selectedCategoryIds = [];
 
+                    // To prevent issues with Zend's form parsing, we must access `id` as an array attribute and not via
+                    // `ActivityCategory->getId()`.
                     foreach ($categorySelectedValues as $category) {
-                        $selectedCategoryIds[] = is_string($category) ? $category : $category->getId();
+                        $selectedCategoryIds[] = is_string($category) ? $category : $category['id'];
                     }
                 }
                 ?>

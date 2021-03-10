@@ -65,19 +65,6 @@ class ActivityCategory
     }
 
     /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'activities' => $this->getActivities(),
-        ];
-    }
-
-    /**
      * @return integer
      */
     public function getId()
@@ -107,5 +94,17 @@ class ActivityCategory
     public function getActivities()
     {
         return $this->activities->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+        ];
     }
 }

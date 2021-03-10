@@ -57,7 +57,7 @@
         <div class="row field-dependant type-2" style="display:none;">
             <div class="col-md-3 col-md-offset-6">
                 <?php
-                $element = $this->signupListField->get('min. value')
+                $element = $this->signupListField->get('minimumValue')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'min-value-field');
                 ?>
@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-3">
                 <?php
-                $element = $this->signupListField->get('max. value')
+                $element = $this->signupListField->get('maximumValue')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'max-value-field');
                 ?>
@@ -100,15 +100,7 @@
                 } elseif (is_string($optionsValue)) {
                     $options->setValue($optionsValue);
                 } else {
-                    // Options are by default an array of arrays which contain
-                    // LocalisedTexts. We walk through the array and update each
-                    // subarray with the value of the LocalisedText in that sub-
-                    // array.
-                    array_walk($optionsValue, function (&$v, $k) {
-                        $v = $v['value']->getValueNL();
-                    });
-
-                    $options->setValue(implode(',', $optionsValue));
+                    $options->setValue(implode(',', array_filter($optionsValue)));
                 }
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($options) ?>">
@@ -131,15 +123,7 @@
                 } elseif (is_string($optionsValue)) {
                     $optionsEn->setValue($optionsValue);
                 } else {
-                    // Options are by default an array of arrays which contain
-                    // LocalisedTexts. We walk through the array and update each
-                    // subarray with the value of the LocalisedText in that sub-
-                    // array.
-                    array_walk($optionsValue, function (&$v, $k) {
-                        $v = $v['value']->getValueNL();
-                    });
-
-                    $optionsEn->setValue(implode(',', $optionsValue));
+                    $optionsEn->setValue(implode(',', array_filter($optionsValue)));
                 }
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($optionsEn) ?>">

@@ -23,7 +23,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     const STATUS_TO_APPROVE = 1; // Activity needs to be approved
     const STATUS_APPROVED = 2;  // The activity is approved
     const STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    const STATUS_UPDATE = 4; //This activity is an update for some activity
+    const STATUS_UPDATE = 4; // This activity is an update for some activity
 
     /**
      * ID for the activity.
@@ -294,39 +294,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $signupLists = [];
-        foreach ($this->getSignupLists() as $signupList) {
-            $signupLists[] = $signupList->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'beginTime' => $this->getBeginTime(),
-            'endTime' => $this->getEndTime(),
-            'location' => $this->getLocation()->getValueNL(),
-            'locationEn' => $this->getLocation()->getValueEN(),
-            'costs' => $this->getCosts()->getValueNL(),
-            'costsEn' => $this->getCosts()->getValueEN(),
-            'description' => $this->getDescription()->getValueNL(),
-            'descriptionEn' => $this->getDescription()->getValueEN(),
-            'organ' => $this->getOrgan(),
-            'company' => $this->getCompany(),
-            'isMyFuture' => $this->getIsMyFuture(),
-            'requireGEFLITST' => $this->getRequireGEFLITST(),
-            'categories' => $this->getCategories()->toArray(),
-            'signupLists' => $signupLists,
-        ];
-    }
-
-    /**
      * Returns an ArrayCollection of SignupLists associated with this activity.
      *
      * @return ArrayCollection
@@ -513,6 +480,60 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * @return User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $signupLists = [];
+        foreach ($this->getSignupLists() as $signupList) {
+            $signupLists[] = $signupList->toArray();
+        }
+
+        $categories = [];
+        foreach ($this->getCategories() as $category) {
+            $categories[] = $category->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'beginTime' => $this->getBeginTime(),
+            'endTime' => $this->getEndTime(),
+            'location' => $this->getLocation()->getValueNL(),
+            'locationEn' => $this->getLocation()->getValueEN(),
+            'costs' => $this->getCosts()->getValueNL(),
+            'costsEn' => $this->getCosts()->getValueEN(),
+            'description' => $this->getDescription()->getValueNL(),
+            'descriptionEn' => $this->getDescription()->getValueEN(),
+            'organ' => $this->getOrgan(),
+            'company' => $this->getCompany(),
+            'isMyFuture' => $this->getIsMyFuture(),
+            'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'categories' => $categories,
+            'signupLists' => $signupLists,
+        ];
+    }
+
+    /**
      * Returns the string identifier of the Resource
      *
      * @return string
@@ -540,23 +561,5 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function getResourceCreator()
     {
         return $this->getCreator();
-    }
-
-    // Permission to link the resource to an organ
-
-    /**
-     * @return User
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param User $creator
-     */
-    public function setCreator(User $creator)
-    {
-        $this->creator = $creator;
     }
 }

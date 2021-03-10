@@ -59,7 +59,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'min. value',
+            'name' => 'minimumValue',
             'attributes' => [
                 'type' => 'number',
             ],
@@ -69,7 +69,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'max. value',
+            'name' => 'maximumValue',
             'attributes' => [
                 'type' => 'number',
             ],
@@ -152,20 +152,20 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                                     'Some of the required fields for this type are empty'
                             ],
                             'callback' => function ($value, $context = null) {
-                                return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
-                                    $this->fieldDependantRequired($value, $context, 'max. value', '2');
+                                return $this->fieldDependantRequired($value, $context, 'minimumValue', '2') &&
+                                    $this->fieldDependantRequired($value, $context, 'maximumValue', '2');
                             }
                         ]
                     ]
                 ]
             ],
-            'min. value' => [
+            'minimumValue' => [
                 'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
             ],
-            'max. value' => [
+            'maximumValue' => [
                 'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']

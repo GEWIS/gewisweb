@@ -59,7 +59,7 @@ class SignupField
     /**
      * The allowed options for the SignupField of the ``option'' type.
      *
-     * @ORM\OneToMany(targetEntity="Activity\Model\SignupOption", mappedBy="field")
+     * @ORM\OneToMany(targetEntity="Activity\Model\SignupOption", mappedBy="field", orphanRemoval=true)
      */
     protected $options;
 
@@ -77,29 +77,6 @@ class SignupField
     public function setSignupList($signupList)
     {
         $this->signupList = $signupList;
-    }
-
-    /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $options = [];
-        foreach ($this->getOptions() as $option) {
-            $options[] = $option->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'type' => $this->getType(),
-            'minimumValue' => $this->getMinimumValue(),
-            'maximumValue' => $this->getMaximumValue(),
-            'options' => $options,
-        ];
     }
 
     /**
@@ -180,5 +157,32 @@ class SignupField
     public function setMaximumValue($maximumValue)
     {
         $this->maximumValue = $maximumValue;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $options = [];
+        $optionsEn = [];
+        foreach ($this->getOptions() as $option) {
+            $optionData = $option->toArray();
+            $options[] = $optionData['value'];
+            $optionsEn[] = $optionData['valueEn'];
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'type' => $this->getType(),
+            'minimumValue' => $this->getMinimumValue(),
+            'maximumValue' => $this->getMaximumValue(),
+            'options' => $options,
+            'optionsEn' => $optionsEn,
+        ];
     }
 }

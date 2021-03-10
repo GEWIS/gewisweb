@@ -61,20 +61,6 @@ class MaxActivities
     }
 
     /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'id' => $this->getId(),
-            'organ' => $this->getOrgan(),
-            'value' => $this->getValue()
-        ];
-    }
-
-    /**
      * @return int
      */
     public function getId()
@@ -116,5 +102,19 @@ class MaxActivities
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'organ' => $this->getOrgan(),
+            'value' => $this->getValue()
+        ];
     }
 }

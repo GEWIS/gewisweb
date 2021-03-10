@@ -179,12 +179,14 @@ class ActivityOptionProposal implements OrganResourceInterface
      */
     public function getCreatorAlt()
     {
-        if ($this->getOrgan() !== null) {
+        if (!is_null($this->getOrgan())) {
             return $this->getOrgan()->getAbbr();
         }
-        if ($this->getOrganAlt() !== null) {
+
+        if (!is_null($this->getOrganAlt())) {
             return $this->getOrganAlt();
         }
+
         return $this->getCreator()->getMember()->getFullName();
     }
 

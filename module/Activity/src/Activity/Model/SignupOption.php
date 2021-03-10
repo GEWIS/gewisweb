@@ -55,20 +55,6 @@ class SignupOption
     }
 
     /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'id' => $this->getId(),
-            'value' => $this->getValue()->getValueNL(),
-            'valueEn' => $this->getValue()->getValueEN(),
-        ];
-    }
-
-    /**
      * @return integer
      */
     public function getId()
@@ -92,5 +78,19 @@ class SignupOption
     public function setValue($value)
     {
         $this->value = $value->copy();
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'value' => $this->getValue()->getValueNL(),
+            'valueEn' => $this->getValue()->getValueEN(),
+        ];
     }
 }

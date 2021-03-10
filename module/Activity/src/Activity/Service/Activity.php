@@ -263,8 +263,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $field->setType($data['type']);
 
         if ($data['type'] === '2') {
-            $field->setMinimumValue($data['min. value']);
-            $field->setMaximumValue($data['max. value']);
+            $field->setMinimumValue($data['minimumValue']);
+            $field->setMaximumValue($data['maximumValue']);
         }
 
         if ($data['type'] === '3') {
@@ -437,7 +437,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
 
         if ($currentActivity->getUpdateProposal()->count() !== 0) {
-            $proposal = $proposalContainer->unwrap()->first();
+            $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
             //Remove old update proposal
             $oldUpdate = $proposal->getNew();
             $proposal->setNew($newActivity);
@@ -495,10 +495,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             }
         });
 
-        // We do not need the ActivityCategory models, hence we replace it with
-        // the ids of each one.
+        // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
+        // longer a model and requires array access to get the id.
         array_walk($current['categories'], function (&$v, $k) {
-            $v = strval($v->getId());
+            $v = strval($v['id']);
         });
 
         // HTML forms do not know anything about booleans, hence we need to
@@ -508,6 +508,26 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 $v = boolval($v);
             }
         });
+
+        // Options are a string after submission, not an array of strings. It is easier to explode the values of
+        // `$proposal` instead of having to implode `$current` (which requires an extra `array_filter()`).
+        foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
+            foreach ($signupList['fields'] as $keyInner => $field) {
+                if (array_key_exists('options', $field)) {
+                    $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
+                        ',',
+                        $field['options']
+                    );
+                }
+
+                if (array_key_exists('optionsEn', $field)) {
+                    $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
+                        ',',
+                        $field['optionsEn']
+                    );
+                }
+            }
+        }
 
         // Remove some of the form attributes.
         unset($proposal['language_dutch'], $proposal['language_english'], $proposal['submit']);
@@ -537,27 +557,22 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param array $array2
      * @return bool
      */
-    protected function array_diff_assoc_recursive($array1, $array2)
-    {
+    protected function array_diff_assoc_recursive(array $array1, array $array2) {
         $difference = [];
 
         foreach ($array1 as $key => $value) {
             if (is_array($value)) {
-                if (!isset($array2[$key]) || !is_array($array2[$key])) {
+                if (!array_key_exists($key, $array2) || !is_array($array2[$key])) {
                     $difference[$key] = $value;
                 } else {
-                    $newDiff = $this->array_diff_assoc_recursive($value, $array2[$key]);
+                    $newDifference = $this->array_diff_assoc_recursive($value, $array2[$key]);
 
-                    if (!empty($newDiff)) {
-                        $difference[$key] = $newDiff;
+                    if (!empty($new_diff)) {
+                        $difference[$key] = $newDifference;
                     }
                 }
-            } else {
-                if (is_array($array2) && !in_array($value, $array2)) {
-                    $difference[] = $value;
-                } elseif (!is_array($array2) && $value != $array2) {
-                    $difference[] = $value;
-                }
+            } elseif (!array_key_exists($key, $array2) || $array2[$key] !== $value) {
+                $difference[$key] = $value;
             }
         }
 

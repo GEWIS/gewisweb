@@ -98,25 +98,6 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         $this->signUps = $signUps;
     }
 
-    public function toArray()
-    {
-        $fields = [];
-        foreach ($this->getFields() as $field) {
-            $fields[] = $field->toArray();
-        }
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName()->getValueNL(),
-            'nameEn' => $this->getName()->getValueEN(),
-            'openDate' => $this->getOpenDate(),
-            'closeDate' => $this->getCloseDate(),
-            'onlyGEWIS' => $this->getOnlyGEWIS(),
-            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
-            'fields' => $fields,
-        ];
-    }
-
     /**
      * @return array
      */
@@ -237,6 +218,50 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Returns the associated Activity.
+     *
+     * @return Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * Sets the associated Activity.
+     *
+     * @param Activity $activity
+     */
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $fields = [];
+        foreach ($this->getFields() as $field) {
+            $fields[] = $field->toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'openDate' => $this->getOpenDate(),
+            'closeDate' => $this->getCloseDate(),
+            'onlyGEWIS' => $this->getOnlyGEWIS(),
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
+            'fields' => $fields,
+        ];
+    }
+
+    /**
      * Returns the string identifier of the Resource
      *
      * @return string
@@ -254,28 +279,6 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     public function getResourceOrgan()
     {
         return $this->getActivity()->getOrgan();
-    }
-
-    /**
-     * Returns the associated Activity.
-     *
-     * @return Activity
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
-
-    // Permission to link the resource to an organ
-
-    /**
-     * Sets the associated Activity.
-     *
-     * @param Activity $activity
-     */
-    public function setActivity($activity)
-    {
-        $this->activity = $activity;
     }
 
     /**

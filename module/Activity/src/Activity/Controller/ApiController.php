@@ -18,6 +18,7 @@ class ApiController extends AbstractActionController
         $activityService = $this->getActivityService();
         $activities = $activityService->getUpcomingActivities();
         $activitiesArray = [];
+
         foreach ($activities as $activity) {
             $activitiesArray[] = $activity->toArray();
         }
