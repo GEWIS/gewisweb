@@ -3,8 +3,8 @@
 namespace Company\Model;
 
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * Job model.
@@ -127,6 +127,13 @@ class Job
     protected $languageNeutralId;
 
     /**
+     * Job labels
+     *
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
+     */
+    protected $labels;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -134,17 +141,17 @@ class Job
         // noting to do
     }
 
-
     /**
      * Get's the id
      */
     public function getLanguageNeutralId()
     {
-        $id = $this->languageNeutralId;
-        if ($id == 0) {
+        $lnid = $this->languageNeutralId;
+        if ($lnid == 0) {
             return $this->id;
         }
-        return $id;
+
+        return $lnid;
     }
 
     /**
@@ -237,7 +244,7 @@ class Job
 
     public function isActive()
     {
-        return $this->getActive() and $this->getPackage()->isActive() && $this->getPackage()->getCompany()->isHidden();
+        return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
     }
 
     /**
@@ -367,12 +374,13 @@ class Job
     /**
      * Set the job's timestamp.
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {
         $this->timestamp = $timestamp;
     }
+
     /**
      * Get the job's description.
      *
@@ -431,6 +439,40 @@ class Job
     public function getCompany()
     {
         return $this->getPackage()->getCompany();
+    }
+
+    /**
+     * Get the labels. Returns an array of JobLabelAssignments
+     *
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * Sets all labels.
+     *
+     * @param array $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
+    }
+
+    /**
+     * Adds a label.
+     *
+     * @param JobLabelAssignment $label
+     */
+    public function addLabel($label)
+    {
+        if ($this->labels === null) {
+            $this->labels = [];
+        }
+        $label->setJob($this);
+        $this->labels[] = $label;
     }
 
     public function setPackage(CompanyPackage $package)

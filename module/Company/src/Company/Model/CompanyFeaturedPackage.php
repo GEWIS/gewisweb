@@ -4,10 +4,6 @@ namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Zend\Permissions\Acl\Role\RoleInterface;
-//use Zend\Permissions\Acl\Resource\ResourceInterface;
-
 /**
  * CompanyFeaturedPackage model.
  *
@@ -15,15 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
 {
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        // todo
-    }
-
     /**
      * The featured package content article.
      *
@@ -77,6 +64,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     {
         $this->language = $language;
     }
+
     // For zend2 forms
     public function getArrayCopy()
     {

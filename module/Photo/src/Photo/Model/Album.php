@@ -14,7 +14,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Album implements ResourceInterface
 {
-    
+
     /**
      * Album ID.
      *
@@ -23,28 +23,28 @@ class Album implements ResourceInterface
      * @ORM\Column(type="integer")
      */
     protected $id;
-    
+
     /**
      * First date of photos in album
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $startDateTime = null;
-    
+
     /**
      * End date of photos in album
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $endDateTime = null;
-    
+
     /**
      * Name of the album.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
      * Parent album, null if there is no parent album.
      *
@@ -52,7 +52,7 @@ class Album implements ResourceInterface
      * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
      */
     protected $parent;
-    
+
     /**
      * all the subalbums
      * Note: These are fetched extra lazy so we can efficiently retrieve an
@@ -63,7 +63,7 @@ class Album implements ResourceInterface
      *                                                  fetch="EXTRA_LAZY")
      */
     protected $children;
-    
+
     /**
      * all the photo's in this album.
      * Note: These are fetched extra lazy so we can efficiently retrieve an
@@ -71,16 +71,17 @@ class Album implements ResourceInterface
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album",
      *                                      cascade={"persist", "remove"},
      *                                      fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"dateTime" = "ASC"})
      */
     protected $photos;
-    
+
     /**
      * The cover photo to display with the album.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $coverPath;
-    
+
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
@@ -106,7 +107,7 @@ class Album implements ResourceInterface
     {
         return $this->photos;
     }
-    
+
     /**
      * Add a photo to an album.
      *
@@ -117,7 +118,7 @@ class Album implements ResourceInterface
         $photo->setAlbum($this);
         $this->photos[] = $photo;
     }
-    
+
     /**
      * Add a sub album to an album.
      *
@@ -128,7 +129,7 @@ class Album implements ResourceInterface
         $album->setParent($this);
         $this->children[] = $album;
     }
-    
+
     /**
      * Returns an associative array representation of this object
      * including all child objects
@@ -144,10 +145,10 @@ class Album implements ResourceInterface
         foreach ($this->children as $album) {
             $array['children'][] = $album->toArray();
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Returns an associative array representation of this object.
      *
@@ -168,10 +169,10 @@ class Album implements ResourceInterface
             'photoCount'    => $this->getPhotoCount(),
             'albumCount'    => $this->getAlbumCount()
         ];
-        
+
         return $array;
     }
-    
+
     /**
      * Get the ID.
      *
@@ -181,7 +182,7 @@ class Album implements ResourceInterface
     {
         return $this->id;
     }
-    
+
     /**
      * Get the start date.
      *
@@ -191,7 +192,7 @@ class Album implements ResourceInterface
     {
         return $this->startDateTime;
     }
-    
+
     /**
      * Set the start date.
      *
@@ -201,7 +202,7 @@ class Album implements ResourceInterface
     {
         $this->startDateTime = $startDateTime;
     }
-    
+
     /**
      * Get the end date.
      *
@@ -211,7 +212,7 @@ class Album implements ResourceInterface
     {
         return $this->endDateTime;
     }
-    
+
     /**
      * Set the end date.
      *
@@ -221,7 +222,7 @@ class Album implements ResourceInterface
     {
         $this->endDateTime = $endDateTime;
     }
-    
+
     /**
      * Get the album name.
      *
@@ -231,7 +232,7 @@ class Album implements ResourceInterface
     {
         return $this->name;
     }
-    
+
     /**
      * Set the name of the album.
      *
@@ -241,7 +242,7 @@ class Album implements ResourceInterface
     {
         $this->name = $name;
     }
-    
+
     /**
      * Get the parent album.
      *
@@ -251,7 +252,7 @@ class Album implements ResourceInterface
     {
         return $this->parent;
     }
-    
+
     /**
      * Set the parent of the album
      *
@@ -261,7 +262,7 @@ class Album implements ResourceInterface
     {
         $this->parent = $parent;
     }
-    
+
     /**
      * Get the album cover
      *
@@ -271,7 +272,7 @@ class Album implements ResourceInterface
     {
         return $this->coverPath;
     }
-    
+
     /**
      * Set the cover photo for the album
      *
@@ -281,7 +282,7 @@ class Album implements ResourceInterface
     {
         $this->coverPath = $photo;
     }
-    
+
     /**
      * Get the amount of photos in the album
      *
@@ -295,10 +296,10 @@ class Album implements ResourceInterface
                 $count += $album->getPhotoCount();
             }
         }
-        
+
         return $count;
     }
-    
+
     /**
      * Get the amount of subalbums in the album
      *
@@ -308,7 +309,7 @@ class Album implements ResourceInterface
     {
         return $this->children->count();
     }
-    
+
     /**
      * Get the resource ID.
      *
@@ -318,5 +319,5 @@ class Album implements ResourceInterface
     {
         return 'album';
     }
-    
+
 }

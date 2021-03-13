@@ -20,7 +20,7 @@ class Bootstrap
     public static function init()
     {
         $zf2ModulePaths = [dirname(dirname(__DIR__))];
-        if (($path = static::findParentPath('vendor'))) {
+        if ($path = static::findParentPath('vendor')) {
             $zf2ModulePaths[] = $path;
         }
         if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {

@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class ApiUser implements RoleInterface, ResourceInterface
 {
-
     /**
      * Id
      *
@@ -36,7 +35,6 @@ class ApiUser implements RoleInterface, ResourceInterface
      * @ORM\Column(type="string")
      */
     protected $token;
-
 
     /**
      * Get the id.

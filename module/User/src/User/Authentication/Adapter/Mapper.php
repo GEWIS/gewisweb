@@ -3,17 +3,16 @@
 namespace User\Authentication\Adapter;
 
 use User\Model\LoginAttempt;
-use Zend\Authentication\Adapter\AdapterInterface,
-    Zend\Authentication\Result,
-    User\Mapper\User as UserMapper,
-    User\Model\User as UserModel;
+use Zend\Authentication\Adapter\AdapterInterface;
+use Zend\Authentication\Result;
+use User\Mapper\User as UserMapper;
+use User\Model\User as UserModel;
 use Zend\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\User as UserService;
 
 class Mapper implements AdapterInterface
 {
-
     /**
      * Mapper.
      *
@@ -77,9 +76,7 @@ class Mapper implements AdapterInterface
      */
     public function authenticate()
     {
-        $mapper = $this->getMapper();
-
-        $user = $mapper->findByLogin($this->login);
+        $user = $this->mapper->findByLogin($this->login);
 
         if (null === $user) {
             return new Result(
@@ -89,7 +86,7 @@ class Mapper implements AdapterInterface
             );
         }
 
-        $mapper->detach($user);
+        $this->mapper->detach($user);
 
         if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
             return new Result(

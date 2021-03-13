@@ -223,8 +223,12 @@ class Poll extends AbstractAclService
         $pollMapper->persist($poll);
         $pollMapper->flush();
 
-        $this->getEmailService()->sendEmail('poll_creation', 'email/poll',
-            'Er is een nieuwe poll aangevraagd | A new poll has been requested', ['poll' => $poll]);
+        $this->getEmailService()->sendEmail(
+            'poll_creation',
+            'email/poll',
+            'Er is een nieuwe poll aangevraagd | A new poll has been requested',
+            ['poll' => $poll]
+        );
 
         return true;
     }
@@ -339,9 +343,7 @@ class Poll extends AbstractAclService
      */
     public function getUser()
     {
-        $user = $this->sm->get('user_role');
-
-        return $user;
+        return $this->sm->get('user_role');
     }
 
     /**
@@ -373,5 +375,4 @@ class Poll extends AbstractAclService
     {
         return $this->sm->get('application_service_email');
     }
-
 }

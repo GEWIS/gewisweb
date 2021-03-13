@@ -7,7 +7,6 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 abstract class AbstractService implements ServiceManagerAwareInterface
 {
-
     /**
      * Service manager.
      *

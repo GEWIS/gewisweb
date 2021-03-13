@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class MeetingDocument
 {
-
     /**
      * Document id.
      *

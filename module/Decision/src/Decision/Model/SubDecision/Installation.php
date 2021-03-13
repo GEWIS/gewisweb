@@ -14,7 +14,6 @@ use Decision\Model\Member;
  */
 class Installation extends FoundationReference
 {
-
     /**
      * Function given.
      *
@@ -43,7 +42,6 @@ class Installation extends FoundationReference
      * @ORM\OneToOne(targetEntity="Decision\Model\OrganMember",mappedBy="installation")
      */
     protected $organMember;
-
 
     /**
      * Get the function.

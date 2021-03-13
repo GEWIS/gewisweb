@@ -13,7 +13,6 @@ use Activity\Model\Activity;
  */
 class Frontpage extends AbstractAclService
 {
-
     /**
      * Retrieves all data which is needed on the home page
      */
@@ -125,10 +124,7 @@ class Frontpage extends AbstractAclService
     public function getUpcomingActivities()
     {
         $count = $this->getConfig()['activity_count'];
-        $activities = $this->getActivityMapper()->getUpcomingActivities($count);
-
-        return $activities;
-
+        return $this->getActivityMapper()->getUpcomingActivities($count);
     }
 
     /**

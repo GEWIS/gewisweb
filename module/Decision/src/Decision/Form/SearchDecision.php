@@ -9,7 +9,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class SearchDecision extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translate)
     {
         parent::__construct();

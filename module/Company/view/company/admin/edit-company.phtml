@@ -5,7 +5,7 @@ $this->scriptUrl()->requireUrls(
     [
         'admin_company/editCompany/editPackage/deletePackage'
     ],
-    ['slugCompanyName', 'packageID']
+    ['slugCompanyName', 'packageId']
 );
 ?>
 <h1><?= $this->translate('Edit Company'); ?></h1>
@@ -87,48 +87,47 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
             <th>
                 <?= $this->translate('Actions'); ?>
             </th>
-            </th>
         </tr>
     </thead>
     <?php foreach ($company->getPackages() as $package): ?>
-            <tr>
-                <td>
-                    <?php echo $package->isActive() ? 'Yes' : 'No' ?>
-                </td>
-                <td>
-                    <?= $package->getStartingDate()->format('d-m-Y') ?>
-                </td>
-                <td>
-                    <?= $package->getExpirationDate()->format('d-m-Y') ?>
-                </td>
-                <td>
-                    <?php if ($package->getType() === 'banner') {
-                        echo $this->translate('Banner package');
+        <tr>
+            <td>
+                <?php echo $package->isActive() ? 'Yes' : 'No' ?>
+            </td>
+            <td>
+                <?= $package->getStartingDate()->format('d-m-Y') ?>
+            </td>
+            <td>
+                <?= $package->getExpirationDate()->format('d-m-Y') ?>
+            </td>
+            <td>
+                <?php if ($package->getType() === 'banner') {
+                    echo $this->translate('Banner package');
+                } else {
+                    if ($package->getType() == 'featured') {
+                        echo $this->translate('Featured Package');
                     } else {
-                        if ($package->getType() == 'featured') {
-                            echo $this->translate('Featured Package');
-                        } else {
-                            echo $package->getJobs()->count();
-                        }
-                    } ?>
-                </td>
-                <td>
-                    <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",
-                        [
-                            "slugCompanyName" => $company->getSlugName(),
-                            "packageID" => $package->getId(),
-                        ]
-                    ); ?>">
-                        <?= $this->translate('edit'); ?></a>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            onclick="Company.Admin.deletePackage('<?= $company->getSlugName() ?>', '<?= $package->getId() ?>')"
-                            data-toggle="modal"
-                            data-target="#deleteModal">
-                        <?= $this->translate('Delete') ?>
-                    </button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
+                        echo $package->getJobs()->count();
+                    }
+                } ?>
+            </td>
+            <td>
+                <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",
+                    [
+                        "slugCompanyName" => $company->getSlugName(),
+                        "packageId" => $package->getId(),
+                    ]
+                ); ?>">
+                    <?= $this->translate('edit'); ?></a>
+                <button type="button" class="btn btn-danger btn-xs"
+                        onclick="Company.Admin.deletePackage('<?= $company->getSlugName() ?>', '<?= $package->getId() ?>')"
+                        data-toggle="modal"
+                        data-target="#deleteModal">
+                    <?= $this->translate('Delete') ?>
+                </button>
+            </td>
+        </tr>
+    <?php endforeach; ?>
 </table>
 <!-- Delete package modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">

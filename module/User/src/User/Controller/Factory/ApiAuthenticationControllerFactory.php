@@ -9,7 +9,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
 {
-
     public function createService(ServiceLocatorInterface $sl)
     {
         $sm = $sl->getServiceLocator();

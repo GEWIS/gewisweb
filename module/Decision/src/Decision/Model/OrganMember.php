@@ -15,7 +15,6 @@ use Decision\Model\SubDecision\Installation;
  */
 class OrganMember
 {
-
     /**
      * Id.
      *
@@ -74,7 +73,6 @@ class OrganMember
      * @ORM\Column(type="date", nullable=true)
      */
     protected $dischargeDate;
-
 
     /**
      * Set the organ.

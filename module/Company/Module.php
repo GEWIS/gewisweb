@@ -35,7 +35,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__.'/config/module.config.php';
+        return include __DIR__ . '/config/module.config.php';
     }
 
     private function getFormFactories()
@@ -54,13 +54,20 @@ class Module
                 );
             },
             'company_admin_edit_category_form' => function ($sm) {
-                $form = new \Company\Form\EditCategory(
+                return new \Company\Form\EditCategory(
                     $sm->get('company_mapper_category'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator')
                 );
-                return $form;
+            },
+            'company_admin_edit_label_form' => function ($sm) {
+                return \Company\Form\EditLabel(
+                    $sm->get('company_mapper_label'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
             },
             'company_admin_edit_bannerpackage_form' => function ($sm) {
                 return new \Company\Form\EditPackage(
@@ -79,13 +86,15 @@ class Module
                     $sm->get('company_mapper_job'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator')
+                    $sm->get('company_hydrator'),
+                    $sm->get('company_service_company')->getLabelList(false)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));
                 return $form;
             },
         ];
     }
+
     private function getMapperFactories()
     {
         return [
@@ -111,6 +120,16 @@ class Module
             },
             'company_mapper_category' => function ($sm) {
                 return new \Company\Mapper\Category(
+                    $sm->get('company_doctrine_em')
+                );
+            },
+            'company_mapper_label' => function ($sm) {
+                return new \Company\Mapper\Label(
+                    $sm->get('company_doctrine_em')
+                );
+            },
+            'company_mapper_label_assignment' => function ($sm) {
+                return new \Company\Mapper\LabelAssignment(
                     $sm->get('company_doctrine_em')
                 );
             },
@@ -146,8 +165,10 @@ class Module
                 $acl->allow('guest', 'company', 'list');
                 $acl->allow('guest', 'company', 'view');
                 $acl->allow('guest', 'company', 'listVisibleCategories');
+                $acl->allow('guest', 'company', 'listVisibleLabels');
                 $acl->allow('guest', 'company', 'showBanner');
-                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete', 'listall', 'listAllCategories']);
+                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete']);
+                $acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
 
                 return $acl;
             },

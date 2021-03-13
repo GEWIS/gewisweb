@@ -26,7 +26,7 @@ $this->headTitle($this->category->getPluralName());
                 </li>
             <?php endif; ?>
             <li class="active">
-                <?= $category->getPluralName()?>
+                <?= $category->getPluralName() ?>
             </li>
         </ol>
     </div>
@@ -48,7 +48,7 @@ $this->headTitle($this->category->getPluralName());
                             type="text"
                             class="form-control"
                             id="job-search"
-                            placeholder="<?= $this->translate('What are you looking for?') ?>" />
+                            placeholder="<?= $this->translate('What are you looking for?') ?>"/>
                     </div>
                     <div class="form-group">
                         <label for="job-sort"><?= $this->translate('Sort on') ?></label>
@@ -57,21 +57,11 @@ $this->headTitle($this->category->getPluralName());
                             <option value="posted"><?= $this->translate('Most recent') ?></option>
                         </select>
                     </div>
-                    <!--
-                    <div class="form-group">
-                        <label for="job-label"><?= $this->translate('Audience') ?></label>
-                        <select name="label" id="job-label" class="form-control">
-                            <option value="*"><?= $this->translate('Any') ?></option>
-                            <option value="CSE">Computer Science and Engineering</option>
-                            <option value="DS">Data Science</option>
-                            <option value="IAM">Industrial and Applied Mathematics</option>
-                        </select>
-                    </div>
-                    -->
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>
-                            <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>" class="btn btn-default btn-filter align-middle">
+                            <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"
+                               class="btn btn-default btn-filter align-middle">
                                 <span class="btn-text" title="<?= $company->getName() ?>">
                                     <?= $company->getName() ?>
                                 </span>
@@ -83,91 +73,94 @@ $this->headTitle($this->category->getPluralName());
             </div>
         </div>
         <?php if (empty($jobList)): ?>
-        <div class="row">
-            <div class="col-md-12" style="margin-top: 1em">
-                <h4>No Results</h4>
-                <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 1em">
+                    <h4>No Results</h4>
+                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+                </div>
             </div>
-        </div>
         <?php else: ?>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-grid">
-                    <?php foreach ($jobList as $index => $job): ?>
-                    <?php
-                        $company = $job->getPackage()->getCompany();
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-grid">
+                        <?php foreach ($jobList as $index => $job): ?>
+                            <?php
+                            $company = $job->getPackage()->getCompany();
 
-                        $jobUrl = $this->url('company/companyItem/joblist/job_item', [
-                            'slugCompanyName' => $company->getSlugName(),
-                            'slugJobName'     => $job->getSlugName(),
-                            'category'        => $job->getCategory()->getSlug(),
-                        ]);
-                    ?>
-                    <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>" data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
-                        <div class="card-img">
-                            <img
-                                src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                                alt="<?= $this->escapeHtmlAttr($company->getName()) ?>" />
-                        </div>
-                        <h2 class="card-title"><?= $job->getName() ?></h2>
-                        <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                        <?php if (!is_null($job->getLocation())): ?>
-                            <p class="job-location"><?= $job->getLocation() ?></p>
-                        <?php endif; ?>
-                        <!--
-                        <div>
-                            <span class="label label-default job-label" data-label="CSE" data-toggle="tooltip" title="Computer Science & Engineering">CSE</span>
-                            <span class="label label-default job-label" data-label="DS" data-toggle="tooltip" title="Data Science">DS</span>
-                        </div>
-                        -->
-                        <div class="card-footer">
-                            <button class="btn btn-link"><?= $this->translate('View') ?></button>
-                            <span class="small">
-                                <?php if($job->getTimestamp()->isToday()): ?>
+                            $jobUrl = $this->url('company/companyItem/joblist/job_item', [
+                                'slugCompanyName' => $company->getSlugName(),
+                                'slugJobName' => $job->getSlugName(),
+                                'category' => $job->getCategory()->getSlug(),
+                            ]);
+                            ?>
+                            <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
+                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
+                                <div class="card-img">
+                                    <img
+                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                        alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                                </div>
+                                <h2 class="card-title"><?= $job->getName() ?></h2>
+                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                <?php if (!is_null($job->getLocation())): ?>
+                                    <p class="job-location"><?= $job->getLocation() ?></p>
+                                <?php endif; ?>
+                                <div>
+                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                        <?php $label = $labelAsg->getLabel(); ?>
+                                        <span class="label label-default job-label"
+                                              data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                              title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-link"><?= $this->translate('View') ?></button>
+                                    <span class="small">
+                                <?php if ($job->getTimestamp()->isToday()): ?>
                                     <?= $this->translate('Posted today') ?>
                                 <?php else: ?>
                                     <?= sprintf($this->translate('Posted %s'), $job->getTimestamp()->diffForHumans()) ?>
                                 <?php endif ?>
                             </span>
-                        </div>
-                    </a>
-                    <?php endforeach; ?>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
         <?php endif; ?>
         <?php
-            $alternatives = [];
-            foreach ($this->jobCategories() as $c) {
-                // Don't include current category in list of alternative job categories
-                if ($category->getId() === $c->getId()) {
-                    continue;
-                }
-
-                $alternatives[] = vsprintf('<a href="%s">%s</a>', [
-                    $this->url('company/jobList', ['category' => $c->getSlug()]),
-                    strtolower($c->getPluralName())
-                ]);
+        $alternatives = [];
+        foreach ($this->jobCategories() as $c) {
+            // Don't include current category in list of alternative job categories
+            if ($category->getId() === $c->getId()) {
+                continue;
             }
 
-            $alternatives = join(', ', $alternatives);
+            $alternatives[] = vsprintf('<a href="%s">%s</a>', [
+                $this->url('company/jobList', ['category' => $c->getSlug()]),
+                strtolower($c->getPluralName())
+            ]);
+        }
+
+        $alternatives = join(', ', $alternatives);
         ?>
         <?php if (!empty($alternatives)): ?>
-        <div class="row">
-            <div class="col-md-4" style="margin-top: 2em">
-                <hr />
+            <div class="row">
+                <div class="col-md-4" style="margin-top: 2em">
+                    <hr/>
+                </div>
+                <div class="col-md-12">
+                    <p class="text-muted">
+                        <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
+                    </p>
+                </div>
             </div>
-            <div class="col-md-12">
-                <p class="text-muted">
-                    <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
-                </p>
-            </div>
-        </div>
         <?php endif; ?>
     </div>
 </section>
 <script type="text/javascript">
-    var CardGrid = function($grid, searchElements) {
+    var CardGrid = function ($grid, searchElements) {
         // Pre-compute card details
         var cards = $('.card', $grid).map(function () {
             var $card = $(this);
@@ -175,7 +168,7 @@ $this->headTitle($this->category->getPluralName());
             return {
                 target: $card,
                 text: $(searchElements, $card).text().toLowerCase(),
-                labels: $('.job-label', $card).map(function() {
+                labels: $('.job-label', $card).map(function () {
                     return $(this).data('label');
                 }).get()
             };
@@ -184,7 +177,7 @@ $this->headTitle($this->category->getPluralName());
         /**
          * Toggles the card visibility depending on the filter matches
          */
-        var updateCardVisibility = function() {
+        var updateCardVisibility = function () {
             cards.forEach(function (card) {
                 // Checks if the card matches all registered filters
                 var isFullMatch = Object.values(card.isMatchOn).every(function (isMatch) {
@@ -222,14 +215,14 @@ $this->headTitle($this->category->getPluralName());
         registerFilter('search', true);
 
         return {
-            filterByLabel: function(label) {
+            filterByLabel: function (label) {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = (card.labels.indexOf(label) > -1);
                 });
 
                 updateCardVisibility();
             },
-            clearLabelFilter: function() {
+            clearLabelFilter: function () {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = true;
                 });
@@ -244,12 +237,12 @@ $this->headTitle($this->category->getPluralName());
                 updateCardVisibility();
             },
             sortByDateDesc: function () {
-                sortCards(function(a, b) {
+                sortCards(function (a, b) {
                     return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
                 });
             },
             sortByDefault: function () {
-                sortCards(function(a, b) {
+                sortCards(function (a, b) {
                     return (parseInt(a.dataset.index) > parseInt(b.dataset.index)) ? 1 : -1;
                 });
             }
@@ -275,7 +268,7 @@ $this->headTitle($this->category->getPluralName());
     });
 
     $("#job-sort").change(function () {
-        switch($(this).val()) {
+        switch ($(this).val()) {
             case 'posted':
                 cardGrid.sortByDateDesc();
                 break;
@@ -285,6 +278,6 @@ $this->headTitle($this->category->getPluralName());
     });
 
     $('[data-toggle="tooltip"]').tooltip({
-        viewport: { "selector": ".card-grid" }
+        viewport: {"selector": ".card-grid"}
     });
 </script>

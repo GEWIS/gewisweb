@@ -16,7 +16,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class UserRole
 {
-
     /**
      * Id
      *
@@ -40,7 +39,6 @@ class UserRole
      * @ORM\Column(type="string")
      */
     protected $role;
-
 
     /**
      * Get the id.

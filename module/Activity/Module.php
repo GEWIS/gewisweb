@@ -202,6 +202,7 @@ class Module
                 'activity_acl' => function ($sm) {
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
+                    $acl->addResource('activityApi');
                     $acl->addResource('myActivities');
                     $acl->addResource('model');
                     $acl->addResource('activity_calendar_proposal');
@@ -233,6 +234,11 @@ class Module
                     );
 
                     $acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
+
+                    $acl->allow('user', 'activityApi', 'list');
+                    $acl->allow('apiuser', 'activityApi', 'list');
+
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
                     return $acl;
                 },
             ]

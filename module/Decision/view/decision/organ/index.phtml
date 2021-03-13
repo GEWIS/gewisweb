@@ -20,19 +20,28 @@ $this->headTitle($this->translate('Organ list'));
                 <?php $url = $this->url('organ/show', ['organ' => $organ->getId()]) ?>
                 <tr>
                     <td><a style="display: block; height: 100%; width:100%"
-                            href="<?= $url ?>"><?= $organ->getAbbr() ?></a></td>
+                           href="<?= $url ?>"><?= $organ->getAbbr() ?></a></td>
                     <td><a style="display: block; height: 100%; width:100%"
-                            href="<?= $url ?>"><?= $organ->getName() ?></a></td>
+                           href="<?= $url ?>"><?= $organ->getName() ?></a></td>
                     <td><a style="display: block; height: 100%; width:100%" href="<?= $url ?>"><?php
                             switch ($organ->getType()) {
                                 case Organ::ORGAN_TYPE_COMMITTEE:
                                     echo $this->translate('Committee');
                                     break;
-                                case Organ::ORGAN_TYPE_AV_COMMITTEE:
+                                case Organ::ORGAN_TYPE_AVC:
                                     echo $this->translate('AV Committee');
                                     break;
                                 case Organ::ORGAN_TYPE_FRATERNITY:
                                     echo $this->translate('Fraternity');
+                                    break;
+                                case Organ::ORGAN_TYPE_AVW:
+                                    echo $this->translate('GM Task Force');
+                                    break;
+                                case Organ::ORGAN_TYPE_KKK:
+                                    echo $this->translate('Audit Committee');
+                                    break;
+                                case Organ::ORGAN_TYPE_RVA:
+                                    echo $this->translate('Advisory Board');
                                     break;
                             }
                             ?></a></td>

@@ -8,7 +8,6 @@ use Zend\Paginator\Paginator;
 
 class NewsAdminController extends AbstractActionController
 {
-
     public function listAction()
     {
         $newsService = $this->getNewsService();
