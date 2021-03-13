@@ -98,7 +98,8 @@
                     <?php if (!empty($activities)): ?>
                         <div class="list-group">
                             <?php foreach ($activities as $activity): ?>
-                                <a class="list-group-item" href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                <a class="list-group-item"
+                                   href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
                                     <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
                                     <h4 class="list-group-item-heading"><?= $activity->getName()->getText($lang) ?></h4>
                                     <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>

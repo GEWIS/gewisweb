@@ -48,7 +48,7 @@ class ApiController extends AbstractActionController
      */
     public function signupAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
 
         $activityService = $this->getActivityService();
         $signupService = $this->getSignupService();
@@ -85,7 +85,7 @@ class ApiController extends AbstractActionController
      */
     public function signoffAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
 
         $activityService = $this->getActivityService();
         $signupService = $this->getSignupService();

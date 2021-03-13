@@ -212,6 +212,8 @@ class Module
                     $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
                     $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
+
                     $acl->allow('user', 'myActivities', 'view');
                     $acl->allow(
                         'user',
@@ -238,7 +240,6 @@ class Module
                     $acl->allow('user', 'activityApi', 'list');
                     $acl->allow('apiuser', 'activityApi', 'list');
 
-                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
                     return $acl;
                 },
             ]
