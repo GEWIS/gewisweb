@@ -48,17 +48,17 @@ $this->headTitle($this->translate('Activities')); ?>
                 <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
             </div>
             <div class="col-md-12">
-                <div class="row agenda-item">
-                    <div class="col-md-2">
-                        <div class="agenda-item-heading">
-                            <span class="badge badge-large">
-                                <span class="small">
-                                    <?= strtr($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, $this->translate('MMM d')), array(' ' => '<br>')); ?>
-                                </span>
-                            </span>
-                        </div>
+                <?php foreach ($activity->getCategories() as $category): ?>
+                    <div class="chip chip-small chip-outlined">
+                                    <span class="chip-label">
+                                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                                    </span>
                     </div>
-                    <div class="col-md-7">
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-12">
+                <div class="row agenda-item">
+                    <div class="col-md-9">
                         <div class="agenda-item-body">
                             <p><?= $this->markdown($activity->getDescription()->getText($lang)) ?></p>
                         </div>

@@ -511,20 +511,22 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
         // Options are a string after submission, not an array of strings. It is easier to explode the values of
         // `$proposal` instead of having to implode `$current` (which requires an extra `array_filter()`).
-        foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
-            foreach ($signupList['fields'] as $keyInner => $field) {
-                if (array_key_exists('options', $field)) {
-                    $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
-                        ',',
-                        $field['options']
-                    );
-                }
+        if (isset($proposal['signupLists'])) {
+            foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
+                foreach ($signupList['fields'] as $keyInner => $field) {
+                    if (array_key_exists('options', $field)) {
+                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
+                            ',',
+                            $field['options']
+                        );
+                    }
 
-                if (array_key_exists('optionsEn', $field)) {
-                    $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
-                        ',',
-                        $field['optionsEn']
-                    );
+                    if (array_key_exists('optionsEn', $field)) {
+                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
+                            ',',
+                            $field['optionsEn']
+                        );
+                    }
                 }
             }
         }
