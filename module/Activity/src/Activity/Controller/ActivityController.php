@@ -37,24 +37,18 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $signupLists = null;
-        if ($activity->getSignupLists()->count() > 0) {
-            $signupLists = [];
-
-            foreach ($activity->getSignupLists()->getValues() as $signupList) {
-                $signupLists[] = [
-                    'id' => $signupList->getId(),
-                    'name' => $signupList->getName(),
-                ];
-            }
+        // If the Activity has a sign-up list always display it by redirecting the request.
+        if ($activity->getSignupLists()->count() !== 0) {
+            return $this->forward()->dispatch('Activity\Controller\Activity', [
+                'action' => 'viewSignupList',
+                'id' => $activityId,
+                'signupList' => $activity->getSignupLists()->first()->getId(),
+            ]);
         }
 
-        $result = [
+        return [
             'activity' => $activity,
-            'signupLists' => $signupLists,
         ];
-
-        return $result;
     }
 
     public function viewSignupListAction()

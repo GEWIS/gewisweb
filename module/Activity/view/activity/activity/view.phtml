@@ -122,19 +122,21 @@ $this->headTitle($this->translate('Activities')); ?>
                 </div>
             </div>
         <?php endif; ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $organString = "the organizing party";
+                $organ = $activity->getOrgan();
 
-        <?php
-        $organString = "the organizing party";
-        $organ = $activity->getOrgan();
-
-        if (!is_null($organ)) {
-            $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
-        }
-        ?>
-        <p>
-            <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
-        </p>
-
+                if (!is_null($organ)) {
+                    $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
+                }
+                ?>
+                <p>
+                    <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+                </p>
+            </div>
+        </div>
         <?php if (isset($signupList)): ?>
             <div class="row">
                 <div class="col-md-12">
