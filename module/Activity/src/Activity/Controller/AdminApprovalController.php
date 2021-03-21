@@ -19,7 +19,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $acl = $translator = $this->getServiceLocator()->get('activity_acl');
@@ -63,7 +63,7 @@ class AdminApprovalController extends AbstractActionController
      */
     protected function setApprovalStatus($status)
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
@@ -126,7 +126,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewProposalAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $proposal = $queryService->getProposal($id);
@@ -147,7 +147,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function applyProposalAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
 
@@ -181,7 +181,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function revokeProposalAction()
     {
-        $id = (int) $this->params('id');
+        $id = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activityService = $this->getServiceLocator()->get('activity_service_activity');
         //Assure the form is used

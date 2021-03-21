@@ -265,7 +265,7 @@ class Signup extends AbstractAclService
                     $fieldValue->setValue(($value) ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->getOptionById((int) $value));
+                    $fieldValue->setOption($optionMapper->getOptionById((int)$value));
                     break;
             }
             $fieldValue->setSignup($signup);

@@ -29,7 +29,7 @@ class ActivityController extends AbstractActionController
      */
     public function viewAction()
     {
-        $activityId = (int) $this->params('id');
+        $activityId = (int)$this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $activity = $queryService->getActivity($activityId);
 
@@ -53,8 +53,8 @@ class ActivityController extends AbstractActionController
 
     public function viewSignupListAction()
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int)$this->params('id');
+        $signupListId = (int)$this->params('signupList');
         $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
         $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
@@ -194,8 +194,8 @@ class ActivityController extends AbstractActionController
      */
     public function signupAction()
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int)$this->params('id');
+        $signupListId = (int)$this->params('signupList');
         $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
         $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
@@ -284,8 +284,8 @@ class ActivityController extends AbstractActionController
 
     public function externalSignupAction()
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int)$this->params('id');
+        $signupListId = (int)$this->params('signupList');
         $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
         $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
@@ -348,8 +348,8 @@ class ActivityController extends AbstractActionController
      */
     public function signoffAction()
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int)$this->params('id');
+        $signupListId = (int)$this->params('signupList');
         $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
         $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 

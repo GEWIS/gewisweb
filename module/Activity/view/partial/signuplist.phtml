@@ -75,7 +75,9 @@
                     <label>
                         <?= $this->formCheckbox($onlyGEWIS) ?>
                         <?= $this->translate('Only allow GEWIS members') ?>
-                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Deselect this to allow people without a GEWIS account to subscribe.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                        <span data-toggle="tooltip" data-placement="right"
+                              title="<?= $this->translate('Deselect this to allow people without a GEWIS account to subscribe.') ?>"
+                              class="fas fa-info-circle" aria-hidden="true"></span>
                     </label>
                     <?= $this->formElementErrors($onlyGEWIS) ?>
                 </div>
@@ -88,7 +90,9 @@
                     <label>
                         <?= $this->formCheckbox($displaySubscribedNumber) ?>
                         <?= $this->translate('Display number of subscribed members') ?>
-                        <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                        <span data-toggle="tooltip" data-placement="right"
+                              title="<?= $this->translate('Select this to display the number of subscribed GEWIS members to external visitors.') ?>"
+                              class="fas fa-info-circle" aria-hidden="true"></span>
                     </label>
                     <?= $this->formElementErrors($displaySubscribedNumber) ?>
                 </div>
@@ -115,11 +119,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group signup-list-field-controls">
-                        <button class="btn btn-danger" type="button" onclick="return Activity.removeField(<?= $this->index ?>)">
+                        <button class="btn btn-danger" type="button"
+                                onclick="return Activity.removeField(<?= $this->index ?>)">
                             <i class="fas fa-minus"></i>
                             <?= $this->translate('Remove the last sign-up list field') ?>
                         </button>
-                        <button class="btn btn-success" type="button" onclick="return Activity.addField(<?= $this->index ?>)">
+                        <button class="btn btn-success" type="button"
+                                onclick="return Activity.addField(<?= $this->index ?>)">
                             <i class="fas fa-plus"></i>
                             <?= $this->translate('Add a sign-up list field') ?>
                         </button>

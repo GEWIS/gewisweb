@@ -1,90 +1,95 @@
 <div class="container">
 
     <?php if (isset($success)): // Display messages ?>
-        <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger';?>" role="alert">
+        <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
             <div class="container">
                 <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
             </div>
         </div>
-    <?php endif;?>
-<?php if ($admin): ?>
-<?= $this->partial('activity/admin/list.phtml', [
-    'header' => $this->translate('Unapproved Activities'),
-    'activities' => $unapprovedActivities,
-    'admin' => true,
-])
-?>
+    <?php endif; ?>
+    <?php if ($admin): ?>
+        <?= $this->partial('activity/admin/list.phtml', [
+            'header' => $this->translate('Unapproved Activities'),
+            'activities' => $unapprovedActivities,
+            'admin' => true,
+        ])
+        ?>
 
-<?= $this->partial('activity/admin/list.phtml', [
-    'header' => $this->translate('Approved Activities'),
-    'activities' => $approvedActivities,
-    'admin' => true,
-])
-?>
+        <?= $this->partial('activity/admin/list.phtml', [
+            'header' => $this->translate('Approved Activities'),
+            'activities' => $approvedActivities,
+            'admin' => true,
+        ])
+        ?>
 
-<?= $this->partial('activity/admin/list.phtml', [
-    'header' => $this->translate('Disapproved Activities'),
-    'activities' => $disapprovedActivities,
-    'admin' => true,
-])
-?>
+        <?= $this->partial('activity/admin/list.phtml', [
+            'header' => $this->translate('Disapproved Activities'),
+            'activities' => $disapprovedActivities,
+            'admin' => true,
+        ])
+        ?>
 
-<?php else: ?>
-<?= $this->partial('activity/admin/list.phtml', [
-    'header' => $this->translate('Upcoming Activities'),
-    'activities' => $upcomingActivities,
-    'admin' => false,
-])
-?>
-<?php endif; ?>
+    <?php else: ?>
+        <?= $this->partial('activity/admin/list.phtml', [
+            'header' => $this->translate('Upcoming Activities'),
+            'activities' => $upcomingActivities,
+            'admin' => false,
+        ])
+        ?>
+    <?php endif; ?>
 
-<h1><?= $this->translate('Old activities') ?></h1>
-<?php if (!empty($oldActivityPaginator)): ?>
-<?= $this->paginationControl(
-    $oldActivityPaginator,
-    // the scrolling style
-    'elastic',
-    'paginator/default',
-    [
-        'path' => $this->url('activity_admin')
-    ]
-)
-?>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th><?= $this->translate('Dutch name') ?></th>
-        <th><?= $this->translate('English name') ?></th>
-        <th><?= $this->translate('Start date') ?></th>
-        <th><?= $this->translate('Organ') ?></th>
-        <th><?= $this->translate('Company') ?></th>
-        <th><?= $this->translate('Submitter') ?></th>
-        <?php if ($admin): ?>
-        <th></th>
-        <?php endif; ?>
-    </tr>
-    </thead>
-    <tbody>
+    <h1><?= $this->translate('Old activities') ?></h1>
+    <?php if (!empty($oldActivityPaginator)): ?>
+        <?= $this->paginationControl(
+            $oldActivityPaginator,
+            // the scrolling style
+            'elastic',
+            'paginator/default',
+            [
+                'path' => $this->url('activity_admin')
+            ]
+        )
+        ?>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th><?= $this->translate('Dutch name') ?></th>
+                <th><?= $this->translate('English name') ?></th>
+                <th><?= $this->translate('Start date') ?></th>
+                <th><?= $this->translate('Organ') ?></th>
+                <th><?= $this->translate('Company') ?></th>
+                <th><?= $this->translate('Submitter') ?></th>
+                <?php if ($admin): ?>
+                    <th></th>
+                <?php endif; ?>
+            </tr>
+            </thead>
+            <tbody>
 
-    <?php foreach($oldActivityPaginator as $activity): ?>
-        <tr>
-            <td><?= $activity->getId() ?></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("nl") ?></a></td>
-            <td><a href="<?= $this->url('activity/view',['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a></td>
-            <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
-            <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
-            <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
-            <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
-            <?php if ($admin): ?>
-            <td>
-                 <a class="btn btn-primary btn-xs" href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
-            </td>
-            <?php endif; ?>
-        </tr>
-    <?php endforeach;?>
-    </tbody>
-</table>
+            <?php foreach ($oldActivityPaginator as $activity): ?>
+                <tr>
+                    <td><?= $activity->getId() ?></td>
+                    <td>
+                        <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("nl") ?></a>
+                    </td>
+                    <td>
+                        <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a>
+                    </td>
+                    <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
+                    <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
+                    <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
+                    <td><?= $activity->getCreator()->getMember()->getFullName() ?></td>
+                    <?php if ($admin): ?>
+                        <td>
+                            <a class="btn btn-primary btn-xs"
+                               href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
 
-<?php endif; ?>
+    <?php endif; ?>
 </div>

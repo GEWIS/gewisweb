@@ -1,4 +1,7 @@
 <?php
+
+use Activity\Model\Activity;
+
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
@@ -21,14 +24,14 @@ $this->headTitle($this->translate('Approval'));
             } else {
                 $organisingParty = $this->escapeHtml($activity->getCreator()->getMember()->getFullName());
             }
-            
+
             echo sprintf(
-                    $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
-                        $activity->getId(),
-                        $organisingParty,
-                        $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                        $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
-                );
+                $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
+                $activity->getId(),
+                $organisingParty,
+                $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+            );
             ?>
             <?= $this->translate('More information about this activity is available below.') ?>
         </p>
@@ -133,44 +136,44 @@ $this->headTitle($this->translate('Approval'));
         </div>
         <hr>
     </div>
-<?php if ($activity->getCategories()->count() > 0): ?>
-    <div class="col-md-12">
-        <h2><?= $this->translate('Activity Categories') ?></h2>
-    </div>
-    <div class="col-md-12">
-        <?php foreach ($activity->getCategories() as $category): ?>
-            <div class="chip">
+    <?php if ($activity->getCategories()->count() > 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Activity Categories') ?></h2>
+        </div>
+        <div class="col-md-12">
+            <?php foreach ($activity->getCategories() as $category): ?>
+                <div class="chip">
                 <span class="chip-label">
                     <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
                 </span>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
-<?php if ($activity->getSignupLists()->count() > 0): ?>
-    <div class="col-md-12">
-        <h2><?= $this->translate('Sign-up Lists') ?></h2>
-    </div>
-    <div class="col-md-10 col-md-offset-2 overview-header">
-        <div class="row">
-            <div class="col-md-6">
-                <span class="flag-icon flag-icon-nl"></span>
-                <b><?= $this->translate('Dutch') ?></b>
-                <hr>
-            </div>
-            <div class="col-md-6">
-                <span class="flag-icon flag-icon-en"></span>
-                <b><?= $this->translate('English') ?></b>
-                <hr>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($activity->getSignupLists()->count() > 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Sign-up Lists') ?></h2>
+        </div>
+        <div class="col-md-10 col-md-offset-2 overview-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Dutch') ?></b>
+                    <hr>
+                </div>
+                <div class="col-md-6">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('English') ?></b>
+                    <hr>
+                </div>
             </div>
         </div>
-    </div>
-    <?= $this->partial('partial/admin-approval/signuplists', ['activity' => $activity]) ?>
-<?php endif; ?>
+        <?= $this->partial('partial/admin-approval/signuplists', ['activity' => $activity]) ?>
+    <?php endif; ?>
     <div class="col-md-12">
         <h2><?= $this->translate('Approval') ?></h2>
     </div>
-    <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
+    <?php if ($activity->getStatus() === Activity::STATUS_TO_APPROVE): ?>
         <div class="col-md-2">
             <?php $approvalForm->setAttribute('action', $this->url('activity_admin_approval/approve', ['id' => $activity->getId()]));
             $approvalForm->prepare();
@@ -195,7 +198,7 @@ $this->headTitle($this->translate('Approval'));
             echo $this->form()->closeTag();
             ?>
         </div>
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED): ?>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_APPROVED): ?>
         <div class="col-md-2">
             <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
             $resetForm->prepare();
@@ -207,7 +210,7 @@ $this->headTitle($this->translate('Approval'));
             echo $this->form()->closeTag();
             ?>
         </div>
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_DISAPPROVED): ?>
         <div class="col-md-2">
             <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
             $resetForm->prepare();

@@ -59,7 +59,7 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $categoryId = (int) $this->params('id');
+            $categoryId = (int)$this->params('id');
             $categoryService = $this->getServiceLocator()->get('activity_service_category');
 
             $category = $categoryService->getCategoryById($categoryId);
@@ -79,7 +79,7 @@ class AdminCategoryController extends AbstractActionController
      */
     public function editAction()
     {
-        $categoryId = (int) $this->params('id');
+        $categoryId = (int)$this->params('id');
         $categoryService = $this->getServiceLocator()->get('activity_service_category');
 
         $category = $categoryService->getCategoryById($categoryId);

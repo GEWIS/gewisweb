@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Service\Activity;
 use Activity\Service\Signup;
+use User\Permissions\NotAllowedException;
 use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -18,7 +19,7 @@ class ApiController extends AbstractActionController
         $activityService = $this->getActivityService();
         if (!$activityService->isAllowed('list', 'activityApi')) {
             $translator = $activityService->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to access the activities through the API')
             );
         }

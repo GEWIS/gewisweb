@@ -1,22 +1,23 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <table class="table table-bordered" style="width: 100%" border="1">
     <thead>
-        <tr>
-            <th>#</th>
-            <th><?= $this->translate('Name') ?></th>
-            <th><?= $this->translate('Email') ?></th>
-            <th><?= $this->translate('Type') ?></th>
-            <?php if (!isset($signupList)): ?>
-                <th><?= $this->translate('Sign-up List') ?></th>
-            <?php endif; ?>
-            <?php if (isset($detailed) && isset($signupList)): ?>
-                <?php foreach ($signupList->getFields() as $field): ?>
-                    <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tr>
+    <tr>
+        <th>#</th>
+        <th><?= $this->translate('Name') ?></th>
+        <th><?= $this->translate('Email') ?></th>
+        <th><?= $this->translate('Type') ?></th>
+        <?php if (!isset($signupList)): ?>
+            <th><?= $this->translate('Sign-up List') ?></th>
+        <?php endif; ?>
+        <?php if (isset($detailed) && isset($signupList)): ?>
+            <?php foreach ($signupList->getFields() as $field): ?>
+                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </tr>
     </thead>
-    <?php $i = 1; $allEmailAddresses = []; ?>
+    <?php $i = 1;
+    $allEmailAddresses = []; ?>
     <?php if (!isset($signupList)) {
         $iterator = [];
         foreach ($activity->getSignupLists() as $list) {
@@ -27,9 +28,12 @@
     } else {
         $iterator = $signupList->getSignUps();
     } ?>
-    <?php foreach($iterator as $signup): ?>
+    <?php foreach ($iterator as $signup): ?>
         <tr>
-            <td><?php echo $i; $i = $i + 1; $email = $this->escapeHtml($signup->getEmail()); $allEmailAddresses[] = $email; ?></td>
+            <td><?php echo $i;
+                $i = $i + 1;
+                $email = $this->escapeHtml($signup->getEmail());
+                $allEmailAddresses[] = $email; ?></td>
             <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
             <td>
                 <a href="mailto:<?= $email ?>">
@@ -37,10 +41,10 @@
                 </a>
             </td>
             <?php if ($signup instanceof Activity\Model\UserSignup): ?>
-                <td><?= $this->translate('User')?></td>
+                <td><?= $this->translate('User') ?></td>
             <?php else: ?>
                 <td>
-                    <?= $this->translate('External')?>
+                    <?= $this->translate('External') ?>
                     <?php if (isset($externalSignoffForm)): ?>
                         <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
                         $externalSignoffForm->prepare();
@@ -59,7 +63,7 @@
             <?php endif; ?>
             <?php if (isset($detailed)): ?>
                 <?php foreach ($signupList->getFields() as $field): ?>
-                    <?php foreach($signup->getFieldValues() as $fieldValue):?>
+                    <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
                         <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
                             <td>
                                 <?php
@@ -84,7 +88,7 @@
                                 ?>
                             </td>
                         <?php endif; ?>
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         </tr>

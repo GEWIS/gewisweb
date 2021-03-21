@@ -559,7 +559,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param array $array2
      * @return bool
      */
-    protected function array_diff_assoc_recursive(array $array1, array $array2) {
+    protected function array_diff_assoc_recursive(array $array1, array $array2)
+    {
         $difference = [];
 
         foreach ($array1 as $key => $value) {
