@@ -79,11 +79,7 @@ class AdminApprovalController extends AbstractActionController
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid()) {
-            return $this->notFoundAction();
-        }
-
-        if (is_null($activity)) {
+        if (!$form->isValid() || is_null($activity)) {
             return $this->notFoundAction();
         }
 

@@ -40,7 +40,7 @@ class SignupList
             ->setParameter('activity', $activityId);
         $result = $qb->getQuery()->getResult();
 
-        return count($result) > 0 ? $result[0] : null;
+        return !empty($result) ? $result[0] : null;
     }
 
     public function getSignupListsOfActivity($activityId)
@@ -50,8 +50,7 @@ class SignupList
             ->from('Activity\Model\SignupList', 'a')
             ->where('a.activity = :activity')
             ->setParameter('activity', $activityId);
-        $result = $qb->getQuery()->getResult();
 
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 }

@@ -19,8 +19,6 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
     {
         parent::__construct('category');
         $this->translator = $translator;
-        //$this->setHydrator(new ClassMethodsHydrator(false))
-        //     ->setObject(new \Activity\Model\ActivityCategory());
 
         $this->add([
             'name' => 'language_dutch',

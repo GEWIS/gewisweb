@@ -41,9 +41,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
     public function getProposal($id)
     {
         $proposalMapper = $this->getServiceManager()->get('activity_mapper_proposal');
-        $proposal = $proposalMapper->getProposalById($id);
 
-        return $proposal;
+        return $proposalMapper->getProposalById($id);
     }
 
     /**
@@ -103,9 +102,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getActivityById($id);
 
-        return $activity;
+        return $activityMapper->getActivityById($id);
     }
 
     /**
@@ -123,9 +121,8 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
         }
 
         $activityMapper = $this->getServiceManager()->get('activity_mapper_activity');
-        $activity = $activityMapper->getAllActivities();
 
-        return $activity;
+        return $activityMapper->getAllActivities();
     }
 
     /**

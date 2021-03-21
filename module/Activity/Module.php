@@ -106,20 +106,16 @@ class Module
                 },
                 'activity_form_calendar_proposal' => function ($sm) {
                     $calendarService = $sm->get('activity_service_calendar');
-                    $form = new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
-                    return $form;
+                    return new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                 },
                 'activity_form_calendar_option' => function ($sm) {
                     $translator = $sm->get('translator');
                     $calendarService = $sm->get('activity_service_calendar');
-                    $form = new Form\ActivityCalendarOption($translator, $calendarService);
-                    return $form;
+                    return new Form\ActivityCalendarOption($translator, $calendarService);
                 },
                 'activity_form_category' => function ($sm) {
                     $translator = $sm->get('translator');
-                    $form = new CategoryForm($translator);
-
-                    return $form;
+                    return new CategoryForm($translator);
                 },
                 'activity_hydrator' => function ($sm) {
                     return new DoctrineObject(

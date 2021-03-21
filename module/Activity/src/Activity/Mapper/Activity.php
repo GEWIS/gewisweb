@@ -128,10 +128,12 @@ class Activity
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = $i + 1; $j < $size; $j++) {
-                if (array_key_exists($i, $result) && array_key_exists($j, $result)) {
-                    if ($result[$i]->getId() == $result[$j]->getId()) {
-                        unset($result[$j]);
-                    }
+                if (
+                    array_key_exists($i, $result)
+                    && array_key_exists($j, $result)
+                    && $result[$i]->getId() == $result[$j]->getId()
+                ) {
+                    unset($result[$j]);
                 }
             }
         }
@@ -161,9 +163,8 @@ class Activity
             ->andWhere('b = c.signupList')
             ->andWhere('c.user = :user')
             ->setParameter('user', $user);
-        $result = $qb->getQuery()->getResult();
 
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -182,8 +183,8 @@ class Activity
             ->setParameter('now', new DateTime())
             ->andWhere('a.creator = :user')
             ->setParameter('user', $user);
-        $result = $qb->getQuery()->getResult();
-        return $result;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -202,8 +203,8 @@ class Activity
             ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
             ->setParameter('organ', $organ->getId());
-        $result = $qb->getQuery()->getResult();
-        return $result;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

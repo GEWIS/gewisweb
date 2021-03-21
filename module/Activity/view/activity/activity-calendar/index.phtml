@@ -74,7 +74,6 @@ $this->headLink()
                     <th><?= $this->translate('Creator') ?></th>
                     <th><?= $this->translate('Name') ?></th>
                     <th><?= $this->translate('Type') ?></th>
-                    <!--                    <th>--><? //= $this->translate('Created at') ?><!--</th>-->
                     <th><?= $this->translate('Start') ?></th>
                     <th><?= $this->translate('End') ?></th>
                     <th></th>
@@ -92,8 +91,6 @@ $this->headLink()
                             <?= $this->escapeHtml($option->getProposal()->getName()) ?>
                         </td>
                         <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
-                        <!--                        <td>-->
-                        <? //= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
                         <td><?= $option->getBeginTime()->format('d-m-Y') ?></td>
                         <td><?= $option->getEndTime()->format('d-m-Y') ?></td>
                         <td>

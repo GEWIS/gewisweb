@@ -11,8 +11,6 @@ use Zend\Mvc\I18n\Translator;
 use Zend\Validator\Callback;
 use Zend\Validator\NotEmpty;
 
-//use Zend\InputFilter\InputFilterInterface;
-
 class Activity extends Form implements InputFilterProviderInterface
 {
     protected $organs;
@@ -28,8 +26,6 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->translator = $translator;
 
         $this->setAttribute('method', 'post');
-        //$this->setHydrator(new ClassMethodsHydrator(false))
-        //    ->setObject(new \Activity\Model\Activity());
 
         // all the organs that the user belongs to in organId => name pairs
         $organOptions = [0 => $translator->translate('No organ')];
