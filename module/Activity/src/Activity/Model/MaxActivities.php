@@ -25,7 +25,7 @@ class MaxActivities
     /**
      * Who created this activity.
      *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Organ")
+     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
      * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
     protected $organ;
