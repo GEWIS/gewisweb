@@ -259,6 +259,9 @@ class ActivityCalendar extends AbstractAclService
         $max = 0;
         if ($maxActivities) {
             $max = $maxActivities->getValue();
+        } else {
+            # TODO: HARDCODED DEFAULT VALUE BELOW
+            $max = 2;
         }
         return $max;
     }
