@@ -255,7 +255,7 @@ class ActivityCalendar extends AbstractAclService
     protected function getMaxActivities($organId, $periodId)
     {
         $mapper = $this->getMaxActivitiesMapper();
-        $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, 1);
+        $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
         $max = 0;
         if ($maxActivities) {
             $max = $maxActivities->getValue();
