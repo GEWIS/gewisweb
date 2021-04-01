@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libmagickwand-dev \
         libmemcached-dev \
         libpng-dev \
+        libpq-dev \
         libxml2-dev \
         unzip \
         zlib1g-dev \
