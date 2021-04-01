@@ -10,7 +10,7 @@ services:
         networks:
             - network
         ports:
-            - "8010:80"
+            - "9200:80"
         restart: unless-stopped
 
     web:
