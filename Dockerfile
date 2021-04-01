@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         mbstring \
         pdo \
         pdo_mysql \
+        pdo_pgsql \
         soap \
         zip \
     && pecl install -o imagick \
