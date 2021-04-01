@@ -15,18 +15,17 @@ namespace Decision\Controller\FileBrowser;
  */
 class LocalFileReader implements FileReader
 {
-
     /**
      * The location in the local filesystem that is considered the 'root' for this browser
      * @var string
      */
-    static private $root;
+    private static $root;
 
     /**
      * A regex pattern matching all valid filepaths.
      * @var string
      */
-    static private $validFilepath;
+    private static $validFilepath;
 
     public function __construct($root, $validFilepath)
     {
@@ -41,7 +40,7 @@ class LocalFileReader implements FileReader
             return null;
         }
         $contentType = mime_content_type($fullPath);
-        if (substr($contentType,0, strlen('text')) === 'text') {
+        if (substr($contentType, 0, strlen('text')) === 'text') {
             $contentType = 'text/plain';
         }
         $response = new \Zend\Http\Response\Stream();
@@ -49,8 +48,8 @@ class LocalFileReader implements FileReader
         $response->setStatusCode(200);
         $headers = new \Zend\Http\Headers();
         $headers->addHeaderLine('Content-Type', $contentType)
-                ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
-                ->addHeaderLine('Content-Length', filesize($fullPath));
+            ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
+            ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
         return $response;
     }
@@ -82,10 +81,7 @@ class LocalFileReader implements FileReader
 
     protected function interpretDircontent($dircontent, $fullPath)
     {
-        if ($dircontent[0] === '.') {
-            return false;
-        }
-        if (!$this->isValidPathName($fullPath)) {
+        if ($dircontent[0] === '.' || !$this->isValidPathName($fullPath)) {
             return false;
         }
         if (is_link($fullPath)) {
@@ -105,7 +101,6 @@ class LocalFileReader implements FileReader
         //(likely, the path doesn't resolve to a valid entry in the filesystem at all)
         return false;
     }
-
 
     public function isDir($path)
     {
@@ -129,7 +124,6 @@ class LocalFileReader implements FileReader
 
     protected function isValidPathName($path)
     {
-        $res = preg_match('#^' . $this->validFilepath . '$#', $path) === 1;
-        return $res;
+        return preg_match('#^' . $this->validFilepath . '$#', $path) === 1;
     }
 }

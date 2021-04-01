@@ -6,7 +6,6 @@ use Zend\Soap\Client as SoapClient;
 
 class Client
 {
-
     /**
      * SOAP client
      *
@@ -76,7 +75,7 @@ class Client
         $vraag->addProperty(new Property("Voertaal", "string", $lang));
         $vraag->addProperty(new Property("ZoekInFullText", "boolean", "true"));
         $vraag->addProperty(new Property("Zoekstring", "string", ""));
- 
+
         return $this->call($vraag);
     }
 

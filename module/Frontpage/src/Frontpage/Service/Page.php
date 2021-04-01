@@ -10,7 +10,6 @@ use Frontpage\Model\Page as PageModel;
  */
 class Page extends AbstractAclService
 {
-
     /**
      * Returns a single page
      *
@@ -41,12 +40,10 @@ class Page extends AbstractAclService
     {
         $pageMapper = $this->getPageMapper();
         $parents = [];
-        if(!is_null($page)) {
-            if(!is_null($page->getSubCategory())) {
-                $parents[] = $pageMapper->findPage($page->getCategory());
-                if(!is_null($page->getName())) {
-                    $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
-                }
+        if (!is_null($page) && !is_null($page->getSubCategory())) {
+            $parents[] = $pageMapper->findPage($page->getCategory());
+            if (!is_null($page->getName())) {
+                $parents[] = $pageMapper->findPage($page->getCategory(), $page->getSubCategory());
             }
         }
 
@@ -181,8 +178,8 @@ class Page extends AbstractAclService
      *
      * @param array $files
      *
-     * @throws \Exception
      * @return array
+     * @throws \Exception
      */
     public function uploadImage($files)
     {
@@ -199,16 +196,14 @@ class Page extends AbstractAclService
                 $config = $this->getStorageConfig();
                 $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
                 return $config['public_dir'] . '/' . $fileName;
-            } else {
-                throw new \Exception(
-                    $this->getTranslator()->translate('The uploaded file does not have a valid extension')
-                );
             }
-        } else {
-            throw new \Exception(
-                $this->getTranslator()->translate('The uploaded file is not a valid image')
+            throw new \InvalidArgumentException(
+                $this->getTranslator()->translate('The uploaded file does not have a valid extension')
             );
         }
+        throw new \InvalidArgumentException(
+            $this->getTranslator()->translate('The uploaded file is not a valid image')
+        );
     }
 
     /**
@@ -227,7 +222,7 @@ class Page extends AbstractAclService
         }
         $form = $this->sm->get('frontpage_form_page');
 
-        if(!is_null($pageId)) {
+        if (!is_null($pageId)) {
             $page = $this->getPageById($pageId);
             $form->bind($page);
         }

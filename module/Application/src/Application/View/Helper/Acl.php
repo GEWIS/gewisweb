@@ -4,10 +4,8 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-
 class Acl extends AbstractHelper
 {
-
     /**
      * Service locator
      *
@@ -49,7 +47,7 @@ class Acl extends AbstractHelper
     public function __invoke($factory)
     {
         $this->acl = $this->getServiceLocator()->get($factory);
-        if($this->acl instanceof \Zend\Permissions\Acl\Acl) {
+        if ($this->acl instanceof \Zend\Permissions\Acl\Acl) {
             return $this;
         } else {
             throw new \Zend\Code\Exception\InvalidArgumentException(

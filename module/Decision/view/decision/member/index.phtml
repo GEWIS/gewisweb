@@ -25,11 +25,13 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"
+                       class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
-                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
+                       class="panel panel-image align-middle">
                         <div class="big-icon fas fa-image"></div>
                         <div class="panel-heading"><?= $this->translate('My photo\'s') ?></div>
                     </a>
@@ -52,7 +54,8 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-sitemap"></div>
                         <div class="panel-heading"><?= $this->translate('Organs') ?></div>
                     </a>
-                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>"
+                       class="panel panel-image align-middle">
                         <div class="big-icon fas fa-download"></div>
                         <div class="panel-heading"><?= $this->translate('Public archive') ?></div>
                     </a>
@@ -64,7 +67,8 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-compact-disc"></div>
                         <div class="panel-heading"><?= $this->translate('Microsoft Imagine') ?></div>
                     </a>
-                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>"
+                       class="panel panel-image align-middle">
                         <div class="big-icon fas fa-link"></div>
                         <div class="panel-heading"><?= $this->translate('Links') ?></div>
                     </a>
@@ -81,49 +85,50 @@ $meetings = $this->meetings;
                         </div>
                         <div class="panel-body">
                             <?=
-                                sprintf(
-                                    $this->translate('The next meeting is %s%s %s%s on %s.'),
-                                    '<a href="' . $this->url('decision/meeting', [ 'type' => $this->upcoming->getType(), 'number' => $this->upcoming->getNumber() ]) . '">',
-                                    $this->upcoming->getType(),
-                                    $this->upcoming->getNumber(),
-                                    '</a>',
-                                    $this->dateFormat($this->upcoming->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
-                                )
+                            sprintf(
+                                $this->translate('The next meeting is %s%s %s%s on %s.'),
+                                '<a href="' . $this->url('decision/meeting', ['type' => $this->upcoming->getType(), 'number' => $this->upcoming->getNumber()]) . '">',
+                                $this->upcoming->getType(),
+                                $this->upcoming->getNumber(),
+                                '</a>',
+                                $this->dateFormat($this->upcoming->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
+                            )
                             ?>
                         </div>
                     </div>
                     <p>
                         <?=
-                            sprintf(
-                                $this->translate('If you aren\'t able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
-                                '<a href="' . $this->url('decision/authorizations') . '">',
-                                '</a>'
-                            )
+                        sprintf(
+                            $this->translate('If you aren\'t able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
+                            '<a href="' . $this->url('decision/authorizations') . '">',
+                            '</a>'
+                        )
                         ?>
                     </p>
-                    <hr />
+                    <hr/>
                 <?php endif; ?>
                 <p><?= $this->translate('Search through the list of decisions accumulated from past meetings:') ?></p>
                 <form method="post" action="<?= $this->url('decision/search') ?>" class="form-inline">
-                    <input type="text" name="query" class="form-control" placeholder="<?= $this->translate('Search by keyword or meeting number') ?>" />
+                    <input type="text" name="query" class="form-control"
+                           placeholder="<?= $this->translate('Search by keyword or meeting number') ?>"/>
                     <button type="submit" class="btn btn-default">
                         <?= $this->translate('Search') ?>
                     </button>
                 </form>
-                <hr />
-                <?php foreach($meetingsCollection as $type => $meetings): ?>
+                <hr/>
+                <?php foreach ($meetingsCollection as $type => $meetings): ?>
                     <p><?= sprintf($this->translate('The latest %s meetings that took place:'), $type) ?></p>
                     <ul>
-                        <?php foreach($meetings as $meeting): ?>
+                        <?php foreach ($meetings as $meeting): ?>
                             <li>
-                                <a href="<?= $this->url('decision/meeting', [ 'type' => $meeting->getType(), 'number' => $meeting->getNumber() ]) ?>">
+                                <a href="<?= $this->url('decision/meeting', ['type' => $meeting->getType(), 'number' => $meeting->getNumber()]) ?>">
                                     <?=
-                                        sprintf(
-                                            $this->translate('%s %s on %s'),
-                                            $meeting->getType(),
-                                            $meeting->getNumber(),
-                                            $this->dateFormat($meeting->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
-                                        )
+                                    sprintf(
+                                        $this->translate('%s %s on %s'),
+                                        $meeting->getType(),
+                                        $meeting->getNumber(),
+                                        $this->dateFormat($meeting->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
+                                    )
                                     ?>
                                 </a>
                             </li>

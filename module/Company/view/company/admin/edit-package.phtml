@@ -54,13 +54,13 @@ $form->prepare()
         </tr>
         </thead>
 
-        <?php $lniDoneList = []?>
+        <?php $lniDoneList = [] ?>
         <?php foreach ($package->getJobs() as $job): ?>
             <?php
-               if(array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
-                   continue;
-               }
-               $lniDoneList[$job->getLanguageNeutralId()] = $job;
+            if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                continue;
+            }
+            $lniDoneList[$job->getLanguageNeutralId()] = $job;
             ?>
             <tr>
                 <td>
@@ -116,10 +116,11 @@ $form->prepare()
     </div>
 </div>
 <script>
-    deleteJob = function(id) {
+    deleteJob = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deleteJob', {
             'slugCompanyName': '<?= $companyName ?>',
             'packageId': '<?= $package->getId() ?>',
-            'languageNeutralJobId': id}));
+            'languageNeutralJobId': id
+        }));
     };
 </script>

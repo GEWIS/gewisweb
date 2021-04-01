@@ -13,14 +13,12 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Summary extends Exam
 {
-
     /**
      * Author of the summary.
      *
      * @ORM\Column(type="string")
      */
     protected $author;
-
 
     /**
      * Get the author.

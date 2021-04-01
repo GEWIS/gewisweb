@@ -22,7 +22,8 @@ $form->setAttribute('class', 'form-horizontal');
             $element->setAttribute('class', 'form-control');
             ?>
             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                <label for="<?= $element->getAttribute('id') ?>"
+                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
                 <div class="col-sm-7">
                     <?= $this->formInput($element) ?>
                     <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
@@ -47,6 +48,7 @@ $form->setAttribute('class', 'form-horizontal');
         <div class="form-group">
             <div class="col-sm-offset-5 col-sm-7">
                 <?php
+                echo $this->formElement($form->get('security'));
                 $submit = $form->get('submit');
                 $submit->setAttribute('class', 'btn btn-primary');
                 ?>
@@ -59,11 +61,11 @@ $form->setAttribute('class', 'form-horizontal');
     <div class="panel-footer">
         <?php $url = $this->url('user/default', ['action' => 'register']); ?>
         <p>
-        <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
+            <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
         </p>
         <?php $url = $this->url('user/default', ['action' => 'reset']); ?>
         <p>
-        <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+            <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
         </p>
     </div>
 </div>

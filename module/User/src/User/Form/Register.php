@@ -8,7 +8,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class Register extends Form
 {
-
     const ERROR_WRONG_EMAIL = 'wrong_email';
     const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
     const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
@@ -56,34 +55,34 @@ class Register extends Form
     public function setError($error)
     {
         switch ($error) {
-        case self::ERROR_WRONG_EMAIL:
-            $this->setMessages([
-                'email' => [
-                    $this->translate->translate("This email address does not be long to the given member.")
-                ]
-            ]);
-            break;
-        case self::ERROR_MEMBER_NOT_EXISTS:
-            $this->setMessages([
-                'lidnr' => [
-                    $this->translate->translate("There is no member with this membership number.")
-                ]
-            ]);
-            break;
-        case self::ERROR_ALREADY_REGISTERED:
-            $this->setMessages([
-                'lidnr' => [
-                    $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
-                ]
-            ]);
-            break;
-        case self::ERROR_USER_ALREADY_EXISTS:
-            $this->setMessages([
-                'lidnr' => [
-                    $this->translate->translate("This member already has an account.")
-                ]
-            ]);
-            break;
+            case self::ERROR_WRONG_EMAIL:
+                $this->setMessages([
+                    'email' => [
+                        $this->translate->translate("This email address does not be long to the given member.")
+                    ]
+                ]);
+                break;
+            case self::ERROR_MEMBER_NOT_EXISTS:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("There is no member with this membership number.")
+                    ]
+                ]);
+                break;
+            case self::ERROR_ALREADY_REGISTERED:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
+                    ]
+                ]);
+                break;
+            case self::ERROR_USER_ALREADY_EXISTS:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("This member already has an account.")
+                    ]
+                ]);
+                break;
         }
     }
 
@@ -112,5 +111,3 @@ class Register extends Form
         $this->setInputFilter($filter);
     }
 }
-
-

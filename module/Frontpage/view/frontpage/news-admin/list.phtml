@@ -15,7 +15,7 @@
     <table class="table table-hover">
         <tbody>
         <?php foreach ($paginator as $newsItem): ?>
-            <tr onclick="window.document.location='<?= $this->url('admin_news/edit', ['item_id' => $newsItem->getId()])?>'">
+            <tr onclick="window.document.location='<?= $this->url('admin_news/edit', ['item_id' => $newsItem->getId()]) ?>'">
                 <td><?= $newsItem->getDutchTitle() ?></td>
                 <td><?= $newsItem->getEnglishTitle() ?></td>
                 <td><?= $newsItem->getDate()->format('d-m-Y') ?></td>

@@ -2,7 +2,6 @@
 
 namespace User\Controller;
 
-
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
@@ -11,7 +10,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 class ApiAuthenticationController extends AbstractActionController
 {
-
     /**
      * @var UserService
      */

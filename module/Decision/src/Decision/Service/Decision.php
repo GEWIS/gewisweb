@@ -16,7 +16,6 @@ use User\Permissions\NotAllowedException;
  */
 class Decision extends AbstractAclService
 {
-
     /**
      * Get all meetings.
      *
@@ -437,7 +436,6 @@ class Decision extends AbstractAclService
         );
 
         return $authorization;
-
     }
 
     /**

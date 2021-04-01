@@ -19,8 +19,9 @@ $this->headTitle($this->translate('Members')); ?>
                 $now = new DateTime();
                 $diff = $now->diff($member->getBirth());
                 $years = $diff->y;
-                if ($diff->m > 0)
+                if ($diff->m > 0) {
                     $years++;
+                }
                 ?>
                 <tr>
                     <td><?= $this->dateFormat(

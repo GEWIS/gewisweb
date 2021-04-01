@@ -6,14 +6,12 @@ use Doctrine\ORM\EntityManager;
 
 class Session
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -37,6 +35,7 @@ class Session
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
     /**
      * Find a session by its id
      *
@@ -63,7 +62,6 @@ class Session
             $this->em->flush();
         }
     }
-
 
     /**
      * Persist a session model
@@ -101,6 +99,7 @@ class Session
     {
         $this->em->remove($entity);
     }
+
     /**
      * Get the repository for this mapper.
      *

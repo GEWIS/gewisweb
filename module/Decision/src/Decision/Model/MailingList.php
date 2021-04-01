@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class MailingList
 {
-
     /**
      * Mailman-identifier / name.
      *
@@ -57,7 +56,6 @@ class MailingList
      * @ORM\ManyToMany(targetEntity="Member", mappedBy="lists")
      */
     protected $members;
-
 
     /**
      * Constructor.

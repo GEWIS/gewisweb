@@ -3,8 +3,8 @@
 namespace Company\Model;
 
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * Job model.
@@ -141,17 +141,17 @@ class Job
         // noting to do
     }
 
-
     /**
      * Get's the id
      */
     public function getLanguageNeutralId()
     {
-        $id = $this->languageNeutralId;
-        if ($id == 0) {
+        $lnid = $this->languageNeutralId;
+        if ($lnid == 0) {
             return $this->id;
         }
-        return $id;
+
+        return $lnid;
     }
 
     /**
@@ -244,7 +244,7 @@ class Job
 
     public function isActive()
     {
-        return $this->getActive() and $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
+        return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
     }
 
     /**
@@ -374,12 +374,13 @@ class Job
     /**
      * Set the job's timestamp.
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      */
     public function setTimeStamp($timestamp)
     {
         $this->timestamp = $timestamp;
     }
+
     /**
      * Get the job's description.
      *

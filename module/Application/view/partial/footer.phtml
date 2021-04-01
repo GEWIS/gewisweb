@@ -7,7 +7,7 @@
             <div class="col-sm-10 col-md-11">
                 <div class="row">
                     <div class="col-sm-8">
-                        <?php if($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                        <?php if ($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
                             <h3><?= $this->translate('Infima') ?></h3>
                             <p>
                                 <?= $this->infima() ?>
@@ -17,9 +17,12 @@
                             - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
                     </div>
                     <div class="col-sm-4">
-                        <i class="fas fa-address-book"></i> <a href="/vereniging/contact"><?= $this->translate('Contact') ?></a><br>
-                        <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
-                        <i class="fab fa-facebook-square"></i> <a href="https://www.facebook.com/svgewis/">Facebook</a><br>
+                        <i class="fas fa-address-book"></i> <a
+                            href="/vereniging/contact"><?= $this->translate('Contact') ?></a><br>
+                        <i class="fab fa-linkedin"></i> <a
+                            href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
+                        <i class="fab fa-facebook-square"></i> <a
+                            href="https://www.facebook.com/svgewis/">Facebook</a><br>
                         <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/svgewis/">Instagram</a>
                     </div>
                 </div>

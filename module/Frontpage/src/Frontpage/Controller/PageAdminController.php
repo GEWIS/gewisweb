@@ -6,10 +6,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-
 class PageAdminController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $pages = $this->getPageService()->getPages();
@@ -49,7 +47,7 @@ class PageAdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($pageService->updatePage($pageId, $request->getPost())) {
-                    $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
@@ -87,6 +85,7 @@ class PageAdminController extends AbstractActionController
 
         return new JsonModel($result);
     }
+
     /**
      * Get the Page service.
      *

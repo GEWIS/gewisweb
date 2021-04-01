@@ -6,14 +6,12 @@ use Doctrine\ORM\EntityManager;
 
 class LoginAttempt
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor

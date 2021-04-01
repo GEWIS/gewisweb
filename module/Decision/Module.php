@@ -1,11 +1,11 @@
 <?php
+
 namespace Decision;
 
 use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
-
     /**
      * Get the autoloader configuration.
      *

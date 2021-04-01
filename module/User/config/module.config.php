@@ -1,4 +1,5 @@
 <?php
+
 use User\Controller\ApiAuthenticationController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
 
@@ -6,23 +7,23 @@ return [
     'router' => [
         'routes' => [
             'user' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
-                    'route'    => '/user',
+                    'route' => '/user',
                     'defaults' => [
                         '__NAMESPACE__' => 'User\Controller',
-                        'controller'    => 'User',
-                        'action'        => 'index',
+                        'controller' => 'User',
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type'    => 'Segment',
+                        'type' => 'Segment',
                         'options' => [
-                            'route'    => '[/:action]',
+                            'route' => '[/:action]',
                             'constraints' => [
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                         ],
                     ],
@@ -58,7 +59,7 @@ return [
                                 'code' => '[a-zA-Z0-9]*'
                             ],
                             'defaults' => [
-                                'code'   => '',
+                                'code' => '',
                                 'action' => 'activateReset'
                             ]
                         ]
@@ -71,7 +72,7 @@ return [
                                 'code' => '[a-zA-Z0-9]*'
                             ],
                             'defaults' => [
-                                'code'   => '',
+                                'code' => '',
                                 'action' => 'activate'
                             ]
                         ]
@@ -80,7 +81,7 @@ return [
                 'priority' => 100
             ],
             'user_admin' => [
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => [
                     'route' => '/admin/user',
                     'defaults' => [
@@ -95,7 +96,7 @@ return [
                             'route' => '/api',
                             'defaults' => [
                                 'controller' => 'ApiAdmin',
-                                'action'     => 'index'
+                                'action' => 'index'
                             ]
                         ],
                         'may_terminate' => true,
@@ -103,7 +104,7 @@ return [
                             'remove' => [
                                 'type' => 'Segment',
                                 'options' => [
-                                    'route'    => '/remove/:id',
+                                    'route' => '/remove/:id',
                                     'constraints' => [
                                         'id' => '[0-9]+',
                                     ],
@@ -115,7 +116,7 @@ return [
                             'default' => [
                                 'type' => 'Segment',
                                 'options' => [
-                                    'route'    => '/:action',
+                                    'route' => '/:action',
                                     'constraints' => [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ]
@@ -165,7 +166,7 @@ return [
             'user' => __DIR__ . '/../view/'
         ],
         'template_map' => [
-            'user/login'       => __DIR__ . '/../view/partial/login.phtml',
+            'user/login' => __DIR__ . '/../view/partial/login.phtml',
         ],
     ],
     'doctrine' => [

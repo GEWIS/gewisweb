@@ -8,7 +8,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class OrganInformation extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translator)
     {
         parent::__construct();

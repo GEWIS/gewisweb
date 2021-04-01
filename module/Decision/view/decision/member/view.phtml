@@ -16,7 +16,7 @@ use Decision\Model\Address;
     <div class="container">
         <h1><?= $member->getFullName() ?></h1>
         <div class="row">
-        <div class="col-md-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th><?= $this->translate('Gender') ?></th>
@@ -101,16 +101,19 @@ use Decision\Model\Address;
             <div class="col-md-6">
                 <?php if ($profilePhoto != null): ?>
                     <div class="row">
-                            <div class="col-sm-12 col-xs-12">
-                              <a class="thumbnail" href="<?= $this->url('photo/photo', ['photo_id' => $profilePhoto->getId()]); ?>">
-                                  <img class="img-responsive" src="<?= $this->fileUrl($profilePhoto->getLargeThumbPath()) ?>" alt="">
-                              </a>
-                            </div>
+                        <div class="col-sm-12 col-xs-12">
+                            <a class="thumbnail"
+                               href="<?= $this->url('photo/photo', ['photo_id' => $profilePhoto->getId()]); ?>">
+                                <img class="img-responsive"
+                                     src="<?= $this->fileUrl($profilePhoto->getLargeThumbPath()) ?>" alt="">
+                            </a>
+                        </div>
                     </div>
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>" class="panel panel-image">
+                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
+                           class="panel panel-image">
                             <div class="panel-body">
                                 <div class="far fa-image big-icon"></div>
                                 <h4><?= sprintf($this->translate("Photo's of %s"), $member->getFirstName()); ?></h4>

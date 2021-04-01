@@ -8,7 +8,6 @@ use Decision\Model\Organ;
 
 interface OrganResourceInterface extends ResourceInterface
 {
-
     /**
      * Get the organ of this resource.
      *

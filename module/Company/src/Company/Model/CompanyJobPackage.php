@@ -20,6 +20,7 @@ class CompanyJobPackage extends CompanyPackage
         parent::__construct();
         $this->jobs = new ArrayCollection();
     }
+
     /**
      * The package's jobs.
      *
@@ -63,11 +64,11 @@ class CompanyJobPackage extends CompanyPackage
             if ($job->getCategory() === null) {
                 return false;
             }
-            return $job->getCategory()->getLanguageNeutralId() ===  $category->getLanguageNeutralId()
+            return $job->getCategory()->getLanguageNeutralId() === $category->getLanguageNeutralId()
                 && $job->isActive() && $job->getLanguage() === $category->getLanguage();
         };
-        $filteredJobs = array_filter($this->jobs->toArray(), $filter);
-        return $filteredJobs;
+
+        return array_filter($this->jobs->toArray(), $filter);
     }
 
     /**

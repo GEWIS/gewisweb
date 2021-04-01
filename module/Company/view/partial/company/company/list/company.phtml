@@ -4,12 +4,14 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
 
 ?>
 <div id="company-<?= $company->getId(); ?>">
-<h1 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h1>
+    <h1 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h1>
     <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
     <div class="row">
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="company-logo img-responsive center-block" src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>" alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>" />
+                <img class="company-logo img-responsive center-block"
+                     src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                     alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>"/>
             </a>
             <div class="">
                 <h4><?= $this->translate('Contact') ?></h4>
@@ -17,33 +19,35 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
                     <p class="company-contactName"><?= $company->getContactName() ?></p>
                 <?php endif ?>
                 <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
-                <p class="company-phone"><a href="tel:<?= rawurlencode($company->getPhone()) ?>"><?= $company->getPhone() ?></a></p>
+                <p class="company-phone"><a
+                        href="tel:<?= rawurlencode($company->getPhone()) ?>"><?= $company->getPhone() ?></a></p>
                 <p class="company-website"><a href="<?= $companyURL ?>">Visit website</a></p>
-                <p class="company-email"><a href="mailto:<?= rawurlencode($company->getEmail()) ?>"><?= $company->getEmail() ?></a></p>
+                <p class="company-email"><a
+                        href="mailto:<?= rawurlencode($company->getEmail()) ?>"><?= $company->getEmail() ?></a></p>
             </div>
             <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs() ?>">
                 <ul class="company-jobs-list">
-                    <?php  // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
+                    <?php // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
                     foreach ($company->getPackages() as $package):
                         if ($package->getType() === 'job'):
                             $categories = $this->jobCategories();
-                            foreach($categories as $category):
+                            foreach ($categories as $category):
                                 $jobs = $package->getJobsInCategory($category);
                                 if (count($jobs) > 0):
-                                ?> 
-                                    <h4><?= $category->getPluralName()?></h4>
-                                    <?php
+                                    ?>
+                                    <h4><?= $category->getPluralName() ?></h4>
+                                <?php
                                 endif;
-                                foreach($jobs as $job):
+                                foreach ($jobs as $job):
                                     ?>
                                     <li class="company-jobs-job">
-                                    <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                        ['slugCompanyName' => $company->getSlugName(),
-                                        'slugJobName' => $job->getSlugName(),
-                                        'category' => $category->getSlug(),
-                                    ], [], true) ?>"><?= $job->getName(); ?></a>
+                                        <a href="<?= $this->url('company/companyItem/joblist/job_item',
+                                            ['slugCompanyName' => $company->getSlugName(),
+                                                'slugJobName' => $job->getSlugName(),
+                                                'category' => $category->getSlug(),
+                                            ], [], true) ?>"><?= $job->getName(); ?></a>
                                     </li>
-                                    <?php
+                                <?php
                                 endforeach;
                             endforeach;
                         endif;
@@ -54,7 +58,8 @@ $companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
         </div>
         <div class="col-md-9">
             <h2><?= $this->translate('Description') ?></h2>
-            <div class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
+            <div
+                class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
         </div>
     </div>
 </div>

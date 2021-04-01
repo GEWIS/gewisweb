@@ -16,7 +16,6 @@ use Decision\Model\SubDecision;
  */
 abstract class FoundationReference extends SubDecision
 {
-
     /**
      * Reference to foundation of organ.
      *
@@ -30,7 +29,6 @@ abstract class FoundationReference extends SubDecision
      * })
      */
     protected $foundation;
-
 
     /**
      * Get organ foundation.

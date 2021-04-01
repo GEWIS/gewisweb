@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class PollComment implements ResourceInterface
 {
-
     /**
      * Poll comment ID.
      *
@@ -59,7 +58,6 @@ class PollComment implements ResourceInterface
      * @ORM\Column(type="datetime")
      */
     protected $createdOn;
-
 
     /**
      * Get the comment ID.
@@ -124,7 +122,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the author.
      *
-     * @param string $author;
+     * @param string $author
      */
     public function setAuthor($author)
     {

@@ -3,8 +3,13 @@
 $this->headTitle($this->translate('Education'));
 ?>
 <style>
-    .row-spacing-top { margin-top: 2rem; }
-    body.js .table-clickable tbody tr { cursor: pointer; }
+    .row-spacing-top {
+        margin-top: 2rem;
+    }
+
+    body.js .table-clickable tbody tr {
+        cursor: pointer;
+    }
 </style>
 <div class="container">
     <section class="section">
@@ -19,15 +24,15 @@ $this->headTitle($this->translate('Education'));
             </div>
             <div class="col-md-8">
                 <?php
-                    $form = $this->form;
-                    $form->prepare();
+                $form = $this->form;
+                $form->prepare();
 
-                    $form->setAttribute('action', $this->url('education'));
-                    $form->setAttribute('method', 'get');
-                    $form->setAttribute('class', '');
-                    $form->setAttribute('role', 'form');
+                $form->setAttribute('action', $this->url('education'));
+                $form->setAttribute('method', 'get');
+                $form->setAttribute('class', '');
+                $form->setAttribute('role', 'form');
 
-                    echo $this->form()->openTag($form);
+                echo $this->form()->openTag($form);
                 ?>
                 <div class="input-group">
                     <?php
@@ -38,7 +43,8 @@ $this->headTitle($this->translate('Education'));
                     ?>
                     <?= $this->formInput($element) ?>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default" value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
+                        <button type="submit" class="btn btn-default"
+                                value="<?= $this->translate('Search') ?>"><?= $this->translate('Search') ?></button>
                     </span>
                 </div>
 
@@ -46,28 +52,31 @@ $this->headTitle($this->translate('Education'));
 
                 <?= $this->form()->closeTag(); ?>
 
-                <br />
+                <br/>
 
                 <?php if (isset($courses)): ?>
-                <p><strong><?= sprintf($this->translate('Found %d course(s) matching your description'), count($courses)) ?></strong></p>
+                    <p>
+                        <strong><?= sprintf($this->translate('Found %d course(s) matching your description'), count($courses)) ?></strong>
+                    </p>
                 <?php endif; ?>
                 <?php if (!empty($courses)): ?>
                     <table class="table table-bordered table-striped table-hover table-clickable">
                         <thead>
-                            <tr>
-                                <td><?= $this->translate('Course code') ?></td>
-                                <td><?= $this->translate('Course name') ?></td>
-                                <td><?= $this->translate('Available documents') ?></td>
-                            </tr>
+                        <tr>
+                            <td><?= $this->translate('Course code') ?></td>
+                            <td><?= $this->translate('Course name') ?></td>
+                            <td><?= $this->translate('Available documents') ?></td>
+                        </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($courses as $course): ?>
+                        <?php foreach ($courses as $course): ?>
                             <?php
-                                $courseLink =  $this->url('education/course', ['code' => $course->getCode()]);
+                            $courseLink = $this->url('education/course', ['code' => $course->getCode()]);
                             ?>
                             <tr data-link="<?= $courseLink ?>">
                                 <td>
-                                    <a href="<?= $courseLink ?>" title="<?= $this->translate('View available documents') ?>">
+                                    <a href="<?= $courseLink ?>"
+                                       title="<?= $this->translate('View available documents') ?>">
                                         <?= $course->getCode() ?>
                                     </a>
                                 </td>
@@ -78,30 +87,40 @@ $this->headTitle($this->translate('Education'));
                                     <?= count($course->getExams()) ?: $this->translate('None') ?>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
 
                 <p class="text-muted">
                     <?=
-                        sprintf(
-                            $this->translate('Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit.'),
-                            '<a href="mailto:co@gewis.nl" title="' . $this->translate('Mail the education officer') . '">',
-                            '</a>'
-                        );
+                    sprintf(
+                        $this->translate('Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit.'),
+                        '<a href="mailto:co@gewis.nl" title="' . $this->translate('Mail the education officer') . '">',
+                        '</a>'
+                    );
                     ?>
                 </p>
 
-                <hr />
+                <hr/>
 
                 <p><?= $this->translate("For old exams of minor courses, you can also look at:") ?></p>
                 <ul>
-                    <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a> (<?= $this->translate("Applied Physics") ?>)</li>
-                    <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT Protagoras</a> (<?= $this->translate("Biomedical Engineering") ?>)</li>
-                    <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a> (<?= $this->translate("Electrical Engineering") ?>)</li>
-                    <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a> (<?= $this->translate("Chemical Engineering") ?>)</li>
-                    <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a> (<?= $this->translate("Innovation Sciences") ?>)</li>
+                    <li><a href="http://phys.tue.nl/stoor/tentamens/Nieuwe%20Curriculum%20(2009-20xx)/" target="_blank">STOOR</a>
+                        (<?= $this->translate("Applied Physics") ?>)
+                    </li>
+                    <li><a href="https://www.protagoras.tue.nl/nl/studenten/onderwijs/vakken" target="_blank">SvBMT
+                            Protagoras</a> (<?= $this->translate("Biomedical Engineering") ?>)
+                    </li>
+                    <li><a href="https://thor.edu/examarchive" target="_blank">e.t.s.v. Thor</a>
+                        (<?= $this->translate("Electrical Engineering") ?>)
+                    </li>
+                    <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a>
+                        (<?= $this->translate("Chemical Engineering") ?>)
+                    </li>
+                    <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a>
+                        (<?= $this->translate("Innovation Sciences") ?>)
+                    </li>
                 </ul>
             </div>
         </div>
@@ -114,36 +133,34 @@ $this->headTitle($this->translate('Education'));
                     <div class="panel-heading">
                         <span class="h4"><?= $this->translate('Books') ?></span>
                     </div>
-                    <div class="panel-thumb">
-                        <a class="thumbnail" href="https://mindbus.go2cloud.org/aff_c?offer_id=65&aff_id=639&url=https://www.athenaeum.nl/studieboeken/studieverenigingen/?utm_source=639" style="margin-bottom: 0 !important;">
-                            <img class="img-responsive"
-                                src="/img/athenaeum-horizontal-banner.jpg"
-                                alt="<?= $this->translate('Athenaeum Bookstore') ?>">
-                        </a>
-                    </div>
                     <div class="panel-body">
                         <p><?= $this->translate('Order your course books via GEWIS to receive a discount. Specific ordering deadlines and pickup dates will be timely communicated to you via an email.') ?></p>
                     </div>
                     <div class="panel-footer panel-footer--links">
-                        <a href="https://gewis.nl/boeken" title="<?= $this->translate('Visit the webshop') ?>" class="panel-footer__link--primary" target="_blank"><?= $this->translate('Visit webshop') ?></a>
+                        <a href="https://gewis.nl/boeken" title="<?= $this->translate('Visit the webshop') ?>"
+                           class="panel-footer__link--primary"
+                           target="_blank"><?= $this->translate('Visit webshop') ?></a>
                     </div>
                 </div>
             </div>
 
             <?php if ($this->acl('decision_acl')->isAllowed('dreamspark', 'login')): ?>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="h4"><?= $this->translate('Microsoft Imagine') ?></span>
-                    </div>
-                    <div class="panel-body">
-                        <p><?= $this->translate('Through Microsoft Imagine you have access to a vast variety of Microsoft products at no cost. The only requirement is that you are a member of GEWIS.') ?></p>
-                    </div>
-                    <div class="panel-footer panel-footer--links">
-                        <a href="<?= $this->url('member/dreamspark') ?>" title="<?= $this->translate('Visit the Microsoft Imagine portal') ?>" class="panel-footer__link--primary" target="_blank"><?= $this->translate('Visit portal') ?></a>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="h4"><?= $this->translate('Microsoft Imagine') ?></span>
+                        </div>
+                        <div class="panel-body">
+                            <p><?= $this->translate('Through Microsoft Imagine you have access to a vast variety of Microsoft products at no cost. The only requirement is that you are a member of GEWIS.') ?></p>
+                        </div>
+                        <div class="panel-footer panel-footer--links">
+                            <a href="<?= $this->url('member/dreamspark') ?>"
+                               title="<?= $this->translate('Visit the Microsoft Imagine portal') ?>"
+                               class="panel-footer__link--primary"
+                               target="_blank"><?= $this->translate('Visit portal') ?></a>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php endif ?>
         </div>
 
@@ -154,11 +171,11 @@ $this->headTitle($this->translate('Education'));
             <div class="col-md-12">
                 <p>
                     <?=
-                        sprintf(
-                            $this->translate('Do you have a complaint or suggestion concerning the education at the TU/e? Contact the %seducation officer%s to share your ideas.'),
-                            '<a href="mailto:klachten@gewis.nl" title="' . $this->translate('Mail the education officer') . '">',
-                            '</a>'
-                        )
+                    sprintf(
+                        $this->translate('Do you have a complaint or suggestion concerning the education at the TU/e? Contact the %seducation officer%s to share your ideas.'),
+                        '<a href="mailto:klachten@gewis.nl" title="' . $this->translate('Mail the education officer') . '">',
+                        '</a>'
+                    )
                     ?>
                 </p>
             </div>
@@ -171,10 +188,10 @@ $this->headTitle($this->translate('Education'));
             <div class="col-md-12">
                 <p>
                     <?=
-                            $this->translate('The exams on the website of GEWIS are provided by Education & Student Affairs of the department of Mathematics and Computer Science of the TU/e.'),
-                            $this->translate('If an exam has been put online without the intention of the author, please let the board of GEWIS know by sending an') . ' ',
-                            '<a href="mailto:board@gewis.nl" title="' . $this->translate('Email the board of GEWIS') . '">' . $this->translate('email to the board of GEWIS') . '</a>',
-                            ', ' . $this->translate('then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal.')
+                    $this->translate('The exams on the website of GEWIS are provided by Education & Student Affairs of the department of Mathematics and Computer Science of the TU/e.'),
+                        $this->translate('If an exam has been put online without the intention of the author, please let the board of GEWIS know by sending an') . ' ',
+                        '<a href="mailto:board@gewis.nl" title="' . $this->translate('Email the board of GEWIS') . '">' . $this->translate('email to the board of GEWIS') . '</a>',
+                        ', ' . $this->translate('then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal.')
                     ?>
                 </p>
             </div>

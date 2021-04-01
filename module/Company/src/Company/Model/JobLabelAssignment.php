@@ -21,7 +21,6 @@ class JobLabelAssignment
      */
     protected $id;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Company\Model\Job", inversedBy="labels")
      * @ORM\JoinColumn(name="job_id",referencedColumnName="id")

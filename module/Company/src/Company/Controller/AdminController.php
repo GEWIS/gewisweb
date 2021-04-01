@@ -2,6 +2,8 @@
 
 namespace Company\Controller;
 
+use DateInterval;
+use DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
 use Zend\View\Model\ViewModel;
@@ -23,8 +25,8 @@ class AdminController extends AbstractActionController
             'companyList' => $companyService->getHiddenCompanyList(),
             'categoryList' => $companyService->getCategoryList(false),
             'labelList' => $companyService->getLabelList(false),
-            'packageFuture' => $companyService->getPackageChangeEvents((new \DateTime())->add(
-                new \DateInterval("P1M")
+            'packageFuture' => $companyService->getPackageChangeEvents((new DateTime())->add(
+                new DateInterval("P1M")
             )),
         ]);
     }
@@ -110,7 +112,6 @@ class AdminController extends AbstractActionController
                     false
                 );
             }
-
         }
 
         // The form was not valid, or we did not get data back
@@ -313,8 +314,10 @@ class AdminController extends AbstractActionController
         foreach ($languages as $key) {
             $languageDictionary[$key] = $companyService->getLanguageDescription($key);
         }
+
         return $languageDictionary;
     }
+
     /**
      * Action that displays a form for editing a company
      *
@@ -348,7 +351,7 @@ class AdminController extends AbstractActionController
                 $company,
                 $post,
                 $request->getFiles()
-            )){
+            )) {
                 $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
                     'admin_company/default',
@@ -359,7 +362,6 @@ class AdminController extends AbstractActionController
                     [],
                     false
                 );
-
             }
         }
 
@@ -403,11 +405,10 @@ class AdminController extends AbstractActionController
         // Get form
         $packageForm = $companyService->getPackageForm($type);
 
-
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($companyService->savePackageByData($package,$request->getPost(), $request->getFiles())) {
+            if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
                 // TODO: possibly redirect to company
             }
         }
@@ -659,7 +660,6 @@ class AdminController extends AbstractActionController
             ]
         );
     }
-
 
     /**
      * Method that returns the service object for the company module.

@@ -37,7 +37,8 @@ $this->headTitle($this->translate('Activate'));
                             $element->setAttribute('placeholder', $this->translate('Password'));
                             ?>
                             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
                                 <div class="col-sm-7">
                                     <?= $this->formInput($element) ?>
                                     <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
@@ -49,7 +50,8 @@ $this->headTitle($this->translate('Activate'));
                             $element->setAttribute('placeholder', $this->translate('Verify password'));
                             ?>
                             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
                                 <div class="col-sm-7">
                                     <?= $this->formInput($element) ?>
                                     <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
