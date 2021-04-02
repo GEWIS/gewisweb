@@ -1,4 +1,6 @@
 *~
+*.gitignore
+*.log
 .*.DS_Store
 .*.sw?
 ._*
@@ -10,6 +12,8 @@ config/autoload/local.php
 config/autoload/zdt.local.php
 .env
 .env.dist
+.git/
+.gitattributes
 .idea/
 .mysql/
 .project
