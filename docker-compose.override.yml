@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+    mysql:
+        image: mysql:5.5
+        env_file:
+            - .env
+        volumes:
+            - gewisweb_mysql:/var/lib/mysql
+        networks:
+            - gewisweb_network
+    myadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        env_file:
+            - .env
+        depends_on:
+            - mysql
+        networks:
+            - gewisweb_network
+        ports:
+            - "8080:80"
+    nginx:
+        build: docker/nginx
+        ports:
+            - "80:80"
+    web:
+        build: .
+        env_file:
+            - .env
+        depends_on:
+            - mysql
+        entrypoint: ["/bin/sh", "/code/docker-entrypoint.override.sh"]
+
+volumes:
+    gewisweb_mysql:
+        name: gewisweb_mysql

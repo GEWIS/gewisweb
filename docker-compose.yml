@@ -1,41 +1,54 @@
-version: '2'
+version: '3.7'
 
 services:
     nginx:
-        image: koen1999/gewisweb_nginx:latest
+        image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
         depends_on:
-            -   web
+            - web
         volumes:
-            - code:/code
+            -   type: volume
+                source: gewisweb_code
+                target: /code
+                volume:
+                    nocopy: true
         networks:
-            - network
+            - gewisweb_network
         ports:
             - "8010:80"
         restart: unless-stopped
-
     web:
-        image: koen1999/gewisweb_web:latest
-        env_file:
-            - .env
+        image: web.docker-registry.gewis.nl/gewisweb_web:latest
         volumes:
-            - code:/code
-            - data:/code/data
-            - pulic:/code/public
+            -   type: volume
+                source: gewisweb_code
+                target: /code
+                volume:
+                    nocopy: false
+
+            -   type: volume
+                source: gewisweb_data
+                target: /data
+                volume:
+                    nocopy: false
+
+            -   type: volume
+                source: gewisweb_public
+                target: /public
+                volume:
+                    nocopy: false
         networks:
-            - network
+            - gewisweb_network
         restart: unless-stopped
 
+
 volumes:
-    data:
-        external:
-            name: gewisweb_data
-    public:
-        external:
-            name: gewisweb_public
-    code:
+    gewisweb_code:
         external: false
+    gewisweb_data:
+        name: gewisweb_data
+    gewisweb_public:
+        name: gewisweb_public
 
 networks:
-    network:
-        external:
-            name: gewisweb
+    gewisweb_network:
+        name: gewisweb

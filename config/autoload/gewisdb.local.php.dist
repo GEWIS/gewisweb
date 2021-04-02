@@ -1,8 +1,8 @@
 <?php
 return [
-    'host'     => '$DOCKER_DB2_HOST',
-    'port'     => '$DOCKER_DB2_PORT',
-    'user'     => '$DOCKER_DB2_USERNAME',
-    'password' => '$DOCKER_DB2_PASSWORD',
-    'dbname'   => '$DOCKER_DB2_DATABASE',
+    'host'     => getenv('DOCKER_DB2_HOST'),
+    'port'     => getenv('DOCKER_DB2_PORT'),
+    'user'     => getenv('DOCKER_DB2_USERNAME'),
+    'password' => getenv('DOCKER_DB2_PASSWORD'),
+    'dbname'   => getenv('DOCKER_DB2_DATABASE'),
 ];

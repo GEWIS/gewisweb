@@ -1,4 +1,3 @@
-#!/usr/bin/env sh
-
+#!/bin/sh
 service cron start
-docker-php-entrypoint
+php-fpm
