@@ -11,6 +11,11 @@ services:
                 target: /code
                 volume:
                     nocopy: true
+            -   type: volume
+                source: gewisweb_logs
+                target: /etc/nginx/logs
+                volume:
+                    nocopy: false
         networks:
             - gewisweb_network
         ports:
@@ -48,6 +53,8 @@ volumes:
         name: gewisweb_data
     gewisweb_public:
         name: gewisweb_public
+    gewisweb_logs:
+        name: gewisweb_logs
 
 networks:
     gewisweb_network:
