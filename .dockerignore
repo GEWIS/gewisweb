@@ -10,8 +10,8 @@ config/autoload/local.php
 config/autoload/zdt.local.php
 .env
 .env.dist
-.idea
-.mysql
+.idea/
+.mysql/
 .project
 .sass-cache/
 .settings
