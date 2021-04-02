@@ -38,6 +38,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         gd \
         intl \
         mbstring \
+        pgsql \
         pdo \
         pdo_mysql \
         pdo_pgsql \
