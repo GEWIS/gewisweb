@@ -7,6 +7,11 @@ define('APP_ENV', getenv('APP_ENV') ?: 'production');
  */
 chdir(dirname(__DIR__));
 
+// For Docker:
+if (file_exists('/code')) {
+    chdir('/code');
+}
+
 // Setup autoloading
 require 'init_autoloader.php';
 

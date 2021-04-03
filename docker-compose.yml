@@ -7,10 +7,10 @@ services:
             - web
         volumes:
             -   type: volume
-                source: gewisweb_code
-                target: /code
+                source: gewisweb_public
+                target: /public
                 volume:
-                    nocopy: true
+                    nocopy: false
             -   type: volume
                 source: gewisweb_logs
                 target: /etc/nginx/logs
@@ -25,17 +25,10 @@ services:
         image: web.docker-registry.gewis.nl/gewisweb_web:latest
         volumes:
             -   type: volume
-                source: gewisweb_code
-                target: /code
-                volume:
-                    nocopy: false
-
-            -   type: volume
                 source: gewisweb_data
                 target: /data
                 volume:
                     nocopy: false
-
             -   type: volume
                 source: gewisweb_public
                 target: /public
@@ -47,8 +40,6 @@ services:
 
 
 volumes:
-    gewisweb_code:
-        external: false
     gewisweb_data:
         name: gewisweb_data
     gewisweb_public:
