@@ -6,7 +6,7 @@ services:
         env_file:
             - .env
         volumes:
-            - gewisweb_mysql:/var/lib/mysql
+            - gewisweb_mysql:/var/lib/mysql:rw
         networks:
             - gewisweb_network
     myadmin:
@@ -33,4 +33,3 @@ services:
 
 volumes:
     gewisweb_mysql:
-        name: gewisweb_mysql

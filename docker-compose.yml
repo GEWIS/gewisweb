@@ -6,16 +6,8 @@ services:
         depends_on:
             - web
         volumes:
-            -   type: volume
-                source: gewisweb_public
-                target: /public
-                volume:
-                    nocopy: false
-            -   type: volume
-                source: gewisweb_logs
-                target: /etc/nginx/logs
-                volume:
-                    nocopy: false
+            - gewisweb_public:/public:ro
+            - gewisweb_logs:/etc/nginx/logs:rw
         networks:
             - gewisweb_network
         ports:
@@ -24,28 +16,16 @@ services:
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:latest
         volumes:
-            -   type: volume
-                source: gewisweb_data
-                target: /data
-                volume:
-                    nocopy: false
-            -   type: volume
-                source: gewisweb_public
-                target: /public
-                volume:
-                    nocopy: false
+            - gewisweb_data:/data:rw
+            - gewisweb_public:/public:rw
         networks:
             - gewisweb_network
         restart: unless-stopped
 
-
 volumes:
     gewisweb_data:
-        name: gewisweb_data
     gewisweb_public:
-        name: gewisweb_public
     gewisweb_logs:
-        name: gewisweb_logs
 
 networks:
     gewisweb_network:
