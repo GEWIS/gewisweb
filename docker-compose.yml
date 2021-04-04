@@ -19,7 +19,7 @@ services:
         networks:
             - gewisweb_network
         ports:
-            - "8010:80"
+            - "9200:80"
         restart: unless-stopped
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:latest

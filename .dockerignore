@@ -10,6 +10,7 @@ config/autoload/doctrine.external.php
 config/autoload/gewisdb.local.php
 config/autoload/local.php
 config/autoload/zdt.local.php
+.editorconfig
 .env
 .env.dist
 .git/
@@ -19,6 +20,7 @@ config/autoload/zdt.local.php
 .project
 .sass-cache/
 .settings
+Vagrantfile
 .vagrant/
 .vs/
 .~lock.*
