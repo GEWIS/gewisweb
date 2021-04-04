@@ -35,47 +35,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <?php if (null === $this->identity()): ?>
-                    <li class="visible-xs pull-left">
+                    <li class="pull-right">
                         <a href="<?= $this->url('user') ?>">
                             <span class="fas fa-user"></span>
                             <span class="sr-only"><?= $this->translate('Login') ?></span>
+                            <?= $this->translate('Login') ?>
                         </a>
-                    </li>
-                    <li class="dropdown pull-left hidden-xs">
-                        <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-user"></span>
-                            <span class="sr-only"><?= $this->translate('Login') ?></span>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-login">
-                            <form action="<?= $this->url('user') ?>" method="post">
-                                <div class="form-group">
-                                    <input type="text" name="login" class="form-control"
-                                           placeholder="<?= $this->translate('Membership number or email address') ?>"/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control"
-                                           placeholder="<?= $this->translate('Password') ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>
-                                        <input type="hidden" name="remember" value="0"><input type="checkbox"
-                                                                                              name="remember"
-                                                                                              checked="checked"
-                                                                                              value="1">
-                                        <?= $this->translate('Remember me') ?>
-                                    </label>
-                                </div>
-                                <button type="submit"
-                                        class="btn btn-primary btn-block"><?= $this->translate('Login') ?></button>
-                                <p><?= $this->translate('Or go to the') ?> <a
-                                        href="<?= $this->url('user/default', ['action' => 'register']) ?>"><?= $this->translate('registration page') ?></a>
-                                </p>
-
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            </form>
-                        </div>
                     </li>
                 <?php else: ?>
                     <?php $member = $this->identity()->getMember() ?>
