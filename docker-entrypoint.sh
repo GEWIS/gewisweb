@@ -1,4 +1,4 @@
 #!/bin/sh
+service cron startx
 ./web orm:generate-proxies
-service cron start
-php-fpm
+php-fpm -F -O
