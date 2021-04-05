@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Decision\Model;
-
 
 class AssociationYear
 {

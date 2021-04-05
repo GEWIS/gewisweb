@@ -6,7 +6,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class FileUrl extends AbstractHelper
 {
-
     /**
      * Service locator
      *
@@ -25,7 +24,7 @@ class FileUrl extends AbstractHelper
     {
         $config = $this->getServiceLocator()->get('config');
         $basedir = $config['storage']['public_dir'];
-        return $this->getView()->basePath() . '/' .  $basedir . '/' . $path;
+        return $this->getView()->basePath() . '/' . $basedir . '/' . $path;
     }
 
     /**

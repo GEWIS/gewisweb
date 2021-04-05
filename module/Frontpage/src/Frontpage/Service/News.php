@@ -10,7 +10,6 @@ use Frontpage\Model\NewsItem as NewsItemModel;
  */
 class News extends AbstractAclService
 {
-
     /**
      * Returns a single NewsItem by its id
      *

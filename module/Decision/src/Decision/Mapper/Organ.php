@@ -13,14 +13,12 @@ use Doctrine\ORM\EntityManager;
  */
 class Organ
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -104,25 +102,42 @@ class Organ
     /**
      * Find an organ by its abbreviation
      *
+     * It is possible that multiple organs with the same abbreviation exist,
+     * for example, through the reinstatement of an previously abrogated organ.
+     * To retrieve the latest occurence of such an organ use `$latest`.
+     *
      * @param string $abbr
      * @param string $type
+     * @param bool $latest
+     *    Whether to retrieve the latest occurence of an organ or not.
      *
      * @return \Decision\Model\Organ
      */
-    public function findByAbbr($abbr, $type = null)
+    public function findByAbbr($abbr, $type = null, $latest = false)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
         $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
-            ->where('o.abbr = :abbr');
+            ->where('o.abbr = :abbr')
+            ->setParameter('abbr', $abbr);
         if (!is_null($type)) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
+        if ($latest) {
+            $qb->orderBy('o.foundationDate', 'DESC');
+            $queryResult = $qb->getQuery()->getResult();
 
-        $qb->setParameter('abbr', $abbr);
+            if (empty($queryResult)) {
+                // the query did not return any records
+                throw new \Doctrine\ORM\NoResultException('no organ found');
+            }
+
+            // the query returned at least 1 record, use first (= latest) record
+            return $queryResult[0];
+        }
 
         return $qb->getQuery()->getSingleResult();
     }

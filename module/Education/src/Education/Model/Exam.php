@@ -17,7 +17,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class Exam implements ResourceInterface
 {
-
     const EXAM_TYPE_FINAL = 'exam';
     const EXAM_TYPE_INTERMEDIATE_TEST = 'intermediate';
     const EXAM_TYPE_ANSWERS = 'answers';

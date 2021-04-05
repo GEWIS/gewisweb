@@ -149,6 +149,7 @@ return [
     ],
 
     'regulations' => [
+        'activity-policy' => 'Beleid%20&%20Reglementen/Activiteitenbeleid',
         'borrel-reglement' => 'Beleid%20&%20Reglementen/Borrelreglement',
         'computer-reglement' => 'Beleid%20&%20Reglementen/Computerreglement',
         'sleutel-beleid' => 'Beleid%20&%20Reglementen/Sleutelbeleid',

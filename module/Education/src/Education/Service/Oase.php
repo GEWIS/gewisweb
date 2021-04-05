@@ -13,7 +13,6 @@ use Zend\Soap\Client as SoapClient;
  */
 class Oase extends AbstractService
 {
-
     /**
      * Update course info from OASE.
      *

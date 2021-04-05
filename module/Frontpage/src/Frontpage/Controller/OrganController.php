@@ -11,23 +11,21 @@ class OrganController extends AbstractActionController
     public function committeeListAction()
     {
         $committees = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
-        $vm = new ViewModel([
+
+        return new ViewModel([
             'committees' => $committees
         ]);
-
-        return $vm;
     }
 
     public function fraternityListAction()
     {
         $activeFraternities = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
         $abrogatedFraternities = $this->getOrganService()->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
-        $vm = new ViewModel([
+
+        return new ViewModel([
             'activeFraternities' => $activeFraternities,
             'abrogatedFraternities' => $abrogatedFraternities
         ]);
-
-        return $vm;
     }
 
     public function organAction()
@@ -36,7 +34,7 @@ class OrganController extends AbstractActionController
         $abbr = $this->params()->fromRoute('abbr');
         $organService = $this->getOrganService();
         try {
-            $organ = $organService->findOrganByAbbr($abbr, $type);
+            $organ = $organService->findOrganByAbbr($abbr, $type, true);
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
             $activities = $this->getActivityQueryService()->getOrganActivities($organ, 3);
@@ -45,7 +43,6 @@ class OrganController extends AbstractActionController
                 'organ' => $organ,
                 'activities' => $activities
             ], $organMemberInformation));
-
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }

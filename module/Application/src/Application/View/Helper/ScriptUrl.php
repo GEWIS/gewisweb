@@ -40,7 +40,7 @@ class ScriptUrl extends AbstractHelper
     {
         $scriptParams = [];
 
-        foreach($params as $param) {
+        foreach ($params as $param) {
             $scriptParams[$param] = '{' . $param . '}';
         }
 
@@ -61,7 +61,7 @@ class ScriptUrl extends AbstractHelper
      */
     public function requireUrls($names, $params)
     {
-        foreach($names as $name) {
+        foreach ($names as $name) {
             $this->requireUrl($name, $params);
         }
         return $this;

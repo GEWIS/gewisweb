@@ -11,7 +11,6 @@ use Decision\Mapper\Meeting as MeetingMapper;
 
 class Document extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translator, MeetingMapper $mapper)
     {
         parent::__construct();
@@ -83,5 +82,4 @@ class Document extends Form implements InputFilterProviderInterface
             ]
         ];
     }
-
 }

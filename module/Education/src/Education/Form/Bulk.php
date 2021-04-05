@@ -9,7 +9,6 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class Bulk extends Form implements InputFilterProviderInterface
 {
-
     public function __construct(Translator $translator, Fieldset $exam)
     {
         parent::__construct();
@@ -37,5 +36,4 @@ class Bulk extends Form implements InputFilterProviderInterface
     {
         return [];
     }
-
 }

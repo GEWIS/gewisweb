@@ -25,7 +25,6 @@ use Decision\Model\Decision;
  */
 class Destroy extends SubDecision
 {
-
     /**
      * Reference to the destruction of a decision.
      *
@@ -38,7 +37,6 @@ class Destroy extends SubDecision
      * })
      */
     protected $target;
-
 
     /**
      * Get the target.
@@ -59,5 +57,4 @@ class Destroy extends SubDecision
     {
         $this->target = $target;
     }
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace User\Service;
 
 use Application\Service\AbstractService;
@@ -10,7 +9,6 @@ use User\Model\User as UserModel;
 
 class ApiApp extends AbstractService
 {
-
     /**
      * @var ApiAppMapper
      */

@@ -9,14 +9,12 @@ use Doctrine\ORM\EntityManager;
  */
 class Authorization
 {
-
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-
 
     /**
      * Constructor
@@ -50,7 +48,6 @@ class Authorization
      */
     public function findUserAuthorization($meetingNumber, $authorizer)
     {
-
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -74,7 +71,6 @@ class Authorization
      */
     public function findRecipientAuthorization($meetingNumber, $recipient)
     {
-
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')

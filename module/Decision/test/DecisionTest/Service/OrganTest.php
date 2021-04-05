@@ -7,7 +7,6 @@ use Zend\ServiceManager\ServiceManager;
 
 class OrganTest extends PHPUnit_Framework_TestCase
 {
-
     protected $organ;
 
     protected $sm;

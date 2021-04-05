@@ -10,32 +10,30 @@ use Zend\Form\FormInterface;
 
 class EditCategory extends CollectionBaseFieldsetAwareForm
 {
+    private $languages;
+
     public function __construct($mapper, Translator $translate, $languages, $hydrator)
     {
         // we want to ignore the name passed
         parent::__construct();
-
         $this->mapper = $mapper;
-
         $this->setHydrator($hydrator);
 
         $this->setAttribute('method', 'post');
-
         $this->setLanguages($languages);
 
-        $this->add(
-            [
-                'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'categories',
-                'hydrator' => $this->getHydrator(),
-                'options' => [
-                    'use_as_base_fieldset' => true,
-                    'count' => count($languages),
-                    'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
-                    'items' => $languages,
-                ]
+        $this->add([
+            'type' => '\Company\Form\FixedKeyDictionaryCollection',
+            'name' => 'categories',
+            'hydrator' => $this->getHydrator(),
+            'options' => [
+                'use_as_base_fieldset' => true,
+                'count' => count($languages),
+                'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
+                'items' => $languages,
             ]
-        );
+        ]);
+
         $this->add([
             'name' => 'submit',
             'attributes' => [
@@ -45,7 +43,6 @@ class EditCategory extends CollectionBaseFieldsetAwareForm
             ],
         ]);
     }
-    private $languages;
 
     public function setLanguages($languages)
     {

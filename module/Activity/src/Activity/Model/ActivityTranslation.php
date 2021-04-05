@@ -101,7 +101,6 @@ class ActivityTranslation
      */
     protected $fields;
 
-    // TODO -> where can i find member organ?
     protected $organ;
 
     protected $isMyFuture;
@@ -391,6 +390,22 @@ class ActivityTranslation
     public function setIsFood($isFood)
     {
         $this->isFood = $isFood;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrgan()
+    {
+        return $this->organ;
+    }
+
+    /**
+     * @param mixed $organ
+     */
+    public function setOrgan($organ)
+    {
+        $this->organ = $organ;
     }
 
     /**

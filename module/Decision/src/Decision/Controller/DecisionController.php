@@ -8,7 +8,6 @@ use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
-
     /**
      * Index action, shows meetings.
      */
@@ -38,7 +37,6 @@ class DecisionController extends AbstractActionController
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
-
     }
 
     public function documentAction()
@@ -160,7 +158,7 @@ class DecisionController extends AbstractActionController
             }
             $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
             return new ViewModel([
-                'folderName' =>  $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
+                'folderName' => $trailingSlash ? end(explode('/', substr($path, 0, -1))) : end(explode('/', $path)),
                 'folder' => $folder,
                 'path' => $path,
                 'trailingSlash' => $trailingSlash,
@@ -178,5 +176,4 @@ class DecisionController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_decision');
     }
-
 }

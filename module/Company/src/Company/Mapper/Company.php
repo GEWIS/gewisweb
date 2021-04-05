@@ -53,15 +53,16 @@ class Company
     {
         $objects = $this->findEditableCompaniesBySlugName($slugName, true);
         foreach ($objects as $company) {
-            if ($company->getID() != $cid) {
+            if ($company->getId() != $cid) {
                 return false;
             }
         }
+
         return true;
     }
 
     /**
-     * Inserts a company into the datebase, and initializes the given 
+     * Inserts a company into the datebase, and initializes the given
      * translations as empty translations for them
      *
      * @param mixed $languages
@@ -69,11 +70,6 @@ class Company
     public function insert($languages)
     {
         $company = new CompanyModel($this->em);
-
-        $companiesBySameSlugName = $this->findEditableCompaniesBySlugName($company->getSlugName(), false);
-
-        // Only for testing, logo will be implemented in a later issue, and it will be validated before it comes here, so this will never be called in production code. TODO: remove this when implemented logo and logo validation
-
 
         foreach ($languages as $language) {
             $translation = new CompanyI18n($language, $company);
@@ -138,6 +134,7 @@ class Company
         if ($asObject) {
             return $qb->getQuery()->getResult();
         }
+
         return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
     }
 
@@ -165,6 +162,7 @@ class Company
         $this->em->remove($company);
         $this->em->flush();
     }
+
     /**
      * Get the repository for this mapper.
      *

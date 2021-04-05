@@ -23,26 +23,26 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
     public function setupElements()
     {
         $this->add([
-            'type'    => \Zend\Form\Element\Radio::class,
-            'name'    => 'direction',
+            'type' => \Zend\Form\Element\Radio::class,
+            'name' => 'direction',
             'options' => [
-                'label'            => 'Label',
-                'value_options'    => [
-                    'up'   => $this->generateIcon('glyphicon-chevron-up', $this->translator->translate('Move up')),
-                    'down' => $this->generateIcon('glyphicon-chevron-down', $this->translator->translate('Move down')),
+                'label' => 'Label',
+                'value_options' => [
+                    'up' => $this->generateIcon('fa-chevron-up', $this->translator->translate('Move up')),
+                    'down' => $this->generateIcon('fa-chevron-down', $this->translator->translate('Move down')),
                 ],
                 'label_attributes' => [
                     'class' => 'label label-radio-hidden'
                 ],
-                'label_options'    => [
+                'label_options' => [
                     'disable_html_escape' => true, // Required to render HTML icons
                 ],
             ]
         ]);
 
         $this->add([
-            'type'       => \Zend\Form\Element\Hidden::class,
-            'name'       => 'document',
+            'type' => \Zend\Form\Element\Hidden::class,
+            'name' => 'document',
             'attributes' => [
                 'value' => null, // Value should be populated in the view
             ]
@@ -63,11 +63,11 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
             'document' => [
                 'required' => true,
                 'filters' => [
-                    [ 'name' => \Zend\Filter\ToNull::class ],
-                    [ 'name' => \Zend\Filter\ToInt::class ]
+                    ['name' => \Zend\Filter\ToNull::class],
+                    ['name' => \Zend\Filter\ToInt::class]
                 ],
                 'validators' => [
-                    [ 'name' => \Zend\Validator\NotEmpty::class ]
+                    ['name' => \Zend\Validator\NotEmpty::class]
                 ],
             ]
         ];
@@ -86,12 +86,12 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      * FUTURE: Think of a better way to show icons in the label. Icons are
      * layout and shouldn't be defined in the Form.
      *
-     * @param string $className Glyphicon class
+     * @param string $className FontAwesome class
      * @param string $title Element title
      * @return string
      */
     private function generateIcon($className, $title)
     {
-        return "<span class=\"glyphicon {$className}\" title=\"{$title}\"></span>";
+        return "<span class=\"fa {$className}\" title=\"{$title}\"></span>";
     }
 }

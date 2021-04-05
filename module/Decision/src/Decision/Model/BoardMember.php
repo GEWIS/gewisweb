@@ -15,7 +15,6 @@ use Decision\Model\SubDecision\Board\Installation;
  */
 class BoardMember
 {
-
     /**
      * Id.
      *
@@ -67,7 +66,6 @@ class BoardMember
      * @ORM\Column(type="date", nullable=true)
      */
     protected $dischargeDate;
-
 
     /**
      * Get the ID.
@@ -178,5 +176,4 @@ class BoardMember
     {
         $this->dischargeDate = $dischargeDate;
     }
-
 }

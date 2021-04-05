@@ -63,7 +63,6 @@ class Meeting
      */
     protected $meetingNotes;
 
-
     /**
      * Get all allowed meeting types.
      */
@@ -109,6 +108,7 @@ class Meeting
     {
         return $this->meetingNotes;
     }
+
     /**
      * Set the meeting type.
      *

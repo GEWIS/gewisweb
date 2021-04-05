@@ -2,13 +2,12 @@
 
 namespace User\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController,
-    Zend\View\Model\ViewModel,
-    Zend\View\Model\JsonModel;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class UserController extends AbstractActionController
 {
-
     /**
      * User login action.
      */
@@ -35,10 +34,11 @@ class UserController extends AbstractActionController
             'form' => $form
         ]);
     }
+
     private function handleRedirect($userService, $referer)
     {
         $form = $userService->getLoginForm();
-        if(is_null($form->get('redirect')->getValue())) {
+        if (is_null($form->get('redirect')->getValue())) {
             $redirect = $this->getRequest()->getQuery('redirect');
             if (isset($redirect)) {
                 $form->get('redirect')->setValue($redirect);
@@ -63,7 +63,6 @@ class UserController extends AbstractActionController
             $login = $userService->pinLogin($data);
 
             if (null !== $login) {
-
                 return new JsonModel([
                     'login' => true,
                     'user' => $login->toArray()
@@ -74,6 +73,7 @@ class UserController extends AbstractActionController
             'login' => false
         ]);
     }
+
     /**
      * User logout action.
      */
@@ -185,7 +185,6 @@ class UserController extends AbstractActionController
             'user' => $newUser
         ]);
     }
-
 
     /**
      * Get a user service.

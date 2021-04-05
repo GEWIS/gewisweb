@@ -215,7 +215,7 @@ class ActivityCalendar extends AbstractAclService
         $max = $this->getMaxActivities($organId, $period->getId());
         $count = $this->getCurrentProposalCount($period, $organId);
 
-        if ($count > $max) {
+        if ($count >= $max) {
             return false;
         }
 
@@ -256,7 +256,8 @@ class ActivityCalendar extends AbstractAclService
     {
         $mapper = $this->getMaxActivitiesMapper();
         $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
-        $max = 0;
+        // TODO: The initial value of $max below represents a default value for when no appropriate MaxActivities instance exists.
+        $max = 2;
         if ($maxActivities) {
             $max = $maxActivities->getValue();
         }

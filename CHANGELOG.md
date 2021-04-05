@@ -1,3 +1,14 @@
+## [v1.8](https://github.com/GEWIS/gewisweb/tree/v1.8) (2020-08-21)
+
+* Made the new photo viewer the main photo viewer
+* Allowed for adding labels to jobs
+* Various other improvements to the Company module
+* Added activity policy agreement to activity signup
+* Various UI improvements
+* Various bugfixes
+
+---
+
 ## [v1.7-beta](https://github.com/GEWIS/gewisweb/tree/v1.7-beta) (2020-02-10)
 
 * Changed website icons to fontawesome

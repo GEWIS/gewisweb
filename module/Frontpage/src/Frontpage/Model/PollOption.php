@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class PollOption implements ResourceInterface
 {
-
     /**
      * Poll Option ID.
      *

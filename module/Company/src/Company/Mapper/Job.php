@@ -52,16 +52,17 @@ class Job
         // A slug in unique if there is no other slug of the same category and same language
         $objects = $this->findJob([
             'companySlugName' => $companySlug,
-            'jobSlug' =>  $slugName,
-            'jobCategoryID' => $category,
+            'jobSlug' => $slugName,
+            'jobCategoryId' => $category,
         ]);
         foreach ($objects as $job) {
             // If the current job is in the database under the same slug, we can safely skip it
-            if ($job->getID() == $jid) {
+            if ($job->getId() == $jid) {
                 continue;
             }
             return false;
         }
+
         return true;
     }
 
@@ -101,7 +102,7 @@ class Job
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->select('j')->join('j.package', 'p')->join('p.company', 'c');
-        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryID', $dict)) {
+        if (array_key_exists('jobCategory', $dict) || array_key_exists('jobCategoryId', $dict)) {
             $qb->join('j.category', 'cat');
         }
         if (array_key_exists('jobSlug', $dict)) {
@@ -121,8 +122,8 @@ class Job
             $qb->andWhere('cat.slug=:category');
             $qb->setParameter('category', $category);
         }
-        if (array_key_exists('jobCategoryID', $dict)) {
-            $category = $dict['jobCategoryID'];
+        if (array_key_exists('jobCategoryId', $dict)) {
+            $category = $dict['jobCategoryId'];
             $qb->andWhere('cat.id=:category');
             $qb->setParameter('category', $category);
         }
@@ -149,6 +150,28 @@ class Job
     }
 
     /**
+     * Flush.
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * Deletes the jobs corresponding to the given language neutral id.
+     *
+     */
+    public function deleteByLanguageNeutralId($jobId)
+    {
+        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobId]);
+        foreach ($jobs as $job) {
+            $this->em->remove($job);
+        }
+
+        $this->em->flush();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
@@ -157,6 +180,7 @@ class Job
     {
         return $this->em->getRepository('Company\Model\Job');
     }
+
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [
@@ -167,8 +191,8 @@ class Job
                 'object_manager' => $this->em,
                 'target_class' => $targetClass,
                 'property' => $property,
-                'find_method'    => [
-                    'name'   => 'findBy',
+                'find_method' => [
+                    'name' => 'findBy',
                     'params' => [
                         'criteria' => ['language' => $locale],
                         // Use key 'orderBy' if using ORM

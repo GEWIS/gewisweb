@@ -159,12 +159,12 @@ return [
                             'editPackage' => [
                                 'type' => 'segment',
                                 'options' => [
-                                    'route' => '/package/:packageID',
+                                    'route' => '/package/:packageId',
                                     'defaults' => [
                                         'action' => 'editPackage',
                                     ],
                                     'constraints' => [
-                                        'packageID' => '[a-zA-Z0-9_-]*',
+                                        'packageId' => '[a-zA-Z0-9_-]*',
                                     ],
                                 ],
                                 'may_terminate' => true,
@@ -197,7 +197,17 @@ return [
                                                 'action' => 'editJob',
                                             ],
                                             'constraints' => [
-                                                'jobName' => '[a-zA-Z0-9_-]*',
+                                                'languageNeutralJobId' => '[0-9]*',
+                                            ],
+                                            'may_terminate' => true,
+                                        ],
+                                    ],
+                                    'deleteJob' => [
+                                        'type' => 'segment',
+                                        'options' => [
+                                            'route' => '/job/:languageNeutralJobId/delete',
+                                            'defaults' => [
+                                                'action' => 'deleteJob',
                                             ],
                                             'may_terminate' => true,
                                         ],
@@ -235,7 +245,7 @@ return [
                                         'action' => 'editJob',
                                     ],
                                     'constraints' => [
-                                        'jobName'     => '[a-zA-Z0-9_-]*',
+                                        'jobName' => '[a-zA-Z0-9_-]*',
                                     ],
                                     'may_terminate' => true,
                                 ],
@@ -246,14 +256,26 @@ return [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
+                            'route' => '/editCategory/:languageNeutralCategoryId',
                             'defaults' => [
                                 'action' => 'editCategory',
                             ],
-                            'route' => '/editCategory/:categoryID',
                             'constraints' => [
-                                'categoryID' => '[0-9]*',
+                                'languageNeutralCategoryId' => '\d+',
                             ],
-                            'may_terminate' => true,
+                        ],
+                    ],
+                    'editLabel' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/editLabel/:languageNeutralLabelId',
+                            'defaults' => [
+                                'action' => 'editLabel',
+                            ],
+                            'constraints' => [
+                                'languageNeutralLabelId' => '\d+',
+                            ],
                         ],
                     ],
                     'default' => [
@@ -278,7 +300,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'company' => __DIR__.'/../view/',
+            'company' => __DIR__ . '/../view/',
         ],
     ],
     'doctrine' => [
@@ -286,7 +308,7 @@ return [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Company/Model/'],
+                'paths' => [__DIR__ . '/../src/Company/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

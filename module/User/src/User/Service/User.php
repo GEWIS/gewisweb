@@ -17,7 +17,6 @@ use User\Permissions\NotAllowedException;
  */
 class User extends AbstractAclService
 {
-
     /**
      * Activate a user.
      *
@@ -101,7 +100,7 @@ class User extends AbstractAclService
         $newUser = $this->getNewUserMapper()->getByLidnr($data['lidnr']);
         if (null !== $newUser) {
             $time = $newUser->getTime();
-            $requiredInterval = (new DateTime())->sub(new DateInterval('P1D'));
+            $requiredInterval = (new DateTime())->sub(new DateInterval('PT900S'));
             if ($time > $requiredInterval) {
                 $form->setError(RegisterForm::ERROR_ALREADY_REGISTERED);
 

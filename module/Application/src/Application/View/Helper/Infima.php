@@ -8,7 +8,6 @@ use Application\Service\Legacy as LegacyService;
 
 class Infima extends AbstractHelper
 {
-
     /**
      * Legacy service
      *

@@ -28,6 +28,12 @@ class Category
         $this->em = $em;
     }
 
+    public function persist($label)
+    {
+        $this->em->persist($label);
+        $this->em->flush();
+    }
+
     /**
      * Saves all categories
      *
@@ -40,7 +46,7 @@ class Category
     /**
      * Finds the category with the given id
      *
-     * @param integer $packageID
+     * @param integer $categorySlug
      */
     public function findCategory($categorySlug)
     {
@@ -50,19 +56,18 @@ class Category
     public function findVisibleCategoryByLanguage($categoryLanguage)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.language=:lang');
-        $qb->andWhere('c.hidden=:hidden');
-        $qb->setParameter('lang', $categoryLanguage);
-        $qb->setParameter('hidden', false);
-        $categories = $qb->getQuery()->getResult();
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.language=:lang')
+            ->andWhere('c.hidden=:hidden')
+            ->setParameter('lang', $categoryLanguage)
+            ->setParameter('hidden', false);
 
-        return $categories;
+        return $qb->getQuery()->getResult();
     }
 
     public function createNullCategory($lang, $translator)
     {
-        $categoryForJobsWithoutCategory =  new CategoryModel();
+        $categoryForJobsWithoutCategory = new CategoryModel();
         $categoryForJobsWithoutCategory->setHidden(false);
         $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
         $categoryForJobsWithoutCategory->setLanguage($lang);
@@ -80,58 +85,50 @@ class Category
     public function siblingCategory($category, $lang)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryID')->andWhere('c.language=:language');
-        $qb->setParameter('categoryID', $category->getLanguageNeutralId());
-        $qb->setParameter('language', $lang);
-        $categories = $qb->getQuery()->getResult();
-        return $categories[0];
-    }
-    /**
-     * Inserts a new package into the given company
-     *
-     */
-    public function insert($lang, $id, $category = null)
-    {
-        if ($category == null) {
-            $category = new CategoryModel();
-        }
-        $category->setLanguage($lang);
-        $category->setLanguageNeutralId($id);
-        $category->setHidden(false);
-        $this->em->persist($category);
-        $this->em->flush();
-        if ($id == -1) {
-            $id = $category->getId();
-        }
-        $category->setLanguageNeutralId($id);
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.languageNeutralId=:categoryId')->andWhere('c.language=:language')
+            ->setParameter('categoryId', $category->getLanguageNeutralId())
+            ->setParameter('language', $lang);
 
-        return $category;
+        $categories = $qb->getQuery()->getResult();
+
+        return $categories[0];
     }
 
     public function findAllCategoriesById($categoryId)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.languageNeutralId=:categoryID');
-        $qb->setParameter('categoryID', $categoryId);
-        $categories = $qb->getQuery()->getResult();
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.languageNeutralId=:categoryId')
+            ->setParameter('categoryId', $categoryId);
 
-        return $categories;
+        return $qb->getQuery()->getResult();
     }
+
     /**
      * Deletes the given category
      *
+     * @param CategoryModel $category
      */
-    public function delete($categoryID)
+    public function delete($category)
     {
-        $category = $this->findEditableCategory($categoryID);
+        $this->em->remove($category);
+        $this->em->flush();
+    }
+
+    /**
+     * Deletes the given category
+     *
+     * @param int $categoryId
+     */
+    public function deleteById($categoryId)
+    {
+        $category = $this->findEditableCategory($categoryId);
         if (is_null($category)) {
             return;
         }
 
-        $this->em->remove($category);
-        $this->em->flush();
+        $this->delete($category);
     }
 
     /**

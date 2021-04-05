@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Address
 {
-
     const TYPE_HOME = 'home';
     const TYPE_STUDENT = 'student'; // student room
     const TYPE_MAIL = 'mail'; // mailing address
@@ -82,7 +81,6 @@ class Address
      * @ORM\Column(type="string")
      */
     protected $phone;
-
 
     /**
      * Get available address types.

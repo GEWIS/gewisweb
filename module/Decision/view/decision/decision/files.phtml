@@ -6,46 +6,45 @@ $escaper = new Zend\Escaper\Escaper('utf-8');
 //construct breadcrumbs
 $offset = 0;
 $pathPrefixes = [];
-while (($pos = strpos($path, '/', $offset)) !== false){
-    $pathPrefixes[] = substr($path, 0,$pos);
+while (($pos = strpos($path, '/', $offset)) !== false) {
+    $pathPrefixes[] = substr($path, 0, $pos);
     $offset = $pos + 1;
 }
 if ($path === '' || $path === '/') {
     $crumbs = [$this->translate('Root')];
-}
-else {
+} else {
     $crumbs = ['<a href="' . $this->url('decision/files', ['path' => '']) . '">' . $this->translate('Root') . '</a>'];
 }
 
 $skipfirst = true;
-foreach($pathPrefixes as $prefix){
+foreach ($pathPrefixes as $prefix) {
     if ($skipfirst) {
         $skipfirst = false;
         continue;
     }
     $crumburl = $this->url('decision/files', ['path' => '']) . $prefix;
-    $crumburl = preg_replace('#[/]+#','/', $crumburl);
+    $crumburl = preg_replace('#[/]+#', '/', $crumburl);
     $crumbtext = end(explode('/', $prefix));
     $crumbs[] = '<a href="' . $escaper->escapeHtmlAttr($crumburl) . '">' . $escaper->escapeHtml($crumbtext) . '</a>';
 }
-if ($trailingSlash && !($path === '/' || $path === '')){
+if ($trailingSlash && !($path === '/' || $path === '')) {
     array_pop($crumbs);
 }
 // set title
-$this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName==='' ? $this->translate('Root') : $escaper->escapeHtml($folderName) ) . ']'); ?>
+$this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === '' ? $this->translate('Root') : $escaper->escapeHtml($folderName)) . ']'); ?>
 <section class="section">
     <div class="container">
         <h2>
-            <?= $this->translate('Browsing directory: ') . ($folderName==='' ? $this->translate('Root') : $escaper->escapeHtml($folderName) ) ?>
+            <?= $this->translate('Browsing directory: ') . ($folderName === '' ? $this->translate('Root') : $escaper->escapeHtml($folderName)) ?>
         </h2>
     </div>
     <section class="section section-breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-                <?php foreach($crumbs as $crumb): ?>
-                <li>
-                    <?= $crumb ?>
-                </li>
+                <?php foreach ($crumbs as $crumb): ?>
+                    <li>
+                        <?= $crumb ?>
+                    </li>
                 <?php endforeach; ?>
                 <li class="active">
                     <?= $escaper->escapeHtml($folderName) ?>
@@ -58,54 +57,69 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName===''
         <table class="table table-hover">
             <thead>
             <tr>
-                <th style="min-width: 80px;"><div class="fas fa-folder"></div> / <div class="fas fa-file-alt"></div></th>
+                <th style="min-width: 80px;">
+                    <div class="fas fa-folder"></div>
+                    /
+                    <div class="fas fa-file-alt"></div>
+                </th>
                 <th><?= $this->translate('Filename') ?></th>
             </tr>
             </thead>
             <tbody>
-            <?php if ($folderName!=='') : ?>
-            <?php $parentPath = substr($path, 0, strrpos($path, '/'));
-                  $parentUrl = $this->url('decision/files', ['path' => '']) . $parentPath;
-                  $parentUrl = preg_replace('#[/]+#','/', $parentUrl);
-            ?>
+            <?php if ($folderName !== '') : ?>
+                <?php $parentPath = substr($path, 0, strrpos($path, '/'));
+                $parentUrl = $this->url('decision/files', ['path' => '']) . $parentPath;
+                $parentUrl = preg_replace('#[/]+#', '/', $parentUrl);
+                ?>
                 <tr>
-                    <td><div class="fas fa-arrow-left"></div></td>
+                    <td>
+                        <div class="fas fa-arrow-left"></div>
+                    </td>
                     <td><a style="display: block; height: 100%; width: 100%"
-                           href="<?= $escaper->escapeHtmlAttr($parentUrl) ?>"><?= $this->translate(".. Move up a folder") ?></a></td>
+                           href="<?= $escaper->escapeHtmlAttr($parentUrl) ?>"><?= $this->translate(".. Move up a folder") ?></a>
+                    </td>
                 </tr>
-            <?php endif;?>
+            <?php endif; ?>
             <?php if (empty($folder)): ?>
                 <tr>
-                    <td><div class="fas fa-ban"></div></td>
-                   <td><?= $this->translate('Empty folder') ?></td>
+                    <td>
+                        <div class="fas fa-ban"></div>
+                    </td>
+                    <td><?= $this->translate('Empty folder') ?></td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($folder as $node): ?>
                 <?php if ($node->getKind() === 'dir'): ?>
-                <?php $kind_icon = 'fas ' . $node->getFileIcon();
-                //directly putting the path in the url helper filters the '/', which we don't want.
-                $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
-                $url = preg_replace('#[/]+#','/', $url);
-                ?>
-                <tr>
-                    <td><div class="<?= $kind_icon ?>"></div></td>
-                    <td><a style="display: block; height: 100%; width: 100%"
-                           href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a></td>
-                </tr>
-                <?php endif;?>
+                    <?php $kind_icon = 'fas ' . $node->getFileIcon();
+                    //directly putting the path in the url helper filters the '/', which we don't want.
+                    $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
+                    $url = preg_replace('#[/]+#', '/', $url);
+                    ?>
+                    <tr>
+                        <td>
+                            <div class="<?= $kind_icon ?>"></div>
+                        </td>
+                        <td><a style="display: block; height: 100%; width: 100%"
+                               href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             <?php endforeach; ?>
             <?php foreach ($folder as $node): ?>
                 <?php if ($node->getKind() === 'file'): ?>
-                <?php $kind_icon = 'fas ' . $node->getFileIcon();
-                //directly putting the path in the url helper html-escapes the '/', which we don't want.
-                $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
-                $url = preg_replace('#[/]+#','/', $url);
-                ?>
-                <tr>
-                    <td><div class="<?= $kind_icon ?>"></div></td>
-                    <td><a style="display: block; height: 100%; width: 100%"
-                           href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a></td>
-                </tr>
+                    <?php $kind_icon = 'fas ' . $node->getFileIcon();
+                    //directly putting the path in the url helper html-escapes the '/', which we don't want.
+                    $url = $this->url('decision/files', ['path' => '']) . $node->getFullPath();
+                    $url = preg_replace('#[/]+#', '/', $url);
+                    ?>
+                    <tr>
+                        <td>
+                            <div class="<?= $kind_icon ?>"></div>
+                        </td>
+                        <td><a style="display: block; height: 100%; width: 100%"
+                               href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a>
+                        </td>
+                    </tr>
                 <?php endif; ?>
             <?php endforeach; ?>
             </tbody>

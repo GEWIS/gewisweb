@@ -7,20 +7,17 @@ use Application\Service\AbstractAclService;
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
 
-
 /**
  * API User service.
  */
 class ApiUser extends AbstractAclService
 {
-
     /**
      * Identity storage.
      *
      * @var ApiUserMapper
      */
     protected $identity;
-
 
     /**
      * Obtain all tokens.
@@ -174,5 +171,4 @@ class ApiUser extends AbstractAclService
     {
         return 'apiuser';
     }
-
 }

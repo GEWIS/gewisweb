@@ -13,7 +13,6 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  */
 class NewsItem implements ResourceInterface
 {
-
     /**
      * News item ID.
      *

@@ -1,48 +1,48 @@
 <h2><?= $this->translate('Add a token') ?></h2>
 <?php if (isset($form)): ?>
-<?php
-$form->prepare();
-$form->setAttribute('action', $this->url('user_admin/api/default', ['action' => 'add']));
-$form->setAttribute('class', 'form-horizontal');
-?>
-<?= $this->form()->openTag($form) ?>
+    <?php
+    $form->prepare();
+    $form->setAttribute('action', $this->url('user_admin/api/default', ['action' => 'add']));
+    $form->setAttribute('class', 'form-horizontal');
+    ?>
+    <?= $this->form()->openTag($form) ?>
 
-<?php
-$element = $form->get('name');
-$element->setAttribute('class', 'form-control');
-$element->setAttribute('placeholder', $element->getLabel());
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
-    <div class="col-sm-10">
-        <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element) ?>
+    <?php
+    $element = $form->get('name');
+    $element->setAttribute('class', 'form-control');
+    $element->setAttribute('placeholder', $element->getLabel());
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
+        <div class="col-sm-10">
+            <?= $this->formInput($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <?php
-        $submit = $form->get('submit');
-        $submit->setAttribute('class', 'btn btn-primary');
-        $submit->setLabel($this->translate('Create API token'));
-        ?>
-        <?= $this->formButton($submit) ?>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <?php
+            $submit = $form->get('submit');
+            $submit->setAttribute('class', 'btn btn-primary');
+            $submit->setLabel($this->translate('Create API token'));
+            ?>
+            <?= $this->formButton($submit) ?>
+        </div>
     </div>
-</div>
 
-<?= $this->form()->closeTag() ?>
+    <?= $this->form()->closeTag() ?>
 <?php else: ?>
-<h3><?= $this->translate('Token was successfully generated') ?></h3>
+    <h3><?= $this->translate('Token was successfully generated') ?></h3>
 
-<table class="table table-bordered">
-    <tr>
-        <th><?= $this->translate('Name') ?></th>
-        <td><?= $apiUser->getName() ?></td>
-    </tr>
-    <tr>
-        <th><?= $this->translate('Token') ?></th>
-        <td><?= $apiUser->getToken() ?></td>
-    </tr>
-</table>
+    <table class="table table-bordered">
+        <tr>
+            <th><?= $this->translate('Name') ?></th>
+            <td><?= $apiUser->getName() ?></td>
+        </tr>
+        <tr>
+            <th><?= $this->translate('Token') ?></th>
+            <td><?= $apiUser->getToken() ?></td>
+        </tr>
+    </table>
 <?php endif ?>

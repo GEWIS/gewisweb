@@ -7,7 +7,6 @@ use Zend\View\Model\ViewModel;
 
 class OrganAdminController extends AbstractActionController
 {
-
     /**
      * Index action, shows all active organs.
      */

@@ -12,15 +12,15 @@ $this->scriptUrl()->requireUrls(
 <h1><?= $this->translate('Polls awaiting approval') ?></h1>
 <table class="table table-striped">
     <thead>
-    <tr>
-        <th>#</th>
-        <th><?= $this->translate('Dutch question') ?></th>
-        <th><?= $this->translate('English question') ?></th>
-        <th><?= $this->translate('Date') ?></th>
-        <th><?= $this->translate('Submitter') ?></th>
-        <th><?= $this->translate('Approver') ?></th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>#</th>
+            <th><?= $this->translate('Dutch question') ?></th>
+            <th><?= $this->translate('English question') ?></th>
+            <th><?= $this->translate('Date') ?></th>
+            <th><?= $this->translate('Submitter') ?></th>
+            <th><?= $this->translate('Approver') ?></th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
     <?php foreach ($unapprovedPolls as $poll): ?>
@@ -34,10 +34,10 @@ $this->scriptUrl()->requireUrls(
         </dl>
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th><?= $this->translate('Dutch option') ?></th>
-                <th><?= $this->translate('English option') ?></th>
-            </tr>
+                <tr>
+                    <th><?= $this->translate('Dutch option') ?></th>
+                    <th><?= $this->translate('English option') ?></th>
+                </tr>
             </thead>
             <tbody>
             <?php foreach ($poll->getOptions() as $option): ?>
@@ -86,33 +86,44 @@ $this->scriptUrl()->requireUrls(
 <?php if (!empty($paginator)): ?>
 
     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?= $this->translate('Dutch question') ?></th>
+                <th><?= $this->translate('English question') ?></th>
+                <th><?= $this->translate('Date') ?></th>
+                <th><?= $this->translate('Submitter') ?></th>
+                <th><?= $this->translate('Approver') ?></th>
+                <th></th>
+            </tr>
+        </thead>
         <tbody>
         <?php foreach ($paginator as $poll): ?>
-        <?php ob_start() /* start buffer for poll options */ ?>
-        <dl>
-            <dt><?= $this->translate('Dutch question') ?></dt>
-            <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
+            <?php ob_start() /* start buffer for poll options */ ?>
+            <dl>
+                <dt><?= $this->translate('Dutch question') ?></dt>
+                <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
 
-            <dt><?= $this->translate('English question') ?></dt>
-            <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
-        </dl>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><?= $this->translate('Dutch option') ?></th>
-                <th><?= $this->translate('English option') ?></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($poll->getOptions() as $option): ?>
-                <tr>
-                    <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
-                    <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
-                </tr>
-            <?php endforeach ?>
-            </tbody>
-        </table>
-        <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
+                <dt><?= $this->translate('English question') ?></dt>
+                <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
+            </dl>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Dutch option') ?></th>
+                        <th><?= $this->translate('English option') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($poll->getOptions() as $option): ?>
+                    <tr>
+                        <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
+                        <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+            <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
             <tr id="admin-poll-<?= $poll->getId() ?>" data-options="<?= $this->escapeHtmlAttr($options) ?>">
                 <td><?= $poll->getId() ?></td>
                 <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
@@ -122,11 +133,11 @@ $this->scriptUrl()->requireUrls(
                 <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>
                 <td>
                     <?php if ($poll->isActive()): ?>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            onclick="Poll.Admin.deletePoll(<?= $poll->getId() ?>)" data-toggle="modal"
-                            data-target="#deleteModal">
-                        <?= $this->translate('Delete') ?>
-                    </button>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                onclick="Poll.Admin.deletePoll(<?= $poll->getId() ?>)" data-toggle="modal"
+                                data-target="#deleteModal">
+                            <?= $this->translate('Delete') ?>
+                        </button>
                     <?php endif ?>
                 </td>
             </tr>
@@ -185,7 +196,7 @@ $this->scriptUrl()->requireUrls(
                 <?= $this->form()->openTag($form); ?>
                 <div class="form-group">
                     <?php
-                        $element = $form->get('expiryDate');
+                    $element = $form->get('expiryDate');
                     ?>
                     <?= $this->formLabel($element); ?>
                     <?= $this->formInput($element); ?>
@@ -194,9 +205,9 @@ $this->scriptUrl()->requireUrls(
             </div>
             <div class="modal-footer">
                 <?php
-                    $submit = $form->get('submit');
-                    $submit->setLabel($this->translate('Approve poll'));
-                    $submit->setAttribute('class', 'btn btn-success');
+                $submit = $form->get('submit');
+                $submit->setLabel($this->translate('Approve poll'));
+                $submit->setAttribute('class', 'btn btn-success');
                 ?>
                 <?= $this->formButton($submit) ?>
                 <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>

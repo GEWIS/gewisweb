@@ -14,7 +14,6 @@ use Imagick;
  */
 class Organ extends AbstractAclService
 {
-
     /**
      * Get organs.
      *
@@ -66,7 +65,10 @@ class Organ extends AbstractAclService
             return array_merge(
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AV_COMMITTEE)
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVC),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVW),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_KKK),
+                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_RVA)
             );
         }
 
@@ -122,16 +124,20 @@ class Organ extends AbstractAclService
     }
 
     /**
-     * Finds an organ by its abbreviation
+     * Finds an organ by its abbreviation.
      *
      * @param $abbr
      * @param string $type
+     * @param bool $latest
+     *    Whether to retrieve the latest occurence of an organ or not.
      *
      * @return OrganModel
+     * @see Decision/Mapper/Organ::findByAbbr()
+     *
      */
-    public function findOrganByAbbr($abbr, $type = null)
+    public function findOrganByAbbr($abbr, $type = null, $latest = false)
     {
-        return $this->getOrganMapper()->findByAbbr($abbr, $type);
+        return $this->getOrganMapper()->findByAbbr($abbr, $type, $latest);
     }
 
     /**
@@ -187,9 +193,12 @@ class Organ extends AbstractAclService
             $this->approveOrganInformation($organInformation);
         }
 
-        $this->getEmailService()->sendEmail('organ_update', 'email/organUpdate',
+        $this->getEmailService()->sendEmail(
+            'organ_update',
+            'email/organUpdate',
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
-            ['organInfo' => $organInformation]);
+            ['organInfo' => $organInformation]
+        );
 
         return true;
     }
@@ -222,9 +231,8 @@ class Organ extends AbstractAclService
         //Tempfile is used such that the file storage service can generate a filename
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
         $image->writeImage($tempFileName);
-        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
-        return $newPath;
+        return $this->getFileStorageService()->storeFile($tempFileName);
     }
 
     public function approveOrganInformation($organInformation)

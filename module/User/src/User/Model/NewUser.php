@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NewUser
 {
-
     /**
      * The membership number.
      *
@@ -51,7 +50,6 @@ class NewUser
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $time;
-
 
     /**
      * Constructor.
@@ -152,7 +150,7 @@ class NewUser
     /**
      * Set the registration time.
      *
-     * @param string $time
+     * @param DateTime $time
      */
     public function setTime($time)
     {
