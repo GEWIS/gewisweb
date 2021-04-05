@@ -25,11 +25,11 @@ return [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
                 'params' => [
-                    'host'     => 'localhost',
-                    'port'     => '3306',
-                    'user'     => 'username',
-                    'password' => 'password',
-                    'dbname'   => 'database',
+                    'host'     => getenv('DOCKER_DB_HOST'),
+                    'port'     => getenv('DOCKER_DB_PORT'),
+                    'user'     => getenv('DOCKER_DB_USERNAME'),
+                    'password' => getenv('DOCKER_DB_PASSWORD'),
+                    'dbname'   => getenv('DOCKER_DB_DATABASE'),
                 ]
             ],
         ],
@@ -40,16 +40,16 @@ return [
             'orm_default' => [
                 // metadata cache instance to use. The retrieved service name will
                 // be `doctrine.cache.$thisSetting`
-                'metadata_cache'    => 'apc',
+                'metadata_cache'    => 'memcached',
                 // DQL queries parsing cache instance to use. The retrieved service
                 // name will be `doctrine.cache.$thisSetting`
-                'query_cache'       => 'apc',
+                'query_cache'       => 'memcached',
                 // ResultSet cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'result_cache'      => 'apc',
+                'result_cache'      => 'memcached',
                 // Hydration cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'hydration_cache'   => 'apc',
+                'hydration_cache'   => 'memcached',
                 // Generate proxies automatically (turn off for production)
                 'generate_proxies'  => false,
                 // directory where proxies will be stored. By default, this is in

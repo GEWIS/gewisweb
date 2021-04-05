@@ -1,14 +1,43 @@
 language: php
-sudo: false
-php:
-  - 5.6
-  - 7.0
+os: linux
 
-env:
-  - APP_ENV=development
-  
+cache:
+    apt: true
+    ccache: true
+    directories:
+        -   $HOME/.composer/
+
+jobs:
+    include:
+        -   name:   "PHP 5.6 Production"
+            php:    5.6
+            env:    APP_ENV=production
+        -   name:   "PHP 5.6 Development"
+            php:    5.6
+            env:    APP_ENV=development
+        -   name:   "PHP 7.0 Production"
+            php:    7.0
+            env:    APP_ENV=production
+        -   name:   "PHP 7.0 Development"
+            php:    7.0
+            env:    APP_ENV=development
+        -   name:   "PHP 7.4 Production"
+            php:    7.4
+            env:    APP_ENV=production
+        -   name:   "PHP 7.4 Development"
+            php:    7.4
+            env:    APP_ENV=development
+        -   name:   "PHP 8.0 Production"
+            php:    8.0
+            env:    APP_ENV=production
+        -   name:   "PHP 8.0 Development"
+            php:    8.0
+            env:    APP_ENV=development
+
+
 before_script:
-    - composer install --prefer-source --ignore-platform-reqs
+    -   composer install --prefer-source --ignore-platform-reqs
+    -   ./genclassmap.sh
 
 script:
-  - (if (./web orm:validate-schema --no-ansi --no-interaction | grep -q "\[Mapping\]  FAIL"); then exit 1; else exit 0; fi)
+    -   (if (./web orm:validate-schema --no-ansi --no-interaction | grep -q "\[Mapping\]  FAIL"); then exit 1; fi)
