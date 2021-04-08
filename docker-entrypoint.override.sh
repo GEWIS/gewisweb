@@ -4,7 +4,7 @@ docker-php-ext-enable xdebug
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
-php composer.phar install -o --prefer-source
+php composer.phar install -o
 ./genclassmap.sh
 cp ./php.override.ini /usr/local/etc/php/conf.d/default.ini
 cp ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php
