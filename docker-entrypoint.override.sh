@@ -1,10 +1,10 @@
 #!/bin/sh
-pecl install -o xdebug-2.4.1
+pecl install xdebug-2.4.1
 docker-php-ext-enable xdebug
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
-php composer.phar install -o
+php composer.phar install
 ./genclassmap.sh
 cp ./php.override.ini /usr/local/etc/php/conf.d/default.ini
 cp ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php

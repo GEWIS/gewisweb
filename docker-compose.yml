@@ -3,6 +3,8 @@ version: '3.5'
 services:
     nginx:
         image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
+        env_file:
+            - .env
         depends_on:
             - web
         volumes:
@@ -15,6 +17,8 @@ services:
         restart: unless-stopped
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:latest
+        env_file:
+            - .env
         volumes:
             - gewisweb_data:/data:rw
             - gewisweb_public:/public:rw
