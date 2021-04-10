@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ebdf3f9108c29b2b358913c49d3f503",
+    "content-hash": "0e3f461b51924f60a8762f900d4d0d18",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -3209,6 +3209,7 @@
         "ext-imagick": ">=3.1",
         "ext-mbstring": "*",
         "ext-memcached": ">=2.2.0",
+        "ext-zend-opcache": ">=7.0.6",
         "ext-pdo": ">=1.0.4",
         "ext-pdo_mysql": ">=1.0.2",
         "ext-pdo_pgsql": ">=1.0.2",

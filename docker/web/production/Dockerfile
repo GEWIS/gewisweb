@@ -35,6 +35,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         gd \
         intl \
         mbstring \
+        opcache \
         pgsql \
         pdo \
         pdo_mysql \
@@ -61,6 +62,7 @@ FROM php-target as gewisweb_web_production
 WORKDIR /code
 
 COPY ./docker/web/production/php.ini /usr/local/etc/php/conf.d/default.ini
+COPY ./docker/web/production/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
 COPY ./config/autoload/local.php.dist ./config/autoload/local.php
 COPY ./config/autoload/doctrine.local.production.php.dist ./config/autoload/doctrine.local.php
 COPY ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php
