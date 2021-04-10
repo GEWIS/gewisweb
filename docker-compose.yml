@@ -23,6 +23,12 @@ services:
             - .env
 #        environment:
 #            - APP_ENV=
+#            - DOCKER_MAIL_HOST=
+#            - DOCKER_MAIL_PORT=
+#            - DOCKER_MAIL_USERNAME=
+#            - DOCKER_MAIL_PASSWORD=
+#            - DOCKER_GOOGLE_API_KEY=
+#            - DOCKER_GOOGLE_CALENDAR_KEY=
 #            - DOCKER_DB_HOST=
 #            - DOCKER_DB_PORT=
 #            - DOCKER_DB_USERNAME=

@@ -58,7 +58,7 @@ RUN npm run scss
 
 COPY ./docker/web/development/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
-COPY ./config/autoload/local.php.dist ./config/autoload/local.php
+COPY ./config/autoload/local.development.php.dist ./config/autoload/local.php
 COPY ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php
 COPY ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php
 COPY ./config/autoload/zdt.local.php.dist ./config/autoload/zdt.local.php
