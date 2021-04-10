@@ -24,10 +24,12 @@ services:
         ports:
             - "80:9200"
     web:
-        build: .
+        image: web.docker-registry.gewis.nl/gewisweb_web:development
+        build:
+            dockerfile: docker/web/development/Dockerfile
+            context: .
         depends_on:
             - mysql
-        entrypoint: ["/bin/sh", "/code/docker-entrypoint.override.sh"]
 
 volumes:
     gewisweb_mysql:

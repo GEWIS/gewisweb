@@ -40,16 +40,16 @@ return [
             'orm_default' => [
                 // metadata cache instance to use. The retrieved service name will
                 // be `doctrine.cache.$thisSetting`
-                'metadata_cache'    => 'memcached',
+                'metadata_cache'    => 'my_memcached',
                 // DQL queries parsing cache instance to use. The retrieved service
                 // name will be `doctrine.cache.$thisSetting`
-                'query_cache'       => 'memcached',
+                'query_cache'       => 'my_memcached',
                 // ResultSet cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'result_cache'      => 'memcached',
+                'result_cache'      => 'my_memcached',
                 // Hydration cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'hydration_cache'   => 'memcached',
+                'hydration_cache'   => 'my_memcached',
                 // Generate proxies automatically (turn off for production)
                 'generate_proxies'  => false,
                 // directory where proxies will be stored. By default, this is in

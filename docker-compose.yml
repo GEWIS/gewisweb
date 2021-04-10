@@ -5,10 +5,12 @@ services:
         image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
         env_file:
             - .env
+#        environment:
+#            - NGINX_REQUIRE_AUTH=
         depends_on:
             - web
         volumes:
-            - gewisweb_public:/public:ro
+            - gewisweb_public:/code/public:ro
             - gewisweb_logs:/etc/nginx/logs:rw
         networks:
             - gewisweb_network
@@ -16,12 +18,24 @@ services:
             - "9200:9200"
         restart: unless-stopped
     web:
-        image: web.docker-registry.gewis.nl/gewisweb_web:latest
+        image: web.docker-registry.gewis.nl/gewisweb_web:production
         env_file:
             - .env
+#        environment:
+#            - APP_ENV=
+#            - DOCKER_DB_HOST=
+#            - DOCKER_DB_PORT=
+#            - DOCKER_DB_USERNAME=
+#            - DOCKER_DB_PASSWORD=
+#            - DOCKER_DB_DATABASE=
+#            - DOCKER_DB2_HOST=
+#            - DOCKER_DB2_PORT=
+#            - DOCKER_DB2_USERNAME=
+#            - DOCKER_DB2_PASSWORD=
+#            - DOCKER_DB2_DATABASE=
         volumes:
-            - gewisweb_data:/data:rw
-            - gewisweb_public:/public:rw
+            - gewisweb_data:/code/data:rw
+            - gewisweb_public:/code/public:rw
         networks:
             - gewisweb_network
         restart: unless-stopped
