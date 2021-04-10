@@ -22,7 +22,7 @@ class AdminController extends AbstractActionController
 {
     public function updateAction()
     {
-        $activityId = (int)$this->params('id');
+        $activityId = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $activity = $queryService->getActivityWithDetails($activityId);
@@ -155,8 +155,8 @@ class AdminController extends AbstractActionController
      */
     public function participantsAction()
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params('id');
+        $signupListId = (int) $this->params('signupList');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $acl = $this->getAcl();
@@ -247,8 +247,8 @@ class AdminController extends AbstractActionController
 
     public function externalSignupAction()
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params('id');
+        $signupListId = (int) $this->params('signupList');
         $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
         $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
@@ -324,7 +324,7 @@ class AdminController extends AbstractActionController
 
     public function externalSignoffAction()
     {
-        $signupId = (int)$this->params('id');
+        $signupId = (int) $this->params('id');
         $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $signupMapper = $this->getServiceLocator()->get('activity_mapper_signup');
 
