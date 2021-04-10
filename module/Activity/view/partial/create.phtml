@@ -11,7 +11,8 @@
             ->setAttribute('class', 'language-control');
         ?>
         <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
-            <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
+            <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label"
+                   title="<?= $this->translate('Enable Dutch translation') ?>">
                 <?= $this->formCheckbox($checkboxDutch) ?>
                 <span class="flag-icon flag-icon-nl"></span>
                 <?= $this->translate('Dutch') ?>
@@ -89,7 +90,8 @@
             ->setAttribute('class', 'language-control');
         ?>
         <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
-            <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
+            <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label"
+                   title="<?= $this->translate('Enable English translation') ?>">
                 <?= $this->formCheckbox($checkboxEnglish) ?>
                 <span class="flag-icon flag-icon-en"></span>
                 <?= $this->translate('English') ?>
@@ -174,7 +176,9 @@
             <label for="<?= $isMyFuture->getAttribute('id') ?>">
                 <?= $this->formCheckbox($isMyFuture) ?>
                 <?= $this->translate('This is a career related activity') ?>
-                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page and the activity will be included on the career activities page.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <span data-toggle="tooltip" data-placement="right"
+                      title="<?= $this->translate('If this is checked the My Future logo will be displayed on the activity page and the activity will be included on the career activities page.') ?>"
+                      class="fas fa-info-circle" aria-hidden="true"></span>
             </label>
             <?= $this->formElementErrors($isMyFuture) ?>
         </div>
@@ -186,7 +190,9 @@
             <label for="<?= $requireGEFLITST->getAttribute('id') ?>">
                 <?= $this->formCheckbox($requireGEFLITST) ?>
                 <?= $this->translate('This activity needs a GEFLITST member to take photos') ?>
-                <span data-toggle="tooltip" data-placement="right" title="<?= $this->translate('When this is checked, GEFLITST will be notified that this activity needs a photographer.') ?>" class="fas fa-info-circle" aria-hidden="true"></span>
+                <span data-toggle="tooltip" data-placement="right"
+                      title="<?= $this->translate('When this is checked, GEFLITST will be notified that this activity needs a photographer.') ?>"
+                      class="fas fa-info-circle" aria-hidden="true"></span>
             </label>
             <?= $this->formElementErrors($requireGEFLITST) ?>
         </div>

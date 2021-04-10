@@ -30,9 +30,8 @@ class SignupListQuery extends AbstractAclService implements ServiceManagerAwareI
         }
 
         $signupListMapper = $this->getServiceManager()->get('activity_mapper_signuplist');
-        $signupList = $signupListMapper->getSignupListByIdAndActivity($signupListId, $activityId);
 
-        return $signupList;
+        return $signupListMapper->getSignupListByIdAndActivity($signupListId, $activityId);
     }
 
     public function getSignupListsOfActivity($activityId)
@@ -45,9 +44,8 @@ class SignupListQuery extends AbstractAclService implements ServiceManagerAwareI
         }
 
         $signupListMapper = $this->getServiceManager()->get('activity_mapper_signuplist');
-        $signupLists = $signupListMapper->getSignupListsOfActivity($activityId);
 
-        return $signupLists;
+        return $signupListMapper->getSignupListsOfActivity($activityId);
     }
 
     /**

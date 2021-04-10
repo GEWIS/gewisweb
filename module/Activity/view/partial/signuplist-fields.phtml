@@ -9,7 +9,7 @@
                 $element = $this->signupListField->get('type')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'type-field')
-                    ->setAttribute('onchange', 'Activity.updateField(' . $this->listIndex . ', ' . $this->index. ')');
+                    ->setAttribute('onchange', 'Activity.updateField(' . $this->listIndex . ', ' . $this->index . ')');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                     <label for="<?= $element->getAttribute('id') ?>" class="control-label">

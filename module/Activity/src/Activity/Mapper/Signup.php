@@ -36,7 +36,7 @@ class Signup
             ->setParameter('id', $id);
         $result = $qb->getQuery()->getResult();
 
-        return count($result) > 0 ? $result[0] : null;
+        return !empty($result) ? $result[0] : null;
     }
 
     /**
@@ -93,9 +93,8 @@ class Signup
             ->join('a.user', 'u')
             ->where('u.lidnr = ?1')
             ->setParameter(1, $userId);
-        $result = $qb->getQuery()->getResult();
 
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 
     public function getNumberOfSignedUpMembers($signupListId)

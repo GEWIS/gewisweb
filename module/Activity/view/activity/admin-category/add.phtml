@@ -22,7 +22,8 @@ $form->setAttribute('class', 'form-activity');
                     ->setAttribute('class', 'language-control');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
-                    <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable Dutch translation') ?>">
+                    <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label"
+                           title="<?= $this->translate('Enable Dutch translation') ?>">
                         <?= $this->formCheckbox($checkboxDutch) ?>
                         <span class="flag-icon flag-icon-nl"></span>
                         <?= $this->translate('Dutch') ?>
@@ -60,7 +61,8 @@ $form->setAttribute('class', 'form-activity');
                     ->setAttribute('class', 'language-control');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
-                    <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label" title="<?= $this->translate('Enable English translation') ?>">
+                    <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label"
+                           title="<?= $this->translate('Enable English translation') ?>">
                         <?= $this->formCheckbox($checkboxEnglish) ?>
                         <span class="flag-icon flag-icon-en"></span>
                         <?= $this->translate('English') ?>
@@ -103,5 +105,5 @@ $form->setAttribute('class', 'form-activity');
 </div>
 
 <script>
-Activity.updateForm();
+    Activity.updateForm();
 </script>

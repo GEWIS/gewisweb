@@ -74,7 +74,8 @@ $form->setAttribute('class', 'form-activity');
                                     ->setAttribute('id', 'begin-time');
                                 ?>
                                 <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
-                                    <label for="<?= $beginTime->getAttribute('id') ?>" class="control-label label-required">
+                                    <label for="<?= $beginTime->getAttribute('id') ?>"
+                                           class="control-label label-required">
                                         <?= $this->translate('Start date and time') ?>
                                     </label>
                                     <?= $this->formInput($beginTime) ?>
@@ -88,7 +89,8 @@ $form->setAttribute('class', 'form-activity');
                                     ->setAttribute('id', 'end-time');
                                 ?>
                                 <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
-                                    <label for="<?= $endTime->getAttribute('id') ?>" class="control-label label-required">
+                                    <label for="<?= $endTime->getAttribute('id') ?>"
+                                           class="control-label label-required">
                                         <?= $this->translate('End date and time') ?>
                                     </label>
                                     <?= $this->formInput($endTime) ?>
@@ -100,7 +102,7 @@ $form->setAttribute('class', 'form-activity');
                 </div>
             </div>
         </div>
-        <?= $this->partial('partial/create', [ 'form' => $form ]) ?>
+        <?= $this->partial('partial/create', ['form' => $form]) ?>
         <div class="row">
             <div class="col-md-12">
                 <h2><?= $this->translate('Activity Categories') ?></h2>
@@ -135,12 +137,12 @@ $form->setAttribute('class', 'form-activity');
                             <div class="chip chip-clickable chip-outlined">
                                 <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
                                 <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
-                                        class="chip-label">
+                                       class="chip-label">
                                     <?= $value->getText($lang) ?>
                                 </label>
                                 <input type="checkbox" name="<?= $categoriesName ?>[]"
-                                    id="<?= $categoriesName ?>-<?= $option; ?>"
-                                    value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
+                                       id="<?= $categoriesName ?>-<?= $option; ?>"
+                                       value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
                             </div>
                         <?php endforeach; ?>
                     </fieldset>
@@ -158,12 +160,12 @@ $form->setAttribute('class', 'form-activity');
                         <div class="col-md-3 col-md-offset-6">
                             <span class="flag-icon flag-icon-nl"></span>
                             <strong><?= $this->translate('Dutch') ?></strong>
-                            <hr />
+                            <hr/>
                         </div>
                         <div class="col-md-3">
                             <span class="flag-icon flag-icon-en"></span>
                             <strong><?= $this->translate('English') ?></strong>
-                            <hr />
+                            <hr/>
                         </div>
                     </div>
                     <div class="row">
@@ -176,7 +178,8 @@ $form->setAttribute('class', 'form-activity');
                             $signupListsTemplateData = trim(ob_get_clean());
                             ?>
                             <fieldset class="signup-lists">
-                                <span class="template" data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
+                                <span class="template"
+                                      data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
                                 <?php
                                 $index = 0;
                                 foreach ($form->get('signupLists')->getIterator() as $signupList) {
@@ -187,11 +190,13 @@ $form->setAttribute('class', 'form-activity');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group signup-list-controls">
-                                            <button class="btn btn-danger" type="button" onclick="return Activity.removeSignupList()">
+                                            <button class="btn btn-danger" type="button"
+                                                    onclick="return Activity.removeSignupList()">
                                                 <i class="fas fa-minus"></i>
                                                 <?= $this->translate('Remove the last sign-up list') ?>
                                             </button>
-                                            <button class="btn btn-success" type="button" onclick="return Activity.addSignupList()">
+                                            <button class="btn btn-success" type="button"
+                                                    onclick="return Activity.addSignupList()">
                                                 <i class="fas fa-plus"></i>
                                                 <?= $this->translate('Add a sign-up list') ?>
                                             </button>
@@ -223,19 +228,19 @@ $form->setAttribute('class', 'form-activity');
 <script>
     $('[name="beginTime"]').datetimepicker();
     $('[name="endTime"]').datetimepicker();
-    $('.markdown-editor').each(function() {
-      $(this).markdown(
-        {
-          resize: "both",
-          iconlibrary: "fa"
-        }
-      );
+    $('.markdown-editor').each(function () {
+        $(this).markdown(
+            {
+                resize: "both",
+                iconlibrary: "fa"
+            }
+        );
     });
     Activity.updateForm();
     Activity.updateAllFields();
     Activity.updateLists();
     Activity.updateAllCategories();
-    $('label[for^="categories-"]').on('click', function() {
+    $('label[for^="categories-"]').on('click', function () {
         Activity.toggleCategory($(this).data('category-id'));
     });
 </script>

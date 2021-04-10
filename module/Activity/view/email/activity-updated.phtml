@@ -1,6 +1,6 @@
 For English, see below.
 
-L.s.<br /><br />
+L.s.<br/><br/>
 
 Er is een activiteit aangepast op de GEWIS website.
 
@@ -21,20 +21,21 @@ Er is een activiteit aangepast op de GEWIS website.
         <td><b>Locatie:</b></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("nl")) ?></td>
     </tr>
-     <tr>
+    <tr>
         <td><b>Kosten:</b></td>
-        <td><?=$this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
     </tr>
 </table>
 <br/>
-Klik <a href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed/af te keuren.
+Klik <a
+    href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed/af te keuren.
 <br/><br/>
 
-Met vriendelijke groeten,<br />
+Met vriendelijke groeten,<br/>
 De Web Commissie
-<hr />
+<hr/>
 
-L.s.<br /><br />
+L.s.<br/><br/>
 
 An activity was updated on the GEWIS website. See below for details.
 
@@ -55,14 +56,15 @@ An activity was updated on the GEWIS website. See below for details.
         <td><b>Location:</b></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("en")) ?></td>
     </tr>
-     <tr>
+    <tr>
         <td><b>Costs:</b></td>
-        <td><?=$this->escapeHtml($activity->getCosts()->getText("en")) ?></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("en")) ?></td>
     </tr>
 </table>
 <br/>
-Click <a href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">here</a> to approve/disapprove this activity.
+Click <a
+    href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">here</a> to approve/disapprove this activity.
 <br/><br/>
 
-Kind Regards, <br />
+Kind Regards, <br/>
 The Web Committee

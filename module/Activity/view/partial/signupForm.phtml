@@ -24,23 +24,25 @@ switch ($form->getType()) {
         break;
 }
 
-function formElementRender($element, $label, $id, $context){
+function formElementRender($element, $label, $id, $context)
+{
     $element->setAttribute('id', $id);
-    $elementType = (new \ReflectionClass($element))->getShortName();
-    if (!in_array($elementType, ['Radio','Checkbox'])) {
+    $elementType = (new ReflectionClass($element))->getShortName();
+    if (!in_array($elementType, ['Radio', 'Checkbox'])) {
         $element->setAttribute('class', 'form-control');
     }
     $result = '<div class="form-group' . (count($element->getMessages()) > 0 ? ' has-error' : '') . '">';
     $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label">' . $label . '</label>';
     if (in_array($elementType, ['Radio'])) {
         $context->formRadio()->setSeparator('</div><div class="radio">');
-        $result .= '<div class="radio">'.$context->formRadio($element).'</div>';
+        $result .= '<div class="radio">' . $context->formRadio($element) . '</div>';
     } else {
         $result .= $context->formRow($element);
     }
     $result .= '</div>';
     return $result;
 }
+
 ?>
 
 <?php
@@ -48,20 +50,21 @@ $form->setAttribute('action', $submitUrl);
 $form->prepare();
 echo $this->form()->openTag($form);
 ?>
-<?php if($showName): ?>
-    <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this)?>
-    <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this)?>
+<?php if ($showName): ?>
+    <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this) ?>
+    <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this) ?>
 <?php endif; ?>
 
-<?php if($showCaptcha): ?>
+<?php if ($showCaptcha): ?>
     <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
 <?php endif; ?>
 
-<?php foreach($signupList->getFields() as $field): ?>
+<?php foreach ($signupList->getFields() as $field): ?>
     <?= formElementRender($form->get($field->getId()), $this->escapeHtml($field->getName()->getText($lang)), $field->getId(), $this) ?>
-<?php endforeach;?>
+<?php endforeach; ?>
 
-<p><?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank"><?= $this->translate('Activity Policy') ?></a>.</p>
+<p><?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf"
+                            target="_blank"><?= $this->translate('Activity Policy') ?></a>.</p>
 
 <?php
 $submit = $form->get('submit');

@@ -15,12 +15,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <?php else: ?>
             <?php // When there are too many categories a search function should be added that searches client-side ?>
             <?php foreach ($categories as $category): ?>
-                <a class="chip chip-clickable chip-deletable" href="<?= $this->url('activity_admin_categories/edit', ['id' => $category->getId()]) ?>">
+                <a class="chip chip-clickable chip-deletable"
+                   href="<?= $this->url('activity_admin_categories/edit', ['id' => $category->getId()]) ?>">
                     <span class="chip-label"><?= $category->getName()->getText($lang) ?></span>
                     <span class="chip-icon chip-delete-icon fas fa-times-circle"
-                            onclick="deleteActivityCategory(<?= $category->getId() ?>)"
-                            data-toggle="modal"
-                            data-target="#deleteModal"></span>
+                          onclick="deleteActivityCategory(<?= $category->getId() ?>)"
+                          data-toggle="modal"
+                          data-target="#deleteModal"></span>
                 </a>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -58,13 +59,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 </div>
 <script>
     // Prevent the anchor tag from redirecting when trying to delete.
-    $(document).on('click', ".chip-delete-icon", function(e) { 
+    $(document).on('click', ".chip-delete-icon", function (e) {
         e.stopPropagation();
         e.preventDefault();
     });
-    
+
     // Set correct URL for the activity category deletion form.
-    deleteActivityCategory = function(id) {
+    deleteActivityCategory = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('activity_admin_categories/delete', {'id': id}));
     };
 </script>

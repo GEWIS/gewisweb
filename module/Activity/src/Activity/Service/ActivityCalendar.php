@@ -202,27 +202,20 @@ class ActivityCalendar extends AbstractAclService
             return true;
         }
 
-        if (!$this->isAllowed('create')) {
-            return false;
-        }
-
         $period = $this->getCurrentPeriod();
-        if ($period == null) {
-            return false;
-        }
 
-        if ($organId == null) {
+        if (
+            $period == null
+            || !$this->isAllowed('create')
+            || $organId == null
+        ) {
             return false;
         }
 
         $max = $this->getMaxActivities($organId, $period->getId());
         $count = $this->getCurrentProposalCount($period, $organId);
 
-        if ($count >= $max) {
-            return false;
-        }
-
-        return true;
+        return ($count < $max);
     }
 
     /**
@@ -318,14 +311,7 @@ class ActivityCalendar extends AbstractAclService
      */
     public function createOption($data, $proposal)
     {
-//        $form = $this->getCreateOptionForm();
         $option = new OptionModel();
-//        $form->setData($data);
-//
-//        if (!$form->isValid()) {
-//            return false;
-//        }
-//        $validatedData = $form->getData();
         $validatedData = $data;
 
         $em = $this->getEntityManager();
@@ -450,10 +436,7 @@ class ActivityCalendar extends AbstractAclService
         $begin = $period->getBeginOptionTime();
         $end = $period->getEndOptionTime();
 
-        if ($begin > $beginTime) {
-            return false;
-        }
-        if ($beginTime > $end) {
+        if ($begin > $beginTime || $beginTime > $end) {
             return false;
         }
 
