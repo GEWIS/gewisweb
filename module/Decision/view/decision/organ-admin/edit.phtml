@@ -1,9 +1,10 @@
 <?php
-$this->headScript()->prependFile($this->basePath() . '/ckeditor/ckeditor.js')
-    ->prependFile($this->basePath() . '/js/jquery.Jcrop.min.js')
-    ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+    ->appendFile($this->basePath() . '/js/jquery.Jcrop.min.js')
+    ->appendFile($this->basePath() . '/ckeditor/ckeditor.js');
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css');
+    ->appendStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css');
 $this->scriptUrl()->requireUrl('admin_page/upload');
 ?>
 <style>

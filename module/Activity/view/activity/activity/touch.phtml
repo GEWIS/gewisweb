@@ -19,17 +19,17 @@ $this->scriptUrl()->requireUrl('user/pinlogin')
 
     <!-- Le styles -->
     <?php echo $this->headLink()
-        ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
-        ->prependStylesheet($this->basePath() . '/css/activity-touch.css')
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css')
+        ->appendStylesheet($this->basePath() . '/css/gewis-theme.css')
+        ->appendStylesheet($this->basePath() . '/css/activity-touch.css')
+        ->appendStylesheet('https://fonts.googleapis.com/css?family=Raleway:700,400,300')
     ?>
     <!-- Scripts -->
-    <?php echo $this->headScript()
-        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-        ->prependFile($this->basePath() . '/js/jquery.min.js')
-        ->prependFile($this->basePath() . '/js/iscroll.js')
-        ->prependFile($this->basePath() . '/js/activity-touch.js')
-        ->prependFile($this->basePath() . '/js/url-helper.js'); ?>
+    <?php echo $this->inlineScript()
+        ->appendFile($this->basePath() . '/js/url-helper.js')
+        ->appendFile($this->basePath() . '/js/activity-touch.js')
+        ->appendFile($this->basePath() . '/js/iscroll.js')
+        ->appendFile($this->basePath() . '/js/jquery.min.js')
+        ->appendFile($this->basePath() . '/js/bootstrap.min.js'); ?>
 
     <script type="text/javascript">
         $(document).ready(function () {

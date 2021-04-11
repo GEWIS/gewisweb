@@ -1,6 +1,6 @@
 <?php
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/education-admin.js');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/education-admin.js');
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
 ?>

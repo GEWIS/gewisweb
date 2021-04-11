@@ -15,8 +15,9 @@ if (isset($memberAlbum)) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php
-$this->headScript()->prependFile($this->basePath() . '/js/photo.js')
-    ->prependFile($this->basePath() . '/js/jquery.autocomplete.js');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
+    ->appendFile($this->basePath() . '/js/photo.js');
 $this->scriptUrl()->requireUrl('member/search');
 ?>
 <?php if ($photo != null): ?>

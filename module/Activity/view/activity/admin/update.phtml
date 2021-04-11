@@ -1,10 +1,10 @@
 <?php
 $this->headTitle($this->translate('Update activity'));
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/activity-create.js')
-    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
+    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
+    ->appendFile($this->basePath() . '/js/activity-create.js');
 $form->prepare();
 ?>
 <section class="section">
