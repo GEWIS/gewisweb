@@ -19,14 +19,8 @@ return [
         'transport' => 'Smtp',
         'options' => [
             'name' => 'gewis.nl',
-            'host' => getenv('DOCKER_MAIL_HOST'),
-            'port' => getenv('DOCKER_MAIL_PORT'),
-            'connection_class'  => 'smtp',
-            'connection_config' => [
-                'username' => getenv('DOCKER_MAIL_USERNAME'),
-                'password' => getenv('DOCKER_MAIL_PASSWORD'),
-                'ssl'      => 'tls',
-            ],
+            'host' => 'postfix',
+            'port' => '25'
         ],
         'from' => 'web@gewis.nl',
         'to' => [

@@ -5,8 +5,8 @@ services:
         image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
         env_file:
             - .env
-#        environment:
-#            - NGINX_REQUIRE_AUTH=
+        #        environment:
+        #            - NGINX_REQUIRE_AUTH=
         depends_on:
             - web
         volumes:
@@ -17,16 +17,13 @@ services:
         ports:
             - "9200:9200"
         restart: unless-stopped
+        stop_grace_period: 30s
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:production
         env_file:
             - .env
 #        environment:
 #            - APP_ENV=
-#            - DOCKER_MAIL_HOST=
-#            - DOCKER_MAIL_PORT=
-#            - DOCKER_MAIL_USERNAME=
-#            - DOCKER_MAIL_PASSWORD=
 #            - DOCKER_GOOGLE_API_KEY=
 #            - DOCKER_GOOGLE_CALENDAR_KEY=
 #            - DOCKER_DB_HOST=
@@ -45,6 +42,21 @@ services:
         networks:
             - gewisweb_network
         restart: unless-stopped
+        stop_grace_period: 90s
+    postfix:
+        image: juanluisbaptiste/postfix
+        env_file:
+            - .env
+#        environment:
+#            - SMTP_SERVER=
+#            - SMTP_PORT=
+#            - SMTP_USERNAME=
+#            - SMTP_PASSWORD=
+#            - SERVER_HOSTNAME=
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+        stop_grace_period: 90s
 
 volumes:
     gewisweb_data:
