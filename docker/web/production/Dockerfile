@@ -24,7 +24,6 @@ RUN apt-get install -y \
         libpng-dev \
         libpq-dev \
         libxml2-dev \
-        memcached \
         unzip \
         zlib1g-dev
 
