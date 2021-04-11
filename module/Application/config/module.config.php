@@ -49,7 +49,7 @@ return [
             'doctrine.cache.my_memcached' => function ($sm) {
                 $cache = new \Doctrine\Common\Cache\MemcachedCache();
                 $memcached = new \Memcached();
-                $memcached->addServer('localhost', 11211);
+                $memcached->addServer('memcached', 11211);
                 $cache->setMemcached($memcached);
                 return $cache;
             },

@@ -38,6 +38,8 @@ services:
         stop_grace_period: 10s
     postfix:
         stop_grace_period: 10s
+    memcached:
+        stop_grace_period: 10s
 
 volumes:
     gewisweb_mysql:

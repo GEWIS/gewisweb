@@ -36,6 +36,9 @@ services:
 #            - DOCKER_DB2_USERNAME=
 #            - DOCKER_DB2_PASSWORD=
 #            - DOCKER_DB2_DATABASE=
+        depends_on:
+            - postfix
+            - memcached
         volumes:
             - gewisweb_data:/code/data:rw
             - gewisweb_public:/code/public:rw
@@ -57,6 +60,13 @@ services:
             - gewisweb_network
         restart: unless-stopped
         stop_grace_period: 90s
+    memcached:
+        image: memcached
+        entrypoint: ['memcached', '-m 256']
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+        stop_grace_period: 30s
 
 volumes:
     gewisweb_data:
