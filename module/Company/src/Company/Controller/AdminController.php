@@ -481,10 +481,7 @@ class AdminController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-        // TODO: This is a hotfix for some ORM issues:
-        $labels = $companyService->getLabelAssignmentMapper()->findAssignmentsByJobId($jobs[0]->getId());
-        // TODO: Instead of doing:
-//        $labels = $jobs[0]->getLabels();
+        $labels = $jobs[0]->getLabels();
 
         $mapper = $companyService->getLabelMapper();
         $actualLabels = [];
