@@ -106,8 +106,7 @@ $this->headTitle($this->category->getPluralName());
                                     <p class="job-location"><?= $job->getLocation() ?></p>
                                 <?php endif; ?>
                                 <div>
-                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                        <?php $label = $labelAsg->getLabel(); ?>
+                                    <?php foreach ($job->getLabels() as $label): ?>
                                         <span class="label label-default job-label"
                                               data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
                                               title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>

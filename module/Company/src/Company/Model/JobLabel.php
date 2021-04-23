@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,14 +49,19 @@ class JobLabel
      */
     protected $languageNeutralId;
 
-    // This is not used
-    protected $assignments;
+    /**
+     * The Activities this Category belongs to.
+     *
+     * @ORM\ManyToMany(targetEntity="Company\Model\Job", mappedBy="labels", cascade={"persist"})
+     */
+    protected $jobs;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
+        $this->jobs = new ArrayCollection();
     }
 
     /**
@@ -136,5 +142,37 @@ class JobLabel
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function addJob($job)
+    {
+        if ($this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->add($job);
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function removeJob($job)
+    {
+        if (!$this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->removeElement($job);
+    }
+
+    /**
+     * @return array
+     */
+    public function getJobs()
+    {
+        return $this->jobs->toArray();
     }
 }

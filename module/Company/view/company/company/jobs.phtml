@@ -54,8 +54,7 @@ $this->headTitle($category->getPluralName());
                                  alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>"/>
                         </a>
                         <div>
-                            <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                <?php $label = $labelAsg->getLabel(); ?>
+                            <?php foreach ($job->getLabels() as $label): ?>
                                 <span class="label label-default job-label" data-label="<?= $label->getSlug(); ?>"
                                       data-toggle="tooltip"
                                       title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>

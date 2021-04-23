@@ -4,6 +4,7 @@ namespace Company\Model;
 
 use Carbon\Carbon;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -129,7 +130,8 @@ class Job
     /**
      * Job labels
      *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Company\Model\JobLabel", inversedBy="job", cascade={"persist"})
+     * @ORM\JoinTable(name="JobLabelAssignment")
      */
     protected $labels;
 
@@ -138,7 +140,7 @@ class Job
      */
     public function __construct()
     {
-        // noting to do
+        $this->labels = new ArrayCollection();
     }
 
     /**
@@ -452,27 +454,49 @@ class Job
     }
 
     /**
-     * Sets all labels.
-     *
      * @param array $labels
      */
-    public function setLabels($labels)
+    public function addLabels($labels)
     {
-        $this->labels = $labels;
+        foreach ($labels as $label) {
+            $this->addLabel($label);
+        }
     }
 
     /**
-     * Adds a label.
-     *
-     * @param JobLabelAssignment $label
+     * @param JobLabel $label
      */
     public function addLabel($label)
     {
-        if ($this->labels === null) {
-            $this->labels = [];
+        if ($this->labels->contains($label)) {
+            return;
         }
-        $label->setJob($this);
-        $this->labels[] = $label;
+
+        $this->labels->add($label);
+        $label->addJob($this);
+    }
+
+    /**
+     * @param array $labels
+     */
+    public function removeLabels($labels)
+    {
+        foreach ($labels as $label) {
+            $this->removeLabel($label);
+        }
+    }
+
+    /**
+     * @param JobLabel $label
+     */
+    public function removeLabel($label)
+    {
+        if (!$this->labels->contains($label)) {
+            return;
+        }
+
+        $this->labels->removeElement($label);
+        $label->removeJob($this);
     }
 
     public function setPackage(CompanyPackage $package)

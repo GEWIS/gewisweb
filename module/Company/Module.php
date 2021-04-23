@@ -128,11 +128,6 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
-            'company_mapper_label_assignment' => function ($sm) {
-                return new \Company\Mapper\LabelAssignment(
-                    $sm->get('company_doctrine_em')
-                );
-            },
             'company_mapper_bannerpackage' => function ($sm) {
                 return new \Company\Mapper\BannerPackage(
                     $sm->get('company_doctrine_em')

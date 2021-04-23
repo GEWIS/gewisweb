@@ -758,7 +758,7 @@ class Company extends AbstractACLService
             $labelsLangBased = [];
             foreach ($labelIds as $labelId) {
                 $label = $mapper->findLabelById($labelId);
-                $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
+                $labelsLangBased[] = $mapper->siblingLabel($label, $lang);
             }
             $this->setLabelsForJob($job, $labelsLangBased);
         }
@@ -772,50 +772,30 @@ class Company extends AbstractACLService
      */
     private function setLabelsForJob($job, $labels)
     {
-        $mapper = $this->getLabelAssignmentMapper();
-        $currentAssignments = $mapper->findAssignmentsByJobId($job->getId());
-        $currentLabels = [];
-        foreach ($currentAssignments as $labelAsg) {
-            $currentLabels[] = $labelAsg->getLabel()->getId();
+        $currentLabels = $job->getLabels();
+        
+        $currentLabelIds = [];
+        foreach ($currentLabels as $label) {
+            $currentLabelIds[$label->getId()] = $label;
         }
-        $intersection = array_intersect($labels, $currentLabels);
-        $toRemove = array_diff($currentLabels, $labels);
-        $toAdd = array_diff($labels, $intersection);
 
-        $this->removeLabelsFromJob($job, $toRemove);
-        $this->addLabelsToJob($job, $toAdd);
-    }
+        $labelIds = [];
+        foreach ($labels as $label) {
+            $labelIds[$label->getId()] = $label;
+        }
 
-    /**
-     * @param Job $job
-     * @param array $labels
-     */
-    private function addLabelsToJob($job, $labels)
-    {
-        $mapperLabel = $this->getLabelMapper();
-        $mapperLabelAssignment = $this->getLabelAssignmentMapper();
+        $currentIds = array_keys($currentLabelIds);
+        $newIds = array_keys($labelIds);
+
+        $intersection = array_intersect($newIds, $currentIds);
+        $toRemove = array_diff($currentIds, $newIds);
+        $toAdd = array_diff($newIds, $intersection);
+
+        $job->removeLabels(array_map(function($x) use ($currentLabelIds) { return $currentLabelIds[$x]; }, $toRemove));
+        $job->addLabels(array_map(function($x) use ($labelIds) { return $labelIds[$x]; }, $toAdd));
+
         $mapperJob = $this->getJobMapper();
-        foreach ($labels as $label) {
-            $jobLabelAssignment = new JobLabelAssignment();
-            $labelModel = $mapperLabel->findLabelById($label);
-            $jobLabelAssignment->setLabel($labelModel);
-            $job->addLabel($jobLabelAssignment);
-            $mapperLabelAssignment->persist($jobLabelAssignment);
-            $mapperJob->flush();
-        }
-    }
-
-    /**
-     * @param Job $job
-     * @param array $labels
-     */
-    private function removeLabelsFromJob($job, $labels)
-    {
-        $mapper = $this->getLabelAssignmentMapper();
-        foreach ($labels as $label) {
-            $toRemove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
-            $mapper->delete($toRemove);
-        }
+        $mapperJob->persist($job); // flushes too
     }
 
     private function setLanguageNeutralJobId($id, $job, $languageNeutralId)
@@ -1027,19 +1007,12 @@ class Company extends AbstractACLService
             foreach ($jobs as $job) {
                 $job->setCategory($this->getCategoryMapper()
                     ->createNullCategory($translator->getLocale(), $translator));
-
-                // TODO: This is a hotfix for some ORM issues:
-                $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
             }
             return $jobs;
         }
         $locale = $translator->getLocale();
         $dict["language"] = $locale;
         $jobs = $this->getJobMapper()->findJob($dict);
-        foreach ($jobs as $job) {
-            // TODO: This is a hotfix for some ORM issues:
-            $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
-        }
 
         return $jobs;
     }
@@ -1198,15 +1171,6 @@ class Company extends AbstractACLService
     public function getLabelMapper()
     {
         return $this->sm->get('company_mapper_label');
-    }
-
-    /**
-     * Returns the label assignment mapper
-     *
-     */
-    public function getLabelAssignmentMapper()
-    {
-        return $this->sm->get('company_mapper_label_assignment');
     }
 
     /**
