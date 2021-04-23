@@ -5,6 +5,7 @@ namespace Company\Model;
 use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Job model.
@@ -138,7 +139,7 @@ class Job
      */
     public function __construct()
     {
-        // noting to do
+        $this->labels = new ArrayCollection();
     }
 
     /**

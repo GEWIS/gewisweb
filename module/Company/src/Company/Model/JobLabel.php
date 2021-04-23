@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Job Label model.
@@ -48,7 +49,11 @@ class JobLabel
      */
     protected $languageNeutralId;
 
-    // This is not used
+    /**
+     * The Assignments this Label belongs to.
+     *
+     * @ORM\ManyToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist"})
+     */
     protected $assignments;
 
     /**
@@ -56,6 +61,7 @@ class JobLabel
      */
     public function __construct()
     {
+        $this->assignments = new ArrayCollection();
     }
 
     /**
