@@ -28,7 +28,7 @@ class JobLabelAssignment
     protected $job;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company\Model\JobLabel")
+     * @ORM\ManyToOne(targetEntity="Company\Model\JobLabel", fetch="EAGER")
      * @ORM\JoinColumn(name="label_id",referencedColumnName="id")
      */
     protected $label;
