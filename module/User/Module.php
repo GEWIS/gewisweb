@@ -230,6 +230,14 @@ class Module
                 },
                 'user_remoteaddress' => function ($sm) {
                     $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
+                    $isProxied = $sm->get('config')['proxy']['enabled'];
+                    $trustedProxies = $sm->get('config')['proxy']['ip_addresses'];
+                    $proxyHeader = $sm->get('config')['proxy']['header'];
+
+                    $remote->setUseProxy($isProxied)
+                        ->setTrustedProxies($trustedProxies)
+                        ->setProxyHeader($proxyHeader);
+
                     return $remote->getIpAddress();
                 },
                 'user_role' => function ($sm) {
