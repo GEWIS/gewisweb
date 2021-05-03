@@ -1,0 +1,57 @@
+<?php
+$this->headTitle($this->translate('Company'));
+?>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user/default', ['action' => 'register']));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+$form->setAttribute('class', 'form-horizontal');
+//?>
+<section class="section">
+    <div class = "container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Company') ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <?= $this->form()->openTag($form); ?>
+
+                        <?php foreach (['login', 'password'] as $field): ?>
+                            <?php
+                            $element = $form->get($field);
+                            $element->setAttribute('id', $field);
+                            $element->setAttribute('class', 'form-control');
+                            ?>
+                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <div class="col-sm-7">
+                                    <?= $this->formInput($element) ?>
+                                    <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <?php
+                                $submit = $form->get('submit');
+                                $submit->setAttribute('class', 'btn btn-primary');
+                                ?>
+                                <?= $this->formRow($submit); ?>
+                            </div>
+                        </div>
+
+                        <?= $this->form()->closeTag($form); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>>
+</section>
