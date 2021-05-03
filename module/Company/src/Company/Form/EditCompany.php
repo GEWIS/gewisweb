@@ -127,12 +127,22 @@ class EditCompany extends Form
         ]);
 
         $this->add([
-            'name' => 'email',
+            'name' => 'contactEmail',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
             ],
             'options' => [
-                'label' => $translate->translate('Email'),
+                'label' => $translate->translate('Contact Email'),
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'email' ,
+            'type' => 'Zend\Form\Element\Email',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Public Email'),
             ],
         ]);
 

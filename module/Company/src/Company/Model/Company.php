@@ -59,7 +59,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $address;
 
     /**
-     * The company's email.
+     * The company's contact email
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $contactEmail;
+
+    /**
+     * The company's public email.
      *
      * @ORM\Column(type="string")
      */
@@ -220,7 +227,27 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Get the company's email.
+     * Get the company's contact email.
+     *
+     * @return string
+     */
+    public function getContactEmail()
+    {
+        return $this->contactEmail;
+    }
+
+    /**
+     * Set the company's contact email.
+     *
+     * @param string $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * Get the company's public email.
      *
      * @return string
      */
@@ -230,7 +257,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Set the company's email.
+     * Set the company's public email.
      *
      * @param string $email
      */
@@ -506,6 +533,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setContactName($this->updateIfSet($data['contactName'], ''));
         $this->setSlugName($this->updateIfSet($data['slugName'], ''));
         $this->setAddress($this->updateIfSet($data['address'], ''));
+        $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
         $this->setEmail($this->updateIfSet($data['email'], ''));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
@@ -526,6 +554,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['contactName'] = $this->getContactName();
+        $arraycopy['contactEmail'] = $this->getContactEmail();
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
         $arraycopy['phone'] = $this->getPhone();
