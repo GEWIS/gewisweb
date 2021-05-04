@@ -94,6 +94,20 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $packages;
 
     /**
+     * The company's phone.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $highlightCredits;
+
+    /**
+     * The company banner credits.
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $bannerCredits;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -244,6 +258,46 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function setContactEmail($contactEmail)
     {
         $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * Get the company's contact email.
+     *
+     * @return string
+     */
+    public function getHighlightCredits()
+    {
+        return $this->highlightCredits;
+    }
+
+    /**
+     * Set the company's contact email.
+     *
+     * @param string $highlightCredits
+     */
+    public function setHighlightCredits($highlightCredits)
+    {
+        $this->highlightCredits = $highlightCredits;
+    }
+
+    /**
+     * Get the company's contact email.
+     *
+     * @return string
+     */
+    public function getBannerCredits()
+    {
+        return $this->bannerCredits;
+    }
+
+    /**
+     * Set the company's contact email.
+     *
+     * @param string $bannerCredits
+     */
+    public function setBannerCredits($bannerCredits)
+    {
+        $this->bannerCredits = $bannerCredits;
     }
 
     /**
@@ -536,6 +590,9 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
         $this->setEmail($this->updateIfSet($data['email'], ''));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
+        $this->setHighlightCredits($this->updateIfSet($data['highlightCredits'], 0));
+        $this->setBannerCredits($this->updateIfSet($data['bannerCredits'], 0));
+        $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
         $this->translations = $newTranslations;
     }
@@ -558,6 +615,8 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
         $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['highlightCredits'] = $this->getHighlightCredits();
+        $arraycopy['bannerCredits'] = $this->getBannerCredits();
         $arraycopy['hidden'] = $this->getHidden();
 
         // Languages

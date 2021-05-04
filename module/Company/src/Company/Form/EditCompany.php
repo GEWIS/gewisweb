@@ -167,6 +167,26 @@ class EditCompany extends Form
         ]);
 
         $this->add([
+            'name' => 'highlightCredits' ,
+            'type' => 'Zend\Form\Element\Number',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Highlight Credits'),
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'bannerCredits' ,
+            'type' => 'Zend\Form\Element\Number',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Banner Credits'),
+            ],
+        ]);
+
+        $this->add([
             'name' => 'nl_logo',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
