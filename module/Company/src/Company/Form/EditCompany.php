@@ -374,6 +374,35 @@ class EditCompany extends Form
         ]);
 
         $filter->add([
+            'name' => 'contactEmail',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'EmailAddress',
+                    'options' => [
+                        'messages' => [
+                            'emailAddressInvalidFormat' => 'Email address format is not valid',
+                        ],
+                    ],
+                ],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
+
+        $filter->add([
+            'name' => 'highlightCredits',
+            'required' => false,
+        ]);
+
+        $filter->add([
+            'name' => 'bannerCredits',
+            'required' => false,
+        ]);
+
+        $filter->add([
             'name' => 'en_logo',
             'required' => false,
             'validators' => [
