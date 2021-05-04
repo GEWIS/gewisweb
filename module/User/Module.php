@@ -147,7 +147,7 @@ class Module
                     );
                 },
                 'user_form_companylogin' => function ($sm) {
-                    return new \User\Form\Login(
+                    return new \User\Form\CompanyLogin(
                         $sm->get('translator')
                     );
                 },

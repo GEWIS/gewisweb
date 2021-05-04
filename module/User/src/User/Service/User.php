@@ -259,6 +259,44 @@ class User extends AbstractAclService
     }
 
     /**
+     * Log the user in.
+     *
+     * @param array $data Login data
+     *
+     * @return UserModel Authenticated user. Null if not authenticated.
+     */
+    public function companyLogin($data)
+    {
+        $form = $this->getCompanyLoginForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        // try to authenticate
+        $auth = $this->getServiceManager()->get('user_auth_service');
+        $authAdapter = $auth->getAdapter();
+
+        $authAdapter->setCredentials($form->getData());
+
+        $result = $auth->authenticate();
+
+        // process the result
+        if (!$result->isValid()) {
+            $form->setResult($result);
+
+            return null;
+        }
+
+        $this->getAuthStorage()->setRememberMe($data['remember']);
+        $user = $auth->getIdentity();
+
+        return $user;
+    }
+
+    /**
      * Login using a pin code.
      *
      * @param array $data
@@ -456,6 +494,16 @@ class User extends AbstractAclService
     public function getLoginForm()
     {
         return $this->sm->get('user_form_login');
+    }
+
+    /**
+     * Get the company login form.
+     *
+     * @return Company Login form
+     */
+    public function getCompanyLoginForm()
+    {
+        return $this->sm->get('user_form_companylogin');
     }
 
     /**

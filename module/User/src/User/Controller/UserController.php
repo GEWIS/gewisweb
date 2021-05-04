@@ -194,7 +194,7 @@ class UserController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
-            $login = $userService->login($data);
+            $login = $userService->companyLogin($data);
             if (!is_null($login)) {
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($referer);
@@ -206,7 +206,7 @@ class UserController extends AbstractActionController
         $form = $this->handleRedirect($userService, $referer);
 
         return new ViewModel([
-            'form' => $form
+            'form' => $userService->getCompanyLoginForm()
         ]);
     }
 
