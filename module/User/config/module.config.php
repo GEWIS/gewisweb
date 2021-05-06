@@ -80,6 +80,30 @@ return [
                 ],
                 'priority' => 100
             ],
+            'company' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/company',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller' => 'User',
+                        'action' => 'company',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'default' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
             'user_admin' => [
                 'type' => 'Literal',
                 'options' => [

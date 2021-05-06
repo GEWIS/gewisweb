@@ -174,6 +174,11 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_company' => function ($sm) {
+                    return new \User\Mapper\Company(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
                 'user_mapper_newuser' => function ($sm) {
                     return new \User\Mapper\NewUser(
                         $sm->get('user_doctrine_em')
@@ -213,6 +218,15 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
+                'company_auth_adapter' => function ($sm) {
+                    $adapter = new \User\Authentication\Adapter\Mapper(
+                        $sm->get('user_bcrypt'),
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_user')
+                    );
+                    $adapter->setMapper($sm->get('user_mapper_company'));
+                    return $adapter;
+                },
                 'user_pin_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\PinMapper(
                         $sm->get('application_service_legacy'),
@@ -231,6 +245,12 @@ class Module
                     return new \Zend\Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_pin_auth_adapter')
+                    );
+                },
+               'company_auth_service' => function ($sm) {
+                    return new \User\Authentication\CompanyAuthenticationService(
+                        $sm->get('user_auth_storage'),
+                        $sm->get('company_auth_adapter')
                     );
                 },
                 'user_remoteaddress' => function ($sm) {

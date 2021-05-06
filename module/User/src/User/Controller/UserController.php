@@ -195,6 +195,7 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->companyLogin($data);
+            
             if (!is_null($login)) {
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($referer);

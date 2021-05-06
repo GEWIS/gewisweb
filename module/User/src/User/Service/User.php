@@ -259,11 +259,11 @@ class User extends AbstractAclService
     }
 
     /**
-     * Log the user in.
+     * Log the company in.
      *
      * @param array $data Login data
      *
-     * @return UserModel Authenticated user. Null if not authenticated.
+     * @return UserModel Authenticated company. Null if not authenticated.
      */
     public function companyLogin($data)
     {
@@ -276,7 +276,7 @@ class User extends AbstractAclService
         }
 
         // try to authenticate
-        $auth = $this->getServiceManager()->get('user_auth_service');
+        $auth = $this->getServiceManager()->get('company_auth_service');
         $authAdapter = $auth->getAdapter();
 
         $authAdapter->setCredentials($form->getData());
@@ -286,7 +286,6 @@ class User extends AbstractAclService
         // process the result
         if (!$result->isValid()) {
             $form->setResult($result);
-
             return null;
         }
 

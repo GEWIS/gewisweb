@@ -12,7 +12,7 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  */
-class User implements RoleInterface, ResourceInterface
+class User extends Model implements RoleInterface, ResourceInterface
 {
     /**
      * The membership number.

@@ -1,7 +1,4 @@
 <?php
-$this->headTitle($this->translate('Company'));
-?>
-<?php
 $form = $this->form;
 $form->prepare();
 
@@ -10,7 +7,7 @@ $form->setAttribute('method', 'post');
 
 $form->setAttribute('role', 'form');
 $form->setAttribute('class', 'form-horizontal');
-//?>
+?>
 <section class="section">
     <div class = "container">
         <div class="row">
@@ -37,16 +34,32 @@ $form->setAttribute('class', 'form-horizontal');
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        <?php
+                        $element = $form->get('remember');
+                        $element->setAttribute('checked', 'checked');
+                        ?>
+                        <div class="form-group">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <label>
+                                    <?= $this->formCheckbox($element) ?>
+                                    <?= $element->getLabel() ?>
+                                </label>
+                            </div>
+                        </div>
+
+                        <?= $this->formInput($form->get('redirect')) ?>
 
                         <div class="form-group">
                             <div class="col-sm-offset-5 col-sm-7">
                                 <?php
+                                echo $this->formElement($form->get('security'));
                                 $submit = $form->get('submit');
                                 $submit->setAttribute('class', 'btn btn-primary');
                                 ?>
                                 <?= $this->formRow($submit); ?>
                             </div>
                         </div>
+
 
                         <?= $this->form()->closeTag($form); ?>
                     </div>

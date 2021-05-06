@@ -5,8 +5,8 @@ namespace User\Authentication\Adapter;
 use User\Model\LoginAttempt;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
-use User\Mapper\User as UserMapper;
-use User\Model\User as UserModel;
+use User\Mapper\Mapper as AbstractMapper;
+use User\Model\Model as AbstractModel;
 use Zend\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\User as UserService;
@@ -16,7 +16,7 @@ class Mapper implements AdapterInterface
     /**
      * Mapper.
      *
-     * @var UserMapper
+     * @var AbstractMapper
      */
     protected $mapper;
 
@@ -113,7 +113,7 @@ class Mapper implements AdapterInterface
      *
      * @param string $password
      * @param string $hash
-     * @param UserModel $user
+     * @param AbstractModel $user
      *
      * @return boolean
      */
@@ -144,7 +144,7 @@ class Mapper implements AdapterInterface
     /**
      * Get the mapper.
      *
-     * @return UserMapper
+     * @return AbstractMapper
      */
     public function getMapper()
     {
@@ -154,9 +154,9 @@ class Mapper implements AdapterInterface
     /**
      * Set the mapper.
      *
-     * @param UserMapper $mapper
+     * @param AbstractMapper $mapper
      */
-    public function setMapper(UserMapper $mapper)
+    public function setMapper(\User\Mapper\Mapper $mapper)
     {
         $this->mapper = $mapper;
     }
