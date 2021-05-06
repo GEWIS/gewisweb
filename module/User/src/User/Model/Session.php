@@ -28,6 +28,14 @@ class Session
      */
     protected $user;
 
+//    /**
+//     * The company whom created this session.
+//     *
+//     * @ORM\ManyToOne(targetEntity="User\Model\Company", inversedBy="sessions")
+//     * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
+//     */
+//    protected $company;
+
     /**
      * The ip the session was created at.
      *
@@ -41,6 +49,22 @@ class Session
      * @ORM\Column(type="string")
      */
     protected $secret;
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getCompany()
+//    {
+//        return $this->company;
+//    }
+//
+//    /**
+//     * @param mixed $company
+//     */
+//    public function setCompany($company)
+//    {
+//        $this->company = $company;
+//    }
 
     /**
      * @return mixed

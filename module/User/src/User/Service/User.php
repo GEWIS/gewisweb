@@ -10,6 +10,7 @@ use User\Mapper\User as UserMapper;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
+use User\Model\Company as CompanyModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -263,7 +264,7 @@ class User extends AbstractAclService
      *
      * @param array $data Login data
      *
-     * @return UserModel Authenticated company. Null if not authenticated.
+     * @return CompanyModel Authenticated company. Null if not authenticated.
      */
     public function companyLogin($data)
     {
@@ -290,9 +291,9 @@ class User extends AbstractAclService
         }
 
         $this->getAuthStorage()->setRememberMe($data['remember']);
-        $user = $auth->getIdentity();
+        $company = $auth->getCompanyIdentity();
 
-        return $user;
+        return $company;
     }
 
     /**
@@ -333,6 +334,24 @@ class User extends AbstractAclService
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
     }
+
+    public function getCompanyIdentity() {
+        $authService = $this->getServiceManager()->get('company_auth_service');
+        if (!$authService->hasCompanyIdentity()) {
+            $translator = $this->getServiceManager()->get('translator');
+            throw new NotAllowedException(
+                $translator->translate('You need to log in to perform this action')
+            );
+        }
+        return $authService->getIdentity();
+    }
+
+    public function hasCompanyIdentity()
+    {
+        $authService = $this->getServiceManager()->get('company_auth_service');
+        return $authService->hasCompanyIdentity();
+    }
+
 
     /**
      * Gets the user identity, or gives a 403 if the user is not logged in
