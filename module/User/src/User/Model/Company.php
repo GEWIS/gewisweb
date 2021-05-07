@@ -10,7 +10,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
 
 /**
  * Company model.
- * @ORM\Table(name=('CompanyUser'))
+ * @Table(name=('CompanyUser'))
  * @ORM\Entity
  */
 
