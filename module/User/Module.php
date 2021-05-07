@@ -254,7 +254,7 @@ class Module
                 },
                'company_auth_service' => function ($sm) {
                     return new \User\Authentication\CompanyAuthenticationService(
-                        $sm->get('user_auth_storage'),
+                        $sm->get('company_auth_storage'),
                         $sm->get('company_auth_adapter')
                     );
                 },
