@@ -291,7 +291,7 @@ class User extends AbstractAclService
         }
 
         $this->getAuthStorage()->setRememberMe($data['remember']);
-        $company = $auth->getCompanyIdentity();
+        $company = $auth->getIdentity();
 
         return $company;
     }

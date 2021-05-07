@@ -114,6 +114,11 @@ class Module
                         $sm
                     );
                 },
+                'company_auth_storage' => function ($sm) {
+                    return new \User\Authentication\Storage\CompanySession(
+                        $sm
+                    );
+                },
                 'user_bcrypt' => function ($sm) {
                     $bcrypt = new \Zend\Crypt\Password\Bcrypt();
                     $config = $sm->get('config');

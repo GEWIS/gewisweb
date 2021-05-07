@@ -63,7 +63,7 @@ class Company extends Model implements RoleInterface, ResourceInterface
      *
      * @return int
      */
-    public function getId()
+    public function getLidnr()
     {
         return $this->id;
     }
@@ -105,7 +105,7 @@ class Company extends Model implements RoleInterface, ResourceInterface
      */
     public function getRoleId()
     {
-        return 'company_' . $this->getId();
+        return 'company_' . $this->getLidnr();
     }
 
     /**

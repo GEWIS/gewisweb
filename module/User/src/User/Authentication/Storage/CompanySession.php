@@ -5,6 +5,7 @@ namespace User\Authentication\Storage;
 
 
 use Firebase\JWT\JWT;
+use Zend\Authentication\Storage;
 use User\Model\Session as SessionModel;
 use Zend\Http\Header\SetCookie;
 
