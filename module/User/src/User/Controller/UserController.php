@@ -188,26 +188,19 @@ class UserController extends AbstractActionController
 
     public function companyAction()
     {
-
         $userService = $this->getUserService();
-        $referer = $this->getRequest()->getServer('HTTP_REFERER');
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->companyLogin($data);
-
+            
             if (!is_null($login)) {
-                if (is_null($data['redirect']) || empty($data['redirect'])) {
-                    return $this->redirect()->toUrl($referer);
-                }
-
-
-                return $this->redirect()->toUrl($data['redirect']);
+                // TODO: set here the url of the company landing page instead of home
+                return $this->redirect()->toRoute('home');
             }
         }
 
-        $form = $this->handleRedirect($userService, $referer);
 
         return new ViewModel([
             'form' => $userService->getCompanyLoginForm()
