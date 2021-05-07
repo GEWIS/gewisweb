@@ -49,7 +49,7 @@ class CompanySession extends Storage\Session
      */
     public function isEmpty()
     {
-        if (isset($this->session->{$this->company})) {
+        if (isset($this->session)) {
             return false;
         }
 
@@ -93,7 +93,7 @@ class CompanySession extends Storage\Session
      */
     public function read()
     {
-        return $this->session->{$this->company};
+        return $this->session;
     }
 
     /**
@@ -104,7 +104,7 @@ class CompanySession extends Storage\Session
      */
     public function write($contents)
     {
-        $this->session->{$this->company} = $contents;
+        $this->session = $contents;
         if ($this->rememberMe) {
             $this->saveSession($contents);
         }
@@ -145,7 +145,7 @@ class CompanySession extends Storage\Session
     public function clear()
     {
         // Clear the session
-        unset($this->session->{$this->company});
+        unset($this->session);
         $this->clearCookie();
     }
 
