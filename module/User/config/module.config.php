@@ -76,7 +76,20 @@ return [
                                 'action' => 'activate'
                             ]
                         ]
-                    ]
+                    ],
+                    'activate-company' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/activate-company/:code',
+                            'constraints' => [
+                                'code' => '[a-zA-Z0-9]*'
+                            ],
+                            'defaults' => [
+                                'code' => '',
+                                'action' => 'activateCompany'
+                            ]
+                        ]
+                    ],
                 ],
                 'priority' => 100
             ],

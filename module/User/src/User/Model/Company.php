@@ -46,17 +46,18 @@ class Company extends Model implements RoleInterface, ResourceInterface
      */
     protected $sessions;
 
-//    /**
-//     * Constructor
-//     */
-//    public function __construct(NewCompany $newCompany = null)
-//    {
-//
-//        if (null !== $newCompany) {
-//            $this->id = $newCompany->getId();
-//            $this->contactEmail = $newCompany->getContactEmail();
-//        }
-//    }
+    /**
+     * Constructor
+     */
+    // TODO: comments
+    public function __construct(NewCompany $newCompany = null)
+    {
+
+        if (null !== $newCompany) {
+            $this->id = $newCompany->getLidnr();
+            $this->contactEmail = $newCompany->getContactEmail();
+        }
+    }
 
 
     /**
@@ -118,6 +119,4 @@ class Company extends Model implements RoleInterface, ResourceInterface
     {
         return 'company';
     }
-
-
 }

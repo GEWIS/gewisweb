@@ -186,6 +186,40 @@ class UserController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Comapny activation action.
+     */
+    // TODO: commments
+    public function activateCompanyAction()
+    {
+        $userService = $this->getUserService();
+
+        $code = $this->params()->fromRoute('code');
+
+        if (empty($code)) {
+            // no code given
+            return $this->redirect()->toRoute('home');
+        }
+
+        // get the new company
+        $newCompany = $userService->getNewCompany($code);
+
+        if (null === $newCompany) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        if ($this->getRequest()->isPost() && $userService->activateCompany($this->getRequest()->getPost(), $newCompany)) {
+            return new ViewModel([
+                'activated' => true
+            ]);
+        }
+
+        return new ViewModel([
+            'form' => $userService->getActivateForm(),
+            'company' => $newCompany
+        ]);
+    }
+
     public function companyAction()
     {
         $userService = $this->getUserService();
@@ -194,7 +228,7 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->companyLogin($data);
-            
+
             if (!is_null($login)) {
                 // TODO: set here the url of the company landing page instead of home
                 return $this->redirect()->toRoute('home');
