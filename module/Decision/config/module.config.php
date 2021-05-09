@@ -340,6 +340,26 @@ return [
                 ],
                 'priority' => 100
             ],
+            'companyaccount' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/companyAccount',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller' => 'companyaccount',
+                        'action' => 'index'
+                    ]
+                ],
+                'child_routes' => [
+                    'index' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '[/:index]',
+                        ],
+                    ],
+                ],
+                'priority' => 100
+            ],
         ],
     ],
     'controllers' => [
@@ -350,6 +370,7 @@ return [
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController',
             'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
+            'Decision\Controller\companyaccount' => 'Decision\Controller\companyAccountController',
         ]
     ],
     'view_manager' => [
@@ -385,5 +406,5 @@ return [
                 ]
             ]
         ]
-    ]
+    ],
 ];
