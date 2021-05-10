@@ -82,4 +82,24 @@ class NewCompany
     {
         return $this->time;
     }
+
+    /**
+     * Set the activation code.
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Set the user's email address
+     *
+     * @param string $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+    }
 }
