@@ -104,6 +104,7 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
+                'user_service_company' => 'User\Service\Company'
             ],
 
             'factories' => [
@@ -227,7 +228,7 @@ class Module
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt'),
                         $sm->get('application_service_legacy'),
-                        $sm->get('user_service_user')
+                        $sm->get('user_service_company')
                     );
                     $adapter->setMapper($sm->get('user_mapper_company'));
                     return $adapter;
@@ -275,9 +276,9 @@ class Module
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
                     }
-                    $authService = $sm->get('company_auth_service');
-                    if ($authService->hasIdentity()) {
-                        return $authService->getIdentity();
+                    $companyService = $sm->get('company_auth_service');
+                    if ($companyService->hasIdentity()) {
+                        return $companyService->getIdentity();
                     }
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
