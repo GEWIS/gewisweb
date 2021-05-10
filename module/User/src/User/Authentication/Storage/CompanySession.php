@@ -30,7 +30,7 @@ class CompanySession extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->session->{$this->company}->getId());
+            $this->saveSession($this->session->{$this->company}->getLidnr());
         }
     }
 

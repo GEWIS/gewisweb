@@ -110,6 +110,16 @@ class Company extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * Get the company role name.
+     *
+     * @return array Role names
+     */
+    public function getRoleNames()
+    {
+        return ["company"];
+    }
+
+    /**
      * Get the company's resource ID.
      *
      * @return string

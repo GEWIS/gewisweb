@@ -16,7 +16,7 @@ class CompanyAccount extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'company';
+        return 'companyaccount';
     }
 
     /**

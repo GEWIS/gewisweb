@@ -194,9 +194,7 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $userService->companyLogin($data);
-
             if (!is_null($login)) {
-                // TODO: set here the url of the company landing page instead of home
                 return $this->redirect()->toRoute('companyaccount/index');
             }
         }

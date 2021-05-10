@@ -52,7 +52,7 @@ class Module
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member',
-                'decision_service_company' => 'Decision\Service\CompanyAccount'
+                'decision_service_companyaccount' => 'Decision\Service\CompanyAccount'
             ],
             'factories' => [
                 'decision_mapper_member' => function ($sm) {
