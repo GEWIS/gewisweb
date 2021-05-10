@@ -26,9 +26,11 @@ $this->headTitle($this->translate('Activate'));
                             <?= $this->form()->openTag($form); ?>
                             <p>
                                 <?php
+                                // TODO: Change so not email but contact name/ company name 'representative' is shown
+//                                $company = $this->company->getCompany();
+//                                $name = $company->getContactName();
                                 $company = $this->company;
-                                // TODO: Change so not email but a name/ company name 'representative' is shown
-                                $name = $company->getContactEmail();
+                                $name = $company->getContactName();
                                 ?>
                                 <?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
                             </p>

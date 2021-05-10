@@ -54,7 +54,7 @@ class Company extends Model implements RoleInterface, ResourceInterface
     {
 
         if (null !== $newCompany) {
-            $this->id = $newCompany->getLidnr();
+            $this->id = $newCompany->getId();
             $this->contactEmail = $newCompany->getContactEmail();
         }
     }
