@@ -30,7 +30,7 @@ $this->headTitle($this->translate('Activate'));
 //                                $company = $this->company->getCompany();
 //                                $name = $company->getContactName();
                                 $company = $this->company;
-                                $name = $company->getContactName();
+                                $name = $company->getContactEmail();
                                 ?>
                                 <?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
                             </p>
