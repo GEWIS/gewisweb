@@ -350,11 +350,22 @@ return [
                         'action' => 'index'
                     ]
                 ],
+                'may_terminate' => true,
                 'child_routes' => [
                     'index' => [
-                        'type' => 'Segment',
+                        'type' => 'literal',
                         'options' => [
-                            'route' => '[/:index]',
+                            'route' => '/index',
+                        ],
+                    ],
+                    'dummy' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/dummy',
+                            'defaults' => [
+                                'action' => 'dummy'
+                            ]
+
                         ],
                     ],
                 ],
