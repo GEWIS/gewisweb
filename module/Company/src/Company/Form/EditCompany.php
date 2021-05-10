@@ -127,12 +127,22 @@ class EditCompany extends Form
         ]);
 
         $this->add([
-            'name' => 'email',
+            'name' => 'contactEmail',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
             ],
             'options' => [
-                'label' => $translate->translate('Email'),
+                'label' => $translate->translate('Contact Email'),
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'email' ,
+            'type' => 'Zend\Form\Element\Email',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Public Email'),
             ],
         ]);
 
@@ -153,6 +163,26 @@ class EditCompany extends Form
             ],
             'options' => [
                 'label' => $translate->translate('Phone'),
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'highlightCredits' ,
+            'type' => 'Zend\Form\Element\Number',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Highlight Credits'),
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'bannerCredits' ,
+            'type' => 'Zend\Form\Element\Number',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Banner Credits'),
             ],
         ]);
 
@@ -341,6 +371,35 @@ class EditCompany extends Form
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
+        ]);
+
+        $filter->add([
+            'name' => 'contactEmail',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'EmailAddress',
+                    'options' => [
+                        'messages' => [
+                            'emailAddressInvalidFormat' => 'Email address format is not valid',
+                        ],
+                    ],
+                ],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
+
+        $filter->add([
+            'name' => 'highlightCredits',
+            'required' => false,
+        ]);
+
+        $filter->add([
+            'name' => 'bannerCredits',
+            'required' => false,
         ]);
 
         $filter->add([

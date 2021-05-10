@@ -5,7 +5,7 @@ namespace User\Mapper;
 
 
 use Doctrine\ORM\EntityManager;
-use User\Model\NewUser as NewUserModel;
+use User\Model\NewCompany as NewCompanyModel;
 use User\Model\Company as CompanyModel;
 
 class Company extends Mapper
@@ -86,26 +86,28 @@ class Company extends Mapper
         return $this->em->merge($company);
     }
 
-//    /**
-//     * Finish user creation.
-//     *
-//     * This will both destroy the NewUser and create the given user
-//     *
-//     * @param CompanyModel $company User to create
-//     * @param NewUserModel $newUser NewUser to destroy
-//     */
-//    public function createUser(UserModel $company, NewUserModel $newUser)
-//    {
-//        $this->em->persist($company);
-//        $this->em->remove($newUser);
-//        $this->em->flush();
-//    }
+    /**
+     * Finish user creation.
+     *
+     * This will both destroy the NewUser and create the given user
+     *
+     * @param CompanyModel $company User to create
+     * @param NewUserModel $newUser NewUser to destroy
+     */
+    // TODO: comments
+    public function createCompany(CompanyModel $company, NewCompanyModel $newCompany)
+    {
+        $this->em->persist($company);
+        $this->em->remove($newCompany);
+        $this->em->flush();
+    }
 
     /**
      * Persist a company model.
      *
      * @param CompanyModel $company Company to persist.
      */
+    // TODO: comments
     public function persist(CompanyModel $company)
     {
         $this->em->persist($company);

@@ -68,6 +68,17 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formElementErrors($element) ?>
 </div>
 <?php
+$element = $form->get('contactEmail');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
 $element = $form->get('address');
 $element->setAttribute('class', 'form-control');
 $element->setAttribute('style', 'width:100%; height:10em; resize:none');
@@ -79,6 +90,29 @@ $element->setAttribute('style', 'width:100%; height:10em; resize:none');
     <?= $this->formTextarea($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+<?php
+$element = $form->get('highlightCredits');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+<?php
+$element = $form->get('bannerCredits');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
 <?php
 $element = $form->get('languages');
 $element->setAttribute('class', 'form-control');

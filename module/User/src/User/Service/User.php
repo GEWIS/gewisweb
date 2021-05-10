@@ -9,6 +9,7 @@ use User\Form\Register as RegisterForm;
 use User\Mapper\User as UserMapper;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
+use User\Model\NewCompany as NewCompanyModel;
 use User\Model\User as UserModel;
 use User\Model\Company as CompanyModel;
 use User\Permissions\NotAllowedException;
@@ -51,6 +52,36 @@ class User extends AbstractAclService
 
         // this will also save a user with a lost password
         $this->getUserMapper()->createUser($user, $newUser);
+
+        return true;
+    }
+
+    // TODO: comments
+    public function activateCompany($data, NewCompanyModel $newCompany)
+    {
+        $form = $this->getActivateForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // first try to obtain the user
+        $companyUser = $this->getCompanyMapper()->findById($newCompany->getId());
+        if (null === $companyUser) {
+            // create a new user from this data, and insert it into the database
+            $companyUser = new CompanyModel($newCompany);
+        }
+
+        $companyUser->setPassword($bcrypt->create($data['password']));
+
+        // this will also save a user with a lost password
+        $this->getCompanyMapper()->createCompany($companyUser, $newCompany);
 
         return true;
     }
@@ -433,6 +464,12 @@ class User extends AbstractAclService
         return $this->getNewUserMapper()->getByCode($code);
     }
 
+    // TODO: comments
+    public function getNewCompany($code)
+    {
+        return $this->getNewCompanyMapper()->getByCode($code);
+    }
+
     /**
      * Generate an activation code for the user.
      *
@@ -544,6 +581,17 @@ class User extends AbstractAclService
         return $this->sm->get('user_mapper_newuser');
     }
 
+    // TODO: comments
+    /**
+     * Get the new company mapper.
+     *
+     * @return NewCompanyMapper
+     */
+    public function getNewCompanyMapper()
+    {
+        return $this->sm->get('user_mapper_newcompany');
+    }
+
     /**
      * Get the user mapper.
      *
@@ -552,6 +600,12 @@ class User extends AbstractAclService
     public function getUserMapper()
     {
         return $this->sm->get('user_mapper_user');
+    }
+
+    // TODO: comments
+    public function getCompanyMapper()
+    {
+        return $this->sm->get('user_mapper_company');
     }
 
     /**

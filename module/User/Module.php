@@ -174,7 +174,6 @@ class Module
                     $form->setHydrator($sm->get('user_hydrator'));
                     return $form;
                 },
-
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
@@ -187,6 +186,11 @@ class Module
                 },
                 'user_mapper_newuser' => function ($sm) {
                     return new \User\Mapper\NewUser(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
+                'user_mapper_newcompany' => function ($sm) {
+                    return new \User\Mapper\NewCompany(
                         $sm->get('user_doctrine_em')
                     );
                 },
