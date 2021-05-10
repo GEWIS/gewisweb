@@ -8,9 +8,14 @@ use Zend\View\Model\JsonModel;
 
 class companyaccountController extends AbstractActionController
 {
-    public function indextestAction()
+    public function indexAction()
     {
 
     }
+
+    public function dummyAction(){}
+
+
+
 
 }
