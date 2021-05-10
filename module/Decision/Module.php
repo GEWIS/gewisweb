@@ -173,7 +173,7 @@ class Module
                     $acl->allow('user', 'regulations', ['list', 'download']);
 
                     // companies are allowed to view the company panel
-                    $acl->allow('company', 'companyaccount', 'view');
+//                    $acl->allow('company', 'companyaccount', 'view');
 
                     return $acl;
                 },

@@ -276,10 +276,10 @@ class Module
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
                     }
-                    $companyService = $sm->get('company_auth_service');
-                    if ($companyService->hasIdentity()) {
-                        return $companyService->getIdentity();
-                    }
+//                    $companyService = $sm->get('company_auth_service');
+//                    if ($companyService->hasIdentity()) {
+//                        return $companyService->getIdentity();
+//                    }
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
                         return 'apiuser';
