@@ -368,6 +368,26 @@ return [
 
                         ],
                     ],
+                    'profile' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/profile',
+                            'defaults' => [
+                                'action' => 'profile'
+                            ]
+
+                        ],
+                    ],
+                    'settings' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'action' => 'settings'
+                            ]
+
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],

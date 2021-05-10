@@ -38,5 +38,9 @@ class companyaccountController extends AbstractActionController
     }
 
 
+    public function ProfileAction() {
+        return new ViewModel();
+    }
+
 
 }
