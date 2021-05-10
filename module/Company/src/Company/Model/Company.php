@@ -19,6 +19,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="User\Model\Company")
      */
     protected $id;
 

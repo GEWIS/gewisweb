@@ -222,12 +222,12 @@ class UserController extends AbstractActionController
 
     public function companyAction()
     {
-        $userService = $this->getUserService();
+        $companyService = $this->getCompanyService();
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
-            $login = $userService->companyLogin($data);
+            $login = $companyService->companyLogin($data);
 
             if (!is_null($login)) {
                 return $this->redirect()->toRoute('companyaccount/index');
@@ -236,8 +236,19 @@ class UserController extends AbstractActionController
 
 
         return new ViewModel([
-            'form' => $userService->getCompanyLoginForm()
+            'form' => $companyService->getCompanyLoginForm()
         ]);
+    }
+
+
+    /**
+     * Get a user service.
+     *
+     * @return \User\Service\Company
+     */
+    protected function getCompanyService()
+    {
+        return $this->getServiceLocator()->get('user_service_company');
     }
 
     /**

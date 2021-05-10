@@ -7,10 +7,11 @@ use DateInterval;
 use DateTime;
 use User\Form\Register as RegisterForm;
 use User\Mapper\User as UserMapper;
+use User\Model\CompanyUser;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
-use User\Model\Company as CompanyModel;
+use User\Model\CompanyUser as CompanyModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -264,7 +265,7 @@ class Company extends AbstractAclService
      *
      * @param array $data Login data
      *
-     * @return CompanyModel Authenticated company. Null if not authenticated.
+     * @return CompanyUser Authenticated company. Null if not authenticated.
      */
     public function companyLogin($data)
     {

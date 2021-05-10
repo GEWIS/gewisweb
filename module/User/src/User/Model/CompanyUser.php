@@ -15,7 +15,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
  * @ORM\Entity
  */
 
-class Company extends Model implements RoleInterface, ResourceInterface
+class CompanyUser extends Model implements RoleInterface, ResourceInterface
 {
     /**
      * The membership number.
@@ -58,6 +58,14 @@ class Company extends Model implements RoleInterface, ResourceInterface
             $this->contactEmail = $newCompany->getContactEmail();
         }
     }
+
+    /**
+     * The corresponding member for this user.
+     *
+     * @ORM\OneToOne(targetEntity="Company\Model\Company", fetch="EAGER")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $companyProfile;
 
 
     /**
