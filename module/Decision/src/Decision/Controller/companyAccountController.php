@@ -22,6 +22,7 @@ class companyaccountController extends AbstractActionController
 
 
 
+
     /**
     * Get the company service.
     *
@@ -31,4 +32,11 @@ class companyaccountController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_companyaccount');
     }
+
+    public function dummyAction(){
+        return new ViewModel();
+    }
+
+
+
 }
