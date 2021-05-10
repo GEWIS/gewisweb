@@ -14,4 +14,15 @@ class companyaccountController extends AbstractActionController
         return new ViewModel();
     }
 
+
+
+    /**
+    * Get the company service.
+    *
+    * @return Decision\Service\CompanyAccount
+    */
+    public function getCompanyService()
+    {
+        return $this->getServiceLocator()->get('decision_service_company');
+    }
 }

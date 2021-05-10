@@ -308,6 +308,7 @@ class Module
                     $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
                     $acl->addRole(new Role('photo_guest'), 'guest');
+                    $acl->addRole(new Role('company'));
 
                     $user = $sm->get('user_role');
 
