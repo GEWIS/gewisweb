@@ -48,6 +48,9 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
+
+            $this -> getCompanyEmailService() -> sendActivationEmail($company);
+
             if (!is_null($company)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
@@ -666,5 +669,15 @@ class AdminController extends AbstractActionController
     protected function getCompanyService()
     {
         return $this->getServiceLocator()->get('company_service_company');
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return CompanyEmailService
+     */
+    public function getCompanyEmailService()
+    {
+        return $this->getServiceLocator()->get('user_service_companyemail');
     }
 }

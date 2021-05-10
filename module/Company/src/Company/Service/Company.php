@@ -585,20 +585,19 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-
         if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
-            foreach ($company->getTranslations() as $translation) {
-                $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                    if ($file['error'] !== UPLOAD_ERR_OK) {
-                        return false;
-                    }
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
-                }
-            }
+//            foreach ($company->getTranslations() as $translation) {
+//                $file = $files[$translation->getLanguage() . '_logo'];
+//                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+//                    if ($file['error'] !== UPLOAD_ERR_OK) {
+//                        return false;
+//                    }
+//                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+//                    $translation->setLogo($newPath);
+//                }
+//            }
             $this->saveCompany();
             return $company;
         }

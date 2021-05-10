@@ -4,23 +4,23 @@ namespace User\Service;
 
 use Application\Service\AbstractService;
 
-use User\Model\NewCompany as NewCompanyModel;
+use Company\Model\Company as CompanyModel;
 
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
 
-class Email extends AbstractService
+class CompanyEmail extends AbstractService
 {
     /**
      * Send registration email.
      *
-     * @param NewCompanyModel $newCompany
+     * @param CompanyModel $company
      */
-    public function sendRegisterEmail(NewUserModel $newCompany)
+    public function sendActivationEmail(CompanyModel $company)
     {
-        $body = $this->render('user/email/register', [
-            'user' => $newUser,
-            'member' => $member
+
+        $body = $this->render('user/email/company-activation.phtml', [
+            'company' => $company
         ]);
 
         $translator = $this->getServiceManager()->get('translator');
@@ -30,11 +30,12 @@ class Email extends AbstractService
         $config = $this->getConfig();
 
         $message->addFrom($config['from']);
-        $message->addTo($newUser->getEmail());
+        $message->addTo($company->getContactEmail());
         $message->setSubject($translator->translate('Account activation code for the GEWIS Website'));
         $message->setBody($body);
 
         $this->getTransport()->send($message);
+
     }
 
     /**
@@ -43,7 +44,7 @@ class Email extends AbstractService
      * @param NewUserModel $activation
      * @param MemberModel $member
      */
-    public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
+    /**public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {
         $body = $this->render('user/email/reset', [
             'user' => $newUser,
@@ -62,7 +63,7 @@ class Email extends AbstractService
         $message->setBody($body);
 
         $this->getTransport()->send($message);
-    }
+    }*/
 
     /**
      * Render a template with given variables.
