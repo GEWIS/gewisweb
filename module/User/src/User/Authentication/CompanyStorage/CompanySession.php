@@ -1,7 +1,7 @@
 <?php
 
 
-namespace User\Authentication\Storage;
+namespace User\Authentication\CompanyStorage;
 
 
 use Firebase\JWT\JWT;

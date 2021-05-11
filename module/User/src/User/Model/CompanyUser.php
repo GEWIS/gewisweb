@@ -40,9 +40,9 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
 
     /**
      * Companies sessions
-     * TODO: check if mappedby user is fine
+     * TODO: check if mappedby companyUser is fine
      *
-     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="CompanyUser")
      */
     protected $sessions;
 
@@ -65,7 +65,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      * @ORM\OneToOne(targetEntity="Company\Model\Company", fetch="EAGER")
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
-    protected $companyProfile;
+    protected $companyAccount;
 
 
     /**
@@ -106,6 +106,22 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return CompanyUser
+     */
+    public function getCompanyAccount()
+    {
+        return $this->companyAccount;
+    }
+
+    /**
+     * @param CompanyUser $companyAccount
+     */
+    public function setCompanyAccount($companyAccount)
+    {
+        $this->companyAccount = $companyAccount;
     }
 
     /**

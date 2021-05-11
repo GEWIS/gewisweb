@@ -116,7 +116,7 @@ class Module
                     );
                 },
                 'company_auth_storage' => function ($sm) {
-                    return new \User\Authentication\Storage\CompanySession(
+                    return new \User\Authentication\CompanyStorage\CompanySession(
                         $sm
                     );
                 },

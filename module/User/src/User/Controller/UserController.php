@@ -228,6 +228,7 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $companyService->companyLogin($data);
+//            echo $login->getRoleId();
 
             if (!is_null($login)) {
                 return $this->redirect()->toRoute('companyaccount/index');
