@@ -25,6 +25,12 @@ $isActive = " ";
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
 
+                    <a href="<?= $this->url('user/default', ['action' => 'companyLogout']) ?>"
+                       class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-lock"></div>
+                        <div class="panel-heading"><?= $this->translate('Logout') ?></div>
+                    </a>
+
                     <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-cog"></div>
                         <div class="panel-heading"><?= $this->translate('Settings') ?></div>

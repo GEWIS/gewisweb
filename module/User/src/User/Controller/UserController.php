@@ -89,6 +89,20 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * User logout action.
+     */
+    public function companyLogoutAction()
+    {
+        $this->getCompanyService()->logout();
+
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
+        }
+
+        return $this->redirect()->toRoute('home');
+    }
+
+    /**
      * User register action.
      */
     public function registerAction()
@@ -228,7 +242,6 @@ class UserController extends AbstractActionController
             $data = $this->getRequest()->getPost();
             // try to login
             $login = $companyService->companyLogin($data);
-//            echo $login->getRoleId();
 
             if (!is_null($login)) {
                 return $this->redirect()->toRoute('companyaccount/index');
