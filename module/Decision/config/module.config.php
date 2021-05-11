@@ -346,7 +346,7 @@ return [
                     'route' => '/companyAccount',
                     'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'companyaccount',
+                        'controller' => 'CompanyAccount',
                         'action' => 'index'
                     ]
                 ],
@@ -381,7 +381,7 @@ return [
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController',
             'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
-            'Decision\Controller\companyaccount' => 'Decision\Controller\companyAccountController',
+            'Decision\Controller\CompanyAccount' => 'Decision\Controller\CompanyAccountController',
         ]
     ],
     'view_manager' => [

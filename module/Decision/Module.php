@@ -52,11 +52,11 @@ class Module
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member',
-                'decision_service_companyAccount' => 'Decision\Service\companyAccount'
+                'decision_service_companyAccount' => 'Decision\Service\CompanyAccount'
             ],
             'factories' => [
                 'decision_mapper_companyAccount' => function ($sm) {
-                    return new \Decision\Mapper\companyAccount(
+                    return new \Decision\Mapper\CompanyAccount(
                         $sm->get('decision_doctrine_em')
                     );
                 },

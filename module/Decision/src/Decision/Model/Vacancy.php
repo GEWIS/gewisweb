@@ -8,11 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * Member model.
+ * vacancy model.
  *
  * @ORM\Entity
  */
-class companyAccount{
+class vacancy{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,10 +35,20 @@ class companyAccount{
      */
     protected $active;
 
+    /**
+     * Get the company name.
+     *
+     * @return string
+     */
     function getName(){
         return $this->name;
     }
 
+    /**
+     * Get the vacancy's description.
+     *
+     * @return string
+     */
     function getDescription(){
         return $this->description;
     }

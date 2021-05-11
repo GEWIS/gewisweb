@@ -1,11 +1,7 @@
 <?php
 namespace Decision\Mapper;
-$member=" ";
-$meetingsCollection=" ";
-$isActive = " ";
-
-
-//echo var_dump($vacancies);
+// set title
+$this->headTitle($this->translate('Company Account'));
 
 ?>
 
@@ -63,21 +59,12 @@ $isActive = " ";
             </div>
         </div>
 
-        <div class="row mt-3">
-
-            <?php if ($isActive): ?>
-
-            <?php endif; ?>
-            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
-
-            <?php endif; ?>
-        </div>
-
-
+        <!--Active vacancies feed -->
         <div class="row mt-3">
             <div class="col-md-6 mt-2">
                 <h2><?= $this->translate('Active vacancies') ?></h2>
-                <?php if (!is_null($this->upcoming) || True): ?>
+
+                <?php if (count($vacancies) > 0): ?>
                     <div class="panel panel-default">
                         <?php foreach ($vacancies as &$vacancy): ?>
                         <div class="panel-heading">
@@ -89,18 +76,20 @@ $isActive = " ";
                         </div>
                         <?php endforeach; ?>
                     </div>
-
                     <hr/>
                 <?php endif; ?>
-                <hr/>
+
+                <?php if (count($vacancies) === 0): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <?= $this->translate("Currently there are no active vacancies,")?>
+                        <a href="<?= $this->url('companyaccount/dummy') ?>">add new vacancy.</a>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+
             </div>
-            <?php if ($isActive): ?>
-
-
-            <?php endif; ?>
-            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
-
-            <?php endif; ?>
         </div>
 
     </section>

@@ -4,16 +4,23 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
-use Decision\Model\companyAccount as companyAccountModel;
+use Decision\Model\vacancy as companyAccountModel;
 
 use Zend\Http\Client as HttpClient;
 
 class companyAccount extends AbstractAclService
 {
 
-
-    public function getActiveVacancies(){
-        return $this->getcompanyAccountMapper()->findactiveVacancies();
+    /**
+     * Get all active vacancies of selected company
+     *
+     * @param string $cName the name of the company who's active
+     * vacancies will be fetched.
+     *
+     * @return array Name and description of active vacancies.
+     */
+    public function getActiveVacancies($cName){
+        return $this->getcompanyAccountMapper()->findactiveVacancies($cName);
     }
 
     /**
@@ -23,7 +30,7 @@ class companyAccount extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'member';
+        return 'companyAccount';
     }
 
     /**
@@ -36,7 +43,11 @@ class companyAccount extends AbstractAclService
         return $this->sm->get('decision_acl');
     }
 
-
+    /**
+     * Get the CompanyAccount mapper.
+     *
+     * @return \Decision\Mapper\CompanyAccount
+     */
     public function getcompanyAccountMapper()
     {
         return $this->sm->get('decision_mapper_companyAccount');
