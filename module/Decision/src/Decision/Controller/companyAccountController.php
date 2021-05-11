@@ -11,14 +11,15 @@ class companyaccountController extends AbstractActionController
 {
     public function IndexAction()
     {
-        if (!$this->getCompanyService()->isAllowed('view')) {
-            $translator = $this->getCompanyService()->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view this page')
-            );
-        }
+//        if (!$this->getCompanyService()->isAllowed('view')) {
+//            $translator = $this->getCompanyService()->getTranslator();
+//            throw new \User\Permissions\NotAllowedException(
+//                $translator->translate('You are not allowed to view this page')
+//            );
+//        }
         return new ViewModel();
     }
+
 
 
 
@@ -31,4 +32,15 @@ class companyaccountController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_companyaccount');
     }
+
+    public function dummyAction(){
+        return new ViewModel();
+    }
+
+
+    public function ProfileAction() {
+        return new ViewModel();
+    }
+
+
 }

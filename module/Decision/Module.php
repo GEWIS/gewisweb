@@ -175,6 +175,7 @@ class Module
                     // companies are allowed to view the company panel
                     $acl->allow('company_user', 'companyaccount', 'view');
 
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory

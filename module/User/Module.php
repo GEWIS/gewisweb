@@ -283,6 +283,7 @@ class Module
                             return $authService->getIdentity();
                         }
                     }
+
                     $companyService = $sm->get('company_auth_service');
                     if ($companyService->hasIdentity()) {
                         return $companyService->getIdentity();

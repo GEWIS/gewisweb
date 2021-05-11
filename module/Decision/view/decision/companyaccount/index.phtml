@@ -1,7 +1,13 @@
 <?php
+namespace Decision\Mapper;
 $member=" ";
 $meetingsCollection=" ";
 $isActive = " ";
+
+
+
+
+
 ?>
 
 <div class="container">
@@ -15,23 +21,21 @@ $isActive = " ";
             <div class="col-md-12">
                 <h2><?= $this->translate('Personal') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('member/self') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/profile') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"
+                    <a href="<?= $this->url('companyaccount/dummy') ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
-
                     <a href="<?= $this->url('user/default', ['action' => 'companyLogout']) ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Logout') ?></div>
                     </a>
-
-                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/settings') ?>"class="panel panel-image align-middle">
                         <div class="big-icon fas fa-cog"></div>
                         <div class="panel-heading"><?= $this->translate('Settings') ?></div>
                     </a>
@@ -43,20 +47,20 @@ $isActive = " ";
             <div class="col-md-12">
                 <h2><?= $this->translate('Company content') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('organ') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Vacancies') ?></div>
                     </a>
-                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>"
+                    <a href="<?= $this->url('companyaccount/dummy') ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Activities') ?></div>
                     </a>
-                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-flag"></div>
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
                     </a>
-                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-check"></div>
                         <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
                     </a>
@@ -84,17 +88,13 @@ $isActive = " ";
                             <strong><?= $this->translate('Vacancy 1') ?></strong>
                         </div>
                         <div class="panel-body">
-
+                           <?= "Description"?>
                         </div>
                     </div>
 
                     <hr/>
                 <?php endif; ?>
-
-
                 <hr/>
-
-
             </div>
             <?php if ($isActive): ?>
 

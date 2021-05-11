@@ -350,11 +350,42 @@ return [
                         'action' => 'index'
                     ]
                 ],
+                'may_terminate' => true,
                 'child_routes' => [
                     'index' => [
-                        'type' => 'Segment',
+                        'type' => 'literal',
                         'options' => [
-                            'route' => '[/:index]',
+                            'route' => '/index',
+                        ],
+                    ],
+                    'dummy' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/dummy',
+                            'defaults' => [
+                                'action' => 'dummy'
+                            ]
+
+                        ],
+                    ],
+                    'profile' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/profile',
+                            'defaults' => [
+                                'action' => 'profile'
+                            ]
+
+                        ],
+                    ],
+                    'settings' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'action' => 'settings'
+                            ]
+
                         ],
                     ],
                 ],
