@@ -141,7 +141,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      */
     public function getRoleNames()
     {
-        return ["company"];
+        return ["company_user"];
     }
 
     /**

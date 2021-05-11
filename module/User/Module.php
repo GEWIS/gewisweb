@@ -2,6 +2,7 @@
 
 namespace User;
 
+use User\Model\CompanyUser;
 use User\Service\ApiApp;
 use User\Service\Factory\ApiAppFactory;
 use Zend\Permissions\Acl\Acl;
@@ -276,14 +277,17 @@ class Module
                     return $remote->getIpAddress();
                 },
                 'user_role' => function ($sm) {
-//                    $authService = $sm->get('user_auth_service');
-//                    if ($authService->hasIdentity()) {
-//                        return $authService->getIdentity();
-//                    }
+                    $authService = $sm->get('user_auth_service');
+                    if ($authService->hasIdentity()) {
+                        if ($authService->getIdentity()!= null) {
+                            return $authService->getIdentity();
+                        }
+                    }
                     $companyService = $sm->get('company_auth_service');
                     if ($companyService->hasIdentity()) {
                         return $companyService->getIdentity();
                     }
+
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
                         return 'apiuser';
@@ -333,6 +337,15 @@ class Module
                             $roles[] = 'active_member';
                         }
 
+                        $acl->addRole($user, $roles);
+                    }
+
+                    if($user instanceof CompanyUser) {
+                        $roles = $user->getRoleNames();
+                        // if the company has no roles, add the 'company role by default
+                        if (empty($roles)) {
+                            $roles = ['company_user'];
+                        }
                         $acl->addRole($user, $roles);
                     }
 

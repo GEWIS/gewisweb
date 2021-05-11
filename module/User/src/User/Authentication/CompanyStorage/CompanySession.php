@@ -11,6 +11,7 @@ use Zend\Http\Header\SetCookie;
 
 class CompanySession extends Storage\Session
 {
+
     /**
      * @var The service manager
      */
