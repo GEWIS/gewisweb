@@ -5,7 +5,7 @@ $meetingsCollection=" ";
 $isActive = " ";
 
 
-echo var_dump($vacancies);
+//echo var_dump($vacancies);
 
 ?>
 
@@ -79,12 +79,15 @@ echo var_dump($vacancies);
                 <h2><?= $this->translate('Active vacancies') ?></h2>
                 <?php if (!is_null($this->upcoming) || True): ?>
                     <div class="panel panel-default">
+                        <?php foreach ($vacancies as &$vacancy): ?>
                         <div class="panel-heading">
-                            <strong><?= $this->translate('Vacancy 1') ?></strong>
+                            <strong><?= $this->translate($vacancy->getName()) ?></strong>
                         </div>
                         <div class="panel-body">
-                           <?= "Description"?>
+                           <?= $this->translate($vacancy->getDescription())?>
+                            <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
                         </div>
+                        <?php endforeach; ?>
                     </div>
 
                     <hr/>

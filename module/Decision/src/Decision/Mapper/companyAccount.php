@@ -18,7 +18,7 @@ class companyAccount
         $this->em = $em;
     }
 
-    public function findactiveVacancies()
+    public function findactiveVacancies($cName = "Phillips")
     {
         // unfortunately, there is no support for functions like DAY() and MONTH()
         // in doctrine2, thus we have to use the NativeSQL here
@@ -26,7 +26,9 @@ class companyAccount
         $builder->addRootEntityFromClassMetadata('Decision\Model\companyAccount', 'm');
 
         $select = $builder->generateSelectClause(['m' => 't1']);
-        $sql = "SELECT $select FROM Job AS t1";
+        $sql = "SELECT $select FROM Job AS t1".
+        " WHERE t1.active = 1 AND".
+        " t1.name = '$cName'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         //$query->setParameter('name');
