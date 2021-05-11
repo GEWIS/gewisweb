@@ -7,9 +7,9 @@
 
 <?= $this->translate('You can activate your account on the following link:') . "\n" ?>
 
-<?= $this->serverUrl($this->url('company/activate', ['code' => $company->getCode()])) . "\n" ?>
+<?= $this->serverUrl($this->url('user/activate-company', ['code' => $newcompany->getCode()])) . "\n" ?>
 
-<?= $this->translate('Your activation code is:') ?> <?= $company->getCode() . "\n" ?>
+<?= $this->translate('Your activation code is:') ?> <?= $newcompany->getCode() . "\n" ?>
 
 <?= $this->translate('Best Regards,') . "\n" ?>
 

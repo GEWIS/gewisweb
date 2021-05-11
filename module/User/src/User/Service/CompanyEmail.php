@@ -6,6 +6,7 @@ use Application\Service\AbstractService;
 
 use Company\Model\Company as CompanyModel;
 
+use User\Model\NewCompany;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
 
@@ -15,12 +16,14 @@ class CompanyEmail extends AbstractService
      * Send registration email.
      *
      * @param CompanyModel $company
+     * @param NewCompany $newcompany
      */
-    public function sendActivationEmail(CompanyModel $company)
+    public function sendActivationEmail(CompanyModel $company, NewCompany $newCompany)
     {
 
         $body = $this->render('user/email/company-activation.phtml', [
-            'company' => $company
+            'company' => $company,
+            'newcompany' => $newCompany
         ]);
 
         $translator = $this->getServiceManager()->get('translator');

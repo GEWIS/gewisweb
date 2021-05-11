@@ -87,7 +87,9 @@ class Company
         $newcompany = new NewCompanyModel($company);
         $this->em->persist($newcompany);
 
-        return $company;
+        $companies = [$company, $newcompany];
+
+        return $companies;
     }
 
     /**

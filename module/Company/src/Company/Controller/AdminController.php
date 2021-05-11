@@ -44,14 +44,17 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            $company = $companyService->insertCompanyByData(
+            $companies = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()
             );
 
+            $company = $companies[0];
+            $newcompany = $companies[1];
+
             if (!is_null($company)) {
                 //Send activation email
-                $this -> getCompanyEmailService() -> sendActivationEmail($company);
+                $this -> getCompanyEmailService() -> sendActivationEmail($company, $newcompany);
 
                 // Redirect to edit page
                 return $this->redirect()->toRoute(

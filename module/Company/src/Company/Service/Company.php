@@ -586,7 +586,8 @@ class Company extends AbstractACLService
         );
         $companyForm->setData($mergedData);
         if ($companyForm->isValid()) {
-            $company = $this->insertCompany($data['languages']);
+            $companies = $this->insertCompany($data['languages']);
+            $company = $companies[0];
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -599,7 +600,7 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
-            return $company;
+            return $companies;
         }
 
         return null;
