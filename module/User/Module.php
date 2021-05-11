@@ -2,6 +2,7 @@
 
 namespace User;
 
+use User\Model\CompanyUser;
 use User\Service\ApiApp;
 use User\Service\Factory\ApiAppFactory;
 use Zend\Permissions\Acl\Acl;
@@ -104,7 +105,7 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
-                'user_service_companyemail' => 'User\Service\CompanyEmail',
+                'user_service_company' => 'User\Service\Company'
             ],
 
             'factories' => [
@@ -116,7 +117,7 @@ class Module
                     );
                 },
                 'company_auth_storage' => function ($sm) {
-                    return new \User\Authentication\Storage\CompanySession(
+                    return new \User\Authentication\CompanyStorage\CompanySession(
                         $sm
                     );
                 },
@@ -232,7 +233,7 @@ class Module
                     $adapter = new \User\Authentication\Adapter\Mapper(
                         $sm->get('user_bcrypt'),
                         $sm->get('application_service_legacy'),
-                        $sm->get('user_service_user')
+                        $sm->get('user_service_company')
                     );
                     $adapter->setMapper($sm->get('user_mapper_company'));
                     return $adapter;
@@ -278,8 +279,15 @@ class Module
                 'user_role' => function ($sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
-                        return $authService->getIdentity();
+                        if ($authService->getIdentity()!= null) {
+                            return $authService->getIdentity();
+                        }
                     }
+                    $companyService = $sm->get('company_auth_service');
+                    if ($companyService->hasIdentity()) {
+                        return $companyService->getIdentity();
+                    }
+
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
                         return 'apiuser';
@@ -313,6 +321,7 @@ class Module
                     $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
                     $acl->addRole(new Role('photo_guest'), 'guest');
+                    $acl->addRole(new Role('company_user'));
 
                     $user = $sm->get('user_role');
 
@@ -328,6 +337,15 @@ class Module
                             $roles[] = 'active_member';
                         }
 
+                        $acl->addRole($user, $roles);
+                    }
+
+                    if($user instanceof CompanyUser) {
+                        $roles = $user->getRoleNames();
+                        // if the company has no roles, add the 'company role by default
+                        if (empty($roles)) {
+                            $roles = ['company_user'];
+                        }
                         $acl->addRole($user, $roles);
                     }
 

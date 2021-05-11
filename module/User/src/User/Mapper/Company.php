@@ -5,6 +5,7 @@ namespace User\Mapper;
 
 
 use Doctrine\ORM\EntityManager;
+use User\Model\CompanyUser;
 use User\Model\NewCompany as NewCompanyModel;
 use User\Model\Company as CompanyModel;
 
@@ -32,7 +33,7 @@ class Company extends Mapper
      *
      * @param int $id company id
      *
-     * @return \User\Model\Company
+     * @return \User\Model\CompanyUser
      */
     public function findById($id)
     {
@@ -44,14 +45,14 @@ class Company extends Mapper
      *
      * @param string $login
      *
-     * @return CompanyModel
+     * @return CompanyUser
      */
     public function findByLogin($login)
     {
         // create query for user
         $qb = $this->em->createQueryBuilder();
         $qb->select('c')
-            ->from('User\Model\Company', 'c');
+            ->from('User\Model\CompanyUser', 'c');
 
 
         $qb->where('LOWER(c.contactEmail) = ?1');
@@ -67,9 +68,9 @@ class Company extends Mapper
     /**
      * Detach a user from the entity manager.
      *
-     * @param CompanyModel $company
+     * @param CompanyUser $company
      */
-    public function detach(CompanyModel $company)
+    public function detach(CompanyUser $company)
     {
         $this->em->detach($company);
     }
@@ -77,11 +78,11 @@ class Company extends Mapper
     /**
      * Re-attach a user to the entity manager.
      *
-     * @param CompanyModel $company
+     * @param CompanyUser $company
      *
-     * @return CompanyModel
+     * @return CompanyUser
      */
-    public function merge(CompanyModel $company)
+    public function merge(CompanyUser $company)
     {
         return $this->em->merge($company);
     }
@@ -91,11 +92,11 @@ class Company extends Mapper
      *
      * This will both destroy the NewUser and create the given user
      *
-     * @param CompanyModel $company User to create
+     * @param CompanyUser $company User to create
      * @param NewUserModel $newUser NewUser to destroy
      */
     // TODO: comments
-    public function createCompany(CompanyModel $company, NewCompanyModel $newCompany)
+    public function createCompany(CompanyUser $company, NewCompanyModel $newCompany)
     {
         $this->em->persist($company);
         $this->em->remove($newCompany);
@@ -105,10 +106,10 @@ class Company extends Mapper
     /**
      * Persist a company model.
      *
-     * @param CompanyModel $company Company to persist.
+     * @param CompanyUser $company Company to persist.
      */
     // TODO: comments
-    public function persist(CompanyModel $company)
+    public function persist(CompanyUser $company)
     {
         $this->em->persist($company);
         $this->em->flush();
@@ -121,7 +122,7 @@ class Company extends Mapper
      */
     public function getRepository()
     {
-        return $this->em->getRepository('User\Model\Company');
+        return $this->em->getRepository('User\Model\CompanyUser');
     }
 
 }

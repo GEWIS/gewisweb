@@ -15,7 +15,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
  * @ORM\Entity
  */
 
-class Company extends Model implements RoleInterface, ResourceInterface
+class CompanyUser extends Model implements RoleInterface, ResourceInterface
 {
     /**
      * The membership number.
@@ -40,9 +40,9 @@ class Company extends Model implements RoleInterface, ResourceInterface
 
     /**
      * Companies sessions
-     * TODO: check if mappedby user is fine
+     * TODO: check if mappedby companyUser is fine
      *
-     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="CompanyUser")
      */
     protected $sessions;
 
@@ -58,6 +58,14 @@ class Company extends Model implements RoleInterface, ResourceInterface
             $this->contactEmail = $newCompany->getContactEmail();
         }
     }
+
+    /**
+     * The corresponding member for this user.
+     *
+     * @ORM\OneToOne(targetEntity="Company\Model\Company", fetch="EAGER")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $companyAccount;
 
 
     /**
@@ -101,13 +109,39 @@ class Company extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * @return CompanyUser
+     */
+    public function getCompanyAccount()
+    {
+        return $this->companyAccount;
+    }
+
+    /**
+     * @param CompanyUser $companyAccount
+     */
+    public function setCompanyAccount($companyAccount)
+    {
+        $this->companyAccount = $companyAccount;
+    }
+
+    /**
      * Get the company's role ID.
      *
      * @return string
      */
     public function getRoleId()
     {
-        return 'company_' . $this->getLidnr();
+        return 'company_user_' . $this->getLidnr();
+    }
+
+    /**
+     * Get the company role name.
+     *
+     * @return array Role names
+     */
+    public function getRoleNames()
+    {
+        return ["company_user"];
     }
 
     /**
@@ -117,6 +151,6 @@ class Company extends Model implements RoleInterface, ResourceInterface
      */
     public function getResourceId()
     {
-        return 'company';
+        return 'companyUser';
     }
 }

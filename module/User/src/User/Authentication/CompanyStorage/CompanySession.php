@@ -1,7 +1,7 @@
 <?php
 
 
-namespace User\Authentication\Storage;
+namespace User\Authentication\CompanyStorage;
 
 
 use Firebase\JWT\JWT;
@@ -11,6 +11,7 @@ use Zend\Http\Header\SetCookie;
 
 class CompanySession extends Storage\Session
 {
+
     /**
      * @var The service manager
      */
@@ -30,7 +31,7 @@ class CompanySession extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->session->{$this->company}->getId());
+            $this->saveSession($this->session->{$this->member}->getLidnr());
         }
     }
 
@@ -49,7 +50,7 @@ class CompanySession extends Storage\Session
      */
     public function isEmpty()
     {
-        if (isset($this->session)) {
+        if (isset($this->session->{$this->member})) {
             return false;
         }
 
@@ -80,7 +81,7 @@ class CompanySession extends Storage\Session
             return false;
         }
 
-        $this->session->{$this->company} = $session->id;
+        $this->session->{$this->member} = $session->id;
         $this->saveSession($session->id);
 
         return true;
@@ -93,7 +94,7 @@ class CompanySession extends Storage\Session
      */
     public function read()
     {
-        return $this->session;
+        return $this->session->{$this->member};
     }
 
     /**
@@ -104,7 +105,7 @@ class CompanySession extends Storage\Session
      */
     public function write($contents)
     {
-        $this->session = $contents;
+        $this->session->{$this->member} = $contents;
         if ($this->rememberMe) {
             $this->saveSession($contents);
         }
@@ -145,7 +146,7 @@ class CompanySession extends Storage\Session
     public function clear()
     {
         // Clear the session
-        unset($this->session);
+        unset($this->session->{$this->member});
         $this->clearCookie();
     }
 

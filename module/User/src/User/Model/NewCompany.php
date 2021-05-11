@@ -3,7 +3,7 @@
 namespace User\Model;
 
 use DateTime;
-use Decision\Model\Member;
+use Company\Model\Company;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +42,14 @@ class NewCompany
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $time;
+
+    /**
+     * User's company
+     *
+     * @ORM\OneToOne(targetEntity="Company\Model\Company")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $company;
 
     /**
      * Get the company id.
@@ -84,22 +92,28 @@ class NewCompany
     }
 
     /**
-     * Set the activation code.
+     * Constructor.
      *
-     * @param string $code
+     * We can populate most values from a member model.
+     *
+     * @param Company $company
      */
-    public function setCode($code)
+    public function __construct(Company $company = null)
     {
-        $this->code = $code;
+        if (null !== $company) {
+            $this->id = $company->getLidnr();
+            $this->contactEmail = $company->getContactEmail();
+            $this->company = $company;
+        }
     }
 
     /**
-     * Set the user's email address
+     * Get the company.
      *
-     * @param string $contactEmail
+     * @return Company
      */
-    public function setContactEmail($contactEmail)
+    public function getCompany()
     {
-        $this->contactEmail = $contactEmail;
+        return $this->company;
     }
 }
