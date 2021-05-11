@@ -8,6 +8,8 @@ use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
+
+
     public function indexAction()
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
@@ -28,6 +30,8 @@ class MemberController extends AbstractActionController
             'meetingsCollection' => $meetingsCollection,
         ]);
     }
+
+
 
     /**
      * Shown own information.
@@ -75,7 +79,9 @@ class MemberController extends AbstractActionController
 
         return new ViewModel([]);
     }
+    public function samplepageAction(){
 
+    }
     /**
      * Determinues whether a member can be authorized without additional confirmation
      */
