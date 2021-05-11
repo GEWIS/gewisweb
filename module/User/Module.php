@@ -105,7 +105,8 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
-                'user_service_company' => 'User\Service\Company'
+                'user_service_company' => 'User\Service\Company',
+                'user_service_companyemail' => 'User\Service\CompanyEmail',
             ],
 
             'factories' => [
