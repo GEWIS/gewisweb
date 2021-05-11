@@ -388,6 +388,16 @@ return [
 
                         ],
                     ],
+                    'vacancies' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/vacancies',
+                            'defaults' => [
+                                'action' => 'vacancies'
+                            ]
+
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],
