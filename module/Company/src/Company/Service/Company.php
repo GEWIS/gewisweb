@@ -590,7 +590,7 @@ class Company extends AbstractACLService
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
-                print_r($file);
+
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] == UPLOAD_ERR_OK) {
                         $newPath = $this->getFileStorageService()->storeUploadedFile($file);

@@ -49,9 +49,10 @@ class AdminController extends AbstractActionController
                 $request->getFiles()
             );
 
-            $this -> getCompanyEmailService() -> sendActivationEmail($company);
-
             if (!is_null($company)) {
+                //Send activation email
+                $this -> getCompanyEmailService() -> sendActivationEmail($company);
+
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default',
