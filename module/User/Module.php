@@ -276,10 +276,10 @@ class Module
                     return $remote->getIpAddress();
                 },
                 'user_role' => function ($sm) {
-                    $authService = $sm->get('user_auth_service');
-                    if ($authService->hasIdentity()) {
-                        return $authService->getIdentity();
-                    }
+//                    $authService = $sm->get('user_auth_service');
+//                    if ($authService->hasIdentity()) {
+//                        return $authService->getIdentity();
+//                    }
                     $companyService = $sm->get('company_auth_service');
                     if ($companyService->hasIdentity()) {
                         return $companyService->getIdentity();
@@ -317,7 +317,7 @@ class Module
                     $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
                     $acl->addRole(new Role('photo_guest'), 'guest');
-                    $acl->addRole(new Role('company'));
+                    $acl->addRole(new Role('company_user'));
 
                     $user = $sm->get('user_role');
 

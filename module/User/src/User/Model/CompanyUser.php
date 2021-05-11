@@ -131,7 +131,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      */
     public function getRoleId()
     {
-        return 'company_' . $this->getLidnr();
+        return 'company_user_' . $this->getLidnr();
     }
 
     /**
@@ -151,6 +151,6 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      */
     public function getResourceId()
     {
-        return 'company';
+        return 'companyUser';
     }
 }
