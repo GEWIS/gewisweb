@@ -393,7 +393,7 @@ return [
                         'options' => [
                             'route' => '/vacancies',
                             'defaults' => [
-                                'controller' => 'companyaccount',
+                                'controller' => 'CompanyAccount',
                                 'action' => 'vacancies'
                             ]
                         ],
@@ -404,7 +404,7 @@ return [
                                 'options' => [
                                     'route' => '/create',
                                     'defaults' => [
-                                        'controller' => 'companyaccount',
+                                        'controller' => 'CompanyAccount',
                                         'action' => 'createVacancy',
                                     ]
                                 ],
@@ -414,7 +414,7 @@ return [
                                 'options' => [
                                     'route' => '/edit',
                                     'defaults' => [
-                                        'controller' => 'companyaccount',
+                                        'controller' => 'CompanyAccount',
                                         'action' => 'editVacancy',
                                     ],
                                 ],
