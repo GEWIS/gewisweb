@@ -1,0 +1,78 @@
+<?php
+$this->headTitle($this->translate('Reset password'));
+?>
+<section class="section">
+    <div class="container">
+        <?php if (isset($this->activated) && $this->activated): ?>
+            <?= $this->translate('Your password has been reset. You are now able to login with your new password.') ?>
+        <?php else: ?>
+            <?php
+            $form = $this->form;
+            $form->prepare();
+
+            $form->setAttribute('action', $this->url('user/forget-company', ['code' => $this->newcompany->getCode()]));
+            $form->setAttribute('method', 'post');
+
+            $form->setAttribute('role', 'form');
+            $form->setAttribute('class', 'form-horizontal');
+            ?>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3><?= $this->translate('Reset password') ?></h3>
+                        </div>
+                        <div class="panel-body">
+                            <?= $this->form()->openTag($form); ?>
+                            <p>
+                                <?php
+                                $company = $this->company->getCompany();
+                                $name = $company->getContactName();
+                                ?>
+                                <?= sprintf($this->translate("Welcome %s. Choose a new password for the website and activate your account."), $name) ?>
+                            </p>
+                            <?php
+                            $element = $form->get('password');
+                            $element->setAttribute('class', 'form-control');
+                            $element->setAttribute('placeholder', $this->translate('Password'));
+                            ?>
+                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <div class="col-sm-7">
+                                    <?= $this->formInput($element) ?>
+                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                </div>
+                            </div>
+                            <?php
+                            $element = $form->get('password_verify');
+                            $element->setAttribute('class', 'form-control');
+                            $element->setAttribute('placeholder', $this->translate('Verify password'));
+                            ?>
+                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <div class="col-sm-7">
+                                    <?= $this->formInput($element) ?>
+                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-7">
+                                    <?php
+                                    $submit = $form->get('submit');
+                                    $submit->setAttribute('class', 'btn btn-primary');
+                                    ?>
+                                    <?= $this->formRow($submit); ?>
+                                </div>
+                            </div>
+
+                            <?= $this->form()->closeTag(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>

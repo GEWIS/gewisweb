@@ -47,6 +47,10 @@ $form->setAttribute('class', 'form-horizontal');
                             </div>
                         </div>
 
+                        <?php $url = $this->url('user/default', ['action' => 'resetCompany']); ?>
+                        <p>
+                            <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+                        </p>
 
                         <?= $this->form()->closeTag($form); ?>
                     </div>

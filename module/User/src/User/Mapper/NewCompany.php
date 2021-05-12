@@ -53,4 +53,19 @@ class NewCompany
     {
         return $this->em->getRepository('User\Model\NewCompany');
     }
+
+    /**
+     * Delete the existing activation code for a company
+     *
+     * @param Company $company
+     * @return array
+     */
+    public function deleteByCompany(Company $company)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete('User\Model\NewCompany', 'u');
+        $qb->where('u.company = :company');
+        $qb->setParameter('company', $company);
+        return $qb->getQuery()->getResult();
+    }
 }

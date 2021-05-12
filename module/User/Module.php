@@ -164,6 +164,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_companypasswordreset' => function ($sm) {
+                    return new \User\Form\CompanyPassword(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_passwordactivate' => function ($sm) {
                     return new \User\Form\Activate(
                         $sm->get('translator')

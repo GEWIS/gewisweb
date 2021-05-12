@@ -153,6 +153,26 @@ class UserController extends AbstractActionController
         ]);
     }
 
+    public function resetCompanyAction()
+    {
+        $userService = $this->getUserService();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $newUser = $userService->resetCompany($request->getPost());
+            if (null !== $newUser) {
+                return new ViewModel([
+                    'reset' => true,
+                    'user' => $newUser
+                ]);
+            }
+        }
+
+        return new ViewModel([
+            'form' => $userService->getPasswordResetForm()
+        ]);
+    }
+
     /**
      * User activation action.
      */

@@ -66,6 +66,18 @@ class Company extends Mapper
     }
 
     /**
+     * Find a company by its email.
+     *
+     * @param int $contactEmail company email
+     *
+     * @return \User\Model\CompanyUser
+     */
+    public function findByEmail($contactEmail)
+    {
+        return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
+    }
+
+    /**
      * Detach a user from the entity manager.
      *
      * @param CompanyUser $company

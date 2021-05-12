@@ -204,6 +204,56 @@ class User extends AbstractAclService
         return $user;
     }
 
+    public function resetCompany($data)
+    {
+        $form = $this->getCompanyPasswordResetForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            echo "Test";
+            return null;
+        }
+
+        // get the member
+        $data = $form->getData();
+        $user = $this->getCompanyMapper()->findByEmail($data['email']);
+        print_r($user);
+
+        if (is_null($user)) {
+            echo "Test2";
+            return null;
+        }
+
+        // check if the member has a corresponding user.
+//        $user = $this->getCompanyMapper()->findById($member->getLidnr());
+//        echo $user;
+//        if (null === $user) {
+//            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+//
+//            return null;
+//        }
+
+        // Check if the e-mail entered and the e-mail in the database match
+//        if ($user->getEmail() != $data['email']) {
+//            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+//            return null;
+//        }
+
+        // Invalidate all previous password reset codes
+        // Makes sure that no double password reset codes are present in the database
+        $this->getNewCompanyMapper()->deleteByCompany($user);
+
+        // create new activation
+        $newUser = new NewUserModel($user);
+        $newUser->setCode($this->generateCode());
+
+        $this->getNewUserMapper()->persist($newUser);
+
+        $this->getEmailService()->sendPasswordLostMail($newUser, $user);
+
+        return $user;
+    }
+
     /**
      * Change the password of a user.
      *
@@ -531,6 +581,14 @@ class User extends AbstractAclService
     public function getPasswordResetForm()
     {
         return $this->sm->get('user_form_passwordreset');
+    }
+
+    /**
+     * Get the company password reset form.
+     */
+    public function getCompanyPasswordResetForm()
+    {
+        return $this->sm->get('user_form_companypasswordreset');
     }
 
     /**
