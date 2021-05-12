@@ -690,29 +690,6 @@ class Company extends AbstractACLService
         return $this->saveJobData("", $jobs, $data, $files);
     }
 
-    /**
-     * Creates a new job and adds it to the specified package.
-     *
-     * @param integer $packageId
-     * @param array $data
-     * @param array $files
-     * @return bool
-     */
-    public function createJobCompany($packageId, $data, $files)
-    {
-        $package = $this->getPackageMapper()->findPackage($packageId);
-        $jobs = [];
-
-        foreach ($this->getLanguages() as $lang) {
-            $job = new JobModel();
-            $job->setPackage($package);
-            $job->setLanguage($lang);
-            $job->setActive(false);
-            $jobs[$lang] = $job;
-        }
-
-        return $this->saveJobData("", $jobs, $data, $files);
-    }
 
     /**
      * Checks if the data is valid, and if it is, saves the Job

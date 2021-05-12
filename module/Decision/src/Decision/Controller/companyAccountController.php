@@ -82,7 +82,7 @@ class companyaccountController extends AbstractActionController
 
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            $job = $companyService->createJobCompany(
+            $job = $companyService->createJob(
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
@@ -91,16 +91,12 @@ class companyaccountController extends AbstractActionController
             if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/editCompany/editPackage',
-                    [
-                        'slugCompanyName' => $companyName,
-                        'packageId' => $packageId
-                    ]
+                    'companyAccount/vacancies'
                 );
             }
         }
 
-        // The form was not valid, or we did not get data back
+        // TODO: change redirect after company has been created.
 
         // Initialize the form
         $companyForm->setAttribute(
