@@ -41,7 +41,7 @@ class Job
      *
      * @ORM\Column(type="boolean")
      */
-    protected $active;
+    protected $active = false;
 
     /**
      * The job's website.

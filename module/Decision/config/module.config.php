@@ -368,6 +368,59 @@ return [
 
                         ],
                     ],
+                    'profile' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/profile',
+                            'defaults' => [
+                                'action' => 'profile'
+                            ]
+
+                        ],
+                    ],
+                    'settings' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'action' => 'settings'
+                            ]
+
+                        ],
+                    ],
+                    'vacancies' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/vacancies',
+                            'defaults' => [
+                                'controller' => 'companyaccount',
+                                'action' => 'vacancies'
+                            ]
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'createvacancy' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/create',
+                                    'defaults' => [
+                                        'controller' => 'companyaccount',
+                                        'action' => 'createVacancy',
+                                    ]
+                                ],
+                            ],
+                            'editvacancy' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/edit',
+                                    'defaults' => [
+                                        'controller' => 'companyaccount',
+                                        'action' => 'editVacancy',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100
             ],

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 
-class User
+class User extends Mapper
 {
     /**
      * Doctrine entity manager.

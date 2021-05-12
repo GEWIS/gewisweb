@@ -9,7 +9,9 @@ use User\Form\Register as RegisterForm;
 use User\Mapper\User as UserMapper;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
+use User\Model\NewCompany as NewCompanyModel;
 use User\Model\User as UserModel;
+use User\Model\Company as CompanyModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -50,6 +52,36 @@ class User extends AbstractAclService
 
         // this will also save a user with a lost password
         $this->getUserMapper()->createUser($user, $newUser);
+
+        return true;
+    }
+
+    // TODO: comments
+    public function activateCompany($data, NewCompanyModel $newCompany)
+    {
+        $form = $this->getActivateForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // first try to obtain the user
+        $companyUser = $this->getCompanyMapper()->findById($newCompany->getId());
+        if (null === $companyUser) {
+            // create a new user from this data, and insert it into the database
+            $companyUser = new CompanyModel($newCompany);
+        }
+
+        $companyUser->setPassword($bcrypt->create($data['password']));
+
+        // this will also save a user with a lost password
+        $this->getCompanyMapper()->createCompany($companyUser, $newCompany);
 
         return true;
     }
@@ -259,6 +291,43 @@ class User extends AbstractAclService
     }
 
     /**
+     * Log the company in.
+     *
+     * @param array $data Login data
+     *
+     * @return CompanyModel Authenticated company. Null if not authenticated.
+     */
+    public function companyLogin($data)
+    {
+        $form = $this->getCompanyLoginForm();
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        // try to authenticate
+        $auth = $this->getServiceManager()->get('company_auth_service');
+        $authAdapter = $auth->getAdapter();
+
+        $authAdapter->setCredentials($form->getData());
+
+        $result = $auth->authenticate();
+
+        // process the result
+        if (!$result->isValid()) {
+            $form->setResult($result);
+            return null;
+        }
+
+        $this->getAuthStorage()->setRememberMe($data['remember']);
+        $company = $auth->getIdentity();
+
+        return $company;
+    }
+
+    /**
      * Login using a pin code.
      *
      * @param array $data
@@ -296,6 +365,24 @@ class User extends AbstractAclService
         $auth = $this->getServiceManager()->get('user_auth_service');
         $auth->clearIdentity();
     }
+
+    public function getCompanyIdentity() {
+        $authService = $this->getServiceManager()->get('company_auth_service');
+        if (!$authService->hasCompanyIdentity()) {
+            $translator = $this->getServiceManager()->get('translator');
+            throw new NotAllowedException(
+                $translator->translate('You need to log in to perform this action')
+            );
+        }
+        return $authService->getIdentity();
+    }
+
+    public function hasCompanyIdentity()
+    {
+        $authService = $this->getServiceManager()->get('company_auth_service');
+        return $authService->hasCompanyIdentity();
+    }
+
 
     /**
      * Gets the user identity, or gives a 403 if the user is not logged in
@@ -375,6 +462,12 @@ class User extends AbstractAclService
     public function getNewUser($code)
     {
         return $this->getNewUserMapper()->getByCode($code);
+    }
+
+    // TODO: comments
+    public function getNewCompany($code)
+    {
+        return $this->getNewCompanyMapper()->getByCode($code);
     }
 
     /**
@@ -459,6 +552,16 @@ class User extends AbstractAclService
     }
 
     /**
+     * Get the company login form.
+     *
+     * @return Company Login form
+     */
+    public function getCompanyLoginForm()
+    {
+        return $this->sm->get('user_form_companylogin');
+    }
+
+    /**
      * Get the member mapper.
      *
      * @return MemberMapper
@@ -478,6 +581,17 @@ class User extends AbstractAclService
         return $this->sm->get('user_mapper_newuser');
     }
 
+    // TODO: comments
+    /**
+     * Get the new company mapper.
+     *
+     * @return NewCompanyMapper
+     */
+    public function getNewCompanyMapper()
+    {
+        return $this->sm->get('user_mapper_newcompany');
+    }
+
     /**
      * Get the user mapper.
      *
@@ -486,6 +600,12 @@ class User extends AbstractAclService
     public function getUserMapper()
     {
         return $this->sm->get('user_mapper_user');
+    }
+
+    // TODO: comments
+    public function getCompanyMapper()
+    {
+        return $this->sm->get('user_mapper_company');
     }
 
     /**

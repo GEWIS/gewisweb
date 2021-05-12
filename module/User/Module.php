@@ -2,6 +2,7 @@
 
 namespace User;
 
+use User\Model\CompanyUser;
 use User\Service\ApiApp;
 use User\Service\Factory\ApiAppFactory;
 use Zend\Permissions\Acl\Acl;
@@ -104,6 +105,7 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
+                'user_service_company' => 'User\Service\Company'
             ],
 
             'factories' => [
@@ -111,6 +113,11 @@ class Module
                 \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {
                     return new \User\Authentication\Storage\Session(
+                        $sm
+                    );
+                },
+                'company_auth_storage' => function ($sm) {
+                    return new \User\Authentication\CompanyStorage\CompanySession(
                         $sm
                     );
                 },
@@ -146,6 +153,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_companylogin' => function ($sm) {
+                    return new \User\Form\CompanyLogin(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_passwordreset' => function ($sm) {
                     return new \User\Form\Register(
                         $sm->get('translator')
@@ -163,14 +175,23 @@ class Module
                     $form->setHydrator($sm->get('user_hydrator'));
                     return $form;
                 },
-
                 'user_mapper_user' => function ($sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
                     );
                 },
+                'user_mapper_company' => function ($sm) {
+                    return new \User\Mapper\Company(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
                 'user_mapper_newuser' => function ($sm) {
                     return new \User\Mapper\NewUser(
+                        $sm->get('user_doctrine_em')
+                    );
+                },
+                'user_mapper_newcompany' => function ($sm) {
+                    return new \User\Mapper\NewCompany(
                         $sm->get('user_doctrine_em')
                     );
                 },
@@ -208,6 +229,15 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
+                'company_auth_adapter' => function ($sm) {
+                    $adapter = new \User\Authentication\Adapter\Mapper(
+                        $sm->get('user_bcrypt'),
+                        $sm->get('application_service_legacy'),
+                        $sm->get('user_service_company')
+                    );
+                    $adapter->setMapper($sm->get('user_mapper_company'));
+                    return $adapter;
+                },
                 'user_pin_auth_adapter' => function ($sm) {
                     $adapter = new \User\Authentication\Adapter\PinMapper(
                         $sm->get('application_service_legacy'),
@@ -228,6 +258,12 @@ class Module
                         $sm->get('user_pin_auth_adapter')
                     );
                 },
+               'company_auth_service' => function ($sm) {
+                    return new \User\Authentication\CompanyAuthenticationService(
+                        $sm->get('company_auth_storage'),
+                        $sm->get('company_auth_adapter')
+                    );
+                },
                 'user_remoteaddress' => function ($sm) {
                     $remote = new \Zend\Http\PhpEnvironment\RemoteAddress();
                     $isProxied = $sm->get('config')['proxy']['enabled'];
@@ -243,8 +279,16 @@ class Module
                 'user_role' => function ($sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
-                        return $authService->getIdentity();
+                        if ($authService->getIdentity()!= null) {
+                            return $authService->getIdentity();
+                        }
                     }
+
+                    $companyService = $sm->get('company_auth_service');
+                    if ($companyService->hasIdentity()) {
+                        return $companyService->getIdentity();
+                    }
+
                     $apiService = $sm->get('user_service_apiuser');
                     if ($apiService->hasIdentity()) {
                         return 'apiuser';
@@ -278,6 +322,7 @@ class Module
                     $acl->addrole(new Role('company_admin'), 'active_member');
                     $acl->addRole(new Role('admin'));
                     $acl->addRole(new Role('photo_guest'), 'guest');
+                    $acl->addRole(new Role('company_user'));
 
                     $user = $sm->get('user_role');
 
@@ -293,6 +338,15 @@ class Module
                             $roles[] = 'active_member';
                         }
 
+                        $acl->addRole($user, $roles);
+                    }
+
+                    if($user instanceof CompanyUser) {
+                        $roles = $user->getRoleNames();
+                        // if the company has no roles, add the 'company role by default
+                        if (empty($roles)) {
+                            $roles = ['company_user'];
+                        }
                         $acl->addRole($user, $roles);
                     }
 

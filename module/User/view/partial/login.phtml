@@ -67,5 +67,8 @@ $form->setAttribute('class', 'form-horizontal');
         <p>
             <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
         </p>
+        <?php $url = $this->url('user/default', ['action' => 'company']); ?>
+        <p>
+            <?= sprintf($this->translate("If you have a company account, go to the %sCompany login page%s"), '<a href="' . $url . '">', '</a>') ?>
     </div>
 </div>

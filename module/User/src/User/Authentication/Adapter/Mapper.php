@@ -2,11 +2,12 @@
 
 namespace User\Authentication\Adapter;
 
+use Application\Service\AbstractAclService;
 use User\Model\LoginAttempt;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
-use User\Mapper\User as UserMapper;
-use User\Model\User as UserModel;
+use User\Mapper\Mapper as AbstractMapper;
+use User\Model\Model as AbstractModel;
 use Zend\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\User as UserService;
@@ -16,7 +17,7 @@ class Mapper implements AdapterInterface
     /**
      * Mapper.
      *
-     * @var UserMapper
+     * @var AbstractMapper
      */
     protected $mapper;
 
@@ -53,20 +54,20 @@ class Mapper implements AdapterInterface
      * User Service
      * (for logging failed login attempts)
      *
-     * @var UserService
+     * @var AbstractAclService
      */
-    protected $userService;
+    protected $accountService;
 
     /**
      * Constructor.
      *
      * @param Bcrypt $bcrypt
      */
-    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, UserService $userService)
+    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, AbstractAclService $accountService)
     {
         $this->bcrypt = $bcrypt;
         $this->legacyService = $legacyService;
-        $this->userService = $userService;
+        $this->accountService = $accountService;
     }
 
     /**
@@ -88,7 +89,7 @@ class Mapper implements AdapterInterface
 
         $this->mapper->detach($user);
 
-        if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
+        if ($this->accountService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
             return new Result(
                 Result::FAILURE,
                 null,
@@ -97,7 +98,7 @@ class Mapper implements AdapterInterface
         }
 
         if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
-            $this->userService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
+            $this->accountService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
@@ -113,7 +114,7 @@ class Mapper implements AdapterInterface
      *
      * @param string $password
      * @param string $hash
-     * @param UserModel $user
+     * @param AbstractModel $user
      *
      * @return boolean
      */
@@ -144,7 +145,7 @@ class Mapper implements AdapterInterface
     /**
      * Get the mapper.
      *
-     * @return UserMapper
+     * @return AbstractMapper
      */
     public function getMapper()
     {
@@ -154,9 +155,9 @@ class Mapper implements AdapterInterface
     /**
      * Set the mapper.
      *
-     * @param UserMapper $mapper
+     * @param AbstractMapper $mapper
      */
-    public function setMapper(UserMapper $mapper)
+    public function setMapper(\User\Mapper\Mapper $mapper)
     {
         $this->mapper = $mapper;
     }

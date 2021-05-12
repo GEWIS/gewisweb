@@ -2,6 +2,7 @@
 
 namespace Application\Service;
 
+use User\Model\Model;
 use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -26,7 +27,7 @@ abstract class AbstractAclService extends AbstractService
     /**
      * Get the current user's role.
      *
-     * @return User|string
+     * @return Model|string
      */
     public function getRole()
     {
