@@ -46,6 +46,8 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]
         ]);
 
+
+
         $this->add([
             'name' => 'labels',
             'type' => 'Zend\Form\Element\MultiCheckbox',
@@ -77,6 +79,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
             $filter->add([
                 'name' => 'id',
+                'required' => false,
+            ]);
+
+            $filter->add([
+                'name' => 'active',
                 'required' => false,
             ]);
 
@@ -146,6 +153,14 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                         ],
                     ],
                 ],
+            ]);
+
+            $filter->add([
+                'name' => 'active',
+                'required' => false,
+                'validators' => [
+
+                ]
             ]);
 
             $filter->add([

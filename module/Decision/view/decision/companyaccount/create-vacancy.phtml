@@ -120,6 +120,18 @@
                     </div>
                 </div>
                 <?php
+                $element = $fieldset->get('active');
+                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formCheckbox($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
+                <?php
                 $element = $fieldset->get('contactName');
                 $element->setAttribute('class', 'form-control');
                 ?>

@@ -72,13 +72,17 @@ class companyaccountController extends AbstractActionController
         $companyName = 'TestA';
         $packageId = 2;
 
+
 //        $company = $this->identity()->getMember();
 
         // Handle incoming form results
         $request = $this->getRequest();
+
+
+
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            $job = $companyService->createJob(
+            $job = $companyService->createJobCompany(
                 $packageId,
                 $request->getPost(),
                 $request->getFiles()
