@@ -92,6 +92,17 @@ class Module
                 $form->setHydrator($sm->get('company_hydrator'));
                 return $form;
             },
+            'company_edit_job_form' => function ($sm) {
+                $form = new \Company\Form\EditJobCompany(
+                    $sm->get('company_mapper_job'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator'),
+                    $sm->get('company_service_company')->getLabelList(false)
+                );
+                $form->setHydrator($sm->get('company_hydrator'));
+                return $form;
+            },
         ];
     }
 
@@ -169,7 +180,15 @@ class Module
                 $acl->allow('guest', 'company', 'showBanner');
                 $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete']);
                 $acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
-                $acl->allow('company_user', 'company', ['view', 'insert', 'edit', 'delete', 'listall', 'listAllCategories', 'listAllLabels', 'showBanner', 'listVisibleLabels', 'listVisibleCategories', 'list', 'viewFeaturedCompany']);
+
+                $acl->allow('company_user', 'company', 'viewFeaturedCompany');
+                $acl->allow('company_user', 'company', 'list');
+                $acl->allow('company_user', 'company', 'view');
+                $acl->allow('company_user', 'company', 'listVisibleCategories');
+                $acl->allow('company_user', 'company', 'listVisibleLabels');
+                $acl->allow('company_user', 'company', 'showBanner');
+                $acl->allow('company_user', 'company', ['insert', 'edit', 'delete']);
+                $acl->allow('company_user', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
 
                 return $acl;
             },

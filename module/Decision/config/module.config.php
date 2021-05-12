@@ -393,9 +393,32 @@ return [
                         'options' => [
                             'route' => '/vacancies',
                             'defaults' => [
+                                'controller' => 'companyaccount',
                                 'action' => 'vacancies'
                             ]
-
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'createvacancy' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/create',
+                                    'defaults' => [
+                                        'controller' => 'companyaccount',
+                                        'action' => 'createVacancy',
+                                    ]
+                                ],
+                            ],
+                            'editvacancy' => [
+                                'type' => 'Literal',
+                                'options' => [
+                                    'route' => '/edit',
+                                    'defaults' => [
+                                        'controller' => 'companyaccount',
+                                        'action' => 'editVacancy',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                 ],
