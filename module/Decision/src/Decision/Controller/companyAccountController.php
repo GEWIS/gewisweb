@@ -12,12 +12,12 @@ class companyaccountController extends AbstractActionController
 {
     public function IndexAction()
     {
-//        if (!$this->getCompanyAccountService()->isAllowed('view')) {
-//            $translator = $this->getCompanyAccountService()->getTranslator();
-//            throw new \User\Permissions\NotAllowedException(
-//                $translator->translate('You are not allowed to view this page')
-//            );
-//        }
+        if (!$this->getCompanyAccountService()->isAllowed('view')) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view this page')
+            );
+        }
         return new ViewModel();
     }
 
@@ -71,9 +71,7 @@ class companyaccountController extends AbstractActionController
 //        $packageId = $this->params('packageId');
         $companyName = 'TestA';
         $packageId = 2;
-
-
-//        $company = $this->identity()->getMember();
+        //$member = $this->identity();
 
         // Handle incoming form results
         $request = $this->getRequest();
