@@ -147,6 +147,7 @@ class Module
                     $acl->addResource('authorization');
                     $acl->addResource('files');
                     $acl->addResource('regulations');
+                    $acl->addResource('companyaccount');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -175,6 +176,9 @@ class Module
 
                     // users are allowed to download the regulations
                     $acl->allow('user', 'regulations', ['list', 'download']);
+
+                    // companies are allowed to view the company panel
+                    $acl->allow('company_user', 'companyaccount', 'view');
 
                     return $acl;
                 },

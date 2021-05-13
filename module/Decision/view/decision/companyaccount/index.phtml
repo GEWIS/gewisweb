@@ -25,7 +25,11 @@ $this->headTitle($this->translate('Company Account'));
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
-
+                    <a href="<?= $this->url('user/default', ['action' => 'companyLogout']) ?>"
+                       class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-lock"></div>
+                        <div class="panel-heading"><?= $this->translate('Logout') ?></div>
+                    </a>
                     <a href="<?= $this->url('companyaccount/dummy') ?>"class="panel panel-image align-middle">
                         <div class="big-icon fas fa-cog"></div>
                         <div class="panel-heading"><?= $this->translate('Settings') ?></div>
@@ -38,7 +42,7 @@ $this->headTitle($this->translate('Company Account'));
             <div class="col-md-12">
                 <h2><?= $this->translate('Company content') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/vacancies') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Vacancies') ?></div>
                     </a>
@@ -83,7 +87,7 @@ $this->headTitle($this->translate('Company Account'));
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <?= $this->translate("Currently there are no active vacancies,")?>
-                        <a href="<?= $this->url('companyaccount/dummy') ?>">add new vacancy.</a>
+                        <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">add new vacancy.</a>
                     </div>
                 </div>
                 <?php endif; ?>

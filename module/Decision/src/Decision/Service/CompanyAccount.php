@@ -23,6 +23,12 @@ class companyAccount extends AbstractAclService
         return $this->getcompanyAccountMapper()->findactiveVacancies($cName);
     }
 
+    public function getCompanyInfo($id = null) {
+        if (null === $id) {
+            $id = $this->getRole();
+        }
+    }
+
     /**
      * Get the default resource ID.
      *
