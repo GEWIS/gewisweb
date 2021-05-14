@@ -1,7 +1,5 @@
 <?php
 
-
-//echo var_dump($companyPackageInfo);
 ?>
 
 <section class="section">
@@ -10,14 +8,25 @@
             <div class="col-md-6">
 
                 <?php
+                //TODO make it such that when the experation date is in the past the correct message is
+                // displayed also when starting date has yet to pass
+
                 $now = new DateTime();
                 $diff = $now->diff($companyPackageInfo[0]->getExpires());
-                ?>
 
-                <?php if ($diff->m === 0): ?>
+                //If vacancy package will expire within one month display notification
+                if ($diff->m === 0 && $diff->d > 0): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package will expire within one month!")?></strong>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($diff->d <= 0): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <strong><?= $this->translate("Vacancy package has expired, please contact an administrator.")?></strong>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -42,10 +51,27 @@
                     <tr>
                         <th><?= $this->translate('Email subscription') ?></th>
                         <td><?= "empty"  ?></td>
+                        <td><input type="checkbox" id="scales" name="scales" checked></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('Start date of membership') ?></th>
+                        <td><?= $companyPackageInfo[0]->getStart()->format('l j F Y')?></td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('End date of membership') ?></th>
                         <td><?= $companyPackageInfo[0]->getExpires()->format('l j F Y')?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('Account status') ?></th>
+                        <td>
+                            <?php if ($diff->d <= 0):?>
+                                inactive
+                            <?php endif; ?>
+
+                            <?php if ($diff->d > 0):?>
+                                active
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 </table>
 
@@ -71,36 +97,43 @@
                         </tr>
                         <tr>
                             <th><?= $this->translate('Phone number') ?></th>
-                            <td id="edit" name="phone"><?= $companyInfo[0]->getPhone() ?></td>
+                            <td id="edit" name="phone"><?= $companyInfo[0]->getPhone()  ?></td>
                         </tr>
                     </table>
 
 
-
-
-                <form id = "finalsubmit" name = "finalsubmit" method="post">
+                <form id = "finalsubmit" name = "finalsubmit" method="post" action="/companyAccount/settings">
                     <input type="text" id="finaltext" name="finaltext" value="">
                     <input type="submit" value="Safe changes">
                 </form>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
                 <script>
+                    //dictionary storing all changed company settings
                     var dict = {email: "", address: "", phone: 0};
 
+                    //the form that will submit the changes
                     var finalsubmit = document.getElementById("finalsubmit");
+
+                    //the text field containing the changes
                     var finaltext = document.getElementById("finaltext");
+
+                    //Set both the form and text field to be not vissible
                     finalsubmit.style.display = "none";
                     finaltext.style.display = "none";
 
+                    //Select setting that is double clicked and has the tag "edit"
                     document.querySelectorAll("#edit").forEach(function(node){
                         node.ondblclick = function(){
+                            //Make the form submit button visible
                             finalsubmit.style.display = "block";
 
+                            //Setup the input text field
                             var val=this.innerHTML;
                             var input=document.createElement("input");
                             input.value=val;
 
+                            //Set changed setting equal to the newly inputted value
+                            //and update the form text field to store the changed values
                             input.onblur=function(){
                                 var val=this.value;
                                 this.parentNode.innerHTML=val;
@@ -109,7 +142,6 @@
 
                                 var parsed = JSON.stringify(dict);
                                 finaltext.value = parsed;
-
                             }
 
                             this.innerHTML="";
@@ -117,18 +149,23 @@
                             input.focus();
                         }
                     });
-
                 </script>
 
-
                 <?php
+                    //If the form has been submitted, submit the changes to the database
                     if($_SERVER["REQUEST_METHOD"] === "POST") {
+                        //Dictionary containing the new settings values
                         $changes = json_decode($_POST['finaltext']);
+
+                        //array containing only the changed setting's names
                         $keys = [];
+                        //array contaiing only the changed setting's values
                         $values = [];
 
                         $i = 0;
                         foreach($changes as $key=>$value) {
+                            //only add setting to the aforementioned array
+                            // when its value has been changed
                             if($value != 0 || $value != ""){
                                 $keys[$i] = $key;
                                 $values[$i] = $value;
@@ -136,6 +173,9 @@
                             }
                         }
 
+                        //TODO sanitize data
+
+                        //send update request to the database
                         $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
                     }
                 ?>

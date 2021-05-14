@@ -76,8 +76,6 @@ class Settings
 
         //$select = $builder->generateSelectClause(['cpi' => 't1']);
 
-
-
         $sql = "UPDATE Company SET ";
         for($i = 0; $i < count($collumns); $i++){
             if($i != count($collumns) - 1) {
