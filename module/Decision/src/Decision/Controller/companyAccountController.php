@@ -22,10 +22,6 @@ class companyaccountController extends AbstractActionController
     }
 
 
-
-
-
-
     public function dummyAction(){
         return new ViewModel();
     }
@@ -46,13 +42,6 @@ class companyaccountController extends AbstractActionController
     public function editVacancyAction() {
         return new ViewModel();
     }
-
-//    public function createVacancyAction() {
-//        $companyService = $this->getCompanyService();
-//        $companyForm = $companyService->getJobFormCompany();
-//
-//        return new ViewModel();
-//    }
 
 
     /**

@@ -40,9 +40,8 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
 
     /**
      * Companies sessions
-     * TODO: check if mappedby companyUser is fine
      *
-     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="CompanyUser")
+     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="company")
      */
     protected $sessions;
 
@@ -74,6 +73,16 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      * @return int
      */
     public function getLidnr()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the id.
+     *
+     * @return int
+     */
+    public function getId()
     {
         return $this->id;
     }

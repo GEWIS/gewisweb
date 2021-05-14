@@ -23,6 +23,7 @@ class AuthenticationService extends ZendAuthService
             $user = $user->getLidnr();
         }
         $this->identity = $mapper->findByLidnr($user);
+
         return $this->identity;
     }
 }
