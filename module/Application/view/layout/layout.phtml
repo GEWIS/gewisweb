@@ -39,7 +39,8 @@
 
 <?= $this->partial('partial/footer.phtml') ?>
 
-<?= $this->inlineScript() ?>
+<?= $this->inlineScript()
+        ->prependFile($this->basePath() . '/js/navbar-submenu.js'); ?>
 <script>
     <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
     URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
