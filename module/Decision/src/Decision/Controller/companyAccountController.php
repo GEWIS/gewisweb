@@ -47,7 +47,6 @@ class companyaccountController extends AbstractActionController
     /**
      * Action that allows adding a job
      *
-     *
      */
     public function createVacancyAction()
     {
@@ -58,13 +57,15 @@ class companyaccountController extends AbstractActionController
         // Get parameters
 //        $companyName = $this->params('slugCompanyName');
 //        $packageId = $this->params('packageId');
-        $companyName = 'TestA';
-        $packageId = 2;
+
         //$member = $this->identity();
 
+//        $company = $this->identity()->getMember();
+
+        $companyName = 'TestA';
+        $packageId = 1;
         // Handle incoming form results
         $request = $this->getRequest();
-
 
 
         if ($request->isPost()) {
