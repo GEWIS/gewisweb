@@ -13,7 +13,7 @@ class companyaccountController extends AbstractActionController
     public function indexAction()
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-        $company = "Sony";
+        $company = "Phillips";
 
         return new ViewModel([
             //fetch the active vacancies of the logged in company
@@ -29,9 +29,25 @@ class companyaccountController extends AbstractActionController
     public function profileAction() {
         return new ViewModel();
     }
-    public function settingsAction() {
-        return new ViewModel();
+
+
+    public function test(){
+        return "test";
     }
+
+    public function settingsAction() {
+        $company = "Phillips";
+        $companyInfo = $this->getSettingsService()->getCompanyInfo($company);
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyInfo[0]->getId());
+
+        return new ViewModel([
+            'companyPackageInfo' => $companyPackageInfo,
+            'companyInfo'  => $companyInfo,
+            'settingsService' => $this->getSettingsService()
+        ]);
+    }
+
+
 
     public function vacanciesAction(){
         return new ViewModel();
@@ -55,7 +71,7 @@ class companyaccountController extends AbstractActionController
         // Get parameters
 //        $companyName = $this->params('slugCompanyName');
 //        $packageId = $this->params('packageId');
-        $companyName = 'Daf';
+        $companyName = 'Phillips';
         $packageId = 2;
 
 
@@ -124,6 +140,16 @@ class companyaccountController extends AbstractActionController
     protected function getCompanyService()
     {
         return $this->getServiceLocator()->get('company_service_company');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return Decision\Service\Settings
+     */
+    protected function getSettingsService()
+    {
+        return $this->getServiceLocator()->get('decision_service_settings');
     }
 
     /**

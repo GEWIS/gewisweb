@@ -1,0 +1,147 @@
+<?php
+
+
+//echo var_dump($companyPackageInfo);
+?>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+                <?php
+                $now = new DateTime();
+                $diff = $now->diff($companyPackageInfo[0]->getExpires());
+                ?>
+
+                <?php if ($diff->m === 0): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <strong><?= $this->translate("Vacancy package will expire within one month!")?></strong>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <h1><?= $companyInfo[0]->getName() ?></h1>
+                <h2><?= "Account status" ?></h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <th><?= $this->translate('Highlight credits') ?></th>
+                        <td><?= $companyInfo[0]->getHighlightCredits() ?></td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('Banner credits') ?></th>
+                        <td><?= $companyInfo[0]->getBannerCredits()  ?></td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('Contract number vacancy package') ?></th>
+                        <td><?= "empty"  ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('Email subscription') ?></th>
+                        <td><?= "empty"  ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $this->translate('End date of membership') ?></th>
+                        <td><?= $companyPackageInfo[0]->getExpires()->format('l j F Y')?></td>
+                    </tr>
+                </table>
+
+                <h2>Personal information (double click to edit)</h2>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th><?= $this->translate('Email') ?></th>
+                            <td id="edit" name="email"><?= $companyInfo[0]->getEmail()?></td>
+                        </tr>
+                        </tr>
+                        <tr>
+                            <th><?= $this->translate('Country') ?></th>
+                            <td name="country"><?= "empty"  ?></td>
+                        </tr>
+                        <tr>
+                            <th><?= $this->translate('Street and number') ?></th>
+                            <td id="edit" name="address"><?= $companyInfo[0]->getAddress()  ?></td>
+                        </tr>
+                        <tr>
+                            <th><?= $this->translate('City and postal code') ?></th>
+                            <td name="postalcode"><?= "empty" ?></td>
+                        </tr>
+                        <tr>
+                            <th><?= $this->translate('Phone number') ?></th>
+                            <td id="edit" name="phone"><?= $companyInfo[0]->getPhone() ?></td>
+                        </tr>
+                    </table>
+
+
+
+
+                <form id = "finalsubmit" name = "finalsubmit" method="post">
+                    <input type="text" id="finaltext" name="finaltext" value="">
+                    <input type="submit" value="Safe changes">
+                </form>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                <script>
+                    var dict = {email: "", address: "", phone: 0};
+
+                    var finalsubmit = document.getElementById("finalsubmit");
+                    var finaltext = document.getElementById("finaltext");
+                    finalsubmit.style.display = "none";
+                    finaltext.style.display = "none";
+
+                    document.querySelectorAll("#edit").forEach(function(node){
+                        node.ondblclick = function(){
+                            finalsubmit.style.display = "block";
+
+                            var val=this.innerHTML;
+                            var input=document.createElement("input");
+                            input.value=val;
+
+                            input.onblur=function(){
+                                var val=this.value;
+                                this.parentNode.innerHTML=val;
+                                dict[node.getAttribute("name")] = val;
+                                console.log(dict);
+
+                                var parsed = JSON.stringify(dict);
+                                finaltext.value = parsed;
+
+                            }
+
+                            this.innerHTML="";
+                            this.appendChild(input);
+                            input.focus();
+                        }
+                    });
+
+                </script>
+
+
+                <?php
+                    if($_SERVER["REQUEST_METHOD"] === "POST") {
+                        $changes = json_decode($_POST['finaltext']);
+                        $keys = [];
+                        $values = [];
+
+                        $i = 0;
+                        foreach($changes as $key=>$value) {
+                            if($value != 0 || $value != ""){
+                                $keys[$i] = $key;
+                                $values[$i] = $value;
+                                $i++;
+                            }
+                        }
+
+                        $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+
