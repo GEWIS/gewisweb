@@ -6,6 +6,8 @@ help:
 		@echo "rundev"
 		@echo "updatecomposer"
 		@echo "updatepackage"
+		@echo "updatecss"
+		@echo "updateglide"
 		@echo "build"
 		@echo "buildprod"
 		@echo "builddev"
@@ -13,7 +15,7 @@ help:
 		@echo "push"
 		@echo "pushprod"
 		@echo "pushdev"
-		@echo "update = updatecomposer updatepackage"
+		@echo "update = updatecomposer updatepackage updatecss updateglide"
 		@echo "all = build login push"
 		@echo "prod = buildprod login pushprod"
 		@echo "dev = builddev login pushdev"
@@ -29,7 +31,7 @@ runprodtest: buildprod
 rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
-update: rundev updatecomposer updatepackage updatecss
+update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
 updatecomposer:
@@ -46,17 +48,26 @@ updatecss:
 		@docker-compose exec web npm run scss
 		@docker-compose exec -T web cat public/css/gewis-theme.css > public/css/gewis-theme.css
 
+updateglide:
+		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+		@docker-compose exec glide php composer-setup.php
+		@docker-compose exec glide php -r "unlink('composer-setup.php');"
+		@docker-compose exec web php composer.phar selfupdate
+		@docker-compose exec -T web cat composer.phar > composer.phar
+		@docker-compose exec glide php composer.phar update
+		@docker-compose exec -T glide cat composer.lock > docker/glide/composer.lock
+
 all: build login push
 
 prod: buildprod login pushprod
 
 dev: builddev login pushdev
 
-build: buildweb buildnginx
+build: buildweb buildglide buildnginx
 
-buildprod: buildwebprod buildnginx
+buildprod: buildwebprod buildglide buildnginx
 
-builddev: buildwebdev buildnginx
+builddev: buildwebdev buildglide buildnginx
 
 buildweb: buildwebprod buildwebdev
 
@@ -66,17 +77,20 @@ buildwebprod:
 buildwebdev:
 		@docker build -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
 
+buildglide:
+		@docker build -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
+
 buildnginx:
 		@docker build -t web.docker-registry.gewis.nl/gewisweb_nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
 login:
 		@docker login web.docker-registry.gewis.nl
 
-push: pushweb pushnginx
+push: pushweb pushglide pushnginx
 
-pushprod: pushwebprod pushnginx
+pushprod: pushwebprod pushglide pushnginx
 
-pushdev: pushwebdev pushnginx
+pushdev: pushwebdev pushglide pushnginx
 
 pushweb: pushwebprod pushwebdev
 
@@ -85,6 +99,9 @@ pushwebprod:
 
 pushwebdev:
 		@docker push web.docker-registry.gewis.nl/gewisweb_web:development
+
+pushglide:
+		@docker push web.docker-registry.gewis.nl/gewisweb_glide:latest
 
 pushnginx:
 		@docker push web.docker-registry.gewis.nl/gewisweb_nginx:latest

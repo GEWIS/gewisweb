@@ -34,6 +34,7 @@ data/keys/jwt-key
 data/keys/jwt-key.pub
 data/logs/*
 data/mail/*
+docker/glide/
 docker/nginx/
 Dockerfile
 docker-compose.*

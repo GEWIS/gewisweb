@@ -9,21 +9,25 @@ services:
         #            - NGINX_REQUIRE_AUTH=
         depends_on:
             - web
+            - glide
         volumes:
             - gewisweb_public:/code/public:ro
+            - gewisweb_glide_public:/glide/public:ro
             - gewisweb_logs:/etc/nginx/logs:rw
         networks:
             - gewisweb_network
         ports:
             - "9200:9200"
+            - "9201:9201"
         restart: unless-stopped
-        stop_grace_period: 30s
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:production
         env_file:
             - .env
 #        environment:
 #            - APP_ENV=
+#            - GLIDE_HOST=
+#            - GLIDE_KEY=
 #            - DOCKER_GOOGLE_API_KEY=
 #            - DOCKER_GOOGLE_CALENDAR_KEY=
 #            - DOCKER_DB_HOST=
@@ -36,16 +40,25 @@ services:
 #            - DOCKER_DB2_USERNAME=
 #            - DOCKER_DB2_PASSWORD=
 #            - DOCKER_DB2_DATABASE=
-        depends_on:
-            - postfix
-            - memcached
         volumes:
             - gewisweb_data:/code/data:rw
             - gewisweb_public:/code/public:rw
         networks:
             - gewisweb_network
         restart: unless-stopped
-        stop_grace_period: 90s
+    glide:
+        image: web.docker-registry.gewis.nl/gewisweb_glide:latest
+        env_file:
+            - .env
+#        environment:
+#            - GLIDE_HOST=
+#            - GLIDE_KEY=
+        volumes:
+            - gewisweb_glide_public:/glide/public:rw
+            - gewisweb_public:/code/public:rw
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
     postfix:
         image: juanluisbaptiste/postfix
         env_file:
@@ -59,18 +72,17 @@ services:
         networks:
             - gewisweb_network
         restart: unless-stopped
-        stop_grace_period: 90s
     memcached:
         image: memcached
         entrypoint: ['memcached', '-m 256']
         networks:
             - gewisweb_network
         restart: unless-stopped
-        stop_grace_period: 30s
 
 volumes:
     gewisweb_data:
     gewisweb_public:
+    gewisweb_glide_public:
     gewisweb_logs:
 
 networks:

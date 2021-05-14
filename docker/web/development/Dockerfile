@@ -1,8 +1,7 @@
 FROM php:5.6-fpm as gewisweb_web_development
 
-RUN apt-get update && apt-get upgrade -y
-
-RUN apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
         cron \
         git \
         libfreetype6-dev \
@@ -14,7 +13,8 @@ RUN apt-get install -y \
         libpq-dev \
         libxml2-dev \
         unzip \
-        zlib1g-dev
+        zlib1g-dev \
+    && apt-get upgrade -y
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \

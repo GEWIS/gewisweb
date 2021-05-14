@@ -10,7 +10,6 @@ services:
         networks:
             - gewisweb_network
         restart: unless-stopped
-        stop_grace_period: 10s
     myadmin:
         image: phpmyadmin/phpmyadmin:latest
         env_file:
@@ -22,12 +21,11 @@ services:
         ports:
             - "8080:80"
         restart: unless-stopped
-        stop_grace_period: 10s
     nginx:
         build: docker/nginx
         ports:
             - "80:9200"
-        stop_grace_period: 10s
+            - "81:9201"
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:development
         build:
@@ -35,11 +33,8 @@ services:
             context: .
         depends_on:
             - mysql
-        stop_grace_period: 10s
-    postfix:
-        stop_grace_period: 10s
-    memcached:
-        stop_grace_period: 10s
+    glide:
+        build: docker/glide
 
 volumes:
     gewisweb_mysql:

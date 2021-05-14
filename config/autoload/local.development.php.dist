@@ -44,7 +44,7 @@ return [
     'filebrowser_folder' => getcwd() . '/public/',
 
     'glide' => [
-        'base_url' => '',
-        'signing_key' => ''
+        'base_url' => getenv('GLIDE_HOST'),
+        'signing_key' => getenv('GLIDE_KEY')
     ]
 ];
