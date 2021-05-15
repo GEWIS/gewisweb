@@ -99,6 +99,22 @@ class Job
      */
     protected $timestamp;
 
+
+
+    /**
+     * The job's start date.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $startdate;
+
+    /**
+     * The job's end date.
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $enddate;
+
     /**
      * The job's language.
      *
@@ -135,12 +151,95 @@ class Job
     protected $labels;
 
     /**
+     * The type of hours.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $hours;
+
+    /**
+     * The sectors of the company
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $sectors;
+
+
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStartdate()
+    {
+        return $this->startdate;
+    }
+
+    /**
+     * @param mixed $startdate
+     */
+    public function setStartdate($startdate)
+    {
+        $this->startdate = $startdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnddate()
+    {
+        return $this->enddate;
+    }
+
+    /**
+     * @param mixed $enddate
+     */
+    public function setEnddate($enddate)
+    {
+        $this->enddate = $enddate;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getHours()
+    {
+        return $this->hours;
+    }
+
+    /**
+     * @param mixed $hours
+     */
+    public function setHours($hours)
+    {
+        $this->hours = $hours;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSectors()
+    {
+        return $this->sectors;
+    }
+
+    /**
+     * @param mixed $sectors
+     */
+    public function setSectors($sectors)
+    {
+        $this->sectors = $sectors;
+    }
+
 
     /**
      * Get's the id

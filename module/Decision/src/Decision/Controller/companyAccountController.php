@@ -90,11 +90,7 @@ class companyaccountController extends AbstractActionController
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/editPackage/addJob',
-                [
-                    'slugCompanyName' => $companyName,
-                    'packageId' => $packageId
-                ]
+                'companyaccount/vacancies'
             )
         );
 

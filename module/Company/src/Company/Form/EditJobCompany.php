@@ -176,6 +176,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'required' => false,
             ]);
 
+            $filter->add([
+                'name' => 'hours',
+                'required' => true,
+            ]);
+
 //            $filter->add([
 //                'name' => 'active',
 //                'required' => false,
