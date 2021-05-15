@@ -54,16 +54,16 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobFormCompany();
 
-        // Get parameters
-//        $companyName = $this->params('slugCompanyName');
-//        $packageId = $this->params('packageId');
 
-        //$member = $this->identity();
-
-//        $company = $this->identity()->getMember();
-
-        $companyName = 'TestA';
-        $packageId = 1;
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+        $packageId = $company->getJobPackageId();
+        if($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You do not have a package to create vacancies.')
+            );
+        }
         // Handle incoming form results
         $request = $this->getRequest();
 

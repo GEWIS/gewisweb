@@ -434,6 +434,17 @@ class Company // implements ArrayHydrator (for zend2 form)
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
     }
 
+    public function getJobPackageId() {
+        $packages = $this->getPackages()->toArray();
+        foreach ($packages as &$value) {
+            if ($value->getType() == "job") {
+                return $value->getId();
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Returns the number of expired packages
      *
