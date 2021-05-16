@@ -79,7 +79,7 @@ class companyaccountController extends AbstractActionController
             if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'companyAccount/vacancies'
+                    'companyaccount/vacancies'
                 );
             }
         }
