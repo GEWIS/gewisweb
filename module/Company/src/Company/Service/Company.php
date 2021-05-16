@@ -687,7 +687,7 @@ class Company extends AbstractACLService
             $jobs[$lang] = $job;
         }
 
-        return $this->saveJobData("", $jobs, $data, $files);
+        return $this->saveJobDataCompany("", $jobs, $data, $files);
     }
 
 
@@ -766,6 +766,84 @@ class Company extends AbstractACLService
 
         return true;
     }
+
+    /**
+     * Checks if the data is valid, and if it is, saves the Job
+     *
+     * @param int|string $languageNeutralId Identifier of the Job to save
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     * @param array $files The (new) files to save
+     *
+     * @return bool
+     */
+    public function saveJobDataCompany($languageNeutralId, $jobs, $data, $files)
+    {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit jobs')
+            );
+        }
+
+        $jobForm = $this->getJobFormCompany();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
+        $jobForm->setCurrentSlug($data['slugName']);
+        $jobForm->bind($jobs);
+        $jobForm->setData($mergedData);
+
+        if (!$jobForm->isValid()) {
+            return false;
+        }
+        $id = -1;
+
+        $labelIds = $data['labels'];
+        if (is_null($labelIds)) {
+            $labelIds = [];
+        }
+
+        foreach ($jobs as $lang => $job) {
+            $file = $files['jobs'][$lang]['attachment_file'];
+
+            if ($file !== null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+                $oldPath = $job->getAttachment();
+
+                try {
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                } catch (\Exception $e) {
+                    return false;
+                }
+
+                if (!is_null($oldPath) && $oldPath != $newPath) {
+                    $this->getFileStorageService()->removeFile($oldPath);
+                }
+
+                $job->setAttachment($newPath);
+            }
+
+            $job->setTimeStamp(new \DateTime());
+            $job->setStartingDate(new \DateTime($data['startingDate']));
+            $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
+            $this->getJobMapper()->persist($job);
+            $this->saveJob();
+
+            $mapper = $this->getLabelMapper();
+            $lang = $job->getLanguage();
+            // Contains language specific labels
+            $labelsLangBased = [];
+            foreach ($labelIds as $labelId) {
+                $label = $mapper->findLabelById($labelId);
+                $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
+            }
+            $this->setLabelsForJob($job, $labelsLangBased);
+        }
+
+        return true;
+    }
+
 
     /**
      * @param Job $job

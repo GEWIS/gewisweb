@@ -584,16 +584,16 @@ class Job
     }
 
 
-//    // For zend2 forms
-//    public function getArrayCopy()
-//    {
-//        return ['id' => $this->id,
-//            'startingDate' => $this->getStartingDate()->format('Y-m-d'),];
-//    }
-//
-//    public function exchangeArray($data)
-//    {
-//        $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
-//        $this->setStartingDate((isset($data['startingDate'])) ? new DateTime($data['startingDate']) : $this->getStartingDate());
-//    }
+    // For zend2 forms
+    public function getArrayCopy()
+    {
+        return ['id' => $this->id,
+            'startingDate' => $this->getStartingDate()->format('Y-m-d'),];
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
+        $this->setStartingDate((isset($data['startingDate'])) ? new DateTime($data['startingDate']) : $this->getStartingDate());
+    }
 }
