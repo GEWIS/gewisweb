@@ -825,7 +825,13 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
-            $job->setStartingDate(new \DateTime($data['startingDate']));
+            $job->setStartingDate(new \DateTime($data['jobs'][$lang]['startingDate']));
+            print_r($data['jobs'][$lang]['sectors']);
+            $job->setSectors($data['jobs'][$lang]['sectors']);
+
+            // set manually as it does not get recognised from the jobform
+            $job->setSectors($data['sectors']);
+
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
