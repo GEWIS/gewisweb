@@ -84,13 +84,11 @@ class companyaccountController extends AbstractActionController
             }
         }
 
-        // TODO: change redirect after company has been created.
-
         // Initialize the form
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'companyaccount/vacancies'
+                'companyaccount/vacancies/createvacancy'
             )
         );
 

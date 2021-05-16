@@ -120,6 +120,34 @@ class JobFieldset extends Fieldset
             ],
         ]);
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'hours',
+            'options' => array(
+                'label' => 'Hours',
+                'value_options' => array(
+                    '0' => 'Part time',
+                    '1' => 'Full time',
+                ),
+            )
+        ));
+
+
+        $this->add([
+            'name' => 'startingDate',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => [
+                'required' => 'require',
+                'step' => '1',
+            ],
+            'options' => [
+                'label' => $translator->translate('Starting date'),
+            ],
+        ]);
+
+
+
+
         $this->add([
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
@@ -141,6 +169,16 @@ class JobFieldset extends Fieldset
                 'name',
                 $this->translator->translate('Category'),
                 'category',
+                $lang
+            )
+        );
+
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $this->translator->translate('Sectors'),
+                'sectors',
                 $lang
             )
         );

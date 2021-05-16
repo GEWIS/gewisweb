@@ -52,6 +52,7 @@ class Job
 
     /**
      * The location(url) of an attachment describing the job.
+     * The location(url) of an attachment describing the job.
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -106,14 +107,7 @@ class Job
      *
      * @ORM\Column(type="date")
      */
-    protected $startdate;
-
-    /**
-     * The job's end date.
-     *
-     * @ORM\Column(type="date")
-     */
-    protected $enddate;
+    protected $startingDate;
 
     /**
      * The job's language.
@@ -158,9 +152,9 @@ class Job
     protected $hours;
 
     /**
-     * The sectors of the company
+     * The job's category.
      *
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
      */
     protected $sectors;
 
@@ -177,34 +171,19 @@ class Job
     /**
      * @return mixed
      */
-    public function getStartdate()
+    public function getStartingDate()
     {
-        return $this->startdate;
+        return $this->startingDate;
     }
 
     /**
-     * @param mixed $startdate
+     * @param mixed $startingDate
      */
-    public function setStartdate($startdate)
+    public function setStartingDate($startingDate)
     {
-        $this->startdate = $startdate;
+        $this->startingDate = $startingDate;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEnddate()
-    {
-        return $this->enddate;
-    }
-
-    /**
-     * @param mixed $enddate
-     */
-    public function setEnddate($enddate)
-    {
-        $this->enddate = $enddate;
-    }
 
 
     /**
@@ -603,4 +582,18 @@ class Job
     {
         $this->location = $location;
     }
+
+
+//    // For zend2 forms
+//    public function getArrayCopy()
+//    {
+//        return ['id' => $this->id,
+//            'startingDate' => $this->getStartingDate()->format('Y-m-d'),];
+//    }
+//
+//    public function exchangeArray($data)
+//    {
+//        $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
+//        $this->setStartingDate((isset($data['startingDate'])) ? new DateTime($data['startingDate']) : $this->getStartingDate());
+//    }
 }

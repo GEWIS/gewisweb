@@ -22,6 +22,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $this->translator = $translator;
         $this->mapper = $mapper;
 
+
         $this->setHydrator($hydrator);
         $this->setAttribute('method', 'post');
 
