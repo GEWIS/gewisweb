@@ -216,6 +216,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'required' => false,
             ]);
 
+            $filter->add([
+                'name' => 'sectors',
+                'required' => false,
+            ]);
+
             $rootFilter->add($filter, $lang);
         }
 

@@ -684,6 +684,7 @@ class Company extends AbstractACLService
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
+            $job->setSectors($data['jobs'][$lang]['sectors']);
             $jobs[$lang] = $job;
         }
 
@@ -826,11 +827,11 @@ class Company extends AbstractACLService
 
             $job->setTimeStamp(new \DateTime());
             $job->setStartingDate(new \DateTime($data['jobs'][$lang]['startingDate']));
-            print_r($data['jobs'][$lang]['sectors']);
-            $job->setSectors($data['jobs'][$lang]['sectors']);
 
-            // set manually as it does not get recognised from the jobform
-            $job->setSectors($data['sectors']);
+            // Hardcoded because it doesn't get set in the form
+            $job->exchangeArray($job->getSectors());
+
+
 
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);

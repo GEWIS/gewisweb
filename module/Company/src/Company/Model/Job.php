@@ -583,17 +583,29 @@ class Job
         $this->location = $location;
     }
 
-
-    // For zend2 forms
-    public function getArrayCopy()
+    /**
+     * Updates the variable if the first argument is set, Otherwise, it will
+     * use the second argument.
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
+    private function updateIfSet($object, $default)
     {
-        return ['id' => $this->id,
-            'startingDate' => $this->getStartingDate()->format('Y-m-d'),];
+        if (isset($object)) {
+            return $object;
+        }
+
+        return $default;
     }
 
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
     public function exchangeArray($data)
     {
-        $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
-        $this->setStartingDate((isset($data['startingDate'])) ? new DateTime($data['startingDate']) : $this->getStartingDate());
+        $this->setSectors($this->updateIfSet($data, null));
     }
+
 }
