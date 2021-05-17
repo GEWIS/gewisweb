@@ -133,7 +133,7 @@ class Company extends Mapper
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\Company');
+        return $this->em->getRepository('User\Model\CompanyUser');
     }
 
 }

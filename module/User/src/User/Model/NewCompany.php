@@ -142,4 +142,45 @@ class NewCompany
     {
         return $this->company;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param mixed $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeArray($data)
+    {
+        $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
+    }
+
+    /**
+     * Updates the variable if the first argument is set, Otherwise, it will
+     * use the second argument.
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
+    private function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+
+        return $default;
+    }
 }

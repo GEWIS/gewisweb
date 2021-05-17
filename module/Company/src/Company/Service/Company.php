@@ -589,6 +589,8 @@ class Company extends AbstractACLService
             $companies = $this->insertCompany($data['languages']);
             $company = $companies[0];
             $company->exchangeArray($data);
+            $newCompany = $companies[1];
+            $newCompany->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
 

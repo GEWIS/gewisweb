@@ -78,6 +78,8 @@ class User extends AbstractAclService
             $companyUser = new CompanyUserModel($newCompany);
         }
 
+        print_r($companyUser->getLidnr());
+
         $companyUser->setPassword($bcrypt->create($data['password']));
 
         // this will also save a user with a lost password
@@ -240,12 +242,13 @@ class User extends AbstractAclService
 
 
         // create new activation
-        $newUser = new NewCompanyModel($company);
+        $newUser = new NewCompanyModel($company->getCompanyAccount());
         $newUser->setCode($newUser->generateCode());
+        $newUser->setContactEmail($data['email']);
 
         $this->getNewCompanyMapper()->persist($newUser);
 
-        $this->getEmailService()->sendCompanyPasswordLostMail($newUser, $company);
+        $this->getEmailService()->sendCompanyPasswordLostMail($newUser, $company->getCompanyAccount());
 
         return $company;
     }
