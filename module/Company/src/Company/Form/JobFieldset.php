@@ -146,7 +146,15 @@ class JobFieldset extends Fieldset
         ]);
 
 
-
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $this->translator->translate('Sectors'),
+                'sectors',
+                $this->translator->getTranslator()->getLocale()
+            )
+        );
 
         $this->add([
             'name' => 'description',
@@ -173,15 +181,15 @@ class JobFieldset extends Fieldset
             )
         );
 
-        $this->add(
-            $this->mapper->createObjectSelectConfig(
-                'Company\Model\JobSector',
-                'name',
-                $this->translator->translate('Sectors'),
-                'sectors',
-                $lang
-            )
-        );
+//        $this->add(
+//            $this->mapper->createObjectSelectConfig(
+//                'Company\Model\JobSector',
+//                'name',
+//                $this->translator->translate('Sectors'),
+//                'sectors',
+//                $lang
+//            )
+//        );
 
         $this->setObject($jc);
     }
