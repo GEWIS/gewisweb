@@ -3,7 +3,7 @@
 namespace User\Model;
 
 use DateTime;
-use Decision\Model\Member;
+use Company\Model\Company;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,6 +44,14 @@ class NewCompany
     protected $time;
 
     /**
+     * User's company
+     *
+     * @ORM\OneToOne(targetEntity="Company\Model\Company")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $company;
+
+    /**
      * Get the company id.
      *
      * @return int
@@ -81,5 +89,31 @@ class NewCompany
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * Constructor.
+     *
+     * We can populate most values from a member model.
+     *
+     * @param Company $company
+     */
+    public function __construct(Company $company = null)
+    {
+        if (null !== $company) {
+            $this->id = $company->getLidnr();
+            $this->contactEmail = $company->getContactEmail();
+            $this->company = $company;
+        }
+    }
+
+    /**
+     * Get the company.
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 }
