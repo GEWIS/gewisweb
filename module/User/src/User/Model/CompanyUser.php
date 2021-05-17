@@ -15,7 +15,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
  * @ORM\Entity
  */
 
-class Company extends Model implements RoleInterface, ResourceInterface
+class CompanyUser extends Model implements RoleInterface, ResourceInterface
 {
     /**
      * The membership number.
@@ -117,6 +117,6 @@ class Company extends Model implements RoleInterface, ResourceInterface
      */
     public function getResourceId()
     {
-        return 'company';
+        return 'companyUser';
     }
 }

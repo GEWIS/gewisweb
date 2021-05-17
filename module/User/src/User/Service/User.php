@@ -11,7 +11,7 @@ use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\NewCompany as NewCompanyModel;
 use User\Model\User as UserModel;
-use User\Model\Company as CompanyModel;
+use User\Model\CompanyUser as CompanyUserModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -75,7 +75,7 @@ class User extends AbstractAclService
         $companyUser = $this->getCompanyMapper()->findById($newCompany->getId());
         if (null === $companyUser) {
             // create a new user from this data, and insert it into the database
-            $companyUser = new CompanyModel($newCompany);
+            $companyUser = new CompanyUserModel($newCompany);
         }
 
         $companyUser->setPassword($bcrypt->create($data['password']));
@@ -295,7 +295,7 @@ class User extends AbstractAclService
      *
      * @param array $data Login data
      *
-     * @return CompanyModel Authenticated company. Null if not authenticated.
+     * @return CompanyUserModel Authenticated company. Null if not authenticated.
      */
     public function companyLogin($data)
     {
