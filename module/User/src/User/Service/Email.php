@@ -4,12 +4,17 @@ namespace User\Service;
 
 use Application\Service\AbstractService;
 
+use User\Mapper\NewCompany;
 use User\Model\NewUser as NewUserModel;
+
+use User\Model\NewCompany as NewCompanyModel;
 
 use Decision\Model\Member as MemberModel;
 
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
+
+use Company\Model\Company as CompanyModel;
 
 class Email extends AbstractService
 {
@@ -46,7 +51,7 @@ class Email extends AbstractService
      * @param NewUserModel $activation
      * @param MemberModel $member
      */
-    public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
+    public function sendPasswordLostMail(NewUserModel $newUser, $member)
     {
         $body = $this->render('user/email/reset', [
             'user' => $newUser,
@@ -61,6 +66,33 @@ class Email extends AbstractService
 
         $message->addFrom($config['from']);
         $message->addTo($newUser->getEmail());
+        $message->setSubject($translator->translate('Password reset code for the GEWIS Website'));
+        $message->setBody($body);
+
+        $this->getTransport()->send($message);
+    }
+
+    /**
+     * Send password lost email.
+     *
+     * @param NewCompany $activation
+     * @param CompanyModel $member
+     */
+    public function sendCompanyPasswordLostMail(NewCompanyModel $newUser, CompanyModel $member)
+    {
+        $body = $this->render('user/email/resetCompany', [
+            'user' => $newUser,
+            'member' => $member
+        ]);
+
+        $translator = $this->getServiceManager()->get('translator');
+
+        $message = new Message();
+
+        $config = $this->getConfig();
+
+        $message->addFrom($config['from']);
+        $message->addTo($member->getContactEmail());
         $message->setSubject($translator->translate('Password reset code for the GEWIS Website'));
         $message->setBody($body);
 

@@ -7,11 +7,11 @@ use DateInterval;
 use DateTime;
 use User\Form\Register as RegisterForm;
 use User\Mapper\User as UserMapper;
+use User\Model\CompanyUser as CompanyUserModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\NewCompany as NewCompanyModel;
 use User\Model\User as UserModel;
-use User\Model\Company as CompanyModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -75,7 +75,7 @@ class User extends AbstractAclService
         $companyUser = $this->getCompanyMapper()->findById($newCompany->getId());
         if (null === $companyUser) {
             // create a new user from this data, and insert it into the database
-            $companyUser = new CompanyModel($newCompany);
+            $companyUser = new CompanyUserModel($newCompany);
         }
 
         $companyUser->setPassword($bcrypt->create($data['password']));
@@ -216,42 +216,38 @@ class User extends AbstractAclService
 
         // get the member
         $data = $form->getData();
-        $user = $this->getCompanyMapper()->findByEmail($data['email']);
-        print_r($user);
+        $company = $this->getCompanyMapper()->findByEmail($data['email']);
 
-        if (is_null($user)) {
-            echo "Test2";
+        #check if the member has a corresponding user.
+//        $user = $this->getCompanyMapper()->findById($member->getLidnr());
+//        echo $user;
+        if (null === $company) {
+            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
+            echo "Company is null";
             return null;
         }
 
-        // check if the member has a corresponding user.
-//        $user = $this->getCompanyMapper()->findById($member->getLidnr());
-//        echo $user;
-//        if (null === $user) {
-//            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
-//
-//            return null;
-//        }
-
-        // Check if the e-mail entered and the e-mail in the database match
-//        if ($user->getEmail() != $data['email']) {
-//            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
-//            return null;
-//        }
+        #Check if the e-mail entered and the e-mail in the database match
+        if ($company->getContactEmail() != $data['email']) {
+            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+            return null;
+        }
 
         // Invalidate all previous password reset codes
         // Makes sure that no double password reset codes are present in the database
-        $this->getNewCompanyMapper()->deleteByCompany($user);
+        $newCompany = $this->getNewCompanyMapper()->findByEmail($data['email']);
+        $this->getNewCompanyMapper()->deleteByCompany($data['email']);
+
 
         // create new activation
-        $newUser = new NewUserModel($user);
-        $newUser->setCode($this->generateCode());
+        $newUser = new NewCompanyModel($company);
+        $newUser->setCode($newUser->generateCode());
 
-        $this->getNewUserMapper()->persist($newUser);
+        $this->getNewCompanyMapper()->persist($newUser);
 
-        $this->getEmailService()->sendPasswordLostMail($newUser, $user);
+        $this->getEmailService()->sendCompanyPasswordLostMail($newUser, $company);
 
-        return $user;
+        return $company;
     }
 
     /**

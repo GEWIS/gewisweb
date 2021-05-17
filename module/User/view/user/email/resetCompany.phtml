@@ -1,0 +1,13 @@
+<?= sprintf($this->translate('Dear %s,'), $member->getContactName()) . "\n" ?>
+
+<?= $this->translate('A password reset was requested for your account.') . "\n" ?>
+
+<?= $this->translate('You can reset your password on the following link:') . "\n" ?>
+
+<?= $this->serverUrl($this->url('user/activate-company', ['code' => $user->getCode()])) . "\n" ?>
+
+<?= $this->translate('Your reset code is:') ?> <?= $user->getCode() . "\n" ?>
+
+<?= $this->translate('Best Regards,') . "\n" ?>
+
+<?= $this->translate('WebCommissie GEWIS') ?>

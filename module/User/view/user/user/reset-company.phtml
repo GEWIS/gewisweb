@@ -4,7 +4,7 @@ $this->headTitle($this->translate('Reset company password'));
 <section class="section">
     <div class="container">
         <?php if (isset($reset) && $reset): ?>
-            <?= sprintf($this->translate('An email has been sent to %s with instructions for resetting your password.'), $this->company->getContactEmail()) ?>
+            <?= sprintf($this->translate('An email has been sent to %s with instructions for resetting your password.'), $this->user->getContactEmail()) ?>
         <?php else: ?>
             <?php
             $form->prepare();

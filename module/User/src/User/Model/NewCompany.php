@@ -98,6 +98,11 @@ class NewCompany
         return $this->id;
     }
 
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
     /**
      * Get the user's email address.
      *

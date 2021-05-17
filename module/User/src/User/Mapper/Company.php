@@ -7,7 +7,7 @@ namespace User\Mapper;
 use Doctrine\ORM\EntityManager;
 use User\Model\CompanyUser;
 use User\Model\NewCompany as NewCompanyModel;
-use User\Model\Company as CompanyModel;
+use Company\Model\Company as CompanyModel;
 
 class Company extends Mapper
 {
@@ -64,13 +64,12 @@ class Company extends Mapper
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
     }
-
     /**
      * Find a company by its email.
      *
-     * @param int $contactEmail company email
+     * @param string $contactEmail company email
      *
-     * @return \User\Model\CompanyUser
+     * @return \Company\Model\Company
      */
     public function findByEmail($contactEmail)
     {
@@ -134,7 +133,7 @@ class Company extends Mapper
      */
     public function getRepository()
     {
-        return $this->em->getRepository('User\Model\CompanyUser');
+        return $this->em->getRepository('Company\Model\Company');
     }
 
 }
