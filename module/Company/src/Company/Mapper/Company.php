@@ -157,6 +157,11 @@ class Company
         return empty($result) ? null : $result[0];
     }
 
+    public function findByEmail($contactEmail)
+    {
+        return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
+    }
+
 
     /**
      * Removes a company.
