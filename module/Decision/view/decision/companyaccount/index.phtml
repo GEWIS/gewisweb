@@ -1,0 +1,109 @@
+<?php
+$member=" ";
+$meetingsCollection=" ";
+$isActive = " ";
+?>
+
+<div class="container">
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Company') ?></h1>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Personal') ?></h2>
+                <div class="grid grid-col-5">
+                    <a href="<?= $this->url('member/self') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-user"></div>
+                        <div class="panel-heading"><?= $this->translate('Profile') ?></div>
+                    </a>
+                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"
+                       class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-lock"></div>
+                        <div class="panel-heading"><?= $this->translate('Change password') ?></div>
+                    </a>
+
+                    <a href="<?= $this->url('user/default', ['action' => 'companyLogout']) ?>"
+                       class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-lock"></div>
+                        <div class="panel-heading"><?= $this->translate('Logout') ?></div>
+                    </a>
+
+                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-cog"></div>
+                        <div class="panel-heading"><?= $this->translate('Settings') ?></div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Company content') ?></h2>
+                <div class="grid grid-col-5">
+                    <a href="<?= $this->url('organ') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-list"></div>
+                        <div class="panel-heading"><?= $this->translate('Vacancies') ?></div>
+                    </a>
+                    <a href="<?= $this->url('decision/files', ['path' => '']) ?>"
+                       class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-list"></div>
+                        <div class="panel-heading"><?= $this->translate('Activities') ?></div>
+                    </a>
+                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-flag"></div>
+                        <div class="panel-heading"><?= $this->translate('Banner') ?></div>
+                    </a>
+                    <a href="<?= $this->url('member/dreamspark') ?>" class="panel panel-image align-middle">
+                        <div class="big-icon fas fa-check"></div>
+                        <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+
+            <?php if ($isActive): ?>
+
+            <?php endif; ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
+
+            <?php endif; ?>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-md-6 mt-2">
+                <h2><?= $this->translate('Active vacancies') ?></h2>
+                <?php if (!is_null($this->upcoming) || True): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><?= $this->translate('Vacancy 1') ?></strong>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+
+                    <hr/>
+                <?php endif; ?>
+
+
+                <hr/>
+
+
+            </div>
+            <?php if ($isActive): ?>
+
+
+            <?php endif; ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
+
+            <?php endif; ?>
+        </div>
+
+    </section>
+</div>

@@ -100,6 +100,7 @@ class User extends Mapper
      */
     public function createUser(UserModel $user, NewUserModel $newUser)
     {
+//        var_dump($this->em->getUnitOfWork());
         $this->em->persist($user);
         $this->em->remove($newUser);
         $this->em->flush();

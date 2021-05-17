@@ -90,6 +90,15 @@ return [
                             ]
                         ]
                     ],
+//                    'reset-company' => [
+//                        'type' => 'Segment',
+//                        'options' => [
+//                            'route' => '[/reset-company]',
+//                            'constraints' => [
+//                                'action' => 'resetCompany',
+//                            ],
+//                        ],
+//                    ],
                 ],
                 'priority' => 100
             ],

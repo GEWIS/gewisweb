@@ -3,6 +3,7 @@
 
 namespace User\Model;
 
+use Company\Model\Company;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -40,9 +41,9 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
 
     /**
      * Companies sessions
-     * TODO: check if mappedby user is fine
+     * TODO: check if mappedby company is fine
      *
-     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="company")
      */
     protected $sessions;
 
@@ -52,12 +53,20 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     // TODO: comments
     public function __construct(NewCompany $newCompany = null)
     {
-
         if (null !== $newCompany) {
             $this->id = $newCompany->getId();
+            $this->companyAccount = $newCompany->getCompany();
             $this->contactEmail = $newCompany->getContactEmail();
         }
     }
+
+    /**
+     * The corresponding member for this user.
+     *
+     * @ORM\OneToOne(targetEntity="Company\Model\Company", fetch="EAGER")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $companyAccount;
 
 
     /**
@@ -101,13 +110,39 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * @return CompanyUser
+     */
+    public function getCompanyAccount()
+    {
+        return $this->companyAccount;
+    }
+
+    /**
+     * @param CompanyUser $companyAccount
+     */
+    public function setCompanyAccount($companyAccount)
+    {
+        $this->companyAccount = $companyAccount;
+    }
+
+    /**
      * Get the company's role ID.
      *
      * @return string
      */
     public function getRoleId()
     {
-        return 'company_' . $this->getLidnr();
+        return 'company_user_' . $this->getLidnr();
+    }
+
+    /**
+     * Get the company role name.
+     *
+     * @return array Role names
+     */
+    public function getRoleNames()
+    {
+        return ["company_user"];
     }
 
     /**
@@ -118,5 +153,14 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     public function getResourceId()
     {
         return 'companyUser';
+    }
+
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeArray($data)
+    {
+        $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
     }
 }

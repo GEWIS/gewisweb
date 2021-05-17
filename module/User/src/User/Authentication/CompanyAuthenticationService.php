@@ -1,8 +1,6 @@
 <?php
 
-
 namespace User\Authentication;
-
 
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 

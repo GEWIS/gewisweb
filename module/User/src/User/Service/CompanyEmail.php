@@ -4,31 +4,26 @@ namespace User\Service;
 
 use Application\Service\AbstractService;
 
-use User\Mapper\NewCompany;
-use User\Model\NewUser as NewUserModel;
+use Company\Model\Company as CompanyModel;
 
-use User\Model\NewCompany as NewCompanyModel;
-
-use Decision\Model\Member as MemberModel;
-
+use User\Model\NewCompany;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
 
-use Company\Model\Company as CompanyModel;
-
-class Email extends AbstractService
+class CompanyEmail extends AbstractService
 {
     /**
      * Send registration email.
      *
-     * @param NewUserModel $newUser
-     * @param MemberModel $member
+     * @param CompanyModel $company
+     * @param NewCompany $newcompany
      */
-    public function sendRegisterEmail(NewUserModel $newUser, MemberModel $member)
+    public function sendActivationEmail(CompanyModel $company, NewCompany $newCompany)
     {
-        $body = $this->render('user/email/register', [
-            'user' => $newUser,
-            'member' => $member
+
+        $body = $this->render('user/email/company-activation.phtml', [
+            'company' => $company,
+            'newcompany' => $newCompany
         ]);
 
         $translator = $this->getServiceManager()->get('translator');
@@ -38,11 +33,12 @@ class Email extends AbstractService
         $config = $this->getConfig();
 
         $message->addFrom($config['from']);
-        $message->addTo($newUser->getEmail());
+        $message->addTo($company->getContactEmail());
         $message->setSubject($translator->translate('Account activation code for the GEWIS Website'));
         $message->setBody($body);
 
         $this->getTransport()->send($message);
+
     }
 
     /**
@@ -51,7 +47,7 @@ class Email extends AbstractService
      * @param NewUserModel $activation
      * @param MemberModel $member
      */
-    public function sendPasswordLostMail(NewUserModel $newUser, $member)
+    /**public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {
         $body = $this->render('user/email/reset', [
             'user' => $newUser,
@@ -70,34 +66,7 @@ class Email extends AbstractService
         $message->setBody($body);
 
         $this->getTransport()->send($message);
-    }
-
-    /**
-     * Send password lost email.
-     *
-     * @param NewCompany $activation
-     * @param CompanyModel $member
-     */
-    public function sendCompanyPasswordLostMail(NewCompanyModel $newUser, CompanyModel $member)
-    {
-        $body = $this->render('user/email/resetCompany', [
-            'user' => $newUser,
-            'member' => $member
-        ]);
-
-        $translator = $this->getServiceManager()->get('translator');
-
-        $message = new Message();
-
-        $config = $this->getConfig();
-
-        $message->addFrom($config['from']);
-        $message->addTo($member->getContactEmail());
-        $message->setSubject($translator->translate('Password reset code for the GEWIS Website'));
-        $message->setBody($body);
-
-        $this->getTransport()->send($message);
-    }
+    }*/
 
     /**
      * Render a template with given variables.

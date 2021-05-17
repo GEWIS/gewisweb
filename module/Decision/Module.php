@@ -51,7 +51,8 @@ class Module
             'invokables' => [
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
-                'decision_service_member' => 'Decision\Service\Member'
+                'decision_service_member' => 'Decision\Service\Member',
+                'decision_service_companyaccount' => 'Decision\Service\CompanyAccount'
             ],
             'factories' => [
                 'decision_mapper_member' => function ($sm) {
@@ -141,6 +142,7 @@ class Module
                     $acl->addResource('authorization');
                     $acl->addResource('files');
                     $acl->addResource('regulations');
+                    $acl->addResource('companyaccount');
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -169,6 +171,9 @@ class Module
 
                     // users are allowed to download the regulations
                     $acl->allow('user', 'regulations', ['list', 'download']);
+
+                    // companies are allowed to view the company panel
+                    $acl->allow('company_user', 'companyaccount', 'view');
 
                     return $acl;
                 },
