@@ -31,8 +31,8 @@ class Session
     /**
      * The company whom created this session.
      *
-     * @ORM\ManyToOne(targetEntity="User\Model\Company", inversedBy="sessions")
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User\Model\CompanyUser", inversedBy="sessions")
+     * @ORM\JoinColumn(name="company_id",referencedColumnName="id")
      */
     protected $company;
 
