@@ -684,7 +684,7 @@ class Company extends AbstractACLService
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
-            $job->setSectors($data['jobs'][$lang]['sectors']);
+//            $job->setSectors($data['jobs'][$lang]['sectors']);
             $jobs[$lang] = $job;
         }
 

@@ -77,6 +77,11 @@ class companyaccountController extends AbstractActionController
             );
 
             if ($job) {
+
+                //Send approval email to admin
+                $email = $this->getDecisionEmail();
+                $email->sendApprovalMail($company);
+
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'companyaccount/vacancies'
@@ -132,5 +137,15 @@ class companyaccountController extends AbstractActionController
     public function getCompanyAccountService()
     {
         return $this->getServiceLocator()->get('decision_service_companyaccount');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return DesicionEmail
+     */
+    protected function getDecisionEmail()
+    {
+        return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
 }

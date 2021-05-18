@@ -164,9 +164,9 @@ class AdminController extends AbstractActionController
                 $request->getFiles()
             );
 
-            //Send approval email to admin
-            $email = $this->getDecisionEmail();
-            $email->sendApprovalMail($company);
+//            //Send approval email to admin
+//            $email = $this->getDecisionEmail();
+//            $email->sendApprovalMail($company);
 
 
             if ($job) {
