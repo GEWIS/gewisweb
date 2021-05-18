@@ -1,5 +1,7 @@
 <?php
-
+$emailIncorrect = False;
+$addressIncorrect = False;
+$phoneIncorrect = False;
 ?>
 
 <section class="section">
@@ -8,14 +10,11 @@
             <div class="col-md-6">
 
                 <?php
-                //TODO make it such that when the experation date is in the past the correct message is
-                // displayed also when starting date has yet to pass
-
                 $now = new DateTime();
                 $diff = $now->diff($companyPackageInfo[0]->getExpires());
 
                 //If vacancy package will expire within one month display notification
-                if ($diff->m === 0 && $diff->d > 0): ?>
+                if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpires() >= $now): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package will expire within one month!")?></strong>
@@ -23,7 +22,9 @@
                 </div>
                 <?php endif; ?>
 
-                <?php if ($diff->d <= 0): ?>
+                <?php
+                //If vacancy package has expired display notification
+                if ($companyPackageInfo[0]->getExpires() < $now): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package has expired, please contact an administrator.")?></strong>
@@ -84,16 +85,8 @@
                         </tr>
                         </tr>
                         <tr>
-                            <th><?= $this->translate('Country') ?></th>
-                            <td name="country"><?= "empty"  ?></td>
-                        </tr>
-                        <tr>
                             <th><?= $this->translate('Street and number') ?></th>
                             <td id="edit" name="address"><?= $companyInfo[0]->getAddress()  ?></td>
-                        </tr>
-                        <tr>
-                            <th><?= $this->translate('City and postal code') ?></th>
-                            <td name="postalcode"><?= "empty" ?></td>
                         </tr>
                         <tr>
                             <th><?= $this->translate('Phone number') ?></th>
@@ -107,9 +100,112 @@
                     <input type="submit" value="Safe changes">
                 </form>
 
+                <?php
+                $changes = [];
+                $correctInput = True;
+
+                //If the form has been submitted, sanitize the data
+                if($_SERVER["REQUEST_METHOD"] === "POST") {
+                    //Dictionary containing the new settings values
+                    $changes = json_decode($_POST['finaltext'], True);
+
+                    //array containing only the changed setting's names
+                    $keys = [];
+                    //array contaiing only the changed setting's values
+                    $values = [];
+
+                    //check in inputted email address is valid
+                    if ((!is_string($changes["email"]) || !filter_var($changes["email"] ,FILTER_VALIDATE_EMAIL )) && $changes["email"] != "") {
+                        $correctInput = False;
+                        $emailIncorrect = True;
+
+                    }
+
+                    //check in inputted address is a string
+                    if (!is_string($changes["address"]) && $changes["address"] != "") {
+                        $correctInput = False;
+                        $addressIncorrect = True;
+
+                    }
+
+                    //check in inputted phone number is an integer
+                    if ((!is_string($changes["phone"]) || !ctype_digit(trim($changes["phone"]))) && $changes["phone"] != 0) {
+                        $correctInput = False;
+                        $phoneIncorrect = True;
+                    }
+                }
+                ?>
+
+                    <?php if ($emailIncorrect): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <strong>Please enter a valid email address!</strong>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if ($addressIncorrect): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <strong>Please enter a valid street and number!</strong>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if ($phoneIncorrect): ?>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <strong>Please enter a valid phone number!</strong>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php
+                        //if the data was inputted correctly, update the database
+                        if($correctInput && $_SERVER["REQUEST_METHOD"] === "POST") {
+                            //trim leading and trailing spaces
+                            if($changes["email"] != 0){
+                                $changes["email"] = trim($changes["email"]);
+                            }
+
+                            if($changes["address"] != 0){
+                                $changes["address"] = trim($changes["address"]);
+                            }
+
+                            //check if values have actually changed
+                            if ($changes["email"] === "" || $changes["email"] === $companyInfo[0]->getEmail()) {
+                                $changes["email"] = 0;
+                            }
+
+                            if ($changes["address"] === "" || $changes["address"] === $companyInfo[0]->getAddress()) {
+                                $changes["address"] = 0;
+                            }
+
+                            if ($changes["phone"] === "" || $changes["phone"] === $companyInfo[0]->getPhone()) {
+                                $changes["phone"] = 0;
+                            }
+
+                            $i = 0;
+                            foreach ($changes as $key => $value) {
+                                //only add setting to the aforementioned array
+                                // when its value has been changed
+                                if ($value != 0 || $value != "") {
+                                    $keys[$i] = $key;
+                                    $values[$i] = $value;
+                                    $i++;
+                                }
+                            }
+
+                            //send update request to the database
+                            if (count($keys > 0)) {
+                                $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
+                            }
+                        }
+                ?>
+
                 <script>
                     //dictionary storing all changed company settings
-                    var dict = {email: "", address: "", phone: 0};
+                    var dict = {email: "", address: 0, phone: ""};
 
                     //the form that will submit the changes
                     var finalsubmit = document.getElementById("finalsubmit");
@@ -150,35 +246,6 @@
                         }
                     });
                 </script>
-
-                <?php
-                    //If the form has been submitted, submit the changes to the database
-                    if($_SERVER["REQUEST_METHOD"] === "POST") {
-                        //Dictionary containing the new settings values
-                        $changes = json_decode($_POST['finaltext']);
-
-                        //array containing only the changed setting's names
-                        $keys = [];
-                        //array contaiing only the changed setting's values
-                        $values = [];
-
-                        $i = 0;
-                        foreach($changes as $key=>$value) {
-                            //only add setting to the aforementioned array
-                            // when its value has been changed
-                            if($value != 0 || $value != ""){
-                                $keys[$i] = $key;
-                                $values[$i] = $value;
-                                $i++;
-                            }
-                        }
-
-                        //TODO sanitize data
-
-                        //send update request to the database
-                        $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
-                    }
-                ?>
             </div>
         </div>
     </div>

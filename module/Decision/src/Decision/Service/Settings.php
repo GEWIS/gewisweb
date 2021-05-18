@@ -24,17 +24,25 @@ class Settings extends AbstractAclService
     }
 
     /**
-     * Get all available company information
+     * Get all available company package information
      *
-     * @param string $cName the name of the company who's information
+     * @param string $cName the name of the company who's package information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array package Information of company
      */
     public function getCompanyPackageInfo($cID){
         return $this->getcompanyAccountMapper()->findCompanyPackageInfo($cID);
     }
 
+    /**
+     * Get all available company package information
+     *
+     * @param string $cName the name of the company who's package information
+     * will be fetched.
+     *
+     * @return array package Information of company
+     */
     public function updateCompanyData($collumns, $values, $company){
         $this->getcompanyAccountMapper()->setCompanyData($collumns, $values, $company);
     }

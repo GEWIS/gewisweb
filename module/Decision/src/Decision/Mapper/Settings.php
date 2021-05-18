@@ -49,12 +49,12 @@ class Settings
     }
 
     /**
-     * Find all available company information
+     * Find all available company package information
      *
-     * @param string $cName the name of the company who's information
+     * @param string $cName the name of the company who's package information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array package Information of company
      */
     public function findCompanyPackageInfo($cID)
     {
@@ -70,11 +70,20 @@ class Settings
     }
 
 
+    /**
+     * Update the database
+     *
+     * @param string $cName the name of the company who's package information
+     * will be fetched.
+     *
+     * @return array package Information of company
+     */
     public function setCompanyData($collumns, $values, $company){
         $builder = new ResultSetMappingBuilder($this->em);
         //$builder->addRootEntityFromClassMetadata('Decision\Model\CompanyInfo', 'cpi');
-
         //$select = $builder->generateSelectClause(['cpi' => 't1']);
+
+        //TODO protect from sql injection
 
         $sql = "UPDATE Company SET ";
         for($i = 0; $i < count($collumns); $i++){
@@ -97,6 +106,9 @@ class Settings
         $query = $this->em->createNativeQuery($sql, $builder);
         $query->getResult();
 
+        if(in_array("email", $collumns)){
+            $i = array_search("email", $collumns);
+            $sql = "UPDATE CompanyUser SET 'email' = '$values[$i]' WHERE name = '$company'";
+        }
     }
-
 }
