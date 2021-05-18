@@ -13,6 +13,15 @@
 
 return [
     /**
+     * Proxy configuration, used when determinining user roles.
+     */
+    'proxy' => [
+        'enabled' => true,
+        'ip_addresses' => [],
+        'header' => 'X-Real-IP',
+    ],
+
+    /**
      * Email configuration.
      */
     'email' => [
