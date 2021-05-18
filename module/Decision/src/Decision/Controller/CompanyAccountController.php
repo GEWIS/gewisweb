@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Zend\Form\Form as Form;
+use Zend\Validator\File\IsImage;
 
 class companyaccountController extends AbstractActionController
 {
@@ -28,6 +29,9 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyName = "TestA";
 
+        // Get Zend validator
+        $image_validator = new IsImage();
+
         // Get form
         $packageForm = $companyService->getPackageForm('banner');
 
@@ -36,26 +40,30 @@ class companyaccountController extends AbstractActionController
         if ($request->isPost()) {
             $files = $request->getFiles();
 
-            if ($companyService->insertPackageForCompanySlugNameByData(
-                $companyName,
-                $request->getPost(),
-                $files['banner'],
-                'banner'
-            )) {
+            if ($image_validator->isValid($files['banner'])) {
+                if ($companyService->insertPackageForCompanySlugNameByData(
+                    $companyName,
+                    $request->getPost(),
+                    $files['banner'],
+                    'banner'
+                )) {
 
-                // Redirect to company page
-                return $this->redirect()->toRoute(
-                    'companyaccount'
-                );
+                    //TODO: make redirect to page the banner is shown
+                    // Redirect to company page
+                    return $this->redirect()->toRoute(
+                        'companyaccount'
+                    );
+                }
+            } else {
+                echo "Is not image";
             }
         }
 
-        //TODO: make redirect to page the banner is shown
         // Initialize the form
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'companyaccount'
+                'companyaccount/bannerupload'
             )
         );
 
