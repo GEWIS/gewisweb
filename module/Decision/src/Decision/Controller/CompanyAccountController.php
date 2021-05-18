@@ -5,6 +5,7 @@ namespace Decision\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Zend\Form\Form as Form;
 
 class companyaccountController extends AbstractActionController
 {
@@ -23,7 +24,16 @@ class companyaccountController extends AbstractActionController
     }
 
     public function banneruploadAction(){
-        return new ViewModel();
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+
+        // Get form
+        $packageForm = $companyService->getPackageForm('banner');
+
+
+        return new ViewModel([
+            'form' => $packageForm
+        ]);
     }
 
     public function dummyAction(){
@@ -157,7 +167,7 @@ class companyaccountController extends AbstractActionController
     }
 
     /**
-     * Get the CompanAccount service.
+     * Get the CompanyAccount service.
      *
      * @return Decision\Service\CompanyAccount
      */

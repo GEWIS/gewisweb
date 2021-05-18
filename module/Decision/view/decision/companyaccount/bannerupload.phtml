@@ -1,4 +1,15 @@
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add banner</h1>
+            </div>
+        </div>
 <?php
-namespace Decision\Mapper;
-?>
-<H1>Upload your banner here</H1>
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => 'banner']);
+echo $this->form()->closeTag($form);?>
+    </div>
+</section>
