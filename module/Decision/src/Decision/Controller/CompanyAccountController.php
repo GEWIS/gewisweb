@@ -42,15 +42,22 @@ class companyaccountController extends AbstractActionController
                 $files['banner'],
                 'banner'
             )) {
-                // Redirect to edit page
+
+                // Redirect to company page
                 return $this->redirect()->toRoute(
-                    'admin_company/editCompany',
-                    ['slugCompanyName' => $companyName],
-                    [],
-                    false
+                    'companyaccount'
                 );
             }
         }
+
+        // Initialize the form
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/editCompany/addPackage',
+                ['slugCompanyName' => $companyName, 'type' => 'banner']
+            )
+        );
 
         return new ViewModel([
             'form' => $packageForm
