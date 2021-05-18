@@ -50,12 +50,12 @@ class companyaccountController extends AbstractActionController
             }
         }
 
+        //TODO: make redirect to page the banner is shown
         // Initialize the form
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/addPackage',
-                ['slugCompanyName' => $companyName, 'type' => 'banner']
+                'companyaccount'
             )
         );
 
