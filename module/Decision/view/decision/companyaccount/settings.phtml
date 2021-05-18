@@ -2,6 +2,9 @@
 $emailIncorrect = False;    //True if invalid email address was entered
 $addressIncorrect = False;  //True if invalid address was entered
 $phoneIncorrect = False;    //True if invalid phone number was entered
+
+
+$emailSubscription = 0;
 ?>
 
 <section class="section">
@@ -51,13 +54,19 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
                         </tr>
                         <tr>
                             <th><?= $this->translate('Email subscription') ?></th>
-                            <td><?= "empty"  ?></td>
-                            <td><input type="checkbox" id="scales" name="scales" checked></td>
+                            <td><?php
+                                if($emailSubscription === 1){
+                                    echo "active";
+                                }else{
+                                    echo "inactive";
+                                }
+                                ?></td>
+                            <td><input type="checkbox" id="subscription" name="subscription" onclick="changed();" <?php if($emailSubscription === 1){echo "checked";}?> ></td>
                         </tr>
                     </table>
 
 
-                <form id = "finalsubmit" name = "finalsubmit" method="post" action="/companyAccount/settings">
+                <form id = "finalsubmit" name = "finalsubmit" method="post" action="/companyAccount/settings" >
                     <input type="text" id="finaltext" name="finaltext" value="">
                     <input type="submit" value="Safe changes">
                 </form>
@@ -125,6 +134,9 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
                     <?php
                         //if the data was inputted correctly, update the database
                         if($correctInput && $_SERVER["REQUEST_METHOD"] === "POST") {
+
+                            //TODO send email subscription to database
+
                             //trim leading and trailing spaces
                             if($changes["email"] != 0){
                                 $changes["email"] = trim($changes["email"]);
@@ -174,8 +186,8 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
                 <!--JavaScript handling the double click to edit functionality-->
                 <script>
                     //dictionary storing all changed company settings
-                    var dict = {email: "", address: 0, phone: ""};
-
+                    var dict = {email: "", address: "", phone: "", subscription: ""};
+                    dict["subscription"] = <?= $emailSubscription ?>;
                     //the form that will submit the changes
                     var finalsubmit = document.getElementById("finalsubmit");
 
@@ -214,6 +226,18 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
                             input.focus();
                         }
                     });
+
+                    function changed(){
+                        finalsubmit.style.display = "block";
+                        if(dict["subscription"] == 0){
+                            dict["subscription"] = 1;
+                        }else{
+                            dict["subscription"] = 0;
+                        }
+
+                        console.log(dict["subscription"]);
+                    }
+
                 </script>
 
                 <h2><?= "Account status" ?></h2>
