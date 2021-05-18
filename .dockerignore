@@ -1,6 +1,7 @@
 *~
 *autoload_classmap.php
 *.gitignore
+*.kate-swp
 *.log
 .*.DS_Store
 .*.sw?

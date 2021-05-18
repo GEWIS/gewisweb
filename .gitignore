@@ -3,6 +3,7 @@ nbproject
 .~lock.*
 .*.sw?
 *~
+*.kate-swp
 .buildpath
 *.DS_Store
 .env
