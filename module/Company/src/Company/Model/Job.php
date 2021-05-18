@@ -105,7 +105,7 @@ class Job
     /**
      * The job's start date.
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $startingDate;
 

@@ -47,6 +47,16 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]
         ]);
 
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobCategory',
+                'name',
+                $this->translator->translate('Category'),
+                'category',
+                'nl'
+            )
+        );
+
 
 
         $this->add([
@@ -64,7 +74,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'name',
                 $this->translator->translate('Sectors'),
                 'sectors',
-                $this->translator->getTranslator()->getLocale()
+                'nl'
             )
         );
 
@@ -95,7 +105,6 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             'name' => 'startingDate',
             'type' => 'Zend\Form\Element\Date',
             'attributes' => [
-                'required' => 'require',
                 'step' => '1',
             ],
             'options' => [
@@ -156,6 +165,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $parentFilter = new InputFilter();
         $rootFilter = new InputFilter();
 
+        // TODO: Set filters correctly
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 

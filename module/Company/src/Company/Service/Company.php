@@ -681,6 +681,7 @@ class Company extends AbstractACLService
         $package = $this->getPackageMapper()->findPackage($packageId);
         $jobs = [];
 
+        $x = 0;
         foreach ($this->getLanguages() as $lang) {
             $job = new JobModel();
             $job->setPackage($package);
@@ -689,12 +690,16 @@ class Company extends AbstractACLService
             $job->setEmail($data['email']);
             $job->setWebsite($data['website']);
             $job->setHours($data['hours']);
-            $job->setSectors($this->getJobMapper()->findAllCategoriesById($data['sectors']));
-//            $job->setCategory($data['category']);
+
+            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
+            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
+            $x++;
 
             $job->setContactName($data['contactName']);
             $job->setPhone($data['phone']);
-            $job->setStartingDate(new \DateTime($data['startingDate']));
+            if ($data['startingDate']!= null) {
+                $job->setStartingDate(new \DateTime($data['startingDate']));
+            }
             $jobs[$lang] = $job;
         }
 
