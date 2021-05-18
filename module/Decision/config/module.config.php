@@ -368,6 +368,16 @@ return [
 
                         ],
                     ],
+                    'bannerupload' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/bannerupload',
+                            'defaults' => [
+                                'action' => 'bannerupload'
+                            ]
+
+                        ],
+                    ],
                     'profile' => [
                         'type' => 'literal',
                         'options' => [

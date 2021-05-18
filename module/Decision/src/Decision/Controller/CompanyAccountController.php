@@ -22,6 +22,10 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
+    public function banneruploadAction(){
+        return new ViewModel();
+    }
+
     public function dummyAction(){
         return new ViewModel();
     }
