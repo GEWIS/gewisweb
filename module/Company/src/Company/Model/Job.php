@@ -211,6 +211,10 @@ class Job
         return $this->sectors;
     }
 
+    public function findSectorsById() {
+
+    }
+
     /**
      * @param mixed $sectors
      */

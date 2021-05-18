@@ -32,11 +32,12 @@
 
     <?= $this->form()->openTag($form) ?>
     <div class="row">
+            </div>
         <?php foreach ($form->getLanguages() as $lang):
             $langDesc = $languages[$lang]
             ?>
             <div class="col-md-6">
-                <h1><?= $this->translate($langDesc); ?></h1>
+                <h1><?= $this->translate($langDesc);?></h1>
                 <?php
                 $fieldset = $form->get('jobs')->get($lang);
                 ?>
@@ -79,19 +80,19 @@
                         <?= $this->formElementErrors($element) ?>
                     </div>
                 </div>
-                <?php
-                $element = $fieldset->get('website');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formInput($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
+<!--                --><?php
+//                $element = $fieldset->get('website');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formInput($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
                 <?php
                 $element = $fieldset->get('category');
                 $element->setAttribute('class', 'form-control');
@@ -105,45 +106,45 @@
                         <?= $this->formElementErrors($element) ?>
                     </div>
                 </div>
-                <?php
-                $element = $fieldset->get('hours');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formElement($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
-                <?php
-                $element = $fieldset->get('sectors');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formElement($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
-                <?php
-                $element = $fieldset->get('startingDate');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formInput($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
+<!--                --><?php
+//                $element = $fieldset->get('hours');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formElement($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--                --><?php
+//                $element = $fieldset->get('sectors');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formElement($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--                --><?php
+//                $element = $fieldset->get('startingDate');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formInput($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
 
                 <?php
                 $element = $fieldset->get('description');
@@ -159,57 +160,32 @@
                         <?= $this->formElementErrors($element) ?>
                     </div>
                 </div>
-                <?php
-                $element = $fieldset->get('active');
-                ?>
+<!--                --><?php
+//                $element = $fieldset->get('contactName');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
 <!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
 <!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
 <!--                        --><?//= $element->getOption('label') ?>
 <!--                    </label>-->
 <!--                    <div class="col-sm-10">-->
-<!--                        --><?//= $this->formCheckbox($element) ?>
+<!--                        --><?//= $this->formInput($element) ?>
 <!--                        --><?//= $this->formElementErrors($element) ?>
 <!--                    </div>-->
 <!--                </div>-->
-                <?php
-                $element = $fieldset->get('contactName');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formInput($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
-                <?php
-                $element = $fieldset->get('phone');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formInput($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
-                <?php
-                $element = $fieldset->get('email');
-                $element->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                        <?= $element->getOption('label') ?>
-                    </label>
-                    <div class="col-sm-10">
-                        <?= $this->formInput($element) ?>
-                        <?= $this->formElementErrors($element) ?>
-                    </div>
-                </div>
+<!--                --><?php
+//                $element = $fieldset->get('phone');
+//                $element->setAttribute('class', 'form-control');
+//                ?>
+<!--                <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--                    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                        --><?//= $element->getOption('label') ?>
+<!--                    </label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        --><?//= $this->formInput($element) ?>
+<!--                        --><?//= $this->formElementErrors($element) ?>
+<!--                    </div>-->
+<!--                </div>-->
                 <?php
                 $element = $fieldset->get('attachment_file');
                 $element->setAttribute('class', 'form-control');
@@ -239,29 +215,123 @@
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
-    </div>
+        <div class="col-md-12">
+            <?php
+            $element = $form->get('email');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('website');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('hours');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formElement($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('sectors');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formElement($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('startingDate');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('contactName');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $form->get('phone');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getOption('label') ?>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formInput($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
 
-    <?php
-    $element = $form->get('labels');
-    ?>
-    <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-            <?= $element->getOption('label') ?>
-        </label>
-        <div class="col-sm-10">
-            <?= $this->formMultiCheckbox($element) ?>
-            <?= $this->formElementErrors($element) ?>
+            <?php
+            $submit = $form->get('submit');
+            $submit->setLabel($this->translate('Save'));
+            $submit->setAttribute('class', 'btn btn-primary pull-right');
+            ?>
+            <div class="form-group">
+                <?= $this->formButton($submit) ?>
+            </div>
         </div>
-    </div>
 
-    <?php
-    $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Save'));
-    $submit->setAttribute('class', 'btn btn-primary pull-right');
-    ?>
-    <div class="form-group">
-        <?= $this->formButton($submit) ?>
-    </div>
+<!--    --><?php
+//    $element = $form->get('labels');
+//    ?>
+<!--    <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--        <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--            --><?//= $element->getOption('label') ?>
+<!--        </label>-->
+<!--        <div class="col-sm-10">-->
+<!--            --><?//= $this->formMultiCheckbox($element) ?>
+<!--            --><?//= $this->formElementErrors($element) ?>
+<!--        </div>-->
+<!--    </div>-->
+
+
 <?= $this->form()->closeTag(); ?>
     </div>
 </section>

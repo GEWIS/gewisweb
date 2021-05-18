@@ -674,6 +674,7 @@ class Company extends AbstractACLService
      * @param array $data
      * @param array $files
      * @return bool
+     * @throws \Exception
      */
     public function createJob($packageId, $data, $files)
     {
@@ -684,7 +685,16 @@ class Company extends AbstractACLService
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
-//            $job->setSectors($data['jobs'][$lang]['sectors']);
+
+            $job->setEmail($data['email']);
+            $job->setWebsite($data['website']);
+            $job->setHours($data['hours']);
+            $job->setSectors($this->getJobMapper()->findAllCategoriesById($data['sectors']));
+//            $job->setCategory($data['category']);
+
+            $job->setContactName($data['contactName']);
+            $job->setPhone($data['phone']);
+            $job->setStartingDate(new \DateTime($data['startingDate']));
             $jobs[$lang] = $job;
         }
 
@@ -715,6 +725,7 @@ class Company extends AbstractACLService
             $data->toArray(),
             $files->toArray()
         );
+
         $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
         $jobForm->setCurrentSlug($data['slugName']);
         $jobForm->bind($jobs);
@@ -826,12 +837,6 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
-            $job->setStartingDate(new \DateTime($data['jobs'][$lang]['startingDate']));
-
-            // Hardcoded because it doesn't get set in the form
-            $job->exchangeArray($job->getSectors());
-
-
 
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);

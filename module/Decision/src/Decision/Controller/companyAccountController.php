@@ -56,7 +56,7 @@ class companyaccountController extends AbstractActionController
 
 
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $companyName = $company->getName();
+//        $companyName = $company->getName();
         $packageId = $company->getJobPackageId();
         if($packageId == null) {
             $translator = $this->getCompanyAccountService()->getTranslator();

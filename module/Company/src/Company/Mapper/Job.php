@@ -181,6 +181,24 @@ class Job
         return $this->em->getRepository('Company\Model\Job');
     }
 
+    public function findAllCategoriesById($id)
+    {
+        $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getSectorsRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobSector');
+    }
+
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [
