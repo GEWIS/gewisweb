@@ -41,19 +41,24 @@ class companyaccountController extends AbstractActionController
             $files = $request->getFiles();
 
             if ($image_validator->isValid($files['banner'])) {
-                if ($companyService->insertPackageForCompanySlugNameByData(
-                    $companyName,
-                    $request->getPost(),
-                    $files['banner'],
-                    'banner'
-                )) {
+                $image = $files['banner'];
 
-                    //TODO: make redirect to page the banner is shown
-                    // Redirect to company page
-                    return $this->redirect()->toRoute(
-                        'companyaccount'
-                    );
+                if ($this->checkImageSize($image)) {
+                    if ($companyService->insertPackageForCompanySlugNameByData(
+                        $companyName,
+                        $request->getPost(),
+                        $image,
+                        'banner'
+                    )) {
+
+                        //TODO: make redirect to page the banner is shown
+                        // Redirect to company page
+                        return $this->redirect()->toRoute(
+                            'companyaccount'
+                        );
+                    }
                 }
+
             } else {
                 echo "Is not image";
             }
@@ -70,6 +75,21 @@ class companyaccountController extends AbstractActionController
         return new ViewModel([
             'form' => $packageForm
         ]);
+    }
+
+    public function checkImageSize($image) {
+        list($image_width, $image_height) = getimagesize($image['tmp_name']);
+
+        if ($image_height != 90 ||
+        $image_width != 728) {
+            echo "The image you submitted does not have the right dimensions\n";
+            echo "The dimensions of your image are " . $image_height . " x " . $image_width . "\n";
+            echo "The dimensions of the image should be 90 x 728";
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
     public function dummyAction(){
