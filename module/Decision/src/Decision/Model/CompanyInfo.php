@@ -109,6 +109,8 @@ class CompanyInfo{
         return $this->phone;
     }
 
+
+
     /**
      * Get the companys's number of highlight credits.
      *

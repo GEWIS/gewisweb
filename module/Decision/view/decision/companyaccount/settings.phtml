@@ -1,7 +1,7 @@
 <?php
-$emailIncorrect = False;
-$addressIncorrect = False;
-$phoneIncorrect = False;
+$emailIncorrect = False;    //True if invalid email address was entered
+$addressIncorrect = False;  //True if invalid address was entered
+$phoneIncorrect = False;    //True if invalid phone number was entered
 ?>
 
 <section class="section">
@@ -33,51 +33,8 @@ $phoneIncorrect = False;
                 <?php endif; ?>
 
                 <h1><?= $companyInfo[0]->getName() ?></h1>
-                <h2><?= "Account status" ?></h2>
-                <table class="table table-bordered">
-                    <tr>
-                        <th><?= $this->translate('Highlight credits') ?></th>
-                        <td><?= $companyInfo[0]->getHighlightCredits() ?></td>
-                    </tr>
-
-                    <tr>
-                        <th><?= $this->translate('Banner credits') ?></th>
-                        <td><?= $companyInfo[0]->getBannerCredits()  ?></td>
-                    </tr>
-
-                    <tr>
-                        <th><?= $this->translate('Contract number vacancy package') ?></th>
-                        <td><?= "empty"  ?></td>
-                    </tr>
-                    <tr>
-                        <th><?= $this->translate('Email subscription') ?></th>
-                        <td><?= "empty"  ?></td>
-                        <td><input type="checkbox" id="scales" name="scales" checked></td>
-                    </tr>
-                    <tr>
-                        <th><?= $this->translate('Start date of membership') ?></th>
-                        <td><?= $companyPackageInfo[0]->getStart()->format('l j F Y')?></td>
-                    </tr>
-                    <tr>
-                        <th><?= $this->translate('End date of membership') ?></th>
-                        <td><?= $companyPackageInfo[0]->getExpires()->format('l j F Y')?></td>
-                    </tr>
-                    <tr>
-                        <th><?= $this->translate('Account status') ?></th>
-                        <td>
-                            <?php if ($diff->d <= 0):?>
-                                inactive
-                            <?php endif; ?>
-
-                            <?php if ($diff->d > 0):?>
-                                active
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                </table>
 
                 <h2>Personal information (double click to edit)</h2>
-
                     <table class="table table-bordered">
                         <tr>
                             <th><?= $this->translate('Email') ?></th>
@@ -92,6 +49,11 @@ $phoneIncorrect = False;
                             <th><?= $this->translate('Phone number') ?></th>
                             <td id="edit" name="phone"><?= $companyInfo[0]->getPhone()  ?></td>
                         </tr>
+                        <tr>
+                            <th><?= $this->translate('Email subscription') ?></th>
+                            <td><?= "empty"  ?></td>
+                            <td><input type="checkbox" id="scales" name="scales" checked></td>
+                        </tr>
                     </table>
 
 
@@ -100,6 +62,7 @@ $phoneIncorrect = False;
                     <input type="submit" value="Safe changes">
                 </form>
 
+                <!--PHP handling the form validation-->
                 <?php
                 $changes = [];
                 $correctInput = True;
@@ -109,10 +72,7 @@ $phoneIncorrect = False;
                     //Dictionary containing the new settings values
                     $changes = json_decode($_POST['finaltext'], True);
 
-                    //array containing only the changed setting's names
-                    $keys = [];
-                    //array contaiing only the changed setting's values
-                    $values = [];
+                    //TODO Use regular expression to check phone or address format
 
                     //check in inputted email address is valid
                     if ((!is_string($changes["email"]) || !filter_var($changes["email"] ,FILTER_VALIDATE_EMAIL )) && $changes["email"] != "") {
@@ -159,7 +119,9 @@ $phoneIncorrect = False;
                             </div>
                         </div>
                     <?php endif; ?>
+                    <br>
 
+                    <!--PHP handling the database interaction-->
                     <?php
                         //if the data was inputted correctly, update the database
                         if($correctInput && $_SERVER["REQUEST_METHOD"] === "POST") {
@@ -181,9 +143,14 @@ $phoneIncorrect = False;
                                 $changes["address"] = 0;
                             }
 
-                            if ($changes["phone"] === "" || $changes["phone"] === $companyInfo[0]->getPhone()) {
+                            if ($changes["phone"] === "" || $changes["phone"] === strval($companyInfo[0]->getPhone())) {
                                 $changes["phone"] = 0;
                             }
+
+                            //array containing only the changed setting's names
+                            $keys = [];
+                            //array containing only the changed setting's values
+                            $values = [];
 
                             $i = 0;
                             foreach ($changes as $key => $value) {
@@ -197,12 +164,13 @@ $phoneIncorrect = False;
                             }
 
                             //send update request to the database
-                            if (count($keys > 0)) {
-                                $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
+                            if (count($keys) > 0) {
+                               $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
                             }
                         }
                 ?>
 
+                <!--JavaScript handling the double click to edit functionality-->
                 <script>
                     //dictionary storing all changed company settings
                     var dict = {email: "", address: 0, phone: ""};
@@ -213,7 +181,7 @@ $phoneIncorrect = False;
                     //the text field containing the changes
                     var finaltext = document.getElementById("finaltext");
 
-                    //Set both the form and text field to be not vissible
+                    //Set both the form and text field to be not visible
                     finalsubmit.style.display = "none";
                     finaltext.style.display = "none";
 
@@ -246,6 +214,65 @@ $phoneIncorrect = False;
                         }
                     });
                 </script>
+
+                <h2><?= "Account status" ?></h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <th><?= $this->translate('Account status') ?></th>
+                        <td>
+                            <?php if ($diff->d <= 0):?>
+                                inactive
+                            <?php endif; ?>
+
+                            <?php if ($diff->d > 0):?>
+                                active
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('Start date of membership') ?></th>
+                        <td><?= $companyPackageInfo[0]->getStart()->format('l j F Y')?></td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('End date of membership') ?></th>
+                        <td><?= $companyPackageInfo[0]->getExpires()->format('l j F Y')?></td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('Contract number vacancy package') ?></th>
+                        <td><?= "empty"  ?></td>
+                    </tr>
+
+                    <tr>
+                        <th><?= $this->translate('Banner') ?></th>
+                        <td><?php
+                            $bannerCredits = $companyInfo[0]->getBannerCredits();
+
+                            //append the relevant text depending on the number of credits
+                            if($bannerCredits === 1){
+                                echo "$bannerCredits day left";
+                            }else{
+                                echo "$bannerCredits days left";
+                            }
+                            ?></td>
+                    </tr>
+
+                    <tr>
+                        <th>Highlight</th>
+                        <td><?php
+                            $highlightCredits = $companyInfo[0]->getHighLightCredits();
+
+                            //append the relevant text depending on the number of credits
+                            if($highlightCredits === 1){
+                                echo "$highlightCredits day left";
+                            }else{
+                                echo "$highlightCredits days left";
+                            }
+                            ?></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -36,6 +36,11 @@ class vacancy{
     protected $active;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $companyName;
+
+    /**
      * Get the company name.
      *
      * @return string

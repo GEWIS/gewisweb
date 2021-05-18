@@ -36,6 +36,11 @@ class CompanyPackageInfo{
      */
     protected $expires;
 
+    /**
+     * @ORM\Column(type="string")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $name;
 
 
     /**

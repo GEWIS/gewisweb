@@ -56,14 +56,14 @@ class Settings
      *
      * @return array package Information of company
      */
-    public function findCompanyPackageInfo($cID)
+    public function findCompanyPackageInfo($company)
     {
         $builder = new ResultSetMappingBuilder($this->em);
         $builder->addRootEntityFromClassMetadata('Decision\Model\CompanyPackageInfo', 'cpi');
 
         $select = $builder->generateSelectClause(['cpi' => 't1']);
         $sql = "SELECT $select FROM CompanyPackage AS t1".
-            " WHERE t1.company_id = $cID";
+            " WHERE t1.name = '$company'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();
@@ -101,14 +101,19 @@ class Settings
                 }
             }
         }
+
         $sql .= " WHERE name = '$company'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         $query->getResult();
 
-        if(in_array("email", $collumns)){
+        if(in_array("email", $collumns)) {
             $i = array_search("email", $collumns);
-            $sql = "UPDATE CompanyUser SET 'email' = '$values[$i]' WHERE name = '$company'";
+            $sql .= "UPDATE CompanyUser SET 'email' = '$values[$i]' WHERE name = '$company'";
         }
+
+        $query = $this->em->createNativeQuery($sql, $builder);
+        $query->getResult();
+
     }
 }

@@ -31,8 +31,8 @@ class Settings extends AbstractAclService
      *
      * @return array package Information of company
      */
-    public function getCompanyPackageInfo($cID){
-        return $this->getcompanyAccountMapper()->findCompanyPackageInfo($cID);
+    public function getCompanyPackageInfo($company){
+        return $this->getcompanyAccountMapper()->findCompanyPackageInfo($company);
     }
 
     /**

@@ -43,7 +43,7 @@ class companyAccount
         $select = $builder->generateSelectClause(['v' => 't1']);
         $sql = "SELECT $select FROM Job AS t1".
         " WHERE t1.active = 1 AND".
-        " t1.name = '$cName'";
+        " t1.companyName = '$cName'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();

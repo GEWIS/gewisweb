@@ -38,7 +38,7 @@ class companyaccountController extends AbstractActionController
     public function settingsAction() {
         $company = "Phillips";
         $companyInfo = $this->getSettingsService()->getCompanyInfo($company);
-        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyInfo[0]->getId());
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($company);
 
         return new ViewModel([
             'companyPackageInfo' => $companyPackageInfo,
