@@ -26,10 +26,31 @@ class companyaccountController extends AbstractActionController
     public function banneruploadAction(){
         // Get useful stuff
         $companyService = $this->getCompanyService();
+        $companyName = "TestA";
 
         // Get form
         $packageForm = $companyService->getPackageForm('banner');
 
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $files = $request->getFiles();
+
+            if ($companyService->insertPackageForCompanySlugNameByData(
+                $companyName,
+                $request->getPost(),
+                $files['banner'],
+                'banner'
+            )) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/editCompany',
+                    ['slugCompanyName' => $companyName],
+                    [],
+                    false
+                );
+            }
+        }
 
         return new ViewModel([
             'form' => $packageForm
