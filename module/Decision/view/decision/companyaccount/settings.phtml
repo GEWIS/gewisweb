@@ -11,10 +11,10 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
 
                 <?php
                 $now = new DateTime();
-                $diff = $now->diff($companyPackageInfo[0]->getExpires());
+                $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
 
                 //If vacancy package will expire within one month display notification
-                if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpires() >= $now): ?>
+                if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpirationDate() >= $now): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package will expire within one month!")?></strong>
@@ -24,7 +24,7 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
 
                 <?php
                 //If vacancy package has expired display notification
-                if ($companyPackageInfo[0]->getExpires() < $now): ?>
+                if ($companyPackageInfo[0]->getExpirationDate() < $now): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package has expired, please contact an administrator.")?></strong>
@@ -165,7 +165,8 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
 
                             //send update request to the database
                             if (count($keys) > 0) {
-                               $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getName());
+                               $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getId());
+                               header("Refresh:0");
                             }
                         }
                 ?>
@@ -232,12 +233,12 @@ $phoneIncorrect = False;    //True if invalid phone number was entered
 
                     <tr>
                         <th><?= $this->translate('Start date of membership') ?></th>
-                        <td><?= $companyPackageInfo[0]->getStart()->format('l j F Y')?></td>
+                        <td><?= $companyPackageInfo[0]->getStartingDate()->format('l j F Y')?></td>
                     </tr>
 
                     <tr>
                         <th><?= $this->translate('End date of membership') ?></th>
-                        <td><?= $companyPackageInfo[0]->getExpires()->format('l j F Y')?></td>
+                        <td><?= $companyPackageInfo[0]->getExpirationDate()->format('l j F Y')?></td>
                     </tr>
 
                     <tr>

@@ -35,15 +35,15 @@ class companyAccount
      *
      * @return array Name and description of active vacancies.
      */
-    public function findactiveVacancies($cName)
+    public function findactiveVacancies($packageID)
     {
         $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Decision\Model\Vacancy', 'v');
+        $builder->addRootEntityFromClassMetadata('Company\Model\Job', 'j');
 
-        $select = $builder->generateSelectClause(['v' => 't1']);
+        $select = $builder->generateSelectClause(['j' => 't1']);
         $sql = "SELECT $select FROM Job AS t1".
         " WHERE t1.active = 1 AND".
-        " t1.companyName = '$cName'";
+        " t1.package_id = $packageID";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();

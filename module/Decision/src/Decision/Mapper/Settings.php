@@ -35,14 +35,35 @@ class Settings
      *
      * @return array Information of company
      */
-    public function findCompanyInfo($cName)
+    public function findCompanyUser($id)
     {
         $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Decision\Model\CompanyInfo', 'ci');
+        $builder->addRootEntityFromClassMetadata('User\Model\CompanyUser', 'cu');
+
+        $select = $builder->generateSelectClause(['cu' => 't1']);
+        $sql = "SELECT $select FROM CompanyUser AS t1".
+            " WHERE t1.id = $id";
+
+        $query = $this->em->createNativeQuery($sql, $builder);
+        return $query->getResult();
+    }
+
+    /**
+     * Find all available company information
+     *
+     * @param string $cName the name of the company who's information
+     * will be fetched.
+     *
+     * @return array Information of company
+     */
+    public function findCompanyInfo($id)
+    {
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\Company', 'ci');
 
         $select = $builder->generateSelectClause(['ci' => 't1']);
         $sql = "SELECT $select FROM Company AS t1".
-        " WHERE t1.name = '$cName'";
+        " WHERE t1.id = '$id'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();
@@ -56,14 +77,14 @@ class Settings
      *
      * @return array package Information of company
      */
-    public function findCompanyPackageInfo($company)
+    public function findCompanyPackageInfo($id)
     {
         $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Decision\Model\CompanyPackageInfo', 'cpi');
+        $builder->addRootEntityFromClassMetadata('Company\Model\CompanyJobPackage', 'cp');
 
-        $select = $builder->generateSelectClause(['cpi' => 't1']);
+        $select = $builder->generateSelectClause(['cp' => 't1']);
         $sql = "SELECT $select FROM CompanyPackage AS t1".
-            " WHERE t1.name = '$company'";
+            " WHERE t1.company_id = $id";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();
@@ -78,42 +99,29 @@ class Settings
      *
      * @return array package Information of company
      */
-    public function setCompanyData($collumns, $values, $company){
-        $builder = new ResultSetMappingBuilder($this->em);
-        //$builder->addRootEntityFromClassMetadata('Decision\Model\CompanyInfo', 'cpi');
-        //$select = $builder->generateSelectClause(['cpi' => 't1']);
+    public function setCompanyData($collumns, $values, $id){
 
-        //TODO protect from sql injection
+        //TODO sql injection protection
 
-        $sql = "UPDATE Company SET ";
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\Company", "c");
+        $qb->where("c.id = $id");
         for($i = 0; $i < count($collumns); $i++){
-            if($i != count($collumns) - 1) {
-                if(is_string($values[$i])) {
-                    $sql .= "$collumns[$i] = '$values[$i]', ";
-                }else{
-                    $sql .= "$collumns[$i] = $values[$i], ";
-                }
-            }else{
-                if(is_string($values[$i])) {
-                    $sql .= "$collumns[$i] = '$values[$i]'";
-                }else{
-                    $sql .= "$collumns[$i] = $values[$i], ";
-                }
-            }
+            $qb->set("c.$collumns[$i]", ":$collumns[$i]");
+            $qb->setParameter("$collumns[$i]", "$values[$i]");
         }
 
-        $sql .= " WHERE name = '$company'";
-
-        $query = $this->em->createNativeQuery($sql, $builder);
-        $query->getResult();
+        $qb->getQuery()->getResult();
 
         if(in_array("email", $collumns)) {
+            $qb = $this->em->createQueryBuilder();
+            $qb->update("User\Model\CompanyUser", "c");
+            $qb->where("c.id = $id");
+
             $i = array_search("email", $collumns);
-            $sql .= "UPDATE CompanyUser SET 'email' = '$values[$i]' WHERE name = '$company'";
+            $qb->set("c.contactEmail", ":contactEmail");
+            $qb->setParameter("contactEmail", "$values[$i]");
+            $qb->getQuery()->getResult();
         }
-
-        $query = $this->em->createNativeQuery($sql, $builder);
-        $query->getResult();
-
     }
 }

@@ -19,8 +19,8 @@ class companyAccount extends AbstractAclService
      *
      * @return array Name and description of active vacancies.
      */
-    public function getActiveVacancies($cName){
-        return $this->getcompanyAccountMapper()->findactiveVacancies($cName);
+    public function getActiveVacancies($packageID){
+        return $this->getcompanyAccountMapper()->findactiveVacancies($packageID);
     }
 
     public function getCompanyInfo($id = null) {

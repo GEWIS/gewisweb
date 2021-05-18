@@ -11,6 +11,20 @@ use Zend\Http\Client as HttpClient;
 class Settings extends AbstractAclService
 {
 
+
+    /**
+     * Find all available company information
+     *
+     * @param string $cName the name of the company who's information
+     * will be fetched.
+     *
+     * @return array Information of company
+     */
+    public function getCompanyUser($id){
+        echo var_dump($this->getcompanyAccountMapper()->findCompanyUser($id));
+    }
+
+
     /**
      * Get all available company information
      *
@@ -19,8 +33,8 @@ class Settings extends AbstractAclService
      *
      * @return array Information of company
      */
-    public function getCompanyInfo($cName){
-        return $this->getcompanyAccountMapper()->findCompanyInfo($cName);
+    public function getCompanyInfo($id){
+        return $this->getcompanyAccountMapper()->findCompanyInfo($id);
     }
 
     /**
@@ -31,8 +45,8 @@ class Settings extends AbstractAclService
      *
      * @return array package Information of company
      */
-    public function getCompanyPackageInfo($company){
-        return $this->getcompanyAccountMapper()->findCompanyPackageInfo($company);
+    public function getCompanyPackageInfo($id){
+        return $this->getcompanyAccountMapper()->findCompanyPackageInfo($id);
     }
 
     /**
@@ -43,8 +57,8 @@ class Settings extends AbstractAclService
      *
      * @return array package Information of company
      */
-    public function updateCompanyData($collumns, $values, $company){
-        $this->getcompanyAccountMapper()->setCompanyData($collumns, $values, $company);
+    public function updateCompanyData($collumns, $values, $id){
+        $this->getcompanyAccountMapper()->setCompanyData($collumns, $values, $id);
     }
 
     /**
