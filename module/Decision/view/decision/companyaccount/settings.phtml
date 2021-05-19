@@ -4,7 +4,13 @@ $addressIncorrect = False;  //True if invalid address was entered
 $phoneIncorrect = False;    //True if invalid phone number was entered
 
 
-$emailSubscription = 0;
+$emailSubscription = (int) $companyInfo[0]->getEmailSubscription();
+$accountActive = True;
+
+$now = new DateTime();
+if ($companyPackageInfo[0]->getExpirationDate() < $now){
+    $accountActive = False;
+}
 ?>
 
 <section class="section">
@@ -13,7 +19,7 @@ $emailSubscription = 0;
             <div class="col-md-6">
 
                 <?php
-                $now = new DateTime();
+
                 $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
 
                 //If vacancy package will expire within one month display notification
@@ -27,7 +33,7 @@ $emailSubscription = 0;
 
                 <?php
                 //If vacancy package has expired display notification
-                if ($companyPackageInfo[0]->getExpirationDate() < $now): ?>
+                if (!$accountActive): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <strong><?= $this->translate("Vacancy package has expired, please contact an administrator.")?></strong>
@@ -40,8 +46,8 @@ $emailSubscription = 0;
                 <h2>Personal information (double click to edit)</h2>
                     <table class="table table-bordered">
                         <tr>
-                            <th><?= $this->translate('Email') ?></th>
-                            <td id="edit" name="email"><?= $companyInfo[0]->getEmail()?></td>
+                            <th><?= $this->translate('Contact email') ?></th>
+                            <td id="edit" name="contactEmail"><?= $companyInfo[0]->getContactEmail()?></td>
                         </tr>
                         </tr>
                         <tr>
@@ -61,7 +67,7 @@ $emailSubscription = 0;
                                     echo "inactive";
                                 }
                                 ?></td>
-                            <td><input type="checkbox" id="subscription" name="subscription" onclick="changed();" <?php if($emailSubscription === 1){echo "checked";}?> ></td>
+                            <td><input type="checkbox" id="edit" name="emailSubscription" onclick="changed();" <?php if($emailSubscription === 1){echo "checked";}?> ></td>
                         </tr>
                     </table>
 
@@ -84,7 +90,7 @@ $emailSubscription = 0;
                     //TODO Use regular expression to check phone or address format
 
                     //check in inputted email address is valid
-                    if ((!is_string($changes["email"]) || !filter_var($changes["email"] ,FILTER_VALIDATE_EMAIL )) && $changes["email"] != "") {
+                    if ((!is_string($changes["contactEmail"]) || !filter_var($changes["contactEmail"] ,FILTER_VALIDATE_EMAIL )) && $changes["contactEmail"] != "") {
                         $correctInput = False;
                         $emailIncorrect = True;
 
@@ -135,11 +141,9 @@ $emailSubscription = 0;
                         //if the data was inputted correctly, update the database
                         if($correctInput && $_SERVER["REQUEST_METHOD"] === "POST") {
 
-                            //TODO send email subscription to database
-
                             //trim leading and trailing spaces
-                            if($changes["email"] != 0){
-                                $changes["email"] = trim($changes["email"]);
+                            if($changes["contactEmail"] != 0){
+                                $changes["contactEmail"] = trim($changes["contactEmail"]);
                             }
 
                             if($changes["address"] != 0){
@@ -147,8 +151,8 @@ $emailSubscription = 0;
                             }
 
                             //check if values have actually changed
-                            if ($changes["email"] === "" || $changes["email"] === $companyInfo[0]->getEmail()) {
-                                $changes["email"] = 0;
+                            if ($changes["contactEmail"] === "" || $changes["contactEmail"] === $companyInfo[0]->getContactEmail()) {
+                                $changes["contactEmail"] = 0;
                             }
 
                             if ($changes["address"] === "" || $changes["address"] === $companyInfo[0]->getAddress()) {
@@ -157,6 +161,10 @@ $emailSubscription = 0;
 
                             if ($changes["phone"] === "" || $changes["phone"] === strval($companyInfo[0]->getPhone())) {
                                 $changes["phone"] = 0;
+                            }
+
+                            if ($changes["emailSubscription"] === "" || $changes["emailSubscription"] === strval($emailSubscription)) {
+                                $changes["emailSubscription"] = 0;
                             }
 
                             //array containing only the changed setting's names
@@ -177,8 +185,8 @@ $emailSubscription = 0;
 
                             //send update request to the database
                             if (count($keys) > 0) {
-                               $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getId());
-                               header("Refresh:0");
+                                $settingsService->updateCompanyData($keys, $values, $companyInfo[0]->getId());
+                                header("Refresh:0");
                             }
                         }
                 ?>
@@ -186,8 +194,8 @@ $emailSubscription = 0;
                 <!--JavaScript handling the double click to edit functionality-->
                 <script>
                     //dictionary storing all changed company settings
-                    var dict = {email: "", address: "", phone: "", subscription: ""};
-                    dict["subscription"] = <?= $emailSubscription ?>;
+                    var dict = {contactEmail: "", address: "", phone: "", emailSubscription: ""};
+                    dict["emailSubscription"] = "<?= $emailSubscription ?>";
                     //the form that will submit the changes
                     var finalsubmit = document.getElementById("finalsubmit");
 
@@ -229,13 +237,13 @@ $emailSubscription = 0;
 
                     function changed(){
                         finalsubmit.style.display = "block";
-                        if(dict["subscription"] == 0){
-                            dict["subscription"] = 1;
+                        if(dict["emailSubscription"] == "0"){
+                            dict["emailSubscription"] = "1";
                         }else{
-                            dict["subscription"] = 0;
+                            dict["emailSubscription"] = "0";
                         }
-
-                        console.log(dict["subscription"]);
+                        var parsed = JSON.stringify(dict);
+                        finaltext.value = parsed;
                     }
 
                 </script>
@@ -245,11 +253,11 @@ $emailSubscription = 0;
                     <tr>
                         <th><?= $this->translate('Account status') ?></th>
                         <td>
-                            <?php if ($diff->d <= 0):?>
+                            <?php if (!$accountActive):?>
                                 inactive
                             <?php endif; ?>
 
-                            <?php if ($diff->d > 0):?>
+                            <?php if ($accountActive):?>
                                 active
                             <?php endif; ?>
                         </td>
@@ -267,7 +275,7 @@ $emailSubscription = 0;
 
                     <tr>
                         <th><?= $this->translate('Contract number vacancy package') ?></th>
-                        <td><?= "empty"  ?></td>
+                        <td><?= $companyPackageInfo[0]->getContractNumber() ?></td>
                     </tr>
 
                     <tr>

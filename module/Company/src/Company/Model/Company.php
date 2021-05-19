@@ -109,6 +109,13 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $bannerCredits;
 
     /**
+     * The company's email subscription status.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $emailSubscription;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -492,6 +499,16 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function setLanguageNeutralId($language)
     {
         $this->languageNeutralId = $language;
+    }
+
+    /**
+     * Get the company's language.
+     *
+     * @return Boolean
+     */
+    public function getEmailSubscription()
+    {
+        return $this->emailSubscription;
     }
 
     /**

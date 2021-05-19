@@ -113,7 +113,7 @@ class Settings
 
         $qb->getQuery()->getResult();
 
-        if(in_array("email", $collumns)) {
+        if(in_array("contactEmail", $collumns)) {
             $qb = $this->em->createQueryBuilder();
             $qb->update("User\Model\CompanyUser", "c");
             $qb->where("c.id = $id");
