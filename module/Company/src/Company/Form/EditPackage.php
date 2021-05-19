@@ -12,7 +12,7 @@ class EditPackage extends Form
     {
         // we want to ignore the name passed
         parent::__construct();
-
+        $today = date("Y-m-d");
         $this->setAttribute('method', 'post');
 
         $this->add([
@@ -26,6 +26,7 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
+                'min' => $today
             ],
             'options' => [
                 'label' => $translate->translate('Start date'),
@@ -104,7 +105,7 @@ class EditPackage extends Form
             ],
         ]);
 
-        $this->initFilters();
+        $this->initFilters($today);
     }
 
     protected function initFilters()
