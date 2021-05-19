@@ -15,7 +15,7 @@ class companyaccountController extends AbstractActionController
     public function indexAction()
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-        $company = "Phillips";
+        $company = "COmpany";
 
         return new ViewModel([
             //fetch the active vacancies of the logged in company
@@ -27,7 +27,7 @@ class companyaccountController extends AbstractActionController
     public function banneruploadAction(){
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyName = "TestA";
+        $companyName = "COmpany";
 
         // Get Zend validator
         $image_validator = new IsImage();
@@ -39,29 +39,37 @@ class companyaccountController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
+            $posts = $request->getPost();
 
+            // Check if the upload file is an image
             if ($image_validator->isValid($files['banner'])) {
                 $image = $files['banner'];
 
-                if ($this->checkImageSize($image)) {
-                    if ($companyService->insertPackageForCompanySlugNameByData(
-                        $companyName,
-                        $request->getPost(),
-                        $image,
-                        'banner'
-                    )) {
+                // Check if the size of the image is 90x728
+                if ($this->checkImageSize($image, $packageForm)) {
+                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
+                        // TODO Check credits
+                        if ($companyService->insertPackageForCompanySlugNameByData(
+                            $companyName,
+                            $request->getPost(),
+                            $image,
+                            'banner'
+                        )) {
 
-                        //TODO: make redirect to page the banner is shown
-                        // Redirect to company page
-                        return $this->redirect()->toRoute(
-                            'companyaccount'
-                        );
+                            //TODO: make redirect to page the banner is shown
+                            // Redirect to company page
+                            return $this->redirect()->toRoute(
+                                'companyaccount'
+                            );
+                        }
                     }
                 }
-
             } else {
                 echo "Is not image";
             }
+
+
+
         }
 
         // Initialize the form
@@ -77,19 +85,31 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
-    public function checkImageSize($image) {
+    public function checkImageSize($image, $packageForm) {
         list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
         if ($image_height != 90 ||
         $image_width != 728) {
-            echo "The image you submitted does not have the right dimensions\n";
-            echo "The dimensions of your image are " . $image_height . " x " . $image_width . "\n";
-            echo "The dimensions of the image should be 90 x 728";
+            $wrongDimensionMessage = "The image you submitted does not have the right dimensions" .
+                "The dimensions of your image are " . $image_height . " x " . $image_width . "\n" .
+                "The dimensions of the image should be 90 x 728";
             return false;
         } else {
             return true;
         }
 
+    }
+
+    public function checkValidDate($startdate, $expdate) {
+        $today = date("Y-m-d");
+        if ($today > $startdate) {
+            echo "startday should be valid";
+            return false;
+        } elseif ($startdate >= $expdate) {
+            echo "startday should be before expiration day";
+            return false;
+        }
+        return true;
     }
 
     public function dummyAction(){
@@ -106,7 +126,7 @@ class companyaccountController extends AbstractActionController
     }
 
     public function settingsAction() {
-        $company = "Phillips";
+        $company = "COmpany";
         $companyInfo = $this->getSettingsService()->getCompanyInfo($company);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyInfo[0]->getId());
 
