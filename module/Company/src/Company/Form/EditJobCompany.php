@@ -80,6 +80,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
         $this->add([
             'name' => 'email',
+            'hydrator' => $this->getHydrator(),
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
                 'type' => 'text',
@@ -126,6 +127,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
         $this->add([
             'name' => 'phone',
+            'hydrator' => $this->getHydrator(),
             'attributes' => [
                 'type' => 'text',
             ],

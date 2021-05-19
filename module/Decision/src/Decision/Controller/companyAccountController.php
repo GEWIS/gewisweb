@@ -36,11 +36,122 @@ class companyaccountController extends AbstractActionController
 
 
     public function vacanciesAction(){
-        return new ViewModel();
+
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+
+        // Get the parameters
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+        $packageId = $company->getJobPackageId();
+//        $companyName = $this->params('slugCompanyName');
+//        $packageId = $this->params('packageId');
+
+        // Get the specified package (Assuming it is found)
+        $package = $companyService->getEditablePackage($packageId);
+        $type = $package->getType();
+
+        $jobs = $companyService;
+
+        // Get form
+        $packageForm = $companyService->getPackageForm($type);
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
+                // TODO: possibly redirect to company
+            }
+        }
+        // TODO: display error page when package is not found
+
+        // Initialize form
+        $packageForm->bind($package);
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/vacancies',
+                [
+                    'packageId' => $packageId,
+                    'slugCompanyName' => $companyName,
+                    'type' => $type,
+                ]
+            )
+        );
+
+        // Initialize the view
+        return new ViewModel([
+            'package' => $package,
+            'companyName' => $companyName,
+            'form' => $packageForm,
+            'type' => $type,
+        ]);
     }
 
-    public function editVacancyAction() {
-        return new ViewModel();
+    public function editVacancyAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $jobForm = $companyService->getJobFormCompany();
+
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+        $packageId = $company->getJobPackageId();
+        // Get the parameters
+        $languageNeutralId = $this->params('languageNeutralJobId');
+
+        // Find the specified jobs
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
+
+        // Check the job is found. If not, throw 404
+        if (empty($jobs)) {
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $files = $request->getFiles();
+            $post = $request->getPost();
+            $jobDict = [];
+
+            foreach ($jobs as $job) {
+                $jobDict[$job->getLanguage()] = $job;
+            }
+
+            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+        }
+
+        // Initialize the form
+        $jobDict = [];
+        foreach ($jobs as $job) {
+            $jobDict[$job->getLanguage()] = $job;
+        }
+        $languages = array_keys($jobDict);
+        $jobForm->setLanguages($languages);
+
+        $labels = $jobs[0]->getLabels();
+
+        $mapper = $companyService->getLabelMapper();
+        $actualLabels = [];
+        foreach ($labels as $label) {
+            $actualLabel = $label->getLabel();
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+        }
+
+
+        $jobForm->setLabels($actualLabels);
+        //TODO: Update database for central values (values in setData())
+        $jobForm->setData($jobs[0]->getArrayCopy());
+        $jobForm->bind($jobDict);
+
+        // Initialize the view
+        return new ViewModel([
+            'form' => $jobForm,
+            'job' => $job,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
     }
 
 

@@ -410,13 +410,16 @@ return [
                                 ],
                             ],
                             'editvacancy' => [
-                                'type' => 'Literal',
+                                'type' => 'segment',
                                 'options' => [
-                                    'route' => '/edit',
+                                    'route' => '/job/:languageNeutralJobId',
                                     'defaults' => [
-                                        'controller' => 'companyaccount',
                                         'action' => 'editVacancy',
                                     ],
+                                    'constraints' => [
+                                        'languageNeutralJobId' => '[0-9]*',
+                                    ],
+                                    'may_terminate' => true,
                                 ],
                             ],
                         ],

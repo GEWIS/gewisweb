@@ -612,4 +612,40 @@ class Job
         $this->setSectors($this->updateIfSet($data, null));
     }
 
+    /**
+     * Returns an array copy with varName=> var for all variables except the
+     * translation.
+     *
+     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     */
+    public function getArrayCopy()
+    {
+        $arraycopy = [];
+        $arraycopy['id'] = $this->getId();
+        $arraycopy['category'] = $this->getCategory();
+        $arraycopy['contactName'] = $this->getContactName();
+        $arraycopy['email'] = $this->getEmail();
+        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['sectors'] = $this->getSectors();
+        $arraycopy['hours'] = $this->getHours();
+        $arraycopy['startingDate'] = $this->getStartingDate();
+        $arraycopy['website'] = $this->getWebsite();
+
+//
+//        $arraycopy['hidden'] = $this->getHidden();
+
+//        // Languages
+//        $arraycopy['languages'] = [];
+//        foreach ($this->getTranslations() as $translation) {
+//            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
+//            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
+//            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
+//            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
+//            $arraycopy['languages'][] = $translation->getLanguage();
+//        }
+
+        return $arraycopy;
+    }
+
 }
