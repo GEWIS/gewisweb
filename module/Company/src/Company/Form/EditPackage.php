@@ -105,7 +105,7 @@ class EditPackage extends Form
             ],
         ]);
 
-        $this->initFilters($today);
+        $this->initFilters();
     }
 
     protected function initFilters()

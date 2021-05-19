@@ -24,19 +24,6 @@ $element->setAttribute('class', 'form-control');
         <?= $this->formElementErrors($element) ?>
     </div>
 </div>
-<?php
-//$element = $form->get('published');
-//?>
-<!--<div class="form-group">-->
-<!--    <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
-<!--        --><?//= $element->getOption('label') ?>
-<!--    </label>-->
-<!--    <div class="col-sm-10">-->
-<!--        --><?//= $this->formCheckbox($element) ?>
-<!--        --><?//= $this->formElementErrors($element) ?>
-<!--    </div>-->
-<!--</div>-->
-
 <?php if ($type === 'featured'): ?>
     <?php
     $element = $form->get('language');
