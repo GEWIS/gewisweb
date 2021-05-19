@@ -28,12 +28,12 @@ class companyAccount
     }
 
     /**
-     * Find all active vacancies of selected company
+     * Find all active vacancies of selected company.
      *
-     * @param string $cName the name of the company who's active
+     * @param integer $packageID the package id of the company who's active
      * vacancies will be fetched.
      *
-     * @return array Name and description of active vacancies.
+     * @return array Job model.
      */
     public function findactiveVacancies($packageID)
     {

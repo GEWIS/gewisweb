@@ -3,14 +3,18 @@ $emailIncorrect = False;    //True if invalid email address was entered
 $addressIncorrect = False;  //True if invalid address was entered
 $phoneIncorrect = False;    //True if invalid phone number was entered
 
-
+//store the email subscription status
 $emailSubscription = (int) $companyInfo[0]->getEmailSubscription();
-$accountActive = True;
 
+$accountActive = True; //False if account is inactive
+
+//determine wheter the account is active or not
 $now = new DateTime();
 if ($companyPackageInfo[0]->getExpirationDate() < $now){
     $accountActive = False;
 }
+
+//TODO Use translate function to display text
 ?>
 
 <section class="section">
@@ -19,7 +23,6 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
             <div class="col-md-6">
 
                 <?php
-
                 $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
 
                 //If vacancy package will expire within one month display notification
@@ -110,7 +113,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     }
                 }
                 ?>
-
+                <!--Wrong input notifications-->
                     <?php if ($emailIncorrect): ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -196,6 +199,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     //dictionary storing all changed company settings
                     var dict = {contactEmail: "", address: "", phone: "", emailSubscription: ""};
                     dict["emailSubscription"] = "<?= $emailSubscription ?>";
+
                     //the form that will submit the changes
                     var finalsubmit = document.getElementById("finalsubmit");
 
@@ -235,6 +239,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                         }
                     });
 
+                    //update email subscription status when checkbox was clicked
                     function changed(){
                         finalsubmit.style.display = "block";
                         if(dict["emailSubscription"] == "0"){

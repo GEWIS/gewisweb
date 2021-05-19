@@ -13,12 +13,12 @@ class Settings extends AbstractAclService
 
 
     /**
-     * Find all available company information
+     * Get all available company user information given a company id
      *
-     * @param string $cName the name of the company who's information
+     * @param integer $id the id of the company who's user information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array CompanyUser model
      */
     public function getCompanyUser($id){
         echo var_dump($this->getcompanyAccountMapper()->findCompanyUser($id));
@@ -26,12 +26,12 @@ class Settings extends AbstractAclService
 
 
     /**
-     * Get all available company information
+     * Get all available company information given a company id
      *
-     * @param string $cName the name of the company who's information
+     * @param integer $id the id of the company who's information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array Company model
      */
     public function getCompanyInfo($id){
         return $this->getcompanyAccountMapper()->findCompanyInfo($id);
@@ -50,12 +50,16 @@ class Settings extends AbstractAclService
     }
 
     /**
-     * Get all available company package information
+     * Update the companies information given a number of changed values
      *
-     * @param string $cName the name of the company who's package information
-     * will be fetched.
+     * @param string $collumns the columns in Company table that will be altered
      *
-     * @return array package Information of company
+     * @param string $values the new values for the to be altered collumns
+     *
+     * @param string $id the id of the company who's company information
+     * will be altered.
+     *
+     * @return null
      */
     public function updateCompanyData($collumns, $values, $id){
         $this->getcompanyAccountMapper()->setCompanyData($collumns, $values, $id);

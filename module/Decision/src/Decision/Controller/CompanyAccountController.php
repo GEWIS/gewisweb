@@ -12,13 +12,14 @@ class companyaccountController extends AbstractActionController
 
     public function indexAction()
     {
-        $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-        $company = 3;
+        $company = 3;   //company id
+
+        //obtain company package information
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($company);
+
         return new ViewModel([
             //fetch the active vacancies of the logged in company
             'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID()),
-            'company' => $company
         ]);
     }
 
@@ -30,16 +31,12 @@ class companyaccountController extends AbstractActionController
         return new ViewModel();
     }
 
-
-    public function test(){
-        return "test";
-    }
-
     public function settingsAction() {
-        $company = 3;
+        $company = 3;   //company id
+
+        //Obtain company and company package information
         $companyInfo = $this->getSettingsService()->getCompanyInfo($company);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($company);
-        //$this->getSettingsService()->getCompanyUser($company);
 
         return new ViewModel([
             'companyPackageInfo' => $companyPackageInfo,

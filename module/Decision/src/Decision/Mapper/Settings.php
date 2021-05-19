@@ -28,12 +28,12 @@ class Settings
     }
 
     /**
-     * Find all available company information
+     * Find all available company user information given a company id
      *
-     * @param string $cName the name of the company who's information
+     * @param integer $id the id of the company who's user information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array CompanyUser model
      */
     public function findCompanyUser($id)
     {
@@ -49,12 +49,12 @@ class Settings
     }
 
     /**
-     * Find all available company information
+     * Find all available company information given a company id
      *
-     * @param string $cName the name of the company who's information
+     * @param integer $id the id of the company who's information
      * will be fetched.
      *
-     * @return array Information of company
+     * @return array Company model
      */
     public function findCompanyInfo($id)
     {
@@ -70,12 +70,12 @@ class Settings
     }
 
     /**
-     * Find all available company package information
+     * Find all available company package information given a company id
      *
-     * @param string $cName the name of the company who's package information
+     * @param integer $id the id of the company who's company information
      * will be fetched.
      *
-     * @return array package Information of company
+     * @return array CompanyJobPackage model
      */
     public function findCompanyPackageInfo($id)
     {
@@ -92,17 +92,22 @@ class Settings
 
 
     /**
-     * Update the database
+     * Update the companies information given a number of changed values
      *
-     * @param string $cName the name of the company who's package information
-     * will be fetched.
+     * @param string $collumns the columns in Company table that will be altered
      *
-     * @return array package Information of company
+     * @param string $values the new values for the to be altered collumns
+     *
+     * @param string $id the id of the company who's company information
+     * will be altered.
+     *
+     * @return null
      */
     public function setCompanyData($collumns, $values, $id){
 
         //TODO sql injection protection
 
+        //update Company table
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\Company", "c");
         $qb->where("c.id = $id");
@@ -113,6 +118,7 @@ class Settings
 
         $qb->getQuery()->getResult();
 
+        //If the contact email has changed, also update the CompanyUser table
         if(in_array("contactEmail", $collumns)) {
             $qb = $this->em->createQueryBuilder();
             $qb->update("User\Model\CompanyUser", "c");
