@@ -27,7 +27,7 @@ class companyaccountController extends AbstractActionController
     public function banneruploadAction(){
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyName = "COmpany";
+        $companyName = "TestA";
 
         // Get Zend validator
         $image_validator = new IsImage();
@@ -39,33 +39,46 @@ class companyaccountController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $files = $request->getFiles();
-            $posts = $request->getPost();
+            $post = $request->getPost();
+            $post['published'] = 0;
 
             // Check if the upload file is an image
-            if ($image_validator->isValid($files['banner'])) {
-                $image = $files['banner'];
-
-                // Check if the size of the image is 90x728
-                if ($this->checkImageSize($image, $packageForm)) {
-                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
-                        // TODO Check credits
-                        if ($companyService->insertPackageForCompanySlugNameByData(
-                            $companyName,
-                            $request->getPost(),
-                            $image,
-                            'banner'
-                        )) {
-
-                            //TODO: make redirect to page the banner is shown
-                            // Redirect to company page
-                            return $this->redirect()->toRoute(
-                                'companyaccount'
-                            );
-                        }
-                    }
-                }
-            } else {
-                echo "Is not image";
+//            if ($image_validator->isValid($files['banner'])) {
+//                $image = $files['banner'];
+//
+//                // Check if the size of the image is 90x728
+//                if ($this->checkImageSize($image, $packageForm)) {
+//                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
+//                        // TODO Check credits
+//                        if ($companyService->insertPackageForCompanySlugNameByData(
+//                            $companyName,
+//                            $request->getPost(),
+//                            $image,
+//                            'banner'
+//                        )) {
+//
+//                            //TODO: make redirect to page the banner is shown
+//                            // Redirect to company page
+//                            return $this->redirect()->toRoute(
+//                                'companyaccount'
+//                            );
+//                        }
+//                    }
+//                }
+//            } else {
+//                echo "Is not image";
+//            }
+            if ($companyService->insertPackageForCompanySlugNameByData(
+                $companyName,
+                $post,
+                $files['banner'],
+                'banner'
+            )) {
+                //TODO: make redirect to page the banner is shown
+                // Redirect to company page
+                return $this->redirect()->toRoute(
+                    'companyaccount'
+                );
             }
 
 
