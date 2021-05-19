@@ -2,13 +2,16 @@
 <?= $this->formElement($element) ?>
 <?= $this->formElementErrors($element); ?>
 <?php
+if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())){
 $element = $form->get('hidden');
+
 ?>
 <div class="checkbox">
     <label>
         <?= $this->formCheckbox($element) ?>
         <?= $element->getOption('label') ?>
         <?= $this->formElementErrors($element) ?>
+
     </label>
 </div>
 
@@ -34,6 +37,8 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+<?php } ?>
+
 <?php
 $element = $form->get('contactName');
 $element->setAttribute('class', 'form-control');
@@ -91,6 +96,7 @@ $element->setAttribute('style', 'width:100%; height:10em; resize:none');
     <?= $this->formElementErrors($element) ?>
 </div>
 <?php
+if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())){
 $element = $form->get('highlightCredits');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -112,6 +118,7 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+<?php } ?>
 
 <?php
 $element = $form->get('languages');

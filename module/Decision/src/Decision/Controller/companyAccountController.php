@@ -22,117 +22,195 @@ class companyaccountController extends AbstractActionController
     }
 
 
-    public function dummyAction(){
+    public function dummyAction()
+    {
         return new ViewModel();
     }
-
-
-    public function profileAction() {
-        return new ViewModel();
-    }
-    public function settingsAction() {
-        return new ViewModel();
-    }
-
-
-    public function vacanciesAction(){
-        return new ViewModel();
-    }
-
-    public function editVacancyAction() {
-        return new ViewModel();
-    }
-
 
     /**
-     * Action that allows adding a job
+     * Action that displays a form for editing a company
+     *
      *
      */
-    public function createVacancyAction()
+    public function profileAction()
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyForm = $companyService->getJobFormCompany();
-
+        $companyForm = $companyService->getCompanyCompanyForm();
+//        print_r(get_class($companyForm));
 
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+//        print_r(get_class($company));
         $companyName = $company->getName();
-        $packageId = $company->getJobPackageId();
-        if($packageId == null) {
-            $translator = $this->getCompanyAccountService()->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You do not have a package to create vacancies.')
-            );
+        // Get parameter
+//        $companyName = $this->params('slugCompanyName');
+
+        // Get the specified company
+        $companyList = $companyService->getEditableCompaniesBySlugName($companyName);
+        // If the company is not found, throw 404
+        if (empty($companyList)) {
+            $company = null;
+            return $this->notFoundAction();
         }
-        // Handle incoming form results
+
+        $company = $companyList[0];
+
+        // Handle incoming form data
         $request = $this->getRequest();
-
-
         if ($request->isPost()) {
-            // Check if data is valid, and insert when it is
-            $job = $companyService->createJob(
-                $packageId,
-                $request->getPost(),
+            $post = $request->getPost();
+            print_r($post);
+            $companyService->saveCompanyByData(
+                $company,
+                $post,
                 $request->getFiles()
             );
-
-            if ($job) {
-                // Redirect to edit page
+//                echo 'test';
+//                $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
-                    'companyAccount/vacancies'
+                    'companyaccount/profile',
+                    [
+                        'action' => 'edit',
+                        'slugCompanyName' => $companyName,
+                    ],
+                    [],
+                    false
                 );
-            }
+
         }
 
-        // TODO: change redirect after company has been created.
-
-        // Initialize the form
+        // Initialize form
+        $companyForm->setData($company->getArrayCopy());
+        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'companyaccount/vacancies'
+                'companyaccount/profile',
+                [
+                    'action' => 'editCompany',
+                    'slugCompanyName' => $companyName,
+                ]
             )
         );
-
-        // Initialize the view
-        $vm = new ViewModel([
+//        echo 'test';
+        return new ViewModel([
+            'company' => $company,
             'form' => $companyForm,
-            'languages' => $this->getLanguageDescriptions(),
         ]);
-
-        return $vm;
     }
 
-    private function getLanguageDescriptions()
-    {
-        $companyService = $this->getCompanyService();
-        $languages = $companyService->getLanguages();
-        $languageDictionary = [];
-        foreach ($languages as $key) {
-            $languageDictionary[$key] = $companyService->getLanguageDescription($key);
+public
+function settingsAction()
+{
+    return new ViewModel();
+}
+
+
+public
+function vacanciesAction()
+{
+    return new ViewModel();
+}
+
+public
+function editVacancyAction()
+{
+    return new ViewModel();
+}
+
+
+/**
+ * Action that allows adding a job
+ *
+ */
+public
+function createVacancyAction()
+{
+    // Get useful stuff
+    $companyService = $this->getCompanyService();
+    $companyForm = $companyService->getJobFormCompany();
+
+
+    $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+    $companyName = $company->getName();
+    $packageId = $company->getJobPackageId();
+    if ($packageId == null) {
+        $translator = $this->getCompanyAccountService()->getTranslator();
+        throw new \User\Permissions\NotAllowedException(
+            $translator->translate('You do not have a package to create vacancies.')
+        );
+    }
+    // Handle incoming form results
+    $request = $this->getRequest();
+
+
+    if ($request->isPost()) {
+        // Check if data is valid, and insert when it is
+        $job = $companyService->createJob(
+            $packageId,
+            $request->getPost(),
+            $request->getFiles()
+        );
+
+        if ($job) {
+            // Redirect to edit page
+            return $this->redirect()->toRoute(
+                'companyaccount/editvacancy'
+            );
         }
-
-        return $languageDictionary;
     }
 
+    // TODO: change redirect after company has been created.
 
-    /**
-     * Method that returns the service object for the company module.
-     *
-     * @return CompanyService
-     */
-    protected function getCompanyService()
-    {
-        return $this->getServiceLocator()->get('company_service_company');
+    // Initialize the form
+    $companyForm->setAttribute(
+        'action',
+        $this->url()->fromRoute(
+            'companyaccount/vacancies'
+        )
+    );
+
+    // Initialize the view
+    $vm = new ViewModel([
+        'form' => $companyForm,
+        'languages' => $this->getLanguageDescriptions(),
+    ]);
+
+    return $vm;
+}
+
+private
+function getLanguageDescriptions()
+{
+    $companyService = $this->getCompanyService();
+    $languages = $companyService->getLanguages();
+    $languageDictionary = [];
+    foreach ($languages as $key) {
+        $languageDictionary[$key] = $companyService->getLanguageDescription($key);
     }
 
-    /**
-     * Get the company service.
-     *
-     * @return Decision\Service\CompanyAccount
-     */
-    public function getCompanyAccountService()
-    {
-        return $this->getServiceLocator()->get('decision_service_companyaccount');
-    }
+    return $languageDictionary;
+}
+
+/**
+ * Method that returns the service object for the company module.
+ *
+ * @return CompanyService
+ */
+protected
+function getCompanyService()
+{
+    return $this->getServiceLocator()->get('company_service_company');
+}
+
+/**
+ * Get the company service.
+ *
+ * @return Decision\Service\CompanyAccount
+ */
+public
+function getCompanyAccountService()
+{
+    return $this->getServiceLocator()->get('decision_service_companyaccount');
+}
 }

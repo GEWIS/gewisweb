@@ -499,13 +499,21 @@ class Company extends AbstractACLService
      */
     public function saveCompanyByData($company, $data, $files)
     {
-        $companyForm = $this->getCompanyForm();
+//        if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())) {
+            $companyForm = $this->getCompanyForm();
+//        }
+//        else {
+//            $companyForm = $this->getCompanyCompanyForm();
+//            }
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-        if ($companyForm->isValid()) {
+        // TODO: figure out why isValid() is false when part of form is used and solve it
+//        print_r(var_dump($companyForm->isValid()));
+//        if ($companyForm->isValid()) {
+//            echo 'test2';
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -523,7 +531,7 @@ class Company extends AbstractACLService
             }
             $this->saveCompany();
             return true;
-        }
+//        }
     }
 
     /**
@@ -1039,13 +1047,23 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get the Company Edit form.
+     * Get the Company Edit form for admins.
      *
      * @return Company Edit form
      */
     public function getCompanyForm()
     {
         return $this->sm->get('company_admin_edit_company_form');
+    }
+
+    /**
+     * Get the Company Edit form for companies.
+     *
+     * @return Company Edit form
+     */
+    public function getCompanyCompanyForm()
+    {
+        return $this->sm->get('company_edit_company_form');
     }
 
     /**

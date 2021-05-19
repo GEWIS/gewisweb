@@ -373,9 +373,9 @@ return [
                         'options' => [
                             'route' => '/profile',
                             'defaults' => [
+                                'controller' => 'companyaccount',
                                 'action' => 'profile'
                             ]
-
                         ],
                     ],
                     'settings' => [
