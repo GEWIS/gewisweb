@@ -15,7 +15,7 @@ class companyaccountController extends AbstractActionController
     public function indexAction()
     {
         $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-        $company = "COmpany";
+        $company = "TestA";
 
         return new ViewModel([
             //fetch the active vacancies of the logged in company
@@ -27,7 +27,10 @@ class companyaccountController extends AbstractActionController
     public function banneruploadAction(){
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyName = "TestA";
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+
+
 
         // Get Zend validator
         $image_validator = new IsImage();
@@ -50,6 +53,27 @@ class companyaccountController extends AbstractActionController
 //                if ($this->checkImageSize($image, $packageForm)) {
 //                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
 //                        // TODO Check credits
+
+            $ban_start = new \DateTime($post['startDate']);
+            $ban_end = new \DateTime($post['expirationDate']);
+            $ban_days = $ban_end->diff($ban_start)->format("%a");
+            //echo $ban_days." days have been selected";                   //testing $ban_days
+
+            $ban_credits = $company->getBannerCredits();
+            if ($ban_credits >= $ban_days ){
+
+                //echo "Old Credits: ".$ban_credits." /// Ban_days: ".$ban_days." /// ";
+                $ban_credits = $ban_credits - $ban_days;            //deduct banner credits based on days scheduled
+
+                $company->setBannerCredits($ban_credits);           //set new credits
+                $ban_credits = $company->getBannerCredits();
+                //echo "set Credits:".$ban_credits."///";
+                $companyService->saveCompany();
+
+            } // else notify "Insufficient credit"
+
+
+
 //                        if ($companyService->insertPackageForCompanySlugNameByData(
 //                            $companyName,
 //                            $request->getPost(),

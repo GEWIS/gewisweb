@@ -29,6 +29,13 @@ class companyAccount extends AbstractAclService
         }
     }
 
+
+
+    public function getCompany() {
+        $companyservice = $this->sm->get('company_auth_service');
+        return $companyservice->getIdentity();
+    }
+
     /**
      * Get the default resource ID.
      *
