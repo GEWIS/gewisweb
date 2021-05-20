@@ -681,25 +681,11 @@ class Company extends AbstractACLService
         $package = $this->getPackageMapper()->findPackage($packageId);
         $jobs = [];
 
-        $x = 0;
         foreach ($this->getLanguages() as $lang) {
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
 
-            $job->setEmail($data['email']);
-            $job->setWebsite($data['website']);
-            $job->setHours($data['hours']);
-
-            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
-            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
-            $x++;
-
-            $job->setContactName($data['contactName']);
-            $job->setPhone($data['phone']);
-            if ($data['startingDate']!= null) {
-                $job->setStartingDate(new \DateTime($data['startingDate']));
-            }
             $jobs[$lang] = $job;
         }
 
@@ -796,6 +782,23 @@ class Company extends AbstractACLService
      */
     public function saveJobDataCompany($languageNeutralId, $jobs, $data, $files)
     {
+        $x = 0;
+        foreach ($jobs as $job) {
+            $job->setEmail($data['email']);
+            $job->setWebsite($data['website']);
+            $job->setHours($data['hours']);
+
+            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
+            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
+            $x++;
+
+            $job->setContactName($data['contactName']);
+            $job->setPhone($data['phone']);
+            if ($data['startingDate']!= null) {
+                $job->setStartingDate(new \DateTime($data['startingDate']));
+            }
+        }
+
         if (!$this->isAllowed('edit')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit jobs')

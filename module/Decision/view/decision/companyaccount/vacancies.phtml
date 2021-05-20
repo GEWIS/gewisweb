@@ -33,23 +33,9 @@
         $form->setAttribute('class', 'form-horizontal');
         $form->prepare()
         ?>
-        <?= $this->form()->openTag($form) ?>
-        <?php $element = $form->get('id') ?>
-        <?= $this->formElement($element) ?>
-        <?= $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]); ?>
-        <?= $this->form()->closeTag(); ?>
 
         <h2>
             <?= $this->translate('Jobs') ?>
-            <!--    <a class="btn btn-success pull-right"-->
-            <!--       href="--><?//= $this->url("admin_company/editCompany/editPackage/addJob",
-            //           [
-            //               "slugCompanyName" => $companyName,
-            //               'packageId' => $package->getId()
-            //           ]); ?><!--">-->
-            <!--        <i class="fas fa-plus"></i>-->
-            <!--        --><?//= $this->translate('Add job'); ?>
-            <!--    </a>-->
         </h2>
         <table class="table table-striped">
             <thead>

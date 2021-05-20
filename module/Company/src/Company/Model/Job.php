@@ -609,7 +609,15 @@ class Job
      */
     public function exchangeArray($data)
     {
-        $this->setSectors($this->updateIfSet($data, null));
+//        $this->setCategory($this->updateIfSet($data['category'], ''));
+        $this->setHours($this->updateIfSet($data['hours'], null));
+
+//        $this->setSectors($this->updateIfSet($data['sectors'], null));
+        $this->setStartingDate($this->updateIfSet(new \DateTime($data['startingDate']), null));
+        $this->setContactName($this->updateIfSet($data['contactName'], ''));
+        $this->setPhone($this->updateIfSet($data['phone'], ''));
+        $this->setEmail($this->updateIfSet($data['email'], ''));
+        $this->setWebsite($this->updateIfSet($data['website'], 0));
     }
 
     /**
@@ -631,19 +639,6 @@ class Job
         $arraycopy['hours'] = $this->getHours();
         $arraycopy['startingDate'] = $this->getStartingDate();
         $arraycopy['website'] = $this->getWebsite();
-
-//
-//        $arraycopy['hidden'] = $this->getHidden();
-
-//        // Languages
-//        $arraycopy['languages'] = [];
-//        foreach ($this->getTranslations() as $translation) {
-//            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
-//            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
-//            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
-//            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
-//            $arraycopy['languages'][] = $translation->getLanguage();
-//        }
 
         return $arraycopy;
     }

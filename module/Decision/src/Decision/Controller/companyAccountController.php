@@ -141,10 +141,28 @@ class companyaccountController extends AbstractActionController
         }
 
 
+        // Handle incoming form data for central fields
+        $request = $this->getRequest();
+        print_r(get_class($jobs[0]));
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $x = 0;
+            foreach ($jobs as $job) {
+                print_r($post['category']);
+                $job->setSectors($companyService->getJobMapper()->findSectorsById($post['sectors'] + $x));
+                $job->setCategory($companyService->getJobMapper()->findCategoryById($post['category'] +$x));
+                $x++;
+                $job->exchangeArray($post);
+            }
+            $companyService->saveJob();
+        }
+
+
         $jobForm->setLabels($actualLabels);
         //TODO: Update database for central values (values in setData())
         $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
+
 
         // Initialize the view
         return new ViewModel([
@@ -152,7 +170,9 @@ class companyaccountController extends AbstractActionController
             'job' => $job,
             'languages' => $this->getLanguageDescriptions(),
         ]);
+
     }
+
 
 
     /**

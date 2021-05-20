@@ -1,7 +1,6 @@
 <?php
 
 namespace Company\Form;
-
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
@@ -9,6 +8,7 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
+
     protected $mapper;
     protected $translator;
 
