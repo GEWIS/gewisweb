@@ -12,6 +12,9 @@ class companyaccountController extends AbstractActionController
 
     public function indexAction()
     {
+        // Code Review Pim:
+        // can be set based on the logged in company when merged with vacancyEdit
+        // Also I think it should be named $companyId rather than $company if it refers to the id.
         $company = 3;   //company id
 
         //obtain company package information
@@ -32,6 +35,9 @@ class companyaccountController extends AbstractActionController
     }
 
     public function settingsAction() {
+        // Code Review Pim:
+        // can be set based on the logged in company when merged with vacancyEdit
+        // Also I think it should be named $companyId rather than $company if it refers to the id.
         $company = 3;   //company id
 
         //Obtain company and company package information

@@ -27,6 +27,8 @@ class companyAccount
         $this->em = $em;
     }
 
+    // Code Review Pim:
+    // Change to function name to findActiveVacancies() (start every word past the first with a capital letter)
     /**
      * Find all active vacancies of selected company.
      *
