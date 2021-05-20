@@ -2,41 +2,42 @@
 <?= $this->formElement($element) ?>
 <?= $this->formElementErrors($element); ?>
 <?php
-if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())){
-$element = $form->get('hidden');
+// Show certain fields only to admins, not to companies editing their own profile
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+    $element = $form->get('hidden');
 
-?>
-<div class="checkbox">
-    <label>
-        <?= $this->formCheckbox($element) ?>
-        <?= $element->getOption('label') ?>
+    ?>
+    <div class="checkbox">
+        <label>
+            <?= $this->formCheckbox($element) ?>
+            <?= $element->getOption('label') ?>
+            <?= $this->formElementErrors($element) ?>
+
+        </label>
+    </div>
+
+    <?php
+    $element = $form->get('name');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
         <?= $this->formElementErrors($element) ?>
-
-    </label>
-</div>
-
-<?php
-$element = $form->get('name');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
-<?php
-$element = $form->get('slugName');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
+    </div>
+    <?php
+    $element = $form->get('slugName');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
 <?php } ?>
 
 <?php
@@ -96,28 +97,29 @@ $element->setAttribute('style', 'width:100%; height:10em; resize:none');
     <?= $this->formElementErrors($element) ?>
 </div>
 <?php
-if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())){
-$element = $form->get('highlightCredits');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
-<?php
-$element = $form->get('bannerCredits');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
+// Show certain fields only to admins, not to companies editing their own profile
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+    $element = $form->get('highlightCredits');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+    <?php
+    $element = $form->get('bannerCredits');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
 <?php } ?>
 
 <?php

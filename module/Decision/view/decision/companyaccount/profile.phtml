@@ -1,4 +1,3 @@
-<!-- TODO: remove everything that was commented out -->
 <?php
 //$this->headScript()
 //    ->prependFile($this->basePath() . '/js/company-admin.js');
@@ -9,11 +8,14 @@
 //    ['slugCompanyName', 'packageId']
 //);
 ?>
+<!-- Position correctly using section and div -->
 <section class="section">
 <div class="container">
 
+<!-- Title -->
 <h1><?= $this->translate('Edit Profile'); ?></h1>
 
+<!-- Logos shown at top of the form -->
 <div class="row">
     <div class="col-md-6">
         <h2><?= $this->translate('Dutch logo') ?></h2>
@@ -31,13 +33,16 @@
     </div>
 </div>
 <hr>
+<!-- Prepare the form -->
 <?php $form->prepare() ?>
 <?= $this->form()->openTag($form) ?>
+<!-- Add the form -->
 <?= $this->partial('partial/company/admin/editors/company.phtml',
     ['form' => $form]
 ); ?>
 <br>
 <?php
+// Save button
 $submit = $form->get('submit');
 $submit->setLabel($this->translate('Save'));
 $submit->setAttribute('class', 'btn btn-primary pull-right');
@@ -48,92 +53,5 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
 <?= $this->form()->closeTag(); ?>
     </section>
 </div>
-<?php ////if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())){ ?>
-<!--    <h2>--><?//= $this->translate('Packages') ?><!--</h2>-->
-<!--    <table class="table table-striped">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>-->
-<!--            --><?//= $this->translate('Active'); ?>
-<!--        </th>-->
-<!--        <th>-->
-<!--            --><?//= $this->translate('Start date'); ?>
-<!--        </th>-->
-<!--        <th>-->
-<!--            --><?//= $this->translate('Expiration date'); ?>
-<!--        </th>-->
-<!--        <th>-->
-<!--            --><?//= $this->translate('Jobs / Type'); ?>
-<!--        </th>-->
-<!--        <th>-->
-<!--            --><?//= $this->translate('Actions'); ?>
-<!--        </th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    --><?php //foreach ($company->getPackages() as $package): ?>
-<!--        <tr>-->
-<!--            <td>-->
-<!--                --><?php //echo $package->isActive() ? 'Yes' : 'No' ?>
-<!--            </td>-->
-<!--            <td>-->
-<!--                --><?//= $package->getStartingDate()->format('d-m-Y') ?>
-<!--            </td>-->
-<!--            <td>-->
-<!--                --><?//= $package->getExpirationDate()->format('d-m-Y') ?>
-<!--            </td>-->
-<!--            <td>-->
-<!--                --><?php //if ($package->getType() === 'banner') {
-//                    echo $this->translate('Banner package');
-//                } else {
-//                    if ($package->getType() == 'featured') {
-//                        echo $this->translate('Featured Package');
-//                    } else {
-//                        echo $package->getJobs()->count();
-//                    }
-//                } ?>
-<!--            </td>-->
-<!--            <td>-->
-<!--                <a class="btn btn-xs btn-primary" href="--><?//= $this->url("admin_company/editCompany/editPackage",
-//                    [
-//                        "slugCompanyName" => $company->getSlugName(),
-//                        "packageId" => $package->getId(),
-//                    ]
-//                ); ?><!--">-->
-<!--                    --><?//= $this->translate('edit'); ?><!--</a>-->
-<!--                <button type="button" class="btn btn-danger btn-xs"-->
-<!--                        onclick="Company.Admin.deletePackage('--><?//= $company->getSlugName() ?><!--//', '--><?//= $package->getId() ?><!--//')"-->
-<!--//                        data-toggle="modal"-->
-<!--//                        data-target="#deleteModal">-->
-<!--//                    --><?////= $this->translate('Delete') ?>
-<!--                </button>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    --><?php //endforeach; ?>
-<!--    </table>-->
-<?php //} ?>
-<!-- Delete package modal -->
-<!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
-<!--                        aria-hidden="true">&times;</span></button>-->
-<!--                <h4 class="modal-title">--><?//= $this->translate('Delete confirmation') ?><!--</h4>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <p>--><?//= $this->translate('Are you sure you want to delete this package?') ?><!-- </p>-->
-<!--                <p class="options">-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <form id="deleteForm" method="POST">-->
-<!--                    <input type="submit" name="submit" value="--><?//= $this->translate('Delete package') ?><!--"-->
-<!--                           class="btn btn-danger"/>-->
-<!--                    <button type="button" class="btn" data-dismiss="modal">--><?//= $this->translate('Cancel') ?><!--</button>-->
-<!--                </form>-->
-<!---->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
 

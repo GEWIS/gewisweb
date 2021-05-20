@@ -499,21 +499,14 @@ class Company extends AbstractACLService
      */
     public function saveCompanyByData($company, $data, $files)
     {
-//        if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())) {
-            $companyForm = $this->getCompanyForm();
-//        }
-//        else {
-//            $companyForm = $this->getCompanyCompanyForm();
-//            }
+        $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-        // TODO: figure out why isValid() is false when part of form is used and solve it
-//        print_r(var_dump($companyForm->isValid()));
-//        if ($companyForm->isValid()) {
-//            echo 'test2';
+
+        if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -531,7 +524,49 @@ class Company extends AbstractACLService
             }
             $this->saveCompany();
             return true;
-//        }
+        }
+    }
+
+    /**
+     * Saves the Company
+     *
+     * @param mixed $company
+     * @param mixed $data
+     */
+    public function saveCompanyByData2($company, $data, $files)
+    {
+        $companyForm = $this->getCompanyForm();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
+        // TODO: figure out why isValid() is false when part of form is used and solve it
+        // TODO: fix hack solution
+        $arr =[];
+        foreach ($data as $key => $value) {
+            array_push($arr, isset($data[$key]));
+        }
+//        if ($companyForm->isValid()) {
+        if (!in_array(false,$arr)) {
+            $company->exchangeArray($data);
+            foreach ($company->getTranslations() as $translation) {
+                $file = $files[$translation->getLanguage() . '_logo'];
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
+                        return false;
+                    }
+                    $oldPath = $translation->getLogo();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $translation->setLogo($newPath);
+                    if ($oldPath !== '' && $oldPath != $newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                }
+            }
+            $this->saveCompany();
+            return true;
+        }
     }
 
     /**
@@ -1056,15 +1091,15 @@ class Company extends AbstractACLService
         return $this->sm->get('company_admin_edit_company_form');
     }
 
-    /**
-     * Get the Company Edit form for companies.
-     *
-     * @return Company Edit form
-     */
-    public function getCompanyCompanyForm()
-    {
-        return $this->sm->get('company_edit_company_form');
-    }
+//    /**
+//     * Get the Company Edit form for companies.
+//     *
+//     * @return Company Edit form
+//     */
+//    public function getCompanyCompanyForm()
+//    {
+//        return $this->sm->get('company_edit_company_form');
+//    }
 
     /**
      * Get the Category Edit form.
@@ -1133,7 +1168,8 @@ class Company extends AbstractACLService
     }
 
 
-    public function getJobFormCompany() {
+    public function getJobFormCompany()
+    {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(

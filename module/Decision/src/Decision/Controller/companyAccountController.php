@@ -36,17 +36,15 @@ class companyaccountController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyForm = $companyService->getCompanyCompanyForm();
-//        print_r(get_class($companyForm));
+        $companyForm = $companyService->getCompanyForm();
 
+        // get useful company info
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-//        print_r(get_class($company));
+        $companySlugName = $company->getSlugName();
         $companyName = $company->getName();
-        // Get parameter
-//        $companyName = $this->params('slugCompanyName');
 
         // Get the specified company
-        $companyList = $companyService->getEditableCompaniesBySlugName($companyName);
+        $companyList = $companyService->getEditableCompaniesBySlugName($companySlugName);
         // If the company is not found, throw 404
         if (empty($companyList)) {
             $company = null;
@@ -58,24 +56,29 @@ class companyaccountController extends AbstractActionController
         // Handle incoming form data
         $request = $this->getRequest();
         if ($request->isPost()) {
+
             $post = $request->getPost();
-            print_r($post);
-            $companyService->saveCompanyByData(
+            // TODO: Solve temporary fix of using saveCompanyByData2 instead of saveCompanyByData
+            // Save the company
+            $companyService->saveCompanyByData2(
                 $company,
                 $post,
                 $request->getFiles()
             );
-//                echo 'test';
-//                $companyName = $request->getPost()['slugName'];
-                return $this->redirect()->toRoute(
-                    'companyaccount/profile',
-                    [
-                        'action' => 'edit',
-                        'slugCompanyName' => $companyName,
-                    ],
-                    [],
-                    false
-                );
+
+            $company->setSlugName($companySlugName);
+            $company->setName($companyName);
+            $companyService->saveCompany();
+
+            return $this->redirect()->toRoute(
+                'companyaccount/profile',
+                [
+                    'action' => 'edit',
+                    'slugCompanyName' => $companyName,
+                ],
+                [],
+                false
+            );
 
         }
 
@@ -92,7 +95,7 @@ class companyaccountController extends AbstractActionController
                 ]
             )
         );
-//        echo 'test';
+
         return new ViewModel([
             'company' => $company,
             'form' => $companyForm,
