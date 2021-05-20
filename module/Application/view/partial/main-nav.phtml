@@ -1,6 +1,11 @@
 <?php
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
-?>
+//namespace User\Authentication;
+//$lang = $this->plugin('translate')->getTranslator()->getLocale();
+//$companyAc = new CompanyAuthenticationService();
+//$company = $companyAc->getIdentity();
+//echo gettype($company);
+//?>
+
 <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
@@ -34,6 +39,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
+<!--                --><?//= gettype($company)?>
                 <?php if (null === $this->identity()): ?>
                     <li class="pull-right">
                         <a href="<?= $this->url('user') ?>">
@@ -46,8 +52,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-<!--                            --><?//= $member->getFirstName() ?>
-                            <?= get_class($this->identity())." - ".gettype($this->identity()) ?>
+                            <?= $member->getFirstName() ?>
+
+<!--                            --><?//= get_class($this->identity())." - ".gettype($this->identity()) ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
