@@ -46,7 +46,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
 
                 <h1><?= $companyInfo[0]->getName() ?></h1>
 
-                <h2>Personal information (double click to edit)</h2>
+                <h2><?= $this->translate("Personal information (double click to edit)") ?></h2>
                     <table class="table table-bordered">
                         <tr>
                             <th><?= $this->translate('Contact email') ?></th>
@@ -117,7 +117,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     <?php if ($emailIncorrect): ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <strong>Please enter a valid email address!</strong>
+                            <strong><?= $this->translate("Please enter a valid email address!") ?>/strong>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -125,7 +125,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     <?php if ($addressIncorrect): ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <strong>Please enter a valid street and number!</strong>
+                            <strong><?= $this->translate("Please enter a valid street and number!") ?></strong>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -133,7 +133,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     <?php if ($phoneIncorrect): ?>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <strong>Please enter a valid phone number!</strong>
+                                <strong><?=  $this->translate("Please enter a valid phone number!") ?></strong>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -259,11 +259,11 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                         <th><?= $this->translate('Account status') ?></th>
                         <td>
                             <?php if (!$accountActive):?>
-                                inactive
+                                <?=$this->translate("inactive")?>
                             <?php endif; ?>
 
                             <?php if ($accountActive):?>
-                                active
+                                <?=$this->translate("active")?>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -298,15 +298,15 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     </tr>
 
                     <tr>
-                        <th>Highlight</th>
+                        <th><?= $this->translate('Highlight') ?></th>
                         <td><?php
                             $highlightCredits = $companyInfo[0]->getHighLightCredits();
 
                             //append the relevant text depending on the number of credits
                             if($highlightCredits === 1){
-                                echo "$highlightCredits day left";
+                                echo $this->translate("$highlightCredits day left");
                             }else{
-                                echo "$highlightCredits days left";
+                                echo $this->translate("$highlightCredits days left");
                             }
                             ?></td>
                     </tr>

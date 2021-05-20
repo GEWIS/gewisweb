@@ -45,8 +45,6 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
-
-
     public function vacanciesAction(){
         return new ViewModel();
     }
