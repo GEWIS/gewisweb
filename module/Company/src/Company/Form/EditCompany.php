@@ -343,7 +343,7 @@ class EditCompany extends Form
 
         $filter->add([
             'name' => 'contactName',
-            'required' => false,
+            'required' => true,
             'validators' => [
                 [
                     'name' => 'string_length',
