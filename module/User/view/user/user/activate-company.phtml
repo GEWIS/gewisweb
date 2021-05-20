@@ -1,12 +1,16 @@
 <?php
 $this->headTitle($this->translate('Activate'));
 ?>
+<!-- Use section and div to position the form/ message in the right place -->
 <section class="section">
     <div class="container">
+        <!-- Check whether the account is activated, i.e. the form is submitted -->
         <?php if (isset($this->activated) && $this->activated): ?>
+            <!-- Message to display when the account was activated, i.e. activated is true -->
             <?= $this->translate('Your account has been activated. You are now able to login.') ?>
         <?php else: ?>
             <?php
+            // Prepare the form
             $form = $this->form;
             $form->prepare();
 
@@ -16,48 +20,63 @@ $this->headTitle($this->translate('Activate'));
             $form->setAttribute('role', 'form');
             $form->setAttribute('class', 'form-horizontal');
             ?>
+            <!-- Form elements are placed in a div -->
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <!-- Display form title -->
                             <h3><?= $this->translate('Activate') ?></h3>
                         </div>
                         <div class="panel-body">
                             <?= $this->form()->openTag($form); ?>
                             <p>
                                 <?php
+                                // Get the company contact's name
                                 $company = $this->company->getCompany();
                                 $name = $company->getContactName();
                                 ?>
+                                <!-- Display welcome text, using the contact's name -->
                                 <?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
                             </p>
+
                             <?php
+                            // Prepare form element, as defined in Activate.php
                             $element = $form->get('password');
                             $element->setAttribute('class', 'form-control');
                             $element->setAttribute('placeholder', $this->translate('Password'));
                             ?>
                             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <!-- Label to display -->
                                 <label for="<?= $element->getAttribute('id') ?>"
-                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
-                                <div class="col-sm-7">
-                                    <?= $this->formInput($element) ?>
-                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
-                                </div>
-                            </div>
-                            <?php
-                            $element = $form->get('password_verify');
-                            $element->setAttribute('class', 'form-control');
-                            $element->setAttribute('placeholder', $this->translate('Verify password'));
-                            ?>
-                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $element->getAttribute('id') ?>"
-                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?>
+                                </label>
+                                <!-- Form input element -->
                                 <div class="col-sm-7">
                                     <?= $this->formInput($element) ?>
                                     <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
                                 </div>
                             </div>
 
+                            <?php
+                            // Prepare form element, as defined in Activate.php
+                            $element = $form->get('password_verify');
+                            $element->setAttribute('class', 'form-control');
+                            $element->setAttribute('placeholder', $this->translate('Verify password'));
+                            ?>
+                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <!-- Label to display -->
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?>
+                                </label>
+                                <!-- Form input element -->
+                                <div class="col-sm-7">
+                                    <?= $this->formInput($element) ?>
+                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                </div>
+                            </div>
+
+                            <!-- Activate button -->
                             <div class="form-group">
                                 <div class="col-sm-offset-5 col-sm-7">
                                     <?php

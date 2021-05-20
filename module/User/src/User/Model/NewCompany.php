@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 class NewCompany
 {
     /**
-     * The membership number.
+     * The company ID.
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -25,14 +25,14 @@ class NewCompany
     protected $id;
 
     /**
-     * The user's email address.
+     * The company's contact email address.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $contactEmail;
 
     /**
-     * The user's activation code.
+     * The company's activation code.
      *
      * @ORM\Column(type="string")
      */
@@ -56,14 +56,13 @@ class NewCompany
     /**
      * Constructor.
      *
-     * We can populate most values from a member model.
+     * We can populate most values from a company model.
      *
      * @param Company $company
      */
     public function __construct(Company $company = null)
     {
         if (null !== $company) {
-            //$this->contactEmail = $company->getContactEmail();
             $this->company = $company;
             $this->code = $this->generateCode();
         }
@@ -104,7 +103,7 @@ class NewCompany
     }
 
     /**
-     * Get the user's email address.
+     * Get the company's contact email address.
      *
      * @return string
      */
@@ -144,6 +143,7 @@ class NewCompany
     }
 
     /**
+     * Set the company ID
      * @param mixed $id
      */
     public function setId($id)
@@ -152,6 +152,7 @@ class NewCompany
     }
 
     /**
+     * Set the company's contact email address
      * @param mixed $contactEmail
      */
     public function setContactEmail($contactEmail)

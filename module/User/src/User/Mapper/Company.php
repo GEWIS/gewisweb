@@ -99,15 +99,14 @@ class Company extends Mapper
     }
 
     /**
-     * Finish user creation.
+     * Finish company creation.
      *
-     * This will both destroy the NewUser and create the given user
+     * This will both destroy the NewCompany and create the given CompanyUser
      *
-     * @param CompanyUser $company User to create
+     * @param CompanyUser $company CompanyUser to create
      * @param NewCompanyModel $newCompany
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    // TODO: comments
     public function createCompany(CompanyUser $company, NewCompanyModel $newCompany)
     {
         $this->em->persist($company);
@@ -120,7 +119,6 @@ class Company extends Mapper
      *
      * @param CompanyUser $company Company to persist.
      */
-    // TODO: comments
     public function persist(CompanyUser $company)
     {
         $this->em->persist($company);

@@ -25,7 +25,7 @@ class NewCompany
     }
 
     /**
-     * Get the new user by code.
+     * Get the new company by activation code.
      *
      * @param string $code
      *
@@ -33,6 +33,7 @@ class NewCompany
      */
     public function getByCode($code)
     {
+        // sql query to select the right database entry, based on a given activation code
         $qb = $this->em->createQueryBuilder();
         $qb->select('nc')
             ->from('User\Model\NewCompany', 'nc')
@@ -40,16 +41,16 @@ class NewCompany
         $qb->setParameter(1, $code);
         $qb->setMaxResults(1);
 
+        // return the resulting database entry
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
     }
 
     /**
-     * Find a company by its email.
+     * Find a company by its contact email.
      *
      * @param string $contactEmail company email
      *
-     * @return \Company\Model\Company
      */
     public function findByEmail($contactEmail)
     {
@@ -82,9 +83,9 @@ class NewCompany
         return $qb->getQuery()->getResult();
     }
 
-    public function persist(NewCompanyModel $user)
+    public function persist(NewCompanyModel $company)
     {
-        $this->em->persist($user);
+        $this->em->persist($company);
         $this->em->flush();
     }
 }

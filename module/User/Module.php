@@ -196,6 +196,7 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                // return a NewCompanyMapper
                 'user_mapper_newcompany' => function ($sm) {
                     return new \User\Mapper\NewCompany(
                         $sm->get('user_doctrine_em')
