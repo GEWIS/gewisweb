@@ -21,13 +21,13 @@
 
 
 
-        <?php
-        $this->scriptUrl()->requireUrls(
-            [
-                'admin_company/editCompany/editPackage/deleteJob',
-            ],
-            ['slugCompanyName', 'packageId', 'languageNeutralJobId']
-        );
+<!--        --><?php
+//        $this->scriptUrl()->requireUrls(
+//            [
+//                'admin_company/editCompany/editPackage/deleteJob',
+//            ],
+//            ['slugCompanyName', 'packageId', 'languageNeutralJobId']
+//        );
         ?>
         <?php
         $form->setAttribute('class', 'form-horizontal');
@@ -79,11 +79,9 @@
                             <?= $this->translate('edit'); ?>
                         </a>
                         <!--                TODO: decide what to do with the delete button-->
-                        <button type="button" class="btn btn-danger btn-xs"
-                                onclick="deleteJob(<?= $job->getLanguageNeutralId() ?>)" data-toggle="modal"
-                                data-target="#deleteModal">
-                            <?= $this->translate('Delete') ?>
-                        </button>
+<!--                        <button type="button" class="btn btn-danger btn-xs" onclick="deleteJob(<?//= $job->getLanguageNeutralId() ?>//)" data-toggle="modal" data-target="#deleteModal">-->
+<!--                            --><?//= $this->translate('Delete') ?>
+<!--                        </button>-->
                     </td>
                 </tr>
             <?php endforeach ?>
