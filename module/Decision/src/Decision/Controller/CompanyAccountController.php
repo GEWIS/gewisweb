@@ -54,23 +54,7 @@ class companyaccountController extends AbstractActionController
 //                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
 //                        // TODO Check credits
 
-            $ban_start = new \DateTime($post['startDate']);
-            $ban_end = new \DateTime($post['expirationDate']);
-            $ban_days = $ban_end->diff($ban_start)->format("%a");
-            //echo $ban_days." days have been selected";                   //testing $ban_days
 
-            $ban_credits = $company->getBannerCredits();
-            if ($ban_credits >= $ban_days ){
-
-                //echo "Old Credits: ".$ban_credits." /// Ban_days: ".$ban_days." /// ";
-                $ban_credits = $ban_credits - $ban_days;            //deduct banner credits based on days scheduled
-
-                $company->setBannerCredits($ban_credits);           //set new credits
-                $ban_credits = $company->getBannerCredits();
-                //echo "set Credits:".$ban_credits."///";
-                $companyService->saveCompany();
-
-            } // else notify "Insufficient credit"
 
 
 
@@ -98,6 +82,8 @@ class companyaccountController extends AbstractActionController
                 $files['banner'],
                 'banner'
             )) {
+                $this->deductCredits($post);
+
                 //TODO: make redirect to page the banner is shown
                 // Redirect to company page
                 return $this->redirect()->toRoute(
@@ -120,6 +106,29 @@ class companyaccountController extends AbstractActionController
         return new ViewModel([
             'form' => $packageForm
         ]);
+    }
+
+    public function deductCredits($post) {
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        $ban_start = new \DateTime($post['startDate']);
+        $ban_end = new \DateTime($post['expirationDate']);
+        $ban_days = $ban_end->diff($ban_start)->format("%a");
+        //echo $ban_days." days have been selected";                   //testing $ban_days
+
+        $ban_credits = $company->getBannerCredits();
+        if ($ban_credits >= $ban_days ){
+
+            //echo "Old Credits: ".$ban_credits." /// Ban_days: ".$ban_days." /// ";
+            $ban_credits = $ban_credits - $ban_days;            //deduct banner credits based on days scheduled
+
+            $company->setBannerCredits($ban_credits);           //set new credits
+            $ban_credits = $company->getBannerCredits();
+            //echo "set Credits:".$ban_credits."///";
+            $companyService->saveCompany();
+
+        } // else notify "Insufficient credit"
     }
 
     public function checkImageSize($image, $packageForm) {
