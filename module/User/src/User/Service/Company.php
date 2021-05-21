@@ -338,7 +338,7 @@ class Company extends AbstractAclService
          */
         $this->sm->get('user_doctrine_em')->clear();
 
-        return $this->getUserMapper()->findById($company->getLidnr());
+        return $this->getCompanyMapper()->findById($company->getLidnr());
     }
 
     public function logFailedLogin($user, $type)

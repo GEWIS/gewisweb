@@ -170,6 +170,12 @@ class Module
                     $helper = new \Application\View\Helper\Infima();
                     $helper->setLegacyService($locator->get('application_service_legacy'));
                     return $helper;
+                },
+                'companyIdentity' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\CompanyIdentity();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
                 }
             ]
         ];

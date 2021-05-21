@@ -96,6 +96,7 @@ return [
         'invokables' => [
             'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage',
             'bootstrapElementError' => 'Application\View\Helper\BootstrapElementError',
+            'companyIdentity' => 'Application\View\Helper\CompanyIdentity'
         ],
     ],
 ];

@@ -98,7 +98,7 @@ class Module
     {
         return [
             'aliases' => [
-                'Zend\Authentication\AuthenticationService' => 'user_auth_service',
+                'Zend\Authentication\AuthenticationService' => 'user_auth_service'
             ],
 
             'invokables' => [
