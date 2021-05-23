@@ -32,6 +32,14 @@ class LoginAttempt
     protected $user;
 
     /**
+     * The user for which the login was attempted.
+     *
+     * @ORM\ManyToOne(targetEntity="User\Model\CompanyUser")
+     * @ORM\JoinColumn(name="company_id",referencedColumnName="id")
+     */
+    protected $company;
+
+    /**
      * The ip from which the login was attempted
      *
      * @ORM\Column(type="string")
@@ -74,6 +82,22 @@ class LoginAttempt
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
     /**

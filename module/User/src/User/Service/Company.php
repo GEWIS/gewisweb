@@ -343,12 +343,13 @@ class Company extends AbstractAclService
 
     public function logFailedLogin($user, $type)
     {
+        print_r('test');
         $attempt = new LoginAttemptModel();
         $attempt->setIp($this->sm->get('user_remoteaddress'));
         $attempt->setTime(new \DateTime());
         $attempt->setType($type);
         $user = $this->detachUser($user);
-        $attempt->setUser($user);
+        $attempt->setCompany($user);
         $this->getLoginAttemptMapper()->persist($attempt);
     }
 
@@ -358,10 +359,10 @@ class Company extends AbstractAclService
         $ip = $this->sm->get('user_remoteaddress');
         $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
+        if ($loginAttemptMapper->getCompanyFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
             return true;
         }
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
+        if ($loginAttemptMapper->getCompanyFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
             return true;
         }
 
