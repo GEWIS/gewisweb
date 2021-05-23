@@ -343,7 +343,6 @@ class Company extends AbstractAclService
 
     public function logFailedLogin($user, $type)
     {
-        print_r('test');
         $attempt = new LoginAttemptModel();
         $attempt->setIp($this->sm->get('user_remoteaddress'));
         $attempt->setTime(new \DateTime());
