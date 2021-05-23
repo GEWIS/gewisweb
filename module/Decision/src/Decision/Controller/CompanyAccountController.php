@@ -10,7 +10,7 @@ use Zend\Validator\File\IsImage;
 
 class companyaccountController extends AbstractActionController
 {
-
+    public $MSG;
 
     public function indexAction()
     {
@@ -29,8 +29,7 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyName = $company->getName();
-
-
+        global $MSG;
 
         // Get Zend validator
         $image_validator = new IsImage();
@@ -45,54 +44,36 @@ class companyaccountController extends AbstractActionController
             $post = $request->getPost();
             $post['published'] = 0;
 
-            // Check if the upload file is an image
-//            if ($image_validator->isValid($files['banner'])) {
-//                $image = $files['banner'];
-//
-//                // Check if the size of the image is 90x728
-//                if ($this->checkImageSize($image, $packageForm)) {
-//                    if ($this->checkValidDate($posts['startDate'], $posts['expirationDate'])){
-//                        // TODO Check credits
-
-
-
-
-
-//                        if ($companyService->insertPackageForCompanySlugNameByData(
-//                            $companyName,
-//                            $request->getPost(),
-//                            $image,
-//                            'banner'
-//                        )) {
-//
-//                            //TODO: make redirect to page the banner is shown
-//                            // Redirect to company page
-//                            return $this->redirect()->toRoute(
-//                                'companyaccount'
-//                            );
-//                        }
-//                    }
-//                }
-//            } else {
-//                echo "Is not image";
-//            }
-            if ($companyService->insertPackageForCompanySlugNameByData(
-                $companyName,
-                $post,
-                $files['banner'],
-                'banner'
-            )) {
-                $this->deductCredits($post);
-
-                //TODO: make redirect to page the banner is shown
-                // Redirect to company page
-                return $this->redirect()->toRoute(
-                    'companyaccount'
-                );
+            // Check if valid timespan is selected
+            if(new \DateTime($post['expirationDate']) > new \DateTime($post['startDate'])){
+                // Check if the upload file is an image
+                if ($image_validator->isValid($files['banner'])) {
+                    $image = $files['banner'];
+                    // Check if the size of the image is 90x728
+                    if ($this->checkImageSize($image, $packageForm)) {
+                        // Check if Company has enough credits and subtract them if so
+                        if ($this->deductCredits($post, $company, $companyService)) {
+                            // Upload the banner to database and redirect to Companypanel
+                            if ($companyService->insertPackageForCompanySlugNameByData(
+                                $companyName,
+                                $request->getPost(),
+                                $image
+                            )) {
+                                return $this->redirect()->toRoute(
+                                    'companyaccount'
+                                );
+                            }
+                        }
+                    } else {
+                        // TODO Implement cropping tool (Could)
+                    }
+                } else {
+                    $MSG = "Please submit an image.";
+                }
+            } else {
+                $MSG = "Please make sure the expirationdate is after the startingdate.";
             }
-
-
-
+            echo $this->function_alert($MSG);
         }
 
         // Initialize the form
@@ -108,51 +89,38 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
-    public function deductCredits($post) {
-        $companyService = $this->getCompanyService();
-        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+    public function function_alert($msg){
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
 
+    public function deductCredits($post, $company, $companyService) {
+        global $MSG;
         $ban_start = new \DateTime($post['startDate']);
         $ban_end = new \DateTime($post['expirationDate']);
         $ban_days = $ban_end->diff($ban_start)->format("%a");
-        //echo $ban_days." days have been selected";                   //testing $ban_days
 
         $ban_credits = $company->getBannerCredits();
         if ($ban_credits >= $ban_days ){
-
-            //echo "Old Credits: ".$ban_credits." /// Ban_days: ".$ban_days." /// ";
             $ban_credits = $ban_credits - $ban_days;            //deduct banner credits based on days scheduled
 
             $company->setBannerCredits($ban_credits);           //set new credits
             $ban_credits = $company->getBannerCredits();
-            //echo "set Credits:".$ban_credits."///";
             $companyService->saveCompany();
-
-        } // else notify "Insufficient credit"
+            return true;
+        }
+        $MSG = "The amount of credits needed is: " . $ban_days . ". The amount you have is: " . $ban_credits . ".";
+        return false;
     }
 
     public function checkImageSize($image, $packageForm) {
+        global $MSG;
         list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
         if ($image_height != 90 ||
         $image_width != 728) {
-            $wrongDimensionMessage = "The image you submitted does not have the right dimensions" .
-                "The dimensions of your image are " . $image_height . " x " . $image_width . "\n" .
-                "The dimensions of the image should be 90 x 728";
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-    public function checkValidDate($startdate, $expdate) {
-        $today = date("Y-m-d");
-        if ($today > $startdate) {
-            echo "startday should be valid";
-            return false;
-        } elseif ($startdate >= $expdate) {
-            echo "startday should be before expiration day";
+            $MSG = "The image you submitted does not have the right dimensions. " .
+                "The dimensions of your image are " . $image_height . " x " . $image_width .
+                ". The dimensions of the image should be 90 x 728.";
             return false;
         }
         return true;

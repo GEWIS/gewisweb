@@ -39,6 +39,7 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
+                'min' => $today
             ],
             'options' => [
                 'label' => $translate->translate('Expiration date'),
@@ -129,16 +130,11 @@ class EditPackage extends Form
             'name' => 'expirationDate',
             'required' => true,
             'validators' => [
-                new \Zend\Validator\Callback([
-                    ['name' => 'date'],
-                    'callback' => [$this, 'expAfterStart'],
-                    'message' => $translate->translate('Expiration date should be after start date'),
-                ]),
-                new \Zend\Validator\Callback([
-                    ['name' => 'date'],
-                    'callback' => [$this, 'checkCredits'],
-                    'message' => $translate->translate('Not enough credits for this timespan'),
-                ]),
+//                new \Zend\Validator\Callback([
+//                    ['name' => 'date'],
+//                    'callback' => [$this, 'expAfterStart'],
+//                    'message' => $translate->translate('Expiration date should be after start date'),
+//                ]),
             ],
             'filters' => [
                 ['name' => 'StripTags'],
