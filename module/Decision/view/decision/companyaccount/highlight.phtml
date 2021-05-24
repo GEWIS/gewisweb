@@ -1,4 +1,15 @@
-<?php
-namespace Decision\Mapper;
-?>
-<H1>This will be the highlight page</H1>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add highlight</h1>
+            </div>
+        </div>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->partial('decision/companyaccount/highlightform.phtml', ['form' => $form]);
+        echo $this->form()->closeTag($form);?>
+    </div>
+</section>

@@ -90,7 +90,22 @@ class companyaccountController extends AbstractActionController
     }
 
     public function highlightAction(){
-        return new ViewModel();
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+
+        $packageForm = $companyService->getPackageForm();
+
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/highlight'
+            )
+        );
+
+        return new ViewModel([
+            'form' => $packageForm
+        ]);
     }
 
     public function function_alert($msg){
