@@ -52,7 +52,7 @@ class companyaccountController extends AbstractActionController
                     // Check if the size of the image is 90x728
                     if ($this->checkImageSize($image, $packageForm)) {
                         // Check if Company has enough credits and subtract them if so
-                        if ($this->deductCredits($post, $company, $companyService)) {
+                        if ($this->checkAndDeductCredits($post, $company, $companyService)) {
                             // Upload the banner to database and redirect to Companypanel
                             if ($companyService->insertPackageForCompanySlugNameByData(
                                 $companyName,
@@ -97,7 +97,7 @@ class companyaccountController extends AbstractActionController
         echo "<script type='text/javascript'>alert('$msg');</script>";
     }
 
-    public function deductCredits($post, $company, $companyService) {
+    public function checkAndDeductCredits($post, $company, $companyService) {
         global $MSG;
         $ban_start = new \DateTime($post['startDate']);
         $ban_end = new \DateTime($post['expirationDate']);
