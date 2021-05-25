@@ -29,7 +29,7 @@ class EditPackage extends Form
                 'min' => $today
             ],
             'options' => [
-                'label' => $translate->translate('Start date'),
+                'label' => $translate->translate('Start date *'),
             ],
         ]);
 
@@ -42,7 +42,7 @@ class EditPackage extends Form
                 'min' => $today
             ],
             'options' => [
-                'label' => $translate->translate('Expiration date'),
+                'label' => $translate->translate('Expiration date *'),
             ],
         ]);
 
@@ -93,7 +93,7 @@ class EditPackage extends Form
                     'type' => 'file',
                 ],
                 'options' => [
-                    'label' => $translate->translate('Banner'),
+                    'label' => $translate->translate('Banner *'),
                 ],
             ]);
         }
