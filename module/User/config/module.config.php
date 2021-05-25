@@ -93,6 +93,17 @@ return [
                 ],
                 'priority' => 100
             ],
+            'companyAccount' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/companyAccount',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Decision\Controller',
+                        'controller' => 'companyaccount',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
             'company' => [
                 'type' => 'Literal',
                 'options' => [

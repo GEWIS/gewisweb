@@ -1,7 +1,5 @@
 <?php
-if (null != $this->CompanyIdentity()):
-    echo $this->CompanyIdentity()->getContactEmail();
-endif;
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 
 <nav class="navbar navbar-gewis navbar-static-top" role="navigation">
@@ -37,12 +35,33 @@ endif;
                         </li>
                     </ul>
                 </li>
-                <?php if (null === $this->identity()): ?>
+                <?php if (null === $this->identity() && null === $this->CompanyIdentity()): ?>
                     <li class="pull-right">
                         <a href="<?= $this->url('user') ?>">
                             <span class="fas fa-user"></span>
                             <?= $this->translate('Login') ?>
                         </a>
+                    </li>
+                <?php elseif (null !== $this->CompanyIdentity()): ?>
+                    <?php $company = $this->CompanyIdentity()->getCompanyAccount() ?>
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <?= $company->getName() ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?= $this->url('companyAccount') ?>"><?= $this->translate('Dashboard') ?></a>
+                            </li>
+                            <li>
+                                <!-- TODO: add correct url and action after implementation/ merging -->
+                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
+                            </li>
+                            <!-- TODO: add correct url? -->
+                            <li><a href="<?= $this->url('user/default', [
+                                    'action' => 'companyLogout'
+                                ]) ?>"><?= $this->translate('Logout') ?></a></li>
+                        </ul>
                     </li>
                 <?php else: ?>
                     <?php $member = $this->identity()->getMember() ?>
