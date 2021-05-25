@@ -29,21 +29,21 @@ $this->headTitle($this->translate('Companies'));
                     </div>
                 </div>
                 <?php endif ?>
-                <div class="col-md-3 hidden-sm">
-                    <div class="list-group">
-                        <?php
-                        foreach ($companyList as $company) {
-                            ?>
-                            <a href="<?= $this->url('company/companyItem', // Route url
-                                ['slugCompanyName' => $company->getSlugName()], // Url parameters
-                                [], // routeOptions
-                                true); // Reuse matched parameters ?>"
-                               class="list-group-item"><?= $company->getName() ?></a>
-                            <?php
-                        }
-                        ?>
-                    </div>
-                </div>
+<!--                <div class="col-md-3 hidden-sm">-->
+<!--                    <div class="list-group">-->
+<!--                        --><?php
+//                        foreach ($companyList as $company) {
+//                            ?>
+<!--                            <a href="--><?//= $this->url('company/companyItem', // Route url
+//                                ['slugCompanyName' => $company->getSlugName()], // Url parameters
+//                                [], // routeOptions
+//                                true); // Reuse matched parameters ?><!--"-->
+<!--                               class="list-group-item">--><?//= $company->getName() ?><!--</a>-->
+<!--                            --><?php
+//                        }
+//                        ?>
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="col-md-9">
                     <div class="company-grid row">
