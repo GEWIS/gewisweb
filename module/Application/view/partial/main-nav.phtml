@@ -146,18 +146,19 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" aria-haspopup="true"
+                       aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                        <?= $this->translate('Companies') ?>
+                        <?= $this->translate('Career') ?>
                         <span class="caret"></span>
                     </a>
-                    <a href="<?= $this->url('company') ?>" role="button" class="hidden-sm hidden-xs">
-                        <?= $this->translate('Companies') ?>
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" class="hidden-sm hidden-xs">
+                        <?= $this->translate('Career') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="visible-sm visible-xs">
                             <a href="<?= $this->url('company') ?>">
-                                <?= $this->translate('Companies') ?>
+                                <?= $this->translate('Career') ?>
                             </a>
                         </li>
                         <?php if (!is_null($this->featuredCompanyPackage())): ?>
@@ -169,15 +170,22 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php foreach ($this->jobCategories() as $category):
-                            ?>
-                            <li>
-                            <li>
-                                <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
-                            </li>
-                            </li>
-                        <?php
-                        endforeach ?>
+                        <li>
+                            <a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('companyaccount/dummy') ?>"><?= $this->translate('Vacancies') ?></a>
+                            <?php foreach ($this->jobCategories() as $category):
+//                            <?php $arr = ['cat1', 'cat2', 'cat3'] ?>
+<!--                            --><?php //foreach ($arr as $category):
+                                ?>
+                                <ul>
+                                    <li>
+                                        <a href="<?= $this->url('company/jobList', ['category' => $category]) ?>"><?= $category ?></a>
+                                    </li>
+                                </ul>
+                            <?php endforeach ?>
+                        </li>
                     </ul>
                 </li>
                 <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>">
