@@ -84,6 +84,9 @@ class companyaccountController extends AbstractActionController
             )
         );
 
+        $email = $this->getDecisionEmail();
+        $email->sendApprovalMail($company);
+
         return new ViewModel([
             'form' => $packageForm
         ]);
@@ -264,6 +267,16 @@ class companyaccountController extends AbstractActionController
     public function getcompanyAccountService()
     {
         return $this->getServiceLocator()->get('decision_service_companyAccount');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return DesicionEmail
+     */
+    protected function getDecisionEmail()
+    {
+        return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
 
 }
