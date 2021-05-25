@@ -36,32 +36,30 @@ class CompanyEditCompany extends Form
                 'type' => 'hidden',
             ],
         ]);
-//
-//        $this->add([
-//            'name' => 'slugName',
-//            'attributes' => [
-//                'type' => 'text',
-//                'required' => 'required',
-//                'type' => 'hidden',
-//            ],
-//            'options' => [
-//                'label' => $translate->translate('Permalink'),
-//                'required' => 'required',
-//            ],
-//        ]);
-//
-//        $this->add([
-//            'name' => 'name',
-//            'attributes' => [
-//                'type' => 'text',
-//                'required' => 'required',
-//                'type' => 'hidden',
-//            ],
-//            'options' => [
-//                'label' => $translate->translate('Name'),
-//                'required' => 'required',
-//            ],
-//        ]);
+
+        $this->add([
+            'name' => 'slugName',
+            'attributes' => [
+                'type' => 'text',
+                'required' => 'required',
+            ],
+            'options' => [
+                'label' => $translate->translate('Permalink'),
+                'required' => 'required',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'name',
+            'attributes' => [
+                'type' => 'text',
+                'required' => 'required',
+            ],
+            'options' => [
+                'label' => $translate->translate('Name'),
+                'required' => 'required',
+            ],
+        ]);
 
         $this->add([
             'name' => 'languages',
@@ -258,40 +256,40 @@ class CompanyEditCompany extends Form
     {
         $filter = new InputFilter();
 
-//        $filter->add([
-//            'name' => 'name',
-//            'required' => true,
-//            'validators' => [
-//                [
-//                    'name' => 'string_length',
-//                    'options' => [
-//                        'min' => 2,
-//                        'max' => 127,
-//                    ],
-//                ],
-//            ],
-//            'filters' => [
-//                ['name' => 'StripTags'],
-//                ['name' => 'StringTrim'],
-//            ],
-//        ]);
-//
-//        $filter->add([
-//            'name' => 'slugName',
-//            'required' => true,
-//            'validators' => [
-//                new \Zend\Validator\Callback([
-//                    'callback' => [$this, 'slugNameUnique'],
-//                    'message' => $translate->translate('This slug is already taken'),
-//                ]),
-//                new \Zend\Validator\Regex([
-//                    'message' => $translate->translate('This slug contains invalid characters'),
-//                    'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-//                ]),
-//            ],
-//            'filters' => [
-//            ],
-//        ]);
+        $filter->add([
+            'name' => 'name',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'string_length',
+                    'options' => [
+                        'min' => 2,
+                        'max' => 127,
+                    ],
+                ],
+            ],
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
+
+        $filter->add([
+            'name' => 'slugName',
+            'required' => true,
+            'validators' => [
+                new \Zend\Validator\Callback([
+                    'callback' => [$this, 'slugNameUnique'],
+                    'message' => $translate->translate('This slug is already taken'),
+                ]),
+                new \Zend\Validator\Regex([
+                    'message' => $translate->translate('This slug contains invalid characters'),
+                    'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                ]),
+            ],
+            'filters' => [
+            ],
+        ]);
 
         $filter->add([
             'name' => 'en_website',

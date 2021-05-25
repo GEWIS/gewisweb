@@ -42,11 +42,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                     </li>
                 <?php else: ?>
+<!--                 --><?php //$company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount(); ?>
                     <?php $member = $this->identity()->getMember() ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-<!--                            --><?//= $member->getFirstName() ?>
+                            <?= $member->getFirstName() ?>
                             <?= get_class($this->identity())." - ".gettype($this->identity()) ?>
                             <span class="caret"></span>
                         </a>
