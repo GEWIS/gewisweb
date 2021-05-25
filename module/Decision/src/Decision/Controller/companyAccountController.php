@@ -143,12 +143,10 @@ class companyaccountController extends AbstractActionController
 
         // Handle incoming form data for central fields
         $request = $this->getRequest();
-        print_r(get_class($jobs[0]));
         if ($request->isPost()) {
             $post = $request->getPost();
             $x = 0;
             foreach ($jobs as $job) {
-                print_r($post['category']);
                 $job->setSectors($companyService->getJobMapper()->findSectorsById($post['sectors'] + $x));
                 $job->setCategory($companyService->getJobMapper()->findCategoryById($post['category'] +$x));
                 $x++;

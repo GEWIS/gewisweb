@@ -782,22 +782,7 @@ class Company extends AbstractACLService
      */
     public function saveJobDataCompany($languageNeutralId, $jobs, $data, $files)
     {
-        $x = 0;
-        foreach ($jobs as $job) {
-            $job->setEmail($data['email']);
-            $job->setWebsite($data['website']);
-            $job->setHours($data['hours']);
-
-            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
-            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
-            $x++;
-
-            $job->setContactName($data['contactName']);
-            $job->setPhone($data['phone']);
-            if ($data['startingDate']!= null) {
-                $job->setStartingDate(new \DateTime($data['startingDate']));
-            }
-        }
+        $this->setCentralJobData($jobs, $data);
 
         if (!$this->isAllowed('edit')) {
             throw new \User\Permissions\NotAllowedException(
@@ -862,6 +847,31 @@ class Company extends AbstractACLService
         }
 
         return true;
+    }
+
+    /**
+     * Sets the centralised fields in both language jobs.
+     *
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     */
+    public function setCentralJobData($jobs, $data) {
+        $x = 0;
+        foreach ($jobs as $job) {
+            $job->setEmail($data['email']);
+            $job->setWebsite($data['website']);
+            $job->setHours($data['hours']);
+
+            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
+            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
+            $x++;
+
+            $job->setContactName($data['contactName']);
+            $job->setPhone($data['phone']);
+            if ($data['startingDate']!= null) {
+                $job->setStartingDate(new \DateTime($data['startingDate']));
+            }
+        }
     }
 
 
