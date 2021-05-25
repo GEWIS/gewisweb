@@ -56,8 +56,9 @@ class companyaccountController extends AbstractActionController
                             // Upload the banner to database and redirect to Companypanel
                             if ($companyService->insertPackageForCompanySlugNameByData(
                                 $companyName,
-                                $request->getPost(),
-                                $image
+                                $post,
+                                $image,
+                                'banner'
                             )) {
                                 return $this->redirect()->toRoute(
                                     'companyaccount'
