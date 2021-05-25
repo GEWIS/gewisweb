@@ -1,4 +1,15 @@
 <?php
+$element = $form->get('highlight');
+?>
+<div class="form-group">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <div class="col-sm-10">
+        <?= $this->formSelect($element) ?>
+    </div>
+</div>
+<?php
 $element = $form->get('startDate');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -21,30 +32,6 @@ $element->setAttribute('class', 'form-control');
     </label>
     <div class="col-sm-10">
         <?= $this->formInput($element) ?>
-        <?= $this->formElementErrors($element) ?>
-    </div>
-</div>
-<?php
-$element = $form->get('published');
-?>
-<div class="form-group">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <div class="col-sm-10">
-        <?= $this->formCheckbox($element) ?>
-        <?= $this->formElementErrors($element) ?>
-    </div>
-</div>
-<?php
-$element = $form->get('published');
-?>
-<div class="form-group">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <div class="col-sm-10">
-        <?= $this->formCheckbox($element) ?>
         <?= $this->formElementErrors($element) ?>
     </div>
 </div>
