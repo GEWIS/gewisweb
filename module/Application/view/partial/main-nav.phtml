@@ -36,6 +36,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
 
+                <!-- To show if no (company)user is logged in -->
                 <?php if (null === $this->identity() && null === $this->CompanyIdentity()): ?>
                     <li class="pull-right">
                         <a href="<?= $this->url('user') ?>">
@@ -43,29 +44,35 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <?= $this->translate('Login') ?>
                         </a>
                     </li>
-
+                <!-- To show if a companyuser is logged in -->
                 <?php elseif (null !== $this->CompanyIdentity()): ?>
+                    <!-- Get company -->
                     <?php $company = $this->CompanyIdentity()->getCompanyAccount() ?>
+                    <!-- Use company name as title for dropdown menu -->
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <?= $company->getName() ?>
                             <span class="caret"></span>
                         </a>
+                        <!-- Content of dropdown menu -->
                         <ul class="dropdown-menu">
+                            <!-- Button to company pannel -->
                             <li><a href="<?= $this->url('companyAccount') ?>"><?= $this->translate('Dashboard') ?></a>
                             </li>
                             <li>
                                 <!-- TODO: add correct url and action after implementation/ merging -->
+                                <!-- Button to log out -->
                                 <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
                             </li>
                             <!-- TODO: add correct url? -->
+                            <!-- Button to go to change password page -->
                             <li><a href="<?= $this->url('user/default', [
                                     'action' => 'companyLogout'
                                 ]) ?>"><?= $this->translate('Logout') ?></a></li>
                         </ul>
                     </li>
-
+                <!-- To show if a user is logged in -->
                 <?php else: ?>
                     <?php $member = $this->identity()->getMember() ?>
                     <li class="dropdown pull-right">
@@ -166,7 +173,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
 
+                <!-- Career section -->
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
+                    <!-- Button career, takes you to the general career page -->
                     <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" aria-haspopup="true"
                        aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
@@ -182,25 +191,20 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <?= $this->translate('Career') ?>
                             </a>
                         </li>
-                        <?php if (!is_null($this->featuredCompanyPackage())): ?>
-                            <li>
-                                <a href="<?= $this->url('company/spotlight') ?>">
-                                    <span class="fas fa-star"></span>
-                                    <?= $this->translate('Featured') ?>:
-                                    <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                        <!-- Dropdown menu -->
                         <li>
+                            <!-- Button to general companies page -->
                             <a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a>
                         </li>
                         <li class="dropdown dropdown-submenu">
+                            <!-- Button to general vacancies page  -->
                             <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
                                class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 <?= $this->translate('Vacancies') ?>
                                 <span class="caret"></span>
                             </a>
+                            <!-- Sub-menu for vacancies -->
                             <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
                                class="hidden-sm hidden-xs">
                                 <?= $this->translate('Vacancies') ?>
@@ -209,6 +213,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <ul class="dropdown-menu">
                             <!-- Correct line, shows no categes as long as no jobCategories are created
                             uncomment next line when actual jobCategories need to be used -->
+                            <!-- For each possible job category, add it to the sub-menu -->
 <!--                            --><?php //foreach ($this->jobCategories() as $category):
                             // Test jobcategories for side-menu
                             // comment out next line when actual jobCategories need to be used
@@ -216,9 +221,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <!-- Test jobcategories for side-menu
                                 comment out next line when actual jobCategories need to be used -->
                                 <?php foreach ($arr as $category):
+                                    // Make sure url is all lower case and does not contain spaces
+                                    $url = str_replace(' ', '', strtolower($category))
                                     ?>
                                         <li>
-                                            <a href="<?= $this->url('company/jobList', ['category' => $category]) ?>"><?= $category ?></a>
+                                            <a href="<?= $this->url('company/jobList', ['category' => $url]) ?>"><?= $category ?></a>
                                         </li>
                                 <?php endforeach ?>
                             </ul>
