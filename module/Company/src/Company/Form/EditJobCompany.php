@@ -109,7 +109,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'step' => '1',
             ],
             'options' => [
-                'label' => $translator->translate('Starting date'),
+                'label' => $translator->translate('Starting Date'),
             ],
         ]);
 
@@ -117,7 +117,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             'type' => 'Zend\Form\Element\Select',
             'name' => 'hours',
             'options' => array(
-                'label' => 'Hours',
+                'label' => $translator->translate('Hours'),
                 'value_options' => array(
                     '0' => 'Part time',
                     '1' => 'Full time',

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-25 18:17+0100\n"
-"PO-Revision-Date: 2021-02-25 18:17+0100\n"
+"PO-Revision-Date: 2021-05-26 16:41+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: module/Activity/view/partial/create.phtml:1
 msgid "Display languages"
@@ -1061,6 +1061,43 @@ msgstr "If you don't have an account yet, go to the %sRegistration page%s"
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr "If you forgot your password, go to the %sPassword reset page%s"
+
+#: module/User/view/partial/login.phtml:72
+#, php-format
+msgid "If you have a company account, go to the %sCompany login page%s"
+msgstr "If you have a company account, go to the %sCompany login page%s"
+
+#: module/Decision/view/decision/companyaccount/vacancies.phtml:11
+#: module/Decision/view/decision/companyaccount/create-vacancy.phtml:11
+#: module/Decision/view/decision/companyaccount/edit-vacancy.phtml:11
+msgid "Vacancies Overview"
+msgstr "Vacancies Overview"
+
+#: module/Decision/view/decision/companyaccount/vacancies.phtml:16
+#: module/Decision/view/decision/companyaccount/create-vacancy.phtml:16
+#: module/Decision/view/decision/companyaccount/edit-vacancy.phtml:16
+msgid "Create new Vacancy"
+msgstr "Create new Vacancy"
+
+#: module/Company/src/company/form/editjobcompany.php:75
+msgid "Sectors"
+msgstr "Sectors"
+
+#: module/Company/src/company/form/editjobcompany.php:120
+msgid "Hours"
+msgstr "Hours"
+
+#: module/Company/src/company/form/editjobcompany.php:112
+msgid "Starting Date"
+msgstr "Starting Date"
+
+#: module/Company/src/company/form/editcompany.php:155
+msgid "Contact name *"
+msgstr "Contact name *"
+
+#: module/Company/src/company/form/editcompany.php:59
+msgid "Name *"
+msgstr "Name *"
 
 #: module/Photo/view/photo/album/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:20

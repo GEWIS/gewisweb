@@ -65,7 +65,7 @@
                         <?= $job->getName() ?>
                     </td>
                     <td>
-                        <?php echo $job->isActive() ? 'Yes' : 'No' ?>
+                        <?php echo $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
                     </td>
                     <td>
                         <a class="btn btn-xs btn-primary"
