@@ -12,7 +12,6 @@ class EditPackage extends Form
     {
         // we want to ignore the name passed
         parent::__construct();
-        $today = date("Y-m-d");
         $this->setAttribute('method', 'post');
 
         $this->add([
@@ -26,7 +25,8 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-                'min' => $today
+                'min' => $this->setTomorrow(),
+                'value' => $this->setTomorrow()
             ],
             'options' => [
                 'label' => $translate->translate('Start date *'),
@@ -39,7 +39,8 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-                'min' => $today
+                'min' => $this->setTomorrow(),
+                'value' => $this->setDayInterval(14)
             ],
             'options' => [
                 'label' => $translate->translate('Expiration date *'),
@@ -116,6 +117,27 @@ class EditPackage extends Form
 
 
         $this->setInputFilter($filter);
+    }
+
+    /**
+     * Method that returns the date of tomorrow
+     *
+     * @return \DateTime
+     */
+    public function setTomorrow() {
+        $today = date("Y-m-d");
+        return date('Y-m-d', strtotime($today . ' +1 day'));
+    }
+
+    /**
+     * Returns the date of tomorrow plus a certain number of days
+     *
+     * @param $interval the number of days to add to tomorrow
+     * @return \DateTime
+     */
+    public function setDayInterval($interval) {
+        $tomorrow = $this->setTomorrow();
+        return date('Y-m-d', strtotime($tomorrow . ' +' . strval($interval) .' day'));
     }
 
 }
