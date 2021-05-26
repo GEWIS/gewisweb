@@ -39,6 +39,7 @@ class User extends AbstractAclService
 
         $data = $form->getData();
 
+        // get hashing
         $bcrypt = $this->sm->get('user_bcrypt');
 
         // first try to obtain the user
@@ -48,6 +49,7 @@ class User extends AbstractAclService
             $user = new UserModel($newUser);
         }
 
+        // set password as hashed version
         $user->setPassword($bcrypt->create($data['password']));
 
         // this will also save a user with a lost password
