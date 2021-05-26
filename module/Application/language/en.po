@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-20 07:59-0700\n"
-"PO-Revision-Date: 2021-05-20 07:57-0700\n"
+"PO-Revision-Date: 2021-05-26 21:03+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -4315,6 +4315,15 @@ msgstr "Purchaser"
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
 msgstr "Inactive Member"
+
+msgid "here"
+msgstr "here"
+
+msgid "Click"
+msgstr "Click"
+
+msgid "to go to the login page."
+msgstr "to go to the login page."
 
 #~ msgid "Audience"
 #~ msgstr "Audience"

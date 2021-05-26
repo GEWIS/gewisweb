@@ -8,6 +8,10 @@ $this->headTitle($this->translate('Activate'));
         <?php if (isset($this->activated) && $this->activated): ?>
             <!-- Message to display when the account was activated, i.e. activated is true -->
             <?= $this->translate('Your account has been activated. You are now able to login.') ?>
+            <br>
+            <?= $this->translate('Click') ?>
+            <a href="/user/company" ><?= $this->translate('here') ?></a>
+            <?= $this->translate('to go to the login page.') ?>
         <?php else: ?>
             <?php
             // Prepare the form
