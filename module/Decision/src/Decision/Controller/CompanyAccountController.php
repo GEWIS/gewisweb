@@ -70,11 +70,13 @@ class companyaccountController extends AbstractActionController
                     }
                 } else {
                     $MSG = "Please submit an image.";
+                    $packageForm->setData($this->resetInsertedDates($post));
                 }
             } else {
                 $MSG = "Please make sure the expirationdate is after the startingdate.";
             }
             echo $this->function_alert($MSG);
+            $packageForm->setData($this->resetInsertedDates($post));
         }
 
         // Initialize the form
@@ -96,6 +98,13 @@ class companyaccountController extends AbstractActionController
 
     public function function_alert($msg){
         echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
+
+    public function resetInsertedDates($post) {
+        $insertedDates = [];
+        $insertedDates['startDate'] = $post['startDate'];
+        $insertedDates['expirationDate'] = $post['expirationDate'];
+        return $insertedDates;
     }
 
     public function checkAndDeductCredits($post, $company, $companyService) {
