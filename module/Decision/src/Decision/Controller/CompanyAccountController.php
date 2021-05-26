@@ -89,7 +89,8 @@ class companyaccountController extends AbstractActionController
         $email->sendApprovalMail($company);
 
         return new ViewModel([
-            'form' => $packageForm
+            'form' => $packageForm,
+            'company' => $company
         ]);
     }
 
