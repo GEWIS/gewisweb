@@ -220,7 +220,6 @@ class User extends AbstractAclService
         $form->setData($data);
 
         if (!$form->isValid()) {
-            echo "Test";
             return null;
         }
 
@@ -229,8 +228,6 @@ class User extends AbstractAclService
         $company = $this->getCompanyMapper()->findByEmail($data['email']);
 
         #check if the member has a corresponding user.
-//        $user = $this->getCompanyMapper()->findById($member->getLidnr());
-//        echo $user;
         if (null === $company) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
             echo "Company is null";
