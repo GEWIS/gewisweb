@@ -55,8 +55,9 @@ $this->headTitle($this->category->getPluralName());
                         <select name="sort" id="job-sort" class="form-control">
                             <option value="random"><?= $this->translate('Random') ?></option>
                             <option value="posted"><?= $this->translate('Most recent') ?></option>
-                            <option value="testid"><?= $this->translate('testid') ?></option>
-
+                            <option value="sector"><?= $this->translate('Sector') ?></option>
+                            <option value="name"><?= $this->translate('Name') ?></option>
+                            <option value="startingDate"><?= $this->translate('Starting Date') ?></option>
                         </select>
                     </div>
                     <?php if (isset($this->company)): ?>
@@ -97,7 +98,9 @@ $this->headTitle($this->category->getPluralName());
                             ?>
                             <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
-                                data-test="<?= $job->getName() ?>">
+                               data-sector="<?= $job->getSectors()->getName() ?>"
+                               data-name="<?= $job->getName() ?>"
+                               data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
                                 <div class="card-img">
                                     <img
                                         src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -241,15 +244,26 @@ $this->headTitle($this->category->getPluralName());
             },
             sortByDateDesc: function () {
                 sortCards(function (a, b) {
-                    console.log(a.dataset);
                     return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
                 });
             },
-            // sortByIdDesc: function () {
-            //     sortCards(function (a, b) {
-            //        return ()
-            //     });
-            // },
+            sortByStartingDateDesc: function () {
+                sortCards(function (a, b) {
+                    console.log(a.dataset.name);
+                    console.log(a.dataset.starts);
+                    return (new Date(a.dataset.starts) < new Date(b.dataset.starts)) ? -1 : 1;
+                });
+            },
+            sortBySector: function () {
+                sortCards(function (a, b) {
+                   return (a.dataset.sector.toLowerCase() > b.dataset.sector.toLowerCase()) ? -1 : 1;
+                });
+            },
+            sortByName: function () {
+                sortCards(function (a, b) {
+                    return (a.dataset.name.toLowerCase() < b.dataset.name.toLowerCase()) ? -1 : 1;
+                });
+            },
             sortByDefault: function () {
                 sortCards(function (a, b) {
                     return (parseInt(a.dataset.index) > parseInt(b.dataset.index)) ? 1 : -1;
@@ -283,6 +297,15 @@ $this->headTitle($this->category->getPluralName());
                 break;
             case 'testid':
                 cardGrid.sortByDefault();
+                break;
+            case 'sector':
+                cardGrid.sortBySector();
+                break;
+            case 'name':
+                cardGrid.sortByName();
+                break;
+            case 'startingDate':
+                cardGrid.sortByStartingDateDesc();
                 break;
             default:
                 cardGrid.sortByDefault();

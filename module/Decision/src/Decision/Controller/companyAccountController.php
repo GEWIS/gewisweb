@@ -157,7 +157,6 @@ class companyaccountController extends AbstractActionController
 
 
         $jobForm->setLabels($actualLabels);
-        //TODO: Update database for central values (values in setData())
         $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 

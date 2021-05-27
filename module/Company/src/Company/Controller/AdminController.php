@@ -503,6 +503,7 @@ class AdminController extends AbstractActionController
             $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
         }
         $jobForm->setLabels($actualLabels);
+        $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 
         // Initialize the view
