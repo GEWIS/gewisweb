@@ -60,6 +60,14 @@ $this->headTitle($this->category->getPluralName());
                             <option value="startingDate"><?= $this->translate('Starting Date') ?></option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="hours-filter"><?= $this->translate('Hours') ?></label>
+                        <select name="hours" id="hours-filter" class="form-control">
+                            <option value="all"><?= $this->translate('All') ?></option>
+                            <option value="part-time"><?= $this->translate('Part Time') ?></option>
+                            <option value="full-time"><?= $this->translate('Full Time') ?></option>
+                        </select>
+                    </div>
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>
@@ -228,6 +236,11 @@ $this->headTitle($this->category->getPluralName());
 
                 updateCardVisibility();
             },
+            filterByHours: function (hours) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['hours'] = (card.hours.indexOf(hours) > -1);
+                });
+            }
             clearLabelFilter: function () {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = true;
@@ -306,6 +319,19 @@ $this->headTitle($this->category->getPluralName());
                 break;
             case 'startingDate':
                 cardGrid.sortByStartingDateDesc();
+                break;
+            default:
+                cardGrid.sortByDefault();
+        }
+    });
+
+    $("#job-sort").change(function () {
+        switch ($(this).val()) {
+            case 'part-time':
+                cardGrid.filterByHours("part-time");
+                break;
+            case 'full-time':
+                cardGrid.sortByDefault();
                 break;
             default:
                 cardGrid.sortByDefault();
