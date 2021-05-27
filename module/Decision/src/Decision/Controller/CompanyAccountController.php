@@ -96,6 +96,9 @@ class companyaccountController extends AbstractActionController
 
         $packageForm = $companyService->getPackageForm('highlight');
 
+        //Set the values for the selection element
+        $packageForm->get('highlight')->setValueOptions($this->getVacancies());
+
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -106,6 +109,22 @@ class companyaccountController extends AbstractActionController
         return new ViewModel([
             'form' => $packageForm
         ]);
+    }
+
+    /**
+     * Gets the names of all active vacancies for a certain company
+     *
+     *
+     */
+    public function getVacancies() {
+        //TODO: change 'testvacancy' to a company name
+        $vacancy_object = $this->getCompanyAccountMapper()->findActiveVacancies('testvacancy');
+        $vacancynames = [];
+
+        foreach ($vacancy_object as &$vacancy) {
+            array_push($vacancynames, $vacancy->getName());
+        }
+        return $vacancynames;
     }
 
     public function function_alert($msg){
@@ -285,4 +304,13 @@ class companyaccountController extends AbstractActionController
         return $this->getServiceLocator()->get('decision_service_companyAccount');
     }
 
+    /**
+     * Get the CompanyAccount mapper.
+     *
+     * @return \Decision\Mapper\companyAccount
+     */
+    public function getCompanyAccountMapper()
+    {
+        return $this->getServiceLocator()->get('decision_mapper_companyAccount');
+    }
 }
