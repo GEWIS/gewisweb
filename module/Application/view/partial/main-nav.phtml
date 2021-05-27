@@ -197,6 +197,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                         <li class="dropdown dropdown-submenu">
                             <!-- Button to general vacancies page  -->
+                            <!-- TODO: add right url once implemented -->
                             <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
                                class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
@@ -204,6 +205,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <span class="caret"></span>
                             </a>
                             <!-- Sub-menu for vacancies -->
+                            <!-- TODO: add right url once implemented -->
                             <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
                                class="hidden-sm hidden-xs">
                                 <?= $this->translate('Vacancies') ?>
@@ -216,6 +218,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 <!--                            --><?php //foreach ($this->jobCategories() as $category):
                             // Test jobcategories for side-menu
                             // comment out next line when actual jobCategories need to be used
+                            // TODO: make sure this is not hardcood once everything is implemented
                             $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
                                 <!-- Test jobcategories for side-menu
                                 comment out next line when actual jobCategories need to be used -->
