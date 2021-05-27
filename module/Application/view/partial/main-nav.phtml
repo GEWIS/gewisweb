@@ -213,18 +213,18 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <!-- Correct line, shows no categes as long as no jobCategories are created
                             uncomment next line when actual jobCategories need to be used -->
                             <!-- For each possible job category, add it to the sub-menu -->
-<!--                            --><?php //foreach ($this->jobCategories() as $category):
+                            <?php foreach ($this->jobCategories() as $category):
                             // Test jobcategories for side-menu
                             // comment out next line when actual jobCategories need to be used
-                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
+//                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
                                 <!-- Test jobcategories for side-menu
                                 comment out next line when actual jobCategories need to be used -->
-                                <?php foreach ($arr as $category):
+<!--                                --><?php //foreach ($arr as $category):
                                     // Make sure url is all lower case and does not contain spaces
-                                    $url = str_replace(' ', '', strtolower($category))
+                                    $url = str_replace(' ', '', strtolower($category->getName()))
                                     ?>
                                         <li>
-                                            <a href="<?= $this->url('company/jobList', ['category' => $url]) ?>"><?= $category ?></a>
+                                            <a href="<?= $this->url('company/jobList', ['category' => $url]) ?>"><?= $category->getName() ?></a>
                                         </li>
                                 <?php endforeach ?>
                             </ul>
