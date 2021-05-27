@@ -194,7 +194,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li>
                             <!-- Button to general companies page -->
                             <a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a>
-                        </li>
                         <li class="dropdown dropdown-submenu">
                             <!-- Button to general vacancies page  -->
                             <!-- TODO: add right url once implemented -->
@@ -212,25 +211,27 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                            <!-- Correct line, shows no categes as long as no jobCategories are created
-                            uncomment next line when actual jobCategories need to be used -->
-                            <!-- For each possible job category, add it to the sub-menu -->
-                            <?php foreach ($this->jobCategories() as $category):
-                            // Test jobcategories for side-menu
-                            // comment out next line when actual jobCategories need to be used
 
+                            <!-- Hardcoded version (for testing purpose) -->
+<!--                            --><?php
 //                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
-
-
-                                <!-- Test jobcategories for side-menu
-                                comment out next line when actual jobCategories need to be used -->
 <!--                                --><?php //foreach ($arr as $category):
-                                    // Make sure url is all lower case and does not contain spaces
-                                    $url = str_replace(' ', '', strtolower($category->getName()))
-                                    ?>
-                                        <li>
-                                            <a href="<?= $this->url('company/jobList', ['category' => $url]) ?>"><?= $category->getName() ?></a>
-                                        </li>
+//                                    $url = str_replace(' ', '', strtolower($category))
+//                                    ?>
+<!--                                        <li>-->
+<!--                                            <a href="--><?//= $this->url('company/jobList', ['category' => $url]) ?><!--">--><?//= $category ?><!--</a>-->
+<!--                                        </li>-->
+<!--                                --><?php //endforeach ?>
+
+                                <!-- Final version -->
+                                <!-- Get all job categories to use in submenu -->
+                                <!-- Only shows created categories when there are active vacancies in the category -->
+                                <?php foreach ($this->jobCategories() as $category): ?>
+                                    <li>
+                                        <!-- Use url with slugname of category for the page with specific category -->
+                                        <!-- Use plural name for category in menu bar -->
+                                        <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
+                                    </li>
                                 <?php endforeach ?>
                             </ul>
                     </ul>
