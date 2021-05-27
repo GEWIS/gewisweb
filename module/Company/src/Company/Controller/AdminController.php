@@ -144,7 +144,7 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyForm = $companyService->getJobForm();
+        $companyForm = $companyService->getJobFormCompany();
 
         // Get parameters
         $companyName = $this->params('slugCompanyName');
@@ -458,7 +458,7 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $jobForm = $companyService->getJobForm();
+        $jobForm = $companyService->getJobFormCompany();
 
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
