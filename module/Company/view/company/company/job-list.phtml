@@ -96,7 +96,8 @@ $this->headTitle($this->category->getPluralName());
                             ]);
                             ?>
                             <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
-                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
+                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
+                                data-test="<?= $job->getName() ?>">
                                 <div class="card-img">
                                     <img
                                         src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -240,14 +241,15 @@ $this->headTitle($this->category->getPluralName());
             },
             sortByDateDesc: function () {
                 sortCards(function (a, b) {
+                    console.log(a.dataset);
                     return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
                 });
             },
-            sortByIdDesc: function () {
-                sortCards(function (a, b) {
-                   return ()
-                });
-            },
+            // sortByIdDesc: function () {
+            //     sortCards(function (a, b) {
+            //        return ()
+            //     });
+            // },
             sortByDefault: function () {
                 sortCards(function (a, b) {
                     return (parseInt(a.dataset.index) > parseInt(b.dataset.index)) ? 1 : -1;
