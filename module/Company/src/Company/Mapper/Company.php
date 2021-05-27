@@ -163,6 +163,51 @@ class Company
         $this->em->flush();
     }
 
+    public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
+    {
+        return [
+            'name' => $name,
+            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+            'options' => [
+                'label' => $label,
+                'object_manager' => $this->em,
+                'target_class' => $targetClass,
+                'property' => $property,
+                'find_method' => [
+                    'name' => 'findBy',
+                    'params' => [
+                        'criteria' => ['language' => $locale],
+                        // Use key 'orderBy' if using ORM
+                        //'orderBy'  => ['lastname' => 'ASC'],
+
+                    ],
+                ],
+            ]
+            //'attributes' => [
+            //'class' => 'form-control input-sm'
+            //]
+        ];
+    }
+
+    // TODO: decide if we should make a separate mapper for this
+    public function findSectorByNeutralId($id)
+    {
+        $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getSectorsRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobSector');
+    }
+
     /**
      * Get the repository for this mapper.
      *

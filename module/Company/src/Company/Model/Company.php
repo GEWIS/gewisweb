@@ -108,6 +108,21 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     protected $bannerCredits;
 
+//    /**
+//     * The job's category.
+//     *
+//     * @ORM\ManyToMany(targetEntity="\Company\Model\JobSector")
+//     * @ORM\JoinColumn(name="id", referencedColumnName="languageNeutralId")
+//     */
+//    protected $sector;
+
+    /**
+     * The companies sector.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $sector;
+
     /**
      * Constructor.
      */
@@ -340,6 +355,24 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->phone = $phone;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSector()
+    {
+        return $this->sector;
+    }
+
+    /**
+     * @param mixed $sector
+     */
+    public function setSector($sector)
+    {
+        $this->sector = $sector;
+    }
+
+
 
     /**
      *
@@ -606,6 +639,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setBannerCredits($this->updateIfSet($data['bannerCredits'], 0));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
+        $this->setSector($this->updateIfSet($data['sector'], null));
         $this->translations = $newTranslations;
     }
 
@@ -630,6 +664,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['highlightCredits'] = $this->getHighlightCredits();
         $arraycopy['bannerCredits'] = $this->getBannerCredits();
         $arraycopy['hidden'] = $this->getHidden();
+        $arraycopy['sector'] = $this->getSector();
 
         // Languages
         $arraycopy['languages'] = [];
