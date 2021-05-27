@@ -94,7 +94,7 @@ class companyaccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyName = $company->getName();
 
-        $packageForm = $companyService->getPackageForm();
+        $packageForm = $companyService->getPackageForm('highlight');
 
         $packageForm->setAttribute(
             'action',

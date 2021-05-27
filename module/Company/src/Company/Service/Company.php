@@ -1093,6 +1093,9 @@ class Company extends AbstractACLService
         if ($type === 'featured') {
             return $this->sm->get('company_admin_edit_featuredpackage_form');
         }
+        if ($type === 'highlight') {
+            return $this->sm->get('company_admin_edit_highlightpackage_form');
+        }
 
         return $this->sm->get('company_admin_edit_package_form');
     }

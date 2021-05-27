@@ -98,20 +98,22 @@ class EditPackage extends Form
             ]);
         }
 
-        $this->add([
-            'name' => 'highlight',
-            'required' => true,
-            'type' => '\Zend\Form\Element\Select',
-            'options' => [
-                'label' => $translate->translate('Select Vacancy'),
-                'value_options' => array(
-                    '0' => 'French',
-                    '1' => 'English',
-                    '2' => 'Japanese',
-                    '3' => 'Chinese',
-                )
-            ],
-        ]);
+        if ($type === "highlight") {
+            $this->add([
+                'name' => 'highlight',
+                'required' => true,
+                'type' => '\Zend\Form\Element\Select',
+                'options' => [
+                    'label' => $translate->translate('Select Vacancy'),
+                    //                'value_options' => array(
+                    //                    '0' => 'French',
+                    //                    '1' => 'English',
+                    //                    '2' => 'Japanese',
+                    //                    '3' => 'Chinese',
+                    //                )
+                ],
+            ]);
+        }
 
 
         $this->add([

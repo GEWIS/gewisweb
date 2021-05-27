@@ -9,7 +9,7 @@
         $form->setAttribute('class', 'form-horizontal');
         $form->prepare();
         echo $this->form()->openTag($form);
-        echo $this->partial('decision/companyaccount/highlightform.phtml', ['form' => $form]);
+        echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'highlight']);
         echo $this->form()->closeTag($form);?>
     </div>
 </section>

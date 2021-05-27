@@ -75,6 +75,12 @@ class Module
                     "banner"
                 );
             },
+            'company_admin_edit_highlightpackage_form' => function ($sm) {
+                return new \Company\Form\EditPackage(
+                    $sm->get('translator'),
+                    "highlight"
+                );
+            },
             'company_admin_edit_company_form' => function ($sm) {
                 return new \Company\Form\EditCompany(
                     $sm->get('company_mapper_company'),
