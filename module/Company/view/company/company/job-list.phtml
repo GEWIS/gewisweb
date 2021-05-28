@@ -127,6 +127,10 @@ $this->headTitle($this->category->getPluralName());
                                               title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
                                     <?php endforeach; ?>
                                 </div>
+                                <span class="label label-default job-hours"
+                                      data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                <span class="label label-default job-sectors"
+                                      data-sectors="<?= $job->getSectors()->getName(); ?>" data-toggle="tooltip"></span>
                                 <div class="card-footer">
                                     <button class="btn btn-link"><?= $this->translate('View') ?></button>
                                     <span class="small">
@@ -178,12 +182,18 @@ $this->headTitle($this->category->getPluralName());
         // Pre-compute card details
         var cards = $('.card', $grid).map(function () {
             var $card = $(this);
-
+            
             return {
                 target: $card,
                 text: $(searchElements, $card).text().toLowerCase(),
                 labels: $('.job-label', $card).map(function () {
                     return $(this).data('label');
+                }).get(),
+                hours: $('.job-hours', $card).map(function () {
+                    return $(this).data('hours');
+                }).get(),
+                sectors: $('.job-sectors', $card).map(function () {
+                    return $(this).data('sectors');
                 }).get()
             };
         }).get();
@@ -227,6 +237,7 @@ $this->headTitle($this->category->getPluralName());
 
         registerFilter('label', true);
         registerFilter('search', true);
+        registerFilter('hours', true);
 
         return {
             filterByLabel: function (label) {
@@ -238,9 +249,12 @@ $this->headTitle($this->category->getPluralName());
             },
             filterByHours: function (hours) {
                 cards.forEach(function (card) {
+                    console.log(card);
                     card.isMatchOn['hours'] = (card.hours.indexOf(hours) > -1);
                 });
-            }
+
+                updateCardVisibility();
+            },
             clearLabelFilter: function () {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = true;
@@ -262,8 +276,6 @@ $this->headTitle($this->category->getPluralName());
             },
             sortByStartingDateDesc: function () {
                 sortCards(function (a, b) {
-                    console.log(a.dataset.name);
-                    console.log(a.dataset.starts);
                     return (new Date(a.dataset.starts) < new Date(b.dataset.starts)) ? -1 : 1;
                 });
             },
@@ -325,10 +337,10 @@ $this->headTitle($this->category->getPluralName());
         }
     });
 
-    $("#job-sort").change(function () {
+    $("#hours-filter").change(function () {
         switch ($(this).val()) {
             case 'part-time':
-                cardGrid.filterByHours("part-time");
+                cardGrid.filterByHours(0);
                 break;
             case 'full-time':
                 cardGrid.sortByDefault();
