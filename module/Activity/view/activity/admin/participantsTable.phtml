@@ -47,7 +47,7 @@
                                     echo $this->escapeHtml($fieldValue->getValue());
                                     break;
                                 case 1:
-                                    if ($fieldValue->getValue()) {
+                                    if ($fieldValue->getValue() === "Yes") {
                                         echo $this->translate('Yes');
                                     } else {
                                         echo $this->translate('No');
