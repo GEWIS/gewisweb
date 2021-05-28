@@ -1,6 +1,7 @@
 *~
 *autoload_classmap.php
 *.gitignore
+*.kate-swp
 *.log
 .*.DS_Store
 .*.sw?
@@ -15,6 +16,7 @@
 .mysql/
 .project
 .sass-cache/
+.scannerwork/
 .settings
 Vagrantfile
 .vagrant/

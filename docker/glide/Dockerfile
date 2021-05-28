@@ -35,15 +35,15 @@ RUN php composer.phar install -o --no-dev
 FROM php-target as glide
 WORKDIR /glide
 
-COPY ./php.ini /usr/local/etc/php/conf.d/default.ini
-COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
+COPY --chown=www-data:www-data ./php.ini /usr/local/etc/php/conf.d/default.ini
+COPY --chown=www-data:www-data ./php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
 
-COPY --from=composer-build /glide/vendor /glide/vendor
+COPY --chown=www-data:www-data --from=composer-build /glide/vendor /glide/vendor
 
-COPY . /glide
+COPY --chown=www-data:www-data . /glide
 
-RUN chmod 0777 ./docker-entrypoint.sh
+RUN chmod 0775 ./docker-entrypoint.sh
 
-RUN chown -R www-data:www-data /glide
+VOLUME ["/glide/public"]
 
 ENTRYPOINT ["/bin/sh", "/glide/docker-entrypoint.sh"]
