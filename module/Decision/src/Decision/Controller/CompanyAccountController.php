@@ -14,13 +14,9 @@ class companyaccountController extends AbstractActionController
 
     public function indexAction()
     {
-        $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-        $company = "TestA";
-
         return new ViewModel([
             //fetch the active vacancies of the logged in company
-            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($company),
-            'company' => $company
+            'vacancies' => $this->getVacancies(),
         ]);
     }
 
@@ -91,13 +87,11 @@ class companyaccountController extends AbstractActionController
 
     public function highlightAction(){
         $companyService = $this->getCompanyService();
-        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $companyName = $company->getName();
 
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('highlight')->setValueOptions($this->getVacancies());
+        $packageForm->get('highlight')->setValueOptions($this->getVacancyNames($this->getVacancies()));
 
         $packageForm->setAttribute(
             'action',
@@ -112,19 +106,32 @@ class companyaccountController extends AbstractActionController
     }
 
     /**
-     * Gets the names of all active vacancies for a certain company
+     * Gets all active vacancies for a certain company
      *
      *
      */
     public function getVacancies() {
-        //TODO: change 'testvacancy' to a company name
-        $vacancy_object = $this->getCompanyAccountMapper()->findActiveVacancies('testvacancy');
-        $vacancynames = [];
+        //Obtain the id of the logged in company
+        $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
 
-        foreach ($vacancy_object as &$vacancy) {
-            array_push($vacancynames, $vacancy->getName());
+        //obtain company package information
+        $companyPackageInfo = $this->getcompanyAccountService()->getCompanyPackageInfo($companyId);
+
+        return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId());
+    }
+
+    /**
+     * Gets the names from all vacancies in a vacancy object
+     *
+     *
+     */
+    public function getVacancyNames($vacancy_objects) {
+        $vacancyNames = [];
+
+        foreach ($vacancy_objects as &$vacancy) {
+            array_push($vacancyNames, $vacancy->getName());
         }
-        return $vacancynames;
+        return $vacancyNames;
     }
 
     public function function_alert($msg){

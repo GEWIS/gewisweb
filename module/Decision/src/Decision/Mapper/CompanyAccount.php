@@ -27,23 +27,46 @@ class companyAccount
         $this->em = $em;
     }
 
+    // Code Review Pim:
+    // Change to function name to findActiveVacancies() (start every word past the first with a capital letter)
     /**
-     * Find all active vacancies of selected company
+     * Find all active vacancies of selected company.
      *
-     * @param string $cName the name of the company who's active
+     * @param integer $packageID the package id of the company who's active
      * vacancies will be fetched.
      *
-     * @return array Name and description of active vacancies.
+     * @return array Job model.
      */
-    public function findactiveVacancies($cName)
+    public function findactiveVacancies($packageID)
     {
         $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Decision\Model\Vacancy', 'v');
+        $builder->addRootEntityFromClassMetadata('Company\Model\Job', 'j');
 
-        $select = $builder->generateSelectClause(['v' => 't1']);
+        $select = $builder->generateSelectClause(['j' => 't1']);
         $sql = "SELECT $select FROM Job AS t1".
-        " WHERE t1.active = 1 AND".
-        " t1.name = '$cName'";
+            " WHERE t1.active = 1 AND".
+            " t1.package_id = $packageID";
+
+        $query = $this->em->createNativeQuery($sql, $builder);
+        return $query->getResult();
+    }
+
+    /**
+     * Find all available company package information given a company id
+     *
+     * @param integer $id the id of the company who's company information
+     * will be fetched.
+     *
+     * @return array CompanyJobPackage model
+     */
+    public function findCompanyPackageInfo($id)
+    {
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\CompanyJobPackage', 'cp');
+
+        $select = $builder->generateSelectClause(['cp' => 't1']);
+        $sql = "SELECT $select FROM CompanyPackage AS t1".
+            " WHERE t1.company_id = $id AND packageType = 'job'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();
