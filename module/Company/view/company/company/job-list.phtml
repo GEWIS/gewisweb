@@ -270,6 +270,7 @@ $this->headTitle($this->category->getPluralName());
     $("#job-sort").change(function () {
         switch ($(this).val()) {
             case 'posted':
+                console.log('test');
                 cardGrid.sortByDateDesc();
                 break;
             default:
