@@ -94,6 +94,7 @@ class companyaccountController extends AbstractActionController
 
     public function highlightAction(){
         $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
         $packageForm = $companyService->getPackageForm('highlight');
 
@@ -108,7 +109,8 @@ class companyaccountController extends AbstractActionController
         );
 
         return new ViewModel([
-            'form' => $packageForm
+            'form' => $packageForm,
+            'company' => $company
         ]);
     }
 

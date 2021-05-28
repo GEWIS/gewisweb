@@ -5,6 +5,11 @@
                 <h1>Add highlight</h1>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3><? echo "You have currently got " . $company->getHighlightCredits() . " credits (days) left to highlight a vacancy."; ?></h3>
+            </div>
+        </div>
         <?php
         $form->setAttribute('class', 'form-horizontal');
         $form->prepare();
