@@ -48,12 +48,13 @@ class companyaccountController extends AbstractActionController
                     // Check if the size of the image is 90x728
                     if ($this->checkImageSize($image, $packageForm)) {
                         // Check if Company has enough credits and subtract them if so
-                        if ($this->deductCredits($post, $company, $companyService)) {
+                        if ($this->checkAndDeductCredits($post, $company, $companyService)) {
                             // Upload the banner to database and redirect to Companypanel
                             if ($companyService->insertPackageForCompanySlugNameByData(
                                 $companyName,
-                                $request->getPost(),
-                                $image
+                                $post,
+                                $image,
+                                'banner'
                             )) {
                                 return $this->redirect()->toRoute(
                                     'companyaccount'
@@ -65,11 +66,13 @@ class companyaccountController extends AbstractActionController
                     }
                 } else {
                     $MSG = "Please submit an image.";
+                    $packageForm->setData($this->resetInsertedDates($post));
                 }
             } else {
                 $MSG = "Please make sure the expirationdate is after the startingdate.";
             }
             echo $this->function_alert($MSG);
+            $packageForm->setData($this->resetInsertedDates($post));
         }
 
         // Initialize the form
@@ -80,8 +83,12 @@ class companyaccountController extends AbstractActionController
             )
         );
 
+        $email = $this->getDecisionEmail();
+        $email->sendApprovalMail($company);
+
         return new ViewModel([
-            'form' => $packageForm
+            'form' => $packageForm,
+            'company' => $company
         ]);
     }
 
@@ -138,7 +145,14 @@ class companyaccountController extends AbstractActionController
         echo "<script type='text/javascript'>alert('$msg');</script>";
     }
 
-    public function deductCredits($post, $company, $companyService) {
+    public function resetInsertedDates($post) {
+        $insertedDates = [];
+        $insertedDates['startDate'] = $post['startDate'];
+        $insertedDates['expirationDate'] = $post['expirationDate'];
+        return $insertedDates;
+    }
+
+    public function checkAndDeductCredits($post, $company, $companyService) {
         global $MSG;
         $ban_start = new \DateTime($post['startDate']);
         $ban_end = new \DateTime($post['expirationDate']);
@@ -309,6 +323,16 @@ class companyaccountController extends AbstractActionController
     public function getcompanyAccountService()
     {
         return $this->getServiceLocator()->get('decision_service_companyAccount');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return DesicionEmail
+     */
+    protected function getDecisionEmail()
+    {
+        return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
 
     /**

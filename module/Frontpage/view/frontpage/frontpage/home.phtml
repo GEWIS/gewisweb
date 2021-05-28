@@ -42,15 +42,16 @@
                                 </div>
                             </div>
                         </article>
-                        <?php if (!isset($bannerShown)): ?>
-                            <article class="content-article">
-                                <?php if ($companyBanner !== null): ?>
-                                    <?= $this->partial('partial/banner.phtml', ['banner' => $companyBanner]) ?>
-                                <?php endif ?>
-                            </article>
-                        <?php endif;
-                        $bannerShown = true; ?>
                     <?php endforeach; ?>
+
+                    <?php if (!isset($bannerShown)): ?>
+                        <article class="content-article">
+                            <?php if ($companyBanner !== null): ?>
+                                <?= $this->partial('partial/banner.phtml', ['banner' => $companyBanner]) ?>
+                            <?php endif ?>
+                        </article>
+                    <?php endif;
+                    $bannerShown = true; ?>
 
                     <script>
                         $(".reveal-button").click(function () {

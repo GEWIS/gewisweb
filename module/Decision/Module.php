@@ -53,7 +53,8 @@ class Module
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member',
                 'decision_service_companyAccount' => 'Decision\Service\CompanyAccount',
-                'decision_service_settings' => 'Decision\Service\Settings'
+                'decision_service_settings' => 'Decision\Service\Settings',
+                'decision_service_decisionEmail' => 'Decision\Service\DecisionEmail'
             ],
             'factories' => [
                 'decision_mapper_settings' => function ($sm) {
