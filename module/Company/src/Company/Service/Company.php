@@ -254,7 +254,7 @@ class Company extends AbstractACLService
      *
      * @return array
      */
-    public function getSectorList()
+    public function getSectorList($lang)
     {
         $translator = $this->getTranslator();
 
@@ -264,7 +264,11 @@ class Company extends AbstractACLService
             );
         }
         $results = $this->getSectorMapper()->findAll();
-        return $this->getUniqueInArray($results, function ($a) {
+        $sectors = [];
+        foreach($results as $sector) {
+            array_push($sectors, $this->getSectorMapper()->siblingSector($sector, $lang));
+        }
+        return $this->getUniqueInArray($sectors, function ($a) {
             return $a->getLanguageNeutralId();
         });
 

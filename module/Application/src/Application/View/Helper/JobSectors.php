@@ -13,11 +13,11 @@ class JobSectors extends AbstractHelper implements ServiceLocatorAwareInterface
      * Returns all visible categories
      *
      */
-    public function __invoke()
+    public function __invoke($lang)
     {
         $pluginManager = $this->getServiceLocator();
         $companyService = $pluginManager->getServiceLocator()->get('Company\Service\Company');
-        $sectors = $companyService->getSectorList();
+        $sectors = $companyService->getSectorList($lang);
         return $sectors;
     }
 }

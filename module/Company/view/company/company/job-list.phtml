@@ -7,7 +7,6 @@ if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
 $this->headTitle($this->category->getPluralName());
-
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -70,7 +69,7 @@ $this->headTitle($this->category->getPluralName());
                         <label for="sectors-filter"><?= $this->translate('Sectors') ?></label>
                         <select name="sectors" id="sector-filter" class="form-control">
                             <option value="all" > <?= $this->translate("All")?></option>
-                            <?php foreach ($this->jobSectors() as $sector): ?>
+                            <?php foreach ($this->jobSectors($locale) as $sector): ?>
                                 <option value="<?= $sector->getLanguageNeutralId()?>" > <?= $sector->getName()?></option>
                             <?php endforeach; ?>
                         </select>
@@ -283,6 +282,13 @@ $this->headTitle($this->category->getPluralName());
 
                 updateCardVisibility();
             },
+            clearSectorFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = true;
+                });
+
+                updateCardVisibility();
+            },
             filterByText: function (query) {
                 cards.forEach(function (card) {
                     card.isMatchOn['search'] = (card.text.indexOf(query.toLowerCase()) > -1);
@@ -331,11 +337,13 @@ $this->headTitle($this->category->getPluralName());
         }
     });
 
+    // Sort jobs on given option
     $("#job-sort").change(function () {
         switch ($(this).val()) {
             case 'testid':
                 cardGrid.sortByDefault();
                 break;
+            // based on sector name (can maybe be removed as there also exists a filter for this)
             case 'sector':
                 cardGrid.sortBySector();
                 break;
@@ -350,6 +358,7 @@ $this->headTitle($this->category->getPluralName());
         }
     });
 
+    // Filter on Hours type
     $("#hours-filter").change(function () {
         switch ($(this).val()) {
             case 'part-time':
@@ -359,13 +368,21 @@ $this->headTitle($this->category->getPluralName());
                 cardGrid.filterByHours(1);
                 break;
             default:
+                // also used for "all" option
                 cardGrid.clearHoursFilter();
         }
     });
 
+    // Filter on sectors
     $("#sector-filter").change(function () {
         var sector = $(this).val();
-        console.log($(this).val());
+
+        // When "all" is selected clear all filters.
+        if (sector == "all") {
+            cardGrid.clearSectorFilter();
+            return;
+        }
+        // Filter on given sector
         cardGrid.filterBySector(sector);
     });
 
