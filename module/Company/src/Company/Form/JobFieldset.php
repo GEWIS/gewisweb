@@ -1,7 +1,6 @@
 <?php
 
 namespace Company\Form;
-
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
@@ -9,6 +8,7 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
+
     protected $mapper;
     protected $translator;
 
@@ -63,16 +63,16 @@ class JobFieldset extends Fieldset
             ],
         ]);
 
-        $this->add([
-            'name' => 'website',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Website'),
-                'required' => false,
-            ],
-        ]);
+//        $this->add([
+//            'name' => 'website',
+//            'attributes' => [
+//                'type' => 'text',
+//            ],
+//            'options' => [
+//                'label' => $translator->translate('Website'),
+//                'required' => false,
+//            ],
+//        ]);
 
         $this->add([
             'name' => 'attachment_file',
@@ -86,39 +86,75 @@ class JobFieldset extends Fieldset
             ],
         ]);
 
-        $this->add([
-            'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Email'),
-                'required' => false,
-            ],
-        ]);
+//        $this->add([
+//            'name' => 'email',
+//            'type' => 'Zend\Form\Element\Email',
+//            'attributes' => [
+//                'type' => 'text',
+//            ],
+//            'options' => [
+//                'label' => $translator->translate('Email'),
+//                'required' => false,
+//            ],
+//        ]);
 
-        $this->add([
-            'name' => 'contactName',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Contact name'),
-                'required' => false,
-            ],
-        ]);
+//        $this->add([
+//            'name' => 'contactName',
+//            'attributes' => [
+//                'type' => 'text',
+//            ],
+//            'options' => [
+//                'label' => $translator->translate('Contact name'),
+//                'required' => false,
+//            ],
+//        ]);
 
-        $this->add([
-            'name' => 'phone',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Phone'),
-                'required' => false,
-            ],
-        ]);
+//        $this->add([
+//            'name' => 'phone',
+//            'attributes' => [
+//                'type' => 'text',
+//            ],
+//            'options' => [
+//                'label' => $translator->translate('Phone'),
+//                'required' => false,
+//            ],
+//        ]);
+
+//        $this->add(array(
+//            'type' => 'Zend\Form\Element\Select',
+//            'name' => 'hours',
+//            'options' => array(
+//                'label' => 'Hours',
+//                'value_options' => array(
+//                    '0' => 'Part time',
+//                    '1' => 'Full time',
+//                ),
+//            )
+//        ));
+
+
+//        $this->add([
+//            'name' => 'startingDate',
+//            'type' => 'Zend\Form\Element\Date',
+//            'attributes' => [
+//                'required' => 'require',
+//                'step' => '1',
+//            ],
+//            'options' => [
+//                'label' => $translator->translate('Starting date'),
+//            ],
+//        ]);
+
+
+//        $this->add(
+//            $this->mapper->createObjectSelectConfig(
+//                'Company\Model\JobSector',
+//                'name',
+//                $this->translator->translate('Sectors'),
+//                'sectors',
+//                $this->translator->getTranslator()->getLocale()
+//            )
+//        );
 
         $this->add([
             'name' => 'description',

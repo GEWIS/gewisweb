@@ -46,6 +46,15 @@ class companyAccount extends AbstractAclService
         return 'companyAccount';
     }
 
+    public function getCompany() {
+        $companyservice = $this->sm->get('company_auth_service');
+        return $companyservice->getIdentity();
+    }
+
+    public function getCompanyContactEmail() {
+        return $this->getCompany()->getContactEmail();
+    }
+
     /**
      * Get the Acl.
      *

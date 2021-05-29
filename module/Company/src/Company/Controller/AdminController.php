@@ -6,6 +6,9 @@ use DateInterval;
 use DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
+use Company\Mapper\Company as CompanyMapper;
+use Company\Model\Company as CompanyModel;
+use Decision\Service\DecisionEmail as Email;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
@@ -139,13 +142,17 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction()
     {
-        // Get useful stuf
+        // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyForm = $companyService->getJobForm();
+        $companyForm = $companyService->getJobFormCompany();
 
         // Get parameters
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageId');
+
+        //get company
+        $companyMapper = $this->getCompanyMapper();
+        $company = $companyMapper->findCompanyBySlugName($companyName);
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -156,6 +163,11 @@ class AdminController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
+
+//            //Send approval email to admin
+//            $email = $this->getDecisionEmail();
+//            $email->sendApprovalMail($company);
+
 
             if ($job) {
                 // Redirect to edit page
@@ -446,7 +458,7 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $jobForm = $companyService->getJobForm();
+        $jobForm = $companyService->getJobFormCompany();
 
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
@@ -491,6 +503,7 @@ class AdminController extends AbstractActionController
             $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
         }
         $jobForm->setLabels($actualLabels);
+        $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 
         // Initialize the view
@@ -666,5 +679,36 @@ class AdminController extends AbstractActionController
     protected function getCompanyService()
     {
         return $this->getServiceLocator()->get('company_service_company');
+    }
+
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return CompanyModel
+     */
+    protected function getCompanyModel()
+    {
+        return $this->getServiceLocator()->get('company_model_company');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return CompanyMapper
+     */
+    protected function getCompanyMapper()
+    {
+        return $this->getServiceLocator()->get('company_mapper_company');
+    }
+
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return DesicionEmail
+     */
+    protected function getDecisionEmail()
+    {
+        return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
 }

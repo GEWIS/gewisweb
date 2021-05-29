@@ -83,7 +83,6 @@ class CompanySession extends Storage\Session
 
         $this->session->{$this->member} = $session->id;
         $this->saveSession($session->id);
-
         return true;
     }
 
@@ -180,7 +179,7 @@ class CompanySession extends Storage\Session
     public function __construct($sm)
     {
         $this->sm = $sm;
-        parent::__construct(null, null, null);
+        parent::__construct("User\Authentication\CompanyStorage", null, null);
     }
 
     /**

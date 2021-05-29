@@ -1,9 +1,9 @@
 <?php
-// set title
-$this->headTitle($this->translate('Company Account'));
-
+namespace Decision\Mapper;
+$member=" ";
+$meetingsCollection=" ";
+$isActive = " ";
 ?>
-
 <div class="container">
     <section class="section">
         <div class="row">
@@ -15,7 +15,7 @@ $this->headTitle($this->translate('Company Account'));
             <div class="col-md-12">
                 <h2><?= $this->translate('Personal') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/profile') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
@@ -50,8 +50,7 @@ $this->headTitle($this->translate('Company Account'));
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Activities') ?></div>
                     </a>
-                    <a href="<?= $this->url('companyaccount/bannerupload') ?>"
-                       class="panel panel-image align-middle">
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-flag"></div>
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
                     </a>
@@ -63,37 +62,41 @@ $this->headTitle($this->translate('Company Account'));
             </div>
         </div>
 
-        <!--Active vacancies feed -->
+        <div class="row mt-3">
+
+            <?php if ($isActive): ?>
+
+            <?php endif; ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
+
+            <?php endif; ?>
+        </div>
+
+
         <div class="row mt-3">
             <div class="col-md-6 mt-2">
                 <h2><?= $this->translate('Active vacancies') ?></h2>
-
-                <?php if (count($vacancies) > 0): ?>
+                <?php if (!is_null($this->upcoming) || True): ?>
                     <div class="panel panel-default">
-                        <?php foreach ($vacancies as &$vacancy): ?>
                         <div class="panel-heading">
-                            <strong><?= $this->translate($vacancy->getName()) ?></strong>
+                            <strong><?= $this->translate('Vacancy 1') ?></strong>
                         </div>
                         <div class="panel-body">
-                           <?= $this->translate($vacancy->getDescription())?>
-                            <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
+                           <?= "Description"?>
                         </div>
-                        <?php endforeach; ?>
                     </div>
+
                     <hr/>
                 <?php endif; ?>
-
-                <?php if (count($vacancies) === 0): ?>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <?= $this->translate("Currently there are no active vacancies,")?>
-                        <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">add new vacancy.</a>
-                    </div>
-                </div>
-                <?php endif; ?>
-
-
+                <hr/>
             </div>
+            <?php if ($isActive): ?>
+
+
+            <?php endif; ?>
+            <?php if ($this->acl('decision_acl')->isAllowed('regulations', 'list')): ?>
+
+            <?php endif; ?>
         </div>
 
     </section>

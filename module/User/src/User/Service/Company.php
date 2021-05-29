@@ -297,34 +297,7 @@ class Company extends AbstractAclService
         return $company;
     }
 
-//    /**
-//     * Login using a pin code.
-//     *
-//     * @param array $data
-//     * @return UserModel Authenticated user. Null if not authenticated.
-//     */
-//    public function pinLogin($data)
-//    {
-//        if (!$this->isAllowed('pin_login')) {
-//            throw new \User\Permissions\NotAllowedException(
-//                $this->getTranslator()->translate('You are not allowed to login using pin codes')
-//            );
-//        }
-//        // try to authenticate
-//        $auth = $this->getServiceManager()->get('user_pin_auth_service');
-//        $authAdapter = $auth->getAdapter();
-//
-//        $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
-//
-//        $result = $auth->authenticate();
-//
-//        // process the result
-//        if (!$result->isValid()) {
-//            return null;
-//        }
-//
-//        return $auth->getIdentity();
-//    }
+
 
     /**
      * Log the user out.
@@ -354,34 +327,7 @@ class Company extends AbstractAclService
     }
 
 
-//    /**
-//     * Gets the user identity, or gives a 403 if the user is not logged in
-//     *
-//     * @return User the current logged in user
-//     * @throws NotAllowedException if no user is logged in
-//     */
-//    public function getIdentity()
-//    {
-//        $authService = $this->getServiceManager()->get('user_auth_service');
-//        if (!$authService->hasIdentity()) {
-//            $translator = $this->getServiceManager()->get('translator');
-//            throw new NotAllowedException(
-//                $translator->translate('You need to log in to perform this action')
-//            );
-//        }
-//        return $authService->getIdentity();
-//    }
-//
-//    /**
-//     * Checks whether the user is logged in
-//     *
-//     * @return Bool true if the user is logged in, false otherwise
-//     */
-//    public function hasIdentity()
-//    {
-//        $authService = $this->getServiceManager()->get('user_auth_service');
-//        return $authService->hasIdentity();
-//    }
+
 
     public function detachUser($company)
     {
@@ -392,7 +338,7 @@ class Company extends AbstractAclService
          */
         $this->sm->get('user_doctrine_em')->clear();
 
-        return $this->getUserMapper()->findById($company->getLidnr());
+        return $this->getCompanyMapper()->findById($company->getLidnr());
     }
 
     public function logFailedLogin($user, $type)
@@ -402,7 +348,7 @@ class Company extends AbstractAclService
         $attempt->setTime(new \DateTime());
         $attempt->setType($type);
         $user = $this->detachUser($user);
-        $attempt->setUser($user);
+        $attempt->setCompany($user);
         $this->getLoginAttemptMapper()->persist($attempt);
     }
 
@@ -412,10 +358,10 @@ class Company extends AbstractAclService
         $ip = $this->sm->get('user_remoteaddress');
         $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
+        if ($loginAttemptMapper->getCompanyFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
             return true;
         }
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
+        if ($loginAttemptMapper->getCompanyFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
             return true;
         }
 

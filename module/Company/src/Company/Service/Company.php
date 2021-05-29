@@ -250,6 +250,27 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all sectors
+     *
+     * @return array
+     */
+    public function getSectorList()
+    {
+        $translator = $this->getTranslator();
+
+        if (!$this->isAllowed('listAllCategories')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to access the admin interface')
+            );
+        }
+        $results = $this->getSectorMapper()->findAll();
+        return $this->getUniqueInArray($results, function ($a) {
+            return $a->getLanguageNeutralId();
+        });
+
+    }
+
+    /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false
      *
      * @param $visible
@@ -674,6 +695,7 @@ class Company extends AbstractACLService
      * @param array $data
      * @param array $files
      * @return bool
+     * @throws \Exception
      */
     public function createJob($packageId, $data, $files)
     {
@@ -684,10 +706,11 @@ class Company extends AbstractACLService
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
+
             $jobs[$lang] = $job;
         }
 
-        return $this->saveJobData("", $jobs, $data, $files);
+        return $this->saveJobDataCompany("", $jobs, $data, $files);
     }
 
 
@@ -714,6 +737,7 @@ class Company extends AbstractACLService
             $data->toArray(),
             $files->toArray()
         );
+
         $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
         $jobForm->setCurrentSlug($data['slugName']);
         $jobForm->bind($jobs);
@@ -766,6 +790,111 @@ class Company extends AbstractACLService
 
         return true;
     }
+
+    /**
+     * Checks if the data is valid, and if it is, saves the Job
+     *
+     * @param int|string $languageNeutralId Identifier of the Job to save
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     * @param array $files The (new) files to save
+     *
+     * @return bool
+     */
+    public function saveJobDataCompany($languageNeutralId, $jobs, $data, $files)
+    {
+        $this->setCentralJobData($jobs, $data);
+
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit jobs')
+            );
+        }
+
+        $jobForm = $this->getJobFormCompany();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
+        $jobForm->setCurrentSlug($data['slugName']);
+        $jobForm->bind($jobs);
+        $jobForm->setData($mergedData);
+
+        if (!$jobForm->isValid()) {
+            return false;
+        }
+        $id = -1;
+
+        $labelIds = $data['labels'];
+        if (is_null($labelIds)) {
+            $labelIds = [];
+        }
+
+        foreach ($jobs as $lang => $job) {
+            $file = $files['jobs'][$lang]['attachment_file'];
+
+            if ($file !== null && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+                $oldPath = $job->getAttachment();
+
+                try {
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                } catch (\Exception $e) {
+                    return false;
+                }
+
+                if (!is_null($oldPath) && $oldPath != $newPath) {
+                    $this->getFileStorageService()->removeFile($oldPath);
+                }
+
+                $job->setAttachment($newPath);
+            }
+
+            $job->setTimeStamp(new \DateTime());
+
+            $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
+            $this->getJobMapper()->persist($job);
+            $this->saveJob();
+
+            $mapper = $this->getLabelMapper();
+            $lang = $job->getLanguage();
+            // Contains language specific labels
+            $labelsLangBased = [];
+            foreach ($labelIds as $labelId) {
+                $label = $mapper->findLabelById($labelId);
+                $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
+            }
+            $this->setLabelsForJob($job, $labelsLangBased);
+        }
+
+        return true;
+    }
+
+    /**
+     * Sets the centralised fields in both language jobs.
+     *
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     */
+    public function setCentralJobData($jobs, $data) {
+        $x = 0;
+        foreach ($jobs as $job) {
+            $job->setEmail($data['email']);
+            $job->setWebsite($data['website']);
+            $job->setHours($data['hours']);
+
+            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
+            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
+            $x++;
+
+            $job->setContactName($data['contactName']);
+            $job->setPhone($data['phone']);
+            if ($data['startingDate']!= null) {
+                $job->setStartingDate(new \DateTime($data['startingDate']));
+            }
+        }
+    }
+
 
     /**
      * @param Job $job
@@ -1195,6 +1324,15 @@ class Company extends AbstractACLService
     public function getCategoryMapper()
     {
         return $this->sm->get('company_mapper_category');
+    }
+
+    /**
+     * Returns the sector mapper
+     *
+     */
+    public function getSectorMapper()
+    {
+        return $this->sm->get('company_mapper_sector');
     }
 
     /**

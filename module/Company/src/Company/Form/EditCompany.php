@@ -44,7 +44,7 @@ class EditCompany extends Form
                 'required' => 'required',
             ],
             'options' => [
-                'label' => $translate->translate('Permalink'),
+                'label' => $translate->translate('Permalink *'),
                 'required' => 'required',
             ],
         ]);
@@ -56,7 +56,7 @@ class EditCompany extends Form
                 'required' => 'required',
             ],
             'options' => [
-                'label' => $translate->translate('Name'),
+                'label' => $translate->translate('Name *'),
                 'required' => 'required',
             ],
         ]);
@@ -132,7 +132,7 @@ class EditCompany extends Form
             'attributes' => [
             ],
             'options' => [
-                'label' => $translate->translate('Contact Email'),
+                'label' => $translate->translate('Contact Email *'),
             ],
         ]);
 
@@ -152,7 +152,7 @@ class EditCompany extends Form
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Contact name'),
+                'label' => $translate->translate('Contact name *'),
             ],
         ]);
 
@@ -343,7 +343,7 @@ class EditCompany extends Form
 
         $filter->add([
             'name' => 'contactName',
-            'required' => false,
+            'required' => true,
             'validators' => [
                 [
                     'name' => 'string_length',

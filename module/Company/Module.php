@@ -134,6 +134,11 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
+            'company_mapper_sector' => function ($sm) {
+                return new \Company\Mapper\Sector(
+                    $sm->get('company_doctrine_em')
+                );
+            },
             'company_mapper_label' => function ($sm) {
                 return new \Company\Mapper\Label(
                     $sm->get('company_doctrine_em')

@@ -181,6 +181,44 @@ class Job
         return $this->em->getRepository('Company\Model\Job');
     }
 
+    // TODO: decide if we should make a separate mapper for this
+    public function findSectorsById($id)
+    {
+        $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getSectorsRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobSector');
+    }
+
+    // TODO: decide if we should make a separate mapper for this
+    public function findCategoryById($id)
+    {
+        $objectRepository = $this->getCategoryRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getCategoryRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobCategory');
+    }
+
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [

@@ -236,6 +236,11 @@ class UserController extends AbstractActionController
         ]);
     }
 
+
+    /**
+     * Comapny login action.
+     * Retrieves filled in company credentials from the Login Form and runs it through the CompanyAutenticationService
+     */
     public function companyAction()
     {
         $companyService = $this->getCompanyService();

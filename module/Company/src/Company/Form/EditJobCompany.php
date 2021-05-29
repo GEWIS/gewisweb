@@ -22,6 +22,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $this->translator = $translator;
         $this->mapper = $mapper;
 
+
         $this->setHydrator($hydrator);
         $this->setAttribute('method', 'post');
 
@@ -46,6 +47,16 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]
         ]);
 
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobCategory',
+                'name',
+                $this->translator->translate('Category'),
+                'category',
+                'nl'
+            )
+        );
+
 
 
         $this->add([
@@ -56,6 +67,88 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'value_options' => $labelOptions
             ],
         ]);
+
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $this->translator->translate('Sectors'),
+                'sectors',
+                'nl'
+            )
+        );
+
+        $this->add([
+            'name' => 'email',
+            'hydrator' => $this->getHydrator(),
+            'type' => 'Zend\Form\Element\Email',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Email'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'website',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Website'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'startingDate',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => [
+                'step' => '1',
+            ],
+            'options' => [
+                'label' => $translator->translate('Starting Date'),
+            ],
+        ]);
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'hours',
+            'options' => array(
+                'label' => $translator->translate('Hours'),
+                'value_options' => array(
+                    '0' => 'Part time',
+                    '1' => 'Full time',
+                ),
+            )
+        ));
+
+        $this->add([
+            'name' => 'phone',
+            'hydrator' => $this->getHydrator(),
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Phone'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'contactName',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Contact name'),
+                'required' => false,
+            ],
+        ]);
+
+
 
         $this->add([
             'name' => 'submit',
@@ -74,6 +167,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $parentFilter = new InputFilter();
         $rootFilter = new InputFilter();
 
+        // TODO: Set filters correctly
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 
@@ -176,6 +270,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'required' => false,
             ]);
 
+            $filter->add([
+                'name' => 'hours',
+                'required' => true,
+            ]);
+
 //            $filter->add([
 //                'name' => 'active',
 //                'required' => false,
@@ -207,6 +306,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
             $filter->add([
                 'name' => 'category',
+                'required' => false,
+            ]);
+
+            $filter->add([
+                'name' => 'sectors',
                 'required' => false,
             ]);
 

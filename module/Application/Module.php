@@ -159,6 +159,12 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
+                'jobSectors' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobSectors();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();
@@ -169,6 +175,12 @@ class Module
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\Infima();
                     $helper->setLegacyService($locator->get('application_service_legacy'));
+                    return $helper;
+                },
+                'companyIdentity' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\CompanyIdentity();
+                    $helper->setServiceLocator($locator);
                     return $helper;
                 }
             ]

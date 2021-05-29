@@ -187,6 +187,52 @@ a.navbar-brand  {
             background-color: darken(#fff, 3%);
         }
     }
+
+    .navbar-nav > li .dropdown-menu .dropdown-submenu {
+        position: relative;
+
+        > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+            margin-left: -1px;
+            padding: inherit;
+            border: inherit;
+            border-radius: inherit;
+
+            > li > a {
+                @include transition(
+                        background $transition-duration ease,
+                        color $transition-duration ease
+                );
+
+                padding: 8px 17px;
+
+                font-weight: 600;
+                font-family: $font-family-alt;
+                color: $gray;
+            }
+        }
+
+        &:hover {
+            @include transition(
+                    opacity $transition-duration ease,
+                    visibility $transition-duration ease
+            );
+
+            > .dropdown-menu {
+                display: block;
+            }
+        }
+
+        > a > .caret {
+            transform: rotate(-90deg);
+        }
+
+        &.open > .dropdown-menu > li > a {
+            padding: 5px 15px 5px 35px;
+        }
+    }
 }
 
 @media (min-width: $grid-float-breakpoint) {
@@ -234,7 +280,7 @@ a.navbar-brand  {
     padding: 0;
     min-width: 100%;
 
-    overflow: hidden;
+    //overflow: hidden;
     visibility: hidden;
     opacity: 0;
 
