@@ -54,7 +54,6 @@ $this->headTitle($this->category->getPluralName());
                         <label for="job-sort"><?= $this->translate('Sort on') ?></label>
                         <select name="sort" id="job-sort" class="form-control">
                             <option value="random"><?= $this->translate('Random') ?></option>
-                            <option value="posted"><?= $this->translate('Most recent') ?></option>
                             <option value="sector"><?= $this->translate('Sector') ?></option>
                             <option value="name"><?= $this->translate('Name') ?></option>
                             <option value="startingDate"><?= $this->translate('Starting Date') ?></option>
@@ -182,7 +181,7 @@ $this->headTitle($this->category->getPluralName());
         // Pre-compute card details
         var cards = $('.card', $grid).map(function () {
             var $card = $(this);
-            
+
             return {
                 target: $card,
                 text: $(searchElements, $card).text().toLowerCase(),
@@ -269,11 +268,6 @@ $this->headTitle($this->category->getPluralName());
 
                 updateCardVisibility();
             },
-            sortByDateDesc: function () {
-                sortCards(function (a, b) {
-                    return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
-                });
-            },
             sortByStartingDateDesc: function () {
                 sortCards(function (a, b) {
                     return (new Date(a.dataset.starts) < new Date(b.dataset.starts)) ? -1 : 1;
@@ -317,9 +311,6 @@ $this->headTitle($this->category->getPluralName());
 
     $("#job-sort").change(function () {
         switch ($(this).val()) {
-            case 'posted':
-                cardGrid.sortByDateDesc();
-                break;
             case 'testid':
                 cardGrid.sortByDefault();
                 break;
