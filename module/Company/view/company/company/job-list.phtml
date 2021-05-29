@@ -8,7 +8,6 @@ if (isset($this->company)) {
 }
 $this->headTitle($this->category->getPluralName());
 
-
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -65,6 +64,15 @@ $this->headTitle($this->category->getPluralName());
                             <option value="all"><?= $this->translate('All') ?></option>
                             <option value="part-time"><?= $this->translate('Part Time') ?></option>
                             <option value="full-time"><?= $this->translate('Full Time') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sectors-filter"><?= $this->translate('Sectors') ?></label>
+                        <select name="sectors" id="sector-filter" class="form-control">
+                            <option value="all" > <?= $this->translate("All")?></option>
+                            <?php foreach ($this->jobSectors() as $sector): ?>
+                                <option value="<?= $sector->getLanguageNeutralId()?>" > <?= $sector->getName()?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <?php if (isset($this->company)): ?>
@@ -129,7 +137,7 @@ $this->headTitle($this->category->getPluralName());
                                 <span class="label label-default job-hours"
                                       data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
                                 <span class="label label-default job-sectors"
-                                      data-sectors="<?= $job->getSectors()->getName(); ?>" data-toggle="tooltip"></span>
+                                      data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
                                 <div class="card-footer">
                                     <button class="btn btn-link"><?= $this->translate('View') ?></button>
                                     <span class="small">
@@ -237,6 +245,7 @@ $this->headTitle($this->category->getPluralName());
         registerFilter('label', true);
         registerFilter('search', true);
         registerFilter('hours', true);
+        registerFilter('sectors', true);
 
         return {
             filterByLabel: function (label) {
@@ -248,8 +257,21 @@ $this->headTitle($this->category->getPluralName());
             },
             filterByHours: function (hours) {
                 cards.forEach(function (card) {
-                    console.log(card);
                     card.isMatchOn['hours'] = (card.hours.indexOf(hours) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            filterBySector: function (sector) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = (card.sectors.indexOf(parseInt(sector)) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            clearHoursFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['hours'] = true;
                 });
 
                 updateCardVisibility();
@@ -334,12 +356,19 @@ $this->headTitle($this->category->getPluralName());
                 cardGrid.filterByHours(0);
                 break;
             case 'full-time':
-                cardGrid.sortByDefault();
+                cardGrid.filterByHours(1);
                 break;
             default:
-                cardGrid.sortByDefault();
+                cardGrid.clearHoursFilter();
         }
     });
+
+    $("#sector-filter").change(function () {
+        var sector = $(this).val();
+        console.log($(this).val());
+        cardGrid.filterBySector(sector);
+    });
+
 
     $('[data-toggle="tooltip"]').tooltip({
         viewport: {"selector": ".card-grid"}

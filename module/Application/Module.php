@@ -159,6 +159,12 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
+                'jobSectors' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobSectors();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();
