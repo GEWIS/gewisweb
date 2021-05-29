@@ -250,19 +250,13 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all sectors
+     * Returns all sectors for the given language
      *
+     * @param $lang
      * @return array
      */
     public function getSectorList($lang)
     {
-        $translator = $this->getTranslator();
-
-        if (!$this->isAllowed('listAllCategories')) {
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to access the admin interface')
-            );
-        }
         $results = $this->getSectorMapper()->findAll();
         $sectors = [];
         foreach($results as $sector) {
