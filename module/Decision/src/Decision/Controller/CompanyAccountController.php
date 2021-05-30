@@ -135,6 +135,33 @@ class CompanyAccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobFormCompany();
 
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $packageId = $company->getJobPackageId();
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
+
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
+            );
+        }
+
 
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
@@ -224,10 +251,28 @@ class CompanyAccountController extends AbstractActionController
 
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $packageId = $company->getJobPackageId();
-        if($packageId == null) {
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        if ($packageId == null) {
             $translator = $this->getCompanyAccountService()->getTranslator();
             throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You do not have a package to create vacancies.')
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
+
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
             );
         }
         // Handle incoming form results
