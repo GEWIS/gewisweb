@@ -5,6 +5,7 @@ namespace Decision\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use DateTime;
 
 class CompanyAccountController extends AbstractActionController
 {
@@ -69,6 +70,21 @@ class CompanyAccountController extends AbstractActionController
             $translator = $this->getCompanyAccountService()->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
+
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
             );
         }
 
