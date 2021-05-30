@@ -45,6 +45,21 @@ class companyaccountController extends AbstractActionController
         $companyName = $company->getName();
         $packageId = $company->getJobPackageId();
 
+
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageId);
         $type = $package->getType();
