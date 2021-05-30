@@ -98,9 +98,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'av']) ?>"><?= $this->translate('General Meeting') ?></a>
-                        </li>
-                        <li>
                             <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a>
                         </li>
                         <li><a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a>
@@ -114,14 +111,32 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li>
                             <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a>
                         </li>
+                        <li class="dropdown dropdown-submenu">
+                            <a href="#" role="button"
+                               class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <?= $this->translate('Useful Information') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <a href="#" role="button"
+                               class="hidden-sm hidden-xs">
+                                <?= $this->translate('Useful Information') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>"><?= $this->translate('Links') ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing']) ?>"><?= $this->translate('Well-being') ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>"><?= $this->translate('FAQ') ?></a>
+                                </li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'links']) ?>"><?= $this->translate('Links') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>"><?= $this->translate('FAQ') ?></a>
                         </li>
                     </ul>
                 </li>
