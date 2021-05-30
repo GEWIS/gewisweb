@@ -1,20 +1,33 @@
 <?php
 
-
 namespace Decision\Service;
-
 
 use Application\Service\AbstractAclService;
 
-class CompanyAccount extends AbstractAclService
+use Decision\Model\vacancy as companyAccountModel;
+
+use Zend\Http\Client as HttpClient;
+
+class companyAccount extends AbstractAclService
 {
+
+    /**
+     * Get all active vacancies of selected company.
+     *
+     * @param integer $packageID the package id of the company who's active
+     * vacancies will be fetched.
+     *
+     * @return array Job model.
+     */
+    public function getActiveVacancies($packageID){
+        return $this->getcompanyAccountMapper()->findactiveVacancies($packageID);
+    }
 
     public function getCompanyInfo($id = null) {
         if (null === $id) {
             $id = $this->getRole();
         }
     }
-
 
     /**
      * Get the default resource ID.
@@ -23,7 +36,7 @@ class CompanyAccount extends AbstractAclService
      */
     protected function getDefaultResourceId()
     {
-        return 'companyaccount';
+        return 'companyAccount';
     }
 
     public function getCompany() {
@@ -45,4 +58,13 @@ class CompanyAccount extends AbstractAclService
         return $this->sm->get('decision_acl');
     }
 
+    /**
+     * Get the CompanyAccount mapper.
+     *
+     * @return \Decision\Mapper\CompanyAccount
+     */
+    public function getcompanyAccountMapper()
+    {
+        return $this->sm->get('decision_mapper_companyAccount');
+    }
 }

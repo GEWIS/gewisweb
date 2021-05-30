@@ -2,14 +2,13 @@
 
 namespace Decision\Controller;
 
-use Company\Service\Company as CompanyService;
-use Doctrine\DBAL\Schema\View;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class companyaccountController extends AbstractActionController
+class CompanyAccountController extends AbstractActionController
 {
+
     public function IndexAction()
     {
         if (!$this->getCompanyAccountService()->isAllowed('view')) {
@@ -18,22 +17,41 @@ class companyaccountController extends AbstractActionController
                 $translator->translate('You are not allowed to view this page')
             );
         }
-        return new ViewModel();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyId = $company->getId();
+        //obtain company package information
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        return new ViewModel([
+            //fetch the active vacancies of the logged in company
+            'vacancies' => $this->getCompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID()),
+        ]);
     }
+
+
 
 
     public function dummyAction(){
         return new ViewModel();
     }
 
-
     public function profileAction() {
         return new ViewModel();
     }
-    public function settingsAction() {
-        return new ViewModel();
-    }
 
+    public function settingsAction() {
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyId = $company->getId();
+        //Obtain company and company package information
+        $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        return new ViewModel([
+            'companyPackageInfo' => $companyPackageInfo,
+            'companyInfo'  => $companyInfo,
+            'settingsService' => $this->getSettingsService()
+        ]);
+    }
 
     public function vacanciesAction(){
 
@@ -44,14 +62,8 @@ class companyaccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyName = $company->getName();
         $packageId = $company->getJobPackageId();
-
-
-        if ($packageId == null) {
-            $translator = $this->getCompanyAccountService()->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You need a vacancy package to manage your vacancies.')
-            );
-        }
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
         if ($packageId == null) {
             $translator = $this->getCompanyAccountService()->getTranslator();
@@ -59,12 +71,12 @@ class companyaccountController extends AbstractActionController
                 $translator->translate('You need a vacancy package to manage your vacancies.')
             );
         }
+
 
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageId);
         $type = $package->getType();
 
-        $jobs = $companyService;
 
         // Get form
         $packageForm = $companyService->getPackageForm($type);
@@ -183,6 +195,7 @@ class companyaccountController extends AbstractActionController
 
 
 
+
     /**
      * Action that allows adding a job
      *
@@ -192,7 +205,6 @@ class companyaccountController extends AbstractActionController
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobFormCompany();
-
 
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $packageId = $company->getJobPackageId();
@@ -256,7 +268,6 @@ class companyaccountController extends AbstractActionController
         return $languageDictionary;
     }
 
-
     /**
      * Method that returns the service object for the company module.
      *
@@ -268,14 +279,25 @@ class companyaccountController extends AbstractActionController
     }
 
     /**
-     * Get the company service.
+     * Method that returns the service object for the company module.
+     *
+     * @return Decision\Service\Settings
+     */
+    protected function getSettingsService()
+    {
+        return $this->getServiceLocator()->get('decision_service_settings');
+    }
+
+    /**
+     * Get the CompanAccount service.
      *
      * @return Decision\Service\CompanyAccount
      */
     public function getCompanyAccountService()
     {
-        return $this->getServiceLocator()->get('decision_service_companyaccount');
+        return $this->getServiceLocator()->get('decision_service_companyAccount');
     }
+
 
     /**
      * Method that returns the service object for the company module.
@@ -286,4 +308,5 @@ class companyaccountController extends AbstractActionController
     {
         return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
+
 }

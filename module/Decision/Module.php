@@ -52,12 +52,25 @@ class Module
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member',
+
                 'decision_service_companyaccount' => 'Decision\Service\CompanyAccount',
                 'company_model_company' => 'Company\Model\Company',
                 'user_service_email' => 'User\Service\Email',
-                'decision_service_decisionEmail' => 'Decision\Service\DecisionEmail'
+                'decision_service_decisionEmail' => 'Decision\Service\DecisionEmail',
+                'decision_service_settings' => 'Decision\Service\Settings',
+
             ],
             'factories' => [
+                'decision_mapper_settings' => function ($sm) {
+                    return new \Decision\Mapper\Settings(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
+                'decision_mapper_companyAccount' => function ($sm) {
+                    return new \Decision\Mapper\CompanyAccount(
+                        $sm->get('decision_doctrine_em')
+                    );
+                },
                 'decision_mapper_member' => function ($sm) {
                     return new \Decision\Mapper\Member(
                         $sm->get('decision_doctrine_em')
@@ -145,7 +158,8 @@ class Module
                     $acl->addResource('authorization');
                     $acl->addResource('files');
                     $acl->addResource('regulations');
-                    $acl->addResource('companyaccount');
+                    $acl->addResource('companyAccount');
+
 
                     // users are allowed to view the organs
                     $acl->allow('guest', 'organ', 'list');
@@ -176,8 +190,7 @@ class Module
                     $acl->allow('user', 'regulations', ['list', 'download']);
 
                     // companies are allowed to view the company panel
-                    $acl->allow('company_user', 'companyaccount', 'view');
-
+                    $acl->allow('company_user', 'companyAccount', 'view');
 
                     return $acl;
                 },

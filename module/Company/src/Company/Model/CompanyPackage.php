@@ -60,6 +60,12 @@ abstract class CompanyPackage
      */
     protected $company;
 
+    /**
+     * The package's contractNumber
+     * @ORM\Column(type="integer")
+     */
+    protected $contractNumber;
+
 
     /**
      * Get the package's id.
@@ -177,6 +183,16 @@ abstract class CompanyPackage
             case "Company\Model\CompanyFeaturedPackage":
                 return "featured";
         }
+    }
+
+    /**
+     * Get the package's contract number.
+     *
+     * @return int
+     */
+    public function getContractNumber()
+    {
+        return $this->contractNumber;
     }
 
     public function isExpired($now)

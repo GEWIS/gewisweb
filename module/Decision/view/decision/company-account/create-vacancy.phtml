@@ -30,14 +30,14 @@ $form->prepare();
             </li>
         </ul>
         <hr/>
-    <?php
-    $form->setAttribute('class', 'form-horizontal');
-    $form->prepare();
-    ?>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare();
+        ?>
 
-    <?= $this->form()->openTag($form) ?>
-    <div class="row">
-            </div>
+        <?= $this->form()->openTag($form) ?>
+        <div class="row">
+        </div>
         <?php foreach ($form->getLanguages() as $lang):
             $langDesc = $languages[$lang]
             ?>
@@ -256,20 +256,20 @@ $form->prepare();
             </div>
         </div>
 
-    <?php
-    $element = $form->get('labels');
-    ?>
-    <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-            <?= $element->getOption('label') ?>
-        </label>
-        <div class="col-sm-10">
-            <?= $this->formMultiCheckbox($element) ?>
-            <?= $this->formElementErrors($element) ?>
+        <?php
+        $element = $form->get('labels');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                <?= $element->getOption('label') ?>
+            </label>
+            <div class="col-sm-10">
+                <?= $this->formMultiCheckbox($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
         </div>
-    </div>
 
 
-<?= $this->form()->closeTag(); ?>
+        <?= $this->form()->closeTag(); ?>
     </div>
 </section>
