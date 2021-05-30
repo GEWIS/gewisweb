@@ -885,6 +885,7 @@ class Company extends AbstractACLService
             $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
             $x++;
 
+            $job->setLocation($data['location']);
             $job->setContactName($data['contactName']);
             $job->setPhone($data['phone']);
             if ($data['startingDate']!= null) {

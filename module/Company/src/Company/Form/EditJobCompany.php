@@ -103,6 +103,17 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         ]);
 
         $this->add([
+            'name' => 'location',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Location'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'startingDate',
             'type' => 'Zend\Form\Element\Date',
             'attributes' => [

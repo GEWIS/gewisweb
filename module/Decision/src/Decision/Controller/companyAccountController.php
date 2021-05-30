@@ -44,8 +44,6 @@ class companyaccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyName = $company->getName();
         $packageId = $company->getJobPackageId();
-//        $companyName = $this->params('slugCompanyName');
-//        $packageId = $this->params('packageId');
 
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageId);
@@ -94,9 +92,7 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobFormCompany();
 
-        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $companyName = $company->getName();
-        $packageId = $company->getJobPackageId();
+
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
 
@@ -184,7 +180,6 @@ class companyaccountController extends AbstractActionController
 
 
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-//        $companyName = $company->getName();
         $packageId = $company->getJobPackageId();
         if($packageId == null) {
             $translator = $this->getCompanyAccountService()->getTranslator();

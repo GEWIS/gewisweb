@@ -609,15 +609,13 @@ class Job
      */
     public function exchangeArray($data)
     {
-//        $this->setCategory($this->updateIfSet($data['category'], ''));
         $this->setHours($this->updateIfSet($data['hours'], null));
-
-//        $this->setSectors($this->updateIfSet($data['sectors'], null));
         $this->setStartingDate($this->updateIfSet(new \DateTime($data['startingDate']), null));
         $this->setContactName($this->updateIfSet($data['contactName'], ''));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setEmail($this->updateIfSet($data['email'], ''));
         $this->setWebsite($this->updateIfSet($data['website'], 0));
+        $this->setLocation($this->updateIfSet($data['location'], ''));
     }
 
     /**
@@ -639,6 +637,7 @@ class Job
         $arraycopy['hours'] = $this->getHours();
         $arraycopy['startingDate'] = $this->getStartingDate();
         $arraycopy['website'] = $this->getWebsite();
+        $arraycopy['location'] = $this->getLocation();
 
         return $arraycopy;
     }
