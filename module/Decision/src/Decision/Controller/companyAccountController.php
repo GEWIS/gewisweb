@@ -73,10 +73,10 @@ class companyaccountController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
-                // TODO: possibly redirect to company
+
             }
         }
-        // TODO: display error page when package is not found
+
 
         // Initialize form
         $packageForm->bind($package);

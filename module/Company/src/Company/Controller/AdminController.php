@@ -164,11 +164,6 @@ class AdminController extends AbstractActionController
                 $request->getFiles()
             );
 
-//            //Send approval email to admin
-//            $email = $this->getDecisionEmail();
-//            $email->sendApprovalMail($company);
-
-
             if ($job) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
