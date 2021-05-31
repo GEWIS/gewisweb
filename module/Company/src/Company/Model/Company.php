@@ -189,6 +189,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Gets the company's slug name.
      *
      * @return string the company's slug name

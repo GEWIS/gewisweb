@@ -41,9 +41,9 @@ class CompanyAccountController extends AbstractActionController
     }
 
     public function settingsAction() {
+        //Obtain company and company package information
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyId = $company->getId();
-        //Obtain company and company package information
         $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
