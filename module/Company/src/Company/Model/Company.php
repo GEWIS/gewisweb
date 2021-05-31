@@ -523,6 +523,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     * @param mixed $emailSubscription
+     */
+    public function setEmailSubscription($emailSubscription)
+    {
+        $this->emailSubscription = $emailSubscription;
+    }
+
+    /**
      * If this object contains an translation for a given locale, it is returned, otherwise null is returned
      *
      */
@@ -621,8 +629,8 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHighlightCredits($this->updateIfSet($data['highlightCredits'], 0));
         $this->setBannerCredits($this->updateIfSet($data['bannerCredits'], 0));
-        $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
+        $this->setEmailSubscription($this->updateIfSet($data['$emailSubscription'], ''));
         $this->translations = $newTranslations;
     }
 
