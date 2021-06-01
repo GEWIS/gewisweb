@@ -10,7 +10,6 @@ RUN apt-get update \
         libxml2-dev \
         libzip-dev \
         unzip \
-        zlib1g-dev \
     && apt-get upgrade -y
 
 RUN docker-php-ext-install \

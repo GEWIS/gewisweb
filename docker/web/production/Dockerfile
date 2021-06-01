@@ -9,7 +9,7 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 COPY ./public/scss ./public/scss/
 RUN npm run scss
 
-FROM php:5.6-fpm as php-target
+FROM php:7.2-fpm as php-target
 
 RUN apt-get update \
     && apt-get install -y \
@@ -23,20 +23,17 @@ RUN apt-get update \
         libpng-dev \
         libpq-dev \
         libxml2-dev \
+        libzip-dev \
         unzip \
-        zlib1g-dev \
     && apt-get upgrade -y
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install \
+RUN docker-php-ext-install \
         calendar \
         exif \
         gd \
         intl \
-        mbstring \
         opcache \
         pgsql \
-        pdo \
         pdo_mysql \
         pdo_pgsql \
         soap \
@@ -44,7 +41,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 RUN pecl install -o imagick \
     && docker-php-ext-enable imagick \
-    && pecl install -o memcached-2.2.0 \
+    && pecl install -o memcached \
     && docker-php-ext-enable memcached
 
 FROM php-target as composer-build
