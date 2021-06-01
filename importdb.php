@@ -74,7 +74,7 @@ try {
                 }
             }
 
-            $sql = "INSERT INTO $table $fields VALUES $values";
+            $sql = "INSERT IGNORE INTO $table $fields VALUES $values";
             $stmtt = $myconn->prepare($sql);
 
             try {
