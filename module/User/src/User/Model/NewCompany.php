@@ -101,7 +101,7 @@ class NewCompany
     public function __construct(Company $company = null)
     {
         if (null !== $company) {
-            $this->id = $company->getLidnr();
+            $this->id = $company->getId();
             $this->contactEmail = $company->getContactEmail();
             $this->company = $company;
         }

@@ -37,7 +37,8 @@ class Bootstrap
             'modules' => [
                 'Decision',
                 'User',
-                'Application'
+                'Application',
+                'Company'
             ]
         ];
 

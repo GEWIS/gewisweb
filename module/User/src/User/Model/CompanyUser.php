@@ -118,6 +118,30 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * @param mixed $sessions
+     */
+    public function setSessions($sessions)
+    {
+        $this->sessions = $sessions;
+    }
+
+    /**
      * @return CompanyUser
      */
     public function getCompanyAccount()

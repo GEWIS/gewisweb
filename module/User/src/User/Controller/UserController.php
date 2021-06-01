@@ -93,14 +93,10 @@ class UserController extends AbstractActionController
      */
     public function companyLogoutAction()
     {
+        // logout the company
         $this->getCompanyService()->logout();
 
-        // used to get point user to current page on logout, only use
-//        if (isset($_SERVER['HTTP_REFERER'])) {
-//            return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
-//        }
-
-        // default set to home
+        // redirect user to home page
         return $this->redirect()->toRoute('home');
     }
 

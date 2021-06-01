@@ -9,11 +9,13 @@ class CompanyUserTest extends \PHPUnit_Framework_TestCase
     {
         $companyUser = new CompanyUser();
 
+        $this->assertNull($companyUser->getId());
         $this->assertNull($companyUser->getContactEmail());
         $this->assertNull($companyUser->getPassword());
 
         $this->assertEquals('company_user_', $companyUser->getRoleId());
         $this->assertEquals('companyUser', $companyUser->getResourceId());
+        $this->assertEquals(["company_user"], $companyUser->getRoleNames());
     }
 
 }
