@@ -28,6 +28,15 @@ $this->headTitle($this->translate('Companies'));
                             <option value="alphabeticallydes"><?= $this->translate('Descending') ?></option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="sectors-filter"><?= $this->translate('Sectors') ?></label>
+                        <select name="sectors" id="sector-filter" class="form-control">
+                            <option value="all" > <?= $this->translate("All")?></option>
+                            <?php foreach ($this->jobSectors($locale) as $sector): ?>
+                                <option value="<?= $sector->getLanguageNeutralId()?>" > <?= $sector->getName()?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>
@@ -43,77 +52,73 @@ $this->headTitle($this->translate('Companies'));
                 </div>
             </div>
         </div>
-</section>
+        <div class="container">
+            <div class="row" style="margin-top:50px">
+                <?php if (isset($featuredPackage)): ?>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
 
-
-<section class="section">
-    <div class="container">
-        <div class="row" style="margin-top:50px">
-            <?php if (isset($featuredPackage)): ?>
-            <div class="col-md-12">
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
-                        <h1>
-                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
-                            <small><?= $this->translate('in the spotlight') ?></small>
-                        </h1>
-                        <?=
-                        $this->partial('./companyStory.phtml', [
-                            'company' => $featuredCompany,
-                            'featuredPackage' => $featuredPackage,
-                            'translator' => $translator,
-                            'panels' => false,
-                        ]);
-                        ?>
-                    </div>
-                </div>
-                <?php endif ?>
-                <?php if (empty($companyList)): ?>
-                    <div class="row">
-                        <div class="col-md-12" style="margin-top: 1em">
-                            <h4>No Results</h4>
-                            <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+                        <div class="panel-body">
+                            <h1>
+                                <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
+                                <small><?= $this->translate('in the spotlight') ?></small>
+                            </h1>
+                            <?=
+                            $this->partial('./companyStory.phtml', [
+                                'company' => $featuredCompany,
+                                'featuredPackage' => $featuredPackage,
+                                'translator' => $translator,
+                                'panels' => false,
+                            ]);
+                            ?>
                         </div>
                     </div>
-                <?php else: ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-grid">
-                                <?php foreach ($companyList as $index => $company): ?>
-                                    <?php
-                                    $companyUrl = $this->url('company/companyItem', // Route url
-                                        ['slugCompanyName' => $company->getSlugName()], // Url parameters
-                                        [], // routeOptions
-                                        true);
-                                    ?>
-                                    <div href="<?= $companyUrl ?>" class="card job-card" data-index="<?= $index ?>"
-                                       data-name="<?= $company->getName() ?>">
-                                            <img class="company-logo img-responsive"
-                                                 src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())); ?>"
-                                                 alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>"/>
-
-
-                                            <h4 class="company-name"><a href="<?= $companyUrl ?>"><?= $company->getName() ?></a></h4>
-                                            <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
-                                            <ul>
-                                                <?php foreach ($this->jobCategories() as $category): ?>
-                                                    <?php if ($company->getNumberOfActiveJobs($category) > 0): ?>
-                                                        <li>
-                                                            <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => $category->getSlug()]) ?>">
-                                                                <?= $company->getNumberOfActiveJobs($category) ?> <?= $company->getNumberOfActiveJobs($category) === 1 ? $category->getName() : $category->getPluralName() ?>
-                                                            </a>
-                                                        </li>
-                                                    <?php endif ?>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                    </div>
-                                <?php endforeach; ?>
+                    <?php endif ?>
+                    <?php if (empty($companyList)): ?>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 1em">
+                                <h4>No Results</h4>
+                                <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
                             </div>
                         </div>
-                    </div>
-                <?php endif; ?>
-            </div>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-grid">
+                                    <?php foreach ($companyList as $index => $company): ?>
+                                        <?php
+                                        $companyUrl = $this->url('company/companyItem', // Route url
+                                            ['slugCompanyName' => $company->getSlugName()], // Url parameters
+                                            [], // routeOptions
+                                            true);
+                                        ?>
+                                        <div href="<?= $companyUrl ?>" class="card job-card" data-index="<?= $index ?>"
+                                           data-name="<?= $company->getName() ?>">
+                                                <img class="company-logo img-responsive"
+                                                     src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())); ?>"
+                                                     alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>"/>
+
+
+                                                <h4 class="company-name"><a href="<?= $companyUrl ?>"><?= $company->getName() ?></a></h4>
+                                                <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+                                                <ul>
+                                                    <?php foreach ($this->jobCategories() as $category): ?>
+                                                        <?php if ($company->getNumberOfActiveJobs($category) > 0): ?>
+                                                            <li>
+                                                                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => $category->getSlug()]) ?>">
+                                                                    <?= $company->getNumberOfActiveJobs($category) ?> <?= $company->getNumberOfActiveJobs($category) === 1 ? $category->getName() : $category->getPluralName() ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif ?>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
 </section>
 
 <script type="text/javascript">
@@ -127,7 +132,10 @@ $this->headTitle($this->translate('Companies'));
                 text: $(searchElements, $card).text().toLowerCase(),
                 labels: $('.job-label', $card).map(function () {
                     return $(this).data('label');
-                }).get()
+                }).get(),
+                sectors: $('.job-sectors', $card).map(function () {
+                    return $(this).data('sectors');
+                }).get(),
             };
         }).get();
 
@@ -170,6 +178,7 @@ $this->headTitle($this->translate('Companies'));
 
         registerFilter('label', true);
         registerFilter('search', true);
+        registerFilter('Sector', true);
 
         return {
             filterByLabel: function (label) {
@@ -182,6 +191,13 @@ $this->headTitle($this->translate('Companies'));
             clearLabelFilter: function () {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = true;
+                });
+
+                updateCardVisibility();
+            },
+            filterBySector: function (sector) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = (card.sectors.indexOf(parseInt(sector)) > -1);
                 });
 
                 updateCardVisibility();
@@ -212,7 +228,14 @@ $this->headTitle($this->translate('Companies'));
                 sortCards(function (a, b) {
                     return (a.dataset.name.toLowerCase() > b.dataset.name.toLowerCase()) ? -1 : 1;
                 });
-            }
+            },
+            clearSectorFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = true;
+                });
+
+                updateCardVisibility();
+            },
         }
     };
 
@@ -248,6 +271,18 @@ $this->headTitle($this->translate('Companies'));
             default:
                 cardGrid.sortByDefault();
         }
+    });
+
+    $("#sector-filter").change(function () {
+        var sector = $(this).val();
+
+        // When "all" is selected clear all filters.
+        if (sector == "all") {
+            cardGrid.clearSectorFilter();
+            return;
+        }
+        // Filter on given sector
+        cardGrid.filterBySector(sector);
     });
 
     $('[data-toggle="tooltip"]').tooltip({
