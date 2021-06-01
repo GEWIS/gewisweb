@@ -77,7 +77,15 @@ try {
             $sql = "INSERT INTO $table $fields VALUES $values";
             $stmtt = $myconn->prepare($sql);
 
-            $stmtt->execute($data);
+            try {
+                $stmtt->execute($data);
+            } catch (Exception $e) {
+                echo "ERROR: Failed synchronization of table ".$table."\n";
+                echo $e->getMessage();
+                echo "\n";
+                echo $e->getTraceAsString();
+                echo "\n\n";
+            }
 
             echo '.';
         }
