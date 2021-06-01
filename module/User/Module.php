@@ -369,6 +369,8 @@ class Module
                     $acl->allow('user', 'user', ['password_change']);
                     $acl->allow('photo_guest', 'user', ['password_change']);
                     $acl->allow('tueguest', 'user', 'pin_login');
+                    // allow company to change their password
+                    $acl->allow('company_user', 'user', ['password_change']);
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');
