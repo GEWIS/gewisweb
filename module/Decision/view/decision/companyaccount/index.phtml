@@ -1,11 +1,64 @@
 <?php
 // set title
 $this->headTitle($this->translate('Company Account'));
+
+$accountActive = True; //False if account is inactive
+
+//determine wheter the account is active or not
+$now = new DateTime();
+if ($companyPackageInfo[0]->getExpirationDate() < $now) {
+    $accountActive = False;
+}
+
+
 ?>
+
+
+<style>
+
+    .myDIV {
+        color: #428bca;
+    }
+
+    .warningMessage {
+        display: none;
+    }
+
+    #inactiveMessage:hover > .warningMessage {
+        display: block;
+        color: white;
+    }
+
+</style>
+
 
 <div class="container">
     <section class="section">
         <div class="row">
+
+            <?php
+            $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
+
+            //If vacancy package will expire within one month display notification
+            if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpirationDate() >= $now): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <strong><?= $this->translate("Vacancy package will expire within one month!") ?></strong>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php
+            //If vacancy package has expired display notification
+            if (!$accountActive): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <strong><?= $this->translate("Vacancy package has expired, please contact an administrator.") ?></strong>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+
             <div class="col-md-12">
                 <h1><?= $this->translate('Company') ?></h1>
             </div>
@@ -14,21 +67,27 @@ $this->headTitle($this->translate('Company Account'));
             <div class="col-md-12">
                 <h2><?= $this->translate('Personal') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+
+
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle"
+                       id="inactiveMessage">
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('companyaccount/dummy') ?>"
-                       class="panel panel-image align-middle">
+
+
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
+
                     <a href="<?= $this->url('user/default', ['action' => 'companyLogout']) ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Logout') ?></div>
                     </a>
-                    <a href="<?= $this->url('companyaccount/settings') ?>"class="panel panel-image align-middle">
+
+                    <a href="<?= $this->url('companyaccount/settings') ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-cog"></div>
                         <div class="panel-heading"><?= $this->translate('Settings') ?></div>
                     </a>
@@ -40,23 +99,54 @@ $this->headTitle($this->translate('Company Account'));
             <div class="col-md-12">
                 <h2><?= $this->translate('Company content') ?></h2>
                 <div class="grid grid-col-5">
-                    <a href="<?= $this->url('companyaccount/vacancies') ?>" class="panel panel-image align-middle">
+
+                    <div>
+                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                       <?php if ($accountActive): ?>href="<?= $this->url('companyaccount/vacancies') ?>"<?php endif; ?>>
+
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Vacancies') ?></div>
+                        <?php if (!$accountActive): ?>
+                            <div class="warningMessage">Disabled, vacancy package has expired.</div>
+                        <?php endif; ?>
                     </a>
-                    <a href="<?= $this->url('companyaccount/dummy') ?>"
-                       class="panel panel-image align-middle">
+                    </div>
+
+                    <div>
+                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                       <?php if ($accountActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Activities') ?></div>
+                        <?php if (!$accountActive): ?>
+                            <div class="warningMessage">Disabled, vacancy package has expired.</div>
+                        <?php endif; ?>
                     </a>
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+                    </div>
+
+                    <div>
+                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                       <?php if ($companyInfo[0]->getBannerCredits() > 0): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+
                         <div class="big-icon fas fa-flag"></div>
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
+                        <?php if ($companyInfo[0]->getBannerCredits() <= 0): ?>
+                            <div class="warningMessage">Disabled, no more banner days left.</div>
+                        <?php endif; ?>
                     </a>
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+                    </div>
+
+                    <div>
+                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                       <?php if ($companyInfo[0]->getHighLightCredits() > 0): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+
                         <div class="big-icon fas fa-check"></div>
                         <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
+                        <?php if ($companyInfo[0]->getHighLightCredits() <= 0): ?>
+                            <div class="warningMessage">Disabled, no more highlight days left.</div>
+                        <?php endif; ?>
                     </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,25 +159,25 @@ $this->headTitle($this->translate('Company Account'));
                 <?php if (count($vacancies) > 0): ?>
                     <div class="panel panel-default">
                         <?php foreach ($vacancies as &$vacancy): ?>
-                        <div class="panel-heading">
-                            <strong><?= $this->translate($vacancy->getName()) ?></strong>
-                        </div>
-                        <div class="panel-body">
-                           <?= $this->translate($vacancy->getDescription())?>
-                            <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
-                        </div>
+                            <div class="panel-heading">
+                                <strong><?= $this->translate($vacancy->getName()) ?></strong>
+                            </div>
+                            <div class="panel-body">
+                                <?= $this->translate($vacancy->getDescription()) ?>
+                                <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                     <hr/>
                 <?php endif; ?>
 
                 <?php if (count($vacancies) === 0): ?>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <?= $this->translate("Currently there are no active vacancies,")?>
-                        <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">add new vacancy.</a>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <?= $this->translate("Currently there are no active vacancies,") ?>
+                            <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">add new vacancy.</a>
+                        </div>
                     </div>
-                </div>
                 <?php endif; ?>
 
             </div>

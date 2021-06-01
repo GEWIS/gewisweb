@@ -2,6 +2,8 @@
 
 namespace DecisionTest\Model;
 
+include("module/Decision/src/Decision/Model/Organ.php");
+
 use Decision\Model\Organ;
 use PHPUnit_Framework_TestCase;
 

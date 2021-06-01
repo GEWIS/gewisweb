@@ -4160,6 +4160,8 @@ msgstr "Purchaser"
 msgid "Inactief Lid"
 msgstr "Inactive Member"
 
+
+
 #~ msgid "Create activity"
 #~ msgstr "Create activity"
 
