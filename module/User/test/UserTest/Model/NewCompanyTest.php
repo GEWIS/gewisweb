@@ -8,24 +8,6 @@ use Zend\ServiceManager\ServiceManager;
 
 class NewCompanyTest extends \PHPUnit_Framework_TestCase
 {
-    protected $companyService;
-
-    protected $sm;
-
-    public function setUp()
-    {
-        $this->sm = new ServiceManager();
-
-        $this->sm->setInvokableClass('user_service_company', 'User\Service\Company');
-        $mapperMock = $this->getMockBuilder('User\Mapper\Company')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->sm->setService('user_mapper_company', $mapperMock);
-
-        $this->companyService = $this->sm->get('user_service_company');
-        $this->companyService->setServiceManager($this->sm);
-    }
-
     public function testEmptyNewCompanyInitialState()
     {
         $newCompany = new NewCompany();

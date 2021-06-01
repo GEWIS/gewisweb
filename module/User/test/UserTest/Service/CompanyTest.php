@@ -40,6 +40,8 @@ class CompanyTest extends PHPUnit_Framework_TestCase
 
         $newCompany = new NewCompany($companyAccount);
 
+//        $acl = $this->company->getAcl();
+
 //        $companyUser = new CompanyUser();
 //        $companyUser->setContactEmail("test@email.com");
 //        $companyUser->setPassword("testPassword");
