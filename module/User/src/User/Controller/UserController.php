@@ -147,6 +147,26 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * Action to change company's password.
+     */
+    public function passwordCompanyAction()
+    {
+        $userService = $this->getUserService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $userService->changeCompanyPassword($request->getPost())) {
+            // set status to successfully changed
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
+        return new ViewModel([
+            'form' => $this->getUserService()->getPasswordForm()
+        ]);
+    }
+
+    /**
      * Action to reset password.
      */
     public function resetAction()

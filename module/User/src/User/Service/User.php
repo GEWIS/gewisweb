@@ -78,6 +78,7 @@ class User extends AbstractAclService
 
         $data = $form->getData();
 
+        // get hashing
         $bcrypt = $this->sm->get('user_bcrypt');
 
         // try to obtain the company user
@@ -87,7 +88,7 @@ class User extends AbstractAclService
             $companyUser = new CompanyUserModel($newCompany);
         }
 
-        // set the company user's password
+        // set the company user's password as hashed version
         $companyUser->setPassword($bcrypt->create($data['password']));
 
         // this will also save a company user with a lost password
@@ -302,6 +303,56 @@ class User extends AbstractAclService
         $actUser->setPassword($bcrypt->create($data['password']));
 
         $mapper->persist($actUser);
+
+        return true;
+    }
+
+    /**
+     * Change the password of a company.
+     *
+     * @param array $data Password change date
+     *
+     * @return boolean
+     */
+    public function changeCompanyPassword($data)
+    {
+        // get form
+        $form = $this->getPasswordForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        // Get current company
+        $auth = $this->getServiceManager()->get('company_auth_service');
+        $adapter = $auth->getAdapter();
+        $company = $auth->getIdentity();
+
+        // error if old password is incorrect
+        if (!$adapter->verifyPassword($data['old_password'], $company->getPassword())) {
+            $form->setMessages([
+                'old_password' => [
+                    $this->getTranslator()->translate("Password incorrect")
+                ]
+            ]);
+
+            return false;
+        }
+
+        $mapper = $this->getCompanyMapper();
+        // get hashing
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // get the company
+        $actCompany = $mapper->findById($company->getLidnr());
+
+        // save hashed password
+        $actCompany->setPassword($bcrypt->create($data['password']));
+
+        $mapper->persist($actCompany);
 
         return true;
     }
