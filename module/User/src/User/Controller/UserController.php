@@ -155,6 +155,8 @@ class UserController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost() && $userService->changeCompanyPassword($request->getPost())) {
+            // log out company after changing password
+            $this->getCompanyService()->logout();
             // set status to successfully changed
             return new ViewModel([
                 'success' => true
