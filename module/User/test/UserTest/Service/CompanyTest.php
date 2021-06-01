@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceManager;
 
 class CompanyTest extends PHPUnit_Framework_TestCase
 {
-    protected $company;
+    protected $companyService;
 
     protected $sm;
 
@@ -31,33 +31,26 @@ class CompanyTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $this->sm->setService('user_mapper_company', $mapperMock);
 
-        $this->company = $this->sm->get('user_service_company');
-        $this->company->setServiceManager($this->sm);
+        $this->companyService = $this->sm->get('user_service_company');
+        $this->companyService->setServiceManager($this->sm);
 
         $companyAccount = new Company();
         $companyAccount->setContactEmail("test@email.com");
         $companyAccount->setId(1);
 
-        $newCompany = new NewCompany($companyAccount);
 
-//        $acl = $this->company->getAcl();
-
-//        $companyUser = new CompanyUser();
-//        $companyUser->setContactEmail("test@email.com");
-//        $companyUser->setPassword("testPassword");
-//        $companyUser->setId(1);
     }
 
 
     public function testCompanyServiceInstance() {
-        $this->assertInstanceOf('User\Service\Company', $this->company);
+        $this->assertInstanceOf('User\Service\Company', $this->companyService);
     }
 
     public function testGenerateCode() {
         // code not null
-        $this->assertNotNull($this->company->generateCode());
+        $this->assertNotNull($this->companyService->generateCode());
         // code of 20 characters
-        $this->assertEquals(20, strlen($this->company->generateCode()));
+        $this->assertEquals(20, strlen($this->companyService->generateCode()));
     }
 
 
