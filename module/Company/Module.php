@@ -155,6 +155,11 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
+            'company_mapper_highlightpackage' => function ($sm) {
+                return new \Company\Mapper\HighlightPackage(
+                    $sm->get('company_doctrine_em')
+                );
+            },
         ];
     }
 

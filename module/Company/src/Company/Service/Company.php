@@ -633,11 +633,15 @@ class Company extends AbstractACLService
     {
         $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
+        //$packageForm->setValidationGroup('vacancy_id');
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             if ($type === 'banner') {
                 $newPath = $this->getFileStorageService()->storeUploadedFile($files);
                 $package->setImage($newPath);
+            }
+            if ($type === 'highlight') {
+                $data['vacancy_id'] = $this->getJobMapper()->findJobById($data['vacancy_id']);
             }
             $package->exchangeArray($data);
             $this->savePackage();
@@ -1180,6 +1184,15 @@ class Company extends AbstractACLService
     public function getFeaturedPackageMapper()
     {
         return $this->sm->get('company_mapper_featuredpackage');
+    }
+
+    /**
+     * Returns the packageMapper
+     *
+     */
+    public function getHighlightPackageMapper()
+    {
+        return $this->sm->get('company_mapper_highlightpackage');
     }
 
     /**

@@ -101,11 +101,11 @@ class EditPackage extends Form
 
         if ($type === "highlight") {
             $this->add([
-                'name' => 'highlight',
+                'name' => 'vacancy_id',
                 'required' => true,
                 'type' => '\Zend\Form\Element\Select',
                 'options' => [
-                    'label' => $translate->translate('Select Vacancy'),
+                    'label' => $translate->translate('Select Vacancy *'),
                 ],
             ]);
         }

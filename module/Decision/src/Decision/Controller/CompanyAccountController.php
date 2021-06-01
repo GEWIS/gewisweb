@@ -24,7 +24,6 @@ class companyaccountController extends AbstractActionController
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $companyName = $company->getName();
         global $MSG;
 
         // Get Zend validator
@@ -51,7 +50,7 @@ class companyaccountController extends AbstractActionController
                         if ($this->checkAndDeductCredits($post, $company, $companyService)) {
                             // Upload the banner to database and redirect to Companypanel
                             if ($companyService->insertPackageForCompanySlugNameByData(
-                                $companyName,
+                                $company->getName(),
                                 $post,
                                 $image,
                                 'banner'
@@ -93,14 +92,35 @@ class companyaccountController extends AbstractActionController
     }
 
     public function highlightAction(){
+        //Get usefull stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
+        //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('highlight')->setValueOptions($this->getVacancyNames($this->getVacancies()));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies()));
 
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            //Set published to one, since a highlight does not need to be approved
+            $post['published'] = 1;
+            if ($companyService->insertPackageForCompanySlugNameByData(
+                $company->getName(),
+                $post,
+                NULL, //There are no files to be passed
+                'highlight'
+            )) {
+                return $this->redirect()->toRoute(
+                    'companyaccount'
+                );
+            }
+        }
+
+        //Initialize the form
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -130,7 +150,8 @@ class companyaccountController extends AbstractActionController
     }
 
     /**
-     * Gets the names from all vacancies in a vacancy object
+     * Gets an array with the names from all vacancies in a vacancy object
+     * where the location in the array is the vacancy id
      *
      *
      */
@@ -138,7 +159,7 @@ class companyaccountController extends AbstractActionController
         $vacancyNames = [];
 
         foreach ($vacancy_objects as &$vacancy) {
-            array_push($vacancyNames, $vacancy->getName());
+            $vacancyNames[$vacancy->getId()] = $vacancy->getName();
         }
         return $vacancyNames;
     }

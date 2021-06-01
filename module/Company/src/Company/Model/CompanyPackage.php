@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="packageType",type="string")
- * @ORM\DiscriminatorMap({"job"="CompanyJobPackage","banner"="CompanyBannerPackage","featured"="CompanyFeaturedPackage"})
+ * @ORM\DiscriminatorMap({"job"="CompanyJobPackage","banner"="CompanyBannerPackage","featured"="CompanyFeaturedPackage", "highlight"="CompanyHighlightPackage"})
  */
 abstract class CompanyPackage
 {
@@ -176,6 +176,8 @@ abstract class CompanyPackage
                 return "job";
             case "Company\Model\CompanyFeaturedPackage":
                 return "featured";
+            case "Company\Model\CompanyHighlightPackage":
+                return "highlight";
         }
     }
 

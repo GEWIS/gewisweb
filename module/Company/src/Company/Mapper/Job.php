@@ -206,4 +206,17 @@ class Job
             //]
         ];
     }
+
+    /**
+     * Get the a job by it's id
+     *
+     * @return JobModel
+     */
+    public function findJobById($vacancy_id) {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.id =:vacancy_id');
+        $qb->setParameter('vacancy_id', $vacancy_id);
+        return $qb->getQuery()->getResult()[0];
+    }
 }
