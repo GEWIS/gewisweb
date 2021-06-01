@@ -30,7 +30,7 @@
         "ext-soap": "*",
         "ext-zip": ">=1.12.5",
         "zendframework/zendframework": "2.*",
-        "doctrine/doctrine-orm-module": "0.*",
+        "doctrine/doctrine-orm-module": "<=1.1.7",
         "twbs/bootstrap-sass": ">=3.3",
         "maglnet/magl-markdown":">=1.4",
         "dino/dompdf-module": "dev-master",
