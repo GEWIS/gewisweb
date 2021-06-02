@@ -3,6 +3,7 @@
 
 namespace User\Model;
 
+use Company\Model\Company;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -51,9 +52,9 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     // TODO: comments
     public function __construct(NewCompany $newCompany = null)
     {
-
         if (null !== $newCompany) {
             $this->id = $newCompany->getId();
+            $this->companyAccount = $newCompany->getCompany();
             $this->contactEmail = $newCompany->getContactEmail();
         }
     }
@@ -185,5 +186,14 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     public function getResourceId()
     {
         return 'companyUser';
+    }
+
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeArray($data)
+    {
+        $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
     }
 }

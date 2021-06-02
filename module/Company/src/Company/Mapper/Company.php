@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
+use User\Model\NewCompany as NewCompanyModel;
 use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
@@ -83,7 +84,12 @@ class Company
         $company->setHidden(false);
         $this->em->persist($company);
 
-        return $company;
+        $newcompany = new NewCompanyModel($company);
+        $this->em->persist($newcompany);
+
+        $companies = [$company, $newcompany];
+
+        return $companies;
     }
 
     /**
@@ -149,6 +155,11 @@ class Company
     {
         $result = $this->getRepository()->findBy(['slugName' => $slugName]);
         return empty($result) ? null : $result[0];
+    }
+
+    public function findByEmail($contactEmail)
+    {
+        return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
     }
 
 

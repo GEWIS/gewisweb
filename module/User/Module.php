@@ -105,7 +105,8 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
-                'user_service_company' => 'User\Service\Company'
+                'user_service_company' => 'User\Service\Company',
+                'user_service_companyemail' => 'User\Service\CompanyEmail',
             ],
 
             'factories' => [
@@ -160,6 +161,11 @@ class Module
                 },
                 'user_form_passwordreset' => function ($sm) {
                     return new \User\Form\Register(
+                        $sm->get('translator')
+                    );
+                },
+                'user_form_companypasswordreset' => function ($sm) {
+                    return new \User\Form\CompanyPassword(
                         $sm->get('translator')
                     );
                 },

@@ -604,22 +604,24 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-
         if ($companyForm->isValid()) {
-            $company = $this->insertCompany($data['languages']);
+            $companies = $this->insertCompany($data['languages']);
+            $company = $companies[0];
             $company->exchangeArray($data);
+            $newCompany = $companies[1];
+            $newCompany->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
+
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                    if ($file['error'] !== UPLOAD_ERR_OK) {
-                        return false;
+                    if ($file['error'] == UPLOAD_ERR_OK) {
+                        $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                        $translation->setLogo($newPath);
                     }
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
                 }
             }
             $this->saveCompany();
-            return $company;
+            return $companies;
         }
 
         return null;

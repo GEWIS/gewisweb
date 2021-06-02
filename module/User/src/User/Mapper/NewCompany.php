@@ -45,6 +45,19 @@ class NewCompany
     }
 
     /**
+     * Find a company by its email.
+     *
+     * @param string $contactEmail company email
+     *
+     * @return \Company\Model\Company
+     */
+    public function findByEmail($contactEmail)
+    {
+        return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
+    }
+
+
+    /**
      * Get the repository for this mapper.
      *
      * @return \Doctrine\ORM\EntityRepository
@@ -52,5 +65,26 @@ class NewCompany
     public function getRepository()
     {
         return $this->em->getRepository('User\Model\NewCompany');
+    }
+
+    /**
+     * Delete the existing activation code for a company
+     *
+     * @param string $company
+     * @return array
+     */
+    public function deleteByCompany($company)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete('User\Model\NewCompany', 'u');
+        $qb->where('u.contactEmail = :com');
+        $qb->setParameter('com', $company);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function persist(NewCompanyModel $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
     }
 }

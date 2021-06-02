@@ -7,7 +7,7 @@ namespace User\Mapper;
 use Doctrine\ORM\EntityManager;
 use User\Model\CompanyUser;
 use User\Model\NewCompany as NewCompanyModel;
-use User\Model\Company as CompanyModel;
+use Company\Model\Company as CompanyModel;
 
 class Company extends Mapper
 {
@@ -68,6 +68,17 @@ class Company extends Mapper
         $res = $qb->getQuery()->getResult();
         return empty($res) ? null : $res[0];
     }
+    /**
+     * Find a company by its email.
+     *
+     * @param string $contactEmail company email
+     *
+     * @return \Company\Model\Company
+     */
+    public function findByEmail($contactEmail)
+    {
+        return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
+    }
 
     /**
      * Detach a user from the entity manager.
@@ -97,7 +108,8 @@ class Company extends Mapper
      * This will both destroy the NewUser and create the given user
      *
      * @param CompanyUser $company User to create
-     * @param NewUserModel $newUser NewUser to destroy
+     * @param NewCompanyModel $newCompany
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     // TODO: comments
     public function createCompany(CompanyUser $company, NewCompanyModel $newCompany)
