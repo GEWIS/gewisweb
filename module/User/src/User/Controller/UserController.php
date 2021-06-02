@@ -243,7 +243,6 @@ class UserController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            print_r($data);
             // try to login
             $login = $companyService->companyLogin($data);
 
