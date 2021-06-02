@@ -91,6 +91,11 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Shows the highlighting page and processes the form when submit has been clicked
+     *
+     *
+     */
     public function highlightAction(){
         //Get usefull stuff
         $companyService = $this->getCompanyService();
