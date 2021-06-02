@@ -608,6 +608,37 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     *Splits a sentence $string into several $words based on whitespaces
+     *Then checks that each $word has at most $max characters
+     *If any of the words exceed $max characters the $string is made to fit on one sentence by removing the excess characters and appending "..." to indicate that it has been cut short
+     */
+    function fixWordSize($string, $line_len, $max_chars) {
+        if (strlen($string) > $max_chars) {                          //If the string exceeds $max_characters
+            if ($line_len > $max_chars) {
+                $string = substr($string, 0, $line_len);         //truncate it after $line_len
+            } else {
+                $string = substr($string, 0, $max_chars);         //truncate it after $max_chars
+            }
+
+            $string = $string.
+                "...";                               //Append "..." to indicate truncation
+        }
+
+        $word = explode(" ", $string);                      //split $string into array of $words
+        $rebuilt_string = "";
+        for ($i = 0; $i < count($word); $i++) {
+            if (strlen($word[$i]) > $line_len) {                     //Finding an oversized word
+                $word[$i] = substr($word[$i], 0, $line_len);
+                return $rebuilt_string.$word[$i].
+                    "...";
+            }
+            $rebuilt_string = $rebuilt_string.$word[$i].
+                " ";
+        }
+        return $string;
+    }
+
+    /**
      * Updates this object with values in the form of getArrayCopy()
      *
      */
