@@ -25,7 +25,7 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        if (APP_ENV === 'production') {
+        if ('APP_ENV' === 'production') {
             return [
                 'Zend\Loader\ClassMapAutoloader' => [
                     __DIR__ . '/autoload_classmap.php',

@@ -1,23 +1,23 @@
 <?php
 
-namespace User\Controller;
+namespace UserTest\Controller;
 
+use PHPUnit_Framework_TestCase;
+use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class UserControllerTest extends \PHPUnit_Framework_TestCase
+class UserControllerTest extends AbstractHttpControllerTestCase
 {
 
-    public function testCompanyLogoutAction()
+    public function setUp()
     {
-
+        print_r(getcwd());
+        $this->setApplicationConfig(
+            include getcwd() . '/config/application.config.development.php'
+        );
+        parent::setUp();
     }
 
-    public function testCompanyAction()
-    {
-
-    }
-
-    public function testActivateCompanyAction()
-    {
-
+    public function testDispatch() {
+//        $this->dispatch('/user');
     }
 }
