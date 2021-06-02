@@ -188,7 +188,7 @@ return [
                     'Property' => 'Education\Oase\Property',
                     'Antwoord' => 'Education\Oase\Antwoord'
                 ],
-                'soap_version' => SOAP_1_1
+                'soap_version' => 'SOAP_1_1'
             ]
         ],
         /**
