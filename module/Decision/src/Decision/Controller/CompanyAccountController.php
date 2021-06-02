@@ -47,7 +47,7 @@ class companyaccountController extends AbstractActionController
                     // Check if the size of the image is 90x728
                     if ($this->checkImageSize($image, $packageForm)) {
                         // Check if Company has enough credits and subtract them if so
-                        if ($this->checkAndDeductCredits($post, $company, $companyService)) {
+                        if ($this->checkCredits($post, $company, $companyService, "banner")) {
                             // Upload the banner to database and redirect to Companypanel
                             if ($companyService->insertPackageForCompanySlugNameByData(
                                 $company->getName(),
@@ -101,15 +101,11 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
-        //Get current language
-        $translator = $companyService->getTranslator();
-        $locale = $translator->getLocale();
-
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies($locale)));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies()));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -117,15 +113,18 @@ class companyaccountController extends AbstractActionController
             $post = $request->getPost();
             //Set published to one, since a highlight does not need to be approved
             $post['published'] = 1;
-            if ($companyService->insertPackageForCompanySlugNameByData(
-                $company->getName(),
-                $post,
-                NULL, //There are no files to be passed
-                'highlight'
-            )) {
-                return $this->redirect()->toRoute(
-                    'companyaccount'
-                );
+
+            if ($this->checkCredits($post, $company, $companyService, "highlight")) {
+                if ($companyService->insertPackageForCompanySlugNameByData(
+                    $company->getName(),
+                    $post,
+                    NULL, //There are no files to be passed
+                    'highlight'
+                )) {
+                    return $this->redirect()->toRoute(
+                        'companyaccount'
+                    );
+                }
             }
         }
 
@@ -148,7 +147,13 @@ class companyaccountController extends AbstractActionController
      *
      *
      */
-    public function getVacancies($locale) {
+    public function getVacancies() {
+        $companyService = $this->getCompanyService();
+
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
         //Obtain the id of the logged in company
         $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
 
@@ -171,6 +176,38 @@ class companyaccountController extends AbstractActionController
             $vacancyNames[$vacancy->getId()] = $vacancy->getName();
         }
         return $vacancyNames;
+    }
+
+    public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
+        $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
+
+        if ($type === "banner"){
+            $company->setBannerCredits($credits_owned);
+        } elseif ($type === "highlight"){
+            $company->setHighlightCredits($credits_owned);
+        }
+        $companyService->saveCompany();
+    }
+
+    public function checkCredits($post, $company, $companyService, $type) {
+        global $MSG;
+        $start_date = new \DateTime($post['startDate']);
+        $end_date = new \DateTime($post['expirationDate']);
+        $days_scheduled = $end_date->diff($start_date)->format("%a");
+
+        if ($type === "banner"){
+            $credits_owned = $company->getBannerCredits();
+        } elseif ($type === "highlight"){
+            $credits_owned = $company->getHighlightCredits();
+        }
+
+        if ($credits_owned >= $days_scheduled ){
+            $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
+            return true;
+        }
+
+        $MSG = "The amount of credits needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+        return false;
     }
 
     public function function_alert($msg){
