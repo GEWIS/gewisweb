@@ -10,6 +10,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function setUp()
     {
+
         print_r(getcwd());
         $this->setApplicationConfig(
             include getcwd() . '/config/application.config.development.php'
