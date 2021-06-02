@@ -26,9 +26,6 @@ class companyaccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         global $MSG;
 
-        // Get Zend validator
-        $image_validator = new IsImage();
-
         // Get form
         $packageForm = $companyService->getPackageForm('banner');
 
@@ -39,39 +36,22 @@ class companyaccountController extends AbstractActionController
             $post = $request->getPost();
             $post['published'] = 0;
 
-            // Check if valid timespan is selected
-            if(new \DateTime($post['expirationDate']) > new \DateTime($post['startDate'])){
-                // Check if the upload file is an image
-                if ($image_validator->isValid($files['banner'])) {
-                    $image = $files['banner'];
-                    // Check if the size of the image is 90x728
-                    if ($this->checkImageSize($image, $packageForm)) {
-                        // Check if Company has enough credits and subtract them if so
-                        if ($this->checkCredits($post, $company, $companyService, "banner")) {
-                            // Upload the banner to database and redirect to Companypanel
-                            if ($companyService->insertPackageForCompanySlugNameByData(
-                                $company->getName(),
-                                $post,
-                                $image,
-                                'banner'
-                            )) {
-                                return $this->redirect()->toRoute(
-                                    'companyaccount'
-                                );
-                            }
-                        }
-                    } else {
-                        // TODO Implement cropping tool (Could)
-                    }
-                } else {
-                    $MSG = "Please submit an image.";
-                    $packageForm->setData($this->resetInsertedDates($post));
+            if ($this->bannerPostCorrect($post, $files)) {
+                // Upload the banner to database and redirect to Companypanel
+                if ($companyService->insertPackageForCompanySlugNameByData(
+                    $company->getName(),
+                    $post,
+                    $files['banner'],
+                    'banner'
+                )) {
+                    return $this->redirect()->toRoute(
+                        'companyaccount'
+                    );
                 }
             } else {
-                $MSG = "Please make sure the expirationdate is after the startingdate.";
+                echo $this->function_alert($MSG);
+                $packageForm->setData($this->resetInsertedDates($post));
             }
-            echo $this->function_alert($MSG);
-            $packageForm->setData($this->resetInsertedDates($post));
         }
 
         // Initialize the form
@@ -89,6 +69,41 @@ class companyaccountController extends AbstractActionController
             'form' => $packageForm,
             'company' => $company
         ]);
+    }
+
+    public function bannerPostCorrect($post, $files) {
+        global $MSG;
+        // Get Zend validator
+        $image_validator = new IsImage();
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        // Check if valid timespan is selected
+        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
+            $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        // Check if the upload file is an image
+        if (!$image_validator->isValid($files['banner'])) {
+            $MSG = "Please submit an image.";
+            //$packageForm->setData($this->resetInsertedDates($post));
+            return false;
+        }
+
+        // Check if the size of the image is 90x728
+        if (!$this->checkImageSize($files['banner'])) {
+            // TODO Implement cropping tool (Could)
+            return false;
+        }
+
+        // Check if Company has enough credits and subtract them if so
+        if (!$this->checkCredits($post, $company, $companyService, "banner")) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -243,7 +258,7 @@ class companyaccountController extends AbstractActionController
         return false;
     }
 
-    public function checkImageSize($image, $packageForm) {
+    public function checkImageSize($image) {
         global $MSG;
         list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
