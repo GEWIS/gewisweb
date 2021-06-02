@@ -97,6 +97,7 @@ class companyaccountController extends AbstractActionController
      *
      */
     public function highlightAction(){
+        global $MSG;
         //Get usefull stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
@@ -125,6 +126,8 @@ class companyaccountController extends AbstractActionController
                         'companyaccount'
                     );
                 }
+            } else {
+                echo $this->function_alert($MSG);
             }
         }
 
@@ -206,7 +209,7 @@ class companyaccountController extends AbstractActionController
             return true;
         }
 
-        $MSG = "The amount of credits needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+        $MSG = "The amount of highlighting days needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
         return false;
     }
 
