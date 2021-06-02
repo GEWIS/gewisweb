@@ -101,11 +101,15 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies()));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies($locale)));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -144,14 +148,14 @@ class companyaccountController extends AbstractActionController
      *
      *
      */
-    public function getVacancies() {
+    public function getVacancies($locale) {
         //Obtain the id of the logged in company
         $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
 
         //obtain company package information
         $companyPackageInfo = $this->getcompanyAccountService()->getCompanyPackageInfo($companyId);
 
-        return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId());
+        return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
     }
 
     /**
