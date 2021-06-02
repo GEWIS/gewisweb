@@ -1,3 +1,6 @@
+<?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
 <section class="section">
     <div class="container">
         <div class="row">
@@ -18,17 +21,6 @@
             </li>
         </ul>
         <hr/>
-
-
-
-<!--        --><?php
-//        $this->scriptUrl()->requireUrls(
-//            [
-//                'admin_company/editCompany/editPackage/deleteJob',
-//            ],
-//            ['slugCompanyName', 'packageId', 'languageNeutralJobId']
-//        );
-        ?>
         <?php
         $form->setAttribute('class', 'form-horizontal');
         $form->prepare()
@@ -55,10 +47,13 @@
             <?php $lniDoneList = [] ?>
             <?php foreach ($package->getJobs() as $job): ?>
                 <?php
-                if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                if($job->getLanguage() != $lang) {
                     continue;
+                    if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                        continue;
+                    }
+                    $lniDoneList[$job->getLanguageNeutralId()] = $job;
                 }
-                $lniDoneList[$job->getLanguageNeutralId()] = $job;
                 ?>
                 <tr>
                     <td>
