@@ -1075,6 +1075,7 @@ class Company extends AbstractACLService
      */
     public function getJobs($dict)
     {
+
         $translator = $this->getTranslator();
         if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] === null) {
             $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
@@ -1089,6 +1090,19 @@ class Company extends AbstractACLService
         $jobs = $this->getJobMapper()->findJob($dict);
 
         return $jobs;
+    }
+
+    public function getAllJobs() {
+        $jobList = $this->getJobMapper()->findAllActiveJobs($this->getTranslator()->getLocale());
+
+        $array = [];
+        foreach ($jobList as $job) {
+            if ($job->isActive()) {
+                $array[] = $job;
+            }
+        }
+
+        return $array;
     }
 
     /**

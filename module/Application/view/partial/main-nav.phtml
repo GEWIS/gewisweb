@@ -197,7 +197,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li class="dropdown dropdown-submenu">
                             <!-- Button to general vacancies page  -->
                             <!-- TODO: add right url once implemented -->
-                            <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
+<!--                            Url for all vacancies:-->
+<!--                            <a href="--><?//= $this->url('company/jobList', ['category' => 'all']) ?><!--">--><?//= $this->translate('Vacancies') ?>
+                            <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
                                class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 <?= $this->translate('Vacancies') ?>
@@ -205,7 +207,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                             <!-- Sub-menu for vacancies -->
                             <!-- TODO: add right url once implemented -->
-                            <a href="<?= $this->url('companyaccount/dummy') ?>" role="button"
+                            <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
                                class="hidden-sm hidden-xs">
                                 <?= $this->translate('Vacancies') ?>
                                 <span class="caret"></span>

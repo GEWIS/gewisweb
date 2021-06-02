@@ -90,6 +90,15 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+    public function findAllActiveJobs($lang)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.language=:lang');
+        $qb->setParameter('lang', $lang);
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName

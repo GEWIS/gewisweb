@@ -6,7 +6,7 @@ $locale = $this->translator->getLocale();
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
-$this->headTitle($this->category->getPluralName());
+$this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -24,7 +24,7 @@ $this->headTitle($this->category->getPluralName());
                 </li>
             <?php endif; ?>
             <li class="active">
-                <?= $category->getPluralName() ?>
+                <?= $all ? 'All Vacancies':$category->getPluralName() ?>
             </li>
         </ol>
     </div>
@@ -34,7 +34,7 @@ $this->headTitle($this->category->getPluralName());
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><?= $category->getPluralName() ?></h1>
+                <h1><?= $all ? 'All Vacancies' : $category->getPluralName() ?></h1>
             </div>
         </div>
         <div class="row">
@@ -93,7 +93,7 @@ $this->headTitle($this->category->getPluralName());
             <div class="row">
                 <div class="col-md-12" style="margin-top: 1em">
                     <h4>No Results</h4>
-                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), $all ? 'vacancies' : strtolower($category->getPluralName())) ?></p>
                 </div>
             </div>
         <?php else: ?>
@@ -156,10 +156,13 @@ $this->headTitle($this->category->getPluralName());
         <?php
         $alternatives = [];
         foreach ($this->jobCategories() as $c) {
-            // Don't include current category in list of alternative job categories
-            if ($category->getId() === $c->getId()) {
-                continue;
+            if (!$all){
+                // Don't include current category in list of alternative job categories
+                if ($category->getId() === $c->getId()) {
+                    continue;
+                }
             }
+
 
             $alternatives[] = vsprintf('<a href="%s">%s</a>', [
                 $this->url('company/jobList', ['category' => $c->getSlug()]),
@@ -176,7 +179,7 @@ $this->headTitle($this->category->getPluralName());
                 </div>
                 <div class="col-md-12">
                     <p class="text-muted">
-                        <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
+                        <?= sprintf($this->translate($all ? "Want to look at vacancies per category? Take a look at %s." : "Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
                     </p>
                 </div>
             </div>
