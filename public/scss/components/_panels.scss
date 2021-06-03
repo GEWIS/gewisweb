@@ -183,6 +183,20 @@ a {
             background: $brand-primary;
         }
     }
+
+    &.panel-image-disabled {
+        display: block;
+
+        color: rgba(97,97,89,0.23);
+        text-decoration: none;
+        background: darken(white, 2%);
+
+        transition:
+            background 150ms ease,
+            color 150ms ease;
+
+
+    }
 }
 
 .panel-image {
@@ -209,3 +223,50 @@ a {
         margin-bottom: 0.1em;
     }
 }
+
+.panel-image-disabled {
+    margin: 0 0 3em;
+    padding: 1em;
+
+    text-align: center;
+    box-shadow: none;
+    border: none;
+
+    h4, .h4 {
+        margin-bottom: 0;
+    }
+
+    .panel-heading {
+        padding: 0;
+        border: none;
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    .big-icon {
+        font-size: 3em;
+        margin-bottom: 0.1em;
+    }
+}
+
+.panel-warning {
+    visibility: hidden;
+    margin-top: -2em;
+}
+
+.panel-warning-text{
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: black;
+}
+
+.panel-disabled:hover > .panel-warning {
+    visibility: visible;
+    background-color: darken(white, 2%);;
+
+}
+
+
+
+

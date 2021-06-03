@@ -31,7 +31,8 @@
         "league/glide-zend": "^1.0",
         "nesbot/carbon": "^1.39",
         "fortawesome/font-awesome": "dev-master",
-        "slowprog/composer-copy-file": "~0.3"
+        "slowprog/composer-copy-file": "~0.3",
+        "phpunit/phpunit":"5.7.27",
     },
     "scripts": {
         "post-install-cmd": [
