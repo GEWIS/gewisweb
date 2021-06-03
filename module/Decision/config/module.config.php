@@ -346,7 +346,7 @@ return [
                     'route' => '/companyAccount',
                     'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'CompanyAccount',
+                        'controller' => 'companyaccount',
                         'action' => 'index'
                     ]
                 ],
@@ -392,7 +392,7 @@ return [
                         'options' => [
                             'route' => '/vacancies',
                             'defaults' => [
-                                'controller' => 'CompanyAccount',
+                                'controller' => 'companyaccount',
                                 'action' => 'vacancies'
                             ]
                         ],
@@ -403,7 +403,7 @@ return [
                                 'options' => [
                                     'route' => '/create',
                                     'defaults' => [
-                                        'controller' => 'CompanyAccount',
+                                        'controller' => 'companyaccount',
                                         'action' => 'createVacancy',
                                     ]
                                 ],
@@ -436,7 +436,7 @@ return [
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController',
             'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
-            'Decision\Controller\CompanyAccount' => 'Decision\Controller\CompanyAccountController',
+            'Decision\Controller\companyaccount' => 'Decision\Controller\companyAccountController',
         ]
     ],
     'view_manager' => [

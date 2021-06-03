@@ -12,7 +12,6 @@ class EditPackage extends Form
     {
         // we want to ignore the name passed
         parent::__construct();
-
         $this->setAttribute('method', 'post');
 
         $this->add([
@@ -26,9 +25,11 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
+                'min' => $this->setTomorrow(),
+                'value' => $this->setTomorrow()
             ],
             'options' => [
-                'label' => $translate->translate('Start date'),
+                'label' => $translate->translate('Start date *'),
             ],
         ]);
 
@@ -38,9 +39,11 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
+                'min' => $this->setTomorrow(),
+                'value' => $this->setDayInterval(14)
             ],
             'options' => [
-                'label' => $translate->translate('Expiration date'),
+                'label' => $translate->translate('Expiration date *'),
             ],
         ]);
 
@@ -85,12 +88,13 @@ class EditPackage extends Form
         if ($type === "banner") {
             $this->add([
                 'name' => 'banner',
+                'required' => true,
                 'type' => '\Zend\Form\Element\File',
                 'attributes' => [
                     'type' => 'file',
                 ],
                 'options' => [
-                    'label' => $translate->translate('Banner'),
+                    'label' => $translate->translate('Banner *'),
                 ],
             ]);
         }
@@ -111,30 +115,29 @@ class EditPackage extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
-            'name' => 'startDate',
-            'required' => true,
-            'validators' => [
-                ['name' => 'date'],
-            ],
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
-        ]);
-
-        $filter->add([
-            'name' => 'expirationDate',
-            'required' => true,
-            'validators' => [
-                ['name' => 'date'],
-            ],
-            'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
-        ]);
 
         $this->setInputFilter($filter);
     }
+
+    /**
+     * Method that returns the date of tomorrow
+     *
+     * @return \DateTime
+     */
+    public function setTomorrow() {
+        $today = date("Y-m-d");
+        return date('Y-m-d', strtotime($today . ' +1 day'));
+    }
+
+    /**
+     * Returns the date of tomorrow plus a certain number of days
+     *
+     * @param $interval the number of days to add to tomorrow
+     * @return \DateTime
+     */
+    public function setDayInterval($interval) {
+        $tomorrow = $this->setTomorrow();
+        return date('Y-m-d', strtotime($tomorrow . ' +' . strval($interval) .' day'));
+    }
+
 }
