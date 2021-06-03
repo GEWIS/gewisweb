@@ -49,8 +49,9 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form results
         $request = $this->getRequest();
+
+        // Check if data is valid, and insert when it is
         if ($request->isPost()) {
-            // Check if data is valid, and insert when it is
             $companies = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()

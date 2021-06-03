@@ -143,6 +143,28 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * Action to change company's password.
+     */
+    public function passwordCompanyAction()
+    {
+        $userService = $this->getUserService();
+        $request = $this->getRequest();
+
+        if ($request->isPost() && $userService->changeCompanyPassword($request->getPost())) {
+            // log out company after changing password
+            $this->getCompanyService()->logout();
+            // set status to successfully changed
+            return new ViewModel([
+                'success' => true
+            ]);
+        }
+
+        return new ViewModel([
+            'form' => $this->getUserService()->getPasswordForm()
+        ]);
+    }
+
+    /**
      * Action to reset password.
      */
     public function resetAction()
@@ -221,26 +243,28 @@ class UserController extends AbstractActionController
     /**
      * Company activation action.
      */
-    // TODO: comments
     public function activateCompanyAction()
     {
         $userService = $this->getUserService();
 
+        // get the activation code
         $code = $this->params()->fromRoute('code');
 
         if (empty($code)) {
-            // no code given
+            // no code given, send back to homepage
             return $this->redirect()->toRoute('home');
         }
 
-        // get the new company
+        // get the new company based on the activation code
         $newCompany = $userService->getNewCompany($code);
 
         if (null === $newCompany) {
+            // no company to activate is found, send back to homepage
             return $this->redirect()->toRoute('home');
         }
 
         if ($this->getRequest()->isPost() && $userService->activateCompany($this->getRequest()->getPost(), $newCompany)) {
+            // change activation status to activated true
             return new ViewModel([
                 'activated' => true
             ]);

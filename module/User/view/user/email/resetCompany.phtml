@@ -1,3 +1,5 @@
+<?= "--- Dutch version below ---\n\n" ?>
+
 <?= sprintf($this->translate('Dear %s,'), $member->getContactName()) . "\n" ?>
 
 <?= $this->translate('A password reset was requested for your account.') . "\n" ?>
@@ -6,8 +8,21 @@
 
 <?= $this->serverUrl($this->url('user/activate-company', ['code' => $user->getCode()])) . "\n" ?>
 
-<?= $this->translate('Your reset code is:') ?> <?= $user->getCode() . "\n" ?>
-
 <?= $this->translate('Best Regards,') . "\n" ?>
 
 <?= $this->translate('WebCommissie GEWIS') ?>
+
+
+<?= "--- Dutch version ---\n\n" ?>
+
+<?= sprintf($this->translate('Beste %s,'), $member->getContactName()) . "\n" ?>
+
+<?= $this->translate('Een wachtwoord reset is aangevraagd voor uw account.') . "\n" ?>
+
+<?= $this->translate('U kunt uw wachtwoord opnieuw instellen via de volgende link:') . "\n" ?>
+
+<?= $this->serverUrl($this->url('user/activate-company', ['code' => $user->getCode()])) . "\n" ?>
+
+<?= $this->translate('Met vriendelijke groeten,') . "\n" ?>
+
+<?= $this->translate('De Web Commissie') ?>

@@ -39,6 +39,7 @@ class User extends AbstractAclService
 
         $data = $form->getData();
 
+        // get hashing
         $bcrypt = $this->sm->get('user_bcrypt');
 
         // first try to obtain the user
@@ -48,6 +49,7 @@ class User extends AbstractAclService
             $user = new UserModel($newUser);
         }
 
+        // set password as hashed version
         $user->setPassword($bcrypt->create($data['password']));
 
         // this will also save a user with a lost password
@@ -56,7 +58,14 @@ class User extends AbstractAclService
         return true;
     }
 
-    // TODO: comments
+    /**
+     * Activate a company user.
+     *
+     * @param array $data Activation data.
+     * @param NewCompanyModel $newCompany The company to create
+     *
+     * @return boolean
+     */
     public function activateCompany($data, NewCompanyModel $newCompany)
     {
         $form = $this->getActivateForm();
@@ -69,19 +78,20 @@ class User extends AbstractAclService
 
         $data = $form->getData();
 
+        // get hashing
         $bcrypt = $this->sm->get('user_bcrypt');
 
-        // first try to obtain the user
+        // try to obtain the company user
         $companyUser = $this->getCompanyMapper()->findById($newCompany->getId());
         if (null === $companyUser) {
-            // create a new user from this data, and insert it into the database
+            // create a new company user from this data, and insert it into the database
             $companyUser = new CompanyUserModel($newCompany);
         }
 
-
+        // set the company user's password as hashed version
         $companyUser->setPassword($bcrypt->create($data['password']));
 
-        // this will also save a user with a lost password
+        // this will also save a company user with a lost password
         $this->getCompanyMapper()->createCompany($companyUser, $newCompany);
 
         return true;
@@ -211,7 +221,6 @@ class User extends AbstractAclService
         $form->setData($data);
 
         if (!$form->isValid()) {
-            echo "Test";
             return null;
         }
 
@@ -220,8 +229,6 @@ class User extends AbstractAclService
         $company = $this->getCompanyMapper()->findByEmail($data['email']);
 
         #check if the member has a corresponding user.
-//        $user = $this->getCompanyMapper()->findById($member->getLidnr());
-//        echo $user;
         if (null === $company) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
             echo "Company is null";
@@ -296,6 +303,56 @@ class User extends AbstractAclService
         $actUser->setPassword($bcrypt->create($data['password']));
 
         $mapper->persist($actUser);
+
+        return true;
+    }
+
+    /**
+     * Change the password of a company.
+     *
+     * @param array $data Password change date
+     *
+     * @return boolean
+     */
+    public function changeCompanyPassword($data)
+    {
+        // get form
+        $form = $this->getPasswordForm();
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $data = $form->getData();
+
+        // Get current company
+        $auth = $this->getServiceManager()->get('company_auth_service');
+        $adapter = $auth->getAdapter();
+        $company = $auth->getIdentity();
+
+        // error if old password is incorrect
+        if (!$adapter->verifyPassword($data['old_password'], $company->getPassword())) {
+            $form->setMessages([
+                'old_password' => [
+                    $this->getTranslator()->translate("Password incorrect")
+                ]
+            ]);
+
+            return false;
+        }
+
+        $mapper = $this->getCompanyMapper();
+        // get hashing
+        $bcrypt = $this->sm->get('user_bcrypt');
+
+        // get the company
+        $actCompany = $mapper->findById($company->getLidnr());
+
+        // save hashed password
+        $actCompany->setPassword($bcrypt->create($data['password']));
+
+        $mapper->persist($actCompany);
 
         return true;
     }
@@ -512,7 +569,13 @@ class User extends AbstractAclService
         return $this->getNewUserMapper()->getByCode($code);
     }
 
-    // TODO: comments
+    /**
+     * Get the new company by activation code.
+     *
+     * @param string $code
+     *
+     * @return NewCompanyModel
+     */
     public function getNewCompany($code)
     {
         return $this->getNewCompanyMapper()->getByCode($code);
@@ -637,7 +700,6 @@ class User extends AbstractAclService
         return $this->sm->get('user_mapper_newuser');
     }
 
-    // TODO: comments
     /**
      * Get the new company mapper.
      *
@@ -645,6 +707,7 @@ class User extends AbstractAclService
      */
     public function getNewCompanyMapper()
     {
+        // get mapper as defined in module.php
         return $this->sm->get('user_mapper_newcompany');
     }
 
@@ -658,9 +721,14 @@ class User extends AbstractAclService
         return $this->sm->get('user_mapper_user');
     }
 
-    // TODO: comments
+    /**
+     * Get the company mapper.
+     *
+     * @return CompanyMapper
+     */
     public function getCompanyMapper()
     {
+        // get mapper as defined in module.php
         return $this->sm->get('user_mapper_company');
     }
 

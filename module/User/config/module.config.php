@@ -77,13 +77,17 @@ return [
                             ]
                         ]
                     ],
+                    // define the route to the activation page
                     'activate-company' => [
                         'type' => 'Segment',
                         'options' => [
+                            // define the route based on a standard route, plus the activation code
                             'route' => '/activate-company/:code',
+                            // set constraints for the activation code
                             'constraints' => [
                                 'code' => '[a-zA-Z0-9]*'
                             ],
+                            // set default for the activation code and action when using the route
                             'defaults' => [
                                 'code' => '',
                                 'action' => 'activateCompany'

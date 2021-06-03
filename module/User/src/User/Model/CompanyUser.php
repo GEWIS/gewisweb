@@ -10,8 +10,9 @@ use Zend\Permissions\Acl\Resource\ResourceInterface;
 use Zend\Permissions\Acl\Role\RoleInterface;
 
 /**
- * Company model.
+ * CompanyUser model.
  *
+ * Create the table in the database
  * @ORM\Table(name="CompanyUser")
  * @ORM\Entity
  */
@@ -19,15 +20,18 @@ use Zend\Permissions\Acl\Role\RoleInterface;
 class CompanyUser extends Model implements RoleInterface, ResourceInterface
 {
     /**
-     * The membership number.
+     * The company ID.
      *
+     * Create column of right type in database
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
     protected $id;
 
     /**
-     * The company's contactEmail address.
+     * The company's contact email address.
+     *
+     * Create column of right type in database
      * @ORM\Column(type="string")
      */
     protected $contactEmail;
@@ -35,6 +39,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     /**
      * The company's password.
      *
+     * Create column of right type in database
      * @ORM\Column(type="string")
      */
     protected $password;
@@ -48,8 +53,9 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
 
     /**
      * Constructor
+     *
+     * Construct a NewCompany to set in the database
      */
-    // TODO: comments
     public function __construct(NewCompany $newCompany = null)
     {
         if (null !== $newCompany) {
@@ -60,8 +66,9 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
-     * The corresponding member for this user.
+     * The corresponding companyAccount for this company.
      *
+     * Database tables Company and CompanyUser are joined on company ID
      * @ORM\OneToOne(targetEntity="Company\Model\Company", fetch="EAGER")
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
@@ -69,7 +76,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
 
 
     /**
-     * Get the membership number.
+     * Get the company ID.
      *
      * @return int
      */
@@ -89,7 +96,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
-     * Get the company's contactEmailaddress.
+     * Get the company's contact email address.
      *
      * @return string
      */
@@ -143,6 +150,8 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * Get the corresponding companyAccount for this company.
+     *
      * @return CompanyUser
      */
     public function getCompanyAccount()
@@ -151,6 +160,8 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     }
 
     /**
+     * Set the corresponding companyAccount for this company.
+     *
      * @param CompanyUser $companyAccount
      */
     public function setCompanyAccount($companyAccount)
