@@ -108,12 +108,20 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     protected $bannerCredits;
 
+//    /**
+//     * The job's category.
+//     *
+//     * @ORM\ManyToMany(targetEntity="\Company\Model\JobSector")
+//     * @ORM\JoinColumn(name="id", referencedColumnName="languageNeutralId")
+//     */
+//    protected $sector;
+
     /**
-     * The company's email subscription status.
+     * The companies sector.
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
-    protected $emailSubscription;
+    protected $sector;
 
     /**
      * Constructor.
@@ -186,14 +194,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -355,6 +355,24 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $this->phone = $phone;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSector()
+    {
+        return $this->sector;
+    }
+
+    /**
+     * @param mixed $sector
+     */
+    public function setSector($sector)
+    {
+        $this->sector = $sector;
+    }
+
+
 
     /**
      *
@@ -521,24 +539,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Get the company's language.
-     *
-     * @return Boolean
-     */
-    public function getEmailSubscription()
-    {
-        return $this->emailSubscription;
-    }
-
-    /**
-     * @param mixed $emailSubscription
-     */
-    public function setEmailSubscription($emailSubscription)
-    {
-        $this->emailSubscription = $emailSubscription;
-    }
-
-    /**
      * If this object contains an translation for a given locale, it is returned, otherwise null is returned
      *
      */
@@ -608,6 +608,37 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     *Splits a sentence $string into several $words based on whitespaces
+     *Then checks that each $word has at most $max characters
+     *If any of the words exceed $max characters the $string is made to fit on one sentence by removing the excess characters and appending "..." to indicate that it has been cut short
+     */
+    function fixWordSize($string, $line_len, $max_chars) {
+        if (strlen($string) > $max_chars) {                          //If the string exceeds $max_characters
+            if ($line_len > $max_chars) {
+                $string = substr($string, 0, $line_len);         //truncate it after $line_len
+            } else {
+                $string = substr($string, 0, $max_chars);         //truncate it after $max_chars
+            }
+
+            $string = $string.
+                "...";                               //Append "..." to indicate truncation
+        }
+
+        $word = explode(" ", $string);                      //split $string into array of $words
+        $rebuilt_string = "";
+        for ($i = 0; $i < count($word); $i++) {
+            if (strlen($word[$i]) > $line_len) {                     //Finding an oversized word
+                $word[$i] = substr($word[$i], 0, $line_len);
+                return $rebuilt_string.$word[$i].
+                    "...";
+            }
+            $rebuilt_string = $rebuilt_string.$word[$i].
+                " ";
+        }
+        return $string;
+    }
+
+    /**
      * Updates this object with values in the form of getArrayCopy()
      *
      */
@@ -637,8 +668,9 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHighlightCredits($this->updateIfSet($data['highlightCredits'], 0));
         $this->setBannerCredits($this->updateIfSet($data['bannerCredits'], 0));
+        $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
-        $this->setEmailSubscription($this->updateIfSet($data['$emailSubscription'], ''));
+        $this->setSector($this->updateIfSet($data['sector'], null));
         $this->translations = $newTranslations;
     }
 
@@ -663,6 +695,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         $arraycopy['highlightCredits'] = $this->getHighlightCredits();
         $arraycopy['bannerCredits'] = $this->getBannerCredits();
         $arraycopy['hidden'] = $this->getHidden();
+        $arraycopy['sector'] = $this->getSector();
 
         // Languages
         $arraycopy['languages'] = [];

@@ -85,6 +85,19 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
+$element = $form->get('sector');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formSelect($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
+
+<?php
 $element = $form->get('address');
 $element->setAttribute('class', 'form-control');
 $element->setAttribute('style', 'width:100%; height:10em; resize:none');

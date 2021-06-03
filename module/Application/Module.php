@@ -177,6 +177,12 @@ class Module
                     $helper->setLegacyService($locator->get('application_service_legacy'));
                     return $helper;
                 },
+                'jobSectors' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobSectors();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'companyIdentity' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\CompanyIdentity();
