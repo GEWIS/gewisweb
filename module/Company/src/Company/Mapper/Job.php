@@ -241,6 +241,7 @@ class Job
             ->join('j.category', 'jc')
             ->where('h.company = ?1')
             ->andWhere('j.language = ?2')
+            ->andWhere('j.active = 1')
             ->setParameter(1, $companyId)
             ->setParameter(2, $locale);
 

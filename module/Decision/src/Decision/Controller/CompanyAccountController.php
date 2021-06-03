@@ -192,7 +192,7 @@ class companyaccountController extends AbstractActionController
     /**
      * Gets all active vacancies for a certain company
      *
-     *
+     * @return all active vacancies for a certain company
      */
     public function getVacancies() {
         $companyService = $this->getCompanyService();
@@ -210,6 +210,14 @@ class companyaccountController extends AbstractActionController
         return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
     }
 
+    /**
+     * Gets all highlightable vacancies for a certain company
+     * A vacancy is highlightable if
+     * - It is active
+     * - No other vacancies in the same category have been highlighted
+     *
+     * @return all highlightable vacancies for a certain company
+     */
     public function getHighlightableVacancies() {
         $companyService = $this->getCompanyService();
 
