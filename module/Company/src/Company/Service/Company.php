@@ -1043,6 +1043,22 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Get all categories in which a company has highlighted a vacancy.
+     *
+     * @param integer $companyId the id of the company who's
+     * categories will be fetched.
+     * @param string $locale The current language of the website
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function getHighlightableVacancies($companyId, $locale){
+        return $this->getJobMapper()->findHighlightableVacancies(
+            $companyId,
+            $this->getHighlightPackageMapper()->findHighlightedCategories($companyId),
+            $locale);
+    }
+
+    /**
      * Get the Company Edit form.
      *
      * @return Company Edit form

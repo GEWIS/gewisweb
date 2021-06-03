@@ -120,8 +120,10 @@ class companyaccountController extends AbstractActionController
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
+        //print_r($this->getHighlightableVacancies($this->getVacancies()));
+
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getVacancies()));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies()));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -130,7 +132,7 @@ class companyaccountController extends AbstractActionController
             //Set published to one, since a highlight does not need to be approved
             $post['published'] = 1;
 
-            if ($this->checkCredits($post, $company, $companyService, "highlight")) {
+            if ($this->highlightPostCorrect($post)) {
                 if ($companyService->insertPackageForCompanySlugNameByData(
                     $company->getName(),
                     $post,
@@ -143,6 +145,7 @@ class companyaccountController extends AbstractActionController
                 }
             } else {
                 echo $this->function_alert($MSG);
+                $packageForm->setData($this->resetInsertedDates($post));
             }
         }
 
@@ -158,6 +161,26 @@ class companyaccountController extends AbstractActionController
             'form' => $packageForm,
             'company' => $company
         ]);
+    }
+
+    public function highlightPostCorrect($post) {
+        global $MSG;
+        //Get usefull stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        // Check if valid timespan is selected
+        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
+            $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        // Check if Company has enough credits and subtract them if so
+        if (!$this->checkCredits($post, $company, $companyService, "highlight")) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -180,6 +203,21 @@ class companyaccountController extends AbstractActionController
 
         return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
     }
+
+    public function getHighlightableVacancies() {
+        $companyService = $this->getCompanyService();
+
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
+        //Obtain the id of the logged in company
+        $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
+
+        //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
+        return $this->getCompanyService()->getHighlightableVacancies($companyId, $locale);
+    }
+
 
     /**
      * Gets an array with the names from all vacancies in a vacancy object
@@ -237,25 +275,6 @@ class companyaccountController extends AbstractActionController
         $insertedDates['startDate'] = $post['startDate'];
         $insertedDates['expirationDate'] = $post['expirationDate'];
         return $insertedDates;
-    }
-
-    public function checkAndDeductCredits($post, $company, $companyService) {
-        global $MSG;
-        $ban_start = new \DateTime($post['startDate']);
-        $ban_end = new \DateTime($post['expirationDate']);
-        $ban_days = $ban_end->diff($ban_start)->format("%a");
-
-        $ban_credits = $company->getBannerCredits();
-        if ($ban_credits >= $ban_days ){
-            $ban_credits = $ban_credits - $ban_days;            //deduct banner credits based on days scheduled
-
-            $company->setBannerCredits($ban_credits);           //set new credits
-            $ban_credits = $company->getBannerCredits();
-            $companyService->saveCompany();
-            return true;
-        }
-        $MSG = "The amount of credits needed is: " . $ban_days . ". The amount you have is: " . $ban_credits . ".";
-        return false;
     }
 
     public function checkImageSize($image) {
@@ -420,15 +439,5 @@ class companyaccountController extends AbstractActionController
     protected function getDecisionEmail()
     {
         return $this->getServiceLocator()->get('decision_service_decisionEmail');
-    }
-
-    /**
-     * Get the CompanyAccount mapper.
-     *
-     * @return \Decision\Mapper\companyAccount
-     */
-    public function getCompanyAccountMapper()
-    {
-        return $this->getServiceLocator()->get('decision_mapper_companyAccount');
     }
 }
