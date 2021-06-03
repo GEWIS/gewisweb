@@ -499,64 +499,29 @@ class Company extends AbstractACLService
      */
     public function saveCompanyByData($company, $data, $files)
     {
-//        if ($this->identity()!== null && in_array('admin',$this->identity()->getRoleNames())) {
-            $companyForm = $this->getCompanyForm();
+        // when a company edits their profile, make sure the data they can't edit is maintained
+        // fill in missing data using current database entries
+//        if ($this->companyIdentity()!== null) {
+        $data['name'] = $company->getName();
+        $data['slugName'] = $company->getSlugName();
+        $data['phone'] = $company->getPhone();
+        $data['contactEmail'] = $company->getContactEmail();
+        $data['highlightCredits'] = $company->getHighlightCredits();
+        $data['bannerCredits'] = $company->getBannerCredits();
+        // comment out next line if company profile should be hidden after editing by company themselves
+        $data['hidden'] = (int)$company->isHidden();
+        // uncomment next line if company profile should be hidden after editing by company themselves
+//            $data['hidden'] = $company->setHidden(1);
 //        }
-//        else {
-//            $companyForm = $this->getCompanyCompanyForm();
-//            }
-        $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
-        );
-        $companyForm->setData($mergedData);
 
-        // TODO: figure out why isValid() is false when part of form is used and solve it
-//        print_r(var_dump($companyForm->isValid()));
-//        if ($companyForm->isValid()) {
-//            echo 'test2';
-            $company->exchangeArray($data);
-            foreach ($company->getTranslations() as $translation) {
-                $file = $files[$translation->getLanguage() . '_logo'];
-                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                    if ($file['error'] !== UPLOAD_ERR_OK) {
-                        return false;
-                    }
-                    $oldPath = $translation->getLogo();
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
-                    if ($oldPath !== '' && $oldPath != $newPath) {
-                        $this->getFileStorageService()->removeFile($oldPath);
-                    }
-                }
-            }
-            $this->saveCompany();
-            return true;
-//        }
-    }
-
-    /**
-     * Saves the Company
-     *
-     * @param mixed $company
-     * @param mixed $data
-     */
-    public function saveCompanyByData2($company, $data, $files)
-    {
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-        // TODO: figure out why isValid() is false when part of form is used and solve it
-        // TODO: fix hack solution
-        $arr =[];
-        foreach ($data as $key => $value) {
-            array_push($arr, isset($data[$key]));
-        }
-//        if ($companyForm->isValid()) {
-        if (!in_array(false,$arr)) {
+
+        if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -1097,26 +1062,6 @@ class Company extends AbstractACLService
     public function getCompanyForm()
     {
         return $this->sm->get('company_admin_edit_company_form');
-    }
-
-//    /**
-//     * Get the Company Edit form for companies.
-//     *
-//     * @return Company Edit form
-//     */
-//    public function getCompanyCompanyForm()
-//    {
-//        return $this->sm->get('company_edit_company_form');
-//    }
-
-    /**
-     * Get the Company Edit form for companies.
-     *
-     * @return Company Edit form
-     */
-    public function getCompanyCompanyForm()
-    {
-        return $this->sm->get('company_edit_company_form');
     }
 
     /**
