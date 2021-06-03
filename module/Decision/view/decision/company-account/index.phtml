@@ -84,7 +84,8 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                     </a>
 
 
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('user/default', ['action' => 'passwordCompany']) ?>"
+                       class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>

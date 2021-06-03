@@ -59,13 +59,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <!-- Button to company pannel -->
                             <li><a href="<?= $this->url('companyAccount') ?>"><?= $this->translate('Dashboard') ?></a>
                             </li>
-                            <li>
-                                <!-- TODO: add correct url and action after implementation/ merging -->
-                                <!-- Button to log out -->
-                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
-                            </li>
-                            <!-- TODO: add correct url? -->
                             <!-- Button to go to change password page -->
+                            <li><a href="<?= $this->url('user/default',
+                                    ['action' => 'passwordCompany'
+                                    ]) ?>"><?= $this->translate('Change password') ?></a></li>
+                            <!-- Button to log out -->
                             <li><a href="<?= $this->url('user/default', [
                                     'action' => 'companyLogout'
                                 ]) ?>"><?= $this->translate('Logout') ?></a></li>
