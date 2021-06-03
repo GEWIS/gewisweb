@@ -42,6 +42,32 @@ if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNa
 <?php } ?>
 
 <?php
+
+$element = $form->get('name');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
+<?php
+$element = $form->get('slugName');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
+<?php
+
 $element = $form->get('contactName');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -52,6 +78,19 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+
+<?php
+$element = $form->get('contactEmail');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
 <?php
 // Show certain fields only to admins, not to companies editing their own profile
 // Companies can edit this field in settings
@@ -66,6 +105,7 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+
 <?php } ?>
 
 <?php
@@ -81,19 +121,23 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
+
+
 // Show certain fields only to admins, not to companies editing their own profile
 // Companies can edit this field in settings
 if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
 $element = $form->get('contactEmail');
+
 $element->setAttribute('class', 'form-control');
 ?>
 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
         <?= $element->getOption('label') ?>
     </label>
-    <?= $this->formInput($element) ?>
+    <?= $this->formSelect($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+
 <?php } ?>
 
 <?php
@@ -110,6 +154,7 @@ $element->setAttribute('style', 'width:100%; height:10em; resize:none');
 </div>
 
 <?php
+
 // Show certain fields only to admins, not to companies editing their own profile
 if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
     $element = $form->get('highlightCredits');
@@ -135,6 +180,7 @@ if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNa
     </div>
 <?php } ?>
 
+
 <?php
 $element = $form->get('languages');
 $element->setAttribute('class', 'form-control');
@@ -150,6 +196,7 @@ $element->setAttribute('class', 'form-control');
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-6">
         <h3><?= $this->translate('English') ?></h3>
@@ -164,6 +211,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formInput($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('en_website');
         $element->setAttribute('class', 'form-control');
@@ -175,6 +223,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formInput($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('en_description');
         $element->setAttribute('class', 'form-control');
@@ -187,6 +236,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formTextarea($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('en_logo');
         $element->setAttribute('class', 'form-control');
@@ -212,6 +262,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formInput($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('nl_website');
         $element->setAttribute('class', 'form-control');
@@ -223,6 +274,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formInput($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('nl_description');
         $element->setAttribute('class', 'form-control');
@@ -235,6 +287,7 @@ $element->setAttribute('class', 'form-control');
             <?= $this->formTextarea($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
+
         <?php
         $element = $form->get('nl_logo');
         $element->setAttribute('class', 'form-control');

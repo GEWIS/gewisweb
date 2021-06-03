@@ -39,8 +39,82 @@ class CompanyAccountController extends AbstractActionController
         return new ViewModel();
     }
 
-    public function profileAction() {
-        return new ViewModel();
+    /**
+     * Action that displays a form for editing a company
+     *
+     *
+     */
+    public function profileAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $companyForm = $companyService->getCompanyForm();
+
+        // get useful company info
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companySlugName = $company->getSlugName();
+        $companyName = $company->getName();
+
+        // Get the specified company
+        $companyList = $companyService->getEditableCompaniesBySlugName($companySlugName);
+        // If the company is not found, throw 404
+        if (empty($companyList)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        $company = $companyList[0];
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $post = $request->getPost();
+            // TODO: Solve temporary fix of using saveCompanyByData2 instead of saveCompanyByData
+            // Save the company
+            $companyService->saveCompanyByData2(
+                $company,
+                $post,
+                $request->getFiles()
+            );
+
+            $company->setSlugName($companySlugName);
+            $company->setName($companyName);
+            $companyService->saveCompany();
+
+            return $this->redirect()->toRoute(
+                'companyaccount/profile',
+                [
+                    'action' => 'edit',
+                    'slugCompanyName' => $companyName,
+                ],
+                [],
+                false
+            );
+
+        }
+
+        // Initialize form
+        $companyForm->setData($company->getArrayCopy());
+        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
+        $companyForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/profile',
+                [
+                    'action' => 'editCompany',
+                    'slugCompanyName' => $companyName,
+                ]
+            )
+        );
+
+        $email = $this->getDecisionEmail();
+        $email->sendApprovalMail($company);
+
+        return new ViewModel([
+            'company' => $company,
+            'form' => $companyForm,
+        ]);
     }
 
     public function settingsAction() {

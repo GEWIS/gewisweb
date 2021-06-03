@@ -34,13 +34,44 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
-                <?php if (null === $this->identity()): ?>
+
+                <!-- To show if no (company)user is logged in -->
+                <?php if (null === $this->identity() && null === $this->CompanyIdentity()): ?>
                     <li class="pull-right">
                         <a href="<?= $this->url('user') ?>">
                             <span class="fas fa-user"></span>
                             <?= $this->translate('Login') ?>
                         </a>
                     </li>
+                <!-- To show if a companyuser is logged in -->
+                <?php elseif (null !== $this->CompanyIdentity()): ?>
+                    <!-- Get company -->
+                    <?php $company = $this->CompanyIdentity()->getCompanyAccount() ?>
+                    <!-- Use company name as title for dropdown menu -->
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <?= $company->getName() ?>
+                            <span class="caret"></span>
+                        </a>
+                        <!-- Content of dropdown menu -->
+                        <ul class="dropdown-menu">
+                            <!-- Button to company pannel -->
+                            <li><a href="<?= $this->url('companyAccount') ?>"><?= $this->translate('Dashboard') ?></a>
+                            </li>
+                            <li>
+                                <!-- TODO: add correct url and action after implementation/ merging -->
+                                <!-- Button to log out -->
+                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
+                            </li>
+                            <!-- TODO: add correct url? -->
+                            <!-- Button to go to change password page -->
+                            <li><a href="<?= $this->url('user/default', [
+                                    'action' => 'companyLogout'
+                                ]) ?>"><?= $this->translate('Logout') ?></a></li>
+                        </ul>
+                    </li>
+                <!-- To show if a user is logged in -->
                 <?php else: ?>
 <!--                 --><?php //$company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount(); ?>
                     <?php $member = $this->identity()->getMember() ?>
@@ -48,7 +79,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <?= $member->getFirstName() ?>
-                            <?= get_class($this->identity())." - ".gettype($this->identity()) ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -69,6 +99,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </ul>
                     </li>
                 <?php endif; ?>
+
             </ul>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only"><?= $this->translate('Toggle navigation') ?></span>
@@ -77,6 +108,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 <span class="icon-bar"></span>
             </button>
         </div>
+
         <div class="visible-xs-block clearfix"></div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
@@ -140,46 +172,80 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
+
+                <!-- Career section -->
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false"
+                    <!-- Button career, takes you to the general career page -->
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" aria-haspopup="true"
+                       aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                        <?= $this->translate('Companies') ?>
+                        <?= $this->translate('Career') ?>
                         <span class="caret"></span>
                     </a>
-                    <a href="<?= $this->url('company') ?>" role="button" class="hidden-sm hidden-xs">
-                        <?= $this->translate('Companies') ?>
+                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" class="hidden-sm hidden-xs">
+                        <?= $this->translate('Career') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="visible-sm visible-xs">
                             <a href="<?= $this->url('company') ?>">
-                                <?= $this->translate('Companies') ?>
+                                <?= $this->translate('Career') ?>
                             </a>
                         </li>
-                        <?php if (!is_null($this->featuredCompanyPackage())): ?>
-                            <li>
-                                <a href="<?= $this->url('company/spotlight') ?>">
-                                    <span class="fas fa-star"></span>
-                                    <?= $this->translate('Featured') ?>:
-                                    <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                        <?php foreach ($this->jobCategories() as $category):
-                            ?>
-                            <li>
-                            <li>
-                                <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
-                            </li>
-                            </li>
-                        <?php
-                        endforeach ?>
+                        <!-- Dropdown menu -->
+                        <li>
+                            <!-- Button to general companies page -->
+                            <a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a>
+                        <li class="dropdown dropdown-submenu">
+                            <!-- Button to general vacancies page  -->
+                            <!-- TODO: add right url once implemented -->
+<!--                            Url for all vacancies:-->
+<!--                            <a href="--><?//= $this->url('company/jobList', ['category' => 'all']) ?><!--">--><?//= $this->translate('Vacancies') ?>
+                            <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
+                               class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <?= $this->translate('Vacancies') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <!-- Sub-menu for vacancies -->
+                            <!-- TODO: add right url once implemented -->
+                            <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
+                               class="hidden-sm hidden-xs">
+                                <?= $this->translate('Vacancies') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                            <!-- Hardcoded version (for testing purpose) -->
+<!--                            --><?php
+//                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
+<!--                                --><?php //foreach ($arr as $category):
+//                                    $url = str_replace(' ', '', strtolower($category))
+//                                    ?>
+<!--                                        <li>-->
+<!--                                            <a href="--><?//= $this->url('company/jobList', ['category' => $url]) ?><!--">--><?//= $category ?><!--</a>-->
+<!--                                        </li>-->
+<!--                                --><?php //endforeach ?>
+
+                                <!-- Final version -->
+                                <!-- Get all job categories to use in submenu -->
+                                <!-- Only shows created categories when there are active vacancies in the category -->
+                                <?php foreach ($this->jobCategories() as $category): ?>
+                                    <li>
+                                        <!-- Use url with slugname of category for the page with specific category -->
+                                        <!-- Use plural name for category in menu bar -->
+                                        <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
+                                    </li>
+                                <?php endforeach ?>
+                            </ul>
                     </ul>
                 </li>
+
                 <li class="<?= $this->moduleIsActive(['education']) ? 'active' : '' ?>">
                     <a href="<?= $this->url('education') ?>">
                         <?= $this->translate('Education') ?>
                     </a>
                 </li>
+
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['activity']) ? 'active default' : '' ?>">
                     <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
@@ -223,6 +289,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
+
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>">
                     <?php if ($this->acl('photo_acl')->isAllowed('photo', 'view')): ?>
                         <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
@@ -259,6 +326,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <?php endif; ?>
                 </li>
             </ul>
+
             <?php if (null != $this->identity()): ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>"><a
