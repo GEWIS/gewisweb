@@ -519,7 +519,7 @@ class Company extends AbstractACLService
     public function saveCompanyByData($company, $data, $files)
     {
 
-        // TODO resolve merge problems
+        // TODO bug fix company changing profile (merge problems)
         // when a company edits their profile, make sure the data they can't edit is maintained
         // fill in missing data using current database entries
 //        if ($this->companyIdentity() !== null) {
@@ -542,6 +542,7 @@ class Company extends AbstractACLService
         );
         $companyForm->setData($mergedData);
 
+//        print_r($data);
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
@@ -559,6 +560,7 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
+//            print_r(var_dump($companyForm->isValid()));
             return true;
         }
     }
