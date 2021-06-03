@@ -120,8 +120,6 @@ class companyaccountController extends AbstractActionController
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
-        //print_r($this->getCompanyService()->getNumberOfHighlights($company->getId()));
-
         //Set the values for the selection element
         $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies()));
 

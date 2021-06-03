@@ -46,12 +46,16 @@ class HighlightPackage extends Package
      */
     public function getNumberOfHighlights($companyId)
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $today = date("Y/m/d");
 
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('h');
         $qb->select('COUNT(h)')
             ->where('h.company = ?1')
-            ->setParameter(1, $companyId);
+            ->andWhere('h.expires >= ?2')
+            ->andWhere('h.published = 1')
+            ->setParameter(1, $companyId)
+            ->setParameter(2, $today);
 
         return $qb->getQuery()->getResult()[0][1];
     }
