@@ -1,4 +1,7 @@
 <?php
+//const APP_ENV = 'development';
+$env = getenv('APP_ENV') ?: 'production';
+
 // Inherit production config
 $config = require 'config/application.config.production.php';
 

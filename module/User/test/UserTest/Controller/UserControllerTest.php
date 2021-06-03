@@ -2,6 +2,7 @@
 
 namespace UserTest\Controller;
 
+
 use PHPUnit_Framework_TestCase;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
@@ -10,8 +11,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function setUp()
     {
-
-        print_r(getcwd());
         $this->setApplicationConfig(
             include getcwd() . '/config/application.config.development.php'
         );

@@ -111,7 +111,6 @@ class Company extends Mapper
      * @param NewCompanyModel $newCompany
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    // TODO: comments
     public function createCompany(CompanyUser $company, NewCompanyModel $newCompany)
     {
         $this->em->persist($company);
@@ -124,7 +123,6 @@ class Company extends Mapper
      *
      * @param CompanyUser $company Company to persist.
      */
-    // TODO: comments
     public function persist(CompanyUser $company)
     {
         $this->em->persist($company);

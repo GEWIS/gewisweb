@@ -39,14 +39,6 @@ class Bootstrap
                 'Application',
                 'Company',
                 'Decision',
-                'Frontpage',
-                'Activity',
-                'Photo',
-                'Education',
-                'MaglMarkdown',
-                'DOMPDFModule',
-                'DoctrineModule',
-                'DoctrineORMModule',
             ]
         ];
 
