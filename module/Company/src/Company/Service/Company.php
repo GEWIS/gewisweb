@@ -1282,6 +1282,7 @@ class Company extends AbstractACLService
         return $array;
     }
 
+
 //    /**
 //     * Returns all sectors
 //     *
@@ -1302,6 +1303,7 @@ class Company extends AbstractACLService
 //        });
 //
 //    }
+
 
     /**
      * Returns the companyMapper
@@ -1424,6 +1426,7 @@ class Company extends AbstractACLService
         return $this->sm->get('application_get_languages');
     }
 
+
 //    /**
 //     * Returns the sector mapper
 //     *
@@ -1432,6 +1435,7 @@ class Company extends AbstractACLService
 //    {
 //        return $this->sm->get('company_mapper_sector');
 //    }
+
 
     public function getLanguageDescription($lang)
     {
