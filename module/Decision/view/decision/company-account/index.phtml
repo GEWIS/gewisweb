@@ -174,7 +174,13 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                             </div>
                             <div class="panel-body">
                                 <?= $this->translate($vacancy->getDescription()) ?>
-                                <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
+                                <a href="<?= $this->url("companyaccount/vacancies/editvacancy",
+                                    [
+                                        "slugCompanyName" => $vacancy->getCompany()->getSlugName(),
+                                        "packageId" => $vacancy->getPackage()->getId(),
+                                        "languageNeutralJobId" => $vacancy->getLanguageNeutralId(),
+                                    ]
+                                ); ?>">go to vacancy</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
