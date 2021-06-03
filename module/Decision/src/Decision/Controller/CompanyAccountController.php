@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use DateTime;
+use Zend\Validator\File\IsImage;
 
 class CompanyAccountController extends AbstractActionController
 {

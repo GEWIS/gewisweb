@@ -377,6 +377,15 @@ return [
                             ]
                         ],
                     ],
+                    'bannerupload' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/bannerupload',
+                            'defaults' => [
+                                'action' => 'bannerupload'
+                            ]
+                        ],
+                    ],
                     'settings' => [
                         'type' => 'literal',
                         'options' => [

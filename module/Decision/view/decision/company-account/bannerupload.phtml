@@ -1,0 +1,20 @@
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add banner</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3><? echo "You have currently got " . $company->getBannerCredits() . " credits (days) left to place a banner."; ?></h3>
+            </div>
+        </div>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'banner']);
+        echo $this->form()->closeTag($form);?>
+    </div>
+</section>
