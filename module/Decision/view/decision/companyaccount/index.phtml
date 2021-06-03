@@ -2,24 +2,34 @@
 // set title
 $this->headTitle($this->translate('Company Account'));
 
-$accountActive = True; //False if account is inactive
+$accountStyle = "panel-image";
+$bannerStyle = "panel-image";
+$highlightStyle = "panel-image";
 
-//determine wheter the account is active or not
+$accountActive = True; //False if account is inactive
+$bannerActive = True;  //False if banner credits are 0
+$HighlightActive = True;  //False if highlight credits are 0
+
+//determine whether the account is active or not
 $now = new DateTime();
 if ($companyPackageInfo[0]->getExpirationDate() < $now) {
     $accountActive = False;
+    $accountStyle = "panel-image-disabled";
 }
 
+if ($companyInfo[0]->getBannerCredits() <= 0){
+    $bannerActive = False;
+    $bannerStyle = "panel-image-disabled";
+}
+
+if ($companyInfo[0]->getHighLightCredits() <= 0){
+    $highlightActive = False;
+    $highlightStyle = "panel-image-disabled";
+}
 
 ?>
 
-
-<style>
-
-    .myDIV {
-        color: #428bca;
-    }
-
+<!--<style>
     .warningMessage {
         display: none;
     }
@@ -28,9 +38,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now) {
         display: block;
         color: white;
     }
-
-</style>
-
+</style>-->
 
 <div class="container">
     <section class="section">
@@ -100,53 +108,54 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now) {
                 <h2><?= $this->translate('Company content') ?></h2>
                 <div class="grid grid-col-5">
 
-                    <div>
-                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                    <div class="panel-disabled">
+                    <a class="<?= "panel $accountStyle align-middle" ?>"
                        <?php if ($accountActive): ?>href="<?= $this->url('companyaccount/vacancies') ?>"<?php endif; ?>>
-
-                        <div class="big-icon fas fa-list"></div>
-                        <div class="panel-heading"><?= $this->translate('Vacancies') ?></div>
-                        <?php if (!$accountActive): ?>
-                            <div class="warningMessage">Disabled, vacancy package has expired.</div>
-                        <?php endif; ?>
+                        <div  class="big-icon fas fa-list"></div>
+                        <div  class="panel-heading"><?= $this->translate('Vacancies') ?></div>
                     </a>
+                        <?php if (!$accountActive): ?>
+                            <div class="panel-warning"><div class="panel-warning-text">Disabled, vacancy package has expired.</div></div>
+                        <?php endif; ?>
                     </div>
 
-                    <div>
-                    <a id="inactiveMessage" class="panel panel-image align-middle"
+                    <div class="panel-disabled">
+                    <a class="<?= "panel $accountStyle align-middle" ?>"
                        <?php if ($accountActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
 
                         <div class="big-icon fas fa-list"></div>
                         <div class="panel-heading"><?= $this->translate('Activities') ?></div>
-                        <?php if (!$accountActive): ?>
-                            <div class="warningMessage">Disabled, vacancy package has expired.</div>
-                        <?php endif; ?>
+
                     </a>
+                        <?php if (!$accountActive): ?>
+                            <div class="panel-warning"><div class="panel-warning-text">Disabled, vacancy package has expired.</div></div>
+                        <?php endif; ?>
                     </div>
 
-                    <div>
-                    <a id="inactiveMessage" class="panel panel-image align-middle"
-                       <?php if ($companyInfo[0]->getBannerCredits() > 0): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+                    <div class="panel-disabled">
+                    <a  class="<?= "panel $bannerStyle align-middle" ?>"
+                       <?php if ($bannerActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
 
                         <div class="big-icon fas fa-flag"></div>
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
-                        <?php if ($companyInfo[0]->getBannerCredits() <= 0): ?>
-                            <div class="warningMessage">Disabled, no more banner days left.</div>
-                        <?php endif; ?>
                     </a>
+                        <?php if (!$bannerActive): ?>
+                            <div class="panel-warning"><div class="panel-warning-text">Disabled, no more banner days left.</div></div>
+                        <?php endif; ?>
                     </div>
 
-                    <div>
-                    <a id="inactiveMessage" class="panel panel-image align-middle"
-                       <?php if ($companyInfo[0]->getHighLightCredits() > 0): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+                    <div class="panel-disabled">
+                    <a class="<?= "panel $highlightStyle align-middle" ?>"
+                       <?php if ($HighlightActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
 
                         <div class="big-icon fas fa-check"></div>
                         <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
-                        <?php if ($companyInfo[0]->getHighLightCredits() <= 0): ?>
-                            <div class="warningMessage">Disabled, no more highlight days left.</div>
-                        <?php endif; ?>
                     </a>
+                        <?php if (!$HighlightActive): ?>
+                            <div class="panel-warning"><div class="panel-warning-text">Disabled, no more highlight days left.</div></div>
+                        <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>
