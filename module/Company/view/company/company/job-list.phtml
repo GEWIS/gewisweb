@@ -122,7 +122,6 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                 </div>
                                 <h2 class="card-title"><?= $job->getName() ?></h2>
                                 <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                <--! The php if (!is_null($job->getLocation())) segment was removed from here //TODO: Delete this comment after merging-->
                                 <div>
                                     <?php foreach ($job->getLabels() as $labelAsg): ?>
                                         <?php $label = $labelAsg->getLabel(); ?>
@@ -138,8 +137,6 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                 <div class="card-footer">
                                     <button class="btn btn-link"><?= $this->translate('View') ?></button>
                                     <span class="small">
-<--! The php if($job->getTimestamp()->isToday()) segment was removed from here //TODO: Delete this comment after merging-->
-<--! The php if($job->getTimestamp()->isToday()) segment was removed from here //TODO: Delete this comment after merging-->
                                 <?php if (!is_null($job->getLocation())): ?>
                                     <p class="job-location"><?= $job->getLocation() ?></p>
                                 <?php endif; ?>
