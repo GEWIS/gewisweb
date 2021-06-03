@@ -73,37 +73,6 @@ class CompanyController extends AbstractActionController
         $this->getResponse()->setStatusCode(404);
     }
 
-
-//    public function allJobsAction() {
-//        $companyService = $this->getCompanyService();
-//        $category = $companyService->categoryForSlug($this->params('category'));
-//
-//        $viewModel = new ViewModel([
-//            'category' => $category,
-//            'translator' => $companyService->getTranslator(),
-//        ]);
-//
-//        // A job can be a thesis/internship/etc.
-//        $jobCategory = ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null;
-//
-//        // Retrieve all published jobs
-//        $jobs = $companyService->getActiveJobList([
-//            'jobCategory' => $jobCategory,
-//        ]);
-//
-//
-//        // Shuffle order to avoid bias
-//        shuffle($jobs);
-//
-//        return $viewModel->setVariables([
-//            'jobList' => $jobs
-//        ]);
-//
-//    }
-
-
-
-
     /**
      *
      * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company

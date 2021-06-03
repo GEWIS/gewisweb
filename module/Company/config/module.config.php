@@ -274,6 +274,19 @@ return [
                             ],
                         ],
                     ],
+                    'editSector' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/editSector/:languageNeutralSectorId',
+                            'defaults' => [
+                                'action' => 'editSector',
+                            ],
+                            'constraints' => [
+                                'languageNeutralSectorId' => '\d+',
+                            ],
+                        ],
+                    ],
                     'editLabel' => [
                         'priority' => 3,
                         'type' => 'Segment',

@@ -28,6 +28,7 @@ class AdminController extends AbstractActionController
             'companyList' => $companyService->getHiddenCompanyList(),
             'categoryList' => $companyService->getCategoryList(false),
             'labelList' => $companyService->getLabelList(false),
+            'translator' => $companyService->getTranslator(),
             'packageFuture' => $companyService->getPackageChangeEvents((new DateTime())->add(
                 new DateInterval("P1M")
             )),
@@ -265,6 +266,62 @@ class AdminController extends AbstractActionController
         return new ViewModel([
             'form' => $categoryForm,
             'category' => $categories,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+    }
+
+    /**
+     * Action that displays a form for editing a sector
+     *
+     *
+     */
+    public function editSectorAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $sectorForm = $companyService->getSectorForm();
+
+        // Get parameter
+        $languageNeutralId = $this->params('languageNeutralSectorId');
+        if ($languageNeutralId === null) {
+            // The parameter is invalid or non-existent
+            return $this->notFoundAction();
+        }
+
+        // Get the specified category
+        $sectors = $companyService->getAllSectorsById($languageNeutralId);
+
+        // If the category is not found, throw 404
+        if (empty($sectors)) {
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $sectorDict = [];
+
+            foreach ($sectors as $sector) {
+                $categoryDict[$sector->getLanguage()] = $sector;
+            }
+
+            $companyService->saveSectorData($languageNeutralId, $sectorDict, $post);
+        }
+
+        // Initialize form
+        $sectorDict = [];
+        foreach ($sectors as $sector) {
+            $sectorDict[$sector->getLanguage()] = $sector;
+        }
+
+        $languages = array_keys($sectorDict);
+        $sectorForm->setLanguages($languages);
+        $sectorForm->bind($sectorDict);
+
+        return new ViewModel([
+            'form' => $sectorForm,
+            'category' => $sectors,
             'languages' => $this->getLanguageDescriptions(),
         ]);
     }
@@ -580,6 +637,46 @@ class AdminController extends AbstractActionController
         // Initialize the view
         return new ViewModel([
             'form' => $categoryForm,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+    }
+
+    public function addSectorAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $sectorForm = $companyService->getSectorForm();
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            // Check if data is valid, and insert when it is
+            $sector = $companyService->createSector($request->getPost());
+
+            if (is_numeric($sector)) {
+                // Redirect to edit page
+                return $this->redirect()->toRoute(
+                    'admin_company/editSector',
+                    [
+                        'languageNeutralSectorId' => $sector,
+                    ]
+                );
+            }
+        }
+
+        // The form was not valid, or we did not get data back
+
+        // Initialize the form
+        $sectorForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                ['action' => 'addSector']
+            )
+        );
+        // Initialize the view
+        return new ViewModel([
+            'form' => $sectorForm,
             'languages' => $this->getLanguageDescriptions(),
         ]);
     }

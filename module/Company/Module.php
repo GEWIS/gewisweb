@@ -61,6 +61,14 @@ class Module
                     $sm->get('company_hydrator')
                 );
             },
+            'company_admin_edit_sector_form' => function ($sm) {
+                return new \Company\Form\EditSector(
+                    $sm->get('company_mapper_category'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
+            },
             'company_admin_edit_label_form' => function ($sm) {
                 return \Company\Form\EditLabel(
                     $sm->get('company_mapper_label'),

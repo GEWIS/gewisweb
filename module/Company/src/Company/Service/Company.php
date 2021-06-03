@@ -6,6 +6,8 @@ namespace Company\Service;
 use Application\Service\AbstractAclService;
 use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as CategoryModel;
+use Company\Model\JobSector;
+use Company\Model\JobSector as SectorModel;
 use Company\Model\JobLabel as LabelModel;
 use Company\Model\Job;
 use Company\Model\JobLabelAssignment;
@@ -331,6 +333,32 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Creates a new JobSector.
+     *
+     * @param array $data Sector data from the EditSector form
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
+     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job category
+     *
+     */
+    public function createSector($data)
+    {
+        if (!$this->isAllowed('insert')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to insert a job sector')
+            );
+        }
+
+        $sectorDict = [];
+        foreach ($this->getLanguages() as $lang) {
+            $sector = new SectorModel();
+            $sector->setLanguage($lang);
+            $sectorDict[$lang] = $sector;
+        }
+
+        return $this->saveSectorData("", $sectorDict, $data);
+    }
+
+    /**
      * Checks if the data is valid, and if it is, saves the JobCategory
      *
      * @param int|string $languageNeutralId Identifier of the JobCategories to save
@@ -366,6 +394,41 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Checks if the data is valid, and if it is, saves the JobSector
+     *
+     * @param int|string $languageNeutralId Identifier of the JobSectors to save
+     * @param array $sectors The JobSectors to save
+     * @param array $data The (new) data to save
+     *
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
+     */
+    public function saveSectorData($languageNeutralId, $sectors, $data)
+    {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit job categories')
+            );
+        }
+
+        $sectorForm = $this->getSectorForm();
+        $sectorForm->bind($sectors);
+        $sectorForm->setData($data);
+
+        if (!$sectorForm->isValid()) {
+            return false;
+        }
+
+        $id = -1;
+        foreach ($sectors as $sector) {
+            $id = $this->setLanguageNeutralSectorId($id, $sector, $languageNeutralId);
+            $this->getSectorMapper()->persist($sector);
+            $this->saveSector();
+        }
+
+        return (($languageNeutralId == "") ? $id : $languageNeutralId);
+    }
+
+    /**
      * Sets the languageNeutralId for this JobCategory.
      *
      * @param int $id The id of the JobCategory
@@ -390,6 +453,35 @@ class Company extends AbstractACLService
         }
 
         $category->setLanguageNeutralId($languageNeutralId);
+
+        return $id;
+    }
+
+    /**
+     * Sets the languageNeutralId for this JobSector.
+     *
+     * @param int $id The id of the JobSector
+     * @param JobSector $sector The JobSector
+     * @param int|string $languageNeutralId The languageNeutralId of the JobSector
+     *
+     * @return int
+     */
+    private function setLanguageNeutralSectorId($id, $sector, $languageNeutralId)
+    {
+        if ($languageNeutralId == "") {
+            $sector->setLanguageNeutralId($id);
+            $this->getSectorMapper()->persist($sector);
+            $this->saveSector();
+
+            if ($id == -1) {
+                $id = $sector->getId();
+            }
+
+            $sector->setLanguageNeutralId($id);
+            return $id;
+        }
+
+        $sector->setLanguageNeutralId($languageNeutralId);
 
         return $id;
     }
@@ -577,6 +669,15 @@ class Company extends AbstractACLService
     public function saveCategory()
     {
         $this->getCategoryMapper()->save();
+    }
+
+    /**
+     * Saves all modified categories
+     *
+     */
+    public function saveSector()
+    {
+        $this->getSectorMapper()->save();
     }
 
     /**
@@ -1011,6 +1112,23 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns a persistent sector
+     *
+     * @param int $sectorId
+     */
+    public function getAllSectorsById($sectorId)
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit packages')
+            );
+        }
+
+        return $this->getSectorMapper()->findAllSectorsById($sectorId);
+    }
+
+    /**
      * Returns a persistent label
      *
      * @param int $labelId
@@ -1143,7 +1261,7 @@ class Company extends AbstractACLService
     /**
      * Get the Category Edit form.
      *
-     * @return EditCategory For for editing JobCategories
+     * @return EditCategory Form for editing JobCategories
      */
     public function getCategoryForm()
     {
@@ -1154,6 +1272,22 @@ class Company extends AbstractACLService
             );
         }
         return $this->sm->get('company_admin_edit_category_form');
+    }
+
+    /**
+     * Get the Sector Edit form.
+     *
+     * @return EditSector Form for editing JobSectors
+     */
+    public function getSectorForm()
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit sectors')
+            );
+        }
+        return $this->sm->get('company_admin_edit_sector_form');
     }
 
     /**
