@@ -199,9 +199,8 @@ class CompanyAccountController extends AbstractActionController
         if ($request->isPost()) {
 
             $post = $request->getPost();
-            // TODO: Solve temporary fix of using saveCompanyByData2 instead of saveCompanyByData
             // Save the company
-            $companyService->saveCompanyByData2(
+            $companyService->saveCompanyByData(
                 $company,
                 $post,
                 $request->getFiles()
