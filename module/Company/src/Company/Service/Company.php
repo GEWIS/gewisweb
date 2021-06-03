@@ -1211,6 +1211,27 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all sectors
+     *
+     * @return array
+     */
+    public function getSectorList()
+    {
+        $translator = $this->getTranslator();
+
+        if (!$this->isAllowed('listAllCategories')) {
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to access the admin interface')
+            );
+        }
+        $results = $this->getSectorMapper()->findAll();
+        return $this->getUniqueInArray($results, function ($a) {
+            return $a->getLanguageNeutralId();
+        });
+
+    }
+
+    /**
      * Returns the companyMapper
      *
      */
@@ -1329,6 +1350,15 @@ class Company extends AbstractACLService
     public function getLanguages()
     {
         return $this->sm->get('application_get_languages');
+    }
+
+    /**
+     * Returns the sector mapper
+     *
+     */
+    public function getSectorMapper()
+    {
+        return $this->sm->get('company_mapper_sector');
     }
 
     public function getLanguageDescription($lang)

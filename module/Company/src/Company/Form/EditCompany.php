@@ -249,7 +249,33 @@ class EditCompany extends Form
             ],
         ]);
 
+        $this->add([
+            'name' => 'sector' ,
+            'type' => 'Zend\Form\Element\Select',
+            'options' => [
+                'empty_option' => '<Please choose the company sector>',
+                'value_options' => [
+                    #todo!!
+                    'Finance' => 'Finance',
+                    'Chips'=> 'Chips',
+                ],
+                'label' => $translate->translate('Company sector')
+            ]
+        ]);
+
+//        $this->add(
+//            $this->mapper->createObjectSelectConfig(
+//                'Company\Model\JobSector',
+//                'name',
+////                $this->translator->translate('Company sector'),
+//                'Company sector',
+//                'sector',
+//                'nl'
+//            )
+//        );
+
         $this->initFilters($translate);
+
     }
 
     protected function initFilters($translate)

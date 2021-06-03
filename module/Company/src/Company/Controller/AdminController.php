@@ -34,6 +34,10 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    public function approvalPageAction(){
+
+    }
+
     /**
      * Action that allows adding a company
      */

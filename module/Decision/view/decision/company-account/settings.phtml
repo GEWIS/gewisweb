@@ -1,4 +1,7 @@
 <?php
+
+$this->headTitle($this->translate('Settings'));
+
 $emailIncorrect = False;    //True if invalid email address was entered
 $addressIncorrect = False;  //True if invalid address was entered
 $phoneIncorrect = False;    //True if invalid phone number was entered
@@ -117,7 +120,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                     <?php if ($emailIncorrect): ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <strong><?= $this->translate("Please enter a valid email address!") ?>/strong>
+                            <strong><?= $this->translate("Please enter a valid email address!") ?></strong>
                         </div>
                     </div>
                     <?php endif; ?>
