@@ -17,7 +17,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
 use Zend\Validator\AbstractValidator;
 use User\Permissions\NotAllowedException;
-define("APP_ENV", "development");
+//define("APP_ENV", "development");
 class Module
 {
     public function onBootstrap(MvcEvent $e)

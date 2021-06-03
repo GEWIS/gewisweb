@@ -21,11 +21,14 @@ class CompanyAccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyId = $company->getId();
         //obtain company package information
+        $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
         return new ViewModel([
             //fetch the active vacancies of the logged in company
-            'vacancies' => $this->getCompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID()),
+            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID()),
+            'companyPackageInfo' => $companyPackageInfo,
+            'companyInfo'  => $companyInfo
         ]);
     }
 
