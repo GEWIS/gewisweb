@@ -124,6 +124,23 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected $sector;
 
     /**
+     * The companies sector.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $emailSubscription;
+
+    /**
+     * Returns company email subscribtion status
+     *
+     * @return boolean
+     */
+    public function getEmailSubscription()
+    {
+        return $this->emailSubscription;
+    }
+
+    /**
      * Constructor.
      */
     public function __construct()
