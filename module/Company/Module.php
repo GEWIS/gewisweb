@@ -81,12 +81,6 @@ class Module
                     $sm->get('translator')
                 );
             },
-//            'company_edit_company_form' => function ($sm) {
-//                return new \Company\Form\CompanyEditCompany(
-//                    $sm->get('company_mapper_company'),
-//                    $sm->get('translator')
-//                );
-//            },
             'company_admin_edit_job_form' => function ($sm) {
                 $form = new \Company\Form\EditJob(
                     $sm->get('company_mapper_job'),
