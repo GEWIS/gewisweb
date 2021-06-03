@@ -125,6 +125,15 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'approval-page' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-page',
+                            'defaults' => [
+                                'action' => 'approvalPage',
+                            ],
+                        ],
+                    ],
                     'deleteCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',
