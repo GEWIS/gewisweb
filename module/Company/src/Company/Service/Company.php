@@ -31,6 +31,11 @@ class Company extends AbstractACLService
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
+    public function getCompanyIdentity() {
+        $companyservice = $this->sm->get('company_auth_service');
+        return $companyservice->getIdentity();
+    }
+
     public function getFeaturedPackage()
     {
         $translator = $this->getTranslator();
@@ -522,18 +527,18 @@ class Company extends AbstractACLService
         // TODO bug fix company changing profile (merge problems)
         // when a company edits their profile, make sure the data they can't edit is maintained
         // fill in missing data using current database entries
-//        if ($this->companyIdentity() !== null) {
-//            $data['name'] = $company->getName();
-//            $data['slugName'] = $company->getSlugName();
-//            $data['phone'] = $company->getPhone();
-//            $data['contactEmail'] = $company->getContactEmail();
-//            $data['highlightCredits'] = $company->getHighlightCredits();
-//            $data['bannerCredits'] = $company->getBannerCredits();
-//            // comment out next line if company profile should be hidden after editing by company themselves
-//            $data['hidden'] = (int)$company->isHidden();
-//            // uncomment next line if company profile should be hidden after editing by company themselves
-////            $data['hidden'] = $company->setHidden(1);
-//        }
+        if ($this->getCompanyIdentity() !== null) {
+            $data['name'] = $company->getName();
+            $data['slugName'] = $company->getSlugName();
+            $data['phone'] = $company->getPhone();
+            $data['contactEmail'] = $company->getContactEmail();
+            $data['highlightCredits'] = $company->getHighlightCredits();
+            $data['bannerCredits'] = $company->getBannerCredits();
+            // comment out next line if company profile should be hidden after editing by company themselves
+            $data['hidden'] = (int)$company->isHidden();
+            // uncomment next line if company profile should be hidden after editing by company themselves
+//            $data['hidden'] = $company->setHidden(1);
+        }
 
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
