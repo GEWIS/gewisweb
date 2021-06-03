@@ -436,7 +436,7 @@ return [
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController',
             'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
-            'Decision\Controller\companyaccount' => 'Decision\Controller\companyAccountController',
+            'Decision\Controller\companyaccount' => 'Decision\Controller\CompanyAccountController',
         ]
     ],
     'view_manager' => [

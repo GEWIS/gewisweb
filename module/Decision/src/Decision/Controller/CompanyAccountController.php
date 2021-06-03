@@ -32,6 +32,135 @@ class CompanyAccountController extends AbstractActionController
         ]);
     }
 
+    public function banneruploadAction(){
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+        global $MSG;
+
+        // Get Zend validator
+        $image_validator = new IsImage();
+
+        // Get form
+        $packageForm = $companyService->getPackageForm('banner');
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $files = $request->getFiles();
+            $post = $request->getPost();
+            $post['published'] = 0;
+
+            // Check if valid timespan is selected
+            if(new \DateTime($post['expirationDate']) > new \DateTime($post['startDate'])){
+                // Check if the upload file is an image
+                if ($image_validator->isValid($files['banner'])) {
+                    $image = $files['banner'];
+                    // Check if the size of the image is 90x728
+                    if ($this->checkImageSize($image, $packageForm)) {
+                        // Check if Company has enough credits and subtract them if so
+                        if ($this->checkCredits($post, $company, $companyService, "banner")) {
+                            // Upload the banner to database and redirect to Companypanel
+                            if ($companyService->insertPackageForCompanySlugNameByData(
+                                $companyName,
+                                $post,
+                                $image,
+                                'banner'
+                            )) {
+                                return $this->redirect()->toRoute(
+                                    'companyaccount'
+                                );
+                            }
+                        }
+                    } else {
+                        // TODO Implement cropping tool (Could)
+                    }
+                } else {
+                    $MSG = "Please submit an image.";
+                    $packageForm->setData($this->resetInsertedDates($post));
+                }
+            } else {
+                $MSG = "Please make sure the expirationdate is after the startingdate.";
+            }
+            echo $this->function_alert($MSG);
+            $packageForm->setData($this->resetInsertedDates($post));
+        }
+
+        // Initialize the form
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/bannerupload'
+            )
+        );
+
+        $email = $this->getDecisionEmail();
+        $email->sendApprovalMail($company);
+
+        return new ViewModel([
+            'form' => $packageForm,
+            'company' => $company
+        ]);
+    }
+
+
+    public function function_alert($msg){
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
+
+    public function resetInsertedDates($post) {
+        $insertedDates = [];
+        $insertedDates['startDate'] = $post['startDate'];
+        $insertedDates['expirationDate'] = $post['expirationDate'];
+        return $insertedDates;
+    }
+
+    public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
+        $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
+
+        if ($type === "banner"){
+            $company->setBannerCredits($credits_owned);
+        } elseif ($type === "highlight"){
+            $company->setHighlightCredits($credits_owned);
+        }
+        $companyService->saveCompany();
+    }
+
+    public function checkCredits($post, $company, $companyService, $type) {
+        global $MSG;
+        $start_date = new \DateTime($post['startDate']);
+        $end_date = new \DateTime($post['expirationDate']);
+        $days_scheduled = $end_date->diff($start_date)->format("%a");
+
+        if ($type === "banner"){
+            $credits_owned = $company->getBannerCredits();
+        } elseif ($type === "highlight"){
+            $credits_owned = $company->getHighlightCredits();
+        }
+
+        if ($credits_owned >= $days_scheduled ){
+            $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
+            return true;
+        }
+
+        $MSG = "The amount of credits needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+        return false;
+    }
+
+    public function checkImageSize($image, $packageForm) {
+        global $MSG;
+        list($image_width, $image_height) = getimagesize($image['tmp_name']);
+
+        if ($image_height != 90 ||
+            $image_width != 728) {
+            $MSG = "The image you submitted does not have the right dimensions. " .
+                "The dimensions of your image are " . $image_height . " x " . $image_width .
+                ". The dimensions of the image should be 90 x 728.";
+            return false;
+        }
+        return true;
+    }
 
 
 
