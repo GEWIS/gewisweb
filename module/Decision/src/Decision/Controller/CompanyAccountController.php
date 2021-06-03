@@ -120,7 +120,7 @@ class companyaccountController extends AbstractActionController
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
-        //print_r($this->getHighlightableVacancies($this->getVacancies()));
+        //print_r($this->getCompanyService()->getNumberOfHighlights($company->getId()));
 
         //Set the values for the selection element
         $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies()));
@@ -172,6 +172,12 @@ class companyaccountController extends AbstractActionController
         // Check if valid timespan is selected
         if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
             $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        //Check if a company does not already have three highlights
+        if ($this->getCompanyService()->getNumberOfHighlights($company->getId()) >= 3) {
+            $MSG = "Unfortunately you can place at most 3 highlights, which you already have";
             return false;
         }
 

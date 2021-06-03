@@ -37,6 +37,26 @@ class HighlightPackage extends Package
     }
 
     /**
+     * Find the number of highlights a company has
+     *
+     * @param integer $companyId the id of the company who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights
+     */
+    public function getNumberOfHighlights($companyId)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('COUNT(h)')
+            ->where('h.company = ?1')
+            ->setParameter(1, $companyId);
+
+        return $qb->getQuery()->getResult()[0][1];
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

@@ -233,7 +233,6 @@ class Job
     public function findHighlightableVacancies($companyId, $alreadyHighlighted, $locale)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        print_r($alreadyHighlighted);
 
         $qb = $objectRepository->createQueryBuilder('j');
         $qb -> select('j')
