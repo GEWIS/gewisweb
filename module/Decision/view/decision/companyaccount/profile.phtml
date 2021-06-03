@@ -1,0 +1,47 @@
+<!-- Position correctly using section and div -->
+<section class="section">
+<div class="container">
+
+<!-- Title -->
+<h1><?= $this->translate('Edit Profile'); ?></h1>
+
+<!-- Logos shown at top of the form -->
+<div class="row">
+    <div class="col-md-6">
+        <h2><?= $this->translate('Dutch logo') ?></h2>
+        <?php $translation = $company->getTranslationFromLocale('nl'); ?>
+        <?php if (!is_null($translation)): ?>
+            <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-6">
+        <h2><?= $this->translate('English logo') ?></h2>
+        <?php $translation = $company->getTranslationFromLocale('en'); ?>
+        <?php if (!is_null($translation)): ?>
+            <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
+        <?php endif; ?>
+    </div>
+</div>
+<hr>
+<!-- Prepare the form -->
+<?php $form->prepare() ?>
+<?= $this->form()->openTag($form) ?>
+<!-- Add the form -->
+<?= $this->partial('partial/company/admin/editors/company.phtml',
+    ['form' => $form]
+); ?>
+<br>
+<?php
+// Save button
+$submit = $form->get('submit');
+$submit->setLabel($this->translate('Save'));
+$submit->setAttribute('class', 'btn btn-primary pull-right');
+?>
+<div class="form-group">
+    <?= $this->formButton($submit) ?>
+</div>
+<?= $this->form()->closeTag(); ?>
+    </section>
+</div>
+
+

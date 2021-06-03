@@ -2,17 +2,47 @@
 <?= $this->formElement($element) ?>
 <?= $this->formElementErrors($element); ?>
 <?php
-$element = $form->get('hidden');
-?>
-<div class="checkbox">
-    <label>
-        <?= $this->formCheckbox($element) ?>
-        <?= $element->getOption('label') ?>
+// Show certain fields only to admins, not to companies editing their own profile
+// Companies are not allowed to edit these fields themselves
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+    $element = $form->get('hidden');
+
+    ?>
+    <div class="checkbox">
+        <label>
+            <?= $this->formCheckbox($element) ?>
+            <?= $element->getOption('label') ?>
+            <?= $this->formElementErrors($element) ?>
+
+        </label>
+    </div>
+
+    <?php
+    $element = $form->get('name');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
         <?= $this->formElementErrors($element) ?>
-    </label>
-</div>
+    </div>
+    <?php
+    $element = $form->get('slugName');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+<?php } ?>
 
 <?php
+
 $element = $form->get('name');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -37,6 +67,7 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
+
 $element = $form->get('contactName');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -61,6 +92,9 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
+// Show certain fields only to admins, not to companies editing their own profile
+// Companies can edit this field in settings
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
 $element = $form->get('phone');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -71,6 +105,8 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+
+<?php } ?>
 
 <?php
 $element = $form->get('email');
@@ -85,7 +121,13 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
-$element = $form->get('sector');
+
+
+// Show certain fields only to admins, not to companies editing their own profile
+// Companies can edit this field in settings
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+$element = $form->get('contactEmail');
+
 $element->setAttribute('class', 'form-control');
 ?>
 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
@@ -96,6 +138,7 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formElementErrors($element) ?>
 </div>
 
+<?php } ?>
 
 <?php
 $element = $form->get('address');
@@ -111,28 +154,32 @@ $element->setAttribute('style', 'width:100%; height:10em; resize:none');
 </div>
 
 <?php
-$element = $form->get('highlightCredits');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
 
-<?php
-$element = $form->get('bannerCredits');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
+// Show certain fields only to admins, not to companies editing their own profile
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+    $element = $form->get('highlightCredits');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+    <?php
+    $element = $form->get('bannerCredits');
+    $element->setAttribute('class', 'form-control');
+    ?>
+    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+            <?= $element->getOption('label') ?>
+        </label>
+        <?= $this->formInput($element) ?>
+        <?= $this->formElementErrors($element) ?>
+    </div>
+<?php } ?>
+
 
 <?php
 $element = $form->get('languages');

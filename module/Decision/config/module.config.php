@@ -375,7 +375,6 @@ return [
                             'defaults' => [
                                 'action' => 'profile'
                             ]
-
                         ],
                     ],
                     'settings' => [

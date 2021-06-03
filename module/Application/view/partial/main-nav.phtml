@@ -73,6 +73,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </li>
                 <!-- To show if a user is logged in -->
                 <?php else: ?>
+<!--                 --><?php //$company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount(); ?>
                     <?php $member = $this->identity()->getMember() ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

@@ -187,7 +187,11 @@ a.navbar-brand  {
             background-color: darken(#fff, 3%);
         }
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> origin/edit-profile
     .navbar-nav > li .dropdown-menu .dropdown-submenu {
         position: relative;
 
@@ -202,8 +206,8 @@ a.navbar-brand  {
 
             > li > a {
                 @include transition(
-                        background $transition-duration ease,
-                        color $transition-duration ease
+                    background $transition-duration ease,
+                    color $transition-duration ease
                 );
 
                 padding: 8px 17px;
@@ -216,8 +220,8 @@ a.navbar-brand  {
 
         &:hover {
             @include transition(
-                    opacity $transition-duration ease,
-                    visibility $transition-duration ease
+                opacity $transition-duration ease,
+                visibility $transition-duration ease
             );
 
             > .dropdown-menu {
@@ -280,7 +284,10 @@ a.navbar-brand  {
     padding: 0;
     min-width: 100%;
 
+<<<<<<< HEAD
     //overflow: hidden;
+=======
+>>>>>>> origin/edit-profile
     visibility: hidden;
     opacity: 0;
 
