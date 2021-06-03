@@ -1,25 +1,22 @@
-<?php $lang = 'en'; ?>
-For English, please see below.<br/><br/>
+<?= "--- Dutch version below --- \n\n" ?>
 
-Lieve bestuurder,<br/><br/>
+<?= "Dear board member, \n"?>
 
-Het bedrijf '<?= $this->escapeHtml($company->getName()) ?>' heeft een update doorgevoerd op haar pagina. Gelieve deze update te reviewen.
-<br/><br/>
+<?= $this->escapeHtml($company->getName()) . " has made a change to her page. Please review this update.\n"?>
 
-Klik <a href="<?= $this->serverUrl($this->url('admin_organ')) ?>">hier</a> om deze update te bekijken.
-<br/><br/>
+<?= "Go to "  . $this->serverUrl($this->url('admin_organ')) . " to view this update. \n" ?>
 
-Met vriendelijke groeten,<br/>
-De Web Commissie
-<hr/>
+<?= "Best Regards,\n\n"?>
+<?="The Web Committee\n\n\n"?>
 
-Dear board member,<br/><br/>
+<?="--- Dutch version ---\n\n"?>
 
-The company '<?= $this->escapeHtml($company->getName()) ?>' has made a change to her page. Please review this update.
-<br/><br/>
+<?="Lieve bestuurder, \n"?>
 
-Click <a href="<?= $this->serverUrl($this->url('admin_organ')) ?>">here</a> to view this update.
-<br/><br/>
+<?=$this->escapeHtml($company->getName()) . " heeft een update doorgevoerd op haar pagina. Gelieve deze update te reviewen.\n"?>
 
-Kind Regards, <br/>
-The Web Committee
+<?="Ga naar " . $this->serverUrl($this->url('admin_organ')) . " om deze update te bekijken.\n"?>
+
+<?="Met vriendelijke groeten\n"?>
+
+<?="De Web Commissie \n"?>
