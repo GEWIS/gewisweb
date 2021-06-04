@@ -19,12 +19,12 @@ $this->scriptUrl()->requireUrls(
 </a>
 <a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
     [
-        "type" => "featured",
+        "type" => "highlight",
         "slugCompanyName" => $company->getSlugName()
     ]
 ); ?>">
     <span class="fas fa-asterisk"></span>
-    <?= $this->translate('Add spotlight package'); ?>
+    <?= $this->translate('Add highlight package'); ?>
 </a>
 <a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
     [

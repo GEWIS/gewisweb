@@ -121,7 +121,7 @@ class companyaccountController extends AbstractActionController
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies()));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies($company->getId())));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -216,15 +216,12 @@ class companyaccountController extends AbstractActionController
      *
      * @return all highlightable vacancies for a certain company
      */
-    public function getHighlightableVacancies() {
+    public function getHighlightableVacancies($companyId) {
         $companyService = $this->getCompanyService();
 
         //Get current language
         $translator = $companyService->getTranslator();
         $locale = $translator->getLocale();
-
-        //Obtain the id of the logged in company
-        $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
 
         //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
         return $this->getCompanyService()->getHighlightableVacancies($companyId, $locale);

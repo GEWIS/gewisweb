@@ -217,6 +217,7 @@ class Module
         return [
             'invokables' => [
                 'company_service_company' => 'Company\Service\Company',
+                'decision_controller_companyAccountController' => 'Decision\Controller\CompanyAccountController'
             ],
             'factories' => $factories,
         ];
