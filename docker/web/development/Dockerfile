@@ -1,4 +1,4 @@
-FROM php:7.2-fpm as gewisweb_web_development
+FROM php:7.1-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y \
@@ -32,7 +32,7 @@ RUN pecl install imagick \
     && docker-php-ext-enable imagick \
     && pecl install memcached \
     && docker-php-ext-enable memcached \
-    && pecl install xdebug \
+    && pecl install xdebug-2.9.8 \
     && docker-php-ext-enable xdebug
 
 WORKDIR /code
@@ -41,8 +41,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"
 
-COPY --chown=www-data:www-data ./composer.json ./composer.lock ./
-RUN php composer.phar install
+COPY --chown=www-data:www-data ./composer.json ./
+RUN php composer.phar update
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \

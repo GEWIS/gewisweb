@@ -9,7 +9,7 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 COPY ./public/scss ./public/scss/
 RUN npm run scss
 
-FROM php:7.2-fpm as php-target
+FROM php:7.1-fpm as php-target
 
 RUN apt-get update \
     && apt-get install -y \
