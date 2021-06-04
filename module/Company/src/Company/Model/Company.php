@@ -108,23 +108,22 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     protected $bannerCredits;
 
+    /**
+     * The job's category.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
+     */
+    protected $sector;
+
 //    /**
-//     * The job's category.
+//     * The companies sector.
 //     *
-//     * @ORM\ManyToMany(targetEntity="\Company\Model\JobSector")
-//     * @ORM\JoinColumn(name="id", referencedColumnName="languageNeutralId")
+//     * @ORM\Column(type="string")
 //     */
 //    protected $sector;
 
     /**
-     * The companies sector.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $sector;
-
-    /**
-     * The companies sector.
+     * The companies email subscription.
      *
      * @ORM\Column(type="boolean")
      */

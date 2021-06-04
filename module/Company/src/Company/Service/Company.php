@@ -724,6 +724,7 @@ class Company extends AbstractACLService
      */
     public function insertCompanyByData($data, $files)
     {
+//        print_r($data);
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
@@ -733,7 +734,10 @@ class Company extends AbstractACLService
         if ($companyForm->isValid()) {
             $companies = $this->insertCompany($data['languages']);
             $company = $companies[0];
+
             $company->exchangeArray($data);
+            $company->setSector($this->getJobMapper()->findSectorsById($data['sector']));
+
             $newCompany = $companies[1];
             $newCompany->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
@@ -749,7 +753,6 @@ class Company extends AbstractACLService
             $this->saveCompany();
             return $companies;
         }
-
         return null;
     }
 

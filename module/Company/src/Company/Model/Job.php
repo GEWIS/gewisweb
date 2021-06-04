@@ -154,7 +154,7 @@ class Job
     /**
      * The job's category.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")@ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
      */
     protected $sectors;
 

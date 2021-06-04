@@ -249,30 +249,52 @@ class EditCompany extends Form
             ],
         ]);
 
-        $this->add([
-            'name' => 'sector' ,
-            'type' => 'Zend\Form\Element\Select',
-            'options' => [
-                'empty_option' => '<Please choose the company sector>',
-                'value_options' => [
-                    #todo!!
-                    'Finance' => 'Finance',
-                    'Chips'=> 'Chips',
-                ],
-                'label' => $translate->translate('Company sector')
-            ]
-        ]);
+//        $this->add([
+//            'name' => 'sector' ,
+//            'type' => 'Zend\Form\Element\Select',
+//            'options' => [
+//                'empty_option' => '<Please choose the company sector>',
+//                'value_options' => [
+//                    #todo!!
+//                    'Finance' => 'Finance',
+//                    'Chips'=> 'Chips',
+//                ],
+//                'label' => $translate->translate('Company sector')
+//            ]
+//        ]);
 
-//        $this->add(
-//            $this->mapper->createObjectSelectConfig(
-//                'Company\Model\JobSector',
-//                'name',
-////                $this->translator->translate('Company sector'),
-//                'Company sector',
-//                'sector',
-//                'nl'
-//            )
-//        );
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $translate->translate('Sectors'),
+                'sector',
+                $translate->getTranslator()->getLocale()
+            )
+        );
+
+//        $this->add([
+//            'name' => 'sector',
+//            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+//            'options' => [
+//                'label' => 'sector',
+//                'object_manager' => $this->em,
+//                'target_class' => 'Company\Model\JobSector',
+//                'property' => 'name',
+//                'find_method' => [
+//                    'name' => 'findBy',
+//                    'params' => [
+//                        'criteria' => ['language' => 'nl'],
+//                        // Use key 'orderBy' if using ORM
+//                        //'orderBy'  => ['lastname' => 'ASC'],
+//
+//                    ],
+//                ],
+//            ]
+//            //'attributes' => [
+//            //'class' => 'form-control input-sm'
+//            //]
+//        ]);
 
         $this->initFilters($translate);
 

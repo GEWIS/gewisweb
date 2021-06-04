@@ -42,34 +42,6 @@ if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNa
 <?php } ?>
 
 <?php
-// Show certain fields only to admins, not to companies editing their own profile
-// Companies can edit this field in settings
-if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
-$element = $form->get('name');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
-
-<?php
-$element = $form->get('slugName');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
-<?php } ?>
-
-<?php
 $element = $form->get('contactName');
 $element->setAttribute('class', 'form-control');
 ?>
