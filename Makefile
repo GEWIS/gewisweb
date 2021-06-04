@@ -31,6 +31,11 @@ runprodtest: buildprod
 rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
+getvendordir: rundev
+		@rm -Rf vendor
+		@docker cp "$(shell docker-compose ps -q web)":/code/vendor ./vendor
+		@docker-compose down
+
 update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 

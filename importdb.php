@@ -80,7 +80,7 @@ try {
             try {
                 $stmtt->execute($data);
             } catch (Exception $e) {
-                echo "ERROR: Failed synchronization of table ".$table."\n";
+                echo "ERROR: Failed synchronization of table " . $table . "\n";
                 echo $e->getMessage();
                 echo "\n";
                 echo $e->getTraceAsString();
