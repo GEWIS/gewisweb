@@ -640,9 +640,9 @@ class Member
             'firstName' => $this->getFirstName(),
             'middleName' => $this->getMiddleName(),
             'lastName' => $this->getLastName(),
-            'birth' => $this->getBirth()->format(\DateTime::ISO8601),
+            'birth' => $this->getBirth()->format(\DateTimeInterface::ISO8601),
             'generation' => $this->getGeneration(),
-            'expiration' => $this->getExpiration()->format(\DateTime::ISO8601),
+            'expiration' => $this->getExpiration()->format(\DateTimeInterface::ISO8601),
         ];
     }
 

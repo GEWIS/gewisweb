@@ -4,7 +4,7 @@ namespace Photo\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\MVc\I18n\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class CreateAlbum extends Form
 {

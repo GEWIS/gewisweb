@@ -24,7 +24,8 @@ foreach ($pathPrefixes as $prefix) {
     }
     $crumburl = $this->url('decision/files', ['path' => '']) . $prefix;
     $crumburl = preg_replace('#[/]+#', '/', $crumburl);
-    $crumbtext = end(explode('/', $prefix));
+    $array = explode('/', $prefix);
+    $crumbtext = end($array);
     $crumbs[] = '<a href="' . $escaper->escapeHtmlAttr($crumburl) . '">' . $escaper->escapeHtml($crumbtext) . '</a>';
 }
 if ($trailingSlash && !($path === '/' || $path === '')) {

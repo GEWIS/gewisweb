@@ -56,6 +56,10 @@ class Mapper implements AdapterInterface
      * @var UserService
      */
     protected $userService;
+    /**
+     * @var mixed
+     */
+    private $login;
 
     /**
      * Constructor.
