@@ -40,7 +40,8 @@
         "league/glide-zend": ">=1.0",
         "nesbot/carbon": ">=1.39",
         "fortawesome/font-awesome": "dev-master",
-        "slowprog/composer-copy-file": ">=0.3"
+        "slowprog/composer-copy-file": ">=0.3",
+        "phpstan/phpstan": "^0.12.88"
     },
     "require-dev": {
         "ext-xdebug": ">=2.4.1",
