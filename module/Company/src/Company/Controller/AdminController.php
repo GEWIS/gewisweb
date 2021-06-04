@@ -36,6 +36,12 @@ class AdminController extends AbstractActionController
     }
 
     public function approvalPageAction(){
+        $pendingApprovals = $this->getApprovalService()->getPendingApprovals();
+
+        // Initialize the view
+        return new ViewModel([
+            'pendingApprovals' => $pendingApprovals
+        ]);
 
     }
 
@@ -785,6 +791,16 @@ class AdminController extends AbstractActionController
         return $this->getServiceLocator()->get('company_service_company');
     }
 
+    /**
+     * Method that returns the service object for the approval module.
+     *
+     * @return ApprovalService
+     */
+    protected function getApprovalService()
+    {
+        return $this->getServiceLocator()->get('company_service_approval');
+    }
+
 
     /**
      * Method that returns the service object for the company module.
@@ -826,5 +842,7 @@ class AdminController extends AbstractActionController
         return $this->getServiceLocator()->get('user_service_companyemail');
 
     }
+
+
 
 }

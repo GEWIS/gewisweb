@@ -117,6 +117,11 @@ class Module
     private function getMapperFactories()
     {
         return [
+            'company_mapper_approval' => function ($sm) {
+                return new \Company\Mapper\Approval(
+                    $sm->get('company_doctrine_em')
+                );
+            },
             'company_mapper_company' => function ($sm) {
                 return new \Company\Mapper\Company(
                     $sm->get('company_doctrine_em')
@@ -224,6 +229,7 @@ class Module
         return [
             'invokables' => [
                 'company_service_company' => 'Company\Service\Company',
+                'company_service_approval' => 'Company\Service\Approval',
             ],
             'factories' => $factories,
         ];

@@ -125,7 +125,7 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'approval-page' => [
+                    'approvalPage' => [
                         'type' => 'literal',
                         'options' => [
                             'route' => '/approval-page',

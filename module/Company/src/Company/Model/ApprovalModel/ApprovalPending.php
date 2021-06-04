@@ -68,7 +68,7 @@ class ApprovalPending
      */
     public function getVacancyApproval()
     {
-        return $this->approval;
+        return $this->VacancyApproval;
     }
 
     /**
@@ -78,7 +78,7 @@ class ApprovalPending
      */
     public function getBannerApproval()
     {
-        return $this->approval;
+        return $this->BannerApproval;
     }
 
     /**
@@ -88,7 +88,7 @@ class ApprovalPending
      */
     public function getProfileApproval()
     {
-        return $this->approval;
+        return $this->ProfileApproval;
     }
 
     /**
@@ -99,6 +99,21 @@ class ApprovalPending
     public function getType()
     {
         return $this->type;
+    }
+
+    public function getCompany(){
+        if(!is_null($this->VacancyApproval)){
+            return $this->VacancyApproval->getCompany();
+
+        }else if(!is_null($this->BannerApproval)){
+            return $this->BannerApproval->getCompany();
+
+        }else if(!is_null($this->ProfileApproval)){
+            return $this->ProfileApproval->getCompany();
+
+        }else{
+            return Null;
+        }
     }
 
 }

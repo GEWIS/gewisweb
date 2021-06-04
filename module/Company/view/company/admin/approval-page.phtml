@@ -1,4 +1,6 @@
 <?php
+
+//echo var_dump($pendingApprovals[0]->getProfileApproval()->getCompany()->getName());
 ?>
 
 <div class="row">
@@ -13,43 +15,30 @@
                     <?= $this->translate('Approval type') ?>
                 </th>
                 <th>
-                    <?= $this->translate('To content') ?>
-                </th>
-                <th>
                     <?= $this->translate('Actions') ?>
                 </th>
             </tr>
             </thead>
             <tbody class="company-list">
-            <tr>
-                <th>
-                    Phillips
-                </th>
-                <th>
-                    Vacancy
-                </th>
-                <th>
-                    link
-                </th>
-                <th>
-                    <button type="button" class="btn btn-danger btn-xs">
-                        <?= $this->translate('Approve') ?>
-                    </button>
-
-                    <button type="button" class="btn btn-danger btn-xs">
-                        <?= $this->translate('Reject') ?>
-                    </button>
-                </th>
-
-            </tr>
-
-
-            </tbody>
+                <?php foreach ($pendingApprovals as &$pendingApproval): ?>
+                <tr>
+                    <th>
+                        <?= $pendingApproval->getCompany()->getName() ?>
+                    </th>
+                    <th>
+                        <?= $pendingApproval->getType() ?>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-danger btn-xs">
+                            <?= $this->translate('View request') ?>
+                        </button>
+                    </th>
+                </tr>
+                <?php endforeach; ?>            </tbody>
             <tfoot>
             <tr>
                 <th><?= $this->translate('Company name') ?></th>
                 <th><?= $this->translate('Approval type') ?></th>
-                <th><?= $this->translate('To content') ?></th>
                 <th><?= $this->translate('Actions') ?></th>
             </tr>
             </tfoot>
