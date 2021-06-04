@@ -2,13 +2,13 @@
 // set title
 $this->headTitle($this->translate('Company Account'));
 
-$accountStyle = "panel-image";
-$bannerStyle = "panel-image";
-$highlightStyle = "panel-image";
+$accountStyle = "panel-image"; //Style for vacancies and activities buttons (used to specify disabled and enabled style)
+$bannerStyle = "panel-image";  //Style for banner button (used to specify disabled and enabled style)
+$highlightStyle = "panel-image";  //Style for highlight button (used to specify disabled and enabled style)
 
 $accountActive = True; //False if account is inactive
 $bannerActive = True;  //False if banner credits are 0
-$HighlightActive = True;  //False if highlight credits are 0
+$highlightActive = True;  //False if highlight credits are 0
 
 //determine whether the account is active or not
 $now = new DateTime();
@@ -17,28 +17,19 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now) {
     $accountStyle = "panel-image-disabled";
 }
 
+//determine if banner upload is active
 if ($companyInfo[0]->getBannerCredits() <= 0){
     $bannerActive = False;
     $bannerStyle = "panel-image-disabled";
 }
 
+//determine if highlightling is active
 if ($companyInfo[0]->getHighLightCredits() <= 0){
     $highlightActive = False;
     $highlightStyle = "panel-image-disabled";
 }
 
 ?>
-
-<!--<style>
-    .warningMessage {
-        display: none;
-    }
-
-    #inactiveMessage:hover > .warningMessage {
-        display: block;
-        color: white;
-    }
-</style>-->
 
 <div class="container">
     <section class="section">
@@ -147,12 +138,12 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
 
                     <div class="panel-disabled">
                     <a class="<?= "panel $highlightStyle align-middle" ?>"
-                       <?php if ($HighlightActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
+                       <?php if ($highlightActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
 
                         <div class="big-icon fas fa-check"></div>
                         <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
                     </a>
-                        <?php if (!$HighlightActive): ?>
+                        <?php if (!$highlightActive): ?>
                             <div class="panel-warning"><div class="panel-warning-text">Disabled, no more highlight days left.</div></div>
                         <?php endif; ?>
                     </div>
