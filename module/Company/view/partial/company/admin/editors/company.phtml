@@ -69,6 +69,27 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php
+$element = $form->get('email');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <?= $element->getOption('label') ?>
+    </label>
+    <?= $this->formInput($element) ?>
+    <?= $this->formElementErrors($element) ?>
+</div>
+
+<?php $element = $form->get('emailSubscription'); ?>
+    <div class="checkbox">
+        <label>
+            <?= $this->formCheckbox($element) ?>
+            <?= $element->getOption('label') ?>
+            <?= $this->formElementErrors($element) ?>
+
+        </label>
+    </div>
+<?php
 $element = $form->get('phone');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -81,18 +102,6 @@ $element->setAttribute('class', 'form-control');
 </div>
 
 <?php } ?>
-
-<?php
-$element = $form->get('email');
-$element->setAttribute('class', 'form-control');
-?>
-<div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-        <?= $element->getOption('label') ?>
-    </label>
-    <?= $this->formInput($element) ?>
-    <?= $this->formElementErrors($element) ?>
-</div>
 
 <?php
 $element = $form->get('sector');

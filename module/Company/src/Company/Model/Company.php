@@ -686,8 +686,16 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setBannerCredits($this->updateIfSet($data['bannerCredits'], 0));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
-        $this->setSector($this->updateIfSet($data['sector'], null));
+        $this->setEmailSubscription($this->updateIfSet($data['emailSubscription'], false));
         $this->translations = $newTranslations;
+    }
+
+    /**
+     * @param mixed $emailSubscription
+     */
+    public function setEmailSubscription($emailSubscription)
+    {
+        $this->emailSubscription = $emailSubscription;
     }
 
     /**

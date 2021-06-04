@@ -73,6 +73,8 @@ class EditCompany extends Form
             ],
         ]);
 
+
+
         $this->add([
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
@@ -241,6 +243,16 @@ class EditCompany extends Form
         ]);
 
         $this->add([
+            'name' => 'emailSubscription',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Email Subscription'),
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -272,29 +284,6 @@ class EditCompany extends Form
                 $translate->getTranslator()->getLocale()
             )
         );
-
-//        $this->add([
-//            'name' => 'sector',
-//            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-//            'options' => [
-//                'label' => 'sector',
-//                'object_manager' => $this->em,
-//                'target_class' => 'Company\Model\JobSector',
-//                'property' => 'name',
-//                'find_method' => [
-//                    'name' => 'findBy',
-//                    'params' => [
-//                        'criteria' => ['language' => 'nl'],
-//                        // Use key 'orderBy' if using ORM
-//                        //'orderBy'  => ['lastname' => 'ASC'],
-//
-//                    ],
-//                ],
-//            ]
-//            //'attributes' => [
-//            //'class' => 'form-control input-sm'
-//            //]
-//        ]);
 
         $this->initFilters($translate);
 
