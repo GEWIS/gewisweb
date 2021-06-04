@@ -17,8 +17,8 @@
  */
 
 if (APP_ENV === 'production') {
-    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php';
-    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php';
+    require_once 'vendor/zendframework/zend-loader/src/AutoloaderFactory.php';
+    require_once 'vendor/zendframework/zend-loader/src/ClassMapAutoloader.php';
     if (!file_exists('vendor/composer/autoload_classmap.php')) {
         throw new RuntimeException('Unable to load vendor classmap. Run `php composer.phar install -o`.');
     }
