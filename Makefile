@@ -8,6 +8,8 @@ help:
 		@echo "updatepackage"
 		@echo "updatecss"
 		@echo "updateglide"
+		@echo "getvendordir"
+		@echo "replenish"
 		@echo "build"
 		@echo "buildprod"
 		@echo "builddev"
@@ -34,6 +36,13 @@ rundev: builddev
 getvendordir: rundev
 		@rm -Rf vendor
 		@docker cp "$(shell docker-compose ps -q web)":/code/vendor ./vendor
+		@docker-compose down
+
+replenish: rundev
+		@docker cp ./public "$(shell docker-compose ps -q web)":/code
+		@docker-compose exec web chown -R www-data:www-data /code/public
+		@docker cp ./data "$(shell docker-compose ps -q web)":/code
+		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose down
 
 update: rundev updatecomposer updatepackage updatecss updateglide
