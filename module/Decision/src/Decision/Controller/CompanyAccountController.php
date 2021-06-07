@@ -726,7 +726,7 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Method that returns the service object for the company module.
      *
-     * @return DesicionEmail
+     * @return DecisionEmail
      */
     protected function getDecisionEmail()
     {
