@@ -101,6 +101,28 @@ class Job
     protected $timestamp;
 
 
+    /**
+     * The job's description.
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $teaser;
+
+    /**
+     * @return mixed
+     */
+    public function getTeaser()
+    {
+        return $this->teaser;
+    }
+
+    /**
+     * @param mixed $teaser
+     */
+    public function setTeaser($teaser)
+    {
+        $this->teaser = $teaser;
+    }
 
     /**
      * The job's start date.

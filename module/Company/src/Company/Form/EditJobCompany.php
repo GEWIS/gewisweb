@@ -248,6 +248,20 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]);
 
             $filter->add([
+                'name' => 'teaser',
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => 'string_length',
+                        'options' => [
+                            'min' => 2,
+                            'max' => 1000,
+                        ],
+                    ],
+                ],
+            ]);
+
+            $filter->add([
                 'name' => 'contactName',
                 'required' => false,
                 'validators' => [

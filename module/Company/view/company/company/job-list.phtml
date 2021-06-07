@@ -114,34 +114,73 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                                data-sector="<?= $job->getSectors()->getName() ?>"
                                data-name="<?= $job->getName() ?>"
+                               data-teaser="<?= $job->getTeaser() ?>"
                                data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
-                                <div class="card-img">
-                                    <img
-                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                                        alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
-                                </div>
-                                <h2 class="card-title"><?= $job->getName() ?></h2>
-                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                <div>
-                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                        <?php $label = $labelAsg->getLabel(); ?>
-                                        <span class="label label-default job-label"
-                                              data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
-                                              title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                                <span class="label label-default job-hours"
-                                      data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
-                                <span class="label label-default job-sectors"
-                                      data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
-                                <div class="card-footer">
-                                    <button class="btn btn-link"><?= $this->translate('View') ?></button>
-                                    <span class="small">
-                                <?php if (!is_null($job->getLocation())): ?>
-                                    <p class="job-location"><?= $job->getLocation() ?></p>
-                                <?php endif; ?>
-                            </span>
-                                </div>
+<!--                                TODO: make check based on highlighted vacancies-->
+                                <?php if($job->getName() == "Test G") : ?>
+                                    <div class="card-img">
+                                        <img
+                                            src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                            alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                                    </div>
+                                    <h2 class="card-title"><?= $job->getName() ?></h2>
+                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                    <div>
+                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                            <?php $label = $labelAsg->getLabel(); ?>
+                                            <span class="label label-default job-label"
+                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <?php if($job->getTeaser() != null):?>
+                                            <p class="card-subtitle text-muted"><?= $job->getTeaser() ?></p>
+                                        <?php endif;?>
+                                    </div>
+                                    <span class="label label-default job-hours"
+                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                    <span class="label label-default job-sectors"
+                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
+                                    <div class="card-footer">
+                                        <button class="btn btn-link"><?= $this->translate('View') ?></button>
+                                        <span class="small">
+                                    <?php if (!is_null($job->getLocation())): ?>
+                                        <p class="job-location"><?= $job->getLocation() ?></p>
+                                    <?php endif; ?>
+                                    </span>
+                                    </div>
+                                <?php else:?>
+                                    <div class="card-img">
+                                        <img
+                                            src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                            alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                                    </div>
+                                    <h2 class="card-title"><?= $job->getName() ?></h2>
+                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                    <div>
+                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                            <?php $label = $labelAsg->getLabel(); ?>
+                                            <span class="label label-default job-label"
+                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <span class="label label-default job-hours"
+                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                    <span class="label label-default job-sectors"
+                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
+                                    <div class="card-footer">
+                                        <button class="btn btn-link"><?= $this->translate('View') ?></button>
+                                        <span class="small">
+                                    <?php if (!is_null($job->getLocation())): ?>
+                                        <p class="job-location"><?= $job->getLocation() ?></p>
+                                    <?php endif; ?>
+                                    </span>
+                                    </div>
+                                <?php endif;?>
+
                             </a>
                         <?php endforeach; ?>
                     </div>
@@ -219,8 +258,20 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
         var sortCards = function (sortFn) {
             var sortedCards = $grid.children('.card').sort(sortFn);
 
+
+            // Put vacancies with a teaser infront.
+            // TODO: change to check on what vacancy is higlighted
+            var result1 = [], result2 = [];
+            for (var i = 0; i < sortedCards.length; i++) {
+                if (sortedCards[i].dataset.teaser) {
+                    result1.push(sortedCards[i]);
+                } else {
+                    result2.push(sortedCards[i]);
+                }
+            }
+            var result = result1.concat(result2);
             // jQuery handles moving DOM elements
-            $grid.append(sortedCards);
+            $grid.append(result);
         };
 
         /**
@@ -313,7 +364,7 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                 sortCards(function (a, b) {
                     return (parseInt(a.dataset.index) > parseInt(b.dataset.index)) ? 1 : -1;
                 });
-            }
+            },
         }
     };
 
@@ -338,9 +389,6 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
     // Sort jobs on given option
     $("#job-sort").change(function () {
         switch ($(this).val()) {
-            case 'testid':
-                cardGrid.sortByDefault();
-                break;
             // based on sector name (can maybe be removed as there also exists a filter for this)
             case 'sector':
                 cardGrid.sortBySector();

@@ -88,6 +88,8 @@ class CompanyController extends AbstractActionController
             // Shuffle order to avoid bias
             shuffle($jobs);
 
+            // TODO: Put highlighted vacancies in the front.
+            
             return new ViewModel([
                 'translator' => $companyService->getTranslator(),
                 'all' => true,

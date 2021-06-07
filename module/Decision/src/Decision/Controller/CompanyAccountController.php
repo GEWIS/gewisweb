@@ -492,9 +492,7 @@ class CompanyAccountController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
-
             if ($job) {
-
                 //Send approval email to admin
                 $email = $this->getDecisionEmail();
                 $email->sendApprovalMail($company);
