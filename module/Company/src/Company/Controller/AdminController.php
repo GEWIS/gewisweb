@@ -6,9 +6,11 @@ use DateInterval;
 use DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
+
 use Company\Mapper\Company as CompanyMapper;
 use Company\Model\Company as CompanyModel;
 use Decision\Service\DecisionEmail as Email;
+use Decision\Controller\CompanyAccountController as CompanyAccountController;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
@@ -475,6 +477,7 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
+        $companyAccountController = $this->getCompanyAccountController();
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
@@ -498,6 +501,14 @@ class AdminController extends AbstractActionController
 
         // Initialize form
         $packageForm->bind($package);
+
+        //Set the values for the selection element
+        if (type === 'highlight') {
+            $packageForm->get('vacancy_id')
+                ->setValueOptions($companyAccountController->getVacancyNames($companyAccountController->
+                getHighlightableVacancies(14)));
+        }
+
         $packageForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -845,4 +856,13 @@ class AdminController extends AbstractActionController
 
 
 
+    /**
+     * Method that returns the service object for the company module.
+     *
+     * @return CompanyAccountController
+     */
+    protected function getCompanyAccountController()
+    {
+        return $this->getServiceLocator()->get('decision_controller_companyAccountController');
+    }
 }

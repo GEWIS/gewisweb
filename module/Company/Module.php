@@ -83,6 +83,12 @@ class Module
                     "banner"
                 );
             },
+            'company_admin_edit_highlightpackage_form' => function ($sm) {
+                return new \Company\Form\EditPackage(
+                    $sm->get('translator'),
+                    "highlight"
+                );
+            },
             'company_admin_edit_company_form' => function ($sm) {
                 return new \Company\Form\EditCompany(
                     $sm->get('company_mapper_company'),
@@ -172,6 +178,11 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
+            'company_mapper_highlightpackage' => function ($sm) {
+                return new \Company\Mapper\HighlightPackage(
+                    $sm->get('company_doctrine_em')
+                );
+            },
         ];
     }
 
@@ -230,6 +241,7 @@ class Module
             'invokables' => [
                 'company_service_company' => 'Company\Service\Company',
                 'company_service_approval' => 'Company\Service\Approval',
+                'decision_controller_companyAccountController' => 'Decision\Controller\CompanyAccountController',
             ],
             'factories' => $factories,
         ];
