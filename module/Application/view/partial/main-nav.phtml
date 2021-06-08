@@ -213,7 +213,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                             <ul class="dropdown-menu">
 
-                            <!-- Hardcoded version (for testing purpose) -->
+<!--                             Hardcoded version (for testing purpose) -->
 <!--                            --><?php
 //                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
 <!--                                --><?php //foreach ($arr as $category):
@@ -231,6 +231,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <li>
                                         <!-- Use url with slugname of category for the page with specific category -->
                                         <!-- Use plural name for category in menu bar -->
+
                                         <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
                                     </li>
                                 <?php endforeach ?>

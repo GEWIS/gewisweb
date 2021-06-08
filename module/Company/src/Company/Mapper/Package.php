@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifycations will be
+ * NOTE: Packages will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Package

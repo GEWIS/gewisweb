@@ -1,7 +1,7 @@
 <?php
 
 $locale = $this->translator->getLocale();
-
+$highlightIds = $this->highlightedIds($locale);
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
@@ -110,14 +110,14 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                 'category' => $job->getCategory()->getSlug(),
                             ]);
                             ?>
-                            <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
+                            <a href="<?= $jobUrl ?>" class="<?= in_array($job->getId(), $highlightIds) ? "card job-highlight" : "card" ?>" data-index="<?= $index ?>"
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                                data-sector="<?= $job->getSectors()->getName() ?>"
                                data-name="<?= $job->getName() ?>"
                                data-teaser="<?= $job->getTeaser() ?>"
+                               data-highlight="<?= in_array($job->getId(), $highlightIds)?>"
                                data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
-<!--                                TODO: make check based on highlighted vacancies-->
-                                <?php if($job->getName() == "Test G") : ?>
+                                <?php if(in_array($job->getId(), $highlightIds)) : ?>
                                     <div class="card-img">
                                         <img
                                             src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -260,10 +260,9 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
 
 
             // Put vacancies with a teaser infront.
-            // TODO: change to check on what vacancy is higlighted
             var result1 = [], result2 = [];
             for (var i = 0; i < sortedCards.length; i++) {
-                if (sortedCards[i].dataset.teaser) {
+                if (sortedCards[i].dataset.highlight) {
                     result1.push(sortedCards[i]);
                 } else {
                     result2.push(sortedCards[i]);

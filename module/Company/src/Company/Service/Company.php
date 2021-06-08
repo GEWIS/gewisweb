@@ -276,6 +276,25 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all sectors for the given language
+     *
+     *
+     * @return array
+     */
+    public function getHighlightsList($lang)
+    {
+        $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlights();
+        $highlightIds = [];
+        foreach($highlightPackages as $package) {
+            $id = $package->getVacancy()->getId();
+            $localeId = $this->getJobMapper()->siblingId($id, $lang);
+            $highlightIds = array_merge($highlightIds, $localeId);
+        }
+        return $highlightIds;
+
+    }
+
+    /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false
      *
      * @param $visible
@@ -1409,26 +1428,7 @@ class Company extends AbstractACLService
     }
 
 
-//    /**
-//     * Returns all sectors
-//     *
-//     * @return array
-//     */
-//    public function getSectorList()
-//    {
-//        $translator = $this->getTranslator();
-//
-//        if (!$this->isAllowed('listAllCategories')) {
-//            throw new \User\Permissions\NotAllowedException(
-//                $translator->translate('You are not allowed to access the admin interface')
-//            );
-//        }
-//        $results = $this->getSectorMapper()->findAll();
-//        return $this->getUniqueInArray($results, function ($a) {
-//            return $a->getLanguageNeutralId();
-//        });
-//
-//    }
+
 
 
     /**

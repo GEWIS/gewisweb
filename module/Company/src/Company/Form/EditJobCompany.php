@@ -178,17 +178,11 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $parentFilter = new InputFilter();
         $rootFilter = new InputFilter();
 
-        // TODO: Set filters correctly
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 
             $filter->add([
                 'name' => 'id',
-                'required' => false,
-            ]);
-
-            $filter->add([
-                'name' => 'active',
                 'required' => false,
             ]);
 
@@ -223,15 +217,15 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 ],
             ]);
 
-            $filter->add([
-                'name' => 'website',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => 'uri',
-                    ],
-                ],
-            ]);
+//            $filter->add([
+//                'name' => 'website',
+//                'required' => false,
+//                'validators' => [
+//                    [
+//                        'name' => 'uri',
+//                    ],
+//                ],
+//            ]);
 
             $filter->add([
                 'name' => 'description',
@@ -261,49 +255,36 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 ],
             ]);
 
-            $filter->add([
-                'name' => 'contactName',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => 'string_length',
-                        'options' => [
-                            'max' => 200,
-                        ],
-                    ],
-                ],
-            ]);
+//            $filter->add([
+//                'name' => 'contactName',
+//                'required' => false,
+//                'validators' => [
+//                    [
+//                        'name' => 'string_length',
+//                        'options' => [
+//                            'max' => 200,
+//                        ],
+//                    ],
+//                ],
+//            ]);
+
+//            $filter->add([
+//                'name' => 'email',
+//                'required' => false,
+//                'validators' => [
+//                    ['name' => 'email_address'],
+//                ],
+//            ]);
+
+//            $filter->add([
+//                'name' => 'phone',
+//                'required' => false,
+//            ]);
 
             $filter->add([
                 'name' => 'active',
                 'required' => false,
-                'validators' => [
-
-                ]
             ]);
-
-            $filter->add([
-                'name' => 'email',
-                'required' => false,
-                'validators' => [
-                    ['name' => 'email_address'],
-                ],
-            ]);
-
-            $filter->add([
-                'name' => 'phone',
-                'required' => false,
-            ]);
-
-            $filter->add([
-                'name' => 'hours',
-                'required' => true,
-            ]);
-
-//            $filter->add([
-//                'name' => 'active',
-//                'required' => false,
-//            ]);
 
             $filter->add([
                 'name' => 'attachment_file',
@@ -331,11 +312,6 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
             $filter->add([
                 'name' => 'category',
-                'required' => false,
-            ]);
-
-            $filter->add([
-                'name' => 'sectors',
                 'required' => false,
             ]);
 

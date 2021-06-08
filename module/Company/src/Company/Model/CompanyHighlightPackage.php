@@ -14,7 +14,7 @@ class CompanyHighlightPackage extends CompanyPackage //implements RoleInterface,
     /**
      * The id of the highlighted vacancy.
      *
-     * @ORM\OneToOne(targetEntity="\Company\Model\Job", inversedBy="packages")
+     * @ORM\OneToOne(targetEntity="\Company\Model\Job")
      */
     protected $vacancy;
 
