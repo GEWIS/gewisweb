@@ -1058,6 +1058,19 @@ class Company extends AbstractACLService
             $locale);
     }
 
+    //TODO: function description
+    /**
+     * Get the number of highlights a company has
+     *
+     * @param integer $companyId the id of the company who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights
+     */
+    public function getCurrentHighlights($companyId) {
+        return $this->getHighlightPackageMapper()->findCurrentHighlights($companyId);
+    }
+
     /**
      * Get the number of highlights a company has
      *
