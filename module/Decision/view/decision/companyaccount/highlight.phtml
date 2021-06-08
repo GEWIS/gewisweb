@@ -17,24 +17,33 @@
         echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'highlight']);
         echo $this->form()->closeTag($form);?>
 
-        <!--Active vacancies feed -->
-        <div class="row mt-3">
-            <div class="col-md-6 mt-2">
-                <h2><?= $this->translate('Active highlights') ?></h2>
+        <div class="row">
+            <div class="col-md-8">
 
+                <h2><?= $this->translate('Active highlights') ?></h2>
                 <?php if (count($currentHighlights) > 0): ?>
-                    <div class="panel panel-default">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                <?= $this->translate('Name'); ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Expiration date'); ?>
+                            </th>
+                        </tr>
+                        </thead>
                         <?php foreach ($currentHighlights as &$highlight): ?>
-                            <div class="panel-heading">
-                                <strong><?= $this->translate($highlight['name']) ?></strong>
-                            </div>
-                            <div class="panel-body">
-                                <?= $this->translate($highlight['expires']->format('Y-m-d') )?>
-                                <a href="<?= $this->url('companyaccount/dummy') ?>">go to vacancy</a>
-                            </div>
+                            <tr>
+                                <td>
+                                    <?php echo $this->translate($highlight['name']) ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->translate($highlight['expires']->format('Y-m-d') )?>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
-                    </div>
-                    <hr/>
+                    </table>
                 <?php endif; ?>
 
                 <?php if (count($currentHighlights) === 0): ?>
@@ -44,8 +53,6 @@
                         </div>
                     </div>
                 <?php endif; ?>
-
-
             </div>
         </div>
     </section>

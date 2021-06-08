@@ -101,15 +101,6 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
                 <?= $package->getExpirationDate()->format('d-m-Y') ?>
             </td>
             <td>
-<!--                --><?php //if ($package->getType() === 'banner') {
-//                    echo $this->translate('Banner package');
-//                } else {
-//                    if ($package->getType() == 'featured') {
-//                        echo $this->translate('Featured Package');
-//                    } else {
-//                        echo $package->getJobs()->count();
-//                    }
-//                } ?>
                 <?php if ($package->getType() === 'banner') {
                     echo $this->translate('Banner package');
                 } else if ($package->getType() === 'highlight'){
