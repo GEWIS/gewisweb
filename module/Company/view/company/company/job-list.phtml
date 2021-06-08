@@ -1,18 +1,12 @@
 <?php
 
 $locale = $this->translator->getLocale();
-
+$highlightIds = $this->highlightedIds($locale);
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
 $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
-
-
-
-$highlightIds = $this->highlightedIds($locale);
-
-
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -116,7 +110,7 @@ $highlightIds = $this->highlightedIds($locale);
                                 'category' => $job->getCategory()->getSlug(),
                             ]);
                             ?>
-                            <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
+                            <a href="<?= $jobUrl ?>" class="<?= in_array($job->getId(), $highlightIds) ? "card job-highlight" : "card" ?>" data-index="<?= $index ?>"
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                                data-sector="<?= $job->getSectors()->getName() ?>"
                                data-name="<?= $job->getName() ?>"
