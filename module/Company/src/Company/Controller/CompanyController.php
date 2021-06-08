@@ -73,6 +73,39 @@ class CompanyController extends AbstractActionController
         $this->getResponse()->setStatusCode(404);
     }
 
+
+    /**
+     * Put the highlighted jobs in front of the list.
+     *
+     * @param $jobs List of jobs
+     *
+     * @return array List of jobs with highlighted jobs in front
+     */
+    public function pushHighlightsUpfront($jobs) {
+        $companyService = $this->getCompanyService();
+        // TODO: Put highlighted vacancies in the front.
+        $highlightPackages = $companyService->getHighlightsList();
+        $highlightIds = [];
+        foreach ($highlightPackages as $highlight) {
+            array_push($highlightIds, $highlight->getVacancy()->getId());
+        }
+
+        $result1 = [];
+        $result2 = [];
+        foreach ($jobs as $job) {
+            if (in_array($job->getId(), $highlightIds)) {
+                array_push($result1, $job);
+            } else {
+                array_push($result2, $job);
+            }
+        }
+
+        return array_merge($result1, $result2);
+    }
+
+
+
+
     /**
      *
      * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company
@@ -88,25 +121,9 @@ class CompanyController extends AbstractActionController
             // Shuffle order to avoid bias
             shuffle($jobs);
 
-            // TODO: Put highlighted vacancies in the front.
-            $highlightPackages = $companyService->getHighlightsList();
-            $highlightIds = [];
-            foreach ($highlightPackages as $highlight) {
-                array_push($highlightIds, $highlight->getVacancy()->getId());
-            }
+            // Put highlighted jobs in front
+            $jobs = $this->pushHighlightsUpfront($jobs);
 
-            $result1 = [];
-            $result2 = [];
-            foreach ($jobs as $job) {
-                if (in_array($job->getId(), $highlightIds)) {
-                    array_push($result1, $job);
-                } else {
-                    array_push($result2, $job);
-                }
-            }
-//            print_r($result1);
-//            print_r($result2);
-            $jobs = $result1 . $result2;
             return new ViewModel([
                 'translator' => $companyService->getTranslator(),
                 'all' => true,
@@ -148,6 +165,9 @@ class CompanyController extends AbstractActionController
 
         // Shuffle order to avoid bias
         shuffle($jobs);
+
+        // Put highlighted jobs in front
+        $jobs = $this->pushHighlightsUpfront($jobs);
 
         return $viewModel->setVariables([
             'jobList' => $jobs
