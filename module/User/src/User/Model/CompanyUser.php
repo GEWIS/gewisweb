@@ -44,6 +44,8 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      */
     protected $password;
 
+
+
     /**
      * Companies sessions
      *
@@ -75,14 +77,13 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
     protected $companyAccount;
 
 
+
     /**
-     * Get the company ID.
-     *
-     * @return int
+     * @return mixed
      */
-    public function getLidnr()
+    public function getSessions()
     {
-        return $this->id;
+        return $this->sessions;
     }
 
     /**
@@ -176,7 +177,7 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
      */
     public function getRoleId()
     {
-        return 'company_user_' . $this->getLidnr();
+        return 'company_user_' . $this->getId();
     }
 
     /**
