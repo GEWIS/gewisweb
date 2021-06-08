@@ -165,9 +165,9 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
-                'highlightedVacancies' => function ($sm) {
+                'highlightedIds' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\HighlightedVacancies();
+                    $helper = new \Application\View\Helper\HighlightIds();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },

@@ -278,12 +278,19 @@ class Company extends AbstractACLService
     /**
      * Returns all sectors for the given language
      *
-     * @param $lang
+     *
      * @return array
      */
-    public function getHighlightsList()
+    public function getHighlightsList($lang)
     {
-        return $this->getHighlightPackageMapper()->findAllActiveHighlights();
+        $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlights();
+        $highlightIds = [];
+        foreach($highlightPackages as $package) {
+            $id = $package->getVacancy()->getId();
+            $localeId = $this->getJobMapper()->siblingId($id, $lang);
+            $highlightIds = array_merge($highlightIds, $localeId);
+        }
+        return $highlightIds;
 
     }
 

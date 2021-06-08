@@ -99,6 +99,24 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+
+    /**
+     * Find the same job, but in the given language
+     *
+     */
+    public function siblingId($jobId, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j.id')->where('j.languageNeutralId=:jobId')->andWhere('j.language=:language')
+            ->setParameter('jobId', $jobId)
+            ->setParameter('language', $lang);
+
+        $ids = $qb->getQuery()->getResult();
+
+        return $ids[0];
+    }
+
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName

@@ -9,11 +9,9 @@ if (isset($this->company)) {
 $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
 
 
-$highlights = $this->highlightedVacancies();
-$highlightIds = [];
-foreach ($highlights as $highlight) {
-    array_push($highlightIds, $highlight->getVacancy()->getId());
-}
+
+$highlightIds = $this->highlightedIds($locale);
+
 
 ?>
 <section class="section section-breadcrumb">
@@ -125,7 +123,6 @@ foreach ($highlights as $highlight) {
                                data-teaser="<?= $job->getTeaser() ?>"
                                data-highlight="<?= in_array($job->getId(), $highlightIds)?>"
                                data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
-<!--                                TODO: make check based on highlighted vacancies-->
                                 <?php if(in_array($job->getId(), $highlightIds)) : ?>
                                     <div class="card-img">
                                         <img
@@ -269,7 +266,6 @@ foreach ($highlights as $highlight) {
 
 
             // Put vacancies with a teaser infront.
-            // TODO: change to check on what vacancy is higlighted
             var result1 = [], result2 = [];
             for (var i = 0; i < sortedCards.length; i++) {
                 if (sortedCards[i].dataset.highlight) {
