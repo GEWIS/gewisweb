@@ -61,7 +61,10 @@ class CompanyAccountController extends AbstractActionController
                     $post,
                     $files['banner'],
                     'banner'
-                )) {
+                ))
+                $email = $this->getDecisionEmail();
+                $email->sendApprovalMail($company);
+                {
                     return $this->redirect()->toRoute(
                         'companyaccount'
                     );
@@ -79,9 +82,6 @@ class CompanyAccountController extends AbstractActionController
                 'companyaccount/bannerupload'
             )
         );
-
-        $email = $this->getDecisionEmail();
-        $email->sendApprovalMail($company);
 
         return new ViewModel([
             'form' => $packageForm,
