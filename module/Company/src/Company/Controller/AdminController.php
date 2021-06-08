@@ -86,6 +86,7 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
+        $companyAccountController = $this->getCompanyAccountController();
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');
@@ -93,6 +94,14 @@ class AdminController extends AbstractActionController
 
         // Get form
         $packageForm = $companyService->getPackageForm($type);
+
+        //Set the values for the selection element
+        if ($type === 'highlight') {
+            $packageForm->get('vacancy_id')
+                ->setValueOptions($companyAccountController->getVacancyNames($companyAccountController->
+                getHighlightableVacancies(14)));
+        }
+
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -394,7 +403,6 @@ class AdminController extends AbstractActionController
     {
         // Get useful stuff
         $companyService = $this->getCompanyService();
-        $companyAccountController = $this->getCompanyAccountController();
 
         // Get the parameters
         $companyName = $this->params('slugCompanyName');
@@ -418,13 +426,6 @@ class AdminController extends AbstractActionController
 
         // Initialize form
         $packageForm->bind($package);
-
-        //Set the values for the selection element
-        if (type === 'highlight') {
-            $packageForm->get('vacancy_id')
-                ->setValueOptions($companyAccountController->getVacancyNames($companyAccountController->
-                getHighlightableVacancies(14)));
-        }
 
         $packageForm->setAttribute(
             'action',
