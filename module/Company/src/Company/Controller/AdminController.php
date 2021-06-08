@@ -503,7 +503,7 @@ class AdminController extends AbstractActionController
         $packageForm->bind($package);
 
         //Set the values for the selection element
-        if (type === 'highlight') {
+        if ($type === 'highlight') {
             $packageForm->get('vacancy_id')
                 ->setValueOptions($companyAccountController->getVacancyNames($companyAccountController->
                 getHighlightableVacancies(14)));
