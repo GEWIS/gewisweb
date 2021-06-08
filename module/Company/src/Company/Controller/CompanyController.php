@@ -89,7 +89,24 @@ class CompanyController extends AbstractActionController
             shuffle($jobs);
 
             // TODO: Put highlighted vacancies in the front.
-            
+            $highlightPackages = $companyService->getHighlightsList();
+            $highlightIds = [];
+            foreach ($highlightPackages as $highlight) {
+                array_push($highlightIds, $highlight->getVacancy()->getId());
+            }
+
+            $result1 = [];
+            $result2 = [];
+            foreach ($jobs as $job) {
+                if (in_array($job->getId(), $highlightIds)) {
+                    array_push($result1, $job);
+                } else {
+                    array_push($result2, $job);
+                }
+            }
+//            print_r($result1);
+//            print_r($result2);
+            $jobs = $result1 . $result2;
             return new ViewModel([
                 'translator' => $companyService->getTranslator(),
                 'all' => true,
