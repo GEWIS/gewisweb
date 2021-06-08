@@ -1077,10 +1077,23 @@ class Company extends AbstractACLService
      * @param integer $companyId the id of the company who's
      * number of highlights will be fetched.
      *
-     * @return int number of highlights
+     * @return int number of highlights for a company
      */
-    public function getNumberOfHighlights($companyId) {
-        return $this->getHighlightPackageMapper()->getNumberOfHighlights($companyId);
+    public function getNumberOfHighlightsPerCompany($companyId) {
+        return $this->getHighlightPackageMapper()->findNumberOfHighlightsPerCompany($companyId);
+    }
+
+    /**
+     * Get the number of highlights in a category
+     *
+     * @param integer $vacancyId the id of the vacancy who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights in a category
+     */
+    public function getNumberOfHighlightsPerCategory($vacancyId) {
+        $categoryId = $this->getJobMapper()->findJobById($vacancyId)->getCategory();
+        return $this->getHighlightPackageMapper()->findNumberOfHighlightsPerCategory($categoryId);
     }
 
     /**

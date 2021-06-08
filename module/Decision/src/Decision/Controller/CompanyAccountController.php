@@ -180,8 +180,14 @@ class companyaccountController extends AbstractActionController
         }
 
         //Check if a company does not already have three highlights
-        if ($this->getCompanyService()->getNumberOfHighlights($company->getId()) >= 3) {
+        if ($this->getCompanyService()->getNumberOfHighlightsPerCompany($company->getId()) >= 3) {
             $MSG = "Unfortunately you can place at most 3 highlights, which you already have";
+            return false;
+        }
+
+        //Check if there are not already three highlights in a certain category
+        if ($this->getCompanyService()->getNumberOfHighlightsPerCategory($post['vacancy_id']) >= 3) {
+            $MSG = "Unfortunately at most 3 vacancies in this category can be highlighted, which there already are";
             return false;
         }
 
@@ -286,6 +292,7 @@ class companyaccountController extends AbstractActionController
         }
 
         if ($credits_owned >= $days_scheduled ){
+            //TODO: Make sure this line is only run after the banner/highlight has actually been uploaded
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
