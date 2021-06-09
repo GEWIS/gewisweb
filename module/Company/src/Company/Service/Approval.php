@@ -19,6 +19,25 @@ class Approval extends AbstractAclService
     }
 
     /**
+     * Returns all companies with a given $slugName and makes them persistent
+     *
+     * @param mixed $slugName
+     */
+    public function getEditableCompaniesBySlugName($slugName)
+    {
+
+//        if (!$this->isAllowed('edit')) {
+//
+//            $translator = $this->getTranslator();
+//            throw new \User\Permissions\NotAllowedException(
+//                $translator->translate('You are not allowed to edit companies')
+//            );
+//        }
+//
+        return $this->getApprovalMapper()->findEditableCompaniesBySlugName($slugName, true);
+    }
+
+    /**
      * Get the default resource ID.
      *
      * @return string

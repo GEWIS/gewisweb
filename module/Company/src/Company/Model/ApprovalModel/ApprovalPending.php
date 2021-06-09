@@ -109,7 +109,8 @@ class ApprovalPending
             return $this->BannerApproval->getCompany();
 
         }else if(!is_null($this->ProfileApproval)){
-            return $this->ProfileApproval->getCompany();
+            //return Null;
+            return $this->ProfileApproval->getCompany(); //this shit
 
         }else{
             return Null;

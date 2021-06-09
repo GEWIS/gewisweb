@@ -107,7 +107,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                         <div  class="panel-heading"><?= $this->translate('Vacancies') ?></div>
                     </a>
                         <?php if (!$accountActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text">Disabled, vacancy package has expired.</div></div>
+                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, vacancy package has expired.") ?></div></div>
                         <?php endif; ?>
                     </div>
 
@@ -120,7 +120,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
 
                     </a>
                         <?php if (!$accountActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text">Disabled, vacancy package has expired.</div></div>
+                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, vacancy package has expired.") ?></div></div>
                         <?php endif; ?>
                     </div>
 
@@ -132,7 +132,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
                     </a>
                         <?php if (!$bannerActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text">Disabled, no more banner days left.</div></div>
+                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, no more banner days left.") ?></div></div>
                         <?php endif; ?>
                     </div>
 
@@ -144,7 +144,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                         <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
                     </a>
                         <?php if (!$highlightActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text">Disabled, no more highlight days left.</div></div>
+                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, no more highlight days left.") ?></div></div>
                         <?php endif; ?>
                     </div>
 
@@ -171,7 +171,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                                         "packageId" => $vacancy->getPackage()->getId(),
                                         "languageNeutralJobId" => $vacancy->getLanguageNeutralId(),
                                     ]
-                                ); ?>">go to vacancy</a>
+                                ); ?>"><?= $this->translate("go to vacancy") ?></a>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -181,8 +181,8 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                 <?php if (count($vacancies) === 0): ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <?= $this->translate("Currently there are no active vacancies,") ?>
-                            <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">add new vacancy.</a>
+                            <?= $this->translate("Currently there are no active vacancies, ") ?>
+                            <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>"><?= $this->translate("add new vacancy.") ?></a>
                         </div>
                     </div>
                 <?php endif; ?>

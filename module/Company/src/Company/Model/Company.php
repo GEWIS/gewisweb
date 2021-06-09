@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  */
 class Company // implements ArrayHydrator (for zend2 form)
 {
+
     /**
      * The company id.
      *
@@ -128,7 +129,6 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @ORM\Column(type="boolean")
      */
     protected $emailSubscription;
-
     /**
      * Returns company email subscribtion status
      *

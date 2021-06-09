@@ -134,6 +134,24 @@ return [
                             ],
                         ],
                     ],
+                    'approvalVacancy' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-vacancy',
+                            'defaults' => [
+                                'action' => 'approvalVacancy',
+                            ],
+                        ],
+                    ],
+                    'approvalProfile' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-profile',
+                            'defaults' => [
+                                'action' => 'approvalProfile',
+                            ],
+                        ],
+                    ],
                     'deleteCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',

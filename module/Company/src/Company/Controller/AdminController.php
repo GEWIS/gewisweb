@@ -37,12 +37,82 @@ class AdminController extends AbstractActionController
 
     public function approvalPageAction(){
         $pendingApprovals = $this->getApprovalService()->getPendingApprovals();
-
+        //echo var_dump($pendingApprovals);
         // Initialize the view
         return new ViewModel([
             'pendingApprovals' => $pendingApprovals
         ]);
+    }
 
+
+    public function approvalVacancyAction()
+    {
+
+    }
+
+    public function approvalProfileAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $approvalService = $this->getApprovalService();
+        $companyForm = $companyService->getCompanyForm();
+
+
+
+        // Get parameter
+        $companyName = "intel";
+
+        // Get the specified company
+        $companyList = $approvalService->getEditableCompaniesBySlugName($companyName);
+        //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
+
+        // If the company is not found, throw 404
+        if (empty($companyList)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        $company = $companyList[0];
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if ($companyService->saveCompanyByData(////////////////////
+                $company,
+                $post,
+                $request->getFiles()
+            )) {
+                $companyName = $request->getPost()['slugName'];
+                return $this->redirect()->toRoute(
+                    'admin_company/default',
+                    [
+                        'action' => 'edit',
+                        'slugCompanyName' => $companyName,
+                    ],
+                    [],
+                    false
+                );
+            }
+        }
+
+        // Initialize form
+        $companyForm->setData($company->getArrayCopy());
+        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
+        $companyForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'admin_company/default',
+                [
+                   'action' => 'editCompany',
+                    'slugCompanyName' => $companyName,
+                ]
+            )
+        );
+        return new ViewModel([
+            'company' => $company,
+            'form' => $companyForm,
+        ]);
     }
 
     /**
@@ -842,6 +912,7 @@ class AdminController extends AbstractActionController
         return $this->getServiceLocator()->get('user_service_companyemail');
 
     }
+
 
 
 
