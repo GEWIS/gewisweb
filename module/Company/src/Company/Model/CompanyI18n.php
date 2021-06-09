@@ -63,12 +63,6 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     protected $language;
 
-    /**
-     * The approval's status.
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $rejected = false;
 
     /**
      * Constructor.

@@ -186,6 +186,13 @@ class ApprovalCompanyI18n implements ApprovalAbstract
     }
 
     /**
+     * The approval's status.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $rejected = false;
+
+    /**
      * Get the company's language.
      *
      * @return string
@@ -209,4 +216,16 @@ class ApprovalCompanyI18n implements ApprovalAbstract
     {
         $this->company = null;
     }
+
+    public function getArrayCopy()
+    {
+        $arraycopy = [];
+        $arraycopy[$this->getLanguage() . '_' . 'slogan'] = $this->getSlogan();
+        $arraycopy[$this->getLanguage() . '_' . 'website'] = $this->getWebsite();
+        $arraycopy[$this->getLanguage() . '_' . 'description'] = $this->getDescription();
+        $arraycopy[$this->getLanguage() . '_' . 'logo'] = $this->getLogo();
+
+        return $arraycopy;
+    }
+
 }
