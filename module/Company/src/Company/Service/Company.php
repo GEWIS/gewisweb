@@ -276,6 +276,25 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all sectors for the given language
+     *
+     *
+     * @return array
+     */
+    public function getHighlightsList($lang)
+    {
+        $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlights();
+        $highlightIds = [];
+        foreach($highlightPackages as $package) {
+            $id = $package->getVacancy()->getId();
+            $localeId = $this->getJobMapper()->siblingId($id, $lang);
+            $highlightIds = array_merge($highlightIds, $localeId);
+        }
+        return $highlightIds;
+
+    }
+
+    /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false
      *
      * @param $visible
@@ -783,11 +802,15 @@ class Company extends AbstractACLService
     {
         $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
+        //$packageForm->setValidationGroup('vacancy_id');
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             if ($type === 'banner') {
                 $newPath = $this->getFileStorageService()->storeUploadedFile($files);
                 $package->setImage($newPath);
+            }
+            if ($type === 'highlight') {
+                $data['vacancy_id'] = $this->getJobMapper()->findJobById($data['vacancy_id']);
             }
             $package->exchangeArray($data);
             $this->savePackage();
@@ -1252,7 +1275,35 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get the Company Edit form for admins.
+     * Get all categories in which a company has highlighted a vacancy.
+     *
+     * @param integer $companyId the id of the company who's
+     * categories will be fetched.
+     * @param string $locale The current language of the website
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function getHighlightableVacancies($companyId, $locale){
+        return $this->getJobMapper()->findHighlightableVacancies(
+            $companyId,
+            $this->getHighlightPackageMapper()->findHighlightedCategories($companyId),
+            $locale);
+    }
+
+    /**
+     * Get the number of highlights a company has
+     *
+     * @param integer $companyId the id of the company who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights
+     */
+    public function getNumberOfHighlights($companyId) {
+        return $this->getHighlightPackageMapper()->getNumberOfHighlights($companyId);
+    }
+
+    /**
+     * Get the Company Edit form.
      *
      * @return Company Edit form
      */
@@ -1322,6 +1373,9 @@ class Company extends AbstractACLService
         if ($type === 'featured') {
             return $this->sm->get('company_admin_edit_featuredpackage_form');
         }
+        if ($type === 'highlight') {
+            return $this->sm->get('company_admin_edit_highlightpackage_form');
+        }
 
         return $this->sm->get('company_admin_edit_package_form');
     }
@@ -1374,26 +1428,7 @@ class Company extends AbstractACLService
     }
 
 
-//    /**
-//     * Returns all sectors
-//     *
-//     * @return array
-//     */
-//    public function getSectorList()
-//    {
-//        $translator = $this->getTranslator();
-//
-//        if (!$this->isAllowed('listAllCategories')) {
-//            throw new \User\Permissions\NotAllowedException(
-//                $translator->translate('You are not allowed to access the admin interface')
-//            );
-//        }
-//        $results = $this->getSectorMapper()->findAll();
-//        return $this->getUniqueInArray($results, function ($a) {
-//            return $a->getLanguageNeutralId();
-//        });
-//
-//    }
+
 
 
     /**
@@ -1430,6 +1465,15 @@ class Company extends AbstractACLService
     public function getFeaturedPackageMapper()
     {
         return $this->sm->get('company_mapper_featuredpackage');
+    }
+
+    /**
+     * Returns the packageMapper
+     *
+     */
+    public function getHighlightPackageMapper()
+    {
+        return $this->sm->get('company_mapper_highlightpackage');
     }
 
     /**

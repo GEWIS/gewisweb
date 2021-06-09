@@ -25,9 +25,14 @@ class CompanyAccountController extends AbstractActionController
         $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
+        // Get local language
+        $companyService = $this->getCompanyService();
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
         return new ViewModel([
             //fetch the active vacancies of the logged in company
-            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID()),
+            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale),
             'companyPackageInfo' => $companyPackageInfo,
             'companyInfo'  => $companyInfo
         ]);
@@ -37,11 +42,7 @@ class CompanyAccountController extends AbstractActionController
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $companyName = $company->getName();
         global $MSG;
-
-        // Get Zend validator
-        $image_validator = new IsImage();
 
         // Get form
         $packageForm = $companyService->getPackageForm('banner');
@@ -53,39 +54,25 @@ class CompanyAccountController extends AbstractActionController
             $post = $request->getPost();
             $post['published'] = 0;
 
-            // Check if valid timespan is selected
-            if(new \DateTime($post['expirationDate']) > new \DateTime($post['startDate'])){
-                // Check if the upload file is an image
-                if ($image_validator->isValid($files['banner'])) {
-                    $image = $files['banner'];
-                    // Check if the size of the image is 90x728
-                    if ($this->checkImageSize($image, $packageForm)) {
-                        // Check if Company has enough credits and subtract them if so
-                        if ($this->checkCredits($post, $company, $companyService, "banner")) {
-                            // Upload the banner to database and redirect to Companypanel
-                            if ($companyService->insertPackageForCompanySlugNameByData(
-                                $companyName,
-                                $post,
-                                $image,
-                                'banner'
-                            )) {
-                                return $this->redirect()->toRoute(
-                                    'companyaccount'
-                                );
-                            }
-                        }
-                    } else {
-                        // TODO Implement cropping tool (Could)
-                    }
-                } else {
-                    $MSG = "Please submit an image.";
-                    $packageForm->setData($this->resetInsertedDates($post));
+            if ($this->bannerPostCorrect($post, $files)) {
+                // Upload the banner to database and redirect to Companypanel
+                if ($companyService->insertPackageForCompanySlugNameByData(
+                    $company->getName(),
+                    $post,
+                    $files['banner'],
+                    'banner'
+                ))
+                $email = $this->getDecisionEmail();
+                $email->sendApprovalMail($company);
+                {
+                    return $this->redirect()->toRoute(
+                        'companyaccount'
+                    );
                 }
             } else {
-                $MSG = "Please make sure the expirationdate is after the startingdate.";
+                echo $this->function_alert($MSG);
+                $packageForm->setData($this->resetInsertedDates($post));
             }
-            echo $this->function_alert($MSG);
-            $packageForm->setData($this->resetInsertedDates($post));
         }
 
         // Initialize the form
@@ -96,8 +83,96 @@ class CompanyAccountController extends AbstractActionController
             )
         );
 
-        $email = $this->getDecisionEmail();
-        $email->sendApprovalMail($company);
+        return new ViewModel([
+            'form' => $packageForm,
+            'company' => $company
+        ]);
+    }
+
+
+    public function bannerPostCorrect($post, $files) {
+        global $MSG;
+        // Get Zend validator
+        $image_validator = new IsImage();
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        // Check if valid timespan is selected
+        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
+            $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        // Check if the upload file is an image
+        if (!$image_validator->isValid($files['banner'])) {
+            $MSG = "Please submit an image.";
+            //$packageForm->setData($this->resetInsertedDates($post));
+            return false;
+        }
+
+        // Check if the size of the image is 90x728
+        if (!$this->checkImageSize($files['banner'])) {
+            // TODO Implement cropping tool (Could)
+            return false;
+        }
+
+        // Check if Company has enough credits and subtract them if so
+        if (!$this->checkCredits($post, $company, $companyService, "banner")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Shows the highlighting page and processes the form when submit has been clicked
+     *
+     *
+     */
+    public function highlightAction(){
+        global $MSG;
+        //Get usefull stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        //Get package form of type highlight
+        $packageForm = $companyService->getPackageForm('highlight');
+
+        //Set the values for the selection element
+        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies($company->getId())));
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            //Set published to one, since a highlight does not need to be approved
+            $post['published'] = 1;
+
+            if ($this->highlightPostCorrect($post)) {
+                if ($companyService->insertPackageForCompanySlugNameByData(
+                    $company->getName(),
+                    $post,
+                    NULL, //There are no files to be passed
+                    'highlight'
+                )) {
+                    return $this->redirect()->toRoute(
+                        'companyaccount'
+                    );
+                }
+            } else {
+                echo $this->function_alert($MSG);
+                $packageForm->setData($this->resetInsertedDates($post));
+            }
+        }
+
+        //Initialize the form
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/highlight'
+            )
+        );
 
         return new ViewModel([
             'form' => $packageForm,
@@ -106,19 +181,91 @@ class CompanyAccountController extends AbstractActionController
     }
 
 
-    public function function_alert($msg){
-        echo "<script type='text/javascript'>alert('$msg');</script>";
+    public function highlightPostCorrect($post) {
+        global $MSG;
+        //Get usefull stuff
+        $companyService = $this->getCompanyService();
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+
+        // Check if valid timespan is selected
+        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
+            $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        //Check if a company does not already have three highlights
+        if ($this->getCompanyService()->getNumberOfHighlights($company->getId()) >= 3) {
+            $MSG = "Unfortunately you can place at most 3 highlights, which you already have";
+            return false;
+        }
+
+        // Check if Company has enough credits and subtract them if so
+        if (!$this->checkCredits($post, $company, $companyService, "highlight")) {
+            return false;
+        }
+
+        return true;
     }
 
-    public function resetInsertedDates($post) {
-        $insertedDates = [];
-        $insertedDates['startDate'] = $post['startDate'];
-        $insertedDates['expirationDate'] = $post['expirationDate'];
-        return $insertedDates;
+    /**
+     * Gets all active vacancies for a certain company
+     *
+     * @return all active vacancies for a certain company
+     */
+    public function getVacancies() {
+        $companyService = $this->getCompanyService();
+
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
+        //Obtain the id of the logged in company
+        $companyId = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
+
+        //obtain company package information
+        $companyPackageInfo = $this->getcompanyAccountService()->getCompanyPackageInfo($companyId);
+
+        return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
+    }
+
+    /**
+     * Gets all highlightable vacancies for a certain company
+     * A vacancy is highlightable if
+     * - It is active
+     * - No other vacancies in the same category have been highlighted
+     *
+     * @return all highlightable vacancies for a certain company
+     */
+    public function getHighlightableVacancies($companyId) {
+        $companyService = $this->getCompanyService();
+
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
+        //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
+        return $this->getCompanyService()->getHighlightableVacancies($companyId, $locale);
+    }
+
+
+    /**
+     * Gets an array with the names from all vacancies in a vacancy object
+     * where the location in the array is the vacancy id
+     *
+     *
+     */
+    public function getVacancyNames($vacancy_objects) {
+        $vacancyNames = [];
+
+        foreach ($vacancy_objects as &$vacancy) {
+            $vacancyNames[$vacancy->getId()] = $vacancy->getName();
+        }
+        return $vacancyNames;
     }
 
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
+
 
         if ($type === "banner"){
             $company->setBannerCredits($credits_owned);
@@ -139,17 +286,29 @@ class CompanyAccountController extends AbstractActionController
         } elseif ($type === "highlight"){
             $credits_owned = $company->getHighlightCredits();
         }
-
         if ($credits_owned >= $days_scheduled ){
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
 
-        $MSG = "The amount of credits needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+
+        $MSG = "The amount of highlighting days needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+
         return false;
     }
 
-    public function checkImageSize($image, $packageForm) {
+    public function function_alert($msg){
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
+
+    public function resetInsertedDates($post) {
+        $insertedDates = [];
+        $insertedDates['startDate'] = $post['startDate'];
+        $insertedDates['expirationDate'] = $post['expirationDate'];
+        return $insertedDates;
+    }
+
+    public function checkImageSize($image) {
         global $MSG;
         list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
@@ -492,9 +651,7 @@ class CompanyAccountController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
-
             if ($job) {
-
                 //Send approval email to admin
                 $email = $this->getDecisionEmail();
                 $email->sendApprovalMail($company);
@@ -569,11 +726,10 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Method that returns the service object for the company module.
      *
-     * @return DesicionEmail
+     * @return DecisionEmail
      */
     protected function getDecisionEmail()
     {
         return $this->getServiceLocator()->get('decision_service_decisionEmail');
     }
-
 }

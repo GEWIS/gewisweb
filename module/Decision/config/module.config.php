@@ -377,6 +377,16 @@ return [
                             ]
                         ],
                     ],
+                    'highlight' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/highlight',
+                            'defaults' => [
+                                'action' => 'highlight'
+                            ]
+
+                        ],
+                    ],
                     'bannerupload' => [
                         'type' => 'literal',
                         'options' => [

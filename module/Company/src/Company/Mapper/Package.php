@@ -5,12 +5,13 @@ namespace Company\Mapper;
 use Company\Model\CompanyJobPackage as PackageModel;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
+use Company\Model\CompanyHighlightPackage as HighlightPackageModel;
 use Doctrine\ORM\EntityManager;
 
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifycations will be
+ * NOTE: Packages will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Package
@@ -172,6 +173,10 @@ class Package
 
         if ($type === "featured") {
             return new FeaturedPackageModel($this->em);
+        }
+
+        if($type === "highlight") {
+            return new HighlightPackageModel($this->em);
         }
 
         return new BannerPackageModel($this->em);

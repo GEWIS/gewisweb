@@ -165,6 +165,12 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
+                'highlightedIds' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\HighlightIds();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();

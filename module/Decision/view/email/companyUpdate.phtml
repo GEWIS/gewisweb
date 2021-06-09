@@ -1,22 +1,10 @@
-<?= "--- Dutch version below --- \n\n" ?>
-
 <?= "Dear board member, \n"?>
 
-<?= $this->escapeHtml($company->getName()) . " has made a change to her page. Please review this update.\n"?>
+<?= $this->escapeHtml($company->getName()) . " just made a change to her page, which is now waiting for your approval.\n"?>
 
-<?= "Go to "  . $this->serverUrl($this->url('admin_organ')) . " to view this update. \n" ?>
+<?= "At your convenience, please click "  . $this->serverUrl($this->url('admin_organ')) . " to approve awaiting changes. \n" ?>
 
 <?= "Best Regards,\n\n"?>
 <?="The Web Committee\n\n\n"?>
 
-<?="--- Dutch version ---\n\n"?>
-
-<?="Lieve bestuurder, \n"?>
-
-<?=$this->escapeHtml($company->getName()) . " heeft een update doorgevoerd op haar pagina. Gelieve deze update te reviewen.\n"?>
-
-<?="Ga naar " . $this->serverUrl($this->url('admin_organ')) . " om deze update te bekijken.\n"?>
-
-<?="Met vriendelijke groeten\n"?>
-
-<?="De Web Commissie \n"?>
+<?="This is an automated email, please do not reply to this email."?>

@@ -84,6 +84,15 @@ class JobFieldset extends Fieldset
                 'required' => false,
             ],
         ]);
+
+        $this->add([
+            'name' => 'teaser',
+            'type' => 'Zend\Form\Element\Textarea',
+            'options' => [
+                'label' => $translator->translate('Teaser'),
+                'required' => false,
+            ],
+        ]);
     }
 
     public function setLanguage($lang)

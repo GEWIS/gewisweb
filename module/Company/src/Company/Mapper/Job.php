@@ -99,6 +99,24 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+
+    /**
+     * Find the same job, but in the given language
+     *
+     */
+    public function siblingId($jobId, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j.id')->where('j.languageNeutralId=:jobId')->andWhere('j.language=:language')
+            ->setParameter('jobId', $jobId)
+            ->setParameter('language', $lang);
+
+        $ids = $qb->getQuery()->getResult();
+
+        return $ids[0];
+    }
+
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName
@@ -252,5 +270,51 @@ class Job
             //'class' => 'form-control input-sm'
             //]
         ];
+    }
+
+    /**
+     * Get the a job by it's id
+     *
+     * @return JobModel
+     */
+    public function findJobById($vacancy_id) {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.id =:vacancy_id');
+        $qb->setParameter('vacancy_id', $vacancy_id);
+        return $qb->getQuery()->getResult()[0];
+    }
+
+    /**
+     * Find all vacancies in categories where companies have not highlighted a vacancy yet
+     *
+     * @param integer $companyId the id of the company who's
+     * highlighted categories will be fetched.
+     * @param array $alreadyHighlighted array of languageNeutralIds of categories where a company has a highlighted vacancy
+     * @param string $locale the current language of the website
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function findHighlightableVacancies($companyId, $alreadyHighlighted, $locale)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+
+        $qb = $objectRepository->createQueryBuilder('j');
+        $qb -> select('j')
+            ->distinct()
+            ->join('j.package', 'h')
+            ->join('j.category', 'jc')
+            ->where('h.company = ?1')
+            ->andWhere('j.language = ?2')
+            ->andWhere('j.active = 1')
+            ->setParameter(1, $companyId)
+            ->setParameter(2, $locale);
+
+        if (!empty($alreadyHighlighted)) {
+            $qb->andWhere('jc.languageNeutralId NOT in (?3)')
+                ->setParameter(3, $alreadyHighlighted);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }
