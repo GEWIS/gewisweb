@@ -4,6 +4,7 @@ $this->scriptUrl()->requireUrls(
     ['admin_company/deleteCompany'],
     ['slugCompanyName']
 );
+$locale = $this->translator->getLocale();
 ?>
 <?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
 <div class="row">
@@ -54,6 +55,39 @@ $this->scriptUrl()->requireUrls(
                     <tfoot>
                     <tr>
                         <th><?= $this->translate('Categories') ?></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <a class="btn btn-success"
+                   href='<?= $this->url('admin_company/default', ['action' => 'addSector']) ?>'> <span
+                        class="fa fa-plus"></span><?= $this->translate('Add Sector'); ?>
+                </a>
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th>
+                            <?= $this->translate('Sectors') ?>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($this->jobSectors($locale) as $sector):
+                        $editUrl = $this->url('admin_company/editSector',
+                            ['languageNeutralSectorId' => $sector->getLanguageNeutralId()]);
+                        ?>
+                        <tr>
+                            <td><?= $sector->getName(); ?> (<a
+                                    href="<?= $editUrl; ?>"><?= $this->translate('edit') ?></a>)
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><?= $this->translate('Sectors') ?></th>
                     </tr>
                     </tfoot>
                 </table>

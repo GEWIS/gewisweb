@@ -33,6 +33,18 @@ $form->setAttribute('class', 'form-horizontal');
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        <?php
+                        $element = $form->get('remember');
+                        $element->setAttribute('checked', 'checked');
+                        ?>
+                        <div class="form-group">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <label>
+                                    <?= $this->formCheckbox($element) ?>
+                                    <?= $element->getLabel() ?>
+                                </label>
+                            </div>
+                        </div>
 
                         <?= $this->formInput($form->get('redirect')) ?>
 
@@ -47,6 +59,10 @@ $form->setAttribute('class', 'form-horizontal');
                             </div>
                         </div>
 
+                        <?php $url = $this->url('user/default', ['action' => 'resetCompany']); ?>
+                        <p>
+                            <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+                        </p>
 
                         <?= $this->form()->closeTag($form); ?>
                     </div>

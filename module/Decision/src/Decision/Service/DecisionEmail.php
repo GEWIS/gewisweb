@@ -30,7 +30,7 @@ class DecisionEmail extends AbstractService
         $config = $this->getConfig();
 
         $message->addFrom($config['from']);
-        $message->addTo($config['from']);
+        $message->addTo($config['company_change']);
         $message->setSubject($translator->translate('Request to review changes made by company'));
         $message->setBody($body);
 
@@ -87,3 +87,5 @@ class DecisionEmail extends AbstractService
     }
 
 }
+
+

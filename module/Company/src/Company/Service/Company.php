@@ -6,6 +6,8 @@ namespace Company\Service;
 use Application\Service\AbstractAclService;
 use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as CategoryModel;
+use Company\Model\JobSector;
+use Company\Model\JobSector as SectorModel;
 use Company\Model\JobLabel as LabelModel;
 use Company\Model\Job;
 use Company\Model\JobLabelAssignment;
@@ -29,6 +31,11 @@ class Company extends AbstractACLService
         }
 
         return $this->getBannerPackageMapper()->getBannerPackage();
+    }
+
+    public function getCompanyIdentity() {
+        $companyservice = $this->sm->get('company_auth_service');
+        return $companyservice->getIdentity();
     }
 
     public function getFeaturedPackage()
@@ -250,6 +257,44 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all sectors for the given language
+     *
+     * @param $lang
+     * @return array
+     */
+    public function getSectorList($lang)
+    {
+        $results = $this->getSectorMapper()->findAll();
+        $sectors = [];
+        foreach($results as $sector) {
+            array_push($sectors, $this->getSectorMapper()->siblingSector($sector, $lang));
+        }
+        return $this->getUniqueInArray($sectors, function ($a) {
+            return $a->getLanguageNeutralId();
+        });
+
+    }
+
+    /**
+     * Returns all sectors for the given language
+     *
+     *
+     * @return array
+     */
+    public function getHighlightsList($lang)
+    {
+        $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlights();
+        $highlightIds = [];
+        foreach($highlightPackages as $package) {
+            $id = $package->getVacancy()->getId();
+            $localeId = $this->getJobMapper()->siblingId($id, $lang);
+            $highlightIds = array_merge($highlightIds, $localeId);
+        }
+        return $highlightIds;
+
+    }
+
+    /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false
      *
      * @param $visible
@@ -307,6 +352,32 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Creates a new JobSector.
+     *
+     * @param array $data Sector data from the EditSector form
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
+     * @throws \User\Permissions\NotAllowedException When a user is not allowed to create a job category
+     *
+     */
+    public function createSector($data)
+    {
+        if (!$this->isAllowed('insert')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to insert a job sector')
+            );
+        }
+
+        $sectorDict = [];
+        foreach ($this->getLanguages() as $lang) {
+            $sector = new SectorModel();
+            $sector->setLanguage($lang);
+            $sectorDict[$lang] = $sector;
+        }
+
+        return $this->saveSectorData("", $sectorDict, $data);
+    }
+
+    /**
      * Checks if the data is valid, and if it is, saves the JobCategory
      *
      * @param int|string $languageNeutralId Identifier of the JobCategories to save
@@ -342,6 +413,41 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Checks if the data is valid, and if it is, saves the JobSector
+     *
+     * @param int|string $languageNeutralId Identifier of the JobSectors to save
+     * @param array $sectors The JobSectors to save
+     * @param array $data The (new) data to save
+     *
+     * @return bool|int Returns false on failure, and the languageNeutralId on success
+     */
+    public function saveSectorData($languageNeutralId, $sectors, $data)
+    {
+        if (!$this->isAllowed('edit')) {
+            throw new \User\Permissions\NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to edit job categories')
+            );
+        }
+
+        $sectorForm = $this->getSectorForm();
+        $sectorForm->bind($sectors);
+        $sectorForm->setData($data);
+
+        if (!$sectorForm->isValid()) {
+            return false;
+        }
+
+        $id = -1;
+        foreach ($sectors as $sector) {
+            $id = $this->setLanguageNeutralSectorId($id, $sector, $languageNeutralId);
+            $this->getSectorMapper()->persist($sector);
+            $this->saveSector();
+        }
+
+        return (($languageNeutralId == "") ? $id : $languageNeutralId);
+    }
+
+    /**
      * Sets the languageNeutralId for this JobCategory.
      *
      * @param int $id The id of the JobCategory
@@ -366,6 +472,35 @@ class Company extends AbstractACLService
         }
 
         $category->setLanguageNeutralId($languageNeutralId);
+
+        return $id;
+    }
+
+    /**
+     * Sets the languageNeutralId for this JobSector.
+     *
+     * @param int $id The id of the JobSector
+     * @param JobSector $sector The JobSector
+     * @param int|string $languageNeutralId The languageNeutralId of the JobSector
+     *
+     * @return int
+     */
+    private function setLanguageNeutralSectorId($id, $sector, $languageNeutralId)
+    {
+        if ($languageNeutralId == "") {
+            $sector->setLanguageNeutralId($id);
+            $this->getSectorMapper()->persist($sector);
+            $this->saveSector();
+
+            if ($id == -1) {
+                $id = $sector->getId();
+            }
+
+            $sector->setLanguageNeutralId($id);
+            return $id;
+        }
+
+        $sector->setLanguageNeutralId($languageNeutralId);
 
         return $id;
     }
@@ -499,12 +634,31 @@ class Company extends AbstractACLService
      */
     public function saveCompanyByData($company, $data, $files)
     {
+
+        // TODO bug fix company changing profile (merge problems)
+        // when a company edits their profile, make sure the data they can't edit is maintained
+        // fill in missing data using current database entries
+        if ($this->getCompanyIdentity() !== null) {
+            $data['name'] = $company->getName();
+            $data['slugName'] = $company->getSlugName();
+            $data['phone'] = $company->getPhone();
+            $data['contactEmail'] = $company->getContactEmail();
+            $data['highlightCredits'] = $company->getHighlightCredits();
+            $data['bannerCredits'] = $company->getBannerCredits();
+            // comment out next line if company profile should be hidden after editing by company themselves
+            $data['hidden'] = (int)$company->isHidden();
+            // uncomment next line if company profile should be hidden after editing by company themselves
+//            $data['hidden'] = $company->setHidden(1);
+        }
+
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
         $companyForm->setData($mergedData);
+
+//        print_r($data);
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
@@ -522,6 +676,7 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
+//            print_r(var_dump($companyForm->isValid()));
             return true;
         }
     }
@@ -533,6 +688,15 @@ class Company extends AbstractACLService
     public function saveCategory()
     {
         $this->getCategoryMapper()->save();
+    }
+
+    /**
+     * Saves all modified categories
+     *
+     */
+    public function saveSector()
+    {
+        $this->getSectorMapper()->save();
     }
 
     /**
@@ -579,30 +743,35 @@ class Company extends AbstractACLService
      */
     public function insertCompanyByData($data, $files)
     {
+//        print_r($data);
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-
         if ($companyForm->isValid()) {
-            $company = $this->insertCompany($data['languages']);
+            $companies = $this->insertCompany($data['languages']);
+            $company = $companies[0];
+
             $company->exchangeArray($data);
+            $company->setSector($this->getJobMapper()->findSectorsById($data['sector']));
+
+            $newCompany = $companies[1];
+            $newCompany->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
+
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                    if ($file['error'] !== UPLOAD_ERR_OK) {
-                        return false;
+                    if ($file['error'] == UPLOAD_ERR_OK) {
+                        $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                        $translation->setLogo($newPath);
                     }
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
                 }
             }
             $this->saveCompany();
-            return $company;
+            return $companies;
         }
-
         return null;
     }
 
@@ -678,6 +847,7 @@ class Company extends AbstractACLService
      * @param array $data
      * @param array $files
      * @return bool
+     * @throws \Exception
      */
     public function createJob($packageId, $data, $files)
     {
@@ -688,6 +858,7 @@ class Company extends AbstractACLService
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
+
             $jobs[$lang] = $job;
         }
 
@@ -707,13 +878,15 @@ class Company extends AbstractACLService
      */
     public function saveJobData($languageNeutralId, $jobs, $data, $files)
     {
+        $this->setCentralJobData($jobs, $data);
+
         if (!$this->isAllowed('edit')) {
             throw new \User\Permissions\NotAllowedException(
                 $this->getTranslator()->translate('You are not allowed to edit jobs')
             );
         }
 
-        $jobForm = $this->getJobForm();
+        $jobForm = $this->getJobFormCompany();
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
@@ -753,6 +926,7 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
+
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
             $this->getJobMapper()->persist($job);
             $this->saveJob();
@@ -770,6 +944,33 @@ class Company extends AbstractACLService
 
         return true;
     }
+
+    /**
+     * Sets the centralised fields in both language jobs.
+     *
+     * @param array $jobs The Job to save
+     * @param array $data The (new) data to save
+     */
+    public function setCentralJobData($jobs, $data) {
+        $x = 0;
+        foreach ($jobs as $job) {
+            $job->setEmail($data['email']);
+            $job->setWebsite($data['website']);
+            $job->setHours($data['hours']);
+
+            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
+            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
+            $x++;
+
+            $job->setLocation($data['location']);
+            $job->setContactName($data['contactName']);
+            $job->setPhone($data['phone']);
+            if ($data['startingDate']!= null) {
+                $job->setStartingDate(new \DateTime($data['startingDate']));
+            }
+        }
+    }
+
 
     /**
      * @param Job $job
@@ -937,6 +1138,23 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns a persistent sector
+     *
+     * @param int $sectorId
+     */
+    public function getAllSectorsById($sectorId)
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit packages')
+            );
+        }
+
+        return $this->getSectorMapper()->findAllSectorsById($sectorId);
+    }
+
+    /**
      * Returns a persistent label
      *
      * @param int $labelId
@@ -1026,6 +1244,7 @@ class Company extends AbstractACLService
      */
     public function getJobs($dict)
     {
+
         $translator = $this->getTranslator();
         if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] === null) {
             $jobs = $this->getJobMapper()->findJobsWithoutCategory($translator->getLocale());
@@ -1040,6 +1259,19 @@ class Company extends AbstractACLService
         $jobs = $this->getJobMapper()->findJob($dict);
 
         return $jobs;
+    }
+
+    public function getAllJobs() {
+        $jobList = $this->getJobMapper()->findAllActiveJobs($this->getTranslator()->getLocale());
+
+        $array = [];
+        foreach ($jobList as $job) {
+            if ($job->isActive()) {
+                $array[] = $job;
+            }
+        }
+
+        return $array;
     }
 
     /**
@@ -1109,7 +1341,7 @@ class Company extends AbstractACLService
     /**
      * Get the Category Edit form.
      *
-     * @return EditCategory For for editing JobCategories
+     * @return EditCategory Form for editing JobCategories
      */
     public function getCategoryForm()
     {
@@ -1120,6 +1352,22 @@ class Company extends AbstractACLService
             );
         }
         return $this->sm->get('company_admin_edit_category_form');
+    }
+
+    /**
+     * Get the Sector Edit form.
+     *
+     * @return EditSector Form for editing JobSectors
+     */
+    public function getSectorForm()
+    {
+        if (!$this->isAllowed('edit')) {
+            $translator = $this->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to edit sectors')
+            );
+        }
+        return $this->sm->get('company_admin_edit_sector_form');
     }
 
     /**
@@ -1176,7 +1424,8 @@ class Company extends AbstractACLService
     }
 
 
-    public function getJobFormCompany() {
+    public function getJobFormCompany()
+    {
         if (!$this->isAllowed('edit')) {
             $translator = $this->getTranslator();
             throw new \User\Permissions\NotAllowedException(
@@ -1203,6 +1452,10 @@ class Company extends AbstractACLService
 
         return $array;
     }
+
+
+
+
 
     /**
      * Returns the companyMapper
@@ -1268,6 +1521,15 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns the sector mapper
+     *
+     */
+    public function getSectorMapper()
+    {
+        return $this->sm->get('company_mapper_sector');
+    }
+
+    /**
      * Returns the label mapper
      *
      */
@@ -1324,6 +1586,17 @@ class Company extends AbstractACLService
     {
         return $this->sm->get('application_get_languages');
     }
+
+
+//    /**
+//     * Returns the sector mapper
+//     *
+//     */
+//    public function getSectorMapper()
+//    {
+//        return $this->sm->get('company_mapper_sector');
+//    }
+
 
     public function getLanguageDescription($lang)
     {

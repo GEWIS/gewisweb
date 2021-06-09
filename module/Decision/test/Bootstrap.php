@@ -35,9 +35,10 @@ class Bootstrap
                 'module_paths' => $zf2ModulePaths,
             ],
             'modules' => [
-                'Decision',
                 'User',
-                'Application'
+                'Application',
+                'Company',
+                'Decision',
             ]
         ];
 

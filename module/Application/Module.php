@@ -17,7 +17,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\Session\Container as SessionContainer;
 use Zend\Validator\AbstractValidator;
 use User\Permissions\NotAllowedException;
-
+//define("APP_ENV", "development");
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -159,6 +159,18 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
+                'jobSectors' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobSectors();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
+                'highlightedIds' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\HighlightIds();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\FileUrl();
@@ -169,6 +181,18 @@ class Module
                     $locator = $sm->getServiceLocator();
                     $helper = new \Application\View\Helper\Infima();
                     $helper->setLegacyService($locator->get('application_service_legacy'));
+                    return $helper;
+                },
+                'jobSectors' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\JobSectors();
+                    $helper->setServiceLocator($locator);
+                    return $helper;
+                },
+                'companyIdentity' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $helper = new \Application\View\Helper\CompanyIdentity();
+                    $helper->setServiceLocator($locator);
                     return $helper;
                 }
             ]

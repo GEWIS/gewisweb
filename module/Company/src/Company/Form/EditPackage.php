@@ -20,6 +20,17 @@ class EditPackage extends Form
         ]);
 
         $this->add([
+            'name' => 'contractNumber',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translate->translate('Contract Number'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'startDate',
             'type' => 'Zend\Form\Element\Date',
             'attributes' => [

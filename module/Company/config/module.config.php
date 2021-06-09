@@ -125,6 +125,33 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
+                    'approvalPage' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-page',
+                            'defaults' => [
+                                'action' => 'approvalPage',
+                            ],
+                        ],
+                    ],
+                    'approvalVacancy' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-vacancy',
+                            'defaults' => [
+                                'action' => 'approvalVacancy',
+                            ],
+                        ],
+                    ],
+                    'approvalProfile' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-profile',
+                            'defaults' => [
+                                'action' => 'approvalProfile',
+                            ],
+                        ],
+                    ],
                     'deleteCompany' => [
                         'priority' => 3,
                         'type' => 'Segment',
@@ -262,6 +289,19 @@ return [
                             ],
                             'constraints' => [
                                 'languageNeutralCategoryId' => '\d+',
+                            ],
+                        ],
+                    ],
+                    'editSector' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/editSector/:languageNeutralSectorId',
+                            'defaults' => [
+                                'action' => 'editSector',
+                            ],
+                            'constraints' => [
+                                'languageNeutralSectorId' => '\d+',
                             ],
                         ],
                     ],

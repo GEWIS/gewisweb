@@ -62,7 +62,7 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        if (APP_ENV === 'production') {
+        if ('APP_ENV' === 'production') {
             return [
                 'Zend\Loader\ClassMapAutoloader' => [
                     __DIR__ . '/autoload_classmap.php',
@@ -105,7 +105,8 @@ class Module
                 'user_service_user' => 'User\Service\User',
                 'user_service_apiuser' => 'User\Service\ApiUser',
                 'user_service_email' => 'User\Service\Email',
-                'user_service_company' => 'User\Service\Company'
+                'user_service_company' => 'User\Service\Company',
+                'user_service_companyemail' => 'User\Service\CompanyEmail',
             ],
 
             'factories' => [
@@ -163,6 +164,11 @@ class Module
                         $sm->get('translator')
                     );
                 },
+                'user_form_companypasswordreset' => function ($sm) {
+                    return new \User\Form\CompanyPassword(
+                        $sm->get('translator')
+                    );
+                },
                 'user_form_passwordactivate' => function ($sm) {
                     return new \User\Form\Activate(
                         $sm->get('translator')
@@ -190,6 +196,7 @@ class Module
                         $sm->get('user_doctrine_em')
                     );
                 },
+                // return a NewCompanyMapper
                 'user_mapper_newcompany' => function ($sm) {
                     return new \User\Mapper\NewCompany(
                         $sm->get('user_doctrine_em')
@@ -363,6 +370,8 @@ class Module
                     $acl->allow('user', 'user', ['password_change']);
                     $acl->allow('photo_guest', 'user', ['password_change']);
                     $acl->allow('tueguest', 'user', 'pin_login');
+                    // allow company to change their password
+                    $acl->allow('company_user', 'user', ['password_change']);
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');

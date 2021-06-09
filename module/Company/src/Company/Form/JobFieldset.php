@@ -1,7 +1,6 @@
 <?php
 
 namespace Company\Form;
-
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
@@ -9,6 +8,7 @@ use Zend\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
+
     protected $mapper;
     protected $translator;
 
@@ -64,17 +64,6 @@ class JobFieldset extends Fieldset
         ]);
 
         $this->add([
-            'name' => 'website',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Website'),
-                'required' => false,
-            ],
-        ]);
-
-        $this->add([
             'name' => 'attachment_file',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
@@ -86,45 +75,21 @@ class JobFieldset extends Fieldset
             ],
         ]);
 
-        $this->add([
-            'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Email'),
-                'required' => false,
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'contactName',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Contact name'),
-                'required' => false,
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'phone',
-            'attributes' => [
-                'type' => 'text',
-            ],
-            'options' => [
-                'label' => $translator->translate('Phone'),
-                'required' => false,
-            ],
-        ]);
 
         $this->add([
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
                 'label' => $translator->translate('Description'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'teaser',
+            'type' => 'Zend\Form\Element\Textarea',
+            'options' => [
+                'label' => $translator->translate('Teaser'),
                 'required' => false,
             ],
         ]);

@@ -80,7 +80,6 @@ class Session extends Storage\Session
 
         $this->session->{$this->member} = $session->lidnr;
         $this->saveSession($session->lidnr);
-
         return true;
     }
 
@@ -177,7 +176,7 @@ class Session extends Storage\Session
     public function __construct($sm)
     {
         $this->sm = $sm;
-        parent::__construct(null, null, null);
+        parent::__construct("User\Authentication\Storage", null, null);
     }
 
     /**

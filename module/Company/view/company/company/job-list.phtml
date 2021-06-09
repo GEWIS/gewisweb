@@ -1,14 +1,12 @@
 <?php
 
 $locale = $this->translator->getLocale();
-
+$highlightIds = $this->highlightedIds($locale);
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
-$this->headTitle($this->category->getPluralName());
-
-
+$this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -26,7 +24,7 @@ $this->headTitle($this->category->getPluralName());
                 </li>
             <?php endif; ?>
             <li class="active">
-                <?= $category->getPluralName() ?>
+                <?= $all ? 'All Vacancies':$category->getPluralName() ?>
             </li>
         </ol>
     </div>
@@ -36,7 +34,7 @@ $this->headTitle($this->category->getPluralName());
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><?= $category->getPluralName() ?></h1>
+                <h1><?= $all ? 'All Vacancies' : $category->getPluralName() ?></h1>
             </div>
         </div>
         <div class="row">
@@ -54,7 +52,26 @@ $this->headTitle($this->category->getPluralName());
                         <label for="job-sort"><?= $this->translate('Sort on') ?></label>
                         <select name="sort" id="job-sort" class="form-control">
                             <option value="random"><?= $this->translate('Random') ?></option>
-                            <option value="posted"><?= $this->translate('Most recent') ?></option>
+                            <option value="sector"><?= $this->translate('Sector') ?></option>
+                            <option value="name"><?= $this->translate('Name') ?></option>
+                            <option value="startingDate"><?= $this->translate('Starting Date') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hours-filter"><?= $this->translate('Hours') ?></label>
+                        <select name="hours" id="hours-filter" class="form-control">
+                            <option value="all"><?= $this->translate('All') ?></option>
+                            <option value="part-time"><?= $this->translate('Part Time') ?></option>
+                            <option value="full-time"><?= $this->translate('Full Time') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sectors-filter"><?= $this->translate('Sectors') ?></label>
+                        <select name="sectors" id="sector-filter" class="form-control">
+                            <option value="all" > <?= $this->translate("All")?></option>
+                            <?php foreach ($this->jobSectors($locale) as $sector): ?>
+                                <option value="<?= $sector->getLanguageNeutralId()?>" > <?= $sector->getName()?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <?php if (isset($this->company)): ?>
@@ -76,7 +93,7 @@ $this->headTitle($this->category->getPluralName());
             <div class="row">
                 <div class="col-md-12" style="margin-top: 1em">
                     <h4>No Results</h4>
-                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), $all ? 'vacancies' : strtolower($category->getPluralName())) ?></p>
                 </div>
             </div>
         <?php else: ?>
@@ -93,36 +110,77 @@ $this->headTitle($this->category->getPluralName());
                                 'category' => $job->getCategory()->getSlug(),
                             ]);
                             ?>
-                            <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
-                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
-                                <div class="card-img">
-                                    <img
-                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                                        alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
-                                </div>
-                                <h2 class="card-title"><?= $job->getName() ?></h2>
-                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                <?php if (!is_null($job->getLocation())): ?>
-                                    <p class="job-location"><?= $job->getLocation() ?></p>
-                                <?php endif; ?>
-                                <div>
-                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                        <?php $label = $labelAsg->getLabel(); ?>
-                                        <span class="label label-default job-label"
-                                              data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
-                                              title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-link"><?= $this->translate('View') ?></button>
-                                    <span class="small">
-                                <?php if ($job->getTimestamp()->isToday()): ?>
-                                    <?= $this->translate('Posted today') ?>
-                                <?php else: ?>
-                                    <?= sprintf($this->translate('Posted %s'), $job->getTimestamp()->diffForHumans()) ?>
-                                <?php endif ?>
-                            </span>
-                                </div>
+                            <a href="<?= $jobUrl ?>" class="<?= in_array($job->getId(), $highlightIds) ? "card job-highlight" : "card" ?>" data-index="<?= $index ?>"
+                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
+                               data-sector="<?= $job->getSectors()->getName() ?>"
+                               data-name="<?= $job->getName() ?>"
+                               data-teaser="<?= $job->getTeaser() ?>"
+                               data-highlight="<?= in_array($job->getId(), $highlightIds)?>"
+                               data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                                <?php if(in_array($job->getId(), $highlightIds)) : ?>
+                                    <div class="card-img">
+                                        <img
+                                            src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                            alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                                    </div>
+                                    <h2 class="card-title"><?= $job->getName() ?></h2>
+                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                    <div>
+                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                            <?php $label = $labelAsg->getLabel(); ?>
+                                            <span class="label label-default job-label"
+                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <?php if($job->getTeaser() != null):?>
+                                            <p class="card-subtitle text-muted"><?= $job->getTeaser() ?></p>
+                                        <?php endif;?>
+                                    </div>
+                                    <span class="label label-default job-hours"
+                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                    <span class="label label-default job-sectors"
+                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
+                                    <div class="card-footer">
+                                        <button class="btn btn-link"><?= $this->translate('View') ?></button>
+                                        <span class="small">
+                                    <?php if (!is_null($job->getLocation())): ?>
+                                        <p class="job-location"><?= $job->getLocation() ?></p>
+                                    <?php endif; ?>
+                                    </span>
+                                    </div>
+                                <?php else:?>
+                                    <div class="card-img">
+                                        <img
+                                            src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                            alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                                    </div>
+                                    <h2 class="card-title"><?= $job->getName() ?></h2>
+                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                    <div>
+                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                            <?php $label = $labelAsg->getLabel(); ?>
+                                            <span class="label label-default job-label"
+                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <span class="label label-default job-hours"
+                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                    <span class="label label-default job-sectors"
+                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
+                                    <div class="card-footer">
+                                        <button class="btn btn-link"><?= $this->translate('View') ?></button>
+                                        <span class="small">
+                                    <?php if (!is_null($job->getLocation())): ?>
+                                        <p class="job-location"><?= $job->getLocation() ?></p>
+                                    <?php endif; ?>
+                                    </span>
+                                    </div>
+                                <?php endif;?>
+
                             </a>
                         <?php endforeach; ?>
                     </div>
@@ -132,10 +190,13 @@ $this->headTitle($this->category->getPluralName());
         <?php
         $alternatives = [];
         foreach ($this->jobCategories() as $c) {
-            // Don't include current category in list of alternative job categories
-            if ($category->getId() === $c->getId()) {
-                continue;
+            if (!$all){
+                // Don't include current category in list of alternative job categories
+                if ($category->getId() === $c->getId()) {
+                    continue;
+                }
             }
+
 
             $alternatives[] = vsprintf('<a href="%s">%s</a>', [
                 $this->url('company/jobList', ['category' => $c->getSlug()]),
@@ -152,7 +213,7 @@ $this->headTitle($this->category->getPluralName());
                 </div>
                 <div class="col-md-12">
                     <p class="text-muted">
-                        <?= sprintf($this->translate("Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
+                        <?= sprintf($this->translate($all ? "Want to look at vacancies per category? Take a look at %s." : "Still haven't found what you're looking for? Take a look at %s."), $alternatives) ?>
                     </p>
                 </div>
             </div>
@@ -170,6 +231,12 @@ $this->headTitle($this->category->getPluralName());
                 text: $(searchElements, $card).text().toLowerCase(),
                 labels: $('.job-label', $card).map(function () {
                     return $(this).data('label');
+                }).get(),
+                hours: $('.job-hours', $card).map(function () {
+                    return $(this).data('hours');
+                }).get(),
+                sectors: $('.job-sectors', $card).map(function () {
+                    return $(this).data('sectors');
                 }).get()
             };
         }).get();
@@ -191,8 +258,19 @@ $this->headTitle($this->category->getPluralName());
         var sortCards = function (sortFn) {
             var sortedCards = $grid.children('.card').sort(sortFn);
 
+
+            // Put vacancies with a teaser infront.
+            var result1 = [], result2 = [];
+            for (var i = 0; i < sortedCards.length; i++) {
+                if (sortedCards[i].dataset.highlight) {
+                    result1.push(sortedCards[i]);
+                } else {
+                    result2.push(sortedCards[i]);
+                }
+            }
+            var result = result1.concat(result2);
             // jQuery handles moving DOM elements
-            $grid.append(sortedCards);
+            $grid.append(result);
         };
 
         /**
@@ -213,11 +291,34 @@ $this->headTitle($this->category->getPluralName());
 
         registerFilter('label', true);
         registerFilter('search', true);
+        registerFilter('hours', true);
+        registerFilter('sectors', true);
 
         return {
             filterByLabel: function (label) {
                 cards.forEach(function (card) {
                     card.isMatchOn['label'] = (card.labels.indexOf(label) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            filterByHours: function (hours) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['hours'] = (card.hours.indexOf(hours) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            filterBySector: function (sector) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = (card.sectors.indexOf(parseInt(sector)) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            clearHoursFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['hours'] = true;
                 });
 
                 updateCardVisibility();
@@ -229,6 +330,13 @@ $this->headTitle($this->category->getPluralName());
 
                 updateCardVisibility();
             },
+            clearSectorFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = true;
+                });
+
+                updateCardVisibility();
+            },
             filterByText: function (query) {
                 cards.forEach(function (card) {
                     card.isMatchOn['search'] = (card.text.indexOf(query.toLowerCase()) > -1);
@@ -236,16 +344,26 @@ $this->headTitle($this->category->getPluralName());
 
                 updateCardVisibility();
             },
-            sortByDateDesc: function () {
+            sortByStartingDateDesc: function () {
                 sortCards(function (a, b) {
-                    return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
+                    return (new Date(a.dataset.starts) < new Date(b.dataset.starts)) ? -1 : 1;
+                });
+            },
+            sortBySector: function () {
+                sortCards(function (a, b) {
+                    return (a.dataset.sector.toLowerCase() > b.dataset.sector.toLowerCase()) ? -1 : 1;
+                });
+            },
+            sortByName: function () {
+                sortCards(function (a, b) {
+                    return (a.dataset.name.toLowerCase() < b.dataset.name.toLowerCase()) ? -1 : 1;
                 });
             },
             sortByDefault: function () {
                 sortCards(function (a, b) {
                     return (parseInt(a.dataset.index) > parseInt(b.dataset.index)) ? 1 : -1;
                 });
-            }
+            },
         }
     };
 
@@ -267,15 +385,52 @@ $this->headTitle($this->category->getPluralName());
         }
     });
 
+    // Sort jobs on given option
     $("#job-sort").change(function () {
         switch ($(this).val()) {
-            case 'posted':
-                cardGrid.sortByDateDesc();
+            // based on sector name (can maybe be removed as there also exists a filter for this)
+            case 'sector':
+                cardGrid.sortBySector();
+                break;
+            case 'name':
+                cardGrid.sortByName();
+                break;
+            case 'startingDate':
+                cardGrid.sortByStartingDateDesc();
                 break;
             default:
                 cardGrid.sortByDefault();
         }
     });
+
+    // Filter on Hours type
+    $("#hours-filter").change(function () {
+        switch ($(this).val()) {
+            case 'part-time':
+                cardGrid.filterByHours(0);
+                break;
+            case 'full-time':
+                cardGrid.filterByHours(1);
+                break;
+            default:
+                // also used for "all" option
+                cardGrid.clearHoursFilter();
+        }
+    });
+
+    // Filter on sectors
+    $("#sector-filter").change(function () {
+        var sector = $(this).val();
+
+        // When "all" is selected clear all filters.
+        if (sector == "all") {
+            cardGrid.clearSectorFilter();
+            return;
+        }
+        // Filter on given sector
+        cardGrid.filterBySector(sector);
+    });
+
 
     $('[data-toggle="tooltip"]').tooltip({
         viewport: {"selector": ".card-grid"}

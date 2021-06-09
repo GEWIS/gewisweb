@@ -4,6 +4,7 @@ namespace User\Model;
 
 use DateTime;
 use Company\Model\Company;
+use User\Service\User as UserService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,22 +16,23 @@ use Doctrine\ORM\Mapping as ORM;
 class NewCompany
 {
     /**
-     * The membership number.
+     * The company ID.
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * The user's email address.
+     * The company's contact email address.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $contactEmail;
 
     /**
-     * The user's activation code.
+     * The company's activation code.
      *
      * @ORM\Column(type="string")
      */
@@ -52,6 +54,40 @@ class NewCompany
     protected $company;
 
     /**
+     * Constructor.
+     *
+     * We can populate most values from a company model.
+     *
+     * @param Company $company
+     */
+    public function __construct(Company $company = null)
+    {
+        if (null !== $company) {
+            $this->company = $company;
+            $this->code = $this->generateCode();
+        }
+    }
+
+    /**
+     * Generate an activation code for the user.
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateCode($length = 20)
+    {
+        $ret = '';
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+        for ($i = 0; $i < $length; $i++) {
+            $ret .= $alphabet[rand(0, strlen($alphabet) - 1)];
+        }
+
+        return $ret;
+    }
+
+    /**
      * Get the company id.
      *
      * @return int
@@ -61,8 +97,13 @@ class NewCompany
         return $this->id;
     }
 
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
     /**
-     * Get the user's email address.
+     * Get the company's contact email address.
      *
      * @return string
      */
@@ -92,22 +133,6 @@ class NewCompany
     }
 
     /**
-     * Constructor.
-     *
-     * We can populate most values from a member model.
-     *
-     * @param Company $company
-     */
-    public function __construct(Company $company = null)
-    {
-        if (null !== $company) {
-            $this->id = $company->getLidnr();
-            $this->contactEmail = $company->getContactEmail();
-            $this->company = $company;
-        }
-    }
-
-    /**
      * Get the company.
      *
      * @return Company
@@ -115,5 +140,48 @@ class NewCompany
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set the company ID
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Set the company's contact email address
+     * @param mixed $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeArray($data)
+    {
+        $this->setContactEmail($this->updateIfSet($data['contactEmail'],''));
+    }
+
+    /**
+     * Updates the variable if the first argument is set, Otherwise, it will
+     * use the second argument.
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
+    private function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+
+        return $default;
     }
 }

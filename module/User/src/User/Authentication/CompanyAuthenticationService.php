@@ -20,7 +20,7 @@ class CompanyAuthenticationService extends ZendAuthService
         $mapper = $this->getAdapter()->getMapper();
         $company = $storage->read();
         if (is_object($company)) {
-            $company = $company->getLidnr();
+            $company = $company->getId();
         }
         $this->identity = $mapper->findById($company);
         return $this->identity;

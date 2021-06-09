@@ -90,6 +90,33 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
+    public function findAllActiveJobs($lang)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.language=:lang');
+        $qb->setParameter('lang', $lang);
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * Find the same job, but in the given language
+     *
+     */
+    public function siblingId($jobId, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j.id')->where('j.languageNeutralId=:jobId')->andWhere('j.language=:language')
+            ->setParameter('jobId', $jobId)
+            ->setParameter('language', $lang);
+
+        $ids = $qb->getQuery()->getResult();
+
+        return $ids[0];
+    }
+
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName
@@ -179,6 +206,44 @@ class Job
     public function getRepository()
     {
         return $this->em->getRepository('Company\Model\Job');
+    }
+
+    // TODO: decide if we should make a separate mapper for this
+    public function findSectorsById($id)
+    {
+        $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getSectorsRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobSector');
+    }
+
+    // TODO: decide if we should make a separate mapper for this
+    public function findCategoryById($id)
+    {
+        $objectRepository = $this->getCategoryRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c')
+            ->select('c')->where('c.id=:Id')
+            ->setParameter('Id', $id);
+
+        if ($qb->getQuery()->getResult()!= null) {
+            return $qb->getQuery()->getResult()[0];
+        }
+        return null;
+    }
+
+    public function getCategoryRepository()
+    {
+        return $this->em->getRepository('Company\Model\JobCategory');
     }
 
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)

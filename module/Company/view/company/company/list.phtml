@@ -3,61 +3,277 @@
 $locale = $this->translator->getLocale();
 $escaper = new Zend\Escaper\Escaper('utf-8');
 
-$this->headTitle($this->translate('Companies'));
-
+if (isset($this->company)) {
+    $this->headTitle($this->translate('Companies'));
+}
 ?>
 <section class="section">
     <div class="container">
-        <div class="row" style="margin-top:50px">
-            <?php if (isset($featuredPackage)): ?>
+        <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
-                        <h1>
-                            <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $featuredCompany->getSlugName()], [], true); ?>"><?= $featuredCompany->getName() ?></a>
-                            <small><?= $this->translate('in the spotlight') ?></small>
-                        </h1>
-                        <?=
-                        $this->partial('./companyStory.phtml', [
-                            'company' => $featuredCompany,
-                            'featuredPackage' => $featuredPackage,
-                            'translator' => $translator,
-                            'panels' => false,
-                        ]);
-                        ?>
+                <div class="filter-bar">
+                    <div class="form-group">
+                        <label for="job-search"><span class="fas fa-search"></span></label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="job-search"
+                            placeholder="<?= $this->translate('What are you looking for?') ?>"/>
                     </div>
+                    <div class="form-group">
+                        <label for="job-sort"><?= $this->translate('Sort on') ?></label>
+                        <select name="sort" id="job-sort" class="form-control">
+                            <option value="random"><?= $this->translate('Random') ?></option>
+                            <option value="alphabeticallyasc"><?= $this->translate('Ascending') ?></option>
+                            <option value="alphabeticallydes"><?= $this->translate('Descending') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sectors-filter"><?= $this->translate('Sectors') ?></label>
+                        <select name="sectors" id="sector-filter" class="form-control">
+                            <option value="all" > <?= $this->translate("All")?></option>
+                            <?php foreach ($this->jobSectors($locale) as $sector): ?>
+                                <option value="<?= $sector->getName()?>" > <?= $sector->getName()?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <?php if (isset($this->company)): ?>
+                        <div class="form-group">
+                            <label><?= $this->translate('Company') ?></label>
+                            <a href="<?= $this->url('company/career', ['category' => $category->getSlug()]) ?>"
+                               class="btn btn-default btn-filter align-middle">
+                                        <span class="btn-text" title="<?= $company->getName() ?>">
+                                            <?= $company->getName() ?>
+                                        </span>
+                                <span class="far fa-trash-alt"></span>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif ?>
-                <div class="col-md-3 hidden-sm">
-                    <div class="list-group">
-                        <?php
-                        foreach ($companyList as $company) {
-                            ?>
-                            <a href="<?= $this->url('company/companyItem', // Route url
+            </div>
+        </div>
+        <?php if (empty($companyList)): ?>
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 1em">
+                    <h4>No Results</h4>
+                    <p><?= sprintf($this->translate("Unfortunately, there aren't any companies to be shown at the moment."))?></p>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-grid">
+                        <?php foreach ($companyList as $index => $company): ?>
+                            <?php
+                            $companyUrl = $this->url('company/companyItem', // Route url
                                 ['slugCompanyName' => $company->getSlugName()], // Url parameters
                                 [], // routeOptions
-                                true); // Reuse matched parameters ?>"
-                               class="list-group-item"><?= $company->getName() ?></a>
-                            <?php
-                        }
-                        ?>
+                                true);
+                            ?>
+                            <div href="<?= $companyUrl ?>" class="card job-card" data-index="<?= $index ?>"
+                               data-name="<?= $company->fixWordSize($company->getName(), 23, 40) ?>">
+                                <img class="company-logo img-responsive"
+                                     src="<?= $escaper->escapeHtmlAttr($this->fileUrl($company->getTranslationFromLocale($locale)->getLogo())); ?>"
+                                     alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()); ?>"/>
+                                <h4 class="company-name"><a href="<?= $companyUrl ?>"><?= $company->getName() ?></a></h4>
+                                <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+                                <ul>
+                                    <?php foreach ($this->jobCategories() as $category): ?>
+                                        <?php if ($company->getNumberOfActiveJobs($category) > 0): ?>
+                                            <li>
+                                                <a href="<?= $this->url('company/companyItem/joblist', ['slugCompanyName' => $company->getSlugName(), 'category' => $category->getSlug()]) ?>">
+                                                    <?= $company->getNumberOfActiveJobs($category) ?> <?= $company->getNumberOfActiveJobs($category) === 1 ? $category->getName() : $category->getPluralName() ?>
+                                                </a>
+                                            </li>
+                                        <?php endif ?>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <span class="label label-default job-sectors"
+                                      data-sectors="<?= $company->getSector()->getName(); ?>" data-toggle="tooltip"></span>
+                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                <div
+                                    style="display: none"<span class="card-subtitle text-muted"><?= $company->getName() ?></span>
+                            </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-
-                <div class="col-md-9">
-                    <div class="company-grid row">
-                        <?php
-                        // Randomize the order of companies
-                        shuffle($companyList);
-                        foreach ($companyList as $company) {
-                            echo $this->partial('partial/company/company/grid/company.phtml',
-                                ['company' => $company, 'locale' => $locale]);
-                        }
-                        ?>
-                    </div>
-                </div>
-
             </div>
-
+        <?php endif; ?>
+            </div>
+        </div>
+    </div>
 </section>
+
+
+<script type="text/javascript">
+    var CardGrid = function ($grid, searchElements) {
+        // Pre-compute card details
+        var cards = $('.card', $grid).map(function () {
+            var $card = $(this);
+
+            return {
+                target: $card,
+                text: $(searchElements, $card).text().toLowerCase(),
+                labels: $('.job-label', $card).map(function () {
+                    return $(this).data('label');
+                }).get(),
+                sectors: $('.job-sectors', $card).map(function () {
+                    return $(this).data('sectors');
+                }).get(),
+            };
+        }).get();
+
+        /**
+         * Toggles the card visibility depending on the filter matches
+         */
+        var updateCardVisibility = function () {
+            cards.forEach(function (card) {
+                // Checks if the card matches all registered filters
+                var isFullMatch = Object.values(card.isMatchOn).every(function (isMatch) {
+                    return (isMatch === true);
+                });
+
+                $(card.target).toggle(isFullMatch);
+            });
+        };
+
+        var sortCards = function (sortFn) {
+            var sortedCards = $grid.children('.card').sort(sortFn);
+
+            // jQuery handles moving DOM elements
+            $grid.append(sortedCards);
+        };
+
+        /**
+         * Registers a filter
+         *
+         * @param filterName   Filter's name
+         * @param defaultValue If the card matches the filter by default
+         */
+        var registerFilter = function (filterName, defaultValue) {
+            cards.forEach(function (card) {
+                if (!card.hasOwnProperty('isMatchOn')) {
+                    card.isMatchOn = {};
+                }
+
+                card.isMatchOn[filterName] = defaultValue;
+            });
+        };
+
+        registerFilter('label', true);
+        registerFilter('search', true);
+        registerFilter('sectors', true);
+
+        return {
+            filterByLabel: function (label) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['label'] = (card.labels.indexOf(label) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            clearLabelFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['label'] = true;
+                });
+
+                updateCardVisibility();
+            },
+            filterBySector: function (sector) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = (card.sectors.indexOf(sector) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            filterByText: function (query) {
+                cards.forEach(function (card) {
+                    card.isMatchOn['search'] = (card.text.indexOf(query.toLowerCase()) > -1);
+                });
+
+                updateCardVisibility();
+            },
+            sortByDateDesc: function () {
+                sortCards(function (a, b) {
+                    return (new Date(a.dataset.posted) > new Date(b.dataset.posted)) ? -1 : 1;
+                });
+            },
+            sortByDefault: function () {
+                sortCards(function (a, b) {
+                    return Math.random() >=0.5 ? -1 : 1 ;
+                });
+            },
+            sortByNameAscending: function () {
+                sortCards(function (a, b) {
+                    return (a.dataset.name.toLowerCase() < b.dataset.name.toLowerCase()) ? -1 : 1;
+                });
+            },
+            sortByNameDescending: function () {
+                sortCards(function (a, b) {
+                    return (a.dataset.name.toLowerCase() > b.dataset.name.toLowerCase()) ? -1 : 1;
+                });
+            },
+            clearSectorFilter: function () {
+                cards.forEach(function (card) {
+                    card.isMatchOn['sectors'] = true;
+                });
+
+                updateCardVisibility();
+            },
+        }
+    };
+
+    cardGrid = new CardGrid($('.card-grid'), '.card-title, .card-subtitle, .job-location');
+
+    $("#job-search").keyup(function () {
+        var query = $(this).val().trim();
+
+        cardGrid.filterByText(query);
+    });
+
+    $("#job-label").change(function () {
+        var label = $(this).val();
+
+        if (label === "*") {
+            cardGrid.clearLabelFilter();
+        } else {
+            cardGrid.filterByLabel(label);
+        }
+    });
+
+    $("#job-sort").change(function () {
+        switch ($(this).val()) {
+            case 'random':
+                cardGrid.sortByDefault();
+                break;
+            case 'alphabeticallyasc':
+                cardGrid.sortByNameAscending();
+                break;
+            case 'alphabeticallydes':
+                cardGrid.sortByNameDescending();
+                break;
+            default:
+                cardGrid.sortByDefault();
+        }
+    });
+
+    // Filter on sectors
+    $("#sector-filter").change(function () {
+        var sector = $(this).val();
+
+        console.log(sector);
+
+        // When "all" is selected clear all filters.
+        if (sector == "all") {
+            cardGrid.clearSectorFilter();
+            return;
+        }
+        // Filter on given sector
+        cardGrid.filterBySector(sector);
+    });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        viewport: {"selector": ".card-grid"}
+    });
+</script>

@@ -37,6 +37,8 @@ class companyAccount
      *
      * @return array Job model.
      */
+
+
     public function findactiveVacancies($packageID, $locale)
     {
         $builder = new ResultSetMappingBuilder($this->em);

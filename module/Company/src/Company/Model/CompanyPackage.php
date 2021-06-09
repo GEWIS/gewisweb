@@ -60,6 +60,21 @@ abstract class CompanyPackage
      */
     protected $company;
 
+    /**
+     * The package's contractNumber
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $contractNumber;
+
+    /**
+     * @param mixed $contractNumber
+     */
+    public function setContractNumber($contractNumber)
+    {
+        $this->contractNumber = $contractNumber;
+    }
+
 
     /**
      * Get the package's id.
@@ -181,6 +196,16 @@ abstract class CompanyPackage
         }
     }
 
+    /**
+     * Get the package's contract number.
+     *
+     * @return int
+     */
+    public function getContractNumber()
+    {
+        return $this->contractNumber;
+    }
+
     public function isExpired($now)
     {
         if ($now > $this->getExpirationDate()) {
@@ -213,7 +238,8 @@ abstract class CompanyPackage
         return ['id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
-            'published' => $this->isPublished(),];
+            'published' => $this->isPublished(),
+            'contractNumber' => $this->getContractNumber()];
     }
 
     public function exchangeArray($data)
@@ -221,6 +247,7 @@ abstract class CompanyPackage
         $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
         $this->setStartingDate((isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate());
         $this->setExpirationDate((isset($data['expirationDate'])) ? new DateTime($data['expirationDate']) : $this->getExpirationDate());
+        $this->setContractNumber((isset($data['contractNumber'])) ? ($data['contractNumber']) : $this->getContractNumber());
         $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
     }
 }

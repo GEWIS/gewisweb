@@ -61,6 +61,14 @@ class Module
                     $sm->get('company_hydrator')
                 );
             },
+            'company_admin_edit_sector_form' => function ($sm) {
+                return new \Company\Form\EditSector(
+                    $sm->get('company_mapper_category'),
+                    $sm->get('translator'),
+                    $sm->get('application_get_languages'),
+                    $sm->get('company_hydrator')
+                );
+            },
             'company_admin_edit_label_form' => function ($sm) {
                 return \Company\Form\EditLabel(
                     $sm->get('company_mapper_label'),
@@ -115,6 +123,11 @@ class Module
     private function getMapperFactories()
     {
         return [
+            'company_mapper_approval' => function ($sm) {
+                return new \Company\Mapper\Approval(
+                    $sm->get('company_doctrine_em')
+                );
+            },
             'company_mapper_company' => function ($sm) {
                 return new \Company\Mapper\Company(
                     $sm->get('company_doctrine_em')
@@ -140,6 +153,11 @@ class Module
                     $sm->get('company_doctrine_em')
                 );
             },
+            'company_mapper_sector' => function ($sm) {
+                return new \Company\Mapper\Sector(
+                    $sm->get('company_doctrine_em')
+                );
+            },
             'company_mapper_label' => function ($sm) {
                 return new \Company\Mapper\Label(
                     $sm->get('company_doctrine_em')
@@ -152,6 +170,11 @@ class Module
             },
             'company_mapper_bannerpackage' => function ($sm) {
                 return new \Company\Mapper\BannerPackage(
+                    $sm->get('company_doctrine_em')
+                );
+            },
+            'company_mapper_sector' => function ($sm) {
+                return new \Company\Mapper\Sector(
                     $sm->get('company_doctrine_em')
                 );
             },
@@ -217,7 +240,8 @@ class Module
         return [
             'invokables' => [
                 'company_service_company' => 'Company\Service\Company',
-                'decision_controller_companyAccountController' => 'Decision\Controller\CompanyAccountController'
+                'company_service_approval' => 'Company\Service\Approval',
+                'decision_controller_companyAccountController' => 'Decision\Controller\CompanyAccountController',
             ],
             'factories' => $factories,
         ];

@@ -22,6 +22,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         $this->translator = $translator;
         $this->mapper = $mapper;
 
+
         $this->setHydrator($hydrator);
         $this->setAttribute('method', 'post');
 
@@ -46,6 +47,16 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]
         ]);
 
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobCategory',
+                'name',
+                $this->translator->translate('Category'),
+                'category',
+                'nl'
+            )
+        );
+
 
 
         $this->add([
@@ -56,6 +67,99 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'value_options' => $labelOptions
             ],
         ]);
+
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $this->translator->translate('Sectors'),
+                'sectors',
+                'nl'
+            )
+        );
+
+        $this->add([
+            'name' => 'email',
+            'hydrator' => $this->getHydrator(),
+            'type' => 'Zend\Form\Element\Email',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Email'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'website',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Website'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'location',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Location'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'startingDate',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => [
+                'step' => '1',
+            ],
+            'options' => [
+                'label' => $translator->translate('Starting Date'),
+            ],
+        ]);
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'hours',
+            'options' => array(
+                'label' => $translator->translate('Hours'),
+                'value_options' => array(
+                    '0' => 'Part time',
+                    '1' => 'Full time',
+                ),
+            )
+        ));
+
+        $this->add([
+            'name' => 'phone',
+            'hydrator' => $this->getHydrator(),
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Phone'),
+                'required' => false,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'contactName',
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Contact name'),
+                'required' => false,
+            ],
+        ]);
+
+
 
         $this->add([
             'name' => 'submit',
@@ -79,11 +183,6 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
 
             $filter->add([
                 'name' => 'id',
-                'required' => false,
-            ]);
-
-            $filter->add([
-                'name' => 'active',
                 'required' => false,
             ]);
 
@@ -118,15 +217,15 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 ],
             ]);
 
-            $filter->add([
-                'name' => 'website',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => 'uri',
-                    ],
-                ],
-            ]);
+//            $filter->add([
+//                'name' => 'website',
+//                'required' => false,
+//                'validators' => [
+//                    [
+//                        'name' => 'uri',
+//                    ],
+//                ],
+//            ]);
 
             $filter->add([
                 'name' => 'description',
@@ -143,43 +242,49 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
             ]);
 
             $filter->add([
-                'name' => 'contactName',
+                'name' => 'teaser',
                 'required' => false,
                 'validators' => [
                     [
                         'name' => 'string_length',
                         'options' => [
-                            'max' => 200,
+                            'min' => 2,
+                            'max' => 1000,
                         ],
                     ],
                 ],
             ]);
 
+//            $filter->add([
+//                'name' => 'contactName',
+//                'required' => false,
+//                'validators' => [
+//                    [
+//                        'name' => 'string_length',
+//                        'options' => [
+//                            'max' => 200,
+//                        ],
+//                    ],
+//                ],
+//            ]);
+
+//            $filter->add([
+//                'name' => 'email',
+//                'required' => false,
+//                'validators' => [
+//                    ['name' => 'email_address'],
+//                ],
+//            ]);
+
+//            $filter->add([
+//                'name' => 'phone',
+//                'required' => false,
+//            ]);
+
             $filter->add([
                 'name' => 'active',
                 'required' => false,
-                'validators' => [
-
-                ]
             ]);
-
-            $filter->add([
-                'name' => 'email',
-                'required' => false,
-                'validators' => [
-                    ['name' => 'email_address'],
-                ],
-            ]);
-
-            $filter->add([
-                'name' => 'phone',
-                'required' => false,
-            ]);
-
-//            $filter->add([
-//                'name' => 'active',
-//                'required' => false,
-//            ]);
 
             $filter->add([
                 'name' => 'attachment_file',

@@ -86,6 +86,21 @@ class HighlightPackage extends Package
         return $qb->getQuery()->getResult()[0][1];
     }
 
+    public function findAllActiveHighlights()
+    {
+        $today = date("Y/m/d");
+
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('h')
+            ->where('h.starts <= ?1')
+            ->andWhere('h.expires >= ?1')
+            ->andWhere('h.published = 1')
+            ->setParameter(1, $today);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Find the number of highlights in a category
      *

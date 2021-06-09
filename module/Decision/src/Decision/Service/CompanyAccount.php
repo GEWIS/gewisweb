@@ -19,8 +19,10 @@ class companyAccount extends AbstractAclService
      *
      * @return array Job model.
      */
+
     public function getActiveVacancies($packageID, $locale){
         return $this->getcompanyAccountMapper()->findactiveVacancies($packageID, $locale);
+
     }
 
     public function getCompanyInfo($id = null) {
@@ -54,6 +56,12 @@ class companyAccount extends AbstractAclService
     protected function getDefaultResourceId()
     {
         return 'companyAccount';
+    }
+
+
+
+    public function getCompanyContactEmail() {
+        return $this->getCompany()->getContactEmail();
     }
 
     /**

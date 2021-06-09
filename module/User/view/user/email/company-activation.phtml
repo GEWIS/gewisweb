@@ -1,0 +1,38 @@
+<?= "--- Dutch version below ---\n\n" ?>
+
+<?= "Dear " .  $company->getContactName() . ",\n" ?>
+
+<?= "You have been registered on the website of Study association GEWIS, with the following information:\n" ?>
+
+- <?= "Company name:" ?> <?= $company->getName() . "\n" ?>
+- <?= "Contact email address:" ?> <?= $company->getContactEmail() . "\n" ?>
+
+<?= "You can activate your account on the following link:\n" ?>
+
+<?= $this->serverUrl($this->url('user/activate-company', ['code' => $newcompany->getCode()])) . "\n" ?>
+
+<?= "Your activation code is:" ?> <?= $newcompany->getCode() . "\n" ?>
+
+<?= "Best Regards,\n" ?>
+
+<?= "WebCommissie GEWIS\n\n\n" ?>
+
+
+<?= "--- Dutch version ---\n\n" ?>
+
+<?= "Beste " .  $company->getContactName() . ",\n" ?>
+
+<?= "Uw bedrijf is geregistreerd voor de website van Studievereniging GEWIS met de onderstaande informatie:\n" ?>
+
+    - <?= "Bedrijfsnaam:" ?> <?= $company->getName() . "\n" ?>
+    - <?= "Contact e-mailadres:" ?> <?= $company->getContactEmail() . "\n" ?>
+
+<?= "U kunt uw bedrijfsaccount activeren door middel van de onderstaande link::\n" ?>
+
+<?= $this->serverUrl($this->url('user/activate-company', ['code' => $newcompany->getCode()])) . "\n" ?>
+
+<?= "Uw activatiecode is:" ?> <?= $newcompany->getCode() . "\n" ?>
+
+<?= "Met vriendelijke groet,\n" ?>
+
+<?= "WebCommissie GEWIS\n\n\n" ?>

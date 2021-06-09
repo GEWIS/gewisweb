@@ -5,18 +5,36 @@ namespace Decision\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Zend\Form\Form as Form;
+use DateTime;
 use Zend\Validator\File\IsImage;
 
-class companyaccountController extends AbstractActionController
+class CompanyAccountController extends AbstractActionController
 {
-    public $MSG;
 
-    public function indexAction()
+    public function IndexAction()
     {
+        if (!$this->getCompanyAccountService()->isAllowed('view')) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You are not allowed to view this page')
+            );
+        }
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyId = $company->getId();
+        //obtain company package information
+        $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        // Get local language
+        $companyService = $this->getCompanyService();
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
         return new ViewModel([
             //fetch the active vacancies of the logged in company
-            'vacancies' => $this->getVacancies(),
+            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale),
+            'companyPackageInfo' => $companyPackageInfo,
+            'companyInfo'  => $companyInfo
         ]);
     }
 
@@ -43,7 +61,10 @@ class companyaccountController extends AbstractActionController
                     $post,
                     $files['banner'],
                     'banner'
-                )) {
+                ))
+                $email = $this->getDecisionEmail();
+                $email->sendApprovalMail($company);
+                {
                     return $this->redirect()->toRoute(
                         'companyaccount'
                     );
@@ -62,14 +83,12 @@ class companyaccountController extends AbstractActionController
             )
         );
 
-        $email = $this->getDecisionEmail();
-        $email->sendApprovalMail($company);
-
         return new ViewModel([
             'form' => $packageForm,
             'company' => $company
         ]);
     }
+
 
     public function bannerPostCorrect($post, $files) {
         global $MSG;
@@ -166,6 +185,7 @@ class companyaccountController extends AbstractActionController
             'currentHighlights' => $currentHighlights
         ]);
     }
+
 
     public function highlightPostCorrect($post) {
         global $MSG;
@@ -271,6 +291,7 @@ class companyaccountController extends AbstractActionController
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
 
+
         if ($type === "banner"){
             $company->setBannerCredits($credits_owned);
         } elseif ($type === "highlight"){
@@ -290,14 +311,15 @@ class companyaccountController extends AbstractActionController
         } elseif ($type === "highlight"){
             $credits_owned = $company->getHighlightCredits();
         }
-
         if ($credits_owned >= $days_scheduled ){
             //TODO: Make sure this line is only run after the banner/highlight has actually been uploaded
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
 
+
         $MSG = "The amount of highlighting days needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
+
         return false;
     }
 
@@ -317,7 +339,7 @@ class companyaccountController extends AbstractActionController
         list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
         if ($image_height != 90 ||
-        $image_width != 728) {
+            $image_width != 728) {
             $MSG = "The image you submitted does not have the right dimensions. " .
                 "The dimensions of your image are " . $image_height . " x " . $image_width .
                 ". The dimensions of the image should be 90 x 728.";
@@ -326,23 +348,95 @@ class companyaccountController extends AbstractActionController
         return true;
     }
 
+
+
     public function dummyAction(){
         return new ViewModel();
     }
 
-    public function profileAction() {
-        return new ViewModel();
-    }
+    /**
+     * Action that displays a form for editing a company
+     *
+     *
+     */
+    public function profileAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $companyForm = $companyService->getCompanyForm();
 
+        // get useful company info
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companySlugName = $company->getSlugName();
+        $companyName = $company->getName();
 
-    public function test(){
-        return "test";
+        // Get the specified company
+        $companyList = $companyService->getEditableCompaniesBySlugName($companySlugName);
+        // If the company is not found, throw 404
+        if (empty($companyList)) {
+            $company = null;
+            return $this->notFoundAction();
+        }
+
+        $company = $companyList[0];
+
+        // Handle incoming form data
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $post = $request->getPost();
+            // Save the company
+            $companyService->saveCompanyByData(
+                $company,
+                $post,
+                $request->getFiles()
+            );
+
+            $company->setSlugName($companySlugName);
+            $company->setName($companyName);
+            $companyService->saveCompany();
+
+            return $this->redirect()->toRoute(
+                'companyaccount/profile',
+                [
+                    'action' => 'edit',
+                    'slugCompanyName' => $companyName,
+                ],
+                [],
+                false
+            );
+
+        }
+
+        // Initialize form
+        $companyForm->setData($company->getArrayCopy());
+        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
+        $companyForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/profile',
+                [
+                    'action' => 'editCompany',
+                    'slugCompanyName' => $companyName,
+                ]
+            )
+        );
+
+        $email = $this->getDecisionEmail();
+        $email->sendApprovalMail($company);
+
+        return new ViewModel([
+            'company' => $company,
+            'form' => $companyForm,
+        ]);
     }
 
     public function settingsAction() {
-        $company = "COmpany";
-        $companyInfo = $this->getSettingsService()->getCompanyInfo($company);
-        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyInfo[0]->getId());
+        //Obtain company and company package information
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyId = $company->getId();
+        $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
         return new ViewModel([
             'companyPackageInfo' => $companyPackageInfo,
@@ -351,19 +445,193 @@ class companyaccountController extends AbstractActionController
         ]);
     }
 
-
-
     public function vacanciesAction(){
-        return new ViewModel();
+
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+
+        // Get the parameters
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyName = $company->getName();
+        $packageId = $company->getJobPackageId();
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
+
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
+            );
+        }
+
+
+        // Get the specified package (Assuming it is found)
+        $package = $companyService->getEditablePackage($packageId);
+        $type = $package->getType();
+
+
+        // Get form
+        $packageForm = $companyService->getPackageForm($type);
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
+
+            }
+        }
+
+
+        // Initialize form
+        $packageForm->bind($package);
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'companyaccount/vacancies',
+                [
+                    'packageId' => $packageId,
+                    'slugCompanyName' => $companyName,
+                    'type' => $type,
+                ]
+            )
+        );
+
+        // Initialize the view
+        return new ViewModel([
+            'package' => $package,
+            'companyName' => $companyName,
+            'form' => $packageForm,
+            'type' => $type,
+        ]);
     }
 
-    public function editVacancyAction() {
-        return new ViewModel();
+    public function editVacancyAction()
+    {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $jobForm = $companyService->getJobFormCompany();
+
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $packageId = $company->getJobPackageId();
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
+
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
+
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
+            );
+        }
+
+
+        // Get the parameters
+        $languageNeutralId = $this->params('languageNeutralJobId');
+
+        // Find the specified jobs
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
+
+        // Check the job is found. If not, throw 404
+        if (empty($jobs)) {
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $files = $request->getFiles();
+            $post = $request->getPost();
+            $jobDict = [];
+
+            foreach ($jobs as $job) {
+                $jobDict[$job->getLanguage()] = $job;
+            }
+
+            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+        }
+
+        // Initialize the form
+        $jobDict = [];
+        foreach ($jobs as $job) {
+            $jobDict[$job->getLanguage()] = $job;
+        }
+        $languages = array_keys($jobDict);
+        $jobForm->setLanguages($languages);
+
+        $labels = $jobs[0]->getLabels();
+
+        $mapper = $companyService->getLabelMapper();
+        $actualLabels = [];
+        foreach ($labels as $label) {
+            $actualLabel = $label->getLabel();
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+        }
+
+
+        // Handle incoming form data for central fields
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $x = 0;
+            foreach ($jobs as $job) {
+                $job->setSectors($companyService->getJobMapper()->findSectorsById($post['sectors'] + $x));
+                $job->setCategory($companyService->getJobMapper()->findCategoryById($post['category'] +$x));
+                $x++;
+                $job->exchangeArray($post);
+            }
+            $companyService->saveJob();
+        }
+
+
+        $jobForm->setLabels($actualLabels);
+        $jobForm->setData($jobs[0]->getArrayCopy());
+        $jobForm->bind($jobDict);
+
+
+        // Initialize the view
+        return new ViewModel([
+            'form' => $jobForm,
+            'job' => $job,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
+
     }
+
+
+
 
     /**
      * Action that allows adding a job
-     *
      *
      */
     public function createVacancyAction()
@@ -372,15 +640,32 @@ class companyaccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobFormCompany();
 
-        // Get parameters
-//        $companyName = $this->params('slugCompanyName');
-//        $packageId = $this->params('packageId');
-        $companyName = 'Phillips';
-        $packageId = 2;
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $packageId = $company->getJobPackageId();
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
+        if ($packageId == null) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need a vacancy package to manage your vacancies.')
+            );
+        }
 
-//        $company = $this->identity()->getMember();
+        $validJobPackage = false;
+        $now = new DateTime();
+        foreach($companyPackageInfo as $package) {
+            if ($package->getType() == "job" && !$package->isExpired($now)) {
+                $validJobPackage = true;
+            }
+        }
 
+        if (!$validJobPackage) {
+            $translator = $this->getCompanyAccountService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package.')
+            );
+        }
         // Handle incoming form results
         $request = $this->getRequest();
 
@@ -392,26 +677,23 @@ class companyaccountController extends AbstractActionController
                 $request->getPost(),
                 $request->getFiles()
             );
-
             if ($job) {
+                //Send approval email to admin
+                $email = $this->getDecisionEmail();
+                $email->sendApprovalMail($company);
+
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'companyAccount/vacancies'
+                    'companyaccount/vacancies'
                 );
             }
         }
-
-        // TODO: change redirect after company has been created.
 
         // Initialize the form
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
-                'admin_company/editCompany/editPackage/addJob',
-                [
-                    'slugCompanyName' => $companyName,
-                    'packageId' => $packageId
-                ]
+                'companyaccount/vacancies/createvacancy'
             )
         );
 
@@ -457,19 +739,20 @@ class companyaccountController extends AbstractActionController
     }
 
     /**
-     * Get the CompanyAccount service.
+     * Get the CompanAccount service.
      *
      * @return Decision\Service\CompanyAccount
      */
-    public function getcompanyAccountService()
+    public function getCompanyAccountService()
     {
         return $this->getServiceLocator()->get('decision_service_companyAccount');
     }
 
+
     /**
      * Method that returns the service object for the company module.
      *
-     * @return DesicionEmail
+     * @return DecisionEmail
      */
     protected function getDecisionEmail()
     {

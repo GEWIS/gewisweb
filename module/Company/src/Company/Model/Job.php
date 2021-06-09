@@ -52,6 +52,7 @@ class Job
 
     /**
      * The location(url) of an attachment describing the job.
+     * The location(url) of an attachment describing the job.
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -99,6 +100,37 @@ class Job
      */
     protected $timestamp;
 
+
+    /**
+     * The job's description.
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $teaser;
+
+    /**
+     * @return mixed
+     */
+    public function getTeaser()
+    {
+        return $this->teaser;
+    }
+
+    /**
+     * @param mixed $teaser
+     */
+    public function setTeaser($teaser)
+    {
+        $this->teaser = $teaser;
+    }
+
+    /**
+     * The job's start date.
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $startingDate;
+
     /**
      * The job's language.
      *
@@ -135,12 +167,84 @@ class Job
     protected $labels;
 
     /**
+     * The type of hours.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $hours;
+
+    /**
+     * The job's category.
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")@ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
+     */
+    protected $sectors;
+
+
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStartingDate()
+    {
+        return $this->startingDate;
+    }
+
+    /**
+     * @param mixed $startingDate
+     */
+    public function setStartingDate($startingDate)
+    {
+        $this->startingDate = $startingDate;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getHours()
+    {
+        return $this->hours;
+    }
+
+    /**
+     * @param mixed $hours
+     */
+    public function setHours($hours)
+    {
+        $this->hours = $hours;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSectors()
+    {
+        return $this->sectors;
+    }
+
+    public function findSectorsById() {
+
+    }
+
+    /**
+     * @param mixed $sectors
+     */
+    public function setSectors($sectors)
+    {
+        $this->sectors = $sectors;
+    }
+
 
     /**
      * Get's the id
@@ -504,4 +608,60 @@ class Job
     {
         $this->location = $location;
     }
+
+    /**
+     * Updates the variable if the first argument is set, Otherwise, it will
+     * use the second argument.
+     *
+     * @param mixed $object
+     * @param mixed $default
+     */
+    private function updateIfSet($object, $default)
+    {
+        if (isset($object)) {
+            return $object;
+        }
+
+        return $default;
+    }
+
+    /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeArray($data)
+    {
+        $this->setHours($this->updateIfSet($data['hours'], null));
+        $this->setStartingDate($this->updateIfSet(new \DateTime($data['startingDate']), null));
+        $this->setContactName($this->updateIfSet($data['contactName'], ''));
+        $this->setPhone($this->updateIfSet($data['phone'], ''));
+        $this->setEmail($this->updateIfSet($data['email'], ''));
+        $this->setWebsite($this->updateIfSet($data['website'], 0));
+        $this->setLocation($this->updateIfSet($data['location'], ''));
+    }
+
+    /**
+     * Returns an array copy with varName=> var for all variables except the
+     * translation.
+     *
+     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     */
+    public function getArrayCopy()
+    {
+        $arraycopy = [];
+        $arraycopy['id'] = $this->getId();
+        $arraycopy['category'] = $this->getCategory();
+        $arraycopy['contactName'] = $this->getContactName();
+        $arraycopy['email'] = $this->getEmail();
+        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['sectors'] = $this->getSectors();
+        $arraycopy['hours'] = $this->getHours();
+        $arraycopy['startingDate'] = $this->getStartingDate();
+        $arraycopy['website'] = $this->getWebsite();
+        $arraycopy['location'] = $this->getLocation();
+
+        return $arraycopy;
+    }
+
 }

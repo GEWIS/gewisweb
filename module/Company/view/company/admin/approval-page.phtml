@@ -1,0 +1,48 @@
+<?php
+
+//echo var_dump($pendingApprovals[0]->getProfileApproval()->getCompany()->getName());
+
+?>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th>
+                    <?= $this->translate('Company name') ?>
+                </th>
+                <th>
+                    <?= $this->translate('Approval type') ?>
+                </th>
+                <th>
+                    <?= $this->translate('Actions') ?>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="company-list">
+                <?php foreach ($pendingApprovals as &$pendingApproval): ?>
+                <tr>
+                    <th>
+                        <?= $pendingApproval->getCompany()->getName() ?>
+                    </th>
+                    <th>
+                        <?= $pendingApproval->getType() ?>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-danger btn-xs">
+                            <?= $this->translate('View request') ?>
+                        </button>
+                    </th>
+                </tr>
+                <?php endforeach; ?>            </tbody>
+            <tfoot>
+            <tr>
+                <th><?= $this->translate('Company name') ?></th>
+                <th><?= $this->translate('Approval type') ?></th>
+                <th><?= $this->translate('Actions') ?></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

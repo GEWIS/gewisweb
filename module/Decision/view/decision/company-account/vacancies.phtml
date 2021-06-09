@@ -1,0 +1,117 @@
+<?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Vacancies</h1>
+            </div>
+        </div>
+        <ul class="nav nav-pills head-menu">
+            <li>
+                <a href="<?= $this->url('companyaccount/vacancies') ?>">
+                    <?= $this->translate('Vacancies Overview') ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?= $this->url('companyaccount/vacancies/createvacancy') ?>">
+                    <?= $this->translate('Create new Vacancy') ?>
+                </a>
+            </li>
+        </ul>
+        <hr/>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare()
+        ?>
+
+        <h2>
+            <?= $this->translate('Jobs') ?>
+        </h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <?= $this->translate('Name'); ?>
+                </th>
+                <th>
+                    <?= $this->translate('Active'); ?>
+                </th>
+                <th>
+                    <?= $this->translate('Actions'); ?>
+                </th>
+            </tr>
+            </thead>
+
+            <?php $lniDoneList = [] ?>
+            <?php foreach ($package->getJobs() as $job): ?>
+                <?php
+                if($job->getLanguage() != $lang) {
+                    continue;
+                    if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                        continue;
+                    }
+                    $lniDoneList[$job->getLanguageNeutralId()] = $job;
+                }
+                ?>
+                <tr>
+                    <td>
+                        <?= $job->getName() ?>
+                    </td>
+                    <td>
+                        <?php echo $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
+                    </td>
+                    <td>
+                        <a class="btn btn-xs btn-primary"
+                           href="<?= $this->url("companyaccount/vacancies/editvacancy",
+                               [
+                                   "slugCompanyName" => $companyName,
+                                   "packageId" => $package->getId(),
+                                   "languageNeutralJobId" => $job->getLanguageNeutralId(),
+                               ]
+                           ); ?>">
+                            <?= $this->translate('edit'); ?>
+                        </a>
+                        <!--                TODO: decide what to do with the delete button-->
+<!--                        <button type="button" class="btn btn-danger btn-xs" onclick="deleteJob(<?//= $job->getLanguageNeutralId() ?>//)" data-toggle="modal" data-target="#deleteModal">-->
+<!--                            --><?//= $this->translate('Delete') ?>
+<!--                        </button>-->
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+        <!-- Delete job modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><?= $this->translate('Are you sure you want to delete this job?') ?> </p>
+                        <p class="options">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <form id="deleteForm" method="POST">
+                            <input type="submit" name="submit" value="<?= $this->translate('Delete job') ?>"
+                                   class="btn btn-danger"/>
+                            <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            deleteJob = function (id) {
+                $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deleteJob', {
+                    'slugCompanyName': '<?= $companyName ?>',
+                    'packageId': '<?= $package->getId() ?>',
+                    'languageNeutralJobId': id
+                }));
+            };
+        </script>

@@ -346,7 +346,7 @@ return [
                     'route' => '/companyAccount',
                     'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'CompanyAccount',
+                        'controller' => 'companyaccount',
                         'action' => 'index'
                     ]
                 ],
@@ -368,14 +368,13 @@ return [
 
                         ],
                     ],
-                    'bannerupload' => [
+                    'profile' => [
                         'type' => 'literal',
                         'options' => [
-                            'route' => '/bannerupload',
+                            'route' => '/profile',
                             'defaults' => [
-                                'action' => 'bannerupload'
+                                'action' => 'profile'
                             ]
-
                         ],
                     ],
                     'highlight' => [
@@ -388,14 +387,13 @@ return [
 
                         ],
                     ],
-                    'profile' => [
+                    'bannerupload' => [
                         'type' => 'literal',
                         'options' => [
-                            'route' => '/profile',
+                            'route' => '/bannerupload',
                             'defaults' => [
-                                'action' => 'profile'
+                                'action' => 'bannerupload'
                             ]
-
                         ],
                     ],
                     'settings' => [
@@ -413,7 +411,7 @@ return [
                         'options' => [
                             'route' => '/vacancies',
                             'defaults' => [
-                                'controller' => 'CompanyAccount',
+                                'controller' => 'companyaccount',
                                 'action' => 'vacancies'
                             ]
                         ],
@@ -424,19 +422,22 @@ return [
                                 'options' => [
                                     'route' => '/create',
                                     'defaults' => [
-                                        'controller' => 'CompanyAccount',
+                                        'controller' => 'companyaccount',
                                         'action' => 'createVacancy',
                                     ]
                                 ],
                             ],
                             'editvacancy' => [
-                                'type' => 'Literal',
+                                'type' => 'segment',
                                 'options' => [
-                                    'route' => '/edit',
+                                    'route' => '/job/:languageNeutralJobId',
                                     'defaults' => [
-                                        'controller' => 'CompanyAccount',
                                         'action' => 'editVacancy',
                                     ],
+                                    'constraints' => [
+                                        'languageNeutralJobId' => '[0-9]*',
+                                    ],
+                                    'may_terminate' => true,
                                 ],
                             ],
                         ],
@@ -454,7 +455,7 @@ return [
             'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
             'Decision\Controller\Member' => 'Decision\Controller\MemberController',
             'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
-            'Decision\Controller\CompanyAccount' => 'Decision\Controller\CompanyAccountController',
+            'Decision\Controller\companyaccount' => 'Decision\Controller\CompanyAccountController',
         ]
     ],
     'view_manager' => [

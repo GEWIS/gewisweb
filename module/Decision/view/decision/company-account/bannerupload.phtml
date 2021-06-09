@@ -10,11 +10,11 @@
                 <h3><? echo "You have currently got " . $company->getBannerCredits() . " days left to place a banner."; ?></h3>
             </div>
         </div>
-<?php
-$form->setAttribute('class', 'form-horizontal');
-$form->prepare();
-echo $this->form()->openTag($form);
-echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'banner']);
-echo $this->form()->closeTag($form);?>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'banner']);
+        echo $this->form()->closeTag($form);?>
     </div>
 </section>

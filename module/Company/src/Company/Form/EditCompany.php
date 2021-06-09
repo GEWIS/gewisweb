@@ -44,7 +44,7 @@ class EditCompany extends Form
                 'required' => 'required',
             ],
             'options' => [
-                'label' => $translate->translate('Permalink'),
+                'label' => $translate->translate('Permalink *'),
                 'required' => 'required',
             ],
         ]);
@@ -56,7 +56,7 @@ class EditCompany extends Form
                 'required' => 'required',
             ],
             'options' => [
-                'label' => $translate->translate('Name'),
+                'label' => $translate->translate('Name *'),
                 'required' => 'required',
             ],
         ]);
@@ -72,6 +72,8 @@ class EditCompany extends Form
                 ],
             ],
         ]);
+
+
 
         $this->add([
             'name' => 'address',
@@ -132,7 +134,7 @@ class EditCompany extends Form
             'attributes' => [
             ],
             'options' => [
-                'label' => $translate->translate('Contact Email'),
+                'label' => $translate->translate('Contact Email *'),
             ],
         ]);
 
@@ -152,7 +154,7 @@ class EditCompany extends Form
                 'type' => 'text',
             ],
             'options' => [
-                'label' => $translate->translate('Contact name'),
+                'label' => $translate->translate('Contact name *'),
             ],
         ]);
 
@@ -241,6 +243,16 @@ class EditCompany extends Form
         ]);
 
         $this->add([
+            'name' => 'emailSubscription',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'attributes' => [
+            ],
+            'options' => [
+                'label' => $translate->translate('Email Subscription'),
+            ],
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
@@ -249,7 +261,32 @@ class EditCompany extends Form
             ],
         ]);
 
+//        $this->add([
+//            'name' => 'sector' ,
+//            'type' => 'Zend\Form\Element\Select',
+//            'options' => [
+//                'empty_option' => '<Please choose the company sector>',
+//                'value_options' => [
+//                    #todo!!
+//                    'Finance' => 'Finance',
+//                    'Chips'=> 'Chips',
+//                ],
+//                'label' => $translate->translate('Company sector')
+//            ]
+//        ]);
+
+        $this->add(
+            $this->mapper->createObjectSelectConfig(
+                'Company\Model\JobSector',
+                'name',
+                $translate->translate('Sectors'),
+                'sector',
+                $translate->getTranslator()->getLocale()
+            )
+        );
+
         $this->initFilters($translate);
+
     }
 
     protected function initFilters($translate)
@@ -343,7 +380,7 @@ class EditCompany extends Form
 
         $filter->add([
             'name' => 'contactName',
-            'required' => false,
+            'required' => true,
             'validators' => [
                 [
                     'name' => 'string_length',
