@@ -2,7 +2,6 @@
 
 namespace Photo\Service;
 
-use _HumbugBoxa991b62ce91e\Nette\FileNotFoundException;
 use Application\Service\AbstractAclService;
 use http\Exception\InvalidArgumentException;
 use Photo\Model\Photo as PhotoModel;
